@@ -46,12 +46,13 @@ const layerlist = [
   }
 ];
 
+import datacatalog from '../datacatalog.js';
+
 class EduGISApp extends connect(store)(LitElement) {
   _render({appTitle, _page, _drawerOpened, _snackbarOpened, _offline}) {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
-
 header {
   position: absolute;
   display: block;
@@ -154,7 +155,7 @@ footer {
           </ul>
         </nav>
     </header>
-    <web-map navigation="top-right" scalebar="true" geolocate="top-right" coordinates="true" layerlist=${layerlist}></web-map>
+    <web-map navigation="top-right" scalebar="true" geolocate="top-right" coordinates="true" datacatalog=${datacatalog}></web-map>
     <footer className="App-footer">&copy;2018 EduGIS, Geodan</footer>
     `;
   }

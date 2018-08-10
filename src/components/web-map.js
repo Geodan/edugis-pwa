@@ -20,7 +20,6 @@ import './map-spinner.js';
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
   static get properties() { 
-    console.log('get properties'); 
     return { 
       mapstyle: String, 
       lon: Number, 
@@ -32,7 +31,7 @@ class WebMap extends LitElement {
       coordinates: String,
       displaylat: Number,
       displaylng: Number,
-      layerlist: Array,
+      datacatalog: Object,
     }; 
   }
   constructor() {
@@ -49,20 +48,14 @@ class WebMap extends LitElement {
     this.scalebar = "false";
     this.geolocate = "false";
     this.coordinates = "false";
-    console.log('constructor');
   }
   /*_createRoot() {
-    console.log('_createRoot()');
     return this;
   }*/
   _shouldRender(props, changedProps, prevProps) {
-    console.log('_shouldRender(props, changedProps, prevProps)');
-    //return (this.map === null);
     return true;
   }
-  _render({mapstyle, lon, lat, zoom, navigation, scalebar, displaylat, displaylng, layerlist}) {
-    console.log('_render()');
-    console.log(layerlist);
+  _render({mapstyle, lon, lat, zoom, navigation, scalebar, displaylat, displaylng, datacatalog}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -89,11 +82,11 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     ${(this.coordinates.toLocaleLowerCase() !== "false") ?
       html`<div class="mapcoordinates">${displaylng}&deg;&#x2194;&nbsp;&nbsp;${displaylat}&deg;&#x2195;</div>`: ''}
-    <map-data-catalog layerlist=${layerlist}></map-data-catalog>
+    <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     <map-spinner webmap=${this.map}></map-spinner>`;
   }
   _didRender() {
-    console.log('_didRender()');
+    ;
   }
   _positionString(prop) {
     // convert prop to control position
@@ -104,7 +97,6 @@ class WebMap extends LitElement {
     return propl;
   }
   _firstRendered() {        
-    console.log('_firstRendered()');
     this.map = new mapboxgl.Map({
         container: this.shadowRoot.querySelector('div'), 
         style: this.mapstyle,
@@ -130,14 +122,11 @@ class WebMap extends LitElement {
     this._dispatchEventMoveEnd();
     this.map.on('moveend', ()=>{this._dispatchEventMoveEnd()});
 
-    this.shadowRoot.querySelector('map-data-catalog').addEventListener('clicklayer', e=>{
-      if (e.detail.on) {
+    this.shadowRoot.querySelector('map-data-catalog').addEventListener('addlayer', e=>{
+      if (e.detail) {
         // add layer
-        this.map.addLayer(this.layerlist[2].layerInfo);
-      } else {
-        // remove layer
-        this.map.removeLayer(this.layerlist[2].layerInfo.id);
-      }
+        this.map.addLayer(e.detail);
+      } 
     });
     this.requestRender();
   }
