@@ -21,8 +21,10 @@
   },
   "dependencies": {
     "@polymer/app-layout": "^3.0.0-pre.21",
+    "@polymer/iron-icon": "^3.0.0-pre.21",
     "@polymer/lit-element": "^0.5.2",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "html5sortable": "^0.9.3",
     "mapbox-gl": "^0.47.0",
     "pwa-helpers": "^0.8.2",
     "redux": "^4.0.0",

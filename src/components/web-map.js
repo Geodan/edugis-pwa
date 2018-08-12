@@ -16,6 +16,10 @@ document.head.appendChild(mapboxcss);
 import './openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
+import './map-layer.js';
+import './button-expandable.js';
+import { databaseIcon } from './my-icons.js';
+
 
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
@@ -32,6 +36,7 @@ class WebMap extends LitElement {
       displaylat: Number,
       displaylng: Number,
       datacatalog: Object,
+      layerlist: Array
     }; 
   }
   constructor() {
@@ -48,6 +53,7 @@ class WebMap extends LitElement {
     this.scalebar = "false";
     this.geolocate = "false";
     this.coordinates = "false";
+    this.layerlist = [];
   }
   /*_createRoot() {
     return this;
@@ -55,7 +61,7 @@ class WebMap extends LitElement {
   _shouldRender(props, changedProps, prevProps) {
     return true;
   }
-  _render({mapstyle, lon, lat, zoom, navigation, scalebar, displaylat, displaylng, datacatalog}) {
+  _render({mapstyle, lon, lat, zoom, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -82,8 +88,11 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     ${(this.coordinates.toLocaleLowerCase() !== "false") ?
       html`<div class="mapcoordinates">${displaylng}&deg;&#x2194;&nbsp;&nbsp;${displaylat}&deg;&#x2195;</div>`: ''}
+    <button-expandable icon=${databaseIcon}>  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
-    <map-spinner webmap=${this.map}></map-spinner>`;
+    </button-expandable>
+    <map-spinner webmap=${this.map}></map-spinner>
+    ${layerlist.map(layer=>html`<map-layer webmap=${this.map}></map-layer>`)}`
   }
   _didRender() {
     ;
@@ -125,6 +134,7 @@ class WebMap extends LitElement {
     this.shadowRoot.querySelector('map-data-catalog').addEventListener('addlayer', e=>{
       if (e.detail) {
         // add layer
+        this.layerlist = [...this.layerlist, e.detail];
         this.map.addLayer(e.detail);
       } 
     });

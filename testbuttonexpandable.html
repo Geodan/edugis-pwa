@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: gray;
+        }
+        .container {
+            position: absolute;
+            display: inline-block;
+            left: 10px;
+            top: 10px;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            min-height: 300px;
+            visibility: hidden;
+            background: white;
+            padding-top: 30px;
+        }
+        .button {
+            position:absolute;
+            left: 10px;
+            top: 10px;
+            visibility:visible;
+            background: lightgray;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;                        
+            cursor: pointer;
+            height: 24px;
+            width: 24px;
+            padding: 1px;
+        }
+    </style>
+    <script>
+        function init() {
+            let visible = 'hidden';
+            const button = document.querySelector('button');
+            const container = document.querySelector('.container');
+            button.addEventListener("click", function(){
+                if (visible === 'visible') {
+                    visible = 'hidden';
+                    
+                } else {
+                    visible = 'visible';
+                }
+                container.style.visibility = visible;
+            })
+        }
+    </script>
+</head>
+<body onload="init()">
+    <div class="page">
+        <div class="container">
+            <button class="button">
+                    <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+            </button>
+            <p/>
+            Lorum ipsum enz. enz. enz. en nog meer informatie.
+        </div>
+    </div>
+</body>
+</html>
