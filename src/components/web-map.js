@@ -16,10 +16,31 @@ document.head.appendChild(mapboxcss);
 import './openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
+import './map-coordinates.js';
 import './map-layer.js';
 import './button-expandable.js';
 import { databaseIcon } from './my-icons.js';
 
+
+function getResolution (map)
+{
+  // returns degrees / pixel-width
+  if (!map) {
+    return undefined;
+  }
+  const y = map._container.clientHeight / 2;
+  return getAngle(map.unproject([0, y]), map.unproject([1, y]));
+}
+
+function getAngle (latlng1, latlng2)
+{
+  const rad = Math.PI / 180,
+      lat1 = latlng1.lat * rad,
+      lat2 = latlng2.lat * rad,
+      a = Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos((latlng2.lng - latlng1.lng) * rad);
+  return Math.acos(Math.min(a, 1)) / rad;
+}
 
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
@@ -35,6 +56,7 @@ class WebMap extends LitElement {
       coordinates: String,
       displaylat: Number,
       displaylng: Number,
+      resolution: Number,
       datacatalog: Object,
       layerlist: Array
     }; 
@@ -49,6 +71,7 @@ class WebMap extends LitElement {
     this.displaylat = this.lat;
     this.displaylng = this.lon;
     this.zoom = 6;
+    this.resolution = 0;
     this.navigation = "false";
     this.scalebar = "false";
     this.geolocate = "false";
@@ -61,7 +84,7 @@ class WebMap extends LitElement {
   _shouldRender(props, changedProps, prevProps) {
     return true;
   }
-  _render({mapstyle, lon, lat, zoom, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
+  _render({mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -70,24 +93,9 @@ class WebMap extends LitElement {
         min-height: 200px; 
       }
       .webmap {width: 100%; height: 100%}
-      .mapcoordinates {
-        background-color: rgba(255, 255, 255, 0.75);
-        font-size: 12px;
-        position: absolute;
-        display: inline-block;
-        width: 30em;
-        bottom: 10px;
-        left: 50%;
-        margin-left: -15em;
-        text-align: center;
-        border-radius: 4px;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-      }
-      
       </style>
     <div class="webmap"></div>
-    ${(this.coordinates.toLocaleLowerCase() !== "false") ?
-      html`<div class="mapcoordinates">${displaylng}&deg;&#x2194;&nbsp;&nbsp;${displaylat}&deg;&#x2195;</div>`: ''}
+    <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <button-expandable icon=${databaseIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     </button-expandable>
@@ -128,8 +136,8 @@ class WebMap extends LitElement {
     }
     
     this.map.autodetectLanguage(); // set openmaptiles language to browser language
-    this._dispatchEventMoveEnd();
-    this.map.on('moveend', ()=>{this._dispatchEventMoveEnd()});
+    this._mapMoveEnd();
+    this.map.on('moveend', ()=>{this._mapMoveEnd()});
 
     this.shadowRoot.querySelector('map-data-catalog').addEventListener('addlayer', e=>{
       if (e.detail) {
@@ -138,10 +146,11 @@ class WebMap extends LitElement {
         this.map.addLayer(e.detail);
       } 
     });
-    this.requestRender();
+    
   }
-  _dispatchEventMoveEnd() {
+  _mapMoveEnd() {
     const bounds = this.map.getBounds();
+    this.resolution = getResolution(this.map);
     this.dispatchEvent(new CustomEvent('moveend', 
       {detail: {
         viewbox: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()], 
@@ -150,6 +159,7 @@ class WebMap extends LitElement {
         pitch: this.map.getPitch()}
       }
     ));
+    this.requestRender();
   }
 }
 customElements.define('web-map', WebMap);
