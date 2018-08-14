@@ -14,13 +14,19 @@
         right: 10px;
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
-        height: 24px;
-        width: 24px;
+        height: 30px;
+        width: 30px;
+        padding: 3px;
         background-color: white;
+        visibility: visible;
+        box-sizing: border-box;
+    }
+    .button:hover {
+        background-color: whitesmoke;
     }
     .container {
         position: absolute;
-        right: 34px;
+        right: 45px;
         bottom: 30px;
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
@@ -81,24 +87,24 @@
         <div class="legendheader">
             Kaartlagen en legenda's
         </div>
-        <div class="legenditems sortable">
+        <div class="sortable">
             <div class="legenditem collapsed">
                 <div class="header"><i class="icon deleteforever" title="remove"></i> legenda-item 1 en nog wat <i class="icon opacity" title="opacity"></i> <i class="icon style" title="change style"></i> <i class="icon visibility" title="hide"></i> <i class="icon expandmore" title="expand legend"></i></div>
                 <div class="content">jawel!</div>
             </div>
             <div class="legenditem">
-                    <div class="header">legenda-item2</div>
+                <div class="header">legenda-item2</div>
                 <div class="content">jawel!</div>
             </div>
             <div class="legenditem">
-                    <div class="header">dit is legenda item 3</div>
-                    <div class="content">jawel!</div>
+                <div class="header">dit is legenda item 3</div>
+                <div class="content">jawel!</div>
             </div>
         </div>
         <div class="legendfooter">
             <div class="legenditem">
-                    <div class="header background">dit is de achtergrondlaag</div>
-                    <div class="content">jawel!</div>
+                <div class="header background">dit is de achtergrondlaag</div>
+                <div class="content">jawel!</div>
             </div>
         </div>
     </div>

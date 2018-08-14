@@ -19,6 +19,7 @@ import './map-spinner.js';
 import './map-coordinates.js';
 import './map-layer.js';
 import './button-expandable.js';
+import './map-legend-container.js';
 import { databaseIcon } from './my-icons.js';
 
 
@@ -58,7 +59,8 @@ class WebMap extends LitElement {
       displaylng: Number,
       resolution: Number,
       datacatalog: Object,
-      layerlist: Array
+      layerlist: Array,
+      haslegend: Boolean
     }; 
   }
   constructor() {
@@ -77,6 +79,7 @@ class WebMap extends LitElement {
     this.geolocate = "false";
     this.coordinates = "false";
     this.layerlist = [];
+    this.haslegend = false;
   }
   /*_createRoot() {
     return this;
@@ -84,7 +87,7 @@ class WebMap extends LitElement {
   _shouldRender(props, changedProps, prevProps) {
     return true;
   }
-  _render({mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
+  _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -99,8 +102,8 @@ class WebMap extends LitElement {
     <button-expandable icon=${databaseIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     </button-expandable>
-    <map-spinner webmap=${this.map}></map-spinner>
-    ${layerlist.map(layer=>html`<map-layer webmap=${this.map}></map-layer>`)}`
+    <map-legend-container layerlist=${layerlist} visible=${haslegend}></map-legend-container>
+    <map-spinner webmap=${this.map}></map-spinner>`
   }
   _didRender() {
     ;
@@ -119,6 +122,9 @@ class WebMap extends LitElement {
         style: this.mapstyle,
         center: [this.lon,this.lat],
         zoom: this.zoom
+    });
+    this.map.on('load', ()=>{
+      this.layerlist = this.map.getStyle().layers;
     });
     if (this.navigation.toLowerCase() !== "false") {
       this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));
