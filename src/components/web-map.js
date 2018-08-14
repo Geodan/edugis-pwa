@@ -88,7 +88,7 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     ${(this.coordinates.toLocaleLowerCase() !== "false") ?
       html`<div class="mapcoordinates">${displaylng}&deg;&#x2194;&nbsp;&nbsp;${displaylat}&deg;&#x2195;</div>`: ''}
-    <button-expandable icon=${databaseIcon}>  
+    <button-expandable icon=${databaseIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     </button-expandable>
     <map-spinner webmap=${this.map}></map-spinner>

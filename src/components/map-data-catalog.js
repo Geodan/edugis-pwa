@@ -29,12 +29,9 @@ class MapDataCatalog extends LitElement {
   _render({map, datacatalog}) {
     return html`<style>
       :host {
-        position: absolute;
         display: inline-block;
         min-width: 200px;
         min-height: 200px;
-        left: 10px;
-        top: 10px;
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
         background-color: white;
@@ -45,7 +42,6 @@ class MapDataCatalog extends LitElement {
       }
       </style>
     <div>
-        Layer data sources
         ${this.renderTree(datacatalog)}
     </div>`
   }
@@ -78,7 +74,7 @@ class MapDataCatalog extends LitElement {
             self.dispatchEvent(new CustomEvent('addlayer', 
                 {detail: self.getDataInfo(self.datacatalog, this.getAttribute("dataid"))}
             ));
-        });
+        }, {passive: true});
     });
   }
 }
