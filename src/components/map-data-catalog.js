@@ -32,10 +32,6 @@ class MapDataCatalog extends LitElement {
         display: inline-block;
         min-width: 200px;
         min-height: 200px;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        background-color: white;
-        padding: 5px;
       }
       .data {
           cursor: pointer;

@@ -32,23 +32,26 @@ class ButtonExpandable extends LitElement {
           position: absolute;
           left: 10px;
           top: 10px;
-          visibility: ${open ? 'visible' : 'hidden'};
-          min-height: 200px;
-          max-height: 400px;
           box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
           border-radius: 4px;
-          padding-left: 10px;
-          padding-top: 10px;
+          max-height: 400px;
+          min-height: 200px;
           background-color: white;
+          visibility: ${open ? 'visible' : 'hidden'};
         }
         .header {
+          box-sizing: border-box;
           height: 40px;
+          padding-left: 5px;
+          padding-top: 5px;
           font-size: 1.17em;
           font-weight: bold;
         }
         .content {
           max-height: 360px;
           overflow: auto;
+          padding-left: 5px;
+          padding-right: 5px;
         }
         .expandable {
           visibility: visible;
