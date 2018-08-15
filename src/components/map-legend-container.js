@@ -50,6 +50,7 @@ class MapLegendContainer extends LitElement {
             overflow:auto;
             display: flex;
             flex: 1;
+            box-sizing: content-box;
             min-height: 0px; /* IMPORTANT: you need this for non-chrome browsers */
         }
         .button {
@@ -79,7 +80,7 @@ class MapLegendContainer extends LitElement {
         <div class="itemscroller">
             <div class="itemlist">
                 <div class="sortable">
-                    ${layerlist.slice(1).map(item=>html`<map-legend-item layer=${item}></map-legend-item>`)}
+                    ${layerlist.slice(1).reverse().map(item=>html`<map-legend-item layer=${item}></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
                     ${layerlist.slice(0,1).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}

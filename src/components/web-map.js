@@ -146,8 +146,8 @@ class WebMap extends LitElement {
     this.shadowRoot.querySelector('map-data-catalog').addEventListener('addlayer', e=>{
       if (e.detail) {
         // add layer
-        this.layerlist = [...this.layerlist, e.detail];
         this.map.addLayer(e.detail);
+        this.layerlist = [...this.map.getStyle().layers];
       } 
     });
     this.map.on('load', ()=>{
