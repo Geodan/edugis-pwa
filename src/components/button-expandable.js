@@ -37,7 +37,6 @@ class ButtonExpandable extends LitElement {
           max-height: 400px;
           min-height: 200px;
           background-color: white;
-          visibility: ${open ? 'visible' : 'hidden'};
         }
         .header {
           box-sizing: border-box;
@@ -67,8 +66,11 @@ class ButtonExpandable extends LitElement {
         .expandable:hover {
           background-color: royalblue;
         }
+        .hidden {
+          visibility: hidden;
+        }
     </style>
-    <div class="container">
+    <div class$="container${open? '' : ' hidden'}">
       <div class="header">
       <button class="expandable">${icon}</button>${info}
       </div>

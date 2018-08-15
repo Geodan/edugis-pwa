@@ -38,7 +38,6 @@ class MapLegendContainer extends LitElement {
             max-height: 90%;
             max-width: 400px;
             background-color:white;
-            visibility: ${opened?'visible':'hidden'};
         }
         .legendheader {
             font-weight:bold;
@@ -69,8 +68,11 @@ class MapLegendContainer extends LitElement {
         .button:hover {
             background-color: whitesmoke;
         }
+        .hidden {
+            visibility: hidden;
+        }
     </style>
-    <div class="container">
+    <div class$="container${opened? '' : ' hidden'}">
         <div class="legendheader">
             ${legendtitle}
         </div>

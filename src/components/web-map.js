@@ -94,6 +94,7 @@ class WebMap extends LitElement {
         display: inline-block;
         min-width: 200px;
         min-height: 200px; 
+        overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
       </style>

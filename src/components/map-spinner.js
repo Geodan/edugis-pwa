@@ -44,16 +44,18 @@ class MapSpinner extends LitElement {
   _render({webmap, visible}) {
     return html`<style>
         :host {
-            z-index: 100;
-            display: ${visible?'block':'none'};
-            position: absolute;
-            margin-left: auto;
-            margin-right: auto;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+          z-index: 100;
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
         }
-    </style><div class="spinner"><img src="../../images/spinner.gif" alt="Spinning wheel"></div>`
+        .hidden {
+          display: none;
+        }
+    </style><div class$="${visible ? '' : 'hidden'}" title="spinner"><img src="../../images/spinner.gif" alt="Spinning wheel"></div>`;
   }
   _didRender() {
     ;
