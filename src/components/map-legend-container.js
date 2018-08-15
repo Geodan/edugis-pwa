@@ -24,6 +24,7 @@ class MapLegendContainer extends LitElement {
       return (props.visible);
   }
   _render({opened, layerlist, legendtitle}) {
+    /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     return html`
     <style>
         .container {
