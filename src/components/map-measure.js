@@ -93,10 +93,10 @@ class MapMeasure extends LitElement {
           "type": "Feature",
           "geometry": {
             "type": "Point",
-            "coordinates": toFrontWorldHalf([
+            "coordinates": [
               e.lngLat.lng,
               e.lngLat.lat
-            ])
+            ]
           },
           "properties": {
             "id": String(new Date().getTime())
