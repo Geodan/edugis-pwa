@@ -87,6 +87,16 @@ class WebMap extends LitElement {
   _shouldRender(props, changedProps, prevProps) {
     return true;
   }
+  updateLayerVisibility(e) {
+    console.log('updating visibility');
+    if (this.map) {
+      const layer = this.map.getLayer(e.detail.layerid);
+      if (layer) {
+        layer.setLayoutProperty('visibility', (e.detail.visible ? 'visible' : 'none'));
+        this.map._update(true); // TODO: how refresh map wihtout calling private function?
+      }
+    }
+  }
   _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -103,7 +113,7 @@ class WebMap extends LitElement {
     <button-expandable icon=${databaseIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist=${layerlist} visible=${haslegend}></map-legend-container>
+    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-updatevisibility="${(e) => this.updateLayerVisibility(e)}"></map-legend-container>
     <map-spinner webmap=${this.map}></map-spinner>`
   }
   _didRender() {

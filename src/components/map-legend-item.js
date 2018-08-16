@@ -27,9 +27,16 @@ class MapLegendItem extends LitElement {
       console.log(this.shadowRoot.querySelector('.header').getAttribute('layerid'));
   }
   _toggleVisibility(e) {
-    //this.map.getLayer('cbsbevolking2017').setLayoutProperty('visibility', 'visible');
-    //this.map.getLayer('cbsbevolking2017').setLayoutProperty('visibility', 'none');
     this.visibility = !this.visibility;
+    this.dispatchEvent(
+        new CustomEvent('updatevisibility', 
+            {
+                detail: {layerid: this.layer.id, visible: this.visibility},
+                bubbles: true,
+                composed: true
+            }
+        )
+    );
   }
   _render({layer, isbackground, visibility}) {
     return html`
@@ -58,8 +65,8 @@ class MapLegendItem extends LitElement {
         }
     </style>
     <div class="legenditem">
-        <div class$="header ${layer.type}" layerid$="${layer.id}"><i class="icon" title="remove" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>${layer.id}<span class="right"><i class="icon" title="opacity">${opacityIcon}</i><i class="icon" title="change style">${styleIcon}</i> <i class="icon" title="hide" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityIcon:visibilityOffIcon}</i> <i class="icon" title="expand legend">${expandMoreIcon}</i></span></div>
-        <div class$="content ${layer.type}">jawel!</div>
+        <div class$="header ${layer.type}" layerid$="${layer.id}"><i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>${layer.id}<span class="right"><i class="icon" title="opacity">${opacityIcon}</i><i class="icon" title="change style">${styleIcon}</i> <i class="icon" title="hide" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityIcon:visibilityOffIcon}</i> <i class="icon" title="expand legend">${expandMoreIcon}</i></span></div>
+        <div class$="content ${layer.type}">Layer legenda</div>
     </div>
     `
   }
