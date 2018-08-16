@@ -53,18 +53,21 @@ class ButtonExpandable extends LitElement {
           padding-right: 5px;
         }
         .expandable {
+          display: inline-block;
           visibility: visible;
-          height: 32px;
-          width: 32px;
-          background-color: DodgerBlue; /* Blue background */
-          border: none; /* Remove borders */
+          height: 30px;
+          width: 30px;
+          box-sizing: border-box;
+          background-color: white;
+          box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+          border-radius: 4px;
           color: white;
           cursor: pointer; /* Mouse pointer on hover */
-          padding: 1px;
+          padding: 3px;
           margin-right: 5px;
         }
         .expandable:hover {
-          background-color: royalblue;
+          background-color: whitesmoke;
         }
         .hidden {
           visibility: hidden;
@@ -72,7 +75,7 @@ class ButtonExpandable extends LitElement {
     </style>
     <div class$="container${open? '' : ' hidden'}">
       <div class="header">
-      <button class="expandable">${icon}</button>${info}
+      <div class="expandable" title$="${info}">${icon}</div>${info}
       </div>
       <div class="content">
         <slot></slot>
