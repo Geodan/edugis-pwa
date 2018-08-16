@@ -65,7 +65,7 @@ class MapLegendItem extends LitElement {
         }
     </style>
     <div class="legenditem">
-        <div class$="header ${layer.type}" layerid$="${layer.id}"><i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>${layer.id}<span class="right"><i class="icon" title="opacity">${opacityIcon}</i><i class="icon" title="change style">${styleIcon}</i> <i class="icon" title="hide" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityIcon:visibilityOffIcon}</i> <i class="icon" title="expand legend">${expandMoreIcon}</i></span></div>
+        <div class$="header ${layer.type}" layerid$="${layer.id}"><i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>${layer.id}<span class="right"><i class="icon" title="opacity">${opacityIcon}</i><i class="icon" title="change style">${styleIcon}</i> <i class="icon" title$=${visibility?"hide":"show"} on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i> <i class="icon" title="expand legend">${expandMoreIcon}</i></span></div>
         <div class$="content ${layer.type}">Layer legenda</div>
     </div>
     `

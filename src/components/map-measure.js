@@ -19,8 +19,9 @@ function toFrontWorldHalf(point) {
 // get geographic coordinates along line A to B
 function getPointsAlongLine(startPoint, endPoint)
 {
-    toFrontWorldHalf(startPoint);
+    /*toFrontWorldHalf(startPoint);
     toFrontWorldHalf(endPoint);
+    */
     
     const degrees = {"units": "degrees"};
     const line = turfLineString([startPoint, endPoint]);
@@ -49,63 +50,100 @@ class MapMeasure extends LitElement {
   constructor() {
       super();
       this.info = "Afstandsmeter";
+      // initialise variables
+      this._boundHandleClick = this.handleMapClick.bind(this);
+      this._boundHandleMapMouseMove = this.handleMapMouseMove.bind(this);
+      this.lineStartPoint = null;
+      this.lineEndPoint = null;
+      this.geojson = {
+        "type": "FeatureCollection",
+        "features": []
+      };
+      // set property defaults
       this.visible = true;
       this.active = false;
       this.webmap = undefined;
-      this.lineStartPoint = null;
-      this.lineEndPoint = null;
-      this.geojsonLine = {
-        "type": "FeatureCollection",
-        "features": [{
-            "type": "Feature",
-            "geometry": {
-                "type": "LineString",
-                "coordinates": []
-            },
-            "properties": {            
-            }
-        }]
-      };
-      this.geojsonPoints = {
-        "type": "FeatureCollection",
-        "features": [{
-          "type": "Feature",
-          "geometry": {
-            "type":  "Point",
-            "coordinates": []
-          }
-        }]
-      }
+  }
+  handleMapMouseMove(e) {
+    let features = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points']});
+    this.webmap.getCanvas().style.cursor = (features.length) ? 'pointer' : 'crosshair';
   }
   handleMapClick(e) {
     if (this.webmap) {
-      const shortestLineLayer = this.webmap.getSource('shortestline');
-      if (shortestLineLayer) {
-        let lng = e.lngLat.lng;
-        let lat = e.lngLat.lat;
-        const clickPoint = [lng, lat];
-        if (!this.lineStartPoint) {
-          this.lineStartPoint = clickPoint;
-          return;
-        }
-        const points = getPointsAlongLine(this.lineStartPoint, clickPoint);
-        this.geojsonLine.features[0].geometry.coordinates = points;
-        shortestLineLayer.setData(this.geojsonLine);
+      const map = this.webmap;
+      const features = map.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
+
+      // Remove the linestring from the group
+      // So we can redraw it based on the points collection
+      if (this.geojson.features.length > 1) {
+        this.geojson.features.pop();
       }
-    }
-  }
+
+      // Clear the Distance container to populate it with a new value
+      //  distanceContainer.innerHTML = '';
+
+      // If a point feature was clicked, remove it from the map
+      if (features.length) {
+        const id = features[0].properties.id;
+        this.geojson.features = this.geojson.features.filter(function(point) {
+                return point.properties.id !== id;
+            });
+      } else {
+        const point = {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": toFrontWorldHalf([
+              e.lngLat.lng,
+              e.lngLat.lat
+            ])
+          },
+          "properties": {
+            "id": String(new Date().getTime())
+          }
+        };
+        this.geojson.features.push(point);
+      }
+
+      // add line through points
+      if (this.geojson.features.length > 1) {
+        const linestring = {
+          "type": "Feature",
+          "geometry": {
+              "type": "LineString",
+              "coordinates": []
+          }
+        };
+        const features = this.geojson.features;
+        for (let i = 1; i < features.length; i++) {
+          const points = getPointsAlongLine(features[i-1].geometry.coordinates, features[i].geometry.coordinates);
+          linestring.geometry.coordinates.push(...points);
+        }
+        this.geojson.features.push(linestring);
+
+        // Populate the distanceContainer with total distance
+        /*
+        var value = document.createElement('pre');
+         value.textContent = 'Total distance: ' + turf.lineDistance(linestring).toLocaleString() + 'km';
+            distanceContainer.appendChild(value);
+        */
+      }
+      map.getSource('map-measure-geojson').setData(this.geojson);
+    };
+  };
   toggleActive(e) {
     this.active = !this.active;
     if (this.webmap) {
       if (this.active) {
         // setup measuring on map
+        this.webmap.addSource('map-measure-geojson', {
+          "type":"geojson", 
+          "data":this.geojson
+        });
         this.webmap.addLayer({        
-          "id": "shortestline",
+          "id": "map-measure-line",
           "type": "line",
-          "source": {            
-              "type": "geojson",
-              "data": this.geojsonLine,
-          },
+          "source": "map-measure-geojson",
           "layout": {
               "line-join": "round",
               "line-cap": "round"
@@ -114,16 +152,31 @@ class MapMeasure extends LitElement {
               "line-color": "#c30",
               "line-width": 3,
               "line-dasharray": [3, 2]
-          }
+          },
+          "filter": ['in', '$type', 'LineString']
         });
-        this.webmap.on('click', this.handleMapClick.bind(this));
+        this.webmap.addLayer({
+          "id": "map-measure-points",
+          "type": "circle",
+          "source": "map-measure-geojson",            
+          "paint": {
+            "circle-radius": 5,
+            "circle-color": '#000'
+          },
+          "filter": ['>', 'id', '']
+        });
+        this.webmap.on('click', this._boundHandleClick);
+        this.webmap.on('mousemove', this._boundHandleMapMouseMove);
       } else {
         // remove measuring from map
         this.lineStartPoint = null;
         this.lineEndPoint = null;
-        this.webmap.off('click', this.handleMapClick.bind(this));
-        this.webmap.removeLayer('shortestline');
-        this.webmap.removeSource('shortestline');
+        this.webmap.off('click', this._boundHandleClick);
+        this.webmap.off('mousemove', this._boundHandleMapMouseMove);
+        this.webmap.removeLayer('map-measure-line');
+        this.webmap.removeLayer('map-measure-points');
+        this.webmap.removeSource('map-measure-geojson');
+        this.geojson.features = [];
       }
     }
   }
