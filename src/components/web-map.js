@@ -20,7 +20,9 @@ import './map-coordinates.js';
 import './map-layer.js';
 import './button-expandable.js';
 import './map-legend-container.js';
-import { databaseIcon } from './my-icons.js';
+import './map-measure';
+
+import { cloudDownloadIcon } from './my-icons';
 
 
 function getResolution (map)
@@ -107,10 +109,12 @@ class WebMap extends LitElement {
         overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
+      .centertop { position: absolute; top: 10px; left: 50%; margin-left: -12px; }
       </style>
     <div class="webmap"></div>
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
-    <button-expandable icon=${databaseIcon} info="Data catalogus">  
+    <map-measure webmap=${this.map} class="centertop"></map-measure>
+    <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
     </button-expandable>
     <map-legend-container layerlist=${layerlist} visible=${haslegend} on-updatevisibility="${(e) => this.updateLayerVisibility(e)}"></map-legend-container>
