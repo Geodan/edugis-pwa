@@ -71,55 +71,53 @@ class MapMeasure extends LitElement {
   handleMapClick(e) {
     if (this.webmap) {
       const map = this.webmap;
-      const features = map.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
+      const clickedFeatures = map.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
 
-      // Remove the linestring from the group
+      // Remove the linestrings from the group
       // So we can redraw it based on the points collection
-      if (this.geojson.features.length > 1) {
-        this.geojson.features.pop();
-      }
+      this.geojson.features = this.geojson.features.filter(curfeature=>curfeature.geometry.type=="Point");
 
       // Clear the Distance container to populate it with a new value
       //  distanceContainer.innerHTML = '';
 
       // If a point feature was clicked, remove it from the map
-      if (features.length) {
-        const id = features[0].properties.id;
+      if (clickedFeatures.length) {
+        const id = clickedFeatures[0].properties.id;
         this.geojson.features = this.geojson.features.filter(function(point) {
                 return point.properties.id !== id;
             });
       } else {
-        const point = {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              e.lngLat.lng,
-              e.lngLat.lat
-            ]
-          },
-          "properties": {
-            "id": String(new Date().getTime())
+        this.geojson.features.push(
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                e.lngLat.lng,
+                e.lngLat.lat
+              ]
+            },
+            "properties": {
+              "id": String(this.geojson.features.length + 1)
+            }
           }
-        };
-        this.geojson.features.push(point);
+        );
       }
 
       // add line through points
-      if (this.geojson.features.length > 1) {
-        const linestring = {
-          "type": "Feature",
-          "geometry": {
-              "type": "LineString",
-              "coordinates": []
-          }
-        };
-        const features = this.geojson.features;
-        for (let i = 1; i < features.length; i++) {
-          const points = getPointsAlongLine(features[i-1].geometry.coordinates, features[i].geometry.coordinates);
-          linestring.geometry.coordinates.push(...points);
+      const pointCount = this.geojson.features.length;
+      if (pointCount > 1) {
+        for (let i = 1; i < pointCount; i++) {
+          this.geojson.features.push(
+            {
+              "type": "Feature",
+              "geometry" : {
+                "type": "LineString",
+                "coordinates": getPointsAlongLine(this.geojson.features[i-1].geometry.coordinates, this.geojson.features[i].geometry.coordinates)
+              }
+            }
+          );
         }
-        this.geojson.features.push(linestring);
 
         // Populate the distanceContainer with total distance
         /*
@@ -177,6 +175,7 @@ class MapMeasure extends LitElement {
         this.webmap.removeLayer('map-measure-points');
         this.webmap.removeSource('map-measure-geojson');
         this.geojson.features = [];
+        this.webmap.getCanvas().style.cursor = '';
       }
     }
   }
