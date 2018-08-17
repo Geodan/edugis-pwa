@@ -5,7 +5,7 @@ import { rulerIcon } from './my-icons.js';
 import {lineString as turfLineString} from '../../node_modules/@turf/turf/turf.es';
 import {along as turfAlong} from '../../node_modules/@turf/turf/turf.es';
 import {length as turfLength} from '../../node_modules/@turf/turf/turf.es';
-import {distance as turfDistance} from '../../node_modules/@turf/turf/turf.es';
+import {distance as turfDistance, bearing as turfBearing} from '../../node_modules/@turf/turf/turf.es';
 
 // translate point to between -180 and +180 degrees
 function toFrontWorldHalf(point) {
@@ -37,6 +37,27 @@ function getPointsAlongLine(startPoint, endPoint)
     points.push(turfAlong(line, length, degrees).geometry.coordinates);
     //points.push(line.geometry.coordinates[1]);
     return points;
+}
+
+function formatDistance(d, units) {
+  // units is one of kilometers, miles, degrees
+  switch (units) {
+    case 'kilometers':
+      if (d < 0.01) {
+        return (Math.round(d * 10000)/10).toFixed(1) + " m";
+      }
+      if (d < 2.0) {
+        return (Math.round(d * 1000)).toFixed(0) + " m";
+      }
+      if (d < 10) {
+        return d.toFixed(2) + " km";
+      }
+      if (d < 100) {
+        return d.toFixed(1) + " km";
+      }
+      return d.toFixed(0) + " km";
+    break;
+  }
 }
 
 import {LitElement, html} from '@polymer/lit-element';
@@ -80,28 +101,28 @@ class MapMeasure extends LitElement {
       // So we can redraw it based on the points collection
       this.geojson.features = this.geojson.features.filter(curfeature=>curfeature.geometry.type=="Point");
 
-      // Clear the Distance container to populate it with a new value
-      //  distanceContainer.innerHTML = '';
-
-      // If a point feature was clicked, remove it from the map
-      if (clickedFeatures.length) {
-        const id = clickedFeatures[0].properties.id;
+      // If a point feature was clicked, not closing polygon
+      if (clickedFeatures.length && !(this.geojson.features.length > 2 && this.geojson.features[0].properties.id === clickedFeatures[0].properties.id)) {
+        // remove clicked point
         this.geojson.features = this.geojson.features.filter(function(point) {
-                return point.properties.id !== id;
-            });
+          return point.properties.id !== clickedFeatures[0].properties.id;
+        });
       } else {
+        // add a new point
+        let point = [e.lngLat.lng, e.lngLat.lat];
+        if (clickedFeatures.length) {
+          // set point identical to starting point
+          point = this.geojson.features[0].geometry.coordinates;
+        }
         this.geojson.features.push(
           {
             "type": "Feature",
             "geometry": {
               "type": "Point",
-              "coordinates": [
-                e.lngLat.lng,
-                e.lngLat.lat
-              ]
+              "coordinates": point
             },
             "properties": {
-              "id": String(this.geojson.features.length + 1)
+              "id": String(new Date().getTime())
             }
           }
         );
@@ -115,17 +136,21 @@ class MapMeasure extends LitElement {
         for (let i = 1; i < pointCount; i++) {
           const point1 = this.geojson.features[i-1].geometry.coordinates;
           const point2 = this.geojson.features[i].geometry.coordinates;
-          distance += turfDistance(point1, point2, options);
+          const lineDistance = turfDistance(point1, point2, options);
+          distance += lineDistance;
           this.geojson.features.push(
             {
               "type": "Feature",
               "geometry" : {
                 "type": "LineString",
                 "coordinates": getPointsAlongLine(point1, point2)
+              },
+              "properties": {
+                "length": formatDistance(lineDistance, options.units)
               }
             }
           );
-          this.measureInfo = `${distance.toFixed(2)} ${options.units}`
+          this.measureInfo = html`${formatDistance(distance, options.units)}<br/> ${turfBearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)} &deg;`
         }
 
         // Populate the distanceContainer with total distance
@@ -172,6 +197,26 @@ class MapMeasure extends LitElement {
           },
           "filter": ['>', 'id', '']
         });
+        this.webmap.addLayer({
+          "id": "map-measure-line-length",
+          "type": "symbol",
+          "source": "map-measure-geojson",
+          "filter": ['==', '$type', 'LineString'],
+          "layout": {
+            "symbol-placement": "line",
+            "text-field": "{length}",
+            "text-font": ["Noto Sans Regular"],
+            //"text-letter-spacing": 0.1,
+            "text-size": 14,
+            "text-rotation-alignment": "map",
+            "visibility": "visible"
+          },
+          "paint": {
+            "text-color": "#000",
+            "text-halo-color": "#fff",
+            "text-halo-width": 4
+          }
+        })
         this.webmap.on('click', this._boundHandleClick);
         this.webmap.on('mousemove', this._boundHandleMapMouseMove);
       } else {
@@ -182,6 +227,7 @@ class MapMeasure extends LitElement {
         this.webmap.off('mousemove', this._boundHandleMapMouseMove);
         this.webmap.removeLayer('map-measure-line');
         this.webmap.removeLayer('map-measure-points');
+        this.webmap.removeLayer('map-measure-line-length');
         this.webmap.removeSource('map-measure-geojson');
         this.geojson.features = [];
         this.webmap.getCanvas().style.cursor = '';
