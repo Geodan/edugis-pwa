@@ -99,6 +99,25 @@ class WebMap extends LitElement {
       }
     }
   }
+  removeLayer(e) {
+    if (this.map) {
+      const targetLayer = this.map.getLayer(e.detail.layerid);
+      if (targetLayer) {
+        const source = targetLayer.source;
+        this.map.removeLayer(targetLayer.id);
+        const sourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
+        if (sourceLayers.length == 0) {
+          this.map.removeSource(source);
+        }
+        this.layerlist = [...this.map.getStyle().layers];
+        this.map._update(true); // TODO: how refresh map wihtout calling private function?
+      }
+    }
+  }
+  addLayer(e) {
+    this.map.addLayer(e.detail);
+    this.layerlist = [...this.map.getStyle().layers];
+  }
   _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -115,9 +134,9 @@ class WebMap extends LitElement {
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <map-measure webmap=${this.map} class="centertop"></map-measure>
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
-    <map-data-catalog datacatalog=${datacatalog}></map-data-catalog>
+    <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-updatevisibility="${(e) => this.updateLayerVisibility(e)}"></map-legend-container>
+    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-spinner webmap=${this.map}></map-spinner>`
   }
   _didRender() {
@@ -157,13 +176,6 @@ class WebMap extends LitElement {
     this._mapMoveEnd();
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
 
-    this.shadowRoot.querySelector('map-data-catalog').addEventListener('addlayer', e=>{
-      if (e.detail) {
-        // add layer
-        this.map.addLayer(e.detail);
-        this.layerlist = [...this.map.getStyle().layers];
-      } 
-    });
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
     });

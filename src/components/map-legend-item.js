@@ -24,7 +24,14 @@ class MapLegendItem extends LitElement {
       this.visibility = true;
   }
   _removeLayer(e) {
-      console.log(this.shadowRoot.querySelector('.header').getAttribute('layerid'));
+      this.dispatchEvent(
+          new CustomEvent('legendremovelayer',
+            {
+                detail: {layerid: this.layer.id},
+                bubbles: true,
+                composed: true
+            })
+      );
   }
   _toggleVisibility(e) {
     this.visibility = !this.visibility;

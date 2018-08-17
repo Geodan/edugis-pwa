@@ -196,6 +196,8 @@ class MapMeasure extends LitElement {
               turfBearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
               } &deg;`:''}
           ${area>0.0?html`<br/>${formatArea(area)}`:""}`
+      } else {
+        this.measureInfo = html`&nbsp;`;
       }
       map.getSource('map-measure-geojson').setData(this.geojson);
     };
@@ -305,7 +307,7 @@ class MapMeasure extends LitElement {
         }
     </style>
     <map-iconbutton class$="${this.visible?'':'hidden'}" info="${this.info}" icon=${rulerIcon} on-click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
-    <div class$="measureinfo${active?'':' hidden'}">${measureInfo}<br/>en nog meer</div>`
+    <div class$="measureinfo${active?'':' hidden'}">${measureInfo}</div>`
   }
   _didRender() {
     ;
