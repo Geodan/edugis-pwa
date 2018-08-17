@@ -5,6 +5,7 @@ import { rulerIcon } from './my-icons.js';
 import {lineString as turfLineString} from '../../node_modules/@turf/turf/turf.es';
 import {along as turfAlong} from '../../node_modules/@turf/turf/turf.es';
 import {length as turfLength} from '../../node_modules/@turf/turf/turf.es';
+import {distance as turfDistance} from '../../node_modules/@turf/turf/turf.es';
 
 // translate point to between -180 and +180 degrees
 function toFrontWorldHalf(point) {
@@ -44,7 +45,8 @@ class MapMeasure extends LitElement {
     return { 
       visible: Boolean,
       active: Boolean,
-      webmap: Object
+      webmap: Object,
+      measureInfo: String
     }; 
   }
   constructor() {
@@ -63,6 +65,7 @@ class MapMeasure extends LitElement {
       this.visible = true;
       this.active = false;
       this.webmap = undefined;
+      this.measureInfo = "Hier komt de meetinformatie";
   }
   handleMapMouseMove(e) {
     let features = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points']});
@@ -104,19 +107,25 @@ class MapMeasure extends LitElement {
         );
       }
 
-      // add line through points
+      // add line through points, calculate distance
+      let distance = 0.0;
+      const options = {units: 'kilometers'};
       const pointCount = this.geojson.features.length;
       if (pointCount > 1) {
         for (let i = 1; i < pointCount; i++) {
+          const point1 = this.geojson.features[i-1].geometry.coordinates;
+          const point2 = this.geojson.features[i].geometry.coordinates;
+          distance += turfDistance(point1, point2, options);
           this.geojson.features.push(
             {
               "type": "Feature",
               "geometry" : {
                 "type": "LineString",
-                "coordinates": getPointsAlongLine(this.geojson.features[i-1].geometry.coordinates, this.geojson.features[i].geometry.coordinates)
+                "coordinates": getPointsAlongLine(point1, point2)
               }
             }
           );
+          this.measureInfo = `${distance.toFixed(2)} ${options.units}`
         }
 
         // Populate the distanceContainer with total distance
@@ -179,7 +188,7 @@ class MapMeasure extends LitElement {
       }
     }
   }
-  _render({visible, active}) {
+  _render({visible, active, measureInfo}) {
     return html`<style>
         .hidden {
           visibility: hidden;
@@ -199,7 +208,7 @@ class MapMeasure extends LitElement {
         }
     </style>
     <map-iconbutton class$="${this.visible?'':'hidden'}" info="${this.info}" icon=${rulerIcon} on-click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
-    <div class$="measureinfo${active?'':' hidden'}">Hier komt meetinformatie<br/>en nog meer</div>`
+    <div class$="measureinfo${active?'':' hidden'}">${measureInfo}<br/>en nog meer</div>`
   }
   _didRender() {
     ;
