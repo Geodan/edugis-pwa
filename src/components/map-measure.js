@@ -237,6 +237,19 @@ class MapMeasure extends LitElement {
           "filter": ['>', 'id', '']
         });
         this.webmap.addLayer({
+          "id": "map-measure-surface",
+          "type": "fill",
+          "source": "map-measure-geojson",
+          "filter": ['==', '$type', "Polygon"],
+          "layout": {
+            "visibility": "visible"
+          },
+          "paint": {
+            "fill-color": "#c30",
+            "fill-opacity": 0.4
+          }
+        })
+        this.webmap.addLayer({
           "id": "map-measure-line-length",
           "type": "symbol",
           "source": "map-measure-geojson",
@@ -256,19 +269,6 @@ class MapMeasure extends LitElement {
             "text-halo-width": 4
           }
         });
-        this.webmap.addLayer({
-          "id": "map-measure-surface",
-          "type": "fill",
-          "source": "map-measure-geojson",
-          "filter": ['==', '$type', "Polygon"],
-          "layout": {
-            "visibility": "visible"
-          },
-          "paint": {
-            "fill-color": "#c30",
-            "fill-opacity": 0.4
-          }
-        })
         this.webmap.on('click', this._boundHandleClick);
         this.webmap.on('mousemove', this._boundHandleMapMouseMove);
       } else {
