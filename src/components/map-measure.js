@@ -2,13 +2,16 @@
 import './map-iconbutton';
 import { rulerIcon } from './my-icons.js';
 
-import {along as turfAlong,
+/***
+ * the following crashes polymer build, moved script load to index.html ?? :
+  import {along as turfAlong,
   area as turfArea,
   bearing as turfBearing, 
   distance as turfDistance, 
   length as turfLength, 
   lineString as turfLineString,
   polygon as turfPolygon} from '../../node_modules/@turf/turf/turf.es';
+*/
 
 // translate point to between -180 and +180 degrees
 function toFrontWorldHalf(point) {
@@ -28,16 +31,16 @@ function getPointsAlongLine(startPoint, endPoint)
     */
     
     const degrees = {"units": "degrees"};
-    const line = turfLineString([startPoint, endPoint]);
-    const length = turfLength(line, degrees);
+    const line = turf.lineString([startPoint, endPoint]);
+    const length = turf.length(line, degrees);
     const count = Math.ceil(length / 1); // steps of 1 degree
     const dist = length / count;
     const points = [];
     for (var i = 0; i < count; i++) {
-        const along = turfAlong(line, 0.00000001 + i * dist, degrees);
+        const along = turf.along(line, 0.00000001 + i * dist, degrees);
         points.push(along.geometry.coordinates);
     }
-    points.push(turfAlong(line, length, degrees).geometry.coordinates);
+    points.push(turf.along(line, length, degrees).geometry.coordinates);
     //points.push(line.geometry.coordinates[1]);
     return points;
 }
@@ -153,7 +156,7 @@ class MapMeasure extends LitElement {
         for (let i = 1; i < pointCount; i++) {
           const point1 = this.geojson.features[i-1].geometry.coordinates;
           const point2 = this.geojson.features[i].geometry.coordinates;
-          const lineDistance = turfDistance(point1, point2, options);
+          const lineDistance = turf.distance(point1, point2, options);
           distance += lineDistance;
           const line = getPointsAlongLine(point1, point2);
           this.geojson.features.push(
@@ -175,7 +178,7 @@ class MapMeasure extends LitElement {
         if (polygon.length) {
           polygon.push(polygon[0]);
           const p = turfPolygon([polygon]);
-          area = turfArea(p);
+          area = turf.area(p);
           this.geojson.features.push(
             {
               "type": "Feature",
@@ -193,7 +196,7 @@ class MapMeasure extends LitElement {
         this.measureInfo = html`${formatDistance(distance, options.units)}
           ${polygon.length==0?
             html`<br/>${
-              turfBearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
+              turf.bearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
               } &deg;`:''}
           ${area>0.0?html`<br/>${formatArea(area)}`:""}`
       } else {
