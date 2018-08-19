@@ -177,7 +177,7 @@ class MapMeasure extends LitElement {
         }
         if (polygon.length) {
           polygon.push(polygon[0]);
-          const p = turfPolygon([polygon]);
+          const p = turf.polygon([polygon]);
           area = turf.area(p);
           this.geojson.features.push(
             {
@@ -292,6 +292,11 @@ class MapMeasure extends LitElement {
   }
   _render({visible, active, measureInfo}) {
     return html`<style>
+        :host { 
+          position: absolute; 
+          top: 10px; 
+          left: 50%; 
+          margin-left: -12px; }
         .hidden {
           visibility: hidden;
         }

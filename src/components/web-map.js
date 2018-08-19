@@ -84,6 +84,7 @@ class WebMap extends LitElement {
     this.haslegend = false;
   }
   /*_createRoot() {
+    // do not create shadowRoot
     return this;
   }*/
   _shouldRender(props, changedProps, prevProps) {
@@ -128,7 +129,6 @@ class WebMap extends LitElement {
         overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
-      .centertop { position: absolute; top: 10px; left: 50%; margin-left: -12px; }
       </style>
     <div class="webmap"></div>
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>

@@ -7,7 +7,10 @@
   "extraDependencies": [
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
-    "push-manifest.json"
+    "node_modules/@turf/turf/turf.js",
+    "push-manifest.json",
+    "styles/openmaptiles/positronworld.json",
+    "node_modules/mapbox-gl/dist/mapbox-gl.css"
   ],
   "builds": [
     {
