@@ -22,6 +22,7 @@ import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
 import './map-3d';
+import './map-search';
 
 import { cloudDownloadIcon } from './my-icons';
 
@@ -153,6 +154,7 @@ class WebMap extends LitElement {
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <map-measure webmap=${this.map} class="centertop"></map-measure>
     <map-3d on-click="${(e)=>this.updatePitch(e)}"></map-3d>
+    <map-search></map-search>
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>

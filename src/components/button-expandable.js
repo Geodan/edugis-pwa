@@ -31,7 +31,7 @@ class ButtonExpandable extends LitElement {
         .container {
           position: absolute;
           left: 10px;
-          top: 10px;
+          top: 60px;
           box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
           border-radius: 4px;
           max-height: 400px;

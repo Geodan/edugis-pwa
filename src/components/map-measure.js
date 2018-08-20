@@ -86,7 +86,7 @@ class MapMeasure extends LitElement {
       this.visible = true;
       this.active = false;
       this.webmap = undefined;
-      this.measureInfo = "Hier komt de meetinformatie";
+      this.measureInfo = "Klik beginpunt op kaart";
   }
   handleMapMouseMove(e) {
     let features = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points']});
@@ -184,7 +184,7 @@ class MapMeasure extends LitElement {
               } &deg;`:''}
           ${area>0.0?html`<br/>${formatArea(area)}`:""}`
       } else {
-        this.measureInfo = html`&nbsp;`;
+        this.measureInfo = (pointCount == 0 ? "Klik beginpunt op kaart" : "Klik volgend punt op kaart");
       }
       map.getSource('map-measure-geojson').setData(this.geojson);
     };
