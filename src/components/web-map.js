@@ -69,7 +69,7 @@ class WebMap extends LitElement {
     super();
     this.map = null;
     // default property values
-    this.mapstyle = "../../styles/openmaptiles/positronworld.json";
+    this.mapstyle = this.baseURI + "styles/openmaptiles/positronworld.json";
     this.lon = 5.0;
     this.lat = 52.0;
     this.displaylat = this.lat;
@@ -121,7 +121,7 @@ class WebMap extends LitElement {
   }
   _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
-      @import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
+      @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
         display: inline-block;
         min-width: 200px;

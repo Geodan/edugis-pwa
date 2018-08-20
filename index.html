@@ -53,19 +53,20 @@
     <meta property="og:site_name" content="EduGIS">
     <meta property="og:image" content="images/manifest/icon-144x144.png" />
 
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <!--script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' -->
 
-    <!--script src="node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
-    <link href='node_modules/mapbox-gl/dist/mapbox-gl.css' rel='stylesheet'-->
+    <script src="node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
+    <link href='node_modules/mapbox-gl/dist/mapbox-gl.css' rel='stylesheet'>
 
     <!-- load turf globally because import causes polymer build out of heap memory error -->
-    <script src="node_modules/@turf/turf/turf.js"></script>
+    <script src="node_modules/@turf/turf/turf.min.js"></script>
 
     <!-- script src="src/openmaptiles-language.js"></script -->
     <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <script>
+      /*
       // Load and register pre-caching Service Worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
@@ -74,7 +75,7 @@
           });
         });
       }
-
+      */
       // Redux assumes `process.env.NODE_ENV` exists in the ES module build.
       // https://github.com/reactjs/redux/issues/2907
       window.process = { env: { NODE_ENV: 'production' } };

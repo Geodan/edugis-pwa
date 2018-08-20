@@ -1,4 +1,3 @@
-
 import './map-iconbutton';
 import { rulerIcon } from './my-icons.js';
 

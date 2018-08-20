@@ -7,10 +7,11 @@
   "extraDependencies": [
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/**",
-    "node_modules/@turf/turf/turf.js",
+    "node_modules/@turf/turf/turf.min.js",
     "push-manifest.json",
     "styles/openmaptiles/positronworld.json",
-    "node_modules/mapbox-gl/dist/mapbox-gl.css"
+    "node_modules/mapbox-gl/dist/mapbox-gl.css",
+    "node_modules/mapbox-gl/dist/mapbox-gl.js"
   ],
   "builds": [
     {
@@ -64,7 +65,7 @@
         "minify": true
       },
       "bundle": true,
-      "addServiceWorker": true
+      "addServiceWorker": false
     }
   ],
   "moduleResolution": "node",

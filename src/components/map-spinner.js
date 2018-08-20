@@ -55,7 +55,7 @@ class MapSpinner extends LitElement {
         .hidden {
           display: none;
         }
-    </style><div class$="${visible ? '' : 'hidden'}" title="spinner"><img src="../../images/spinner.gif" alt="Spinning wheel"></div>`;
+    </style><div class$="${visible ? '' : 'hidden'}" title="spinner"><img src="${this.baseURI}/images/spinner.gif" alt="Loading..."></div>`;
   }
   _didRender() {
     ;

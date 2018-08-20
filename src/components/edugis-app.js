@@ -143,7 +143,7 @@ footer {
 
 </style>
     <header>
-      <img src="../images/edugislogo.png" alt="logo"/>
+      <img src="${this.baseURI}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
             <li class="menuitem"><a href="#">openen</a></li>
