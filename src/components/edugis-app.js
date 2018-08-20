@@ -150,7 +150,6 @@ footer {
             <li class="menuitem"><a href="#">opslaan</a></li>
             <li class="menuitem"><a href="#">permalink</a></li>
             <li class="menuitem"><a href="#">help</a></li>
-            <li><input type="text" placeholder="zoek locatie"></input></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>

@@ -71,6 +71,7 @@ class WebMap extends LitElement {
     super();
     this.map = null;
     this.pitch = 0;
+    this.viewbox = undefined;
     // default property values
     this.mapstyle = this.baseURI + "styles/openmaptiles/positronworld.json";
     this.lon = 5.0;
@@ -139,6 +140,10 @@ class WebMap extends LitElement {
       this.map.setPitch(this.pitch);
     }
   }
+  fitBounds(e)
+  {
+    this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
+  }
   _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -154,7 +159,7 @@ class WebMap extends LitElement {
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <map-measure webmap=${this.map} class="centertop"></map-measure>
     <map-3d on-click="${(e)=>this.updatePitch(e)}"></map-3d>
-    <map-search></map-search>
+    <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}"></map-search>
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
@@ -204,10 +209,11 @@ class WebMap extends LitElement {
   }
   _mapMoveEnd() {
     const bounds = this.map.getBounds();
+    this.viewbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
     this.resolution = getResolution(this.map);
     this.dispatchEvent(new CustomEvent('moveend', 
       {detail: {
-        viewbox: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()], 
+        viewbox: this.viewbox, 
         zoom: this.map.getZoom(),
         bearing: this.map.getBearing(),
         pitch: this.map.getPitch()}
