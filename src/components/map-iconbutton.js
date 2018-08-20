@@ -32,7 +32,8 @@ class IconButton extends LitElement {
           background-color: white;
           box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
           border-radius: 4px;
-          color: white;
+          text-align: center;
+          user-select:none;
           cursor: pointer; /* Mouse pointer on hover */
           padding: 3px;
         }

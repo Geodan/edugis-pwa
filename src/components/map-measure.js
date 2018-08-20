@@ -12,23 +12,9 @@ import { rulerIcon } from './my-icons.js';
   polygon as turfPolygon} from '../../node_modules/@turf/turf/turf.es';
 */
 
-// translate point to between -180 and +180 degrees
-function toFrontWorldHalf(point) {
-  if (point[0] < -180) {
-      point[0] = 180 + (point[0] % 180)
-  } else if (point[0] > 180) {
-      point[0] = -180 + (point[0] % 180);
-  }
-  return point;
-}
-
 // get geographic coordinates along line A to B
 function getPointsAlongLine(startPoint, endPoint)
 {
-    /*toFrontWorldHalf(startPoint);
-    toFrontWorldHalf(endPoint);
-    */
-    
     const degrees = {"units": "degrees"};
     const line = turf.lineString([startPoint, endPoint]);
     const length = turf.length(line, degrees);
@@ -40,7 +26,6 @@ function getPointsAlongLine(startPoint, endPoint)
         points.push(along.geometry.coordinates);
     }
     points.push(turf.along(line, length, degrees).geometry.coordinates);
-    //points.push(line.geometry.coordinates[1]);
     return points;
 }
 
@@ -313,7 +298,7 @@ class MapMeasure extends LitElement {
           font-size: 12px;
         }
     </style>
-    <map-iconbutton class$="${this.visible?'':'hidden'}" info="${this.info}" icon=${rulerIcon} on-click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
+    <map-iconbutton class$="${visible?'':'hidden'}" info="${this.info}" icon=${rulerIcon} on-click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
     <div class$="measureinfo${active?'':' hidden'}">${measureInfo}</div>`
   }
   _didRender() {

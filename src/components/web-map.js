@@ -21,6 +21,7 @@ import './map-layer.js';
 import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
+import './map-3d';
 
 import { cloudDownloadIcon } from './my-icons';
 
@@ -68,6 +69,7 @@ class WebMap extends LitElement {
   constructor() {
     super();
     this.map = null;
+    this.pitch = 0;
     // default property values
     this.mapstyle = this.baseURI + "styles/openmaptiles/positronworld.json";
     this.lon = 5.0;
@@ -119,6 +121,23 @@ class WebMap extends LitElement {
     this.map.addLayer(e.detail);
     this.layerlist = [...this.map.getStyle().layers];
   }
+  updatePitch(e) {
+    if (this.map) {
+      switch (this.pitch) {
+        case 0:
+          this.pitch = 60;
+          break;
+        case 60: 
+          this.pitch = 30;
+          break;
+        case 30:
+        default:
+          this.pitch = 0;
+          break;
+      }
+      this.map.setPitch(this.pitch);
+    }
+  }
   _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -133,6 +152,7 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <map-measure webmap=${this.map} class="centertop"></map-measure>
+    <map-3d on-click="${(e)=>this.updatePitch(e)}"></map-3d>
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
