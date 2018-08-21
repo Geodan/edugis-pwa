@@ -105,9 +105,10 @@ class MapMeasure extends LitElement {
       // If a point feature was clicked, not closing polygon
       if (clickedFeatures.length && !(this.geojson.features.length > 2 && this.geojson.features[0].properties.id === clickedFeatures[0].properties.id)) {
         // remove clicked point
-        this.geojson.features = this.geojson.features.filter(function(point) {
-          return point.properties.id !== clickedFeatures[0].properties.id;
-        });
+        let idCounter = 1;
+        this.geojson.features = this.geojson.features
+          .filter(point=>point.properties.id !== clickedFeatures[0].properties.id)
+          .map(point=>{point.properties.id = (idCounter++).toString(); return point});
       } else {
         // add a new point
         let point = [e.lngLat.lng, e.lngLat.lat];
@@ -124,7 +125,7 @@ class MapMeasure extends LitElement {
               "coordinates": point
             },
             "properties": {
-              "id": String(new Date().getTime())
+              "id": (this.geojson.features.length + 1).toString()
             }
           }
         );
@@ -219,7 +220,10 @@ class MapMeasure extends LitElement {
           "source": "map-measure-geojson",            
           "paint": {
             "circle-radius": 5,
-            "circle-color": '#000'
+            "circle-color": ["match", 
+              ["get", "id"], 
+              "1", "#000", 
+              "#999"]
           },
           "filter": ['>', 'id', '']
         });
