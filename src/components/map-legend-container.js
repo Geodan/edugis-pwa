@@ -102,18 +102,11 @@ class MapLegendContainer extends LitElement {
     ;
   }
   //drag-drop based on https://stackoverflow.com/questions/44415228/list-sorting-with-html5-dragndrop-drop-above-or-below-depending-on-mouse
-  dragDrop(event) {
-    event.preventDefault();
-    if (event.target.style['border-bottom'] !== '') {
-        event.target.style['border-bottom'] = '';
-        event.target.parentNode.insertBefore(this._el, event.target.nextSibling);
-    } else {
-        event.target.style['border-top'] = '';
-        event.target.parentNode.insertBefore(this._el, event.target);
-    }
-  }
-  dragEnd(event) {
-      this._el.classList.remove("dragging");
+  dragStart(e) {
+    this._el = e.target;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", this._el);
+    e.target.classList.add('dragging');
   }
   dragOver(event) {
     event.preventDefault();
@@ -131,11 +124,18 @@ class MapLegendContainer extends LitElement {
     event.target.style['border-bottom'] = '';
     event.target.style['border-top'] = '';
   }
-  dragStart(e) {
-    this._el = e.target;
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", this._el);
-    e.target.classList.add('dragging');
+  dragDrop(event) {
+    event.preventDefault();
+    if (event.target.style['border-bottom'] !== '') {
+        event.target.style['border-bottom'] = '';
+        event.target.parentNode.insertBefore(this._el, event.target.nextSibling);
+    } else {
+        event.target.style['border-top'] = '';
+        event.target.parentNode.insertBefore(this._el, event.target);
+    }
+  }
+  dragEnd(event) {
+      this._el.classList.remove("dragging");
   }
 }
 
