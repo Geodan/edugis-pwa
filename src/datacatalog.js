@@ -11,7 +11,21 @@ export default
                         "tiles" : [
                             "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&styles=default&layers=Actueel_ortho25"
                         ],
-                        "attrubution": "PDOK"
+                        "attribution": "PDOK"
+                    }
+                }
+            },
+            {"type": "layer", "title": "Blaeu", "type":"wms", "layerInfo": {
+                    "id" : "blaeu",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles" : [
+                            "http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A38573&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
+                            "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A38573&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                        ],
+                        "attribution": "Edugis"
                     }
                 }
             }
@@ -32,7 +46,8 @@ export default
                             "https://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wmts/cbsbevolking2017/spherical_mercator/{z}/{x}/{y}.png"
                         ],
                         "attribution": "&copy; Geodan, CBS"
-                }}
+                    }
+                }
             },
             {"type": "layer", "title": "Openstreetmap (wmst)", "type":"wmst", "layerInfo": {
                 "id" : "openstreetmap",
