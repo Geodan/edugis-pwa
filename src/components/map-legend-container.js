@@ -1,7 +1,5 @@
-
 import {layersIcon} from './my-icons';
 import './map-legend-item.js';
-
 
 import {LitElement, html} from '@polymer/lit-element';
 class MapLegendContainer extends LitElement {
@@ -15,7 +13,8 @@ class MapLegendContainer extends LitElement {
   }
   constructor() {
       super();
-      this.maplayers = [];
+      // properties
+      this.layerlist = []
       this.visible = false;
       this.opened = false;
       this.legendtitle = "Kaartlagen en legenda's"
@@ -72,6 +71,10 @@ class MapLegendContainer extends LitElement {
         .hidden {
             visibility: hidden;
         }
+        .dragging {
+            opacity: 0.25;
+            color: orange;
+        }
     </style>
     <div class$="container${opened? '' : ' hidden'}">
         <div class="legendheader">
@@ -79,8 +82,10 @@ class MapLegendContainer extends LitElement {
         </div>
         <div class="itemscroller">
             <div class="itemlist">
-                <div class="sortable">
-                    ${layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-')).map(item=>html`<map-legend-item layer=${item}></map-legend-item>`)}
+                <div>
+                    ${layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-'))
+                        .map(item=>
+                            html`<map-legend-item layer=${item} draggable="true" on-dragend="${e=>this.dragEnd(e)}" on-dragover="${e=>this.dragOver(e)}" on-dragstart="${e=>this.dragStart(e)}"></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
                     ${layerlist.slice(0,1).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}
@@ -88,15 +93,37 @@ class MapLegendContainer extends LitElement {
             </div>
         </div>
     </div>
-    <div class="button" title=${legendtitle}>${layersIcon}</div>`
+    <div class="button" title=${legendtitle} on-click="${e=>this.opened=!this.opened}">${layersIcon}</div>`
   }
   _didRender() {
     ;
   }
   _firstRendered() {
-      if (this.visible) {
-        this.shadowRoot.querySelector('.button').addEventListener('click', ()=>this.opened = !this.opened);
-      }
+    ;
+  }
+  dragEnd(e) {
+    this._el = null;
+    e.target.classList.remove('dragging');
+  }
+  dragOver(e) {
+     if (this.isBefore(this._el, e.target))
+        e.target.parentNode.insertBefore(this._el, e.target);
+    else
+        e.target.parentNode.insertBefore(this._el, e.target.nextSibling);
+     return false;
+  }
+  dragStart(e) {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", null);
+    this._el = e.target;
+    e.target.classList.add('dragging');
+  }
+  isBefore(el1, el2) {
+    if (el2.parentNode === el1.parentNode)
+    for (var cur = el1.previousSibling; cur; cur = cur.previousSibling)
+        if (cur === el2)
+            return true;
+    return false;
   }
 }
 

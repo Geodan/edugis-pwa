@@ -76,8 +76,6 @@ class MapMeasure extends LitElement {
       // initialise variables
       this._boundHandleClick = this.handleMapClick.bind(this);
       this._boundHandleMapMouseMove = this.handleMapMouseMove.bind(this);
-      this.lineStartPoint = null;
-      this.lineEndPoint = null;
       this.geojson = {
         "type": "FeatureCollection",
         "features": []
@@ -264,8 +262,6 @@ class MapMeasure extends LitElement {
         this.webmap.on('mousemove', this._boundHandleMapMouseMove);
       } else {
         // remove measuring from map
-        this.lineStartPoint = null;
-        this.lineEndPoint = null;
         this.webmap.off('click', this._boundHandleClick);
         this.webmap.off('mousemove', this._boundHandleMapMouseMove);
         this.webmap.removeLayer('map-measure-line');
@@ -275,6 +271,7 @@ class MapMeasure extends LitElement {
         this.webmap.removeSource('map-measure-geojson');
         this.geojson.features = [];
         this.webmap.getCanvas().style.cursor = '';
+        this.measureInfo = "Klik beginpunt op kaart";
       }
     }
   }
