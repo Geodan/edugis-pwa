@@ -33,7 +33,21 @@ export default
                         ],
                         "attribution": "&copy; Geodan, CBS"
                 }}
+            },
+            {"type": "layer", "title": "Openstreetmap (wmst)", "type":"wmst", "layerInfo": {
+                "id" : "openstreetmap",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,
+                    "tiles": [
+                        "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                     ],
+                    "attrubution": "&copy; OpenStreetMap contributors"
+                }
             }
+        }
         ]},
         {"type": "group", "title": "TMS", "sublayers": 
         [
