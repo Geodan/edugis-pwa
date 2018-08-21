@@ -22,7 +22,7 @@ class MapDataCatalog extends LitElement {
         if (elem.type=="group"){
             return html`<li>${elem.title}${this.renderTree(elem.sublayers)}</li>`
         } else {
-            return html`<li><span class="data" dataid$="${elem.layerInfo?elem.layerInfo.id:''}">${elem.title}</span></li>`;
+            return html`<li class="data" on-click="${(e)=>{this.handleClick(e, (elem.layerInfo?elem.layerInfo.id:undefined), )}}">${elem.title}</li>`;
         }
     })}</ul>`;
   }
@@ -44,9 +44,9 @@ class MapDataCatalog extends LitElement {
   _didRender() {
     ;
   }
-  getDataInfo(nodeList, dataid) {
+  getDataInfo(treenodes, dataid) {
     let result = null;
-    nodeList.forEach(elem=>{
+    treenodes.forEach(elem=>{
         if (!result) {
             if(elem.type=="group"){
                 const subresult = this.getDataInfo(elem.sublayers, dataid);
@@ -62,16 +62,14 @@ class MapDataCatalog extends LitElement {
     });
     return result;
   }
+  handleClick(e, dataid) {
+      if (dataid) {
+        this.dispatchEvent(new CustomEvent('addlayer', 
+            {detail: this.getDataInfo(this.datacatalog, dataid)}
+        ));
+      }
+  }
   _firstRendered() {
-    const self = this;
-    const datasets = this.shadowRoot.querySelectorAll('.data');
-    datasets.forEach(dataset=>{
-        dataset.addEventListener("click", function(){
-            self.dispatchEvent(new CustomEvent('addlayer', 
-                {detail: self.getDataInfo(self.datacatalog, this.getAttribute("dataid"))}
-            ));
-        }, {passive: true});
-    });
   }
 }
 customElements.define('map-data-catalog', MapDataCatalog);

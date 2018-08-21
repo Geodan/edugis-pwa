@@ -29,23 +29,6 @@ import { menuIcon } from './my-icons.js';
 import './web-map.js';
 import './snack-bar.js';
 
-const layerlist = [
-  {type: "mvt", "url" : "styles/openmaptiles/positronworld.json"},
-  {type: "wms", "url" : "http://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wmts/cbsbevolking2017"},
-  {type: "wmst", layerInfo: {
-    "id" : "cbsbevolking2017",
-    "type": "raster",
-    "source": {
-        "type": "raster",
-        "tileSize": 256,
-        "tiles": [
-            "https://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wmts/cbsbevolking2017/spherical_mercator/{z}/{x}/{y}.png"
-        ],
-        "attribution": "&copy; Geodan, CBS"
-    }}
-  }
-];
-
 import datacatalog from '../datacatalog.js';
 
 class EduGISApp extends connect(store)(LitElement) {
