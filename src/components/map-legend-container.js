@@ -85,7 +85,7 @@ class MapLegendContainer extends LitElement {
                 <div>
                     ${layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-'))
                         .map(item=>
-                            html`<map-legend-item layer=${item} draggable="true" on-dragend="${e=>this.dragEnd(e)}" on-dragover="${e=>this.dragOver(e)}" on-dragstart="${e=>this.dragStart(e)}"></map-legend-item>`)}
+                            html`<map-legend-item layer=${item} draggable="true" on-dragstart="${e=>this.dragStart(e)}" on-dragover="${e=>this.dragOver(e)}" on-dragleave="${e=>this.dragLeave(e)}" on-drop="${e=>this.dragDrop(e)}" on-dragend="${e=>this.dragEnd(e)}"></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
                     ${layerlist.slice(0,1).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}
@@ -101,29 +101,41 @@ class MapLegendContainer extends LitElement {
   _firstRendered() {
     ;
   }
-  dragEnd(e) {
-    this._el = null;
-    e.target.classList.remove('dragging');
+  //drag-drop based on https://stackoverflow.com/questions/44415228/list-sorting-with-html5-dragndrop-drop-above-or-below-depending-on-mouse
+  dragDrop(event) {
+    event.preventDefault();
+    if (event.target.style['border-bottom'] !== '') {
+        event.target.style['border-bottom'] = '';
+        event.target.parentNode.insertBefore(this._el, event.target.nextSibling);
+    } else {
+        event.target.style['border-top'] = '';
+        event.target.parentNode.insertBefore(this._el, event.target);
+    }
   }
-  dragOver(e) {
-     if (this.isBefore(this._el, e.target))
-        e.target.parentNode.insertBefore(this._el, e.target);
-    else
-        e.target.parentNode.insertBefore(this._el, e.target.nextSibling);
-     return false;
+  dragEnd(event) {
+      this._el.classList.remove("dragging");
+  }
+  dragOver(event) {
+    event.preventDefault();
+    const bounding = event.target.getBoundingClientRect();
+    const offset = bounding.y + (bounding.height/2);
+    if (event.clientY - offset > 0) {
+        event.target.style['border-bottom'] = 'solid 4px black';
+        event.target.style['border-top'] = '';
+    } else {
+        event.target.style['border-bottom'] = '';
+        event.target.style['border-top'] = 'solid 4px black';
+    }
+  }
+  dragLeave(event) {
+    event.target.style['border-bottom'] = '';
+    event.target.style['border-top'] = '';
   }
   dragStart(e) {
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", null);
     this._el = e.target;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", this._el);
     e.target.classList.add('dragging');
-  }
-  isBefore(el1, el2) {
-    if (el2.parentNode === el1.parentNode)
-    for (var cur = el1.previousSibling; cur; cur = cur.previousSibling)
-        if (cur === el2)
-            return true;
-    return false;
   }
 }
 

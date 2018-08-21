@@ -48,6 +48,9 @@ class MapLegendItem extends LitElement {
   _render({layer, isbackground, visibility}) {
     return html`
     <style>
+        :host {
+            display:block;
+        }
         .legenditem {
             border-bottom:1px solid lightgray;
             margin-bottom:2px;
