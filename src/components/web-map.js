@@ -73,7 +73,7 @@ class WebMap extends LitElement {
     this.pitch = 0;
     this.viewbox = undefined;
     // default property values
-    this.mapstyle = this.baseURI + "styles/openmaptiles/positronworld.json";
+    this.mapstyle = this.baseURI + "styles/openmaptiles/osmbright.json";
     this.lon = 5.0;
     this.lat = 52.0;
     this.displaylat = this.lat;
