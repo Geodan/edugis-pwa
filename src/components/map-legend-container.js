@@ -6,6 +6,7 @@ class MapLegendContainer extends LitElement {
   static get properties() { 
     return { 
       layerlist: Array,
+      groupedList: Array,
       legendtitle: String,
       visible: Boolean,
       opened: Boolean
@@ -14,12 +15,78 @@ class MapLegendContainer extends LitElement {
   constructor() {
       super();
       // properties
+      this.groupedList = [];
       this.layerlist = []
       this.visible = false;
       this.opened = false;
       this.legendtitle = "Kaartlagen en legenda's"
   }
+  updateGroupedList()
+  {
+      const tempList = this.layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-'));
+      const groupedList = [];
+      let lastSource = '';
+      let lastSourceCount = 0;
+      let lastSourceLayer = '';
+      let lastSourceLayerCount = 0;
+      let lastSourceLayerGroupCount = 0;
+      for (let i = 0; i < tempList.length; i++) {
+          if (tempList[i].source == lastSource) {
+              lastSourceCount++;
+              if (tempList[i]["source-layer"] == lastSourceLayer) {
+                  lastSourceLayerCount++;
+              } else {
+                  // new source-layer found
+                  if (lastSourceLayerCount > 1) {
+                      // insert sourcelayer group
+                      groupedList.push({id:lastSource+"-"+lastSourceLayer, type: "sourcelayergroup", count: lastSourceLayerCount, open: false});
+                      lastSourceLayerGroupCount++;
+                  }
+                  // reset counters
+                  lastSourceLayer = tempList[i]["source-layer"];
+                  lastSourceLayerCount = 1;
+              }
+          } else {
+              // new source found
+              if (lastSourceCount > 1) {
+                  // insert source group
+                  groupedList.push({id:lastSource, type: "sourcegroup", count: lastSourceCount + lastSourceLayerGroupCount, open: false});
+              }
+              // reset counters
+              lastSource = tempList[i].source;
+              lastSourceCount = 1;
+              lastSourceLayer = tempList[i]["source-layer"];
+              lastSourceLayerCount = 1;
+              lastSourceLayerGroupCount = 0;
+          }
+          groupedList.push(tempList[i]);
+      }
+      if (lastSourceCount > 1) {
+        groupedList.push({id:lastSource, type: "sourcegroup", count: lastSourceCount + lastSourceLayerGroupCount, open: false});
+      }
+      // TODO: now copy group open/closed state from previous groupedList
+      for (let i = groupedList.length - 1; i > -1; i--) {
+          if (groupedList[i].type === "sourcegroup") {
+
+          }
+      }
+      // set item visibility depending on group membership
+      for (let i = groupedList.length - 1; i > -1; i--) {
+          if (groupedList[i].type === "sourcegroup" || groupedList[i].type === "sourcelayergroup") {
+              for (let j = 0; j < groupedList[i].count; j++) {
+                  groupedList[i-j].visible = groupedList[i].open;
+              }
+              i -= groupedList[i].count;
+          } else {
+              groupedList[i].visible = true;
+          }
+      }
+      this.groupedList = [...groupedList];
+  }
   _shouldRender(props, changedProps, prevProps) {
+      if (changedProps && changedProps.layerlist) {
+          this.updateGroupedList();
+      }
       return (props.visible);
   }
   _render({opened, layerlist, legendtitle}) {

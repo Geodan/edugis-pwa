@@ -72,7 +72,7 @@ class Map3D extends LitElement {
     }
   }
   _shouldRender(props, changedProps, prevProps) {
-    if (changedProps.webmap) {
+    if (changedProps && changedProps.webmap && prevProps && prevProps.webmap) {
       this.removeControl(prevProps.webmap);      
     }
     return props.webmap !== null;
