@@ -8,7 +8,7 @@ class Map3D extends LitElement {
         :host {
           position: absolute;
           right: 10px;
-          top: 150px;          
+          top: 180px;          
         }
         .hidden {
           display: none;

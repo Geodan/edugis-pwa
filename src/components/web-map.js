@@ -24,6 +24,7 @@ import './map-measure';
 import './map-3d';
 import './map-search';
 
+import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon } from './my-icons';
 
 
@@ -185,6 +186,7 @@ class WebMap extends LitElement {
         zoom: this.zoom
     });
     if (this.navigation.toLowerCase() !== "false") {
+      this.map.addControl(new ZoomControl(), this._positionString(this.navigation));
       this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));
     }
     if (this.scalebar.toLowerCase() !== "false") {
