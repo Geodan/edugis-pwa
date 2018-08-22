@@ -159,7 +159,7 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
     <map-measure webmap=${this.map} class="centertop"></map-measure>
-    <map-3d on-click="${(e)=>this.updatePitch(e)}"></map-3d>
+    <map-3d webmap=${this.map} active="true"></map-3d>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}"></map-search>
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
