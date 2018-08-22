@@ -6,7 +6,6 @@ class MapLegendContainer extends LitElement {
   static get properties() { 
     return { 
       layerlist: Array,
-      groupedList: Array,
       legendtitle: String,
       visible: Boolean,
       opened: Boolean
@@ -14,8 +13,8 @@ class MapLegendContainer extends LitElement {
   }
   constructor() {
       super();
-      // properties
       this.groupedList = [];
+      // properties
       this.layerlist = []
       this.visible = false;
       this.opened = false;
@@ -23,7 +22,7 @@ class MapLegendContainer extends LitElement {
   }
   updateGroupedList()
   {
-      const tempList = this.layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-'));
+      const tempList = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
       const groupedList = [];
       let lastSource = '';
       let lastSourceCount = 0;
@@ -53,9 +52,9 @@ class MapLegendContainer extends LitElement {
                   groupedList.push({id:lastSource, type: "sourcegroup", count: lastSourceCount + lastSourceLayerGroupCount, open: false});
               }
               // reset counters
-              lastSource = tempList[i].source;
+              lastSource = tempList[i].source ? tempList[i].source : "background";
               lastSourceCount = 1;
-              lastSourceLayer = tempList[i]["source-layer"];
+              lastSourceLayer = tempList[i]["source-layer"] ? tempList[i]["source-layer"] : "background";
               lastSourceLayerCount = 1;
               lastSourceLayerGroupCount = 0;
           }
@@ -73,7 +72,8 @@ class MapLegendContainer extends LitElement {
       // set item visibility depending on group membership
       for (let i = groupedList.length - 1; i > -1; i--) {
           if (groupedList[i].type === "sourcegroup" || groupedList[i].type === "sourcelayergroup") {
-              for (let j = 0; j < groupedList[i].count; j++) {
+              groupedList[i].visible = true;
+              for (let j = 1; j <= groupedList[i].count; j++) {
                   groupedList[i-j].visible = groupedList[i].open;
               }
               i -= groupedList[i].count;
@@ -81,7 +81,7 @@ class MapLegendContainer extends LitElement {
               groupedList[i].visible = true;
           }
       }
-      this.groupedList = [...groupedList];
+      this.groupedList = groupedList.reverse();
   }
   _shouldRender(props, changedProps, prevProps) {
       if (changedProps && changedProps.layerlist) {
@@ -89,7 +89,7 @@ class MapLegendContainer extends LitElement {
       }
       return (props.visible);
   }
-  _render({opened, layerlist, legendtitle}) {
+  _render({opened, legendtitle}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     return html`
     <style>
@@ -150,12 +150,12 @@ class MapLegendContainer extends LitElement {
         <div class="itemscroller">
             <div class="itemlist">
                 <div>
-                    ${layerlist.slice(1).reverse().filter(item=>!item.id.startsWith('map-measure-'))
+                    ${this.groupedList.filter(item=>item.visible&&!(item.type==="background"))
                         .map(item=>
                             html`<map-legend-item layer=${item} draggable="true" on-dragstart="${e=>this.dragStart(e)}" on-dragover="${e=>this.dragOver(e)}" on-dragleave="${e=>this.dragLeave(e)}" on-drop="${e=>this.dragDrop(e)}" on-dragend="${e=>this.dragEnd(e)}"></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
-                    ${layerlist.slice(0,1).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}
+                    ${this.groupedList.filter(item=>item.visible&&(item.type==="background")).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}
                 </div>
             </div>
         </div>

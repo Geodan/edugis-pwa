@@ -96,7 +96,6 @@ class WebMap extends LitElement {
     return true;
   }
   updateLayerVisibility(e) {
-    console.log('updating visibility');
     if (this.map) {
       const layer = this.map.getLayer(e.detail.layerid);
       if (layer) {
@@ -113,10 +112,12 @@ class WebMap extends LitElement {
         this.map.removeLayer(targetLayer.id);
         const sourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
         if (sourceLayers.length == 0) {
-          this.map.removeSource(source);
+          if (this.map.getSource(source)) {
+            this.map.removeSource(source);
+          }
         }
         this.layerlist = [...this.map.getStyle().layers];
-        this.map._update(true); // TODO: how refresh map wihtout calling private function?
+        this.map._update(true); // TODO: how refresh map wihtout calling private "_update()"?
       }
     }
   }
