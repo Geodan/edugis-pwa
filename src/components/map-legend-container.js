@@ -24,7 +24,7 @@ class MapLegendContainer extends LitElement {
   updateGroupedList()
   {
       this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
-      this.groupedArray.collapseAll();
+      this.groupedArray.reset();
   }
   _shouldRender(props, changedProps, prevProps) {
       if (changedProps && changedProps.layerlist) {
@@ -95,7 +95,7 @@ class MapLegendContainer extends LitElement {
                 <div>
                     ${this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse()
                         .map(item=>
-                            html`<map-legend-item item=${item} draggable="true"
+                            html`<map-legend-item item=${item} open=${item.hasOwnProperty('_ga_open')?item._ga_open:false} draggable="true"
                              on-dragstart="${e=>this.dragStart(e)}"
                              on-dragover="${e=>this.dragOver(e)}"
                              on-dragleave="${e=>this.dragLeave(e)}"

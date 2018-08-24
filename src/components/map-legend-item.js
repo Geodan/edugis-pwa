@@ -7,7 +7,6 @@ import {visibilityIcon} from './my-icons';
 import {visibilityOffIcon} from './my-icons';
 import {expandMoreIcon} from './my-icons';
 
-
 import {LitElement, html} from '@polymer/lit-element';
 class MapLegendItem extends LitElement {
   static get properties() { 
@@ -94,19 +93,25 @@ class MapLegendItem extends LitElement {
         }
         .draghandle {
             cursor: move;
-        }        
+        }
+        .indent {
+            display: inline-block;
+            width: 1em;
+        }
     </style>
     <div class="legenditem">
-        <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
-            <span class$=${isbackground?'':"draghandle"} draggable$=${isbackground?"false":"true"}'}>${item.id?item.id:(item.source+(item["source-layer"]?item["source-layer"]:''))}</span>
+        <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
+            ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
+            <span class$=${isbackground?'':"draghandle"} draggable$=${isbackground?"false":"true"}'}>${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</span>
             <span class="right">
+                ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>
                 ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
                 <i class="icon" title$=${visibility?"hide":"show"} on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
                 <i class="icon" title="expand legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>
             </span>
         </div>
-        <div class$="content ${item.type}">Layer legenda</div>
+        <!--div class$="content ${item.type}">Layer legenda</div-->
     </div>
     `
   }
