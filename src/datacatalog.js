@@ -78,7 +78,144 @@ export default
         ]},
         {"type": "group", "title": "Vector Tile", "sublayers": 
         [
-            {"type": "layer", "title": "Vector Layer", "layerInfo": {}}
+            {"type": "layer", "title": "NL buildings", "layerInfo": 
+                {
+                    "id": "gebouwkenmerken",
+                    "type": "fill",
+                    "source": {
+                        id: "gebouwkenmerken",
+                        type: 'vector',
+                        tiles:["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
+                        minzoom: 13,
+                        maxzoom: 18
+                    },
+                    "source-layer": "gebouwkenmerken",
+                    "minzoom": 13,
+                    "maxzoom": 24,
+                    "layout": {
+                      "visibility": "visible"
+                    },
+                    "paint": {
+                      "fill-color": {
+                        "property": "pandtype",
+                        "type": "categorical",
+                        "default": "rgba(44, 127, 184, 1)",
+                        "stops": [
+                          [
+                            "",
+                            "rgba(44, 127, 184, 1)"
+                          ],
+                          [
+                            "kantoorpand",
+                            "rgba(255, 0, 121, 1)"
+                          ],
+                          [
+                            "tussenwoning",
+                            "blue"
+                          ],
+                          [
+                            "winkelgebouw",
+                            "rgba(83, 16, 162, 1)"
+                          ],
+                          [
+                            "appartement midden",
+                            "rgba(146, 95, 48, 1)"
+                          ],
+                          [
+                            "appartement laag",
+                            "rgba(146, 140, 48, 1)"
+                          ],
+                          [
+                            "appartement hoog",
+                            "rgba(113, 107, 76, 1)"
+                          ],
+                          [
+                            "schoolgebouw",
+                            "rgba(50, 165, 81, 1)"
+                          ],
+                          [
+                            "gemengd gebouw",
+                            "rgba(88, 75, 84, 1)"
+                          ],
+                          [
+                            "bijeenkomstgebouw",
+                            "rgba(40, 128, 35, 1)"
+                          ]
+                        ]
+                      },
+                      "fill-outline-color": "rgba(193, 193, 177, 1)"
+                    }
+                }
+            },
+            {"type": "layer", "title": "NL buildings 3D", "layerInfo": {
+                "id": "building3D",
+                "type": "fill-extrusion",
+                "source": {
+                    id: "gebouwkenmerken2",
+                    type: 'vector',
+                    tiles:["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
+                    minzoom: 13,
+                    maxzoom: 18
+                },
+                "source-layer": "gebouwkenmerken",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                    "fill-extrusion-color": {
+                    "property": "pandtype",
+                    "type": "categorical",
+                    "default": "rgba(44, 127, 184, 1)",
+                    "stops": [
+                        [
+                        "",
+                        "rgba(44, 127, 184, 1)"
+                        ],
+                        [
+                        "kantoorpand",
+                        "rgba(255, 0, 121, 1)"
+                        ],
+                        [
+                        "tussenwoning",
+                        "blue"
+                        ],
+                        [
+                        "winkelgebouw",
+                        "rgba(83, 16, 162, 1)"
+                        ],
+                        [
+                        "appartement midden",
+                        "rgba(146, 95, 48, 1)"
+                        ],
+                        [
+                        "appartement laag",
+                        "rgba(146, 140, 48, 1)"
+                        ],
+                        [
+                        "appartement hoog",
+                        "rgba(113, 107, 76, 1)"
+                        ],
+                        [
+                        "schoolgebouw",
+                        "rgba(50, 165, 81, 1)"
+                        ],
+                        [
+                        "gemengd gebouw",
+                        "rgba(88, 75, 84, 1)"
+                        ],
+                        [
+                        "bijeenkomstgebouw",
+                        "rgba(40, 128, 35, 1)"
+                        ]
+                    ]
+                    },
+                    "fill-extrusion-height": {
+                    "property": "hoogte",
+                    "type": "identity"
+                    },
+                    "fill-extrusion-base": 0,
+                    "fill-extrusion-opacity": 0.8
+                }
+            }}
         ]},
         {"type": "group", "title": "Google spreadsheet", "sublayers": 
         [
