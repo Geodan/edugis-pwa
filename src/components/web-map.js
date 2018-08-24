@@ -13,7 +13,7 @@ mapboxcss.setAttribute('rel', 'stylesheet');
 document.head.appendChild(mapboxcss);
 */
 
-import './openmaptiles-language.js';
+import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
 import './map-coordinates.js';
