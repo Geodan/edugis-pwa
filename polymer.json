@@ -10,6 +10,7 @@
     "node_modules/@turf/turf/turf.min.js",
     "push-manifest.json",
     "styles/openmaptiles/positronworld.json",
+    "styles/openmaptiles/osmbright.json",
     "node_modules/mapbox-gl/dist/mapbox-gl.css",
     "node_modules/mapbox-gl/dist/mapbox-gl.js"
   ],
