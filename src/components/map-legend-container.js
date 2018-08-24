@@ -1,5 +1,6 @@
 import {layersIcon} from './my-icons';
 import './map-legend-item.js';
+import GroupedArray from '../../lib/groupedarray';
 
 import {LitElement, html} from '@polymer/lit-element';
 class MapLegendContainer extends LitElement {
@@ -13,7 +14,7 @@ class MapLegendContainer extends LitElement {
   }
   constructor() {
       super();
-      this.groupedList = [];
+      this.groupedArray = new GroupedArray(["source", "source-layer"]);
       // properties
       this.layerlist = []
       this.visible = false;
@@ -22,66 +23,8 @@ class MapLegendContainer extends LitElement {
   }
   updateGroupedList()
   {
-      const tempList = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
-      const groupedList = [];
-      let lastSource = '';
-      let lastSourceCount = 0;
-      let lastSourceLayer = '';
-      let lastSourceLayerCount = 0;
-      let lastSourceLayerGroupCount = 0;
-      for (let i = 0; i < tempList.length; i++) {
-          if (tempList[i].source == lastSource) {
-              lastSourceCount++;
-              if (tempList[i]["source-layer"] == lastSourceLayer) {
-                  lastSourceLayerCount++;
-              } else {
-                  // new source-layer found
-                  if (lastSourceLayerCount > 1) {
-                      // insert sourcelayer group
-                      groupedList.push({id:lastSource+"-"+lastSourceLayer, type: "sourcelayergroup", count: lastSourceLayerCount, open: false});
-                      lastSourceLayerGroupCount++;
-                  }
-                  // reset counters
-                  lastSourceLayer = tempList[i]["source-layer"];
-                  lastSourceLayerCount = 1;
-              }
-          } else {
-              // new source found
-              if (lastSourceCount > 1) {
-                  // insert source group
-                  groupedList.push({id:lastSource, type: "sourcegroup", count: lastSourceCount + lastSourceLayerGroupCount, open: false});
-              }
-              // reset counters
-              lastSource = tempList[i].source ? tempList[i].source : "background";
-              lastSourceCount = 1;
-              lastSourceLayer = tempList[i]["source-layer"] ? tempList[i]["source-layer"] : "background";
-              lastSourceLayerCount = 1;
-              lastSourceLayerGroupCount = 0;
-          }
-          groupedList.push(tempList[i]);
-      }
-      if (lastSourceCount > 1) {
-        groupedList.push({id:lastSource, type: "sourcegroup", count: lastSourceCount + lastSourceLayerGroupCount, open: false});
-      }
-      // TODO: now copy group open/closed state from previous groupedList
-      for (let i = groupedList.length - 1; i > -1; i--) {
-          if (groupedList[i].type === "sourcegroup") {
-
-          }
-      }
-      // set item visibility depending on group membership
-      for (let i = groupedList.length - 1; i > -1; i--) {
-          if (groupedList[i].type === "sourcegroup" || groupedList[i].type === "sourcelayergroup") {
-              groupedList[i].visible = true;
-              for (let j = 1; j <= groupedList[i].count; j++) {
-                  groupedList[i-j].visible = groupedList[i].open;
-              }
-              i -= groupedList[i].count;
-          } else {
-              groupedList[i].visible = true;
-          }
-      }
-      this.groupedList = groupedList.reverse();
+      this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
+      this.groupedArray.collapseAll();
   }
   _shouldRender(props, changedProps, prevProps) {
       if (changedProps && changedProps.layerlist) {
@@ -150,12 +93,20 @@ class MapLegendContainer extends LitElement {
         <div class="itemscroller">
             <div class="itemlist">
                 <div>
-                    ${this.groupedList.filter(item=>item.visible&&!(item.type==="background"))
+                    ${this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse()
                         .map(item=>
-                            html`<map-legend-item layer=${item} draggable="true" on-dragstart="${e=>this.dragStart(e)}" on-dragover="${e=>this.dragOver(e)}" on-dragleave="${e=>this.dragLeave(e)}" on-drop="${e=>this.dragDrop(e)}" on-dragend="${e=>this.dragEnd(e)}"></map-legend-item>`)}
+                            html`<map-legend-item item=${item} draggable="true"
+                             on-dragstart="${e=>this.dragStart(e)}"
+                             on-dragover="${e=>this.dragOver(e)}"
+                             on-dragleave="${e=>this.dragLeave(e)}"
+                             on-drop="${e=>this.dragDrop(e)}"
+                             on-dragend="${e=>this.dragEnd(e)}"
+                             on-openclose="${e=>this.openClose(e)}"
+                             ></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
-                    ${this.groupedList.filter(item=>item.visible&&(item.type==="background")).map(item=>html`<map-legend-item layer=${item} isbackground="true"></map-legend-item>`)}
+                    ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
+                        html`<map-legend-item item=${item} isbackground="true"></map-legend-item>`)}
                 </div>
             </div>
         </div>
@@ -167,6 +118,15 @@ class MapLegendContainer extends LitElement {
   }
   _firstRendered() {
     ;
+  }
+  openClose(e) {
+      const item = {_ga_id: e.detail._ga_id};
+      if (e.detail.open) {
+        this.groupedArray.openGroup(item);
+      } else {
+        this.groupedArray.closeGroup(item);
+      }
+      this.requestRender();
   }
   //drag-drop based on https://stackoverflow.com/questions/44415228/list-sorting-with-html5-dragndrop-drop-above-or-below-depending-on-mouse
   dragStart(e) {

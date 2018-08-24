@@ -12,22 +12,26 @@ import {LitElement, html} from '@polymer/lit-element';
 class MapLegendItem extends LitElement {
   static get properties() { 
     return { 
-      layer: Object,
+      item: Object,
       isbackground: Boolean,
-      visibility: Boolean
+      visibility: Boolean,
+      _ga_id: String,
+      open: Boolean
     }; 
   }
   constructor() {
       super();
-      this.layer = {};
+      this.item = {};
       this.isbackground = false;
       this.visibility = true;
+      this._ga_id = '';
+      this.open = false;
   }
   _removeLayer(e) {
       this.dispatchEvent(
           new CustomEvent('legendremovelayer',
             {
-                detail: {layerid: this.layer.id},
+                detail: {layerid: this.item.id},
                 bubbles: true,
                 composed: true
             })
@@ -38,14 +42,24 @@ class MapLegendItem extends LitElement {
     this.dispatchEvent(
         new CustomEvent('updatevisibility', 
             {
-                detail: {layerid: this.layer.id, visible: this.visibility},
+                detail: {layerid: this.item.id, visible: this.visibility},
                 bubbles: true,
                 composed: true
             }
         )
     );
   }
-  _render({layer, isbackground, visibility}) {
+  _toggleOpenClose(e) {
+      this.open = !this.open;
+      this.dispatchEvent(
+        new CustomEvent('openclose',
+            {
+                detail: {open: this.open, _ga_id: this.item._ga_id}
+            }
+        )
+      );
+  }
+  _render({item, isbackground, visibility}) {
     return html`
     <style>
         :host {
@@ -83,8 +97,16 @@ class MapLegendItem extends LitElement {
         }        
     </style>
     <div class="legenditem">
-    <div class$="header ${layer.type}" layerid$="${layer.id}">${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}<span class$=${isbackground?'':"draghandle"} draggable$=${isbackground?"false":"true"}'}>${layer.id}</span><span class="right"><i class="icon" title="opacity">${opacityIcon}</i>${(layer.type==="sourcegroup" || layer.type==="sourcelayergroup")?'':html`<i class="icon" title="change style">${styleIcon}</i>`} <i class="icon" title$=${visibility?"hide":"show"} on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i> <i class="icon" title="expand legend">${expandMoreIcon}</i></span></div>
-        <div class$="content ${layer.type}">Layer legenda</div>
+        <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
+            <span class$=${isbackground?'':"draghandle"} draggable$=${isbackground?"false":"true"}'}>${item.id?item.id:(item.source+(item["source-layer"]?item["source-layer"]:''))}</span>
+            <span class="right">
+                <i class="icon" title="opacity">${opacityIcon}</i>
+                ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
+                <i class="icon" title$=${visibility?"hide":"show"} on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
+                <i class="icon" title="expand legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>
+            </span>
+        </div>
+        <div class$="content ${item.type}">Layer legenda</div>
     </div>
     `
   }
