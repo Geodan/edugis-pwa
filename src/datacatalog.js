@@ -2,14 +2,14 @@ export default
     [
         {"type": "group", "title": "WMS", "sublayers": 
         [
-            {"type": "layer", "title": "WMS Layer", "type":"wms", "layerInfo": {
+            {"type": "layer", "title": "PDOK Luchtfoto", "type":"wms", "layerInfo": {
                     "id" : "pdokluchtfoto",
                     "type" : "raster",
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles" : [
-                            "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&styles=default&layers=Actueel_ortho25"
+                            "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&styles=default&layers=Actueel_ortho25&transparent=true"
                         ],
                         "attribution": "PDOK"
                     }
@@ -34,9 +34,9 @@ export default
         [
             {"type": "layer", "title": "WMS Capabilities", "layerInfo": {}}
         ]},
-        {"type": "group", "title": "WMST", "sublayers": 
+        {"type": "group", "title": "WMTS", "sublayers": 
         [
-            {"type": "layer", "title": "WMST Layer", "type": "wmst", "layerInfo": {
+            {"type": "layer", "title": "WMTS Layer", "type": "wmts", "layerInfo": {
                     "id" : "cbsbevolking2017",
                     "type": "raster",
                     "source": {
@@ -49,7 +49,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Openstreetmap (wmst)", "type":"wmst", "layerInfo": {
+            {"type": "layer", "title": "Openstreetmap (wmts)", "type":"wmts", "layerInfo": {
                 "id" : "openstreetmap",
                 "type" : "raster",
                 "source" : {

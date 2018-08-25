@@ -125,6 +125,11 @@ class WebMap extends LitElement {
     this.map.addLayer(e.detail);
     this.layerlist = [...this.map.getStyle().layers];
   }
+  moveLayer(e) {
+    console.log(`moving layer ${e.detail.layer} to ${e.detail.beforeLayer}`)
+    this.map.moveLayer(e.detail.layer, e.detail.beforeLayer);
+    this.layerlist = [...this.map.getStyle().layers];
+  }
   updatePitch(e) {
     if (this.map) {
       switch (this.pitch) {
@@ -165,7 +170,7 @@ class WebMap extends LitElement {
     <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
     <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-spinner webmap=${this.map}></map-spinner>`
   }
   _didRender() {

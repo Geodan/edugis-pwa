@@ -25,6 +25,7 @@ class MapLegendContainer extends LitElement {
   {
       this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
       this.groupedArray.reset();
+      this.requestRender();
   }
   _shouldRender(props, changedProps, prevProps) {
       if (changedProps && changedProps.layerlist) {
@@ -34,7 +35,22 @@ class MapLegendContainer extends LitElement {
   }
   _render({opened, legendtitle}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
-    return html`
+    const itemList = this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
+    console.log(JSON.stringify(itemList));
+    let htmlItemList = itemList.map(item=>
+        html`<map-legend-item item=${item} 
+            itemid$="${item._ga_id}" 
+            open=${item.hasOwnProperty('_ga_open')?item._ga_open:false} 
+            draggable="true"
+            on-dragstart="${e=>this.dragStart(e)}"
+            on-dragover="${e=>this.dragOver(e)}"
+            on-dragleave="${e=>this.dragLeave(e)}"
+            on-drop="${e=>this.dragDrop(e)}"
+            on-dragend="${e=>this.dragEnd(e)}"
+            on-openclose="${e=>this.openClose(e)}"
+         ></map-legend-item>`);
+    console.log(htmlItemList);
+    let result = html`
     <style>
         .container {
             position: absolute;
@@ -82,7 +98,7 @@ class MapLegendContainer extends LitElement {
             visibility: hidden;
         }
         .dragging {
-            opacity: 0.25;
+            opacity: 0.75;
             color: orange;
         }
     </style>
@@ -93,16 +109,7 @@ class MapLegendContainer extends LitElement {
         <div class="itemscroller">
             <div class="itemlist">
                 <div>
-                    ${this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse()
-                        .map(item=>
-                            html`<map-legend-item item=${item} open=${item.hasOwnProperty('_ga_open')?item._ga_open:false} draggable="true"
-                             on-dragstart="${e=>this.dragStart(e)}"
-                             on-dragover="${e=>this.dragOver(e)}"
-                             on-dragleave="${e=>this.dragLeave(e)}"
-                             on-drop="${e=>this.dragDrop(e)}"
-                             on-dragend="${e=>this.dragEnd(e)}"
-                             on-openclose="${e=>this.openClose(e)}"
-                             ></map-legend-item>`)}
+                    ${htmlItemList}
                 </div>
                 <div class="legendfooter">
                     ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
@@ -111,7 +118,9 @@ class MapLegendContainer extends LitElement {
             </div>
         </div>
     </div>
-    <div class="button" title=${legendtitle} on-click="${e=>this.opened=!this.opened}">${layersIcon}</div>`
+    <div class="button" title=${legendtitle} on-click="${e=>this.opened=!this.opened}">${layersIcon}</div>`;
+    console.log(result.getHTML());
+    return result;
   }
   _didRender() {
     ;
@@ -152,13 +161,35 @@ class MapLegendContainer extends LitElement {
     event.target.style['border-top'] = '';
   }
   dragDrop(event) {
-    event.preventDefault();
+    /*event.preventDefault();*/
+    let itemid = this._el.getAttribute('itemid');
+    let beforeid = '';
     if (event.target.style['border-bottom'] !== '') {
+        // insert below event.target
         event.target.style['border-bottom'] = '';
-        event.target.parentNode.insertBefore(this._el, event.target.nextSibling);
+        beforeid = event.target.nextElementSibling.getAttribute('itemid');
+        event.target.parentNode.insertBefore(this._el, event.target.nextElementSibling);
     } else {
+        // insert before event.target
         event.target.style['border-top'] = '';
+        beforeid = event.target.getAttribute('itemid');
         event.target.parentNode.insertBefore(this._el, event.target);
+        
+    }
+    if (itemid == beforeid) {
+        // item dropped onto itself, do nothing
+        return;
+    }
+    const item = this.groupedArray.getItem(itemid);
+    const beforeItem = this.groupedArray.getItem(beforeid);
+    if (item.id && beforeItem.id) {
+        this.dispatchEvent(
+            new CustomEvent('movelayer',
+                {
+                    detail: {layer: item.id, beforeLayer: beforeItem.id}
+                }
+            )
+        );
     }
   }
   dragEnd(event) {

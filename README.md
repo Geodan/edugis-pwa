@@ -3,7 +3,7 @@
 
 # EduGIS-lithtml
 
-EduGIS, http://www.edugis.nl and http://kaart.edugis.nl is an application to acquaint students with Geographical Information Systems (GIS) without the need to first install software or download data.
+EduGIS, http://www.edugis.nl, and http://kaart.edugis.nl is an application to introduce Geographical Information Systems (GIS) to students, without the need to first install software or download data.
 
 
 ## Pre-requisties
@@ -15,7 +15,7 @@ EduGIS, http://www.edugis.nl and http://kaart.edugis.nl is an application to acq
 ```
 # get source from github
 git clone [this_repository]
-cd this_rpository
+cd this_repository
 # add dependencies
 npm install
 ```
