@@ -7,6 +7,8 @@ import {visibilityIcon} from './my-icons';
 import {visibilityOffIcon} from './my-icons';
 import {expandMoreIcon} from './my-icons';
 
+import './dragdrop/lit-draghandle';
+
 import {LitElement, html} from '@polymer/lit-element';
 class MapLegendItem extends LitElement {
   static get properties() { 
@@ -15,7 +17,8 @@ class MapLegendItem extends LitElement {
       isbackground: Boolean,
       visibility: Boolean,
       _ga_id: String,
-      open: Boolean
+      open: Boolean,
+      itemcontainer: Object
     }; 
   }
   constructor() {
@@ -58,7 +61,7 @@ class MapLegendItem extends LitElement {
         )
       );
   }
-  _render({item, isbackground, visibility}) {
+  _render({item, isbackground, visibility, itemcontainer}) {
     return html`
     <style>
         :host {
@@ -91,8 +94,8 @@ class MapLegendItem extends LitElement {
         .right {
             float: right;
         }
-        .draghandle {
-            cursor: move;
+        lit-draghandle {
+            width: 200px;
         }
         .indent {
             display: inline-block;
@@ -102,7 +105,7 @@ class MapLegendItem extends LitElement {
     <div class="legenditem">
         <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
-            <span class$=${isbackground?'':"draghandle"} draggable$=${isbackground?"false":"true"}'}>${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</span>
+            <lit-draghandle itemcontainer=${itemcontainer} class$=${isbackground?'':"draghandle"}>${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</lit-draghandle>
             <span class="right">
                 ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>

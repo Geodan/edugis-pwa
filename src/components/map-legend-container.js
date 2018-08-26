@@ -39,14 +39,9 @@ class MapLegendContainer extends LitElement {
     console.log(JSON.stringify(itemList));
     let htmlItemList = itemList.map(item=>
         html`<map-legend-item item=${item} 
+            itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
             itemid$="${item._ga_id}" 
             open=${item.hasOwnProperty('_ga_open')?item._ga_open:false} 
-            draggable="true"
-            on-dragstart="${e=>this.dragStart(e)}"
-            on-dragover="${e=>this.dragOver(e)}"
-            on-dragleave="${e=>this.dragLeave(e)}"
-            on-drop="${e=>this.dragDrop(e)}"
-            on-dragend="${e=>this.dragEnd(e)}"
             on-openclose="${e=>this.openClose(e)}"
          ></map-legend-item>`);
     console.log(htmlItemList);
@@ -108,7 +103,7 @@ class MapLegendContainer extends LitElement {
         </div>
         <div class="itemscroller">
             <div class="itemlist">
-                <div>
+                <div id="draggableitems">
                     ${htmlItemList}
                 </div>
                 <div class="legendfooter">
@@ -136,64 +131,6 @@ class MapLegendContainer extends LitElement {
         this.groupedArray.closeGroup(item);
       }
       this.requestRender();
-  }
-  //drag-drop based on https://stackoverflow.com/questions/44415228/list-sorting-with-html5-dragndrop-drop-above-or-below-depending-on-mouse
-  dragStart(e) {
-    this._el = e.target;
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", this._el);
-    e.target.classList.add('dragging');
-  }
-  dragOver(event) {
-    event.preventDefault();
-    const bounding = event.target.getBoundingClientRect();
-    const offset = bounding.y + (bounding.height/2);
-    if (event.clientY - offset > 0) {
-        event.target.style['border-bottom'] = 'solid 4px black';
-        event.target.style['border-top'] = '';
-    } else {
-        event.target.style['border-bottom'] = '';
-        event.target.style['border-top'] = 'solid 4px black';
-    }
-  }
-  dragLeave(event) {
-    event.target.style['border-bottom'] = '';
-    event.target.style['border-top'] = '';
-  }
-  dragDrop(event) {
-    /*event.preventDefault();*/
-    let itemid = this._el.getAttribute('itemid');
-    let beforeid = '';
-    if (event.target.style['border-bottom'] !== '') {
-        // insert below event.target
-        event.target.style['border-bottom'] = '';
-        beforeid = event.target.nextElementSibling.getAttribute('itemid');
-        event.target.parentNode.insertBefore(this._el, event.target.nextElementSibling);
-    } else {
-        // insert before event.target
-        event.target.style['border-top'] = '';
-        beforeid = event.target.getAttribute('itemid');
-        event.target.parentNode.insertBefore(this._el, event.target);
-        
-    }
-    if (itemid == beforeid) {
-        // item dropped onto itself, do nothing
-        return;
-    }
-    const item = this.groupedArray.getItem(itemid);
-    const beforeItem = this.groupedArray.getItem(beforeid);
-    if (item.id && beforeItem.id) {
-        this.dispatchEvent(
-            new CustomEvent('movelayer',
-                {
-                    detail: {layer: item.id, beforeLayer: beforeItem.id}
-                }
-            )
-        );
-    }
-  }
-  dragEnd(event) {
-      this._el.classList.remove("dragging");
   }
 }
 
