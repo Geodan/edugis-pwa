@@ -6,6 +6,12 @@ import {styleIcon} from './my-icons';
 import {visibilityIcon} from './my-icons';
 import {visibilityOffIcon} from './my-icons';
 import {expandMoreIcon} from './my-icons';
+import {arrowRightIcon} from './my-icons';
+import {arrowDropDownIcon} from './my-icons';
+import {noIcon} from './my-icons';
+
+import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, starIcon, tripOriginIcon as circleIcon, 
+    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon } from './my-icons';
 
 import './dragdrop/lit-draghandle';
 
@@ -62,6 +68,38 @@ class MapLegendItem extends LitElement {
       );
   }
   _render({item, isbackground, visibility, itemcontainer}) {
+    let layerIcon = undefined;
+    if (!item._ga_group) {
+        switch (item.type) {
+            case "fill":
+                layerIcon = areaIcon;
+                break;
+            case "line":
+                layerIcon = lineIcon;
+                break;
+            case "symbol":
+                layerIcon = textIcon;
+                break;
+            case "circle":
+                layerIcon = circleIcon;
+                break;
+            case "heatmap":
+                layerIcon = heatmapIcon;
+                break;
+            case "fill-extrusion":
+                layerIcon = "3D";
+                break;
+            case "raster":
+                layerIcon = rasterIcon;
+                break;
+            case "hillshade":
+                break;
+            case "background":
+                layerIcon = backgroundIcon;
+                break;
+            default:
+        }
+    }
     return html`
     <style>
         :host {
@@ -73,13 +111,13 @@ class MapLegendItem extends LitElement {
         }
         .header {
             cursor:'grab';
-            background: lightgray;
+            background: white;
         }
         .header.sourcegroup {
-            background: orange;
+            background: white;
         }
         .header.sourcelayergroup {
-            background: orangered;
+            background: white;
         }
         .icon {
             display:inline-block;        
@@ -89,7 +127,10 @@ class MapLegendItem extends LitElement {
         }
         .icon svg {
             width: 16px;
-            height: 16px;
+            height: 16px;            
+        }
+        .right .icon svg:hover {
+            fill: dimgray;
         }
         .right {
             float: right;
@@ -105,13 +146,15 @@ class MapLegendItem extends LitElement {
     <div class="legenditem">
         <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
+            <i class="icon" title$="${item._ga_group?'Layer group':undefined}" on-click="${e=>this._toggleOpenClose(e)}">${item._ga_group?(item._ga_open?arrowDropDownIcon:arrowRightIcon):noIcon}</i>
+            ${item._ga_group?undefined:html`<i class="icon">${layerIcon}</i>`}
             <lit-draghandle itemcontainer=${itemcontainer} class$="${isbackground?'':'draghandle'}">${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</lit-draghandle>
             <span class="right">
                 ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>
                 ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
                 <i class="icon" title$="${visibility?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
-                <i class="icon" title="expand legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>
+                ${item._ga_group?undefined:html`<i class="icon" title="show legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>`}
             </span>
         </div>
         <!--div class$="content ${item.type}">Layer legenda</div-->

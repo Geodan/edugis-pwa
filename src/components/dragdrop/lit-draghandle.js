@@ -147,9 +147,16 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         user-select: none;
         cursor: move;
       }
+      slot {
+        display: inline-block;
+        width: 200px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     </style>
     <div class="container" style$="${stylepos}">
-      <slot>Default DragHandle Text</slot>
+      <slot>Default DragHandle Text Default DragHandle Text</slot>
     </div>
     `;
   }
