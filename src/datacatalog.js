@@ -32,11 +32,11 @@ export default
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [
-            {"type": "layer", "title": "WMS Capabilities", "layerInfo": {}}
+            {"type": "layer", "title": "To do", "layerInfo": {}}
         ]},
         {"type": "group", "title": "WMTS", "sublayers": 
         [
-            {"type": "layer", "title": "WMTS Layer", "type": "wmts", "layerInfo": {
+            {"type": "layer", "title": "CBS (mapproxy + qgis)", "type": "wmts", "layerInfo": {
                     "id" : "cbsbevolking2017",
                     "type": "raster",
                     "source": {
@@ -66,15 +66,15 @@ export default
         ]},
         {"type": "group", "title": "TMS", "sublayers": 
         [
-            {"type": "layer", "title": "TMS Layer", "layerInfo": {}}
+            {"type": "layer", "title": "To do", "layerInfo": {}}
         ]},
         {"type": "group", "title": "WFS", "sublayers": 
         [
-            {"type": "layer", "title": "WFS Layer", "layerInfo": {}}
+            {"type": "layer", "title": "To do(?)", "layerInfo": {}}
         ]},
         {"type": "group", "title": "GeoJSON", "sublayers": 
         [
-            {"type": "layer", "title": "GeoJSON Layer", "layerInfo": {}}
+            {"type": "layer", "title": "to do", "layerInfo": {}}
         ]},
         {"type": "group", "title": "Vector Tile", "sublayers": 
         [
