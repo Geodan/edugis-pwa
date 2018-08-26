@@ -105,12 +105,12 @@ class MapLegendItem extends LitElement {
     <div class="legenditem">
         <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
-            <lit-draghandle itemcontainer=${itemcontainer} class$=${isbackground?'':"draghandle"}>${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</lit-draghandle>
+            <lit-draghandle itemcontainer=${itemcontainer} class$="${isbackground?'':'draghandle'}">${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</lit-draghandle>
             <span class="right">
                 ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>
                 ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
-                <i class="icon" title$=${visibility?"hide":"show"} on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
+                <i class="icon" title$="${visibility?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
                 <i class="icon" title="expand legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>
             </span>
         </div>

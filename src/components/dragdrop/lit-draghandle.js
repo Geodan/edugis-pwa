@@ -1,5 +1,5 @@
 /**
-  element that can be dragged inside a scrollable list of elements
+  element that can be dragged inside a vertical scrollable list of elements
 */
 
 import { LitElement, html } from '@polymer/lit-element';
@@ -49,7 +49,6 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
   }
   findSiblings(y, x){
     const siblings = [...this.itemcontainer.children];
-    //console.log(`x: ${x}, this.parentClientRect.offsetLeft: ${this.parentClientRect.offsetLeft}`)
     if (!this.parentClientRect || 
         x > this.parentClientRect.left + this.parentClientRect.width + 20 ||
         x < this.parentClientRect.left - 20) {
@@ -113,7 +112,6 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
             this.curHovering = null;
           }
         }
-        
         break;
       case 'end':
         this.scrollingUp = false;
@@ -122,9 +120,10 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         this.stylepos = "";
         if (this.curHovering) {
           this.curHovering.style['border-bottom'] = '';
-          dispatchEvent(new CustomEvent('customdrop', 
+          this.dispatchEvent(new CustomEvent('litdragend', 
             {
-              detail: {element: this.curHovering},
+              detail: {dragTarget: this.curHovering},
+              composed: true
             }  
           ));
           this.curHovering = null;
@@ -133,7 +132,6 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     }
   }
   _render({stylepos, allowdrop}) {
-    
     return html`
     <style>
       :host {
