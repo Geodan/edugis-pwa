@@ -70,9 +70,26 @@ export default
         ]},
         {"type": "group", "title": "WFS", "sublayers": 
         [
-            {"type": "layer", "title": "To do(?)", "layerInfo": {}}
+            {"type": "layer", "title": "To do(via mvt proxy?)", "layerInfo": {}}
         ]},
         {"type": "group", "title": "GeoJSON", "sublayers": 
+        [
+            {"type": "layer", "title": "CBS Gemeenten", "layerInfo": {
+                "id" : "cbsgemeenten2017",
+                "type": "fill",
+                "source" : {
+                    "type": "geojson",
+                    "data": "http://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
+                    "attribution": "cbs/pdok"
+                },
+                "paint": {
+                    "fill-color": "#ccc",
+                    "fill-opacity": 0.6,
+                    "fill-outline-color": "#444"
+                }
+            }}
+        ]},
+        {"type": "group", "title": "TopoJSON", "sublayers": 
         [
             {"type": "layer", "title": "to do", "layerInfo": {}}
         ]},
