@@ -123,7 +123,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
           this.dispatchEvent(new CustomEvent('litdragend', 
             {
               detail: {dragTarget: this.curHovering},
-              composed: true
+              composed: true,
+              bubbles: true
             }  
           ));
           this.curHovering = null;

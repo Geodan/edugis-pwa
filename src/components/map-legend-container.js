@@ -36,7 +36,6 @@ class MapLegendContainer extends LitElement {
   _render({opened, legendtitle}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     const itemList = this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
-    console.log(JSON.stringify(itemList));
     let htmlItemList = itemList.map(item=>
         html`<map-legend-item item=${item} 
             itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
@@ -45,7 +44,6 @@ class MapLegendContainer extends LitElement {
             on-openclose="${e=>this.openClose(e)}",
             on-litdragend="${e=>this.litDragEnd(e)}"
          ></map-legend-item>`);
-    console.log(htmlItemList);
     let result = html`
     <style>
         .container {
@@ -115,7 +113,6 @@ class MapLegendContainer extends LitElement {
         </div>
     </div>
     <div class="button" title=${legendtitle} on-click="${e=>this.opened=!this.opened}">${layersIcon}</div>`;
-    console.log(result.getHTML());
     return result;
   }
   _didRender() {
