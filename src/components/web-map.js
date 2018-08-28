@@ -97,7 +97,7 @@ class WebMap extends LitElement {
   }
   updateLayerVisibility(e) {
     if (this.map) {
-      const layer = this.map.getLayer(e.detail.layerid);
+      const layer = this.map.getLayer(e.detail.layerid[0]);
       if (layer) {
         layer.setLayoutProperty('visibility', (e.detail.visible ? 'visible' : 'none'));
         this.map._update(true); // TODO: how refresh map wihtout calling private function?

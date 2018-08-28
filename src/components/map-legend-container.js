@@ -102,7 +102,8 @@ class MapLegendContainer extends LitElement {
                             itemid$="${item._ga_id}" 
                             open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
                             on-openclose="${e=>this.openClose(e)}",
-                            on-litdragend="${e=>this.litDragEnd(e)}"
+                            on-litdragend="${e=>this.litDragEnd(e)}",
+                            on-updatevisibility="${e=>this.updateVisibility(e)}"
                         ></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
@@ -137,18 +138,31 @@ class MapLegendContainer extends LitElement {
             let sourceItemId = e.target.getAttribute('itemid');
             let targetItemId = dragTarget.getAttribute('itemid');
             if (sourceItemId && targetItemId && (sourceItemId !== targetItemId)) {
-                const sourceLayer = this.groupedArray.getItem(sourceItemId);
-                const targetLayer = this.groupedArray.getItem(targetItemId);
-                this.dispatchEvent(
-                    new CustomEvent('movelayer',
-                        {
-                            detail: {layer: sourceLayer.id, beforeLayer: targetLayer.id}
-                        }
-                    )
-                );
+                const sourceItem = this.groupedArray.getItem(sourceItemId);
+                const targetItem = this.groupedArray.getLastItemInGroup(targetItemId);
+                if (sourceItem && targetItem) {
+                    this.dispatchEvent(
+                        new CustomEvent('movelayer',
+                            {
+                                detail: {layer: sourceItem.id, beforeLayer: targetItem.id}
+                            }
+                        )
+                    );
+                }
             }
         }
     }
+  }
+  updateVisibility(e) {
+      /*const item = this.groupedArray.getItem(e.detail.layerid);
+      if (item._ga_group) {
+        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item)
+      } else {
+        e.detail.layerid = [e.detail.layerid];
+      }
+      
+      //e.stopPropagation(); // event.cancelBubble = true;
+      */
   }
 }
 
