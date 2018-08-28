@@ -24,7 +24,8 @@ class MapLegendItem extends LitElement {
       visibility: Boolean,
       _ga_id: String,
       open: Boolean,
-      itemcontainer: Object
+      itemcontainer: Object,
+      itemscroller: Object
     }; 
   }
   constructor() {
@@ -67,7 +68,7 @@ class MapLegendItem extends LitElement {
         )
       );
   }
-  _render({item, isbackground, visibility, itemcontainer}) {
+  _render({item, isbackground, visibility, itemcontainer, itemscroller}) {
     let layerIcon = undefined;
     if (!item._ga_group) {
         switch (item.type) {
@@ -148,7 +149,7 @@ class MapLegendItem extends LitElement {
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
             <i class="icon" title$="${item._ga_group?'Layer group':undefined}" on-click="${e=>this._toggleOpenClose(e)}">${item._ga_group?(item._ga_open?arrowDropDownIcon:arrowRightIcon):noIcon}</i>
             ${item._ga_group?undefined:html`<i class="icon">${layerIcon}</i>`}
-            <lit-draghandle itemcontainer=${itemcontainer} class$="${isbackground?'':'draghandle'}">
+            <lit-draghandle itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" class$="${isbackground?'':'draghandle'}">
                 ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
             </lit-draghandle>
             <span class="right">

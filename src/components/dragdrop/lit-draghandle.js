@@ -10,7 +10,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
   static get properties() {
     return {
       stylepos: String,
-      itemcontainer: Object
+      itemcontainer: Object,
+      itemscroller: Object
     };
   }
   constructor() {
@@ -20,11 +21,12 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     // initialize properties
     this.stylepos = "";
     this.itemcontainer = undefined;
+    this.itemscroller = undefined;
   }
   scrollUp() {
     if (this.scrollingUp) {
-      if (this.itemcontainer.scrollTop > 1 && this.startOffsetTop > 1 && this.top > 1) {
-        this.itemcontainer.scrollTop--;
+      if (this.itemscroller.scrollTop > 1) {
+        this.itemscroller.scrollTop--;
         this.startOffsetTop--;
         this.top--;
         this.stylepos=`top:${top}px;`;
@@ -36,8 +38,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
   }
   scrollDown() {
     if (this.scrollingDown) {
-      if (this.itemcontainer.scrollTop < this.parentScrollHeight - this.parentClientRect.height - 1) {
-        this.itemcontainer.scrollTop++;
+      if (this.itemscroller.scrollTop < this.itemScrollerHeight - this.itemScrollerClientRect.height - 1) {
+        this.itemscroller.scrollTop++;
         this.startOffsetTop++;
         this.top++;
         this.stylepos=`top:${top}px;`;
@@ -49,9 +51,9 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
   }
   findSiblings(y, x){
     const siblings = [...this.itemcontainer.children];
-    if (!this.parentClientRect || 
-        x > this.parentClientRect.left + this.parentClientRect.width + 20 ||
-        x < this.parentClientRect.left - 20) {
+    if (!this.itemScrollerClientRect || 
+        x > this.itemScrollerClientRect.left + this.itemScrollerClientRect.width + 20 ||
+        x < this.itemScrollerClientRect.left - 20) {
       return [];
     }
     return siblings.filter(elem=> {
@@ -67,33 +69,37 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     switch(event.detail.state) {
       case 'start':
         this.container = this.shadowRoot.querySelector('.container');
-        this.startOffsetTop = this.container.offsetTop;
-        this.parentScrollHeight = this.itemcontainer.scrollHeight;
-        this.parentClientRect = this.itemcontainer.getBoundingClientRect();
         this.curHovering = null;
+        this.startOffsetTop = this.container.offsetTop;// always zero?
+        if (this.itemscroller) {
+          this.itemScrollerHeight = this.itemscroller.scrollHeight;
+          this.itemScrollerClientRect = this.itemscroller.getBoundingClientRect();
+        }
         break;
       case 'track':
         let top = this.startOffsetTop + event.detail.dy;
         if (this.top < 0) {
           top = 0;
         }
-        if (event.detail.y < this.parentClientRect.top) {
-          // pointer above scroller
-          this.scrollingUp = true;
-          this.scrollUp();
-        } else {
-          // stop scrolling
-          this.scrollingUp = false;
-        }
-        if (event.detail.y > this.parentClientRect.top + this.parentClientRect.height) {
-          // pointer below scroller
-          this.scrollingDown = true;
-          this.scrollDown();
-        } else {
-          this.scrollingDown = false;
-        }
-        if (top > this.parentScrollHeight - 1) {
-          top = this.parentScrollHeight - 1;
+        if (this.itemscroller) {
+          if (event.detail.y < this.itemScrollerClientRect.top) {
+            // pointer above scroller
+            this.scrollingUp = true;
+            this.scrollUp();
+          } else {
+            // stop scrolling
+            this.scrollingUp = false;
+          }
+          if (event.detail.y > this.itemScrollerClientRect.top + this.itemScrollerClientRect.height) {
+            // pointer below scroller
+            this.scrollingDown = true;
+            this.scrollDown();
+          } else {
+            this.scrollingDown = false;
+          }
+          if (top > this.itemScrollerHeight - 1) {
+            top = this.itemScrollerHeight - 1;
+          }
         }
         this.top = top;
         this.stylepos=`top:${top}px;`;

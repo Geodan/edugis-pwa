@@ -36,14 +36,6 @@ class MapLegendContainer extends LitElement {
   _render({opened, legendtitle}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     const itemList = this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
-    let htmlItemList = itemList.map(item=>
-        html`<map-legend-item item=${item} 
-            itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
-            itemid$="${item._ga_id}" 
-            open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
-            on-openclose="${e=>this.openClose(e)}",
-            on-litdragend="${e=>this.litDragEnd(e)}"
-         ></map-legend-item>`);
     let result = html`
     <style>
         .container {
@@ -103,7 +95,15 @@ class MapLegendContainer extends LitElement {
         <div class="itemscroller">
             <div class="itemlist">
                 <div id="draggableitems">
-                    ${htmlItemList}
+                    ${itemList.map(item=>
+                        html`<map-legend-item item=${item} 
+                            itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
+                            itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
+                            itemid$="${item._ga_id}" 
+                            open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
+                            on-openclose="${e=>this.openClose(e)}",
+                            on-litdragend="${e=>this.litDragEnd(e)}"
+                        ></map-legend-item>`)}
                 </div>
                 <div class="legendfooter">
                     ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
