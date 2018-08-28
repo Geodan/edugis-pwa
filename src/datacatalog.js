@@ -74,7 +74,7 @@ export default
         ]},
         {"type": "group", "title": "GeoJSON", "sublayers": 
         [
-            {"type": "layer", "title": "CBS Gemeenten", "layerInfo": {
+            {"type": "layer", "title": "CBS Gemeenten (2.1 MB)", "layerInfo": {
                 "id" : "cbsgemeenten2017",
                 "type": "fill",
                 "source" : {
@@ -91,7 +91,20 @@ export default
         ]},
         {"type": "group", "title": "TopoJSON", "sublayers": 
         [
-            {"type": "layer", "title": "to do", "layerInfo": {}}
+            {"type": "layer", "title": "CBS wijken (1.5 MB)", "layerInfo": {
+                "id" : "cbswijken2017",
+                "type": "fill",
+                "source" : {
+                    "type": "topojson",
+                    "data": "http://tiles.edugis.nl/geojson/cbs_wijk_2017_gegeneraliseerd_topojson.json",
+                    "attribution": "cbs/pdok"
+                },
+                "paint": {
+                    "fill-color": "#cec",
+                    "fill-opacity": 0.6,
+                    "fill-outline-color": "#444"
+                }
+            }}
         ]},
         {"type": "group", "title": "Vector Tile", "sublayers": 
         [

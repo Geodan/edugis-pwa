@@ -191,6 +191,7 @@ class WebMap extends LitElement {
         center: [this.lon,this.lat],
         zoom: this.zoom
     });
+    
     if (this.navigation.toLowerCase() !== "false") {
       this.map.addControl(new ZoomControl(), this._positionString(this.navigation));
       this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));

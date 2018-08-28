@@ -148,7 +148,9 @@ class MapLegendItem extends LitElement {
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
             <i class="icon" title$="${item._ga_group?'Layer group':undefined}" on-click="${e=>this._toggleOpenClose(e)}">${item._ga_group?(item._ga_open?arrowDropDownIcon:arrowRightIcon):noIcon}</i>
             ${item._ga_group?undefined:html`<i class="icon">${layerIcon}</i>`}
-            <lit-draghandle itemcontainer=${itemcontainer} class$="${isbackground?'':'draghandle'}">${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}</lit-draghandle>
+            <lit-draghandle itemcontainer=${itemcontainer} class$="${isbackground?'':'draghandle'}">
+                ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
+            </lit-draghandle>
             <span class="right">
                 ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>

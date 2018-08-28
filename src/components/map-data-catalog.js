@@ -1,3 +1,4 @@
+
 import {LitElement, html} from '@polymer/lit-element';
 class MapDataCatalog extends LitElement {
   static get properties() { 
@@ -64,9 +65,23 @@ class MapDataCatalog extends LitElement {
   }
   handleClick(e, dataid) {
       if (dataid) {
-        this.dispatchEvent(new CustomEvent('addlayer', 
+        const detail = this.getDataInfo(this.datacatalog, dataid);
+        if (detail.source.type=="topojson") {
+          fetch(detail.source.data).then(data=> {
+            data.json().then(json=>{
+              // replace url with topojson first object converted to geojson
+              detail.source.data = topojson.feature(json, json.objects[Object.keys(json.objects)[0]]);
+              detail.source.type = "geojson";
+              this.dispatchEvent(new CustomEvent('addlayer', {
+                detail: detail
+              }))
+            })
+          }).catch(reason=>console.log(reason));
+        } else {
+          this.dispatchEvent(new CustomEvent('addlayer', 
             {detail: this.getDataInfo(this.datacatalog, dataid)}
-        ));
+          ));
+        }
       }
   }
   _firstRendered() {
