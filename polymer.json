@@ -6,6 +6,7 @@
   ],
   "extraDependencies": [
     "manifest.json",
+    "lib/topojson-client.js",
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/@turf/turf/turf.min.js",
     "push-manifest.json",
