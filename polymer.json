@@ -14,6 +14,7 @@
     "styles/openmaptiles/osmbright.json",
     "node_modules/mapbox-gl/dist/mapbox-gl.css",
     "node_modules/mapbox-gl/dist/mapbox-gl.js",
+    "node_modules/proj4/dist/proj4.js",
     "src/keys.js"
   ],
   "builds": [
