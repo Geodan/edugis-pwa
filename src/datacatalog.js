@@ -28,7 +28,20 @@ export default
                         "attribution": "Edugis"
                     }
                 }
+            },
+            {"type": "layer", "title": "Bert's fietstocht", "type":"wms", "layerInfo": {
+                "id" : "fietstocht",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,
+                    "tiles" : [
+                        "https://services.geodan.nl/public/data/my/gws/ZLTO6584XXXX/ows?LAYERS=Route_06330481-61aa-4b74-b76a-33bf23e17acf&FORMAT=image%2Fpng&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICEKEY=3dc8818a-d126-11e7-a442-005056805b87&EXCEPTIONS=INIMAGE&SERVICE=WMS&REQUEST=GetMap&STYLES=&sld=https%3A%2F%2Fservices.geodan.nl%2Fpublic%2Fdocument%2FZLTO6584XXXX%2Fapi%2Fdata%2FZLTO6584XXXX%2Fstyles%2FZLTO6584XXXX_public%3ARoute_06330481-61aa-4b74-b76a-33bf23e17acf%3ARoute_zwart&CRS=EPSG%3A3857&bbox={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                    ],
+                    "attribution": "StevenF"
+                }
             }
+        }
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [
@@ -119,7 +132,21 @@ export default
                     "fill-opacity": 0.6,
                     "fill-outline-color": "#444"
                 }
-            }}
+            }},
+            {"type": "layer", "title": "Bert's fietstocht", "layerInfo": {
+                "id" : "bertsfietstochtpunten",
+                "type": "circle",
+                "source" : {
+                    "type": "geojson",
+                    "data": "https://research.geodan.nl/cgi-py/getlocationhistory.py?id=3",
+                    "attribution": "StevenF",
+                    "crs": "EPSG:3857"
+                },
+                "paint": {
+                    "circle-radius": 5,
+                    "circle-color": "#FA0"
+                }
+            }},
         ]},
         {"type": "group", "title": "TopoJSON", "sublayers": 
         [
