@@ -1,0 +1,4 @@
+EduGISkeys = {
+    mapbox: "pk.your-personal-public-mapbox-key",
+    geodanmaps: "your-personal-public-geodanmaps-key"
+}

@@ -66,7 +66,8 @@ class WebMap extends LitElement {
       resolution: Number,
       datacatalog: Object,
       layerlist: Array,
-      haslegend: Boolean
+      haslegend: Boolean,
+      accesstoken: String
     }; 
   }
   constructor() {
@@ -88,6 +89,7 @@ class WebMap extends LitElement {
     this.coordinates = "false";
     this.layerlist = [];
     this.haslegend = false;
+    this.accesstoken = undefined;
   }
   /*_createRoot() {
     // do not create shadowRoot
@@ -195,7 +197,10 @@ class WebMap extends LitElement {
     }
     return propl;
   }
-  _firstRendered() {        
+  _firstRendered() {
+    if (this.accesstoken) {
+      mapboxgl.accessToken = this.accesstoken;
+    }
     this.map = new mapboxgl.Map({
         container: this.shadowRoot.querySelector('div'), 
         style: this.mapstyle,
