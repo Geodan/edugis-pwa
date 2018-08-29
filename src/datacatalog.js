@@ -50,19 +50,46 @@ export default
                 }
             },
             {"type": "layer", "title": "Openstreetmap (wmts)", "type":"wmts", "layerInfo": {
-                "id" : "openstreetmap",
+                    "id" : "openstreetmap",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles": [
+                            "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "&copy; OpenStreetMap contributors"
+                    }
+                }
+            },
+            
+            {"type": "layer", "title": "OSM frankrijk (wmts)", "type":"wmts", "layerInfo": {
+                "id" : "osmfr",
                 "type" : "raster",
                 "source" : {
                     "type": "raster",
                     "tileSize" : 256,
                     "tiles": [
-                        "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                     ],
-                    "attrubution": "&copy; OpenStreetMap contributors"
+                        "http://tile-a.openstreetmap.fr/hot/{z}/{x}/{y}.png?3dc8818a-d126-11e7-a442-005056805b87",
+                        "http://tile-b.openstreetmap.fr/hot/{z}/{x}/{y}.png?3dc8818a-d126-11e7-a442-005056805b87",
+                        "http://tile-c.openstreetmap.fr/hot/{z}/{x}/{y}.png?3dc8818a-d126-11e7-a442-005056805b87"                        
+                    ],
+                    "attribution": "&copy; OpenStreetMap contributors"
                 }
             }
-        }
+            },
+            {"type": "layer", "title": "Terrein (Geodan Maps)", "type":"wmts", "layerInfo": {
+                    "id" : "gmterrain",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles": [ "https://acc.geodan.nl/data/geodan/gws/world/streets/wmts/topo/EPSG%3A3857/{z}/{x}/{y}.png?servicekey=2021faff-cc40-11e6-a549-52540031712c"],
+                        "attribution": "&copy;GeodanMaps"
+                    }
+                }
+            }
         ]},
         {"type": "group", "title": "TMS", "sublayers": 
         [
