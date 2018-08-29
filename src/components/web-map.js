@@ -95,13 +95,22 @@ class WebMap extends LitElement {
   _shouldRender(props, changedProps, prevProps) {
     return true;
   }
+  updateSingleLayerVisibility(id, visible) {
+    const layer = this.map.getLayer(id);
+    if (layer) {
+      layer.setLayoutProperty('visibility', (visible ? 'visible' : 'none'));
+    }
+  }
   updateLayerVisibility(e) {
     if (this.map) {
-      const layer = this.map.getLayer(e.detail.layerid[0]);
-      if (layer) {
-        layer.setLayoutProperty('visibility', (e.detail.visible ? 'visible' : 'none'));
-        this.map._update(true); // TODO: how refresh map wihtout calling private function?
+      if (Array.isArray(e.detail.layerid)) {
+        e.detail.layerid.forEach(id=>{
+          this.updateSingleLayerVisibility(id, e.detail.visible);
+        });
+      } else {
+        this.updateSingleLayerVisibility(e.detail.layerid, e.detail.visible);
       }
+      this.map._update(true); // TODO: how refresh map wihtout calling private function?
     }
   }
   removeLayer(e) {

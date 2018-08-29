@@ -23,7 +23,11 @@ class MapLegendContainer extends LitElement {
   }
   updateGroupedList()
   {
-      this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'));
+      this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'))
+        .map(item=>{
+            item.layervisible=(item.hasOwnProperty('layout')?(item.layout.visibility==='visible'):true);
+            return item;
+        });
       this.groupedArray.reset();
       this.requestRender();
   }
@@ -99,7 +103,8 @@ class MapLegendContainer extends LitElement {
                         html`<map-legend-item item=${item} 
                             itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
                             itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
-                            itemid$="${item._ga_id}" 
+                            itemid$="${item._ga_id}"
+                            layervisible="${item.layervisible}"
                             open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
                             on-openclose="${e=>this.openClose(e)}",
                             on-litdragend="${e=>this.litDragEnd(e)}",
@@ -108,7 +113,7 @@ class MapLegendContainer extends LitElement {
                 </div>
                 <div class="legendfooter">
                     ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
-                        html`<map-legend-item item=${item} isbackground="true"></map-legend-item>`)}
+                        html`<map-legend-item item="${item}" layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
                 </div>
             </div>
         </div>
@@ -154,15 +159,12 @@ class MapLegendContainer extends LitElement {
     }
   }
   updateVisibility(e) {
-      /*const item = this.groupedArray.getItem(e.detail.layerid);
+      // modify event that is bubbling up
+      const item = this.groupedArray.getItem(e.detail._ga_id);
       if (item._ga_group) {
-        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item)
-      } else {
-        e.detail.layerid = [e.detail.layerid];
-      }
-      
-      //e.stopPropagation(); // event.cancelBubble = true;
-      */
+        // toggle group visibility
+        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id).map(item=>item.id);
+      } 
   }
 }
 

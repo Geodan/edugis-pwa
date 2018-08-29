@@ -1,5 +1,3 @@
-
-import {layersIcon} from './my-icons';
 import {deleteForeverIcon} from './my-icons';
 import {opacityIcon} from './my-icons';
 import {styleIcon} from './my-icons';
@@ -21,7 +19,7 @@ class MapLegendItem extends LitElement {
     return { 
       item: Object,
       isbackground: Boolean,
-      visibility: Boolean,
+      layervisible: Boolean,
       _ga_id: String,
       open: Boolean,
       itemcontainer: Object,
@@ -32,7 +30,7 @@ class MapLegendItem extends LitElement {
       super();
       this.item = {};
       this.isbackground = false;
-      this.visibility = true;
+      this.layervisible = true;
       this._ga_id = '';
       this.open = false;
   }
@@ -47,11 +45,15 @@ class MapLegendItem extends LitElement {
       );
   }
   _toggleVisibility(e) {
-    this.visibility = !this.visibility;
+    this.layervisible = !this.layervisible;
     this.dispatchEvent(
         new CustomEvent('updatevisibility', 
             {
-                detail: {layerid: this.item.id, visible: this.visibility},
+                detail: {
+                    layerid: this.item.id, 
+                    visible: this.layervisible,
+                    _ga_id: this.item._ga_id
+                },
                 bubbles: true,
                 composed: true
             }
@@ -68,7 +70,7 @@ class MapLegendItem extends LitElement {
         )
       );
   }
-  _render({item, isbackground, visibility, itemcontainer, itemscroller}) {
+  _render({item, isbackground, layervisible, itemcontainer, itemscroller}) {
     let layerIcon = undefined;
     if (!item._ga_group) {
         switch (item.type) {
@@ -156,7 +158,7 @@ class MapLegendItem extends LitElement {
                 ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity">${opacityIcon}</i>
                 ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
-                <i class="icon" title$="${visibility?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${visibility?visibilityOffIcon:visibilityIcon}</i>
+                <i class="icon" title$="${layervisible?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${layervisible?visibilityOffIcon:visibilityIcon}</i>
                 ${item._ga_group?undefined:html`<i class="icon" title="show legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>`}
             </span>
         </div>
