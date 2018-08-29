@@ -80,10 +80,6 @@ class Map3D extends LitElement {
   _render({webmap, active}) {
     if (active) {
       this.addControl(webmap);
-      /*if (this.control) {
-        const content = html`<style>button{color:red}</style><button>Bla</button>`;
-        this.control._container.innerHTML = content.getHTML();
-      }*/
     } else {
       this.removeControl(webmap);
     }

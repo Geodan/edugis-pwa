@@ -22,6 +22,7 @@ import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
 import './map-3d';
+import './map-language';
 import './map-search';
 
 import ZoomControl from '../../lib/zoomcontrol';
@@ -172,15 +173,16 @@ class WebMap extends LitElement {
       .webmap {width: 100%; height: 100%}
       </style>
     <div class="webmap"></div>
-    <map-coordinates visible=${coordinates.toLowerCase() !== "false"} lon=${displaylng} lat=${displaylat} resolution=${resolution}></map-coordinates>
-    <map-measure webmap=${this.map} class="centertop"></map-measure>
-    <map-3d webmap=${this.map} active="true"></map-3d>
+    <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}"></map-coordinates>
+    <map-measure webmap="${this.map}" class="centertop"></map-measure>
+    <map-3d webmap="${this.map}" active="true"></map-3d>
+    <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}"></map-search>
-    <button-expandable icon=${cloudDownloadIcon} info="Data catalogus">  
-    <map-data-catalog datacatalog=${datacatalog} on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
+    <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
+    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist=${layerlist} visible=${haslegend} on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
-    <map-spinner webmap=${this.map}></map-spinner>`
+    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-spinner webmap="${this.map}"></map-spinner>`
   }
   _didRender() {
     ;
@@ -224,6 +226,7 @@ class WebMap extends LitElement {
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
     });
+    this.addEventListener("languagechanged", e=>this.setLanguage(e));
   }
   _mapMoveEnd() {
     const bounds = this.map.getBounds();
@@ -238,6 +241,13 @@ class WebMap extends LitElement {
       }
     ));
     this.requestRender();
+  }
+  setLanguage(e) {
+    if (e.detail.language === "autodetect") {
+      this.map.autodetectLanguage();
+    } else {
+      this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
+    }
   }
 }
 customElements.define('web-map', WebMap);
