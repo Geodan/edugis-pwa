@@ -253,6 +253,7 @@ class WebMap extends LitElement {
     } else {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
+    this.layerlist = [...this.map.getStyle().layers];
   }
 }
 customElements.define('web-map', WebMap);

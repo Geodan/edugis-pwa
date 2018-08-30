@@ -306,6 +306,17 @@ export default
                 }
             }}
         ]},
+        { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
+        [
+            {"type": "layer", "title": "Mapbox hillshading", "layerInfo": {
+                "id": "hillshading",
+                "type": "hillshade",
+                "source": {
+                    "type":"raster-dem",
+                    "url": "mapbox://mapbox.terrain-rgb"
+                }
+            }}
+        ]},
         {"type": "group", "title": "Google spreadsheet", "sublayers": 
         [
             {"type": "layer", "title": "Google spreadsheet layer", "layerInfo": {}}

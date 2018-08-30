@@ -9,7 +9,7 @@ import {arrowDropDownIcon} from './my-icons';
 import {noIcon} from './my-icons';
 
 import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, starIcon, tripOriginIcon as circleIcon, 
-    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon } from './my-icons';
+    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon, landscapeIcon } from './my-icons';
 
 import './dragdrop/lit-draghandle';
 
@@ -96,6 +96,7 @@ class MapLegendItem extends LitElement {
                 layerIcon = rasterIcon;
                 break;
             case "hillshade":
+                layerIcon = landscapeIcon;
                 break;
             case "background":
                 layerIcon = backgroundIcon;
