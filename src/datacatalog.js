@@ -29,19 +29,33 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Bert's fietstocht", "type":"wms", "layerInfo": {
-                "id" : "fietstocht",
-                "type" : "raster",
-                "source" : {
-                    "type": "raster",
-                    "tileSize" : 256,
-                    "tiles" : [
-                        "https://services.geodan.nl/public/data/my/gws/ZLTO6584XXXX/ows?LAYERS=Route_06330481-61aa-4b74-b76a-33bf23e17acf&FORMAT=image%2Fpng&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICEKEY=3dc8818a-d126-11e7-a442-005056805b87&EXCEPTIONS=INIMAGE&SERVICE=WMS&REQUEST=GetMap&STYLES=&sld=https%3A%2F%2Fservices.geodan.nl%2Fpublic%2Fdocument%2FZLTO6584XXXX%2Fapi%2Fdata%2FZLTO6584XXXX%2Fstyles%2FZLTO6584XXXX_public%3ARoute_06330481-61aa-4b74-b76a-33bf23e17acf%3ARoute_zwart&CRS=EPSG%3A3857&bbox={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
-                    ],
-                    "attribution": "StevenF"
+            {"type": "layer", "title": "Fietstocht Bert en Joep", "type":"wms", "layerInfo": {
+                    "id" : "fietstocht",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles" : [
+                            "https://services.geodan.nl/public/data/my/gws/ZLTO6584XXXX/ows?LAYERS=Route_06330481-61aa-4b74-b76a-33bf23e17acf&FORMAT=image%2Fpng&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICEKEY=3dc8818a-d126-11e7-a442-005056805b87&EXCEPTIONS=INIMAGE&SERVICE=WMS&REQUEST=GetMap&STYLES=&sld=https%3A%2F%2Fservices.geodan.nl%2Fpublic%2Fdocument%2FZLTO6584XXXX%2Fapi%2Fdata%2FZLTO6584XXXX%2Fstyles%2FZLTO6584XXXX_public%3ARoute_06330481-61aa-4b74-b76a-33bf23e17acf%3ARoute_zwart&CRS=EPSG%3A3857&bbox={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                        ],
+                        "attribution": "StevenF"
+                    }
                 }
-            }
-        }
+            },            
+            {"type": "layer", "title": "Actueel Hoogtebestand NL (DSM)", "type":"wmts", "layerInfo": {
+                    "id" : "ahndsm",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles": [
+                            "http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
+                            "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                        ],
+                        "attribution": ""
+                    }
+                }
+            }  
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [
@@ -133,8 +147,8 @@ export default
                     "fill-outline-color": "#444"
                 }
             }},
-            {"type": "layer", "title": "Bert's fietstocht", "layerInfo": {
-                "id" : "bertsfietstochtpunten",
+            {"type": "layer", "title": "Fietstocht Bert en Joep (punten)", "layerInfo": {
+                "id" : "fietstochtpunten",
                 "type": "circle",
                 "source" : {
                     "type": "geojson",

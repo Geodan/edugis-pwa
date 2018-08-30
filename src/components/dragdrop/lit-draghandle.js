@@ -11,7 +11,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     return {
       stylepos: String,
       itemcontainer: Object,
-      itemscroller: Object
+      itemscroller: Object,
+      isdraggable: Boolean
     };
   }
   constructor() {
@@ -22,6 +23,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     this.stylepos = "";
     this.itemcontainer = undefined;
     this.itemscroller = undefined;
+    this.isdraggable = true;
   }
   scrollUp() {
     if (this.scrollingUp) {
@@ -138,7 +140,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         break;
     }
   }
-  _render({stylepos, allowdrop}) {
+  _render({stylepos, isdraggable}) {
     return html`
     <style>
       :host {
@@ -148,10 +150,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
       }
       .container {
         position: absolute;
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+      }
+      .draghandle {
         cursor: move;
       }
       slot {
@@ -162,7 +162,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         overflow: hidden;
       }
     </style>
-    <div class="container" style$="${stylepos}">
+    <div class$="container${isdraggable?' draghandle':''}" style$="${stylepos}">
       <slot>Default DragHandle Text Default DragHandle Text</slot>
     </div>
     `;

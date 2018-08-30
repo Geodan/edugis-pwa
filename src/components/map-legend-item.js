@@ -112,6 +112,10 @@ class MapLegendItem extends LitElement {
         .legenditem {
             border-bottom:1px solid lightgray;
             margin-bottom:2px;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
         .header {
             cursor:'grab';
@@ -152,7 +156,7 @@ class MapLegendItem extends LitElement {
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
             <i class="icon" title$="${item._ga_group?'Layer group':undefined}" on-click="${e=>this._toggleOpenClose(e)}">${item._ga_group?(item._ga_open?arrowDropDownIcon:arrowRightIcon):noIcon}</i>
             ${item._ga_group?undefined:html`<i class="icon">${layerIcon}</i>`}
-            <lit-draghandle itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" class$="${isbackground?'':'draghandle'}">
+            <lit-draghandle itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" isdraggable="${!isbackground}">
                 ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
             </lit-draghandle>
             <span class="right">

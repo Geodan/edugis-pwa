@@ -86,11 +86,7 @@ class MapLegendContainer extends LitElement {
         }
         .hidden {
             visibility: hidden;
-        }
-        .dragging {
-            opacity: 0.75;
-            color: orange;
-        }
+        }        
     </style>
     <div class$="container${opened? '' : ' hidden'}">
         <div class="legendheader">
