@@ -67,7 +67,8 @@ class WebMap extends LitElement {
       datacatalog: Object,
       layerlist: Array,
       haslegend: Boolean,
-      accesstoken: String
+      accesstoken: String,
+      lastClickPoint: Object
     }; 
   }
   constructor() {
@@ -90,6 +91,7 @@ class WebMap extends LitElement {
     this.layerlist = [];
     this.haslegend = false;
     this.accesstoken = undefined;
+    this.lastClickPoint = undefined;
   }
   /*_createRoot() {
     // do not create shadowRoot
@@ -140,9 +142,7 @@ class WebMap extends LitElement {
   moveLayer(e) {
     if (e.detail.beforeFirst) {
       e.detail.layers.reverse().forEach(layer=>this.map.moveLayer(layer));
-      //this.map.moveLayer(e.detail.layer);
     } else {
-      //this.map.moveLayer(e.detail.layer, e.detail.beforeLayer);
       e.detail.layers.reverse().forEach(layer=>this.map.moveLayer(layer, e.detail.beforeLayer));
     }
     this.layerlist = [...this.map.getStyle().layers];
@@ -168,7 +168,7 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
-  _render({haslegend, mapstyle, lon, lat, resolution, coordinates, navigation, scalebar, displaylat, displaylng, datacatalog, layerlist}) {
+  _render({haslegend, resolution, coordinates, displaylat, displaylng, datacatalog, layerlist, lastClickPoint}) {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -180,7 +180,7 @@ class WebMap extends LitElement {
       .webmap {width: 100%; height: 100%}
       </style>
     <div class="webmap"></div>
-    <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}"></map-coordinates>
+    <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}" clickpoint="${lastClickPoint?lastClickPoint:undefined}"></map-coordinates>
     <map-measure webmap="${this.map}" class="centertop"></map-measure>
     <map-3d webmap="${this.map}" active="true"></map-3d>
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
@@ -232,6 +232,7 @@ class WebMap extends LitElement {
     this.map.autodetectLanguage(); // set openmaptiles language to browser language
     this._mapMoveEnd();
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
+    this.map.on('click', (e)=>this.mapClick(e));
 
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
@@ -259,6 +260,9 @@ class WebMap extends LitElement {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
     this.layerlist = [...this.map.getStyle().layers];
+  }
+  mapClick(e) {
+    this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];
   }
 }
 customElements.define('web-map', WebMap);
