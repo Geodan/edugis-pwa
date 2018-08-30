@@ -138,11 +138,12 @@ class WebMap extends LitElement {
     this.layerlist = [...this.map.getStyle().layers];
   }
   moveLayer(e) {
-    console.log(`moving layer ${e.detail.layer} to ${e.detail.beforeLayer}`)
     if (e.detail.beforeFirst) {
-      this.map.moveLayer(e.detail.layer);
+      e.detail.layers.reverse().forEach(layer=>this.map.moveLayer(layer));
+      //this.map.moveLayer(e.detail.layer);
     } else {
-      this.map.moveLayer(e.detail.layer, e.detail.beforeLayer);
+      //this.map.moveLayer(e.detail.layer, e.detail.beforeLayer);
+      e.detail.layers.reverse().forEach(layer=>this.map.moveLayer(layer, e.detail.beforeLayer));
     }
     this.layerlist = [...this.map.getStyle().layers];
   }
