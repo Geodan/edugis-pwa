@@ -145,7 +145,7 @@ class MapLegendContainer extends LitElement {
                     this.dispatchEvent(
                         new CustomEvent('movelayer',
                             {
-                                detail: {layer: sourceItem.id, beforeLayer: targetItem.id}
+                                detail: {layer: sourceItem.id, beforeLayer: targetItem.id, beforeFirst: e.detail.beforeFirst}
                             }
                         )
                     );

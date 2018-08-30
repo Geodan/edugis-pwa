@@ -56,12 +56,27 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     if (!this.itemScrollerClientRect || 
         x > this.itemScrollerClientRect.left + this.itemScrollerClientRect.width + 20 ||
         x < this.itemScrollerClientRect.left - 20) {
+      // cursor outside itemscroller
       return [];
     }
-    return siblings.filter(elem=> {
+    let result = siblings.filter(elem=> {
         const elemClientRect = elem.getBoundingClientRect();
         return (y > elemClientRect.y && y < (elemClientRect.y + elemClientRect.height));
       });
+    if (result.length) {
+      result = result.slice(0,1);
+      if (result[0] === this.itemcontainer.children[0]) {
+        // cursor on first item
+        const elemClientRect = result[0].getBoundingClientRect();
+        if (y -elemClientRect.y < elemClientRect.height / 2) {
+          // cursor on top half of first item
+          result.push("top"); 
+        } else {
+          result.push("bottom");
+        }
+      }
+    }
+    return result;
   }
   handleTrack(event) {
     if (!this.itemcontainer) {
@@ -107,11 +122,16 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         this.stylepos=`top:${top}px;`;
         const hovering  = this.findSiblings(event.detail.y, event.detail.x);
         if (hovering.length && hovering[0] !== this) {
-          if (hovering[0] !== this.curHovering) {
+          if (hovering[0] !== this.curHovering || hovering.length > 1) {
             if (this.curHovering) {
+              this.curHovering.style['border-top'] = '';
               this.curHovering.style['border-bottom'] = '';
             }
-            hovering[0].style['border-bottom'] = 'solid 4px black';
+            if (hovering.length > 1 && hovering[1] == "top") {
+              hovering[0].style['border-top'] = 'solid 4px black';
+            } else {
+              hovering[0].style['border-bottom'] = 'solid 4px black';
+            }
             this.curHovering = hovering[0];
           }
         } else {
@@ -127,10 +147,16 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         this.container = null;
         this.stylepos = "";
         if (this.curHovering) {
-          this.curHovering.style['border-bottom'] = '';
+          let beforeFirst = false;
+          if (this.curHovering.style['border-top'].length) {
+            this.curHovering.style['border-top'] = '';
+            beforeFirst = true;
+          } else {
+            this.curHovering.style['border-bottom'] = '';
+          }
           this.dispatchEvent(new CustomEvent('litdragend', 
             {
-              detail: {dragTarget: this.curHovering},
+              detail: {dragTarget: this.curHovering, beforeFirst: beforeFirst },
               composed: true,
               bubbles: true
             }  
