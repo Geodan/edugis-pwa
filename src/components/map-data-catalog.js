@@ -200,6 +200,15 @@ class MapDataCatalog extends LitElement {
   handleClick(e, dataid) {
       if (dataid) {
         const detail = this.getDataInfo(this.datacatalog, dataid);
+        if (detail.metadata && detail.metadata.insertgeodanmapskey) {
+          detail.metadata.insertgeodanmapskey = false;
+          if (detail.source.tiles) {
+            detail.source.tiles = detail.source.tiles.map(tileurl=>tileurl.replace('{key}', EduGISkeys.geodanmaps));
+          }
+          if (detail.source.url) {
+            detail.source.url = detail.source.url.replace('{key}', EduGISkeys.geodanmaps);
+          }
+        }
         if (detail.source.type == "geojson" && detail.metadata && detail.metadata.topojson && !detail.metadata.originaldata) {
           fetch(detail.source.data).then(data=> {
             data.json().then(json=>{

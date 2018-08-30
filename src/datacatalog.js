@@ -114,11 +114,17 @@ export default
             {"type": "layer", "title": "Terrein (Geodan Maps)", "type":"wmts", "layerInfo": {
                     "id" : "gmterrain",
                     "type" : "raster",
+                    "metadata" : {
+                        "insertgeodanmapskey" : true
+                    },
                     "source" : {
+                        "metadata" : {
+                            "test": true
+                        },
                         "type": "raster",
-                        "tileSize" : 256,
-                        "tiles": [ "https://acc.geodan.nl/data/geodan/gws/world/streets/wmts/topo/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={key}"],
-                        "attribution": "&copy;GeodanMaps"
+                        "tileSize" : 256,            
+                        "tiles": [ "https://acc.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={key}"],
+                        "attribution": "&copy; GeodanMaps"
                     }
                 }
             }
