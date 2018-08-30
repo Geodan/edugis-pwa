@@ -150,11 +150,13 @@ export default
             {"type": "layer", "title": "Fietstocht Bert en Joep (punten)", "layerInfo": {
                 "id" : "fietstochtpunten",
                 "type": "circle",
+                "metadata" : {
+                    "crs" : "EPSG:3857"
+                },
                 "source" : {
                     "type": "geojson",
                     "data": "https://research.geodan.nl/cgi-py/getlocationhistory.py?id=3",
-                    "attribution": "StevenF",
-                    "crs": "EPSG:3857"
+                    "attribution": "StevenF"
                 },
                 "paint": {
                     "circle-radius": 5,
@@ -167,8 +169,11 @@ export default
             {"type": "layer", "title": "CBS wijken (1.5 MB)", "layerInfo": {
                 "id" : "cbswijken2017",
                 "type": "fill",
+                "metadata" : {
+                    "topojson" : true
+                },
                 "source" : {
-                    "type": "topojson",
+                    "type": "geojson",
                     "data": "http://tiles.edugis.nl/geojson/cbs_wijk_2017_gegeneraliseerd_topojson.json",
                     "attribution": "cbs/pdok"
                 },

@@ -200,22 +200,22 @@ class MapDataCatalog extends LitElement {
   handleClick(e, dataid) {
       if (dataid) {
         const detail = this.getDataInfo(this.datacatalog, dataid);
-        if (detail.source.type=="topojson") {
+        if (detail.source.type == "geojson" && detail.metadata && detail.metadata.topojson && !detail.metadata.originaldata) {
           fetch(detail.source.data).then(data=> {
             data.json().then(json=>{
               // replace url with topojson first object converted to geojson
+              detail.metadata.originaldata = detail.source.data;
               detail.source.data = topojson.feature(json, json.objects[Object.keys(json.objects)[0]]);
-              detail.source.type = "geojson";
               this.dispatchEvent(new CustomEvent('addlayer', {
                 detail: detail
               }))
             })
           }).catch(reason=>console.log(reason));
         } else {
-          if (detail.source.hasOwnProperty('crs')) {            
-            const crs = detail.source.crs;
-            delete detail.source.crs;
+          if (detail.source.type == "geojson" && detail.metadata && detail.metadata.crs && !detail.metadata.originaldata) {
+            const crs = detail.metadata.crs;
             fetch(detail.source.data).then(data=>data.json()).then(json=>{
+              detail.metadata.originaldata = detail.source.data;
               detail.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
               this.dispatchEvent(new CustomEvent('addlayer', {
                 detail: detail
