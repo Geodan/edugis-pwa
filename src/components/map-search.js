@@ -30,7 +30,7 @@ class MapSearch extends LitElement {
     super();
     // properties
     this.info = "zoek plaats of adres (via nominatim)";
-    this.resultList = [];
+    this.resultList = null;
     this.viewbox = undefined;
     this.active = true;
   }
@@ -39,24 +39,34 @@ class MapSearch extends LitElement {
     if (searchText.length > 1) {
       let url;
       if (this.viewbox) {
-        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&viewbox=${this.viewbox.join(',')}&bounded=0`;
+        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&viewbox=${this.viewbox.join(',')}&bounded=0&polygon_geojson=1&addressdetails=1&limit=15`;
       } else {
-        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json`;
+        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&polygon_geojson=1&addressdetails=1&limit=15`;
       }
       fetch(url)
       .then(response => response.json())
-      .then(data => this.resultList = [...data]);
+      .then(data => {
+        this.resultList = data;
+        this.dispatchEvent(
+          new CustomEvent('searchresult',
+            {
+                detail: this.resultList,
+                bubbles: true,
+                composed: true
+            })
+        );
+      })
     } 
   }
   keyup(e) {
     if (e.keyCode == 13) {
       this.search(e);
     } else {
-      this.resultList = [];
+      this.resultList = null;
     }
   }
   changed(e) {
-    this.resultList = [];
+    this.resultList = null;
   }
   zoomTo(point, bbox) {
     this.dispatchEvent(
@@ -142,9 +152,12 @@ class MapSearch extends LitElement {
         }
     </style>
     <map-iconbutton info="${info}" icon="${imageSearchIcon}" on-click="${e=>{this.active=!this.active;}}"></map-iconbutton>
-    <div class$="searchbox${active?'':' hidden'}"><input type="text" placeholder="${info}" on-keyup="${(e)=>this.keyup(e)}">
-    <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span></div>
-      ${(active && resultList.length)?html`<div class="resultlist"><ul>${resultList.map(item=>html`<li on-click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">${getIcon(item.osm_type)}${item.display_name}</li>`)}</ul></div>`:''}`;
+    <div class$="searchbox${active?'':' hidden'}">
+      <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span>
+      <input type="text" placeholder="${info}" on-keyup="${(e)=>this.keyup(e)}">
+    </div>
+    ${(active && resultList && resultList.length)?html`<div class="resultlist"><ul>${resultList.map(item=>html`<li on-click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">${getIcon(item.osm_type)}${item.display_name}</li>`)}</ul></div>`
+      :(resultList === null?'':html`<div class="resultlist"><ul><li>niets gevonden</li></ul></div>`)}`
   }
   
 }
