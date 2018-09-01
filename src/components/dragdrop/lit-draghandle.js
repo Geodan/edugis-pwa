@@ -52,7 +52,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     }
   }
   findSiblings(y, x){
-    const siblings = [...this.itemcontainer.children];
+    const siblings = Array.from(this.itemcontainer.children);
     if (!this.itemScrollerClientRect || 
         x > this.itemScrollerClientRect.left + this.itemScrollerClientRect.width + 20 ||
         x < this.itemScrollerClientRect.left - 20) {
@@ -61,14 +61,14 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     }
     let result = siblings.filter(elem=> {
         const elemClientRect = elem.getBoundingClientRect();
-        return (y > elemClientRect.y && y < (elemClientRect.y + elemClientRect.height));
+        return (y > elemClientRect.top && y < (elemClientRect.top + elemClientRect.height));
       });
     if (result.length) {
       result = result.slice(0,1);
       if (result[0] === this.itemcontainer.children[0]) {
         // cursor on first item
         const elemClientRect = result[0].getBoundingClientRect();
-        if (y -elemClientRect.y < elemClientRect.height / 2) {
+        if (y -elemClientRect.top < elemClientRect.height / 2) {
           // cursor on top half of first item
           result.push("top"); 
         } else {
