@@ -83,13 +83,25 @@ export default
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles": [
-                            "http://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            "http://b.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            "http://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                         ],
                         "attribution": "&copy; OpenStreetMap contributors"
                     }
                 }
             },
+            {"type": "layer", "title": "Openstreetmap gray", "type":"wmts", "layerInfo": {
+                "id" : "openstreetmapgray",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,
+                    "tiles": [
+                        "https://saturnus.geodan.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                    ],
+                    "attribution": "&copy; OpenStreetMap contributors"
+                }
+            }
+        },
             {"type": "layer", "title": "OSM frankrijk (wmts)", "type":"wmts", "layerInfo": {
                     "id" : "osmfr",
                     "type" : "raster",
