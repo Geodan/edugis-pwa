@@ -173,15 +173,15 @@ class MapSearch extends LitElement {
         </ul>
       </div>`
         :
-      (resultList === null?
-        ''
-          :
+      (active && (Array.isArray(resultList) && resultList.length === 0)?
         html`
           <div class="resultlist">
             <ul>
               <li>niets gevonden</li>
             </ul>
-          </div>`)}`
+          </div>`
+          :
+        '')}`
   }
   
 }

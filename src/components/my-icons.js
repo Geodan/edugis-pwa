@@ -28,7 +28,42 @@ width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 
  <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
 </rect>
 </svg>`
-
+export const puffIcon = svg`<svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+<g fill="none" fill-rule="evenodd" stroke-width="2">
+    <circle cx="22" cy="22" r="1">
+        <animate attributeName="r"
+            begin="0s" dur="1.8s"
+            values="1; 20"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.165, 0.84, 0.44, 1"
+            repeatCount="indefinite" />
+        <animate attributeName="stroke-opacity"
+            begin="0s" dur="1.8s"
+            values="1; 0"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.3, 0.61, 0.355, 1"
+            repeatCount="indefinite" />
+    </circle>
+    <circle cx="22" cy="22" r="1">
+        <animate attributeName="r"
+            begin="-0.9s" dur="1.8s"
+            values="1; 20"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.165, 0.84, 0.44, 1"
+            repeatCount="indefinite" />
+        <animate attributeName="stroke-opacity"
+            begin="-0.9s" dur="1.8s"
+            values="1; 0"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.3, 0.61, 0.355, 1"
+            repeatCount="indefinite" />
+    </circle>
+</g>
+</svg>`;
 export const menuIcon = svg`<svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>`;
 export const databaseIcon = svg`<svg height="24" viewBox="0 0 448 512" width="24"><path fill="currentColor" d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"></path></svg>`;
 

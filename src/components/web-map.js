@@ -243,8 +243,12 @@ class WebMap extends LitElement {
     const bounds = this.map.getBounds();
     this.viewbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
     this.resolution = getResolution(this.map);
+    const center = this.map.getCenter();
+    this.displaylat = center.lat;
+    this.displaylng = center.lng;
     this.dispatchEvent(new CustomEvent('moveend', 
       {detail: {
+        center: center,
         viewbox: this.viewbox, 
         zoom: this.map.getZoom(),
         bearing: this.map.getBearing(),

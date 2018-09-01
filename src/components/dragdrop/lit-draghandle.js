@@ -95,9 +95,6 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         break;
       case 'track':
         let top = this.startOffsetTop + event.detail.dy;
-        if (this.top < 0) {
-          top = 0;
-        }
         if (this.itemscroller) {
           if (event.detail.y < this.itemScrollerClientRect.top) {
             // pointer above scroller
@@ -167,6 +164,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     }
   }
   _render({stylepos, isdraggable}) {
+    console.log(stylepos);
     return html`
     <style>
       :host {

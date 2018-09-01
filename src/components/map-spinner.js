@@ -55,6 +55,9 @@ class MapSpinner extends LitElement {
         .hidden {
           display: none;
         }
+        svg path, svg rect{
+          fill: #FF6700;
+        }
     </style><div class$="${visible ? '' : 'hidden'}" title="spinner">${spinnerIcon}</div>`;
   }
   _didRender() {
