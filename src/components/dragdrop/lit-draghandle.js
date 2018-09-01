@@ -164,7 +164,6 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
     }
   }
   _render({stylepos, isdraggable}) {
-    console.log(stylepos);
     return html`
     <style>
       :host {

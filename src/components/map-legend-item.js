@@ -154,8 +154,13 @@ class MapLegendItem extends LitElement {
     <div class="legenditem">
         <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
             ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
-            <i class="icon" title$="${item._ga_group?'Layer group':undefined}" on-click="${e=>this._toggleOpenClose(e)}">${item._ga_group?(item._ga_open?arrowDropDownIcon:arrowRightIcon):noIcon}</i>
-            ${item._ga_group?undefined:html`<i class="icon">${layerIcon}</i>`}
+            ${item._ga_group ? 
+                html`
+                <i class="icon" title="Layer group" on-click="${e=>this._toggleOpenClose(e)}">
+                ${item._ga_open?arrowDropDownIcon:arrowRightIcon}</i>`
+                :
+                html`
+                <i class="icon">${layerIcon}</i>`}            
             <lit-draghandle itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" isdraggable="${!isbackground}">
                 ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
             </lit-draghandle>
