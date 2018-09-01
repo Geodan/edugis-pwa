@@ -36,6 +36,11 @@ class EduGISApp extends connect(store)(LitElement) {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
+:host{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 header {
   position: absolute;
   display: block;

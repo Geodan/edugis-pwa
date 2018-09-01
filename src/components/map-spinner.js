@@ -1,5 +1,5 @@
 
-
+import {spinnerIcon} from './my-icons';
 
 import {LitElement, html} from '@polymer/lit-element';
 class MapSpinner extends LitElement {
@@ -55,7 +55,7 @@ class MapSpinner extends LitElement {
         .hidden {
           display: none;
         }
-    </style><div class$="${visible ? '' : 'hidden'}" title="spinner"><img src="${this.baseURI}/images/spinner.gif" alt="Loading..."></div>`;
+    </style><div class$="${visible ? '' : 'hidden'}" title="spinner">${spinnerIcon}</div>`;
   }
   _didRender() {
     ;

@@ -61,7 +61,7 @@
 
     <!-- load turf globally because import causes polymer build out of heap memory error -->
     <script src="node_modules/@turf/turf/turf.min.js"></script>
-    <script src="lib/topojson-client.js"></script>;
+    <script src="lib/topojson-client.js"></script>
 
     <script src="src/keys.js"></script>
     <script src="node_modules/proj4/dist/proj4.js"></script>
@@ -105,6 +105,11 @@
         line-height: 1.5;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
+      }
+      edugis-app {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
     </style>
     <script>

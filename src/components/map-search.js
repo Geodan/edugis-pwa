@@ -156,8 +156,32 @@ class MapSearch extends LitElement {
       <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span>
       <input type="text" placeholder="${info}" on-keyup="${(e)=>this.keyup(e)}">
     </div>
-    ${(active && resultList && resultList.length)?html`<div class="resultlist"><ul>${resultList.map(item=>html`<li on-click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">${getIcon(item.osm_type)}${item.display_name}</li>`)}</ul></div>`
-      :(resultList === null?'':html`<div class="resultlist"><ul><li>niets gevonden</li></ul></div>`)}`
+    ${(active && resultList && resultList.length)?
+      html`
+      <div class="resultlist">
+        <ul>
+          ${resultList.map(item=>
+            html`
+            <li on-click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">
+                ${item.hasOwnProperty('icon')?
+                  html`
+                  <img src="${item.icon}">`
+                    :
+                  html`${getIcon(item.osm_type)}`}
+                ${item.display_name}
+            </li>`)}
+        </ul>
+      </div>`
+        :
+      (resultList === null?
+        ''
+          :
+        html`
+          <div class="resultlist">
+            <ul>
+              <li>niets gevonden</li>
+            </ul>
+          </div>`)}`
   }
   
 }
