@@ -1,6 +1,6 @@
 
 import './map-iconbutton';
-import {imageSearchIcon, searchIcon, panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon } from './my-icons';
+import {imageSearchIcon, searchIcon, panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, closeIcon } from './my-icons';
 
 
 function getIcon(osmtype) {
@@ -34,6 +34,20 @@ class MapSearch extends LitElement {
     this.viewbox = undefined;
     this.active = true;
   }
+  triggerResult() {
+    if (this.prevResultList == null && this.resultList == null) {
+        return;
+    }
+    this.prevResultList = this.resultList;
+    this.dispatchEvent(
+      new CustomEvent('searchresult',
+        {
+            detail: this.resultList,
+            bubbles: true,
+            composed: true
+        })
+    );
+  }
   search(e) {
     const searchText = this.shadowRoot.querySelector('input').value.trim();
     if (searchText.length > 1) {
@@ -47,14 +61,7 @@ class MapSearch extends LitElement {
       .then(response => response.json())
       .then(data => {
         this.resultList = data;
-        this.dispatchEvent(
-          new CustomEvent('searchresult',
-            {
-                detail: this.resultList,
-                bubbles: true,
-                composed: true
-            })
-        );
+        this.triggerResult();
       })
     } 
   }
@@ -63,10 +70,12 @@ class MapSearch extends LitElement {
       this.search(e);
     } else {
       this.resultList = null;
+      this.triggerResult();
     }
   }
   changed(e) {
     this.resultList = null;
+    this.triggerResult();
   }
   zoomTo(point, bbox) {
     this.dispatchEvent(
@@ -77,6 +86,12 @@ class MapSearch extends LitElement {
             composed: true
         })
   );
+  }
+  searchErase(e)
+  {
+    this.shadowRoot.querySelector('input').value = "";
+    this.resultList = null;
+    this.triggerResult();
   }
   _render({info, resultList, active}) {
     return html`<style>
@@ -113,8 +128,14 @@ class MapSearch extends LitElement {
           fill: gray;
           padding-top: 6px;
         }
-        .searchbutton:hover {
+        .searchbutton:hover, .erasebutton:hover {
           fill: darkcyan;
+        }
+        .erasebutton {
+          position: absolute;
+          right: 30px;
+          fill: gray;
+          padding-top: 6px;
         }
         .resultlist {
           position: absolute;
@@ -153,8 +174,9 @@ class MapSearch extends LitElement {
     </style>
     <map-iconbutton info="${info}" icon="${imageSearchIcon}" on-click="${e=>{this.active=!this.active;}}"></map-iconbutton>
     <div class$="searchbox${active?'':' hidden'}">
-      <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span>
       <input type="text" placeholder="${info}" on-keyup="${(e)=>this.keyup(e)}">
+      ${active&&resultList&&resultList.length?html`<i class="erasebutton" on-click="${e=>this.searchErase(e)}">${closeIcon}</i>`:''}
+      <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span>
     </div>
     ${(active && resultList && resultList.length)?
       html`

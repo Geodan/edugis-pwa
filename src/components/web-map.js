@@ -26,7 +26,7 @@ import './map-language';
 import './map-search';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { cloudDownloadIcon } from './my-icons';
+import { cloudDownloadIcon, locationOnIcon as pointIcon } from './my-icons';
 
 
 function getResolution (map)
@@ -48,6 +48,62 @@ function getAngle (latlng1, latlng2)
         Math.cos(lat1) * Math.cos(lat2) * Math.cos((latlng2.lng - latlng1.lng) * rad);
   return Math.acos(Math.min(a, 1)) / rad;
 }
+
+let searchGeoJson = {
+  "type": "FeatureCollection",
+  "features": []
+}
+const searchSource = { 
+  "type" : "geojson",
+  "data" : searchGeoJson
+};
+const searchLines = {        
+  "id": "map-search-line",
+  "type": "line",
+  "source": "map-search-geojson",
+  "layout": {
+      "line-join": "round",
+      "line-cap": "round"
+  },
+  "paint": {
+      "line-color": "#c30",
+      "line-width": 3
+  },
+  "filter": ['in', '$type', 'LineString']
+};
+const searchPoints ={
+  "id": "map-search-points",
+  "type": "symbol",
+  "source": "map-search-geojson",            
+  "layout": {                        
+    "icon-image": "{icon}",
+    "text-field": "{name}",
+    "text-font": ["Noto Sans Regular"],
+    "text-offset": [0, 0.6],
+    "text-anchor": "top",
+    "text-size": 14,
+    "text-rotation-alignment": "map",
+  },
+  "paint": {
+    "text-color": "#000",
+    "text-halo-color": "#fff",
+    "text-halo-width": 1
+  },
+  "filter": ['==', '$type', 'Point']
+};
+const searchSurface = {
+  "id": "map-search-surface",
+  "type": "fill",
+  "source": "map-search-geojson",
+  "layout": {
+    "visibility": "visible"
+  },
+  "paint": {
+    "fill-color": "#c30",
+    "fill-opacity": 0.4
+  },
+  "filter": ['==', '$type', "Polygon"],
+};
 
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
@@ -184,7 +240,7 @@ class WebMap extends LitElement {
     <map-measure webmap="${this.map}" class="centertop"></map-measure>
     <map-3d webmap="${this.map}" active="true"></map-3d>
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
-    <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}"></map-search>
+    <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
     <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
@@ -267,6 +323,58 @@ class WebMap extends LitElement {
   }
   mapClick(e) {
     this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];
+  }
+  getIcon(iconUrl) {
+    const name = iconUrl.split('/').pop().split('.').shift();
+    if (this.map.hasImage(name)) {
+      return name;
+    }
+    const baseUrl = 'https://nominatim.openstreetmap.org/';
+    if (iconUrl.startsWith(baseUrl)) {
+      // route through edugis to workaround openstreetmap CORS error
+      iconUrl = 'http://tiles.edugis.nl/nominatim/' + iconUrl.slice(baseUrl.length);
+    }
+    if (!this.loadedNames) {
+      this.loadedNames = [];
+    }
+    if (this.loadedNames.indexOf(name) == -1) {
+      this.loadedNames.push(name);
+      this.map.loadImage(iconUrl, (error, image) => {
+        if (error) {
+          // todo
+        } else {
+          this.map.addImage(name, image);
+        }
+      })
+    }
+    return name;
+  }
+  searchResult(e) {
+    // add list of found elements to temporary map layer
+    if (this.map) {
+      const mapSearchSource = this.map.getSource('map-search-geojson');
+      if (!mapSearchSource) {
+        this.map.addSource('map-search-geojson', searchSource);
+        this.map.addLayer(searchSurface);
+        this.map.addLayer(searchLines);
+        this.map.addLayer(searchPoints);
+      }
+      if (e.detail != null) {        
+        searchGeoJson.features = e.detail.map(item=>{
+          return {
+              "type":"Feature",
+              "geometry": item.geojson,
+              "properties": {
+                "icon": (item.icon?this.getIcon(item.icon): 'star_11'),
+                "name": item.display_name.split(",").shift()
+              }
+          };
+        });
+      } else {
+        searchGeoJson.features = [];
+      }
+      this.map.getSource('map-search-geojson').setData(searchGeoJson);
+    }
   }
 }
 customElements.define('web-map', WebMap);
