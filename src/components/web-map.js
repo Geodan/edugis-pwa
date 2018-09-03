@@ -160,6 +160,9 @@ class WebMap extends LitElement {
     const layer = this.map.getLayer(id);
     if (layer) {
       layer.setLayoutProperty('visibility', (visible ? 'visible' : 'none'));
+      // update item in this.layerlist
+      const layerlistitem = this.layerlist.find(layerlistitem=>layerlistitem.id===id);
+      layerlistitem.layervisible = visible;
     }
   }
   updateLayerVisibility(e) {

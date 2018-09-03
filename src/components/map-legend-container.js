@@ -42,15 +42,7 @@ class MapLegendContainer extends LitElement {
   _render({opened, legendtitle, zoom, layerlist}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     const itemList = this.groupedArray.items.
-        filter(item=>item._ga_visible&&!(item.type==="background"))
-        .map(item=>{
-            const layerItem = layerlist.find(layer=>layer.id===item.id);
-            if (layerItem) {
-                item.layervisible=(layerItem.hasOwnProperty('layout') && (layerItem.layout.visibility!=='none'));
-            }
-            return item;
-        })
-        .reverse();
+        filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
     let result = html`
     <style>
         .container {
@@ -176,7 +168,9 @@ class MapLegendContainer extends LitElement {
       const item = this.groupedArray.getItem(e.detail._ga_id);
       if (item._ga_group) {
         // toggle group visibility
-        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id).map(item=>item.id);
+        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id)
+            .map(groupitem=>groupitem.id);
+        this.requestRender();
       } 
   }
 }
