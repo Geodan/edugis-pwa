@@ -9,7 +9,8 @@ class MapLegendContainer extends LitElement {
       layerlist: Array,
       legendtitle: String,
       visible: Boolean,
-      opened: Boolean
+      opened: Boolean,
+      zoom: Number
     }; 
   }
   constructor() {
@@ -19,13 +20,14 @@ class MapLegendContainer extends LitElement {
       this.layerlist = []
       this.visible = false;
       this.opened = false;
-      this.legendtitle = "Kaartlagen en legenda's"
+      this.legendtitle = "Kaartlagen en legenda's";
+      this.zoom = 0;
   }
   updateGroupedList()
   {
       this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'))
         .map(item=>{
-            item.layervisible=(item.hasOwnProperty('layout')?(item.layout.visibility==='visible'):true);
+            item.layervisible=(item.hasOwnProperty('layout')?(item.layout.visibility!=='none'):true);
             return item;
         });
       this.groupedArray.reset();
@@ -37,9 +39,18 @@ class MapLegendContainer extends LitElement {
       }
       return (props.visible);
   }
-  _render({opened, legendtitle}) {
+  _render({opened, legendtitle, zoom, layerlist}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
-    const itemList = this.groupedArray.items.filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
+    const itemList = this.groupedArray.items.
+        filter(item=>item._ga_visible&&!(item.type==="background"))
+        .map(item=>{
+            const layerItem = layerlist.find(layer=>layer.id===item.id);
+            if (layerItem) {
+                item.layervisible=(layerItem.hasOwnProperty('layout') && (layerItem.layout.visibility!=='none'));
+            }
+            return item;
+        })
+        .reverse();
     let result = html`
     <style>
         .container {
@@ -102,6 +113,7 @@ class MapLegendContainer extends LitElement {
                             itemid$="${item._ga_id}"
                             layervisible="${item.layervisible}"
                             open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
+                            zoom="${zoom}"
                             on-openclose="${e=>this.openClose(e)}",
                             on-litdragend="${e=>this.litDragEnd(e)}",
                             on-updatevisibility="${e=>this.updateVisibility(e)}"

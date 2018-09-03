@@ -9,7 +9,7 @@ import {arrowDropDownIcon} from './my-icons';
 import {noIcon} from './my-icons';
 
 import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, starIcon, tripOriginIcon as circleIcon, 
-    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon, landscapeIcon } from './my-icons';
+    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon, landscapeIcon, zoomInIcon, zoomOutIcon } from './my-icons';
 
 import './dragdrop/lit-draghandle';
 
@@ -23,7 +23,8 @@ class MapLegendItem extends LitElement {
       _ga_id: String,
       open: Boolean,
       itemcontainer: Object,
-      itemscroller: Object
+      itemscroller: Object,
+      zoom: Number
     }; 
   }
   constructor() {
@@ -33,6 +34,7 @@ class MapLegendItem extends LitElement {
       this.layervisible = true;
       this._ga_id = '';
       this.open = false;
+      this.zoom = 0;
   }
   _removeLayer(e) {
       this.dispatchEvent(
@@ -70,8 +72,18 @@ class MapLegendItem extends LitElement {
         )
       );
   }
-  _render({item, isbackground, layervisible, itemcontainer, itemscroller}) {
+  _render({item, isbackground, layervisible, itemcontainer, itemscroller, zoom}) {
     let layerIcon = undefined;
+    let layerViewIcon = '';
+    if (zoom > item.maxzoom) {
+        layerViewIcon = zoomOutIcon;
+    } else {
+        if (zoom < item.minzoom) {
+            layerViewIcon = zoomInIcon;
+        } else {
+            layerViewIcon = expandMoreIcon;
+        }
+    }
     if (!item._ga_group) {
         switch (item.type) {
             case "fill":
@@ -169,7 +181,7 @@ class MapLegendItem extends LitElement {
                 <i class="icon" title="opacity">${opacityIcon}</i>
                 ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
                 <i class="icon" title$="${layervisible?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${layervisible?visibilityOffIcon:visibilityIcon}</i>
-                ${item._ga_group?undefined:html`<i class="icon" title="show legend" on-click="${e=>this._toggleOpenClose(e)}">${expandMoreIcon}</i>`}
+                ${item._ga_group?undefined:html`<i class="icon" title="show legend" on-click="${e=>this._toggleOpenClose(e)}">${layerViewIcon}</i>`}
             </span>
         </div>
         <!--div class$="content ${item.type}">Layer legenda</div-->

@@ -224,7 +224,7 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
-  _render({haslegend, resolution, coordinates, displaylat, displaylng, datacatalog, layerlist, lastClickPoint}) {
+  _render({haslegend, resolution, coordinates, displaylat, displaylng, datacatalog, layerlist, lastClickPoint, zoom}) {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       :host {
@@ -244,7 +244,7 @@ class WebMap extends LitElement {
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
     <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-spinner webmap="${this.map}"></map-spinner>`
   }
   _didRender() {
@@ -302,6 +302,7 @@ class WebMap extends LitElement {
     const center = this.map.getCenter();
     this.displaylat = center.lat;
     this.displaylng = center.lng;
+    this.zoom = this.map.getZoom();
     this.dispatchEvent(new CustomEvent('moveend', 
       {detail: {
         center: center,
