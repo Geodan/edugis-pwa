@@ -20,7 +20,14 @@ class LanguageButton extends LitElement {
         <style>
           #langbutton {width: 100px; cursor: pointer} 
           div svg {display: inline-block; vertical-align: middle;}
-          select {width:100%}
+          select {width:100%;
+                border: 1px solid #d8e0e7;
+                border-radius: 2px;
+                background: #fff;
+                color: #6b7c93;
+                padding: 9.6px;
+                font-size: 14px;
+                height: 39.2px;
         </style>
         <select on-change="${e=>this.changeLangue(e)}">
           <option selected$="${language==="autodetect"?'selected':undefined}" value="autodetect">Browser</option>
