@@ -200,7 +200,9 @@ class WebMap extends LitElement {
   }
   setStyle(e) {
     this.map.setStyle(this.baseURI + e.detail.source);
-    this.layerlist = [...this.map.getStyle().layers];
+    this.map.on('load', ()=>{
+      this.layerlist = this.map.getStyle().layers;
+    });
   }
   moveLayer(e) {
     if (e.detail.beforeFirst) {

@@ -11,14 +11,17 @@ class MapSpinner extends LitElement {
   }
   constructor() {
       super();
-      this.visible = true;
+      this.waiting = false;
+      this.visible = false;
       this.webmap = null;
   }
   showSpinner() {
-    this.visible = true;
+    this.waiting = true;
+    setTimeout(()=>{if (this.waiting) this.visible=true;}, 300)
   }
   hideSpinner() {
     if(this.webmap.loaded()) {
+        this.waiting = false;
         this.visible = false;
     }
   }
