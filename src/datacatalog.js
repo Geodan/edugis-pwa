@@ -1,5 +1,23 @@
 export default 
     [
+        {"type": "group", "title": "Referentiekaarten", "sublayers": 
+        [
+            {"type": "style", "title": "Klokantech Basic (stijl)", "layerInfo": {
+                "id" : "klokantechbasic",
+                "type" : "style",
+                "source" : "styles/openmaptiles/klokantech-basic.json"
+            }},
+            {"type": "style", "title": "OSM Bright (stijl)", "layerInfo": {
+                "id" : "OsmBright",
+                "type" : "style",
+                "source" : "styles/openmaptiles/klokantech-basic.json"
+            }},
+            {"type": "style", "title": "Positron (stijl)", "layerInfo": {
+                "id" : "Positron",
+                "type" : "style",
+                "source" : "styles/openmaptiles/positron.json"
+            }}
+        ]},
         {"type": "group", "title": "WMS", "sublayers": 
         [
             {"type": "layer", "title": "PDOK Luchtfoto", "type":"wms", "layerInfo": {
@@ -127,7 +145,7 @@ export default
                     "id" : "gmterrain",
                     "type" : "raster",
                     "metadata" : {
-                        "insertgeodanmapskey" : true
+                        "insertgeodanmapskey" : "{key}"
                     },
                     "source" : {
                         "metadata" : {

@@ -1,4 +1,5 @@
 EduGISkeys = {
     mapbox: "pk.your-personal-public-mapbox-key",
-    geodanmaps: "your-personal-public-geodanmaps-key"
+    geodanmaps: "your-personal-public-geodanmaps-key",
+    freetilehosting: "your-personal-freetilehosting-key"
 }

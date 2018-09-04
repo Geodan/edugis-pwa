@@ -174,7 +174,7 @@ class WebMap extends LitElement {
       } else {
         this.updateSingleLayerVisibility(e.detail.layerid, e.detail.visible);
       }
-      this.map._update(true); // TODO: how refresh map wihtout calling private function?
+      this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
     }
   }
   removeLayer(e) {
@@ -196,6 +196,10 @@ class WebMap extends LitElement {
   }
   addLayer(e) {
     this.map.addLayer(e.detail);
+    this.layerlist = [...this.map.getStyle().layers];
+  }
+  setStyle(e) {
+    this.map.setStyle(this.baseURI + e.detail.source);
     this.layerlist = [...this.map.getStyle().layers];
   }
   moveLayer(e) {
@@ -230,6 +234,7 @@ class WebMap extends LitElement {
   _render({haslegend, resolution, coordinates, displaylat, displaylng, datacatalog, layerlist, lastClickPoint, zoom}) {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
+      @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       :host {
         display: inline-block;
         min-width: 200px;
@@ -245,7 +250,7 @@ class WebMap extends LitElement {
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
-    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
+    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}" on-setstyle="${e=>this.setStyle(e)}"></map-data-catalog>
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-spinner webmap="${this.map}"></map-spinner>`
@@ -293,9 +298,12 @@ class WebMap extends LitElement {
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
     this.map.on('click', (e)=>this.mapClick(e));
 
+    this.map.addControl(new MapboxDraw(), 'bottom-left');
+
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
     });
+    
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
   }
   _mapMoveEnd() {

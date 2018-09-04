@@ -201,9 +201,10 @@ class MapDataCatalog extends LitElement {
       if (dataid) {
         const detail = this.getDataInfo(this.datacatalog, dataid);
         if (detail.metadata && detail.metadata.insertgeodanmapskey) {
+          const keytemplate = detail.metadata.insertgeodanmapskey;
           detail.metadata.insertgeodanmapskey = false;
           if (detail.source.tiles) {
-            detail.source.tiles = detail.source.tiles.map(tileurl=>tileurl.replace('{key}', EduGISkeys.geodanmaps));
+            detail.source.tiles = detail.source.tiles.map(tileurl=>tileurl.replace(keytemplate, EduGISkeys.geodanmaps));
           }
           if (detail.source.url) {
             detail.source.url = detail.source.url.replace('{key}', EduGISkeys.geodanmaps);
@@ -231,9 +232,15 @@ class MapDataCatalog extends LitElement {
               }))
             })
           } else {
-            this.dispatchEvent(new CustomEvent('addlayer', 
-            {detail: this.getDataInfo(this.datacatalog, dataid)}
-          ));
+            if (detail.type == "style") {
+              this.dispatchEvent(new CustomEvent('setstyle',
+                {detail: this.getDataInfo(this.datacatalog, dataid)}
+              ));
+            } else {
+              this.dispatchEvent(new CustomEvent('addlayer', 
+                {detail: this.getDataInfo(this.datacatalog, dataid)}
+              ))
+            }
           }
         }
       }
