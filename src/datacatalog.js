@@ -10,12 +10,17 @@ export default
             {"type": "style", "title": "OSM Bright (stijl)", "layerInfo": {
                 "id" : "OsmBright",
                 "type" : "style",
-                "source" : "styles/openmaptiles/klokantech-basic.json"
+                "source" : "styles/openmaptiles/osmbright.json"
             }},
             {"type": "style", "title": "Positron (stijl)", "layerInfo": {
                 "id" : "Positron",
                 "type" : "style",
                 "source" : "styles/openmaptiles/positron.json"
+            }},
+            {"type": "style", "title": "Openstreetmap (stijl)", "layerInfo": {
+                "id" : "OsmRaster",
+                "type" : "style",
+                "source" : "styles/osmraster.json"
             }}
         ]},
         {"type": "group", "title": "WMS", "sublayers": 

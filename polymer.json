@@ -12,6 +12,8 @@
     "push-manifest.json",
     "styles/openmaptiles/positronworld.json",
     "styles/openmaptiles/osmbright.json",
+    "styles/openmaptiles/klokantech-basic.json",
+    "styles/osmraster.json",
     "node_modules/mapbox-gl/dist/mapbox-gl.css",
     "node_modules/mapbox-gl/dist/mapbox-gl.js",
     "node_modules/proj4/dist/proj4.js",

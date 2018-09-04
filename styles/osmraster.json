@@ -1,0 +1,42 @@
+{
+  "version": 8,
+  "name": "OsmRaster",
+  "metadata": {
+    "mapbox:autocomposite": false,
+    "mapbox:type": "template"
+  },
+  "center": [
+    4.913196, 
+    52.342259
+  ],  
+  "zoom": 0.8902641636539237,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "osmraster": {
+      "type" : "raster",
+      "tileSize" : 256,
+          "tiles": [
+              "http://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+          ],
+          "attribution": "&copy; OpenStreetMap contributors"
+    }
+  },
+  "sprite": "https://openmaptiles.github.io/positron-gl-style/sprite",
+  "glyphs": "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=2M7vcRHumvPIiYgsvvJ9",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "rgb(242,243,240)"
+      }
+    },
+    {
+      "id" : "openstreetmap",
+      "type" : "raster",
+      "source" : "osmraster"
+    }
+  ],
+  "id": "ciwf3o3u2008z2pmsdfasxq"
+}
