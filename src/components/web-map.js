@@ -198,11 +198,76 @@ class WebMap extends LitElement {
     this.map.addLayer(e.detail);
     this.layerlist = [...this.map.getStyle().layers];
   }
-  setStyle(e) {
-    this.map.setStyle(this.baseURI + e.detail.source);
-    this.map.on('load', ()=>{
+  restoreStyle()
+  {
+    if (this.extraLayers) {
+      this.extraLayers.forEach(layer=>{
+        this.map.addSource(layer.storedSource.id, layer.storedSource.source);
+        layer.storedSource = null;
+        delete layer.storedSource;
+        this.addLayer({detail:layer});
+      });
+      this.extraLayers = null;
       this.layerlist = this.map.getStyle().layers;
+    }
+  }
+  storeStyle()
+  {
+    this.extraLayers = this.map.getStyle().layers.filter(layer=>{
+      if (layer.source !== 'openmaptiles' && !layer.id.startsWith('gl-draw-') && layer.type !== "background" && !layer.id.startsWith('map-measure-')) {
+        const layerSource = this.map.getSource(layer.source);
+        let typedSource = {};
+        switch (layerSource.type) {
+          case "raster":
+            typedSource = {
+              type: "raster",
+              tileSize: layerSource.tileSize,
+              attribution: layerSource.attribution,
+              tiles: layerSource.tiles,
+              minzoom: layerSource.minzoom,
+              maxzoom: layerSource.maxzoom
+            }
+            break;
+          case "geojson":
+            typedSource = {
+              type: "geojson",
+              attribution: layerSource.attribution,
+              data: layerSource._data
+            }
+            break;
+          case "vector":
+            typedSource = {
+              id: layer.source,
+              type: "vector",
+              attribution: layerSource.attribution,
+              tiles: layerSource.tiles,
+              minzoom: layerSource.minzoom,
+              maxzoom: layerSource.maxzoom
+            }
+            break;
+          case "raster-dem":
+            typedSource = {
+              type: "raster-dem",
+              url: layerSource.url
+            }
+            break;
+        }
+        if (!typedSource.attribution) {
+          delete typedSource.attribution; // undefined attribution not allowed
+        }
+        layer.storedSource = {
+          id: layer.source,
+          source: typedSource
+        }
+        return true;
+      }
+      return false;
     });
+  }
+  setStyle(e) {
+    this.storeStyle();
+    this.map.setStyle(this.baseURI + e.detail.source);
+    setTimeout(()=>this.restoreStyle(), 1000); // how else?
   }
   moveLayer(e) {
     if (e.detail.beforeFirst) {
@@ -328,12 +393,14 @@ class WebMap extends LitElement {
     this.requestRender();
   }
   setLanguage(e) {
+    this.storeStyle();
     if (e.detail.language === "autodetect") {
       this.map.autodetectLanguage();
     } else {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
-    this.layerlist = [...this.map.getStyle().layers];
+    setTimeout(()=>this.restoreStyle(), 1000); // how else?
+    //this.layerlist = [...this.map.getStyle().layers];
   }
   mapClick(e) {
     this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];
