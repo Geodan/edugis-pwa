@@ -224,6 +224,7 @@ class WebMap extends LitElement {
               tileSize: layerSource.tileSize,
               attribution: layerSource.attribution,
               tiles: layerSource.tiles,
+              url: layerSource.url,
               minzoom: layerSource.minzoom,
               maxzoom: layerSource.maxzoom
             }
@@ -241,6 +242,7 @@ class WebMap extends LitElement {
               type: "vector",
               attribution: layerSource.attribution,
               tiles: layerSource.tiles,
+              url: layouerSource.url,
               minzoom: layerSource.minzoom,
               maxzoom: layerSource.maxzoom
             }
@@ -254,6 +256,12 @@ class WebMap extends LitElement {
         }
         if (!typedSource.attribution) {
           delete typedSource.attribution; // undefined attribution not allowed
+        }
+        if (!typedSource.url) {
+          delete typedSource.url;
+        }
+        if (!typedSource.tiles) {
+          delete typedSource.tiles;
         }
         layer.storedSource = {
           id: layer.source,
