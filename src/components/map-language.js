@@ -1,5 +1,8 @@
 import {languageIcon} from './my-icons';
 
+/* LanguageButton shows a button on the map. If pressed the button expands to show a list of languages.
+   When selected, a "languagechanged" event with the new language is dispatched.
+*/
 import {LitElement, html} from '@polymer/lit-element';
 class LanguageButton extends LitElement {
   static get properties() {
@@ -28,6 +31,7 @@ class LanguageButton extends LitElement {
                 padding: 9.6px;
                 font-size: 14px;
                 height: 39.2px;
+          }
         </style>
         <select on-change="${e=>this.changeLangue(e)}">
           <option selected$="${language==="autodetect"?'selected':undefined}" value="autodetect">Browser</option>
@@ -45,7 +49,7 @@ class LanguageButton extends LitElement {
     } else {
       return html`
         <style>
-          button {
+          button.mapboxgl-ctrl.mapboxgl-ctrl-group.mapboxgl-ctrl-language {
             width: 30px;
             height: 30px;
             display: block;
@@ -55,6 +59,8 @@ class LanguageButton extends LitElement {
             box-sizing: border-box;
             background-color: transparent;
             cursor: pointer;
+            margin-right: 0;
+            margin-top: 0;
           }
           button:hover {
             background-color: whitesmoke;
@@ -80,6 +86,10 @@ class LanguageButton extends LitElement {
 }
 customElements.define('language-button', LanguageButton);
 
+/* LanguageControl according to mapbox-gl control API.
+   LanguageControl inserts an <language-button></language-button> element
+   to the map 
+*/
 class LanguageControl {
   constructor(litElement, defaultLanguage) {
     this._litElement = litElement;
@@ -88,7 +98,7 @@ class LanguageControl {
   onAdd(map) {
     this.pitch = 0;
     this._map = map;
-    this._container = document.createElement('div');
+    this._container = document.createElement('span');
     this._container.innerHTML = `<language-button language="${this._defaultLanguage}"></language-button>`;
     this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-language';
     
@@ -107,9 +117,10 @@ class LanguageControl {
   }
 }
 
-import './map-iconbutton';
 
-
+/* element to be inserted at <web-map></web-map> 
+   this element initalizes and adds LanguageControl to the map
+*/
 class MapLanguage extends LitElement {
   static get properties() { 
     return { 
@@ -156,44 +167,7 @@ class MapLanguage extends LitElement {
     return props.webmap !== null;
   }
   _render({webmap, active, chooservisible, language}) {
-
-    /* if (this.control) {
-      if (chooservisible) {
-        this.control._container.innerHTML = `<div><style>#langbutton {width: 100px;} div svg {display: inline-block; vertical-align: middle;}select {width:100%}</style><select>
-        <option ${language==="autodetect"?'selected':''} value="autodetect">Browser</option>
-        <option ${language==="native"?'selected':''} value="native">International</option>
-        <option ${language==="en"?'selected':''} value="en">English</option>
-        <option ${language==="de"?'selected':''} value="de">Deutsch</option>
-        <option ${language==="fr"?'selected':''} value="fr">Français</option>
-        <option ${language==="cn"?'selected':''} value="cn">橘子</option>
-        <option ${language==="ru"?'selected':''} value="ru">русский</option>
-        <option ${language==="ar"?'selected':''} value="ar">العربية</option>
-      </select></div><div id="langbutton" title="Taal"><a>${languageIcon.getHTML()}<span>Kies taal</span></a></div>`
-      } else {
-        this.control._container.innerHTML = `<button id="langbutton" title="Taal">${languageIcon.getHTML()}</button>`
-      }
-    }*/
     return html``;
-/*
-
-    return html`${chooservisible?html`
-      <style>
-        .chooser {
-          position: absolute;
-          right: 40px;
-          background: white;
-          box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-          border-radius: 4px;
-        }
-      </style>
-      <div class="chooser" style$="right:${this.buttonrect.left - 10}px;top:${this.buttonrect.top}px"><select>
-        <option>autodetect</option>
-        <option>native</option>
-        <option>english</option>
-        <option>deutsch</option>
-      </select></div>`
-      :''}`;
-    */
   }
 }
 customElements.define('map-language', MapLanguage);
