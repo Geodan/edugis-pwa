@@ -23,19 +23,97 @@ class MapLegendContainer extends LitElement {
       this.legendtitle = "Kaartlagen en legenda's";
       this.zoom = 0;
   }
-  updateGroupedList()
+  compareItems(item1, item2) {
+    if (item1._ga_group && item2._ga_group) {
+        // compare groups
+        return (item1.source === item2.source && item1['source-layer'] === item2['source-layer']);
+    } else {
+        // compare layers
+        return (item1.id === item2.id);
+    }
+  }
+  syncNewItemWithOldItems(newIndex, oldItems) {
+    const newItem = this.groupedArray._items[newIndex];
+    if (newItem._ga_group) {
+        const oldGroupIndex = oldItems.findIndex((oldItem, oldIndex, oldItems)=>{
+            if (oldItem._ga_group && (oldItem.source === newItem.source) && (oldItem['source-layer'] === newItem['source-layer']))
+             {
+                // same group source and group source-layer
+                if (oldIndex > 0 && newIndex > 0) {
+                    // check if first item in in group is the same
+                    const firstOldItemInGroup = oldItems[oldIndex - 1];
+                    const firstNewItemInGroup = this.groupedArray._items[newIndex - 1];
+                    if (this.compareItems(firstOldItemInGroup, firstNewItemInGroup)) {
+                        // same first item in both groups
+                        return true;
+                    } else {
+                        // groups do not have same first item, check if they have the same last item
+                        const groupSource = newItem.source;
+                        const groupSourceLayer = newItem['source-layer'];
+                        for (oldIndex--; 
+                                oldIndex > -1 && oldItems[oldIndex].source===groupSource && oldItems[oldIndex]['source-layer']==groupSourceLayer; 
+                                    oldIndex--) {                                            
+                        }
+                        const lastOldItemInGroup = oldItems[oldIndex + 1];
+                        let localNewIndex = newIndex - 1;
+                        for (;
+                                localNewIndex > -1 && this.groupedArray._items[localNewIndex].source===groupSource && this.groupedArray._items[localNewIndex]['source-layer']==groupSourceLayer; 
+                                    localNewIndex--) { 
+                        }
+                        const lastNewItemInGroup = this.groupedArray._items[localNewIndex + 1];
+                        return this.compareItems(lastOldItemInGroup, lastNewItemInGroup);
+                    }
+                }
+            }
+            return false;
+        });
+        if (oldGroupIndex > -1) {
+            // group found in oldItems
+            newItem._ga_open = oldItems[oldGroupIndex]._ga_open;
+            newItem._ga_visible = oldItems[oldGroupIndex]._ga_visible;
+        }
+    } else {
+        const oldItem = oldItems.find(oldItem=>oldItem.id == newItem.id);
+        if (oldItem) {
+          newItem._ga_visible = oldItem._ga_visible;
+          newItem._ga_open = oldItem._ga_open;
+        }
+    }
+  }
+  updateGroupItems()
   {
-      this.groupedArray.items = this.layerlist.filter(item=>!item.id.startsWith('map-measure-'))
+      // set group layervisible to match item.layervisible, set item _ga_visible according to group open/close
+      let i = 0;
+      for (i = 0; i < this.groupedArray._items.length; i++) {
+          const item = this.groupedArray._items[i];
+          if (item._ga_group) {
+            this.groupedArray.updateGroupOpen(item, item._ga_open);
+            const hasInvisibleLayer = this.groupedArray.getAllItemsInGroup(item._ga_id).findIndex(item=>item.layervisible === false);
+            item.layervisible = (hasInvisibleLayer === -1);
+          }
+      }
+  }
+  updateGroupedList(newLayerlist, oldLayerlist)
+  {
+      const oldItems = this.groupedArray._items;
+      this.groupedArray.items = newLayerlist.filter(item=>!item.id.startsWith('map-measure-'))
         .map(item=>{
             item.layervisible=(item.hasOwnProperty('layout')?(item.layout.visibility!=='none'):true);
             return item;
         });
       this.groupedArray.reset();
+      if (oldItems && oldItems.length > 0) {
+        // set new item properties to old item properties
+        for (let newIndex = 0; newIndex < this.groupedArray._items.length; newIndex++) {
+            this.syncNewItemWithOldItems(newIndex, oldItems);
+        }
+      }
+      this.updateGroupItems();
       this.requestRender();
   }
   _shouldRender(props, changedProps, prevProps) {
       if (changedProps && changedProps.layerlist) {
-          this.updateGroupedList();
+          this.updateGroupedList(changedProps.layerlist, prevProps.layerlist);
       }
       return (props.visible);
   }
@@ -66,10 +144,6 @@ class MapLegendContainer extends LitElement {
         }
         .itemscroller {            
             overflow:auto;
-            display: flex;
-            flex: 1;
-            box-sizing: content-box;
-            min-height: 0px; /* IMPORTANT: you need this for non-chrome browsers */
         }
         .button {
             position: absolute;
@@ -96,25 +170,23 @@ class MapLegendContainer extends LitElement {
             ${legendtitle}
         </div>
         <div class="itemscroller">
-            <div class="itemlist">
-                <div id="draggableitems">
-                    ${itemList.map(item=>
-                        html`<map-legend-item item=${item} 
-                            itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
-                            itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
-                            itemid$="${item._ga_id}"
-                            layervisible="${item.layervisible}"
-                            open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
-                            zoom="${zoom}"
-                            on-openclose="${e=>this.openClose(e)}",
-                            on-litdragend="${e=>this.litDragEnd(e)}",
-                            on-updatevisibility="${e=>this.updateVisibility(e)}"
-                        ></map-legend-item>`)}
-                </div>
-                <div class="legendfooter">
-                    ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
-                        html`<map-legend-item item="${item}" layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
-                </div>
+            <div id="draggableitems">
+                ${itemList.map(item=>
+                    html`<map-legend-item item=${item} 
+                        itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
+                        itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
+                        itemid$="${item._ga_id}"
+                        layervisible="${item.layervisible}"
+                        open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
+                        zoom="${zoom}"
+                        on-openclose="${e=>this.openClose(e)}",
+                        on-litdragend="${e=>this.litDragEnd(e)}",
+                        on-updatevisibility="${e=>this.updateVisibility(e)}"
+                    ></map-legend-item>`)}
+            </div>
+            <div class="legendfooter">
+                ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
+                    html`<map-legend-item item="${item}" layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
             </div>
         </div>
     </div>
