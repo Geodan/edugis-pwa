@@ -96,7 +96,7 @@ class MapLegendContainer extends LitElement {
   updateGroupedList(newLayerlist, oldLayerlist)
   {
       const oldItems = this.groupedArray._items;
-      this.groupedArray.items = newLayerlist.filter(item=>!item.id.startsWith('map-measure-'))
+      this.groupedArray.items = newLayerlist.filter(item=>!item.id.startsWith('map-measure-')&&!item.id.startsWith('gl-draw-'))
         .map(item=>{
             item.layervisible=(item.hasOwnProperty('layout')?(item.layout.visibility!=='none'):true);
             return item;
