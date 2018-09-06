@@ -105,6 +105,16 @@ const searchSurface = {
   "filter": ['==', '$type', "Polygon"],
 };
 
+let StaticMode = {
+  onSetup :  function() {
+    this.setActionableState(); // default actionable state is false for all actions
+    return {};
+  },
+  toDisplayFeatures : function(state, geojson, display) {
+    display(geojson);
+  }
+}
+
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
   static get properties() { 
@@ -373,10 +383,15 @@ class WebMap extends LitElement {
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
     this.map.on('click', (e)=>this.mapClick(e));
 
-    this.map.addControl(new MapboxDraw(), 'bottom-left');
+    const modes = MapboxDraw.modes;
+    modes.static = StaticMode;
+
+    this.draw = new MapboxDraw({ modes: modes, boxSelect: false });
+    this.map.addControl(this.draw, 'bottom-left');
 
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
+      this.draw.changeMode('static');
     });
     
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
