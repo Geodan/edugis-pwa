@@ -228,13 +228,61 @@ export default
                 },
                 "source" : {
                     "type": "geojson",
-                    "data": "http://tiles.edugis.nl/geojson/cbs_wijk_2017_gegeneraliseerd_topojson.json",
+                    "data": "http://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
-                    "fill-color": "#cec",
+                    'fill-color': {
+                        'type': 'exponential',
+                        'property': 'bevolkingsdichtheid',
+                        'stops': [
+                            [0, '#f7fcf0'],
+                            [160, '#e0f3db'],
+                            [320, '#ccebc5'],
+                            [480, '#a8ddb5'],
+                            [640, '#7bccc4'],
+                            [800, '#4eb3d3'],
+                            [960, '#2b8cbe'],
+                            [1120, '#0868ac'],
+                            [1280, '#084081']
+                        ]
+                    },
                     "fill-opacity": 0.6,
                     "fill-outline-color": "#444"
+                }
+            }},
+            {"type": "layer", "title": "CBS bevolkingsdichtheid 2.5D", "layerInfo": {
+                "id" : "cbswijken2017inwoners",
+                "type": "fill-extrusion",
+                "metadata" : {
+                    "topojson" : true
+                },
+                "source" : {
+                    "type": "geojson",
+                    "data": "http://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
+                    "attribution": "cbs/pdok"
+                },
+                "paint": {
+                    'fill-extrusion-color': {
+                        'type': 'exponential',
+                        'property': 'bevolkingsdichtheid',
+                        'stops': [
+                            [0, '#f7fcf0'],
+                            [160, '#e0f3db'],
+                            [320, '#ccebc5'],
+                            [480, '#a8ddb5'],
+                            [640, '#7bccc4'],
+                            [800, '#4eb3d3'],
+                            [960, '#2b8cbe'],
+                            [1120, '#0868ac'],
+                            [1280, '#084081']
+                        ]
+                    },
+                    "fill-extrusion-opacity": 0.6,
+                    "fill-extrusion-height": {
+                        "property": "bevolkingsdichtheid",
+                        "type": "identity"
+                      }
                 }
             }}
         ]},
