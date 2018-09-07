@@ -252,7 +252,7 @@ class WebMap extends LitElement {
               type: "vector",
               attribution: layerSource.attribution,
               tiles: layerSource.tiles,
-              url: layouerSource.url,
+              url: layerSource.url,
               minzoom: layerSource.minzoom,
               maxzoom: layerSource.maxzoom
             }
@@ -284,7 +284,11 @@ class WebMap extends LitElement {
   }
   setStyle(e) {
     this.storeStyle();
-    this.map.setStyle(this.baseURI + e.detail.source);
+    if (e.detail.source.split('/')[0].indexOf(':') === -1) {
+      this.map.setStyle(this.baseURI + e.detail.source);
+    } else {
+      this.map.setStyle(e.detail.source);
+    }
     setTimeout(()=>this.restoreStyle(), 1000); // how else?
   }
   moveLayer(e) {

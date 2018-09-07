@@ -17,6 +17,11 @@ export default
                 "type" : "style",
                 "source" : "styles/openmaptiles/positron.json"
             }},
+            {"type": "style", "title": "MapBox Streets (stijl)", "layerInfo": {
+                "id" : "streets-v8",
+                "type" : "style",
+                "source" : "mapbox://styles/mapbox/streets-v8"
+            }},
             {"type": "style", "title": "Openstreetmap (stijl)", "layerInfo": {
                 "id" : "OsmRaster",
                 "type" : "style",
