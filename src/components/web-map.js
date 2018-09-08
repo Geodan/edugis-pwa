@@ -224,7 +224,7 @@ class WebMap extends LitElement {
   storeStyle()
   {
     this.extraLayers = this.map.getStyle().layers.filter(layer=>{
-      if (layer.source !== 'openmaptiles' && !layer.id.startsWith('gl-draw-') && layer.type !== "background" && !layer.id.startsWith('map-measure-')) {
+      if (layer.source !== 'openmaptiles' && layer.source != 'composite' && !layer.id.startsWith('gl-draw-') && layer.type !== "background" && !layer.id.startsWith('map-measure-')) {
         const layerSource = this.map.getSource(layer.source);
         let typedSource = {};
         switch (layerSource.type) {
