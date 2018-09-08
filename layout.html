@@ -78,6 +78,7 @@
             overflow-x: hidden; /* Disable horizontal scroll */
             padding-top: 60px; /* Place content 60px from the top */
             transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+            opacity: 0.8;
         }
         .left {
             left: 0;
@@ -89,6 +90,14 @@
         }
         .visible {
             width: 300px;
+        }
+        .mapboxgl-control-container {
+            position: absolute;
+            height: 100%;
+            left: 0;
+            right: 0;
+            transition: 0.5s;
+            pointer-events: none;
         }
         .spaceleft {
             margin-left: 300px;
@@ -116,6 +125,9 @@ function setup()
         center: [4.913196, 52.342259],
         zoom: 8
     });
+    map.on('load', function(){
+        map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+    })
     let waiting = false;
     window.onresize = function() {
         if (waiting) {
@@ -147,7 +159,7 @@ function setup()
 function toggleBar(side)
 {
     document.querySelector('.sidebar.'+ side).classList.toggle('visible');
-    const mapdiv = document.querySelector('.map');
+    const mapdiv = document.querySelector('.mapboxgl-control-container');
     mapdiv.classList.toggle('space'+side);
     
 }
