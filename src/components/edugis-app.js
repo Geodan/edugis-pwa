@@ -9,13 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 import { LitElement, html } from '@polymer/lit-element';
-import { connect } from 'pwa-helpers/connect-mixin.js';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
-//import { installOfflineWatcher } from 'pwa-helpers/network.js';
-//import { updateMetadata } from 'pwa-helpers/metadata.js';
-
-// This element is connected to the Redux store.
-import { store } from '../store.js';
 
 // These are the actions needed by this element.
 import {
@@ -31,7 +25,22 @@ import './snack-bar.js';
 
 import datacatalog from '../datacatalog.js';
 
-class EduGISApp extends connect(store)(LitElement) {
+class EduGISApp extends (LitElement) {
+  static get properties() {
+    return {
+      appTitle: String,
+      _page: String,
+      _drawerOpened: Boolean,
+      _snackbarOpened: Boolean,
+      _offline: Boolean
+    }
+  }
+  constructor() {
+    super();
+    // To force all event listeners for gestures to be passive.
+    // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
+    setPassiveTouchGestures(true);
+  }
   _render({appTitle, _page, _drawerOpened, _snackbarOpened, _offline}) {
     // Anything that's related to rendering should be done in here.
     return html`
@@ -145,23 +154,6 @@ footer {
     <web-map navigation="top-right" scalebar="true" geolocate="top-right" coordinates="true" datacatalog="${datacatalog}" haslegend="true" accesstoken="${EduGISkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2018 EduGIS, Geodan</footer>
     `;
-  }
-
-  static get properties() {
-    return {
-      appTitle: String,
-      _page: String,
-      _drawerOpened: Boolean,
-      _snackbarOpened: Boolean,
-      _offline: Boolean
-    }
-  }
-
-  constructor() {
-    super();
-    // To force all event listeners for gestures to be passive.
-    // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
-    setPassiveTouchGestures(true);
   }
 
   _firstRendered() {

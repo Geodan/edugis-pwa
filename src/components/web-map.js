@@ -21,9 +21,9 @@ import './map-layer.js';
 import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
-import './map-3d';
 import './map-language';
 import './map-search';
+import './map-button-ctrl';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, locationOnIcon as pointIcon } from './my-icons';
@@ -114,6 +114,8 @@ let StaticMode = {
     display(geojson);
   }
 }
+
+import {menuIcon} from './my-icons';
 
 import {LitElement, html} from '@polymer/lit-element';
 class WebMap extends LitElement {
@@ -335,7 +337,7 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}" clickpoint="${lastClickPoint?lastClickPoint:undefined}"></map-coordinates>
     <map-measure webmap="${this.map}" class="centertop"></map-measure>
-    <map-3d webmap="${this.map}" active="true"></map-3d>
+    <map-button-ctrl webmap="${this.map}" position="top-right" icon="${html`<b>3D</b>`}" controlid="3D" tooltip="Pitch" on-mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
@@ -386,6 +388,7 @@ class WebMap extends LitElement {
     this._mapMoveEnd();
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
     this.map.on('click', (e)=>this.mapClick(e));
+    
 
     const modes = MapboxDraw.modes;
     modes.static = StaticMode;
@@ -397,9 +400,9 @@ class WebMap extends LitElement {
       this.layerlist = this.map.getStyle().layers;
       this.draw.changeMode('static');
     });
-    
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
   }
+  
   _mapMoveEnd() {
     const bounds = this.map.getBounds();
     this.viewbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
