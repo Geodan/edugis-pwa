@@ -26,7 +26,7 @@ import './map-search';
 import './map-button-ctrl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { cloudDownloadIcon, locationOnIcon as pointIcon } from './my-icons';
+import { cloudDownloadIcon, infoIcon } from './my-icons';
 
 
 function getResolution (map)
@@ -337,14 +337,18 @@ class WebMap extends LitElement {
     <div class="webmap"></div>
     <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}" clickpoint="${lastClickPoint?lastClickPoint:undefined}"></map-coordinates>
     <map-measure webmap="${this.map}" class="centertop"></map-measure>
-    <map-button-ctrl webmap="${this.map}" position="top-right" icon="${html`<b>3D</b>`}" controlid="3D" tooltip="Pitch" on-mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
+    <map-button-ctrl controlid="3D" webmap="${this.map}" position="top-right" icon="${html`<b>3D</b>`}" tooltip="Pitch" on-mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
     <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}" on-setstyle="${e=>this.setStyle(e)}"></map-data-catalog>
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
     <map-spinner webmap="${this.map}"></map-spinner>`
+  }
+  toggleInfoMode() {
+    console.log('toggle info mode');
   }
   _didRender() {
     ;
