@@ -58,6 +58,9 @@
             box-sizing: border-box;
             padding-left: 1em;
         }
+        .titlebar img {
+            vertical-align: middle;
+        }
         .footer {
             position: fixed;
             display: block;
@@ -84,10 +87,12 @@
         .left {
             left: 0;
             box-shadow: 2px 0px 10px grey;
+            padding-right: 4px;
         }
         .right { 
             right: 0;
             box-shadow: -2px 0px 10px grey;
+            /* padding-left: 4px; */
         }
         .visible {
             width: 300px;
@@ -239,9 +244,10 @@ function toggleDownload()
         </div>
         
         <div class="sidebar right">
-            Jawel!
+            Legenda en zo...
         </div>
         <div class="titlebar">
+            <img src="images/edugislogo.png" alt="logo"/>
             <button class="icon-btn menu" onclick="toggleBar('left')">
                 <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
             </button>

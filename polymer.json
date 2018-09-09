@@ -19,7 +19,8 @@
     "node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.js",
     "node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css",
     "node_modules/proj4/dist/proj4.js",
-    "src/keys.js"
+    "src/keys.js",
+    "layout.html"
   ],
   "builds": [
     {
