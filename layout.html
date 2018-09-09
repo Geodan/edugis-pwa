@@ -75,8 +75,9 @@
             top: 0; /* Stay at the top */
             bottom: 0;
             background-color: white;
-            overflow-x: hidden; /* Disable horizontal scroll */
-            padding-top: 60px; /* Place content 60px from the top */
+            overflow-y: hidden; /* Disable vertical scroll */
+            margin-top: 40px; /* Place content 40px from the top */
+            margin-bottom: 20px;
             transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
             opacity: 0.8;
         }
@@ -105,14 +106,40 @@
         .spaceright {
             margin-right: 300px;
         }
-        .menu-btn {
+        .icon-btn {
             background: none;
             border: none;
-            fill: white;
             cursor: pointer;
             height: 24px;
             width: 24px;
             padding: 1px;
+            vertical-align:text-bottom;
+        }
+        .rbutton {
+            position: absolute;
+            right: 10px;
+        }
+        .menu {
+            fill: white;
+        }
+        .collapsible {
+            border-top: 1px solid lightblue;
+            background-color: whitesmoke;
+            height: 26px;
+            vertical-align: middle;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.5s;
+        }
+        .contentvisible {
+            overflow: auto;
+        }
+        .hidden {
+            visibility: hidden;
         }
     </style>
 
@@ -127,34 +154,8 @@ function setup()
     });
     map.on('load', function(){
         map.addControl(new mapboxgl.ScaleControl(), 'bottom-left');
+        map.addControl(new mapboxgl.NavigationControl(), 'top-right');
     })
-    let waiting = false;
-    window.onresize = function() {
-        if (waiting) {
-            return;
-        }
-        var mapdiv = document.querySelector('#map');
-        if (mapdiv.style.marginLeft !== '' || mapdiv.style.marginRight !== ''){
-            // restore side bars
-            mapdiv.style.marginLeft = '';
-            mapdiv.style.marginRight = ''
-        } else {
-            if (mapdiv.classList.contains('spaceleft') || mapdiv.classList.contains('spaceright')) {
-                // remove side bars
-                mapdiv.style.marginLeft = '0';
-                mapdiv.style.marginRight = '0';
-                // trigger new onresize
-                waiting = true;
-                setTimeout(function() {
-                    waiting = false;
-                    var event = document.createEvent('HTMLEvents');
-                    event.initEvent('resize', true, false);
-                    mapdiv.dispatchEvent(event);
-                }, 500)
-            }
-        
-        }
-    }
 }
 function toggleBar(side)
 {
@@ -163,6 +164,20 @@ function toggleBar(side)
     mapdiv.classList.toggle('space'+side);
     
 }
+function toggleDownload()
+{
+    const downloadcontent = document.querySelector('#download');
+    downloadcontent.classList.toggle('contentvisible');
+    if (downloadcontent.classList.contains('contentvisible')) {
+        downloadcontent.style.maxHeight = "calc(100% - 4.5em)";
+    } else {
+        downloadcontent.style.maxHeight = "";
+    }
+    setTimeout(()=>{
+        document.querySelector('#downloadcollapsible .expand').classList.toggle('hidden');
+        document.querySelector('#downloadcollapsible .collapse').classList.toggle('hidden');
+    }, 500);
+}
 </script>
 
 </head>
@@ -170,43 +185,69 @@ function toggleBar(side)
     <div class="edugis-app">
         <div class="map" id="map"></div>
         <div class="sidebar left">
-            <div class="panel">
-                <div class="header">
-                    <a href="#">Search</a>
-                </div>
-                <div class="content">
+            <div class="collapsible">
+            
+                <a href="#">Search</a>
+                <button class="icon-btn rbutton expand">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </button>
+                <button class="icon-btn rbutton collapse hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h12v2H6z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+                </button>
+            </div>
+            <div class="content">
 
-                </div>
             </div>
-            <div class="panel">
-                <div class="header">
-                    <a href="#">Data</a>
-                </div>
-                <div class="content">
-                    
-                </div>
+            <div id="downloadcollapsible" class="collapsible" onclick="toggleDownload()">                
+                    <button class="icon-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                    </button>
+                    Download
+                    <button class="icon-btn rbutton expand">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </button>
+                    <button class="icon-btn rbutton collapse hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h12v2H6z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+                    </button>
             </div>
-            <div class="panel">
-                <div class="header">
+            <div id="download" class="content">
+                <ul>
+                    <li>data 1</li>
+                    <li>data 2</li>
+                    <li>data 3</li>
+                    <li>data 4</li>
+                    <li>data 5</li>
+                    <li>data 6</li>
+                    <li>data 7</li>
+                    <li>data 8</li>
+                    <li>data 9</li>
+                    <li>data 10</li>
+                </ul>
+            </div>
+            <div class="collapsible">
                     <a href="#">Info</a>
-                </div>
-                <div class="content">
-                    
-                </div>
+                    <button class="icon-btn rbutton expand">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                    </button>
+                    <button class="icon-btn rbutton collapse hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h12v2H6z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+                    </button>
+            </div>
+            <div class="content">
+                   
             </div>
         </div>
         
-        </div>
         <div class="sidebar right">
             Jawel!
         </div>
         <div class="titlebar">
-            <button class="menu-btn" onclick="toggleBar('left')">
-               <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+            <button class="icon-btn menu" onclick="toggleBar('left')">
+                <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
             </button>
-            <button class="menu-btn" onclick="toggleBar('right')">
-                    <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
-                 </button>
+            <button class="icon-btn menu" onclick="toggleBar('right')">
+                <svg height="24" viewBox="0 0 24 24" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+            </button>
         </div>
         <div class="footer"></div>
         <div class="snackbar"></div>
