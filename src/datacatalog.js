@@ -2,30 +2,35 @@ export default
     [
         {"type": "group", "title": "Referentiekaarten", "sublayers": 
         [
-            {"type": "style", "title": "Klokantech Basic (stijl)", "layerInfo": {
+            {"type": "reference", "title": "Klokantech Basic (stijl)", "layerInfo": {
                 "id" : "klokantechbasic",
                 "type" : "style",
-                "source" : "styles/openmaptiles/klokantech-basic.json"
+                "source" : "styles/openmaptiles/klokantech-basic.json",
+                "metadata" : {"reference": true}
             }},
-            {"type": "style", "title": "OSM Bright (stijl)", "layerInfo": {
+            {"type": "reference", "title": "OSM Bright (stijl)", "layerInfo": {
                 "id" : "OsmBright",
                 "type" : "style",
-                "source" : "styles/openmaptiles/osmbright.json"
+                "source" : "styles/openmaptiles/osmbright.json",
+                "metadata" : {"reference": true}
             }},
-            {"type": "style", "title": "Positron (stijl)", "layerInfo": {
+            {"type": "reference", "title": "Positron (stijl)", "layerInfo": {
                 "id" : "Positron",
                 "type" : "style",
-                "source" : "styles/openmaptiles/positron.json"
+                "source" : "styles/openmaptiles/positron.json",
+                "metadata" : {"reference": true}
             }},
-            {"type": "style", "title": "MapBox Streets (stijl)", "layerInfo": {
+            {"type": "reference", "title": "MapBox Streets (stijl)", "layerInfo": {
                 "id" : "streets-v8",
                 "type" : "style",
-                "source" : "mapbox://styles/mapbox/streets-v8"
+                "source" : "mapbox://styles/mapbox/streets-v8",
+                "metadata" : {"reference": true}
             }},
-            {"type": "style", "title": "Openstreetmap (stijl)", "layerInfo": {
+            {"type": "reference", "title": "Openstreetmap (stijl)", "layerInfo": {
                 "id" : "OsmRaster",
                 "type" : "style",
-                "source" : "styles/osmraster.json"
+                "source" : "styles/osmraster.json",
+                "metadata" : {"reference": true}
             }}
         ]},
         {"type": "group", "title": "WMS", "sublayers": 
@@ -53,7 +58,7 @@ export default
                             "http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
                             "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
                         ],
-                        "attribution": "Edugis"
+                        "attribution": "EduGIS"
                     }
                 }
             },
@@ -167,16 +172,10 @@ export default
             {"type": "layer", "title": "Terrein (Geodan Maps)", "type":"wmts", "layerInfo": {
                     "id" : "gmterrain",
                     "type" : "raster",
-                    "metadata" : {
-                        "insertgeodanmapskey" : "{key}"
-                    },
                     "source" : {
-                        "metadata" : {
-                            "test": true
-                        },
                         "type": "raster",
                         "tileSize" : 256,            
-                        "tiles": [ "https://acc.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={key}"],
+                        "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
                         "attribution": "&copy; GeodanMaps"
                     }
                 }

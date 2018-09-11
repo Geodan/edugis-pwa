@@ -131,8 +131,6 @@ function toWgs84(geojson, from, projs) {
   return reproject(geojson, from, proj4.WGS84, projs);
 }
 
-
-
 import {LitElement, html} from '@polymer/lit-element';
 class MapDataCatalog extends LitElement {
   static get properties() { 
@@ -145,23 +143,19 @@ class MapDataCatalog extends LitElement {
     this.map = null;
     this.datacatalog = null;
   }
-  /*_createRoot() {
-    console.log('_createRoot()');
-    return this;
-  }*/
   _shouldRender(props, changedProps, prevProps) {
     return (props.datacatalog != null);
   }
   renderTree(nodeList) {
-    return html`<ul>${nodeList.map(elem=>{
-        if (elem.type=="group"){
-            return html`<li>${elem.title}${this.renderTree(elem.sublayers)}</li>`
+    return html`<ul>${nodeList.map(node=>{
+        if (node.type==="group"){
+            return html`<li>${node.title}${this.renderTree(node.sublayers)}</li>`
         } else {
-            return html`<li class="data" on-click="${(e)=>{this.handleClick(e, (elem.layerInfo?elem.layerInfo.id:undefined), )}}">${elem.title}</li>`;
+            return html`<li class="data" on-click="${(e)=>{this.handleClick(e, node)}}">${node.title}</li>`;
         }
     })}</ul>`;
   }
-  _render({map, datacatalog}) {
+  _render({datacatalog}) {
     return html`<style>
       :host {
         display: inline-block;
@@ -175,9 +169,6 @@ class MapDataCatalog extends LitElement {
     <div>
         ${this.renderTree(datacatalog)}
     </div>`
-  }
-  _didRender() {
-    ;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;
@@ -197,55 +188,60 @@ class MapDataCatalog extends LitElement {
     });
     return result;
   }
-  handleClick(e, dataid) {
-      if (dataid) {
-        const detail = this.getDataInfo(this.datacatalog, dataid);
-        if (detail.metadata && detail.metadata.insertgeodanmapskey) {
-          const keytemplate = detail.metadata.insertgeodanmapskey;
-          detail.metadata.insertgeodanmapskey = false;
-          if (detail.source.tiles) {
-            detail.source.tiles = detail.source.tiles.map(tileurl=>tileurl.replace(keytemplate, EduGISkeys.geodanmaps));
-          }
-          if (detail.source.url) {
-            detail.source.url = detail.source.url.replace('{key}', EduGISkeys.geodanmaps);
-          }
-        }
-        if (detail.source.type == "geojson" && detail.metadata && detail.metadata.topojson && !detail.metadata.originaldata) {
-          fetch(detail.source.data).then(data=> {
-            data.json().then(json=>{
-              // replace url with topojson first object converted to geojson
-              detail.metadata.originaldata = detail.source.data;
-              detail.source.data = topojson.feature(json, json.objects[Object.keys(json.objects)[0]]);
-              this.dispatchEvent(new CustomEvent('addlayer', {
-                detail: detail
-              }))
-            })
-          }).catch(reason=>console.log(reason));
+  insertServiceKey(layerInfo) {
+    /* replace '{geodanmapskey}' by EduGISkeys.geodanmaps, '{freetilehostingkey}' by EduGISkeys.freetilehosting etc. */
+    for (let key in EduGISkeys) {
+      const keyTemplate = `{${key}key}`;
+      if (layerInfo.source.tiles) {
+        layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace(keyTemplate, EduGISkeys[key]));
+      }
+      if (layerInfo.source.url) {
+        layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, EduGISkeys[key]);
+      }
+    }
+  }
+  addTopoJsonLayer(layerInfo) {
+    fetch(layerInfo.source.data).then(data=> {
+      data.json().then(json=>{
+        // replace url with topojson first object converted to geojson
+        layerInfo.metadata.originaldata = layerInfo.source.data;
+        layerInfo.source.data = topojson.feature(json, json.objects[Object.keys(json.objects)[0]]);
+        this.dispatchEvent(new CustomEvent('addlayer', {
+          detail: layerInfo
+        }))
+      })
+    }).catch(reason=>console.log(reason));
+  }
+  addProjectedGeoJsonLayer(layerInfo) {
+    const crs = layerInfo.metadata.crs;
+    fetch(layerInfo.source.data).then(data=>data.json()).then(json=>{
+      layerInfo.metadata.originaldata = layerInfo.source.data;
+      layerInfo.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
+      this.dispatchEvent(new CustomEvent('addlayer', {
+        detail: layerInfo
+      }))
+    })
+  }
+  handleClick(e, node) {
+    if (node.layerInfo && node.layerInfo.id) {
+      const layerInfo = node.layerInfo;
+      this.insertServiceKey(layerInfo);
+      if (!layerInfo.metadata) {
+        layerInfo.metadata = {};
+      }
+      layerInfo.metadata.reference = (node.type === "reference");
+      if (layerInfo.source.type == "geojson" && layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
+        this.addTopoJsonLayer(layerInfo);
+      } else {
+        if (layerInfo.source.type == "geojson" && layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
+          this.addProjectedGeoJsonLayer(layerInfo);
         } else {
-          if (detail.source.type == "geojson" && detail.metadata && detail.metadata.crs && !detail.metadata.originaldata) {
-            const crs = detail.metadata.crs;
-            fetch(detail.source.data).then(data=>data.json()).then(json=>{
-              detail.metadata.originaldata = detail.source.data;
-              detail.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
-              this.dispatchEvent(new CustomEvent('addlayer', {
-                detail: detail
-              }))
-            })
-          } else {
-            if (detail.type == "style") {
-              this.dispatchEvent(new CustomEvent('setstyle',
-                {detail: this.getDataInfo(this.datacatalog, dataid)}
-              ));
-            } else {
-              this.dispatchEvent(new CustomEvent('addlayer', 
-                {detail: this.getDataInfo(this.datacatalog, dataid)}
-              ))
-            }
-          }
+          this.dispatchEvent(new CustomEvent('addlayer', 
+            {detail: layerInfo}
+          ))
         }
       }
-  }
-  _firstRendered() {
+    }
   }
 }
 customElements.define('map-data-catalog', MapDataCatalog);

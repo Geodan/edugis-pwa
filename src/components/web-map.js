@@ -206,9 +206,21 @@ class WebMap extends LitElement {
       }
     }
   }
+  removeReferenceLayers()
+  {
+    this.map.getStyle().layers.filter(layer=>layer.metadata && layer.metadata.reference).forEach(layer=>this.map.removeLayer(layer));
+  }
   addLayer(e) {
-    this.map.addLayer(e.detail);
-    this.layerlist = [...this.map.getStyle().layers];
+    const layerInfo = e.detail;
+    if (layerInfo.type === 'style') {
+      this.setStyle(layerInfo);
+    } else {
+      if (layerInfo.metadata && layerInfo.metadata.reference) {
+        this.removeReferenceLayers();
+      }
+      this.map.addLayer(e.detail);
+      this.layerlist = [...this.map.getStyle().layers];
+    }
   }
   restoreStyle()
   {
@@ -226,7 +238,12 @@ class WebMap extends LitElement {
   storeStyle()
   {
     this.extraLayers = this.map.getStyle().layers.filter(layer=>{
-      if (layer.source !== 'openmaptiles' && layer.source != 'composite' && !layer.id.startsWith('gl-draw-') && layer.type !== "background" && !layer.id.startsWith('map-measure-')) {
+      if (layer.source !== 'openmaptiles'
+            && layer.source != 'composite'
+            && !layer.id.startsWith('gl-draw-') 
+            && layer.type !== "background" 
+            && !layer.id.startsWith('map-measure-')
+            && (!layer.metadata || !layer.metadata.reference)) {
         const layerSource = this.map.getSource(layer.source);
         let typedSource = {};
         switch (layerSource.type) {
@@ -284,12 +301,12 @@ class WebMap extends LitElement {
       return false;
     });
   }
-  setStyle(e) {
+  setStyle(layerInfo) {
     this.storeStyle();
-    if (e.detail.source.split('/')[0].indexOf(':') === -1) {
-      this.map.setStyle(this.baseURI + e.detail.source);
+    if (layerInfo.source.split('/')[0].indexOf(':') === -1) {
+      this.map.setStyle(this.baseURI + layerInfo.source);
     } else {
-      this.map.setStyle(e.detail.source);
+      this.map.setStyle(layerInfo.source);
     }
     setTimeout(()=>this.restoreStyle(), 1000); // how else?
   }

@@ -185,7 +185,11 @@ class MapMeasure extends LitElement {
       } else {
         this.measureInfo = (pointCount == 0 ? "Klik beginpunt op kaart" : "Klik volgend punt op kaart");
       }
-      map.getSource('map-measure-geojson').setData(this.geojson);
+      try {
+        map.getSource('map-measure-geojson').setData(this.geojson);
+      } catch(e) {
+        console.warn('map-measure source-layer missing');
+      }
     };
   };
   toggleActive(e) {
