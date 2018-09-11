@@ -11,23 +11,23 @@ class MapSpinner extends LitElement {
   }
   constructor() {
       super();
-      this.waiting = false;
+      this.delay = false;
       this.visible = false;
       this.webmap = null;
   }
   showSpinner() {
     // prevent short-duration spinners
-    this.waiting = true;
+    this.delay = true;
     setTimeout(()=>
       {
-        if (this.waiting) {
+        if (this.delay) {
           this.visible = true;
         }
       }, 300)
   }
   hideSpinner() {
     if(this.webmap.loaded()) {
-        this.waiting = false;
+        this.delay = false;
         this.visible = false;
     }
   }
