@@ -218,7 +218,8 @@ class WebMap extends LitElement {
       if (layerInfo.metadata && layerInfo.metadata.reference) {
         this.removeReferenceLayers();
       }
-      this.map.addLayer(e.detail);
+      layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
+      this.map.addLayer(layerInfo);
       this.layerlist = [...this.map.getStyle().layers];
     }
   }
@@ -238,12 +239,7 @@ class WebMap extends LitElement {
   storeStyle()
   {
     this.extraLayers = this.map.getStyle().layers.filter(layer=>{
-      if (layer.source !== 'openmaptiles'
-            && layer.source != 'composite'
-            && !layer.id.startsWith('gl-draw-') 
-            && layer.type !== "background" 
-            && !layer.id.startsWith('map-measure-')
-            && (!layer.metadata || !layer.metadata.reference)) {
+      if (layer.metadata && layer.metadata.userlayer) {
         const layerSource = this.map.getSource(layer.source);
         let typedSource = {};
         switch (layerSource.type) {
@@ -301,12 +297,28 @@ class WebMap extends LitElement {
       return false;
     });
   }
+  loadStyle(url) {
+    if (url.indexOf('mapbox:') === 0) {
+      //https://api.mapbox.com/styles/v1/mapbox/streets-v8?access_token=pk.eyJ1IjoiYW5uZWIiLCJhIjoiY2psZmxmdHlqMHZjOTNrcWdoMjJpdXdhMiJ9.dPjSb4FBQ-W4d01xF6OCnA
+      url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
+    }
+    fetch(url).then(data=>data.json()).then(style=>{
+      const layers = style.layers;
+      style.layers = layers.filter(layer=>layer.type==='background');
+      this.map.once('style.load', ()=>{
+        layers.filter(layer=>(layer.type && (layer.type !=='background'))).forEach(layer=>this.map.addLayer(layer));
+      });
+      this.map.setStyle(style);
+    })
+  }
   setStyle(layerInfo) {
     this.storeStyle();
     if (layerInfo.source.split('/')[0].indexOf(':') === -1) {
-      this.map.setStyle(this.baseURI + layerInfo.source);
+      //this.map.setStyle(this.baseURI + layerInfo.source);
+      this.loadStyle(this.baseURI + layerInfo.source);
     } else {
-      this.map.setStyle(layerInfo.source);
+      //this.map.setStyle(layerInfo.source);
+      this.loadStyle(layerInfo.source);
     }
     setTimeout(()=>this.restoreStyle(), 1000); // how else?
   }
@@ -419,6 +431,7 @@ class WebMap extends LitElement {
 
     this.map.on('load', ()=>{
       this.layerlist = this.map.getStyle().layers;
+      this.layerlist.forEach(layer=>layer.metadata = Object.assign(layer.metadata || {}, {reference: true}));
       this.draw.changeMode('static');
     });
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
