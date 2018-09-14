@@ -244,14 +244,21 @@ class WebMap extends LitElement {
         let typedSource = {};
         switch (layerSource.type) {
           case "raster":
-            typedSource = {
-              type: "raster",
-              tileSize: layerSource.tileSize,
-              attribution: layerSource.attribution,
-              tiles: layerSource.tiles,
-              url: layerSource.url,
-              minzoom: layerSource.minzoom,
-              maxzoom: layerSource.maxzoom
+            if (layerSource.url) {
+              typedSource = {
+                type: "raster",
+                tileSize: layerSource.tileSize,
+                url: layerSource.url
+              }
+            } else {
+              typedSource = {
+                type: "raster",
+                tileSize: layerSource.tileSize,
+                attribution: layerSource.attribution,
+                tiles: layerSource.tiles,
+                minzoom: layerSource.minzoom,
+                maxzoom: layerSource.maxzoom
+              }
             }
             break;
           case "geojson":
@@ -299,24 +306,30 @@ class WebMap extends LitElement {
   }
   loadStyle(url) {
     if (url.indexOf('mapbox:') === 0) {
-      //https://api.mapbox.com/styles/v1/mapbox/streets-v8?access_token=pk.eyJ1IjoiYW5uZWIiLCJhIjoiY2psZmxmdHlqMHZjOTNrcWdoMjJpdXdhMiJ9.dPjSb4FBQ-W4d01xF6OCnA
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
       const layers = style.layers;
       style.layers = layers.filter(layer=>layer.type==='background');
-      this.map.once('style.load', ()=>{
+      this.map.once('styledata', ()=>{
         layers.filter(layer=>(layer.type && (layer.type !=='background'))).forEach(layer=>this.map.addLayer(layer));
+        setTimeout(()=>this.styleLoading = false, 1000);
       });
       this.map.setStyle(style);
     })
   }
   setStyle(layerInfo) {
+    if (this.styleLoading) {
+      return;
+    }
+    this.styleLoading = true;
     this.storeStyle();
     if (layerInfo.source.split('/')[0].indexOf(':') === -1) {
+      // relative url
       //this.map.setStyle(this.baseURI + layerInfo.source);
       this.loadStyle(this.baseURI + layerInfo.source);
     } else {
+      // absolute url
       //this.map.setStyle(layerInfo.source);
       this.loadStyle(layerInfo.source);
     }
