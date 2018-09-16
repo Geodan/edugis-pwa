@@ -47,6 +47,10 @@ class MapLegendItem extends LitElement {
       );
   }
   _toggleVisibility(e) {
+    if (this.toggleDebounce) {
+        return;
+    }
+    this.toggleDebounce = true;
     this.layervisible = !this.layervisible;
     this.dispatchEvent(
         new CustomEvent('updatevisibility', 
@@ -61,6 +65,7 @@ class MapLegendItem extends LitElement {
             }
         )
     );
+    setTimeout(()=>this.toggleDebounce = false, 500);
   }
   _toggleOpenClose(e) {
       this.open = !this.open;
