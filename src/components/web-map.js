@@ -161,13 +161,6 @@ class WebMap extends LitElement {
     this.accesstoken = undefined;
     this.lastClickPoint = undefined;
   }
-  /*_createRoot() {
-    // do not create shadowRoot
-    return this;
-  }*/
-  _shouldRender(props, changedProps, prevProps) {
-    return true;
-  }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
     if (layer) {
@@ -206,40 +199,27 @@ class WebMap extends LitElement {
       }
     }
   }
-  removeReferenceLayers()
-  {
-    this.map.getStyle().layers.filter(layer=>layer.metadata && layer.metadata.reference).forEach(layer=>this.map.removeLayer(layer));
-  }
-  addLayer(e) {
-    const layerInfo = e.detail;
-    if (layerInfo.type === 'style') {
-      this.setStyle(layerInfo);
-    } else {
-      if (layerInfo.metadata && layerInfo.metadata.reference) {
-        this.removeReferenceLayers();
-      }
-      layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
-      this.map.addLayer(layerInfo);
-      this.layerlist = [...this.map.getStyle().layers];
-    }
-  }
-  restoreStyle()
+  restoreNoneReferenceLayers()
   {
     if (this.extraLayers) {
       this.extraLayers.forEach(layer=>{
-        this.map.addSource(layer.storedSource.id, layer.storedSource.source);
+        if (!this.map.getSource(layer.storedSource.id)) {
+          this.map.addSource(layer.storedSource.id, layer.storedSource.source);
+        }
         layer.storedSource = null;
         delete layer.storedSource;
         this.addLayer({detail:layer});
       });
       this.extraLayers = null;
-      this.layerlist = this.map.getStyle().layers;
     }
   }
-  storeStyle()
+  storeNoneReferenceLayers()
   {
     this.extraLayers = this.map.getStyle().layers.filter(layer=>{
-      if (layer.metadata && layer.metadata.userlayer) {
+      if (!layer.metadata || !layer.metadata.reference) {
+        if (!layer.source) {
+          return false;
+        }
         const layerSource = this.map.getSource(layer.source);
         let typedSource = {};
         switch (layerSource.type) {
@@ -304,36 +284,70 @@ class WebMap extends LitElement {
       return false;
     });
   }
+  setReferenceLayers() {
+    this.map.getStyle().layers.forEach(layer=>{
+      if (layer.metadata) {
+        layer.metadata.reference = true;
+      } else {
+        this.map.getLayer(layer.id).metadata = {reference: true};
+      }
+    });
+  }
   loadStyle(url) {
+    if (url.split('/')[0].indexOf(':') === -1) {
+      // relative url
+      url = this.baseURI + url;
+    } 
     if (url.indexOf('mapbox:') === 0) {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
-      const layers = style.layers;
-      style.layers = layers.filter(layer=>layer.type==='background');
-      this.map.once('styledata', ()=>{
-        layers.filter(layer=>(layer.type && (layer.type !=='background'))).forEach(layer=>this.map.addLayer(layer));
-        setTimeout(()=>this.styleLoading = false, 1000);
-      });
-      this.map.setStyle(style);
-    })
+      style.layers.forEach(layer=>this.addLayer({detail:layer}));
+    });
   }
-  setStyle(layerInfo) {
+  removeReferenceLayers()  {
+    const referenceLayers = this.map.getStyle().layers.filter(layer=>layer.metadata && layer.metadata.reference);
+    referenceLayers.forEach(layer=>this.map.removeLayer(layer.id));
+  }
+  addStyle(layerInfo) {
     if (this.styleLoading) {
       return;
     }
     this.styleLoading = true;
-    this.storeStyle();
-    if (layerInfo.source.split('/')[0].indexOf(':') === -1) {
-      // relative url
-      //this.map.setStyle(this.baseURI + layerInfo.source);
-      this.loadStyle(this.baseURI + layerInfo.source);
+    if (layerInfo.metadata && layerInfo.metadata.reference) {
+      /* replace reference style */
+      /* remove old reference layers */
+      this.removeReferenceLayers(); 
+      /* store non reference layers */
+      this.storeNoneReferenceLayers();
+      /* update layerlist */
+      this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
+      /* set callback for map.setStyle() */
+      this.map.once('styledata', ()=>{
+        /* add reference metadata to new layers set by setStyle() */
+        this.setReferenceLayers();
+        /* restore old non-reference layers */
+        this.restoreNoneReferenceLayers();
+        /* update layerlist */
+        this.layerlist = [...this.map.getStyle().layers];
+        /* allow new styles to be set */
+        setTimeout(()=>this.styleLoading = false, 1000);
+      });
+      this.map.setStyle(layerInfo.source);
     } else {
-      // absolute url
-      //this.map.setStyle(layerInfo.source);
+      /* add style to existing layers */
       this.loadStyle(layerInfo.source);
     }
-    setTimeout(()=>this.restoreStyle(), 1000); // how else?
+  }
+  addLayer(e) {
+    const layerInfo = e.detail;
+    if (layerInfo.type === 'style') {
+      this.addStyle(layerInfo);
+    } else {
+      layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
+      this.map.addLayer(layerInfo);
+      this.layerlist = [...this.map.getStyle().layers];
+    }
   }
   moveLayer(e) {
     if (e.detail.beforeFirst) {
@@ -383,7 +397,7 @@ class WebMap extends LitElement {
     <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
     <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
-    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}" on-setstyle="${e=>this.setStyle(e)}"></map-data-catalog>
+    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
@@ -443,9 +457,9 @@ class WebMap extends LitElement {
     this.map.addControl(this.draw, 'bottom-left');
 
     this.map.on('load', ()=>{
-      this.layerlist = this.map.getStyle().layers;
-      this.layerlist.forEach(layer=>layer.metadata = Object.assign(layer.metadata || {}, {reference: true}));
-      this.draw.changeMode('static');
+        this.setReferenceLayers();
+        this.layerlist = this.map.getStyle().layers;
+        this.draw.changeMode('static');
     });
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
   }
@@ -470,13 +484,13 @@ class WebMap extends LitElement {
     this.requestRender();
   }
   setLanguage(e) {
-    this.storeStyle();
+    this.storeNoneReferenceLayers();
     if (e.detail.language === "autodetect") {
       this.map.autodetectLanguage();
     } else {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
-    setTimeout(()=>this.restoreStyle(), 1000); // how else?
+    setTimeout(()=>this.restoreNoneReferenceLayers(), 1000); // how else?
     //this.layerlist = [...this.map.getStyle().layers];
   }
   mapClick(e) {
