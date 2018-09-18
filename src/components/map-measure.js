@@ -61,6 +61,10 @@ function formatArea(a) {
 }
 
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapMeasure extends LitElement {
   static get properties() { 
     return { 

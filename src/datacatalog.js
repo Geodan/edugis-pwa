@@ -20,10 +20,16 @@ export default
                 "source" : "styles/openmaptiles/positron.json",
                 "metadata" : {"reference": true}
             }},
-            {"type": "reference", "title": "MapBox Streets (stijl)", "layerInfo": {
+            {"type": "reference", "title": "MapBox Streets v8 (stijl)", "layerInfo": {
                 "id" : "streets-v8",
                 "type" : "style",
                 "source" : "mapbox://styles/mapbox/streets-v8",
+                "metadata" : {"reference": true}
+            }},
+            {"type": "reference", "title": "MapBox Streets v9 (stijl)", "layerInfo": {
+                "id" : "streets-v9",
+                "type" : "style",
+                "source" : "mapbox://styles/mapbox/streets-v9",
                 "metadata" : {"reference": true}
             }},
             {"type": "reference", "title": "Openstreetmap (stijl)", "layerInfo": {
@@ -31,7 +37,19 @@ export default
                 "type" : "style",
                 "source" : "styles/osmraster.json",
                 "metadata" : {"reference": true}
-            }}
+            }},
+            {"type": "layer", "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
+                "id" : "gmstreets",
+                "metadata" : {"reference": true},
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,            
+                    "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
+                    "attribution": "&copy; GeodanMaps"
+                }
+            }
+        }
         ]},
         {"type": "group", "title": "WMS", "sublayers": 
         [
@@ -101,7 +119,20 @@ export default
                         "attribution": ""
                     }
                 }
-            }  
+            },
+            {"type": "layer", "title": "Neerslagradar KNMI", "type":"wms", "layerInfo": {
+                "id" : "knmineerslag",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,
+                    "tiles": [
+                        "http://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&WIDTH=1464&HEIGHT=488&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE"                        
+                    ],
+                    "attribution": "KNMI"
+                    }
+                }
+            }
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [
@@ -169,7 +200,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Terrein (Geodan Maps)", "type":"wmts", "layerInfo": {
+            {"type": "layer", "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
                     "id" : "gmterrain",
                     "type" : "raster",
                     "source" : {

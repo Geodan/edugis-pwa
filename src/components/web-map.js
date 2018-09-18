@@ -115,9 +115,11 @@ let StaticMode = {
   }
 }
 
-import {menuIcon} from './my-icons';
-
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class WebMap extends LitElement {
   static get properties() { 
     return { 
@@ -328,10 +330,12 @@ class WebMap extends LitElement {
         this.setReferenceLayers();
         /* restore old non-reference layers */
         this.restoreNoneReferenceLayers();
-        /* update layerlist */
-        this.layerlist = [...this.map.getStyle().layers];
+        
         /* allow new styles to be set */
-        setTimeout(()=>this.styleLoading = false, 1000);
+        setTimeout(()=>{
+          this.layerlist = [...this.map.getStyle().layers];
+          this.styleLoading = false;
+        }, 1000);
       });
       this.map.setStyle(layerInfo.source);
     } else {
