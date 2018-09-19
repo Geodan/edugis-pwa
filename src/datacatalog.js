@@ -179,7 +179,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "PDOK luchtfoto's (WMST)", "type":"wmts", "layerInfo": {
+            {"type": "layer", "title": "PDOK luchtfoto's (WMTS)", "type":"wmts", "layerInfo": {
                     "id" : "pdokluchtfotowmts",
                     "type" : "raster",
                     "source" : {
