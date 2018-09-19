@@ -167,18 +167,31 @@ export default
                 }
             },
             {"type": "layer", "title": "Openstreetmap gray", "type":"wmts", "layerInfo": {
-                "id" : "openstreetmapgray",
-                "type" : "raster",
-                "source" : {
-                    "type": "raster",
-                    "tileSize" : 256,
-                    "tiles": [
-                        "https://saturnus.geodan.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                    ],
-                    "attribution": "&copy; OpenStreetMap contributors"
+                    "id" : "openstreetmapgray",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles": [
+                            "https://saturnus.geodan.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution": "&copy; OpenStreetMap contributors"
+                    }
                 }
-            }
-        },
+            },
+            {"type": "layer", "title": "PDOK luchtfoto's (WMST)", "type":"wmts", "layerInfo": {
+                    "id" : "pdokluchtfotowmts",
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,
+                        "tiles": [
+                            "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                        ],
+                        "attribution": "PDOK"
+                    }
+                },
+            },
             {"type": "layer", "title": "OSM frankrijk (wmts)", "type":"wmts", "layerInfo": {
                     "id" : "osmfr",
                     "type" : "raster",

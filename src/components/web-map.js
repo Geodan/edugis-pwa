@@ -184,6 +184,36 @@ class WebMap extends LitElement {
       this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
     }
   }
+  updateSingleLayerOpacity(id, opacity) {
+    const layer = this.map.getLayer(id);
+    if (layer) {
+      switch (layer.type) {
+        case 'raster':
+          this.map.setPaintProperty(id, 'raster-opacity', opacity);
+          break;
+        case 'fill':
+          this.map.setPaintProperty(id, 'fill-opacity', opacity);
+          break;
+        case 'line':
+          this.map.setPaintProperty(id, 'line-opacity', opacity);
+          break;
+        case 'symbol':
+          this.map.setPaintProperty(id, 'text-opacity', opacity);
+          break;
+      }
+    }
+  }
+  updateLayerOpacity(e) {
+    if (this.map) {
+      if (Array.isArray(e.detail.layerid)) {
+        e.detail.layerid.forEach(id=>{
+          this.updateSingleLayerOpacity(id, e.detail.opacity);
+        })
+      } else {
+        this.updateSingleLayerOpacity(e.detail.layerid, e.detail.opacity);
+      }
+    }
+  }
   removeLayer(e) {
     if (this.map) {
       const targetLayer = this.map.getLayer(e.detail.layerid);
@@ -403,7 +433,7 @@ class WebMap extends LitElement {
     <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
     <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
     <map-spinner webmap="${this.map}"></map-spinner>`
   }

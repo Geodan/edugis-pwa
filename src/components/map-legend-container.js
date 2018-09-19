@@ -182,6 +182,7 @@ class MapLegendContainer extends LitElement {
                         on-openclose="${e=>this.openClose(e)}",
                         on-litdragend="${e=>this.litDragEnd(e)}",
                         on-updatevisibility="${e=>this.updateVisibility(e)}"
+                        on-updateopacity="${e=>this.updateOpacity(e)}"
                     ></map-legend-item>`)}
             </div>
             <div class="legendfooter">
@@ -243,6 +244,15 @@ class MapLegendContainer extends LitElement {
         e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id)
             .map(groupitem=>groupitem.id);
         this.requestRender();
+      } 
+  }
+  updateOpacity(e) {
+      // modify event that is bubbling up
+      const item = this.groupedArray.getItem(e.detail._ga_id);
+      if (item._ga_group) {
+        // toggle group visibility
+        e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id)
+            .map(groupitem=>groupitem.id);        
       } 
   }
 }
