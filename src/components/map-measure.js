@@ -254,8 +254,6 @@ class MapMeasure extends LitElement {
           "layout": {
             "symbol-placement": "line",
             "text-field": "{length}",
-            "text-font": ["Noto Sans Regular"],
-            //"text-letter-spacing": 0.1,
             "text-size": 14,
             "text-rotation-alignment": "map",
             "visibility": "visible"

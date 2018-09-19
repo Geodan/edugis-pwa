@@ -80,15 +80,16 @@ class MapLegendItem extends LitElement {
   _render({item, isbackground, layervisible, itemcontainer, itemscroller, zoom}) {
     let layerIcon = undefined;
     let layerViewIcon = '';
-    if (zoom > item.maxzoom) {
+    if (item.maxzoom && zoom > item.maxzoom) {
         layerViewIcon = zoomOutIcon;
     } else {
-        if (zoom < item.minzoom) {
+        if (item.minzoom && zoom < item.minzoom) {
             layerViewIcon = zoomInIcon;
         } else {
             layerViewIcon = expandMoreIcon;
         }
     }
+    const layerOnMap = layervisible && (!item.maxzoom || zoom < item.maxzoom) && (!item.minzoom || zoom > item.minzoom);
     if (!item._ga_group) {
         switch (item.type) {
             case "fill":
@@ -167,6 +168,9 @@ class MapLegendItem extends LitElement {
             display: inline-block;
             width: 1em;
         }
+        .gray {
+            color: gray;
+        }
     </style>
     <div class="legenditem">
         <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
@@ -178,7 +182,7 @@ class MapLegendItem extends LitElement {
                 :
                 html`
                 <i class="icon">${layerIcon}</i>`}            
-            <lit-draghandle itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" isdraggable="${!isbackground}">
+            <lit-draghandle class$="${layerOnMap?undefined:'gray'}" itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" isdraggable="${!isbackground}">
                 ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
             </lit-draghandle>
             <span class="right">
