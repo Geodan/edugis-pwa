@@ -473,6 +473,12 @@ export default
                     "fill-extrusion-base": 0,
                     "fill-extrusion-opacity": 0.8
                 }
+            }}, 
+            {"type": "layer", "title": "BGT vector (stijl)", "layerInfo": {
+                "id" : "bgtvector",
+                "type" : "style",
+                "source" : "styles/bgt.json",
+                "metadata" : {"reference": false}
             }}
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":

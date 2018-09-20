@@ -14,6 +14,7 @@
     "styles/openmaptiles/osmbright.json",
     "styles/openmaptiles/klokantech-basic.json",
     "styles/osmraster.json",
+    "styles/bgt.json",
     "node_modules/mapbox-gl/dist/mapbox-gl.css",
     "node_modules/mapbox-gl/dist/mapbox-gl.js",
     "node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.js",

@@ -334,6 +334,9 @@ class WebMap extends LitElement {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
+      for (let id in style.sources) {
+        this.map.addSource(id, style.sources[id]);
+      }
       style.layers.forEach(layer=>this.addLayer({detail:layer}));
     });
   }
