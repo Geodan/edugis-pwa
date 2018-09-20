@@ -479,6 +479,11 @@ export default
                 "type" : "style",
                 "source" : "styles/bgt.json",
                 "metadata" : {"reference": false}
+            }},
+            {"type": "layer", "title": "OSM rails vector (stijl)", "layerInfo": {
+                "id" : "osmrail",
+                "type" : "style",
+                "source" : "styles/osmrail.json"
             }}
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":

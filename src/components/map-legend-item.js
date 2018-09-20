@@ -12,8 +12,12 @@ import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon 
     blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon, landscapeIcon, zoomInIcon, zoomOutIcon } from './my-icons';
 
 import './dragdrop/lit-draghandle';
-
 import {LitElement, html} from '@polymer/lit-element';
+
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapLegendItem extends LitElement {
   static get properties() { 
     return { 

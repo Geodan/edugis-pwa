@@ -3,6 +3,11 @@ import './map-legend-item.js';
 import GroupedArray from '../../lib/groupedarray';
 
 import {LitElement, html} from '@polymer/lit-element';
+
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapLegendContainer extends LitElement {
   static get properties() { 
     return { 
@@ -119,7 +124,7 @@ class MapLegendContainer extends LitElement {
   }
   _render({opened, legendtitle, zoom, layerlist}) {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
-    const itemList = this.groupedArray.items.
+    this.itemList = this.groupedArray.items.
         filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
     let result = html`
     <style>
@@ -171,7 +176,7 @@ class MapLegendContainer extends LitElement {
         </div>
         <div class="itemscroller">
             <div id="draggableitems">
-                ${itemList.map(item=>
+                ${this.itemList.map(item=>
                     html`<map-legend-item item=${item} 
                         itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
                         itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
