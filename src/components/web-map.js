@@ -381,6 +381,14 @@ class WebMap extends LitElement {
     if (layerInfo.type === 'style') {
       this.addStyle(layerInfo);
     } else {
+      if (layerInfo.metadata && layerInfo.metadata.reference) {
+        this.removeReferenceLayers();
+        this.storeNoneReferenceLayers();
+        this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
+        this.map.addLayer(layerInfo);
+        this.restoreNoneReferenceLayers();
+        this.layerlist = [...this.map.getStyle().layers];
+      }
       layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
       this.map.addLayer(layerInfo);
       this.layerlist = [...this.map.getStyle().layers];

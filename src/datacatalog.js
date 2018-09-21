@@ -38,7 +38,7 @@ export default
                 "source" : "styles/osmraster.json",
                 "metadata" : {"reference": true}
             }},
-            {"type": "layer", "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
+            {"type": "reference", "title": "Streets (Geodan Maps)", "layerInfo": {
                 "id" : "gmstreets",
                 "metadata" : {"reference": true},
                 "type" : "raster",
