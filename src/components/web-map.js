@@ -345,11 +345,11 @@ class WebMap extends LitElement {
     referenceLayers.forEach(layer=>this.map.removeLayer(layer.id));
   }
   addStyle(layerInfo) {
-    if (this.styleLoading) {
-      return;
-    }
-    this.styleLoading = true;
     if (layerInfo.metadata && layerInfo.metadata.reference) {
+      if (this.styleLoading) {
+        return;
+      }
+      this.styleLoading = true;  
       /* replace reference style */
       /* remove old reference layers */
       this.removeReferenceLayers(); 

@@ -76,12 +76,16 @@ class MapLegendContainer extends LitElement {
             // group found in oldItems
             newItem._ga_open = oldItems[oldGroupIndex]._ga_open;
             newItem._ga_visible = oldItems[oldGroupIndex]._ga_visible;
+            newItem.slidervisible = oldItems[oldGroupIndex].slidervisible;
+            newItem.layeropacity = oldItems[oldGroupIndex].layeropacity;
         }
     } else {
         const oldItem = oldItems.find(oldItem=>oldItem.id == newItem.id);
         if (oldItem) {
           newItem._ga_visible = oldItem._ga_visible;
           newItem._ga_open = oldItem._ga_open;
+          newItem.slidervisible = oldItem.slidervisible;
+          newItem.layeropacity = oldItem.layeropacity;
         }
     }
   }
@@ -182,12 +186,15 @@ class MapLegendContainer extends LitElement {
                         itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
                         itemid$="${item._ga_id}"
                         layervisible="${item.layervisible}"
+                        slidervisible="${item.slidervisible?true:false}"
+                        layeropacity="${item.layeropacity?item.layeropacity*100:100}"
                         open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
                         zoom="${zoom}"
                         on-openclose="${e=>this.openClose(e)}",
                         on-litdragend="${e=>this.litDragEnd(e)}",
                         on-updatevisibility="${e=>this.updateVisibility(e)}"
                         on-updateopacity="${e=>this.updateOpacity(e)}"
+                        on-slidervisible="${e=>this.updateSliderVisible(e)}"
                     ></map-legend-item>`)}
             </div>
             <div class="legendfooter">
@@ -211,6 +218,13 @@ class MapLegendContainer extends LitElement {
         this.groupedArray.openGroup(item);
       } else {
         this.groupedArray.closeGroup(item);
+      }
+      this.requestRender();
+  }
+  updateSliderVisible(e) {
+      const index = this.groupedArray._items.findIndex(item=>item._ga_id==e.detail._ga_id);
+      if (index > -1) {
+        this.groupedArray._items[index].slidervisible = e.detail.slidervisible;
       }
       this.requestRender();
   }
@@ -254,11 +268,12 @@ class MapLegendContainer extends LitElement {
   updateOpacity(e) {
       // modify event that is bubbling up
       const item = this.groupedArray.getItem(e.detail._ga_id);
+      item.layeropacity = e.detail.opacity;
       if (item._ga_group) {
         // toggle group visibility
         e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id)
-            .map(groupitem=>groupitem.id);        
-      } 
+            .map(groupitem=>groupitem.id);
+      }
   }
 }
 

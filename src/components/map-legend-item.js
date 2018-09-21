@@ -86,7 +86,12 @@ class MapLegendItem extends LitElement {
       );
   }
   toggleSlider(e) {
-      this.slidervisible = !this.slidervisible;
+      this.dispatchEvent(new CustomEvent('slidervisible', {
+          detail: {
+              slidervisible: !this.slidervisible,
+              _ga_id: this.item._ga_id
+          }
+      }))
   }
   updateOpacity(e) {
       this.layeropacity = parseInt(e.target.value);
@@ -292,11 +297,11 @@ input[type=range]:focus::-ms-fill-upper {
         .slider {
             position: absolute;
             right: 20px;
-            width: 200px;
+            width: 150px;
         }
         .percentage {
             position: absolute;
-            right: 205px;
+            right: 155px;
             text-align: right;
             font-size: smaller;
             top: 3px;
