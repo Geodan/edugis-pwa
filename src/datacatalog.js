@@ -125,14 +125,54 @@ export default
                 "type" : "raster",
                 "source" : {
                     "type": "raster",
-                    "tileSize" : 256,
+                    "tileSize" : 1024,
                     "tiles": [
-                        "http://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&WIDTH=1464&HEIGHT=488&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE"                        
+                        "http://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=1024&HEIGHT=1024"
                     ],
                     "attribution": "KNMI"
                     }
                 }
+            },
+            {"type": "layer", "title": "Neerslagradar USA", "type":"wms", "layerInfo": {
+                "id" : "usaweatherradar",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 1024,
+                    "tiles": [
+                        "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0q.cgi?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=nexrad-n0q-900913-conus,nexrad-n0q-900913-ak,nexrad-n0q-900913-hi,nexrad-n0q-900913-pr,nexrad-n0q-900913-m05m-conus,nexrad-n0q-900913-m05m-hi,nexrad-n0q-900913-m05m-ak,nexrad-n0q-900913-m05m-pr,nexrad-n0q-900913-m10m-conus,nexrad-n0q-900913-m10m-ak&WIDTH=1024&HEIGHT=1024&CRS=EPSG:900913&BBOX={bbox-epsg-3857}"
+                    ],
+                    "attribution": "NEXRAD"
+                    }
+                }
+            },
+            {"type": "layer", "title": "Neerslagradar Duitsland", "type":"wms", "layerInfo": {
+                "id" : "Radarkomposit",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 1024,
+                    "tiles": [
+                        "https://maps.dwd.de:443/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=dwd:RX-Produkt&WIDTH=1024&HEIGHT=1024&CRS=EPSG:3857&BBOX={bbox-epsg-3857}"
+                    ],
+                    "attribution": "dwd.de"
+                    }
+                }
+            },
+            {"type": "layer", "title": "Neerslagradar Groot Britannie", "type":"wmts", "layerInfo": {
+                "id" : "metofficeradar",
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,
+                    "tiles": [
+                        "https://www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
+                    ],
+                    "attribution": "met office"
+                    }
+                }
             }
+            
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [

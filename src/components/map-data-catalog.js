@@ -200,6 +200,16 @@ class MapDataCatalog extends LitElement {
       }
     }
   }
+  insertTime(layerInfo){
+    //2018-09-21T23:35:00Z
+    const now = encodeURIComponent(new Date(Math.floor((Date.now() - 600000) / 300000) * 300000).toISOString());
+    if (layerInfo.source.tiles) {
+      layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace('{time}', now));
+    }
+    if (layerInfo.source.url) {
+      layerInfo.source.url = layerInfo.source.url.replace('{time}', now);
+    }
+  }
   addTopoJsonLayer(layerInfo) {
     fetch(layerInfo.source.data).then(data=> {
       data.json().then(json=>{
@@ -226,6 +236,7 @@ class MapDataCatalog extends LitElement {
     if (node.layerInfo && node.layerInfo.id) {
       const layerInfo = node.layerInfo;
       this.insertServiceKey(layerInfo);
+      this.insertTime(layerInfo);
       if (!layerInfo.metadata) {
         layerInfo.metadata = {};
       }

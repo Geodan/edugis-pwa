@@ -97,8 +97,8 @@ class MapLegendContainer extends LitElement {
           const item = this.groupedArray._items[i];
           if (item._ga_group) {
             this.groupedArray.updateGroupOpen(item, item._ga_open);
-            const hasInvisibleLayer = this.groupedArray.getAllItemsInGroup(item._ga_id).findIndex(item=>item.layervisible === false);
-            item.layervisible = (hasInvisibleLayer === -1);
+            const hasVisibleLayer = this.groupedArray.getAllItemsInGroup(item._ga_id).findIndex(item=>item.layervisible);
+            item.layervisible = hasVisibleLayer > -1;
           }
       }
   }
