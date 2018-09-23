@@ -281,14 +281,21 @@ class WebMap extends LitElement {
             }
             break;
           case "vector":
-            typedSource = {
-              id: layer.source,
-              type: "vector",
-              attribution: layerSource.attribution,
-              tiles: layerSource.tiles,
-              url: layerSource.url,
-              minzoom: layerSource.minzoom,
-              maxzoom: layerSource.maxzoom
+            if (layerSource.url) {
+              typedSource = {
+                  type: "vector",
+                  url: layerSource.url
+              }
+            } else {
+              typedSource = {
+                id: layer.source,
+                type: "vector",
+                attribution: layerSource.attribution,
+                tiles: layerSource.tiles,
+                url: layerSource.url,
+                minzoom: layerSource.minzoom,
+                maxzoom: layerSource.maxzoom
+              }
             }
             break;
           case "raster-dem":

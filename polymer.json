@@ -16,6 +16,7 @@
     "styles/osmraster.json",
     "styles/bgt.json",
     "styles/osmrail.json",
+    "styles/mapboxtraffic.json",
     "node_modules/mapbox-gl/dist/mapbox-gl.css",
     "node_modules/mapbox-gl/dist/mapbox-gl.js",
     "node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.js",

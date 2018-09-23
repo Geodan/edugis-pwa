@@ -166,7 +166,7 @@ export default
                     "type": "raster",
                     "tileSize" : 256,
                     "tiles": [
-                        "https://www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
+                        "http://tiles.edugis.nl/www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
                     ],
                     "attribution": "met office"
                     }
@@ -524,6 +524,11 @@ export default
                 "id" : "osmrail",
                 "type" : "style",
                 "source" : "styles/osmrail.json"
+            }},
+            {"type": "layer", "title": "Mapbox Traffic (stijl)", "layerInfo": {
+                "id" : "mapboxtraffice",
+                "type" : "style",
+                "source" : "styles/mapboxtraffic.json"
             }}
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
