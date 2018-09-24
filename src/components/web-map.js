@@ -332,7 +332,17 @@ class WebMap extends LitElement {
       }
     });
   }
+  applyStyle(style) {
+    for (let id in style.sources) {
+      this.map.addSource(id, style.sources[id]);
+    }
+    style.layers.forEach(layer=>this.addLayer({detail:layer}));
+  }
   loadStyle(url) {
+    if (typeof url === 'object') {
+      // no need to dereference url
+      return this.applyStyle(url);
+    }
     if (url.split('/')[0].indexOf(':') === -1) {
       // relative url
       url = this.baseURI + url;
@@ -341,10 +351,7 @@ class WebMap extends LitElement {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
-      for (let id in style.sources) {
-        this.map.addSource(id, style.sources[id]);
-      }
-      style.layers.forEach(layer=>this.addLayer({detail:layer}));
+      this.applyStyle(style);
     });
   }
   removeReferenceLayers()  {
@@ -388,16 +395,16 @@ class WebMap extends LitElement {
     if (layerInfo.type === 'style') {
       this.addStyle(layerInfo);
     } else {
+      layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
       if (layerInfo.metadata && layerInfo.metadata.reference) {
         this.removeReferenceLayers();
-        this.storeNoneReferenceLayers();
         this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
-        this.map.addLayer(layerInfo);
-        this.restoreNoneReferenceLayers();
-        this.layerlist = [...this.map.getStyle().layers];
+        this.map.addLayer(layerInfo, this.map.getStyle().layers[0].id);
+      } else {
+        if (!this.map.getLayer(layerInfo.id)) {
+          this.map.addLayer(layerInfo);
+        }
       }
-      layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
-      this.map.addLayer(layerInfo);
       this.layerlist = [...this.map.getStyle().layers];
     }
   }

@@ -293,7 +293,7 @@ export default
                 }
             },
             {"type": "layer", "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
-                    "id" : "gmterrain",
+                    "id" : "geodanmaps streets",
                     "type" : "raster",
                     "source" : {
                         "type": "raster",
@@ -342,6 +342,121 @@ export default
                 "paint": {
                     "circle-radius": 5,
                     "circle-color": "#FA0"
+                }
+            }},
+            {"type": "layer", "title": "Verkeerssnelheid Amsterdam", "layerInfo": {
+                "id" : "verkeerssnelheidamsterdam",
+                "type": "style",
+                "source" : {
+                    "version": 8,
+                    "name": "Verkeerssnelheid Amsterdam",
+                    "sources": {
+                        "verkeerssnelheid amsterdam": {
+                            "type": "geojson",
+                            "data": "http://tiles.edugis.nl/web.redant.net/~amsterdam/ndw/data/reistijdenAmsterdam.geojson",
+                            "attribution": "StevenF"
+                        }
+                    },
+                    "layers": [
+                        {
+                            "id": "snelheid onbekend",
+                            "type" : "line",
+                            "source" : "verkeerssnelheid amsterdam",
+                            "filter" : [
+                                "all", 
+                                [
+                                    "==",
+                                    "$type",
+                                    "LineString"
+                                ],
+                                [
+                                    "!has", "Velocity"
+                                ]
+                            ],
+                            "paint" : {
+                                "line-color" : "#D0D0D0",
+                                "line-width" : 3
+                            }
+                        },
+                        {
+                            "id": "snelheid snelweg",
+                            "type": "line",
+                            "source" : "verkeerssnelheid amsterdam",
+                            "filter": [
+                                "all",
+                                [
+                                  "==",
+                                  "$type",
+                                  "LineString"
+                                ],
+                                [
+                                  "all",
+                                  [
+                                    "==",
+                                    "Type",
+                                    "H"
+                                  ],
+                                  [
+                                    ">",
+                                    "Velocity",
+                                    -1
+                                  ]
+                                ]
+                            ],
+                            "paint" : {
+                                "line-color":[
+                                    "step", ["get", "Velocity"],
+                                    "#D0D0D0",
+                                    1, "#BE0000",
+                                    30, "#FF0000",
+                                    50, "#FF9E00",
+                                    70, "#FFFF00",
+                                    90, "#AAFF00",
+                                    120, "#00B22D"
+                                ],
+                                "line-width": 5
+                            }
+                        },
+                        {
+                            "id": "snelheid overig",
+                            "type": "line",
+                            "source" : "verkeerssnelheid amsterdam",
+                            "filter": [
+                                "all",
+                                [
+                                  "==",
+                                  "$type",
+                                  "LineString"
+                                ],
+                                [
+                                  "all",
+                                  [
+                                    "!=",
+                                    "Type",
+                                    "H"
+                                  ],
+                                  [
+                                    ">",
+                                    "Velocity",
+                                    -1
+                                  ]
+                                ]
+                            ],
+                            "paint" : {
+                                "line-color":[
+                                    "step", ["get", "Velocity"],
+                                    "#00B22D",
+                                    1, "#BE0000",
+                                    10, "#FF0000",
+                                    20, "#FF9E00",
+                                    30, "#FFFF00",
+                                    40, "#AAFF00",
+                                    50, "#00B22D"
+                                ],
+                                "line-width": 2
+                            }
+                        }
+                    ]
                 }
             }},
         ]},
