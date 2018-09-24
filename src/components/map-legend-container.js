@@ -77,6 +77,7 @@ class MapLegendContainer extends LitElement {
             newItem._ga_open = oldItems[oldGroupIndex]._ga_open;
             newItem._ga_visible = oldItems[oldGroupIndex]._ga_visible;
             newItem.slidervisible = oldItems[oldGroupIndex].slidervisible;
+            newItem.legendvisible = oldItems[oldGroupIndex].legendvisible;
             newItem.layeropacity = oldItems[oldGroupIndex].layeropacity;
         }
     } else {
@@ -85,6 +86,7 @@ class MapLegendContainer extends LitElement {
           newItem._ga_visible = oldItem._ga_visible;
           newItem._ga_open = oldItem._ga_open;
           newItem.slidervisible = oldItem.slidervisible;
+          newItem.legendvisible = oldItem.legendvisible;
           newItem.layeropacity = oldItem.layeropacity;
         }
     }
@@ -187,6 +189,8 @@ class MapLegendContainer extends LitElement {
                         itemid$="${item._ga_id}"
                         layervisible="${item.layervisible}"
                         slidervisible="${item.slidervisible?true:false}"
+                        legendvisible="${item.legendvisible?true:false}"
+                        legendurl="${item.metadata && item.metadata.legendurl?item.metadata.legendurl:''}"
                         layeropacity="${item.layeropacity?item.layeropacity*100:100}"
                         open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
                         zoom="${zoom}"
@@ -195,6 +199,7 @@ class MapLegendContainer extends LitElement {
                         on-updatevisibility="${e=>this.updateVisibility(e)}"
                         on-updateopacity="${e=>this.updateOpacity(e)}"
                         on-slidervisible="${e=>this.updateSliderVisible(e)}"
+                        on-legendvisible="${e=>this.updateLegendVisible(e)}"
                     ></map-legend-item>`)}
             </div>
             <div class="legendfooter">
@@ -227,6 +232,13 @@ class MapLegendContainer extends LitElement {
         this.groupedArray._items[index].slidervisible = e.detail.slidervisible;
       }
       this.requestRender();
+  }
+  updateLegendVisible(e) {
+    const index = this.groupedArray._items.findIndex(item=>item._ga_id==e.detail._ga_id);
+    if (index > -1) {
+      this.groupedArray._items[index].legendvisible = e.detail.legendvisible;
+    }
+    this.requestRender();
   }
   litDragEnd(e){
     if (e.detail.dragTarget) {

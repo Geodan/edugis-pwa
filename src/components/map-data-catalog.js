@@ -232,6 +232,34 @@ class MapDataCatalog extends LitElement {
       }))
     })
   }
+  extractLegendUrl(layerInfo)
+  {
+    let legendUrl = '';
+    let tileUrl = layerInfo.source.url;
+    if (!tileUrl) {
+      tileUrl = layerInfo.source.tiles[0];
+    }
+    if (tileUrl) {
+      const urlparts = tileUrl.split('?'); // [baseurl,querystring]
+      const params = urlparts[1].split('&').map(param=>param.split('='))
+        .filter(param=>
+          param[0].toUpperCase() !== 'BBOX' && 
+          param[0].toUpperCase() !== 'REQUEST' && 
+          param[0].toUpperCase() != 'SRS' && 
+          param[0].toUpperCase() != 'WIDTH' &&
+          param[0].toUpperCase() !== 'HEIGHT' &&
+          param[0].toUpperCase() !== 'TRANSPARENT')
+        .map(param=>{
+          if (param[0].toUpperCase() === 'LAYERS') {
+            return ['layer', param[1].split(',')[0]];
+          }
+          return param;
+        })
+        .map(param=>param.join('=')).join('&');
+      legendUrl = urlparts[0] + '?' + params + '&REQUEST=GetLegendGraphic';
+    }
+    return legendUrl;
+  }
   handleClick(e, node) {
     if (node.layerInfo && node.layerInfo.id) {
       const layerInfo = node.layerInfo;
@@ -239,6 +267,11 @@ class MapDataCatalog extends LitElement {
       this.insertTime(layerInfo);
       if (!layerInfo.metadata) {
         layerInfo.metadata = {};
+      }
+      if (node.type === 'wms') {
+        if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
+          layerInfo.metadata.legendurl = this.extractLegendUrl(node.layerInfo);
+        }
       }
       layerInfo.metadata.reference = (node.type === "reference");
       if (layerInfo.source.type == "geojson" && layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {

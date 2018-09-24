@@ -69,6 +69,11 @@ export default
             {"type": "layer", "title": "Blaeu", "type":"wms", "layerInfo": {
                     "id" : "blaeu",
                     "type" : "raster",
+                    "metadata" : {
+                        "legendurl" : "http://mapserver.edugis.nl/legends/nederland/belgica-logo.jpg"
+                    },
+                    "minzoom": 5.5,
+                    "maxzoom": 12.5,
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
@@ -83,19 +88,41 @@ export default
             {"type": "layer", "title": "Pico hoogspanningsnet 2018", "type":"wms", "layerInfo": {
                 "id" : "hoogspanningsnet_2018",
                 "type" : "raster",
+                "minzoom": 4.5,
                 "source" : {
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles" : [
                             "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/Hoogspanningsnet_2018.qgs&layers=Hoogspanningsnet_2018&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
                         ],
-                        "attribution": "Edugis"
+                        "attribution": "Pico"
+                    }
+                }
+            },
+            {"type": "layer", "title": "Pico dakdelen 2018", "type":"wms", "layerInfo": {
+                "id" : "dakdelen_2018",
+                "type" : "raster",
+                "minzoom" : 16.5,
+                "metadata" : {
+                    "legendurl" : "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=false&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&"
+                },
+                "source" : {
+                        "type": "raster",
+                        "minzoom": 16.5,
+                        "tileSize" : 512,
+                        "tiles" : [
+                            "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=true&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=512&HEIGHT=512"
+                        ],
+                        "attribution": "Pico"
                     }
                 }
             },
             {"type": "layer", "title": "Fietstocht Bert en Joep", "type":"wms", "layerInfo": {
                     "id" : "fietstocht",
                     "type" : "raster",
+                    "metadata" : {
+                        "legendurl": ""
+                    },
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
@@ -106,9 +133,12 @@ export default
                     }
                 }
             },            
-            {"type": "layer", "title": "Actueel Hoogtebestand NL (DSM)", "type":"wmts", "layerInfo": {
+            {"type": "layer", "title": "Actueel Hoogtebestand NL (DSM)", "type":"wms", "layerInfo": {
                     "id" : "ahndsm",
                     "type" : "raster",
+                    "metadata" : {
+                        "legendurl": "http://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png"
+                    },
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
@@ -136,6 +166,9 @@ export default
             {"type": "layer", "title": "Neerslagradar USA", "type":"wms", "layerInfo": {
                 "id" : "usaweatherradar",
                 "type" : "raster",
+                "metadata" : {
+                    "legendurl" : ""
+                },
                 "source" : {
                     "type": "raster",
                     "tileSize" : 1024,
@@ -159,9 +192,12 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Neerslagradar Groot Britannie", "type":"wmts", "layerInfo": {
+            {"type": "layer", "title": "Neerslagradar Groot Britannie", "type":"wms", "layerInfo": {
                 "id" : "metofficeradar",
                 "type" : "raster",
+                "metadata" : {
+                    "legendurl" : ""
+                },
                 "source" : {
                     "type": "raster",
                     "tileSize" : 256,
@@ -222,6 +258,9 @@ export default
             {"type": "layer", "title": "PDOK luchtfoto's (WMTS)", "type":"wmts", "layerInfo": {
                     "id" : "pdokluchtfotowmts",
                     "type" : "raster",
+                    "metadata" : {
+                        "legendurl" : "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?format=image/png&service=WMS&version=1.1.1&styles=default&layer=Actueel_ortho25&REQUEST=GetLegendGraphic"
+                    },
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
