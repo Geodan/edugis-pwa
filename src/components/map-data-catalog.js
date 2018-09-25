@@ -202,7 +202,11 @@ class MapDataCatalog extends LitElement {
   }
   insertTime(layerInfo){
     //2018-09-21T23:35:00Z
-    const now = encodeURIComponent(new Date(Math.floor((Date.now() - 600000) / 300000) * 300000).toISOString());
+    let interval = 300000; // 5 minutes default
+    if (layerInfo.metadata && layerInfo.metadata.timeinterval) {
+      interval = layerInfo.metadata.timeinterval;
+    }
+    const now = encodeURIComponent(new Date(Math.floor((Date.now() - (2 * interval)) / interval) * interval).toISOString());
     if (layerInfo.source.tiles) {
       layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace('{time}', now));
     }
@@ -210,27 +214,33 @@ class MapDataCatalog extends LitElement {
       layerInfo.source.url = layerInfo.source.url.replace('{time}', now);
     }
   }
-  addTopoJsonLayer(layerInfo) {
-    fetch(layerInfo.source.data).then(data=> {
-      data.json().then(json=>{
+  convertTopoJsonLayer(layerInfo) {
+    return fetch(layerInfo.source.data).then(data=> {
+      return data.json().then(json=>{
         // replace url with topojson first object converted to geojson
         layerInfo.metadata.originaldata = layerInfo.source.data;
         layerInfo.source.data = topojson.feature(json, json.objects[Object.keys(json.objects)[0]]);
-        this.dispatchEvent(new CustomEvent('addlayer', {
-          detail: layerInfo
-        }))
+        return layerInfo;        
       })
     }).catch(reason=>console.log(reason));
   }
-  addProjectedGeoJsonLayer(layerInfo) {
+  convertProjectedGeoJsonLayer(layerInfo) {
     const crs = layerInfo.metadata.crs;
-    fetch(layerInfo.source.data).then(data=>data.json()).then(json=>{
-      layerInfo.metadata.originaldata = layerInfo.source.data;
-      layerInfo.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
-      this.dispatchEvent(new CustomEvent('addlayer', {
-        detail: layerInfo
-      }))
-    })
+    if (typeof layerInfo.data == 'object') {
+      return new Promise((resolve, reject)=>{
+        if (!layerInfo.metadata.originaldata) {
+          layerInfo.metadata.originaldata = layerinfo.source.data;
+          layerInfo.source.data = toWgs84(layerInfo.source.data, proj4.Proj("EPSG:8557"));
+        }
+        resolve();
+      })
+    } else {
+      return fetch(layerInfo.source.data).then(data=>data.json()).then(json=>{
+        layerInfo.metadata.originaldata = layerInfo.source.data;
+        layerInfo.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
+        return layerInfo;
+      })
+    }
   }
   extractLegendUrl(layerInfo)
   {
@@ -260,7 +270,7 @@ class MapDataCatalog extends LitElement {
     }
     return legendUrl;
   }
-  handleClick(e, node) {
+  async handleClickAsync(e, node) {
     if (node.layerInfo && node.layerInfo.id) {
       const layerInfo = node.layerInfo;
       this.insertServiceKey(layerInfo);
@@ -275,17 +285,19 @@ class MapDataCatalog extends LitElement {
       }
       layerInfo.metadata.reference = (node.type === "reference");
       if (layerInfo.source.type == "geojson" && layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
-        this.addTopoJsonLayer(layerInfo);
-      } else {
-        if (layerInfo.source.type == "geojson" && layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
-          this.addProjectedGeoJsonLayer(layerInfo);
-        } else {
-          this.dispatchEvent(new CustomEvent('addlayer', 
-            {detail: layerInfo}
-          ))
-        }
+        await this.convertTopoJsonLayer(layerInfo);
+      } 
+      if (layerInfo.source.type == "geojson" && layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
+        await this.convertProjectedGeoJsonLayer(layerInfo);
       }
+      this.dispatchEvent(new CustomEvent('addlayer', 
+        {detail: layerInfo}
+      ))
     }
   }
+  handleClick(e, node) {
+    setTimeout(()=>this.handleClickAsync(e, node), 0);
+  }
 }
+
 customElements.define('map-data-catalog', MapDataCatalog);

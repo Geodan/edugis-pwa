@@ -196,7 +196,8 @@ export default
                 "id" : "metofficeradar",
                 "type" : "raster",
                 "metadata" : {
-                    "legendurl" : ""
+                    "legendurl" : "",
+                    "timeinterval" : 300000,
                 },
                 "source" : {
                     "type": "raster",
@@ -207,8 +208,24 @@ export default
                     "attribution": "met office"
                     }
                 }
+            },
+            {"type": "layer", "title": "KNMI neerslag", "type":"wms", "layerInfo": {
+                "id" : "eumetsatknmi",
+                "type" : "raster",
+                "metadata" : {
+                    "timeinterval" : 900000,
+                    "source" : "http://geoservices.knmi.nl/adaguc_portal/ => MSGCPP OGC realtime service => Precipitation rate"
+                },
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 1024,
+                    "tiles": [
+                        "http://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=lwe_precipitation_rate&WIDTH=1024&HEIGHT=1024&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=precip%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&time={time}"
+                    ],
+                    "attribution": "EUMETSAT/KNMI"
+                    }
+                }
             }
-            
         ]},
         {"type": "group", "title": "WMS Service", "sublayers": 
         [
@@ -512,19 +529,19 @@ export default
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
-                    'fill-color': {
-                        'type': 'exponential',
-                        'property': 'bevolkingsdichtheid',
-                        'stops': [
-                            [0, '#f7fcf0'],
-                            [160, '#e0f3db'],
-                            [320, '#ccebc5'],
-                            [480, '#a8ddb5'],
-                            [640, '#7bccc4'],
-                            [800, '#4eb3d3'],
-                            [960, '#2b8cbe'],
-                            [1120, '#0868ac'],
-                            [1280, '#084081']
+                    "fill-color": {
+                        "type": "exponential",
+                        "property": "bevolkingsdichtheid",
+                        "stops": [
+                            [0, "#f7fcf0"],
+                            [160, "#e0f3db"],
+                            [320, "#ccebc5"],
+                            [480, "#a8ddb5"],
+                            [640, "#7bccc4"],
+                            [800, "#4eb3d3"],
+                            [960, "#2b8cbe"],
+                            [1120, "#0868ac"],
+                            [1280, "#084081"]
                         ]
                     },
                     "fill-opacity": 0.6,
@@ -543,19 +560,19 @@ export default
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
-                    'fill-extrusion-color': {
-                        'type': 'exponential',
-                        'property': 'bevolkingsdichtheid',
-                        'stops': [
-                            [0, '#f7fcf0'],
-                            [160, '#e0f3db'],
-                            [320, '#ccebc5'],
-                            [480, '#a8ddb5'],
-                            [640, '#7bccc4'],
-                            [800, '#4eb3d3'],
-                            [960, '#2b8cbe'],
-                            [1120, '#0868ac'],
-                            [1280, '#084081']
+                    "fill-extrusion-color": {
+                        "type": "exponential",
+                        "property": "bevolkingsdichtheid",
+                        "stops": [
+                            [0, "#f7fcf0"],
+                            [160, "#e0f3db"],
+                            [320, "#ccebc5"],
+                            [480, "#a8ddb5"],
+                            [640, "#7bccc4"],
+                            [800, "#4eb3d3"],
+                            [960, "#2b8cbe"],
+                            [1120, "#0868ac"],
+                            [1280, "#084081"]
                         ]
                     },
                     "fill-extrusion-opacity": 0.6,
@@ -573,11 +590,11 @@ export default
                     "id": "gebouwkenmerken",
                     "type": "fill",
                     "source": {
-                        id: "gebouwkenmerken",
-                        type: 'vector',
-                        tiles:["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
-                        minzoom: 13,
-                        maxzoom: 18
+                        "id": "gebouwkenmerken",
+                        "type": "vector",
+                        "tiles":["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
+                        "minzoom": 13,
+                        "maxzoom": 18
                     },
                     "source-layer": "gebouwkenmerken",
                     "minzoom": 13,
@@ -641,11 +658,11 @@ export default
                 "id": "building3D",
                 "type": "fill-extrusion",
                 "source": {
-                    id: "gebouwkenmerken2",
-                    type: 'vector',
-                    tiles:["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
-                    minzoom: 13,
-                    maxzoom: 18
+                    "id": "gebouwkenmerken2",
+                    "type": "vector",
+                    "tiles":["https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"],
+                    "minzoom": 13,
+                    "maxzoom": 18
                 },
                 "source-layer": "gebouwkenmerken",
                 "minzoom": 13,
@@ -736,7 +753,21 @@ export default
         ]},
         {"type": "group", "title": "Google spreadsheet", "sublayers": 
         [
-            {"type": "layer", "title": "Google spreadsheet layer", "layerInfo": {}}
+            {"type": "layer", "title": "Google spreadsheet layer", "layerInfo": {
+                "id": "sheet gemeenten2017",
+                "type": "sheetlayer",
+                "source" : {
+                    "type":"geojson",
+                    "data": "http://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
+                    "attribution": "cbs/pdok"
+                },
+                "sheet": {
+                    "url": "",
+                    "type" : "relational",
+                    "sheetcolumn" : "gemeente",
+                    "datacolumn" : "statnaam"
+                }
+            }}
         ]},
         {"type": "group", "title": "CSV", "sublayers": 
         [
