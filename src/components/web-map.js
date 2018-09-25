@@ -24,6 +24,7 @@ import './map-measure';
 import './map-language';
 import './map-search';
 import './map-button-ctrl';
+import './map-dialog';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, infoIcon } from './my-icons';
@@ -401,8 +402,13 @@ class WebMap extends LitElement {
         this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
         this.map.addLayer(layerInfo, this.map.getStyle().layers[0].id);
       } else {
-        if (!this.map.getLayer(layerInfo.id)) {
-          this.map.addLayer(layerInfo);
+        if (layerInfo.type == "sheetlayer") {
+          this.sheetdialog = layerInfo;
+          this.requestRender();
+        } else {
+          if (!this.map.getLayer(layerInfo.id)) {
+            this.map.addLayer(layerInfo);
+          }
         }
       }
       this.layerlist = [...this.map.getStyle().layers];
@@ -460,6 +466,7 @@ class WebMap extends LitElement {
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
+    ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"></map-dialog>`:html``} 
     <map-spinner webmap="${this.map}"></map-spinner>`
   }
   toggleInfoMode() {

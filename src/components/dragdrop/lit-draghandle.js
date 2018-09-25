@@ -133,6 +133,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
           }
         } else {
           if (this.curHovering) {
+            this.curHovering.style['border-top'] = '';
             this.curHovering.style['border-bottom'] = '';
             this.curHovering = null;
           }
@@ -146,10 +147,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         if (this.curHovering) {
           let beforeFirst = false;
           if (this.curHovering.style['border-top'].length) {
-            this.curHovering.style['border-top'] = '';
             beforeFirst = true;
-          } else {
-            this.curHovering.style['border-bottom'] = '';
           }
           this.dispatchEvent(new CustomEvent('litdragend', 
             {
@@ -158,6 +156,8 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
               bubbles: true
             }  
           ));
+          this.curHovering.style['border-top'] = '';
+          this.curHovering.style['border-bottom'] = '';
           this.curHovering = null;
         }
         break;

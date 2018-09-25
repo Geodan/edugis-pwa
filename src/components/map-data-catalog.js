@@ -253,12 +253,9 @@ class MapDataCatalog extends LitElement {
       const urlparts = tileUrl.split('?'); // [baseurl,querystring]
       const params = urlparts[1].split('&').map(param=>param.split('='))
         .filter(param=>
-          param[0].toUpperCase() !== 'BBOX' && 
-          param[0].toUpperCase() !== 'REQUEST' && 
-          param[0].toUpperCase() != 'SRS' && 
-          param[0].toUpperCase() != 'WIDTH' &&
-          param[0].toUpperCase() !== 'HEIGHT' &&
-          param[0].toUpperCase() !== 'TRANSPARENT')
+          ["BBOX", "REQUEST", "SRS", "WIDTH",
+           "HEIGHT", "TRANSPARENT"].indexOf(param[0].toUpperCase()) == -1
+        )
         .map(param=>{
           if (param[0].toUpperCase() === 'LAYERS') {
             return ['layer', param[1].split(',')[0]];
