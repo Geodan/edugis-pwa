@@ -458,7 +458,45 @@ export default
                         }
                     ]
                 }
-            }},
+            }},        
+            {"type": "layer", "title": "NDW Weglussen", 
+                "layerInfo": {
+                    "id" : "ndwweglussen",
+                    "type": "line",
+                    "metadata" : {
+                        "crs" : "EPSG:3857"
+                    },
+                    "source": {
+                        "type": "geojson",
+                        "data": "http://research.geodan.nl/sites/ndw_viewer/traffic.json",
+                        "attribution": "RubioV"
+                    },
+                    "paint" : {
+                        "line-color":[
+                            "step", ["get", "speed"],
+                            "#D0D0D0",
+                            1, "#BE0000",
+                            30, "#FF0000",
+                            50, "#FF9E00",
+                            70, "#FFFF00",
+                            90, "#AAFF00",
+                            120, "#00B22D"
+                        ],
+                        "line-width": [
+                            "step", ["get", "flow"],
+                            1,
+                            100, 2,
+                            200, 3,
+                            400, 4,
+                            500, 5,
+                            750, 6,
+                            1000, 7,
+                            1500, 8,
+                            2000, 9
+                        ]
+                    }
+                }
+            }
         ]},
         {"type": "group", "title": "TopoJSON", "sublayers": 
         [
