@@ -20,6 +20,12 @@ export default
                 "source" : "styles/openmaptiles/positron.json",
                 "metadata" : {"reference": true}
             }},
+            {"type": "reference", "title": "Dark Matter (stijl)", "layerInfo": {
+                "id" : "DarkMatter",
+                "type" : "style",
+                "source" : "styles/openmaptiles/dark-matter.json",
+                "metadata" : {"reference": true}
+            }},
             {"type": "reference", "title": "MapBox Streets v8 (stijl)", "layerInfo": {
                 "id" : "streets-v8",
                 "type" : "style",
@@ -36,7 +42,7 @@ export default
                 "id" : "OsmRaster",
                 "type" : "style",
                 "source" : "styles/osmraster.json",
-                "metadata" : {"reference": true}
+                "metadata" : {"reference": true},
             }},
             {"type": "reference", "title": "Streets (Geodan Maps)", "layerInfo": {
                 "id" : "gmstreets",

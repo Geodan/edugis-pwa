@@ -42,13 +42,15 @@ class MapDialog extends GestureEventListeners(LitElement) {
           height: 34px;
           line-height: 34px;
           padding-left: 4px;
+          padding-right: 2px;
           border-bottom: 1px solid lightblue;
           font-weight: bold;
+          box-sizing: border-box;
+          border-radius: 4px 4px 0 0;
         }
         .right {
           float: right;
           margin-top: 2px;
-          margin-right: 2px;
         }
         map-iconbutton {
           width: 30px;
