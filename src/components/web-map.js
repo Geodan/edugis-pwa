@@ -17,7 +17,6 @@ import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
 import './map-coordinates.js';
-import './map-layer.js';
 import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
@@ -400,8 +399,8 @@ class WebMap extends LitElement {
       layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
       if (layerInfo.metadata && layerInfo.metadata.reference) {
         this.removeReferenceLayers();
-        this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
-        this.map.addLayer(layerInfo, this.map.getStyle().layers[0].id);
+        this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];        
+        this.map.addLayer(layerInfo, this.map.getStyle().layers.length ? this.map.getStyle().layers[0].id : undefined);
       } else {
         if (layerInfo.type == "sheetlayer") {
           this.sheetdialog = layerInfo;
@@ -466,12 +465,14 @@ class WebMap extends LitElement {
     <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
-    <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
+    <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfo()}"></map-button-ctrl>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"><map-gsheet-form layerinfo="${this.sheetdialog}" on-addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
+    ${this.infodialog?html`<map-dialog dialogtitle="Locatie informatie" on-close="${e=>{this.infodialog=null;this.requestRender();}}">${JSON.stringify(this.featureInfo)}</map-dialog>`:html``} 
     <map-spinner webmap="${this.map}"></map-spinner>`
   }
-  toggleInfoMode() {
-    console.log('toggle info mode');
+  toggleInfo() {
+    this.infodialog = !this.infodialog;
+    this.requestRender();
   }
   _didRender() {
     ;
@@ -510,6 +511,7 @@ class WebMap extends LitElement {
     if (this.coordinates.toLowerCase() !== "false") {
       this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
     }
+    this.map.on('mousemove', e=>this.handleInfo(e));
     
     this.map.autodetectLanguage(); // set openmaptiles language to browser language
     this._mapMoveEnd();
@@ -614,6 +616,12 @@ class WebMap extends LitElement {
       }
       this.map.getSource('map-search-geojson').setData(searchGeoJson);
     }
+  }
+  handleInfo(e) {
+    if (!this.infodialog) {
+      return;
+    }
+    this.featureInfo = this.map.queryRenderedFeatures(e.point).map(function(feature){ return {layer: {id: feature.layer.id, type: feature.layer.type}, properties:(feature.properties)};});
   }
 }
 customElements.define('web-map', WebMap);

@@ -45,17 +45,41 @@ export default
                 "metadata" : {"reference": true},
             }},
             {"type": "reference", "title": "Streets (Geodan Maps)", "layerInfo": {
-                "id" : "gmstreets",
-                "metadata" : {"reference": true},
-                "type" : "raster",
-                "source" : {
-                    "type": "raster",
-                    "tileSize" : 256,            
-                    "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
-                    "attribution": "&copy; GeodanMaps"
+                    "id" : "gmstreets",
+                    "metadata" : {"reference": true},
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,            
+                        "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
+                        "attribution": "&copy; GeodanMaps"
+                    }
                 }
-            }
-        }
+            },
+            {"type": "reference", "title": "ESRI World Map topo", "layerInfo": {
+                    "id" : "worldmaptopo",
+                    "metadata" : {"reference": true},
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,            
+                        "tiles": [ "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"],
+                        "attribution": "&copy; ESRI"
+                    }
+                }
+            },
+            {"type": "reference", "title": "ESRI Natural World Map", "layerInfo": {
+                    "id" : "natgeoworldmap",
+                    "metadata" : {"reference": true},
+                    "type" : "raster",
+                    "source" : {
+                        "type": "raster",
+                        "tileSize" : 256,            
+                        "tiles": [ "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"],
+                        "attribution": "&copy; ESRI"
+                    }
+                }
+            },
         ]},
         {"type": "group", "title": "WMS", "sublayers": 
         [

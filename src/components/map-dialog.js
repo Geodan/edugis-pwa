@@ -29,7 +29,10 @@ class MapDialog extends GestureEventListeners(LitElement) {
           left: calc(50% - 100px);
           top: calc(50% - 100px);
           min-width: 200px;
+          max-width: 500px;
           min-height: 200px;
+          max-height: 500px;
+          overflow: auto;
           background-color: white;
           border-radius: 4px;
           box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
