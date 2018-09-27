@@ -768,10 +768,11 @@ export default
                     "attribution": "cbs/pdok"
                 },
                 "sheet": {
-                    "url": "",
-                    "type" : "relational",
-                    "sheetcolumn" : "gemeente",
-                    "datacolumn" : "statnaam"
+                    "description": "cbs gemeentedata 2017",
+                    "key": "1SCzqMGqclDJAwY0YKDDzfmc35RpLJCi-w_0_SMAJHI0",
+                    "georeference" : "relation",
+                    "sheetcolumn" : "A",
+                    "datacolumn" : "statnaam",
                 }
             }}
         ]},

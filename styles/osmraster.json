@@ -35,6 +35,9 @@
     {
       "id" : "openstreetmap",
       "type" : "raster",
+      "metadata" : {
+        "legendurl" : "http://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+      },
       "source" : "osmraster"
     }
   ],

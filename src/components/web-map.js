@@ -25,6 +25,7 @@ import './map-language';
 import './map-search';
 import './map-button-ctrl';
 import './map-dialog';
+import './map-gsheet-form'
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, infoIcon } from './my-icons';
@@ -466,7 +467,7 @@ class WebMap extends LitElement {
     </button-expandable>
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfoMode()}"></map-button-ctrl>
-    ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"></map-dialog>`:html``} 
+    ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"><map-gsheet-form layerinfo="${this.sheetdialog}" on-addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner webmap="${this.map}"></map-spinner>`
   }
   toggleInfoMode() {
