@@ -24,7 +24,8 @@ import './map-language';
 import './map-search';
 import './map-button-ctrl';
 import './map-dialog';
-import './map-gsheet-form'
+import './map-gsheet-form';
+import './map-info-formatted';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, infoIcon } from './my-icons';
@@ -357,7 +358,12 @@ class WebMap extends LitElement {
   }
   removeReferenceLayers()  {
     const referenceLayers = this.map.getStyle().layers.filter(layer=>layer.metadata && layer.metadata.reference);
-    referenceLayers.forEach(layer=>this.map.removeLayer(layer.id));
+    referenceLayers.forEach(layer=>{
+      this.map.removeLayer(layer.id)
+      if (this.map.getSource(layer.id)) {
+        this.map.removeSource(layer.id);
+      }
+    });
   }
   addStyle(layerInfo) {
     if (layerInfo.metadata && layerInfo.metadata.reference) {
@@ -467,7 +473,7 @@ class WebMap extends LitElement {
     <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfo()}"></map-button-ctrl>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"><map-gsheet-form layerinfo="${this.sheetdialog}" on-addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
-    ${this.infodialog?html`<map-dialog dialogtitle="Locatie informatie" on-close="${e=>{this.infodialog=null;this.requestRender();}}">${JSON.stringify(this.featureInfo)}</map-dialog>`:html``} 
+    ${this.infodialog?html`<map-dialog dialogtitle="Locatie informatie" on-close="${e=>{this.infodialog=null;this.requestRender();}}"><map-info-formatted info="${this.featureInfo}"></map-info-formatted></map-dialog>`:html``} 
     <map-spinner webmap="${this.map}"></map-spinner>`
   }
   toggleInfo() {
@@ -621,7 +627,7 @@ class WebMap extends LitElement {
     if (!this.infodialog) {
       return;
     }
-    this.featureInfo = this.map.queryRenderedFeatures(e.point).map(function(feature){ return {layer: {id: feature.layer.id, type: feature.layer.type}, properties:(feature.properties)};});
+    this.featureInfo = this.map.queryRenderedFeatures(e.point);
   }
 }
 customElements.define('web-map', WebMap);

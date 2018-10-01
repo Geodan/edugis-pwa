@@ -2,6 +2,11 @@
 import {spinnerIcon} from './my-icons';
 
 import {LitElement, html} from '@polymer/lit-element';
+
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapSpinner extends LitElement {
   static get properties() { 
     return { 

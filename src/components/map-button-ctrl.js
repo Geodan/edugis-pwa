@@ -63,7 +63,7 @@ class ButtonControl {
     this._map = map;
     this._container = document.createElement('div');
     this._container.innerHTML = `<control-icon-button tooltip="${this.tooltip}">${this.icon.strings[0]}</control-icon-button>`;
-    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-pitch';
+    this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
     
     this._container.addEventListener('click', this.clickHandler);
     

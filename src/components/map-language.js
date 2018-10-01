@@ -4,6 +4,11 @@ import {languageIcon} from './my-icons';
    When selected, a "languagechanged" event with the new language is dispatched.
 */
 import {LitElement, html} from '@polymer/lit-element';
+
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class LanguageButton extends LitElement {
   static get properties() {
     return { 
@@ -120,6 +125,10 @@ class LanguageControl {
 
 /* element to be inserted at <web-map></web-map> 
    this element initalizes and adds LanguageControl to the map
+*/
+/**
+* @polymer
+* @extends HTMLElement
 */
 class MapLanguage extends LitElement {
   static get properties() { 
