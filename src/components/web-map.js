@@ -357,7 +357,12 @@ class WebMap extends LitElement {
   }
   removeReferenceLayers()  {
     const referenceLayers = this.map.getStyle().layers.filter(layer=>layer.metadata && layer.metadata.reference);
-    referenceLayers.forEach(layer=>this.map.removeLayer(layer.id));
+    referenceLayers.forEach(layer=>{
+      this.map.removeLayer(layer.id)
+      if (this.map.getSource(layer.id)) {
+        this.map.removeSource(layer.id);
+      }
+    });
   }
   addStyle(layerInfo) {
     if (layerInfo.metadata && layerInfo.metadata.reference) {

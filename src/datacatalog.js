@@ -80,6 +80,33 @@ export default
                     }
                 }
             },
+            {"type": "reference", "title": "Microsoft BING Kaart", "layerInfo": {
+                    "id" : "bingmaproad",
+                    "metadata" : {"reference": true, "bing": true},
+                    "type" : "raster",
+                    "source" : {
+                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&key={bingkey}"
+                    }                
+                }
+            },
+            {"type": "reference", "title": "Microsoft BING Hybride", "layerInfo": {
+                    "id" : "bingmaphybrid",
+                    "metadata" : {"reference": true, "bing": true},
+                    "type" : "raster",
+                    "source" : {
+                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&key={bingkey}"
+                    }
+                }
+            },
+            {"type": "reference", "title": "Microsoft BING Luchtfoto", "layerInfo": {
+                    "id" : "bingmapaerial",
+                    "metadata" : {"reference": true, "bing": true},
+                    "type" : "raster",
+                    "source" : {
+                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&key={bingkey}"
+                    }
+                }
+            }
         ]},
         {"type": "group", "title": "WMS", "sublayers": 
         [
