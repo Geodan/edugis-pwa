@@ -174,6 +174,24 @@ export default
                     }
                 }
             },
+            {"type": "layer", "title": "Parkeervakken Amsterdam", "type":"wms", "layerInfo": {
+                "id" : "amsparkeervakken",
+                "type" : "raster",
+                "minzoom" : 15,
+                "metadata" : {
+                    "legendurl" : "https://map.data.amsterdam.nl/maps/parkeervakken?transparent=false&LAYER=parkeervakken&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&"
+                },
+                "source" : {
+                        "type": "raster",
+                        "minzoom": 15,
+                        "tileSize" : 512,
+                        "tiles" : [
+                            "https://map.data.amsterdam.nl/maps/parkeervakken?transparent=true&LAYERS=parkeervakken&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=512&HEIGHT=512"
+                        ],
+                        "attribution": "Pico"
+                    }
+                }
+            },
             {"type": "layer", "title": "Fietstocht Bert en Joep", "type":"wms", "layerInfo": {
                     "id" : "fietstocht",
                     "type" : "raster",
@@ -800,13 +818,29 @@ export default
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
         [
             {"type": "layer", "title": "Mapbox hillshading", "layerInfo": {
-                "id": "hillshading",
-                "type": "hillshade",
-                "source": {
-                    "type":"raster-dem",
-                    "url": "mapbox://mapbox.terrain-rgb"
+                    "id": "hillshading",
+                    "type": "hillshade",
+                    "source": {
+                        "type":"raster-dem",
+                        "url": "mapbox://mapbox.terrain-rgb"
+                    }
                 }
-            }}
+            },
+            {"type": "layer", "title": "Nextzen hillshading", "layerInfo": {
+                    "id": "mapzenhillshading",
+                    "type": "hillshade",
+                    "source": {
+                        "id": "mapzenhillshading",
+                        "type":"raster-dem",
+                        "tileSize" : 512,
+                        "tiles": ["https://tile.nextzen.org/tilezen/terrain/v1/512/terrarium/{z}/{x}/{y}.png?api_key={nextzenkey}"],
+                        "attribution" : "NextZen"
+                    },
+                    "paint" : {
+                        "hillshade-exaggeration" : 0.05
+                    }
+                }
+            },
         ]},
         {"type": "group", "title": "Google spreadsheet", "sublayers": 
         [
