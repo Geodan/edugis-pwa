@@ -832,12 +832,17 @@ export default
                     "source": {
                         "id": "mapzenhillshading",
                         "type":"raster-dem",
-                        "tileSize" : 512,
-                        "tiles": ["https://tile.nextzen.org/tilezen/terrain/v1/512/terrarium/{z}/{x}/{y}.png?api_key={nextzenkey}"],
+                        "tileSize" : 256,
+                        "encoding" : "terrarium",
+                        "tiles": ["https://t1.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                                "https://t2.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                                "https://t3.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                                "https://t4.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png"
+                            ],
                         "attribution" : "NextZen"
                     },
                     "paint" : {
-                        "hillshade-exaggeration" : 0.05
+                        "hillshade-exaggeration" : 0.275
                     }
                 }
             },
