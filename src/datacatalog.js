@@ -813,7 +813,180 @@ export default
                 "id" : "mapboxtraffice",
                 "type" : "style",
                 "source" : "styles/mapboxtraffic.json"
-            }}
+            }},
+            {"type": "layer", "title": "EduGIS nuts_m03_2006", "layerInfo": {
+                    "id" : "EduGIS_nuts_m03_2006",
+                    "type" : "line",
+                    "source": {
+                        "id": "nuts_m03_2006",
+                        "type": "vector",
+                        "tiles":["https://tiles.edugis.nl/mvt/nuts_m03_2006/{z}/{x}/{y}.mvt"],
+                        "minzoom": 3,
+                        "maxzoom": 10
+                    },
+                    "source-layer": "nuts_m03_2006",
+                    "paint": {
+                        "line-color": "#000000",
+                        "line-width": 1
+                    }
+                }
+            },
+            {"type": "layer", "title": "EduGIS nuts_m03_2006 fill", "layerInfo": 
+                {
+                    "id" : "EduGIS_nuts_m03_2006_fill",
+                    "type" : "fill",
+                    "source": {
+                        "id": "nuts_m03_2006_fill",
+                        "type": "vector",
+                        "tiles":["https://tiles.edugis.nl/mvt/nuts_m03_2006/{z}/{x}/{y}.mvt"],
+                        "minzoom": 3,
+                        "maxzoom": 10
+                    },
+                    "source-layer": "nuts_m03_2006",
+                    "paint": {
+                        "fill-color": {
+                            "property": "cntr_code",
+                            "type": "categorical",
+                            "default": "rgba(0, 0, 0, 0)",
+                            "stops": [                              
+                              [
+                                "NL", 
+                                "rgba(251,180,174, 0.8)"
+                              ],
+                              [
+                                "IS", 
+                                "rgba(251,180,174, 0.8)"
+                              ],
+                              [
+                                "CZ", 
+                                "rgba(251,180,174, 0.8)"
+                              ],
+                              [
+                                "DE",
+                                "rgba(179,205,227, 0.8)"
+                              ],
+                              [
+                                "EE",
+                                "rgba(179,205,227, 0.8)"
+                              ],
+                              [
+                                "RO",
+                                "rgba(179,205,227, 0.8)"
+                              ],
+                              [
+                                "BE",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "MK",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "LT",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "SK",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "FR",
+                                "rgba(222,203,228, 0.8)"
+                              ],
+                              [
+                                "FI",
+                                "rgba(222,203,228, 0.8)"
+                              ],
+                              [
+                                "HU",
+                                "rgba(222,203,228, 0.8)"
+                              ],
+                              [
+                                "LI",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "SI",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "ES",
+                                "rgba(254,217,166, 0.8)"
+                              ],
+                              [
+                                "GR",
+                                "rgba(254,217,166, 0.8)"
+                              ],
+                              [
+                                "PL",
+                                "rgba(254,217,166, 0.8)"
+                              ],
+                              [
+                                "HR",
+                                "rgba(254,217,166, 0.8)"
+                              ],
+                              [
+                                "PT",
+                                "rgba(255,255,204, 0.8)"
+                              ],
+                              [
+                                "LU",
+                                "rgba(255,255,204, 0.8)"
+                              ],
+                              [
+                                "AT",
+                                "rgba(255,255,204, 0.8)"
+                              ],
+                              [
+                                "CY",
+                                "rgba(255,255,204, 0.8)"
+                              ],
+                              [
+                                "IT",
+                                "rgba(229,216,189, 0.8)"
+                              ],
+                              [
+                                "TR",
+                                "rgba(229,216,189, 0.8)"
+                              ],
+                              [
+                                "LV",
+                                "rgba(229,216,189, 0.8)"
+                              ],
+                              [
+                                "CH",
+                                "rgba(253,218,236, 0.8)"
+                              ],
+                              [
+                                "BG",
+                                "rgba(253,218,236, 0.8)"
+                              ],
+                              [
+                                "DK",
+                                "rgba(255,255,204, 0.8)"
+                              ],
+                              [
+                                "SE",
+                                "rgba(251,180,174, 0.8)"
+                              ],
+                              [
+                                "NO",
+                                "rgba(179,205,227, 0.8)"
+                              ],
+                              [
+                                "UK",
+                                "rgba(204,235,197, 0.8)"
+                              ],
+                              [
+                                "IE",
+                                "rgba(222,203,228, 0.8)"
+                              ],
+                            ]
+                        },
+                        "fill-outline-color": "#ffffff"
+                    }
+                }
+            }
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
         [
