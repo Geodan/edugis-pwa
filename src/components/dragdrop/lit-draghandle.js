@@ -163,7 +163,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         break;
     }
   }
-  _render({stylepos, isdraggable}) {
+  render() {
     return html`
     <style>
       :host {
@@ -185,7 +185,7 @@ class LitDragHandle extends GestureEventListeners(LitElement) {
         overflow: hidden;
       }
     </style>
-    <div class$="container${isdraggable?' draghandle':''}" style$="${stylepos}">
+    <div class="container${this.isdraggable?' draghandle':''}" style="${this.stylepos}">
       <slot>Default DragHandle Text Default DragHandle Text</slot>
     </div>
     `;

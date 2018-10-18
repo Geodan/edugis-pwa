@@ -21,8 +21,8 @@ class LanguageButton extends LitElement {
     super();
     this.chooservisible = false;
   }
-  _render({language, chooservisible}) {
-    if (chooservisible) {
+  render() {
+    if (this.chooservisible) {
       return html`
       <div>
         <style>
@@ -38,18 +38,18 @@ class LanguageButton extends LitElement {
                 height: 39.2px;
           }
         </style>
-        <select on-change="${e=>this.changeLangue(e)}">
-          <option selected$="${language==="autodetect"?'selected':undefined}" value="autodetect">Browser</option>
-          <option selected$="${language==="native"?'selected':undefined}" value="native">Local</option>
-          <option selected$="${language==="en"?'selected':undefined}" value="en">English</option>
-          <option selected$="${language==="de"?'selected':undefined}" value="de">Deutsch</option>
-          <option selected$="${language==="fr"?'selected':undefined}" value="fr">Français</option>
-          <option selected$="${language==="nl"?'selected':undefined}" value="nl">Nederlands</option>
-          <option selected$="${language==="zh"?'selected':undefined}" value="zh">橘子</option>
-          <option selected$="${language==="ru"?'selected':undefined}" value="ru">русский</option>
-          <option selected$="${language==="ar"?'selected':undefined}" value="ar">العربية</option>
+        <select @change="${e=>this.changeLangue(e)}">
+          <option .selected="${this.language==="autodetect"?'selected':undefined}" value="autodetect">Browser</option>
+          <option .selected="${this.language==="native"?'selected':undefined}" value="native">Local</option>
+          <option .selected="${this.language==="en"?'selected':undefined}" value="en">English</option>
+          <option .selected="${this.language==="de"?'selected':undefined}" value="de">Deutsch</option>
+          <option .selected="${this.language==="fr"?'selected':undefined}" value="fr">Français</option>
+          <option .selected="${this.language==="nl"?'selected':undefined}" value="nl">Nederlands</option>
+          <option .selected="${this.language==="zh"?'selected':undefined}" value="zh">橘子</option>
+          <option .selected="${this.language==="ru"?'selected':undefined}" value="ru">русский</option>
+          <option .selected="${this.language==="ar"?'selected':undefined}" value="ar">العربية</option>
         </select>
-      <div id="langbutton" title="Taal" on-click="${e=>this.chooservisible=false}"><a>${languageIcon}<span>Kies taal</span></a></div>
+      <div id="langbutton" title="Taal" @click="${e=>this.chooservisible=false}"><a>${languageIcon}<span>Kies taal</span></a></div>
       </div>`
     } else {
       return html`
@@ -71,7 +71,7 @@ class LanguageButton extends LitElement {
             background-color: whitesmoke;
           }
         </style>
-        <button class="mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-language" on-click="${e=>this.toggleLanguageChooser(e)}">${languageIcon}</button>`;
+        <button class="mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-language" @click="${e=>this.toggleLanguageChooser(e)}">${languageIcon}</button>`;
     } 
   }
   toggleLanguageChooser(e) {
@@ -104,7 +104,7 @@ class LanguageControl {
     this.pitch = 0;
     this._map = map;
     this._container = document.createElement('span');
-    this._container.innerHTML = `<language-button language="${this._defaultLanguage}"></language-button>`;
+    this._container.innerHTML = `<language-button .language="${this._defaultLanguage}"></language-button>`;
     this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group mapboxgl-ctrl-language';
     
     //this.addEventListeners();
@@ -162,20 +162,21 @@ class MapLanguage extends LitElement {
       webmap.addControl(this.control);
     }
   }
-  _shouldRender(props, changedProps, prevProps) {
-    if (changedProps && changedProps.webmap && prevProps && prevProps.webmap) {
-      this.removeControl(prevProps.webmap);      
+  shouldUpdate(changedProps) {
+    const prevWebMap = changedProps.get('webmap')
+    if (prevWebMap) {
+      this.removeControl(prevWebmap);      
     }
-    if (changedProps.hasOwnProperty('webmap') || changedProps.hasOwnProperty('active')) {
-      if (props.webmap && props.active) {
-        this.addControl(props.webmap);
+    if (this.webmap) {
+      if (this.active) {
+        this.addControl(this.webmap);
       } else {
-        this.removeControl(props.webmap);
+        this.removeControl(this.webmap);
       }
     }
-    return props.webmap !== null;
+    return this.webmap !== null;
   }
-  _render({webmap, active, chooservisible, language}) {
+  render() {
     return html``;
   }
 }

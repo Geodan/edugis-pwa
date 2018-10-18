@@ -24,7 +24,10 @@ import './web-map.js';
 import './snack-bar.js';
 
 import datacatalog from '../datacatalog.js';
-
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class EduGISApp extends (LitElement) {
   static get properties() {
     return {
@@ -41,7 +44,7 @@ class EduGISApp extends (LitElement) {
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
   }
-  _render({appTitle, _page, _drawerOpened, _snackbarOpened, _offline}) {
+  render() {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
@@ -151,19 +154,20 @@ footer {
           </ul>
         </nav>
     </header>
-    <web-map navigation="top-right" scalebar="true" geolocate="top-right" coordinates="true" datacatalog="${datacatalog}" haslegend="true" accesstoken="${EduGISkeys.mapbox}"></web-map>
+    <web-map navigation="top-right" scalebar="true" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2018 EduGIS, Geodan</footer>
     `;
   }
-
-  _firstRendered() {
+/*
+  firstUpdated() {
     //installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     //installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     //installMediaQueryWatcher(`(min-width: 460px)`,
        // (matches) => store.dispatch(updateLayout(matches)));
   }
-
-  _didRender(properties, changeList) {
+*/
+/*
+  updated(properties, changeList) {
     if ('_page' in changeList) {
       const pageTitle = properties.appTitle + ' - ' + changeList._page;
       updateMetadata({
@@ -173,13 +177,15 @@ footer {
       });
     }
   }
-
+*/
+  /*
   _stateChanged(state) {
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
   }
+  */
 }
 
 window.customElements.define('edugis-app', EduGISApp);

@@ -132,6 +132,10 @@ function toWgs84(geojson, from, projs) {
 }
 
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapDataCatalog extends LitElement {
   static get properties() { 
     return { 
@@ -143,19 +147,19 @@ class MapDataCatalog extends LitElement {
     this.map = null;
     this.datacatalog = null;
   }
-  _shouldRender(props, changedProps, prevProps) {
-    return (props.datacatalog != null);
+  shouldUpdate(changedProps) {
+    return (this.datacatalog != null);
   }
   renderTree(nodeList) {
     return html`<ul>${nodeList.map(node=>{
         if (node.type==="group"){
             return html`<li>${node.title}${this.renderTree(node.sublayers)}</li>`
         } else {
-            return html`<li class="data" on-click="${(e)=>{this.handleClick(e, node)}}">${node.title}</li>`;
+            return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">${node.title}</li>`;
         }
     })}</ul>`;
   }
-  _render({datacatalog}) {
+  render() {
     return html`<style>
       :host {
         display: inline-block;
@@ -167,7 +171,7 @@ class MapDataCatalog extends LitElement {
       }
       </style>
     <div>
-        ${this.renderTree(datacatalog)}
+        ${this.renderTree(this.datacatalog)}
     </div>`
   }
   getDataInfo(treenodes, dataid) {

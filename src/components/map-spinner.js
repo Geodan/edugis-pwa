@@ -49,13 +49,14 @@ class MapSpinner extends LitElement {
         newMap.on("render", hideSpinner);
     }
   }
-  _shouldRender(props, changedProps, prevProps) {
-      if (prevProps.webmap !== changedProps.webmap) {
-        this.registerMapEvents(prevProps.webmap, changedProps.webmap);
+  shouldUpdate(changedProps) {
+      const prevWebMap = changedProps.get('webmap');
+      if (prevWebMap !== this.webmap) {
+        this.registerMapEvents(prevWebMap, this.webmap);
       }
-      return (props.webmap ? true : false);
+      return (this.webmap ? true : false);
   }
-  _render({webmap, visible}) {
+  render() {
     return html`<style>
         :host {
           z-index: 100;
@@ -72,14 +73,7 @@ class MapSpinner extends LitElement {
         svg path, svg rect{
           fill: #FF6700;
         }
-    </style><div class$="${visible ? '' : 'hidden'}" title="spinner">${spinnerIcon}</div>`;
-  }
-  _didRender() {
-    ;
-  }
-  _firstRendered() {
-      /*
-    */
+    </style><div class="${this.visible ? '' : 'hidden'}" title="spinner">${spinnerIcon}</div>`;
   }
 }
 customElements.define('map-spinner', MapSpinner);

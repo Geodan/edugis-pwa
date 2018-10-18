@@ -9,9 +9,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 import { LitElement, html } from '@polymer/lit-element';
-
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class SnackBar extends LitElement {
-  _render(props) {
+  render() {
     return html`
       <style>
       :host {

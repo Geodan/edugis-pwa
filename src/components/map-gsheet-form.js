@@ -18,8 +18,8 @@ class MapGSheetForm extends LitElement {
   sheetURL(sheetkey) {
     return "https://docs.google.com/spreadsheets/d/" + sheetkey
   }
-  _shouldRender(props, changedProps, prevProps) {
-    return (props.layerinfo ? true : false);
+  shouldUpdate() {
+    return (this.layerinfo ? true : false);
   }
   extractKeyFromUrl(url) {
     url = url.replace('\\', '/');
@@ -88,12 +88,11 @@ class MapGSheetForm extends LitElement {
       }).catch(reason=>alert(`error (${layerinfo.mapurl}): ${reason}`))
     }).catch(reason=>alert(`error (${sheetApiUrl}): ${reason}`));
   }
-  _render({layerinfo}) {
-    const sheetkey = layerinfo.sheet.key;
-    const mapurl = layerinfo.source.data;
-    const description = layerinfo.sheet.description;
-    const sheetcolumn = layerinfo.sheet.sheetcolumn;
-    const datacolumn = layerinfo.sheet.datacolumn;
+  render() {
+    const sheetkey = this.layerinfo.sheet.key;
+    const mapurl = this.layerinfo.source.data;
+    const sheetcolumn = this.layerinfo.sheet.sheetcolumn;
+    const datacolumn = this.layerinfo.sheet.datacolumn;
     return html`
       <style>
       .gsheetform {
@@ -114,13 +113,13 @@ class MapGSheetForm extends LitElement {
       <p></p>
       <label for="sheetcolumn">Sheet koppel-kolom:</label>
       <select name="sheetcolumn" id="sheetcolumn">
-      ${new Array( 26 ).fill( 1 ).map( ( _, i ) => html`<option selected$="${sheetcolumn==String.fromCharCode(65+i)?'true':undefined}">${String.fromCharCode( 65 + i )}</option>`)}
+      ${new Array( 26 ).fill( 1 ).map( ( _, i ) => html`<option .selected="${sheetcolumn==String.fromCharCode(65+i)?'true':undefined}">${String.fromCharCode( 65 + i )}</option>`)}
       </select>
       <br/>
       <label for="datacolumn">Kaartlaagdata koppelattribuut:</label>
       <input type="text" name="datacolumn" id="datacolumn" value="${datacolumn}">
       <br/>
-      <input type="button" value="OK" on-click="${e=>this.submitForm()}">
+      <input type="button" value="OK" @click="${e=>this.submitForm()}">
       </div>
     `;
   }

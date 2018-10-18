@@ -15,12 +15,12 @@ class MapInfoFormatted extends LitElement {
       super();
       this.info = [];
   }
-  _render({info}) {
+  render() {
     let result = html`
       <style>
       </style>
       <div>
-      ${info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
+      ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
           <table>
             <tr><th cols="2" align="center">${feature.layer.id}</th></tr>

@@ -1,7 +1,10 @@
 
 
 import {LitElement, html} from '@polymer/lit-element';
-
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class ButtonExpandable extends LitElement {
   static get properties() { 
     return {
@@ -16,18 +19,9 @@ class ButtonExpandable extends LitElement {
       this.icon = '';
       this.info = "default title";
   }
-  _shouldRender(props, changedProps, prevProps) {
-    return true;
-  }
-  _render({info, open, icon}) {
+  render() {
     return html`
     <style>
-        :host {
-           
-        }/*
-        ::slotted(*) {
-          
-        }*/
         .container {
           position: absolute;
           left: 10px;
@@ -73,9 +67,9 @@ class ButtonExpandable extends LitElement {
           visibility: hidden;
         }
     </style>
-    <div class$="container${open? '' : ' hidden'}">
+    <div class="container${this.open? '' : ' hidden'}">
       <div class="header">
-      <div class="expandable" title$="${info}">${icon}</div>${info}
+      <div class="expandable" title="${this.info}">${this.icon}</div>${this.info}
       </div>
       <div class="content">
         <slot></slot>
@@ -83,10 +77,7 @@ class ButtonExpandable extends LitElement {
     </div>
     `
   }
-  _didRender() {
-    ;
-  }
-  _firstRendered() {
+  firstUpdated() {
       this.shadowRoot.querySelector('.expandable').addEventListener('click', ()=>this.open=!this.open);
   }
 }

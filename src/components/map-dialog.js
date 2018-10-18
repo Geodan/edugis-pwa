@@ -22,7 +22,7 @@ class MapDialog extends GestureEventListeners(LitElement) {
   close() {
     this.dispatchEvent(new CustomEvent('close'));
   }
-  _render({dialogtitle}) {
+  render() {
     return html`<style>
         .container {
           position: absolute;
@@ -60,8 +60,8 @@ class MapDialog extends GestureEventListeners(LitElement) {
           height: 30px;
         }
     </style>
-    <div class="container" style$="${this.stylepos}">
-      <div class="titlebar">${dialogtitle}<span class="right"><map-iconbutton info="close" icon="${closeIcon}" on-click="${(e)=>this.close()}"></map-iconbutton</span></div>
+    <div class="container" style="${this.stylepos}">
+      <div class="titlebar">${this.dialogtitle}<span class="right"><map-iconbutton info="close" .icon="${closeIcon}" @click="${(e)=>this.close()}"></map-iconbutton></span></div>
       <slot>Dummy content</slot>
     </div>`;
   }

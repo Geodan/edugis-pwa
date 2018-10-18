@@ -17,6 +17,10 @@ function getIcon(osmtype) {
 }
 
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapSearch extends LitElement {
   static get properties() { 
     return { 
@@ -93,7 +97,7 @@ class MapSearch extends LitElement {
     this.resultList = null;
     this.triggerResult();
   }
-  _render({info, resultList, active}) {
+  render() {
     return html`<style>
         :host {
           position: absolute;
@@ -172,19 +176,19 @@ class MapSearch extends LitElement {
           display: none;
         }
     </style>
-    <map-iconbutton info="${info}" icon="${imageSearchIcon}" on-click="${e=>{this.active=!this.active;}}"></map-iconbutton>
-    <div class$="searchbox${active?'':' hidden'}">
-      <input type="text" placeholder="${info}" on-keyup="${(e)=>this.keyup(e)}">
-      ${active&&resultList&&resultList.length?html`<i class="erasebutton" on-click="${e=>this.searchErase(e)}">${closeIcon}</i>`:''}
-      <span title="zoek" class="searchbutton" on-click="${(e)=>this.search(e)}">${searchIcon}</span>
+    <map-iconbutton .info="${this.info}" .icon="${imageSearchIcon}" @click="${e=>{this.active=!this.active;}}"></map-iconbutton>
+    <div class="searchbox${this.active?'':' hidden'}">
+      <input type="text" placeholder="${this.info}" @keyup="${(e)=>this.keyup(e)}">
+      ${this.active&&this.resultList&&this.resultList.length?html`<i class="erasebutton" @click="${e=>this.searchErase(e)}">${closeIcon}</i>`:''}
+      <span title="zoek" class="searchbutton" @click="${(e)=>this.search(e)}">${searchIcon}</span>
     </div>
-    ${(active && resultList && resultList.length)?
+    ${(this.active && this.resultList && this.resultList.length)?
       html`
       <div class="resultlist">
         <ul>
-          ${resultList.map(item=>
+          ${this.resultList.map(item=>
             html`
-            <li on-click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">
+            <li @click="${e=>this.zoomTo([item.lon,item.lat],item.boundingbox)}">
                 ${item.hasOwnProperty('icon')?
                   html`
                   <img src="${item.icon}">`
@@ -195,7 +199,7 @@ class MapSearch extends LitElement {
         </ul>
       </div>`
         :
-      (active && (Array.isArray(resultList) && resultList.length === 0)?
+      (this.active && (Array.isArray(this.resultList) && this.resultList.length === 0)?
         html`
           <div class="resultlist">
             <ul>

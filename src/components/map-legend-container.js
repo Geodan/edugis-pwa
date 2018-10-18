@@ -120,15 +120,16 @@ class MapLegendContainer extends LitElement {
         }
       }
       this.updateGroupItems();
-      this.requestRender();
+      this.requestUpdate();
   }
-  _shouldRender(props, changedProps, prevProps) {
-      if (changedProps && changedProps.layerlist) {
-          this.updateGroupedList(changedProps.layerlist, prevProps.layerlist);
+  shouldUpdate(changedProps) {
+      const prevLayerList = changedProps.get('layerlist');
+      if (this.layerlist) {
+          this.updateGroupedList(this.layerlist, prevLayerList);
       }
-      return (props.visible);
+      return (this.visible);
   }
-  _render({opened, legendtitle, zoom, layerlist}) {
+  render() {
     /* see https://codepen.io/sulfurious/pen/eWPBjY?editors=1100 for flex layout */
     this.itemList = this.groupedArray.items.
         filter(item=>item._ga_visible&&!(item.type==="background")).reverse();
@@ -176,46 +177,40 @@ class MapLegendContainer extends LitElement {
             visibility: hidden;
         }        
     </style>
-    <div class$="container${opened? '' : ' hidden'}">
+    <div class="container${this.opened? '' : ' hidden'}">
         <div class="legendheader">
-            ${legendtitle}
+            ${this.legendtitle}
         </div>
         <div class="itemscroller">
             <div id="draggableitems">
                 ${this.itemList.map(item=>
-                    html`<map-legend-item item=${item} 
-                        itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
-                        itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
-                        itemid$="${item._ga_id}"
-                        layervisible="${item.layervisible}"
-                        slidervisible="${item.slidervisible?true:false}"
-                        legendvisible="${item.legendvisible?true:false}"
-                        legendurl="${item.metadata && item.metadata.legendurl?item.metadata.legendurl:''}"
-                        layeropacity="${item.layeropacity?item.layeropacity*100:100}"
-                        open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
-                        zoom="${zoom}"
-                        on-openclose="${e=>this.openClose(e)}",
-                        on-litdragend="${e=>this.litDragEnd(e)}",
-                        on-updatevisibility="${e=>this.updateVisibility(e)}"
-                        on-updateopacity="${e=>this.updateOpacity(e)}"
-                        on-slidervisible="${e=>this.updateSliderVisible(e)}"
-                        on-legendvisible="${e=>this.updateLegendVisible(e)}"
+                    html`<map-legend-item .item="${item}"
+                        .itemcontainer="${this.shadowRoot.querySelector('#draggableitems')}"
+                        .itemscroller="${this.shadowRoot.querySelector('.itemscroller')}"
+                        itemid="${item._ga_id}"
+                        .layervisible="${item.layervisible}"
+                        .slidervisible="${item.slidervisible?true:false}"
+                        .legendvisible="${item.legendvisible?true:false}"
+                        .legendurl="${item.metadata && item.metadata.legendurl?item.metadata.legendurl:''}"
+                        .layeropacity="${item.layeropacity?item.layeropacity*100:100}"
+                        .open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
+                        .zoom="${this.zoom}"
+                        @openclose="${e=>this.openClose(e)}",
+                        @litdragend="${e=>this.litDragEnd(e)}",
+                        @updatevisibility="${e=>this.updateVisibility(e)}"
+                        @updateopacity="${e=>this.updateOpacity(e)}"
+                        @slidervisible="${e=>this.updateSliderVisible(e)}"
+                        @legendvisible="${e=>this.updateLegendVisible(e)}"
                     ></map-legend-item>`)}
             </div>
             <div class="legendfooter">
                 ${this.groupedArray.items.filter(item=>item._ga_visible&&(item.type==="background")).map(item=>
-                    html`<map-legend-item item="${item}" layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
+                    html`<map-legend-item .item="${item}" .layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
             </div>
         </div>
     </div>
-    <div class="button" title=${legendtitle} on-click="${e=>this.opened=!this.opened}">${layersIcon}</div>`;
+    <div class="button" .title="${this.legendtitle}" @click="${e=>this.opened=!this.opened}">${layersIcon}</div>`;
     return result;
-  }
-  _didRender() {
-    ;
-  }
-  _firstRendered() {
-    ;
   }
   openClose(e) {
       const item = {_ga_id: e.detail._ga_id};
@@ -224,21 +219,21 @@ class MapLegendContainer extends LitElement {
       } else {
         this.groupedArray.closeGroup(item);
       }
-      this.requestRender();
+      this.requestUpdate();
   }
   updateSliderVisible(e) {
       const index = this.groupedArray._items.findIndex(item=>item._ga_id==e.detail._ga_id);
       if (index > -1) {
         this.groupedArray._items[index].slidervisible = e.detail.slidervisible;
       }
-      this.requestRender();
+      this.requestUpdate();
   }
   updateLegendVisible(e) {
     const index = this.groupedArray._items.findIndex(item=>item._ga_id==e.detail._ga_id);
     if (index > -1) {
       this.groupedArray._items[index].legendvisible = e.detail.legendvisible;
     }
-    this.requestRender();
+    this.requestUpdate();
   }
   litDragEnd(e){
     if (e.detail.dragTarget) {
@@ -274,7 +269,7 @@ class MapLegendContainer extends LitElement {
         // toggle group visibility
         e.detail.layerid = this.groupedArray.getAllItemsInGroup(item._ga_id)
             .map(groupitem=>groupitem.id);
-        this.requestRender();
+        this.requestUpdate();
       } 
   }
   updateOpacity(e) {

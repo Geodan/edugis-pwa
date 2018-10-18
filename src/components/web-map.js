@@ -410,7 +410,7 @@ class WebMap extends LitElement {
       } else {
         if (layerInfo.type == "sheetlayer") {
           this.sheetdialog = layerInfo;
-          this.requestRender();
+          this.requestUpdate();
         } else {
           if (!this.map.getLayer(layerInfo.id)) {
             this.map.addLayer(layerInfo);
@@ -449,7 +449,7 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
-  _render({haslegend, resolution, coordinates, displaylat, displaylng, datacatalog, layerlist, lastClickPoint, zoom}) {
+  render() {
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -462,26 +462,23 @@ class WebMap extends LitElement {
       .webmap {width: 100%; height: 100%}
       </style>
     <div class="webmap"></div>
-    <map-coordinates visible="${coordinates.toLowerCase() !== 'false'}" lon="${displaylng}" lat="${displaylat}" resolution="${resolution}" clickpoint="${lastClickPoint?lastClickPoint:undefined}"></map-coordinates>
-    <map-measure webmap="${this.map}" class="centertop"></map-measure>
-    <map-button-ctrl controlid="3D" webmap="${this.map}" position="top-right" icon="${html`<b>3D</b>`}" tooltip="Pitch" on-mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
-    <map-language webmap="${this.map}" active="true" language="autodetect" on-togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
-    <map-search viewbox="${this.viewbox}" on-searchclick="${e=>this.fitBounds(e)}" on-searchresult="${e=>this.searchResult(e)}"></map-search>
-    <button-expandable icon="${cloudDownloadIcon}" info="Data catalogus">  
-    <map-data-catalog datacatalog="${datacatalog}" on-addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
+    <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
+    <map-measure .webmap="${this.map}" class="centertop"></map-measure>
+    <map-button-ctrl controlid="3D" .webmap="${this.map}" position="top-right" .icon="${html`<b>3D</b>`}" tooltip="Pitch" @mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
+    <map-language .webmap="${this.map}" active="true" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
+    <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+    <button-expandable .icon="${cloudDownloadIcon}" info="Data catalogus">  
+    <map-data-catalog .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
-    <map-legend-container layerlist="${layerlist}" visible="${haslegend}" zoom="${zoom}" on-movelayer="${e=>this.moveLayer(e)}" on-updatevisibility="${(e) => this.updateLayerVisibility(e)}" on-updateopacity="${(e)=>this.updateLayerOpacity(e)}" on-legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
-    <map-button-ctrl controlid="info" webmap="${this.map}" position="bottom-left" icon="${infoIcon}" tooltip="info" on-mapbuttoncontrolclick="${e=>this.toggleInfo()}"></map-button-ctrl>
-    ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" on-close="${e=>{this.sheetdialog=null;this.requestRender();}}"><map-gsheet-form layerinfo="${this.sheetdialog}" on-addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
-    ${this.infodialog?html`<map-dialog dialogtitle="Locatie informatie" on-close="${e=>{this.infodialog=null;this.requestRender();}}"><map-info-formatted info="${this.featureInfo}"></map-info-formatted></map-dialog>`:html``} 
-    <map-spinner webmap="${this.map}"></map-spinner>`
+    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-button-ctrl controlid="info" .webmap="${this.map}" position="bottom-left" .icon="${infoIcon}" tooltip="info" @mapbuttoncontrolclick="${e=>this.toggleInfo()}"></map-button-ctrl>
+    ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
+    ${this.infodialog?html`<map-dialog dialogtitle="Locatie-informatie" @close="${e=>{this.infodialog=null;this.requestUpdate();}}"><map-info-formatted .info="${this.featureInfo}"></map-info-formatted></map-dialog>`:html``} 
+    <map-spinner .webmap="${this.map}"></map-spinner>`
   }
   toggleInfo() {
     this.infodialog = !this.infodialog;
-    this.requestRender();
-  }
-  _didRender() {
-    ;
+    this.requestUpdate();
   }
   _positionString(prop) {
     // convert prop to control position
@@ -491,7 +488,7 @@ class WebMap extends LitElement {
     }
     return propl;
   }
-  _firstRendered() {
+  firstUpdated() {
     if (this.accesstoken) {
       mapboxgl.accessToken = this.accesstoken;
     }
@@ -517,6 +514,7 @@ class WebMap extends LitElement {
     if (this.coordinates.toLowerCase() !== "false") {
       this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
     }
+    this.featureInfo = [];
     this.map.on('mousemove', e=>this.handleInfo(e));
     
     this.map.autodetectLanguage(); // set openmaptiles language to browser language
@@ -556,7 +554,7 @@ class WebMap extends LitElement {
         pitch: this.map.getPitch()}
       }
     ));
-    this.requestRender();
+    this.requestUpdate();
   }
   setLanguage(e) {
     this.storeNoneReferenceLayers();

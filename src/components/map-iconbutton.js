@@ -1,7 +1,8 @@
-
-
-
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class IconButton extends LitElement {
   static get properties() { 
     return { 
@@ -16,14 +17,11 @@ class IconButton extends LitElement {
       this.icon = "";
       this.info = "Button";
   }
-  _shouldRender(props, changedProps, prevProps) {
+  shouldUpdate(changedProps) {
     return this.visible;
   }
-  _render({visible, icon, info}) {
+  render() {
     return html`<style>
-        :host {
-          
-        }
         .button {
           display: inline-block;
           height: 30px;
@@ -44,14 +42,7 @@ class IconButton extends LitElement {
           display: none;
         }
     </style>
-    <div title$="${info}" class$="button ${visible ? '' : 'hidden'}">${icon}</div>`;
-  }
-  _didRender() {
-    ;
-  }
-  _firstRendered() {
-      /*
-    */
+    <div title="${this.info}" class="button ${this.visible ? '' : 'hidden'}">${this.icon}</div>`;
   }
 }
 customElements.define('map-iconbutton', IconButton);

@@ -281,7 +281,7 @@ class MapMeasure extends LitElement {
       }
     }
   }
-  _render({visible, active, measureInfo}) {
+  render() {
     return html`<style>
         :host { 
           position: absolute; 
@@ -305,15 +305,8 @@ class MapMeasure extends LitElement {
           font-size: 12px;
         }
     </style>
-    <map-iconbutton class$="${visible?'':'hidden'}" info="${this.info}" icon=${rulerIcon} on-click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
-    <div class$="measureinfo${active?'':' hidden'}">${measureInfo}</div>`
-  }
-  _didRender() {
-    ;
-  }
-  _firstRendered() {
-      /*
-    */
+    <map-iconbutton class="${this.visible?'':'hidden'}" .info="${this.info}" .icon=${rulerIcon} @click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
+    <div class="measureinfo${this.active?'':' hidden'}">${this.measureInfo}</div>`
   }
 }
 customElements.define('map-measure', MapMeasure);

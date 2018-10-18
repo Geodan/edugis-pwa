@@ -1,4 +1,8 @@
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapCoordinates extends LitElement {
   static get properties() { 
     return { 
@@ -20,20 +24,20 @@ class MapCoordinates extends LitElement {
     this.resolution = 0.0;
     this.clickpoint = [];
   }
-  _shouldRender(props, changedProps, prevProps) {
-    if (changedProps.hasOwnProperty('resolution')) {
-      if (props.resolution > 0) {
-        this.factor = -Math.round(Math.log10(props.resolution));
+  shouldUpdate(changedProps) {
+    if (changedProps.has('resolution')) {
+      if (this.resolution > 0) {
+        this.factor = -Math.round(Math.log10(this.resolution));
       } else {
         this.factor = 7;
       }
-    }
-    if (changedProps.hasOwnProperty('clickpoint') && props.clickpoint.length === 2) {
-      this.clickpointHtml = html`<br/>Click: ${props.clickpoint[0].toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${props.clickpoint[1].toFixed(this.factor)}&deg;&#x2195`
+    }    
+    if (changedProps.has('clickpoint') && this.clickpoint && this.clickpoint.length === 2) {
+      this.clickpointHtml = html`<br/>Click: ${this.clickpoint[0].toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${this.clickpoint[1].toFixed(this.factor)}&deg;&#x2195`;
     }
     return this.visible;
   }
-  _render({visible, lat, lon, resolution}) {
+  render() {
     return html`<style>
       :host {
         background-color: rgba(255, 255, 255, 0.75);
@@ -49,7 +53,7 @@ class MapCoordinates extends LitElement {
         box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
       }
     </style>
-    ${lon.toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${lat.toFixed(this.factor)}&deg;&#x2195;
+    ${this.lon.toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${this.lat.toFixed(this.factor)}&deg;&#x2195;
     ${this.clickpointHtml}
     `
   }

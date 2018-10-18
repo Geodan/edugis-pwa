@@ -16,6 +16,10 @@
 
 
 import {LitElement, html} from '@polymer/lit-element';
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class ControlIconButton extends LitElement {
   static get properties() { 
     return { 
@@ -26,7 +30,7 @@ class ControlIconButton extends LitElement {
       super();
       this.tooltip = "";
   }
-  _render({tooltip}) {
+  render() {
     return html`<style>
         button {
           display: block;
@@ -43,7 +47,7 @@ class ControlIconButton extends LitElement {
           background-color: rgba(0,0,0,0.05);
         }
     </style>
-    <button title$="${tooltip}" class="button"><slot></slot></button>`;
+    <button title="${this.tooltip}" class="button"><slot></slot></button>`;
   }
 }
 customElements.define('control-icon-button', ControlIconButton);
@@ -62,7 +66,7 @@ class ButtonControl {
   onAdd(map) {
     this._map = map;
     this._container = document.createElement('div');
-    this._container.innerHTML = `<control-icon-button tooltip="${this.tooltip}">${this.icon.strings[0]}</control-icon-button>`;
+    this._container.innerHTML = `<control-icon-button .tooltip="${this.tooltip}">${this.icon.strings[0]}</control-icon-button>`;
     this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
     
     this._container.addEventListener('click', this.clickHandler);
@@ -76,6 +80,10 @@ class ButtonControl {
   }
 }
 
+/**
+* @polymer
+* @extends HTMLElement
+*/
 class MapButtonControl extends LitElement {
   static get properties() { 
     return { 
@@ -123,17 +131,18 @@ class MapButtonControl extends LitElement {
       webmap.addControl(this._control, position);
     }
   }
-  _shouldRender(props, changedProps, prevProps) {
-    if (changedProps && changedProps.webmap && prevProps && prevProps.webmap) {
-      this.removeControl(prevProps.webmap);      
+  shouldUpdate(changedProps) {
+    const prevMap = changedProps.get('webmap');
+    if (prevMap) {
+      this.removeControl(prevMap);
     }
-    return props.webmap !== null;
+    return this.webmap !== null;
   }
-  _render({webmap, position, icon, controlid, tooltip}) {
-    if (position !== "none") {
-      this.addControl(webmap, position, icon, controlid, tooltip);
+  render() {
+    if (this.position !== "none") {
+      this.addControl(this.webmap, this.position, this.icon, this.controlid, this.tooltip);
     } else {
-      this.removeControl(webmap);
+      this.removeControl(this.webmap);
     }
     return html``;
   }

@@ -118,21 +118,21 @@ class MapLegendItem extends LitElement {
           composed: true
       }));
   }
-  _render({item, isbackground, layervisible, slidervisible, legendvisible, legendurl, layeropacity, itemcontainer, itemscroller, zoom}) {
+  render() {
     let layerIcon = undefined;
     let layerViewIcon = '';
-    if (item.maxzoom && zoom > item.maxzoom) {
+    if (this.item.maxzoom && this.zoom > this.item.maxzoom) {
         layerViewIcon = zoomOutIcon;
     } else {
-        if (item.minzoom && zoom < item.minzoom) {
+        if (this.item.minzoom && this.zoom < this.item.minzoom) {
             layerViewIcon = zoomInIcon;
         } else {
             layerViewIcon = expandMoreIcon;
         }
     }
-    const layerOnMap = layervisible && (!item.maxzoom || zoom < item.maxzoom) && (!item.minzoom || zoom > item.minzoom);
-    if (!item._ga_group) {
-        switch (item.type) {
+    const layerOnMap = this.layervisible && (!this.item.maxzoom || this.zoom < this.item.maxzoom) && (!this.item.minzoom || this.zoom > this.item.minzoom);
+    if (!this.item._ga_group) {
+        switch (this.item.type) {
             case "fill":
                 layerIcon = areaIcon;
                 break;
@@ -323,40 +323,40 @@ input[type=range]:focus::-ms-fill-upper {
         }
     </style>
     <div class="legenditem">
-        <div class$="header ${item.type?item.type:(item._ga_group?(item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" layerid$="${item.id}">
-            ${item._ga_indent ? new Array(item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
-            ${item._ga_group ? 
+        <div .class="header ${this.item.type?this.item.type:(this.item._ga_group?(this.item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" .layerid="${this.item.id}">
+            ${this.item._ga_indent ? new Array(this.item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
+            ${this.item._ga_group ? 
                 html`
-                <i class="icon" title="Layer group" on-click="${e=>this._toggleOpenClose(e)}">
-                ${item._ga_open?arrowDropDownIcon:arrowRightIcon}</i>`
+                <i class="icon" title="Layer group" @click="${e=>this._toggleOpenClose(e)}">
+                ${this.item._ga_open?arrowDropDownIcon:arrowRightIcon}</i>`
                 :
                 html`
                 <i class="icon">${layerIcon}</i>`}            
-            <lit-draghandle class$="${layerOnMap?undefined:'gray'}" itemcontainer="${itemcontainer}" itemscroller="${itemscroller}" isdraggable="${!isbackground}">
-                ${item.id?item.id:(item["source-layer"]?item["source-layer"]:item.source)}
+            <lit-draghandle .class="${layerOnMap?undefined:'gray'}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" .isdraggable="${!this.isbackground}">
+                ${this.item.id?this.item.id:(this.item["source-layer"]?this.item["source-layer"]:this.item.source)}
             </lit-draghandle>
             <span class="right">
-                ${isbackground?'':html`<i class="icon" title="remove layer" on-click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
-                <i class="icon" title="opacity" on-click="${e=>this.toggleSlider()}">${opacityIcon}</i>
-                ${(item._ga_group)?'':html`<i class="icon" title="change style">${styleIcon}</i>`} 
-                <i class="icon" title$="${layervisible?'hide':'show'}" on-click="${(e) => this._toggleVisibility(e)}">${layervisible?visibilityOffIcon:visibilityIcon}</i>
-                ${item._ga_group?undefined:html`<i class="icon" title="show legend" on-click="${e=>this.toggleLegend(e)}">${layerViewIcon}</i>`}
+                ${this.isbackground?'':html`<i class="icon" title="remove layer" @click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
+                <i class="icon" title="opacity" @click="${e=>this.toggleSlider()}">${opacityIcon}</i>
+                ${(this.item._ga_group)?'':html`<i class="icon" .title="change style">${styleIcon}</i>`} 
+                <i class="icon" .title="${this.layervisible?'hide':'show'}" @click="${(e) => this._toggleVisibility(e)}">${this.layervisible?visibilityOffIcon:visibilityIcon}</i>
+                ${this.item._ga_group?undefined:html`<i class="icon" title="show legend" @click="${e=>this.toggleLegend(e)}">${layerViewIcon}</i>`}
             </span>
         </div>
-        ${slidervisible ?
-            html`${sliderstyle}<div class="slidercontainer"><div class="slider"><span class="percentage">${layeropacity}%</span><input type="range" on-input="${e=>this.updateOpacity(e)}" value="${layeropacity}"></div></div>`
+        ${this.slidervisible ?
+            html`${sliderstyle}<div class="slidercontainer"><div class="slider"><span class="percentage">${this.layeropacity}%</span><input type="range" @input="${e=>this.updateOpacity(e)}" .value="${this.layeropacity}"></div></div>`
             :
             html``
         }
-        ${layerOnMap && legendvisible ?
-            legendurl && legendurl.length ? 
-                html`<div class="legendcontainer"><img src$="${legendurl}"></div>`
+        ${layerOnMap && this.legendvisible ?
+            this.legendurl && this.legendurl.length ? 
+                html`<div class="legendcontainer"><img .src="${this.legendurl}"></div>`
                 :
                 html`<div class="legendcontainer">legenda niet beschikbaar</div>`
             :
             html``
         }
-        <!--div class$="content ${item.type}">Layer legenda</div-->
+        <!--div class$="content ${this.item.type}">Layer legenda</div-->
     </div>
     `
   }
