@@ -1,17 +1,16 @@
-import {deleteForeverIcon} from './my-icons';
-import {opacityIcon} from './my-icons';
-import {styleIcon} from './my-icons';
-import {visibilityIcon} from './my-icons';
-import {visibilityOffIcon} from './my-icons';
-import {expandMoreIcon} from './my-icons';
-import {arrowRightIcon} from './my-icons';
-import {arrowDropDownIcon} from './my-icons';
-import {noIcon} from './my-icons';
+/*  map-legend-item
+    Display layer name, layer type, delete button, opacitiy button, visibility button and legend button
+    Contains (collapsible) map-legend-panel to visually display the legend for the layer
+*/
+
+
+import {deleteForeverIcon, opacityIcon, visibilityIcon, visibilityOffIcon, expandMoreIcon, arrowRightIcon, arrowDropDownIcon} from './my-icons';
 
 import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, starIcon, tripOriginIcon as circleIcon, 
     blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, verticalAlignBottom as backgroundIcon, landscapeIcon, zoomInIcon, zoomOutIcon } from './my-icons';
 
 import './dragdrop/lit-draghandle';
+import './map-legend-panel';
 import {LitElement, html} from '@polymer/lit-element';
 
 /**
@@ -32,7 +31,8 @@ class MapLegendItem extends LitElement {
       open: Boolean,
       itemcontainer: Object,
       itemscroller: Object,
-      zoom: Number
+      zoom: Number,
+      maplayer: Object
     }; 
   }
   constructor() {
@@ -318,9 +318,7 @@ input[type=range]:focus::-ms-fill-upper {
             font-size: smaller;
             top: 3px;
         }
-        .legendcontainer {
-            text-align: right;
-        }
+        
     </style>
     <div class="legenditem">
         <div .class="header ${this.item.type?this.item.type:(this.item._ga_group?(this.item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" .layerid="${this.item.id}">
@@ -338,7 +336,6 @@ input[type=range]:focus::-ms-fill-upper {
             <span class="right">
                 ${this.isbackground?'':html`<i class="icon" title="remove layer" @click="${(e) => this._removeLayer(e)}" >${deleteForeverIcon}</i>`}
                 <i class="icon" title="opacity" @click="${e=>this.toggleSlider()}">${opacityIcon}</i>
-                ${(this.item._ga_group)?'':html`<i class="icon" .title="change style">${styleIcon}</i>`} 
                 <i class="icon" .title="${this.layervisible?'hide':'show'}" @click="${(e) => this._toggleVisibility(e)}">${this.layervisible?visibilityOffIcon:visibilityIcon}</i>
                 ${this.item._ga_group?undefined:html`<i class="icon" title="show legend" @click="${e=>this.toggleLegend(e)}">${layerViewIcon}</i>`}
             </span>
@@ -348,14 +345,7 @@ input[type=range]:focus::-ms-fill-upper {
             :
             html``
         }
-        ${layerOnMap && this.legendvisible ?
-            this.legendurl && this.legendurl.length ? 
-                html`<div class="legendcontainer"><img .src="${this.legendurl}"></div>`
-                :
-                html`<div class="legendcontainer">legenda niet beschikbaar</div>`
-            :
-            html``
-        }
+        ${layerOnMap && this.legendvisible ? html`<map-legend-panel .legendurl="${this.legendurl}" .layerid="${this.item.id}" .maplayer="${this.maplayer}"></map-legend-panel>`:``}
         <!--div class$="content ${this.item.type}">Layer legenda</div-->
     </div>
     `

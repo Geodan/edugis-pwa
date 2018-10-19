@@ -1,3 +1,10 @@
+/* map-legend-container
+   Displays a list of currently added layers in the map
+   Provides access to legend-items that allow settings for each layer
+   If consecutive layers use the same source data, the legend-items are automatically grouped
+   Legend items can be dragged vertically to change layer ordering
+*/
+
 import {layersIcon} from './my-icons';
 import './map-legend-item.js';
 import GroupedArray from '../../lib/groupedarray';
@@ -192,6 +199,7 @@ class MapLegendContainer extends LitElement {
                         .slidervisible="${item.slidervisible?true:false}"
                         .legendvisible="${item.legendvisible?true:false}"
                         .legendurl="${item.metadata && item.metadata.legendurl?item.metadata.legendurl:''}"
+                        .maplayer="${this.layerlist.find(layer=>layer.id===item.id)}"
                         .layeropacity="${item.layeropacity?item.layeropacity*100:100}"
                         .open="${item.hasOwnProperty('_ga_open')?item._ga_open:false}"
                         .zoom="${this.zoom}"
