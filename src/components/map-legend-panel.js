@@ -14,6 +14,7 @@ class MapLegendPanel extends LitElement {
   static get properties() { 
     return { 
       legendurl: String,
+      zoom: Number,
       maplayer: Object
     }; 
   }
@@ -25,6 +26,45 @@ class MapLegendPanel extends LitElement {
     if (this.maplayer.metadata && this.maplayer.metadata.legendurl) {
       return html`<img src="${this.maplayer.metadata.legendurl}">`;
     }
+  }
+  lineLegend() {
+    const paint = this.maplayer.paint;
+    let lineColor = "black";
+    let lineWidth = 1;
+    if (paint && paint['line-color']) {
+      lineColor = paint['line-color'];
+    }
+    if (paint && paint['line-width']) {
+      lineWidth = paint['line-width'];
+    }
+    if (lineWidth === Object(lineWidth)) {
+      if (lineWidth.stops) {
+        let minWidth = 1;
+        let maxWidth = 1;
+        let prevZoom = 0;
+        for (let i = 0; i < lineWidth.stops.length; i++) {
+          if (this.zoom <= lineWidth.stops[i][0]) {
+            maxWidth = lineWidth.stops[i][1];
+            lineWidth = (maxWidth - minWidth) * (this.zoom - prevZoom)/(lineWidth.stops[i][0] - prevZoom);
+            break;
+          } else {
+            minWidth = lineWidth.stops[i][1];
+            prevZoom = lineWidth.stops[i][0];
+          }
+        }
+      }
+    }
+    if (Array.isArray(lineWidth)) {
+
+    }
+    if (!Array.isArray(lineColor)) {
+      lineColor = [lineColor];
+    }
+    return svg`${lineColor.map((color, index)=>{
+      return svg`<svg width="30" height="15">
+      <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color};stroke-width:${lineWidth};" />
+      </svg>`;
+    })}`
   }
   fillLegend()
   {
@@ -43,6 +83,18 @@ class MapLegendPanel extends LitElement {
           result.push(fillColor[i]);
         }
         fillColor = result;
+      }
+    }
+    if (fillColor === Object(fillColor)) {
+      if (fillColor.stops) {
+        let color = fillColor.stops[0][1];
+        for (let i = 0; i < fillColor.stops.length; i++) {
+          if (this.zoom > fillColor.stops[i][0]) {
+            color = fillColor.stops[i][1];
+            break;
+          }
+        }
+        fillColor = color;
       }
     }
     if (paint && paint['fill-outline-color']) {
@@ -73,6 +125,9 @@ class MapLegendPanel extends LitElement {
           break;
         case 'fill':
           legendContent = this.fillLegend();
+          break;
+        case 'line':
+          legendContent = this.lineLegend();
           break;
         default:
           legendContent = html`legend not available for type ${this.maplayer.type}</div>`;

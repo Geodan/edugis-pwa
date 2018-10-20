@@ -321,7 +321,7 @@ input[type=range]:focus::-ms-fill-upper {
         
     </style>
     <div class="legenditem">
-        <div .class="header ${this.item.type?this.item.type:(this.item._ga_group?(this.item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" .layerid="${this.item.id}">
+        <div class="header ${this.item.type?this.item.type:(this.item._ga_group?(this.item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" .layerid="${this.item.id}">
             ${this.item._ga_indent ? new Array(this.item._ga_indent).fill(undefined).map(item=>html`<span class="indent"></span>`):''}
             ${this.item._ga_group ? 
                 html`
@@ -330,7 +330,7 @@ input[type=range]:focus::-ms-fill-upper {
                 :
                 html`
                 <i class="icon">${layerIcon}</i>`}            
-            <lit-draghandle .class="${layerOnMap?undefined:'gray'}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" .isdraggable="${!this.isbackground}">
+            <lit-draghandle class="${layerOnMap?undefined:'gray'}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" .isdraggable="${!this.isbackground}">
                 ${this.item.id?this.item.id:(this.item["source-layer"]?this.item["source-layer"]:this.item.source)}
             </lit-draghandle>
             <span class="right">
@@ -345,8 +345,7 @@ input[type=range]:focus::-ms-fill-upper {
             :
             html``
         }
-        ${layerOnMap && this.legendvisible ? html`<map-legend-panel .legendurl="${this.legendurl}" .layerid="${this.item.id}" .maplayer="${this.maplayer}"></map-legend-panel>`:``}
-        <!--div class$="content ${this.item.type}">Layer legenda</div-->
+        ${layerOnMap && this.legendvisible ? html`<map-legend-panel .zoom="${this.zoom}" .layerid="${this.item.id}" .maplayer="${this.maplayer}"></map-legend-panel>`:``}
     </div>
     `
   }
