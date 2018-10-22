@@ -227,9 +227,9 @@ class WebMap extends LitElement {
           if (this.map.getSource(source)) {
             this.map.removeSource(source);
           }
-        }
-        this.layerlist = [...this.map.getStyle().layers];
-        this.map._update(true); // TODO: how refresh map wihtout calling private "_update()"?
+        }        
+        this.resetLayerList();
+        this.map._update(true); // TODO: how refresh map without calling private "_update()"?
       }
     }
   }
@@ -377,7 +377,7 @@ class WebMap extends LitElement {
       /* store non reference layers */
       this.storeNoneReferenceLayers();
       /* update layerlist */
-      this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];
+      this.layerlist = [...this.layerlist.filter(layer=>layer.reference==false || layer.background)];
       /* set callback for map.setStyle() */
       this.map.once('styledata', ()=>{
         /* add reference metadata to new layers set by setStyle() */
@@ -387,7 +387,7 @@ class WebMap extends LitElement {
         
         /* allow new styles to be set */
         setTimeout(()=>{
-          this.layerlist = [...this.map.getStyle().layers];
+          this.resetLayerList();          
           this.styleLoading = false;
         }, 1000);
       });
@@ -405,7 +405,7 @@ class WebMap extends LitElement {
       layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
       if (layerInfo.metadata && layerInfo.metadata.reference) {
         this.removeReferenceLayers();
-        this.layerlist = [...this.map.getStyle().layers.filter(layer=>layer.reference==false || layer.background)];        
+        this.layerlist = [...this.layerlist.filter(layer=>layer.reference==false || layer.background)];        
         this.map.addLayer(layerInfo, this.map.getStyle().layers.length ? this.map.getStyle().layers[0].id : undefined);
       } else {
         if (layerInfo.type == "sheetlayer") {
@@ -417,7 +417,7 @@ class WebMap extends LitElement {
           }
         }
       }
-      this.layerlist = [...this.map.getStyle().layers];
+      this.resetLayerList();
     }
   }
   moveLayer(e) {
@@ -426,7 +426,7 @@ class WebMap extends LitElement {
     } else {
       e.detail.layers.reverse().forEach(layer=>this.map.moveLayer(layer, e.detail.beforeLayer));
     }
-    this.layerlist = [...this.map.getStyle().layers];
+    this.resetLayerList();
   }
   updatePitch(e) {
     if (this.map) {
@@ -521,6 +521,8 @@ class WebMap extends LitElement {
     this._mapMoveEnd();
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
     this.map.on('click', (e)=>this.mapClick(e));
+    this.map.on('render', e=>this.mapHasRendered());
+    this.map.on('zoomend', e=>this.mapHasZoomed());
     
 
     const modes = MapboxDraw.modes;
@@ -531,10 +533,36 @@ class WebMap extends LitElement {
 
     this.map.on('load', ()=>{
         this.setReferenceLayers();
-        this.layerlist = this.map.getStyle().layers;
+        this.resetLayerList();
         this.draw.changeMode('static');
     });
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
+  }
+
+  updateLayerCalculatedPaintProperties(layerlist) {
+    layerlist.forEach(layer=>{
+      const mapLayer = this.map.getLayer(layer.id);
+      if (mapLayer.paint) {
+        layer._paint = mapLayer.paint;
+      }
+    });
+  }
+
+  mapHasZoomed() {
+    this.updateLayerCalculatedPaintProperties(this.layerlist);
+  }
+
+  mapHasRendered() {
+    if (this.resetLayerListRequested) {
+      const layerlist = this.map.getStyle().layers;
+      this.updateLayerCalculatedPaintProperties(layerlist);
+      this.layerlist = [...layerlist];
+      this.resetLayerListRequested = false;
+    }
+  }
+
+  resetLayerList() {
+    this.resetLayerListRequested = true;
   }
   
   _mapMoveEnd() {
@@ -563,8 +591,7 @@ class WebMap extends LitElement {
     } else {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
-    setTimeout(()=>this.restoreNoneReferenceLayers(), 1000); // how else?
-    //this.layerlist = [...this.map.getStyle().layers];
+    setTimeout(()=>this.restoreNoneReferenceLayers(), 1000); // how else?    
   }
   mapClick(e) {
     this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];

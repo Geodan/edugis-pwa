@@ -44,6 +44,73 @@ export default
                 "source" : "styles/osmraster.json",
                 "metadata" : {"reference": true},
             }},
+            {"type": "reference", "title": "Alleen grenzen", "layerInfo": 
+                {
+                    "id" : "Boundaries",
+                    "type" : "style",
+                    "source" : {
+                        "version": 8,
+                        "name": "Grenzen",
+                        "sources": {
+                            "openmaptileboundaries": {
+                                "type": "vector",
+                                "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json?key={key}"
+                            }
+                        },
+                        "layers": [
+                            {
+                                "id": "boundary_state",
+                                "type": "line",
+                                "metadata": {
+                                  "mapbox:group": "a14c9607bc7954ba1df7205bf660433f"
+                                },
+                                "source": "openmaptileboundaries",
+                                "source-layer": "boundary",
+                                "filter": [
+                                  "==",
+                                  "admin_level",
+                                  2
+                                ],
+                                "layout": {
+                                  "line-cap": "round",
+                                  "line-join": "round",
+                                  "visibility": "visible"
+                                },
+                                "paint": {
+                                    "line-color": "rgb(230, 204, 207)",
+                                    "line-width": {
+                                      "base": 1.1,
+                                      "stops": [
+                                        [
+                                          3,
+                                          1
+                                        ],
+                                        [
+                                          22,
+                                          20
+                                        ]
+                                      ]
+                                    },
+                                    "line-blur": {
+                                      "base": 1,
+                                      "stops": [
+                                        [
+                                          0,
+                                          0.4
+                                        ],
+                                        [
+                                          22,
+                                          4
+                                        ]
+                                      ]
+                                    },
+                                    "line-opacity": 1
+                                  }
+                            }      
+                        ]
+                    }
+                }
+            },
             {"type": "reference", "title": "Streets (Geodan Maps)", "layerInfo": {
                     "id" : "gmstreets",
                     "metadata" : {"reference": true},

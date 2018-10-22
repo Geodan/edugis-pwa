@@ -28,34 +28,48 @@ class MapLegendPanel extends LitElement {
     }
   }
   lineLegend() {
-    const paint = this.maplayer.paint;
     let lineColor = "black";
     let lineWidth = 1;
-    if (paint && paint['line-color']) {
-      lineColor = paint['line-color'];
-    }
-    if (paint && paint['line-width']) {
-      lineWidth = paint['line-width'];
-    }
-    if (lineWidth === Object(lineWidth)) {
-      if (lineWidth.stops) {
-        let minWidth = 1;
-        let maxWidth = 1;
-        let prevZoom = 0;
-        for (let i = 0; i < lineWidth.stops.length; i++) {
-          if (this.zoom <= lineWidth.stops[i][0]) {
-            maxWidth = lineWidth.stops[i][1];
-            lineWidth = (maxWidth - minWidth) * (this.zoom - prevZoom)/(lineWidth.stops[i][0] - prevZoom);
-            break;
-          } else {
-            minWidth = lineWidth.stops[i][1];
-            prevZoom = lineWidth.stops[i][0];
+      
+    if (this.maplayer._paint) {
+      if (this.maplayer._paint._values) {
+        const values = this.maplayer._paint._values;
+        if (values["line-color"] && values["line-color"].value.kind === "constant") {
+          const rgba = values["line-color"].value.value;
+          lineColor = `rgba(${rgba.r * 255},${rgba.g * 255},${rgba.b * 255},${rgba.a})`;
+        }
+        if (values["line-width"] && values["line-width"].value.kind === "constant") {
+          lineWidth = values["line-width"].value.value;
+        }
+      }
+    } else {
+      const paint = this.maplayer.paint;
+      if (paint && paint['line-color']) {
+        lineColor = paint['line-color'];
+      }
+      if (paint && paint['line-width']) {
+        lineWidth = paint['line-width'];
+      }
+      if (lineWidth === Object(lineWidth)) {
+        if (lineWidth.stops) {
+          let minWidth = 1;
+          let maxWidth = 1;
+          let prevZoom = 0;
+          for (let i = 0; i < lineWidth.stops.length; i++) {
+            if (this.zoom <= lineWidth.stops[i][0]) {
+              maxWidth = lineWidth.stops[i][1];
+              lineWidth = (maxWidth - minWidth) * (this.zoom - prevZoom)/(lineWidth.stops[i][0] - prevZoom);
+              break;
+            } else {
+              minWidth = lineWidth.stops[i][1];
+              prevZoom = lineWidth.stops[i][0];
+            }
           }
         }
       }
-    }
-    if (Array.isArray(lineWidth)) {
+      if (Array.isArray(lineWidth)) {
 
+      }
     }
     if (!Array.isArray(lineColor)) {
       lineColor = [lineColor];
