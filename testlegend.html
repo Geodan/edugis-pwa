@@ -1,119 +1,256 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Legend</title>
-    <script src="node_modules/html5sortable/dist/html5sortable.min.js"></script>
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; left:0; width:400px; height:400px }
+        #legend { position:absolute;top:400px; height: 250px; left:0%; width:100%;border: 1px solid black;}
+        #legendcopy {position:absolute;bottom:0;left:0; border: 1px solid red;}
+        
+    </style>
 </head>
-<style>
-    .button {
-        position: absolute;
-        bottom: 30px;
-        right: 10px;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        height: 30px;
-        width: 30px;
-        padding: 3px;
-        background-color: white;
-        visibility: visible;
-        box-sizing: border-box;
-    }
-    .button:hover {
-        background-color: whitesmoke;
-    }
-    .container {
-        position: absolute;
-        right: 45px;
-        bottom: 30px;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        max-height: 400px;
-        max-width: 400px;
-        background-color:white;
-        visibility: visible;
-        padding: 5px;
-        overflow: auto;
-    }
-    .legendheader {
-        font-weight:bold;
-        font-size:1.17em;
-        border-bottom:1px solid lightblue;
-    }
-    .legenditem {
-        border-bottom:1px solid lightgray;
-        margin-bottom:2px;
-    }
-    .header {
-        box-sizing: border-box;
-        cursor:grab;
-        background: lightgray;
-    }
-    .background {
-        cursor:default;
-    }
-    .icon {
-        display:inline-block;        
-        width: 1em;
-        height: 1em;
-        vertical-align: bottom;
-        background-repeat: no-repeat;
-        cursor: pointer;
-    }
-    .visibility {        
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>');
-    }
-    .deleteforever {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path fill="none" d="M0 0h24v24H0z"/></svg>');
-    }
-    .opacity {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" d="M24 0H0v24h24V0zm0 0H0v24h24V0zM0 24h24V0H0v24z"/><path d="M17.66 8L12 2.35 6.34 8C4.78 9.56 4 11.64 4 13.64s.78 4.11 2.34 5.67 3.61 2.35 5.66 2.35 4.1-.79 5.66-2.35S20 15.64 20 13.64 19.22 9.56 17.66 8zM6 14c.01-2 .62-3.27 1.76-4.4L12 5.27l4.24 4.38C17.38 10.77 17.99 12 18 14H6z"/></svg>');
-    }
-    .style {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M2.53 19.65l1.34.56v-9.03l-2.43 5.86c-.41 1.02.08 2.19 1.09 2.61zm19.5-3.7L17.07 3.98c-.31-.75-1.04-1.21-1.81-1.23-.26 0-.53.04-.79.15L7.1 5.95c-.75.31-1.21 1.03-1.23 1.8-.01.27.04.54.15.8l4.96 11.97c.31.76 1.05 1.22 1.83 1.23.26 0 .52-.05.77-.15l7.36-3.05c1.02-.42 1.51-1.59 1.09-2.6zM7.88 8.75c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-2 11c0 1.1.9 2 2 2h1.45l-3.45-8.34v6.34z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-    }
-    .expandmore {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-    }
-    .placeholder {
-        opacity: .3;
-        background-color: #f60;
-    }
-</style>
 <body>
-    <div class="container">
-        <div class="legendheader">
-            Kaartlagen en legenda's
-        </div>
-        <div class="sortable">
-            <div class="legenditem collapsed">
-                <div class="header"><i class="icon deleteforever" title="remove"></i> legenda-item 1 en nog wat <i class="icon opacity" title="opacity"></i> <i class="icon style" title="change style"></i> <i class="icon visibility" title="hide"></i> <i class="icon expandmore" title="expand legend"></i></div>
-                <div class="content">jawel!</div>
-            </div>
-            <div class="legenditem">
-                <div class="header">legenda-item2</div>
-                <div class="content">jawel!</div>
-            </div>
-            <div class="legenditem">
-                <div class="header">dit is legenda item 3</div>
-                <div class="content">jawel!</div>
-            </div>
-        </div>
-        <div class="legendfooter">
-            <div class="legenditem">
-                <div class="header background">dit is de achtergrondlaag</div>
-                <div class="content">jawel!</div>
-            </div>
-        </div>
-    </div>
-    <div class="button">      
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <path d="M0 0h24v24H0z" fill="none"/>
-    <path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/>
-</svg>
-    </div>
-    <script>sortable('.sortable', {handle:'.legenditem', placeholder: '<div class="legenditem"><div class="header placeholder">placeholder - placeholder</div></div>', forcePlaceHolderSize: true, animation: 300});</script>
+
+<div id='map'></div>
+<div id='legend'></div>
+<div id='legendcopy'></div>
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYW5uZWIiLCJhIjoiY2psZmxmdHlqMHZjOTNrcWdoMjJpdXdhMiJ9.dPjSb4FBQ-W4d01xF6OCnA';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    //style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
+    style: "styles/openmaptiles/osmbright.json",
+    center: [4.8, 52.3], // starting position [lng, lat]
+    zoom: 9 // starting zoom
+});
+
+
+const geojson = {
+    "type": "FeatureCollection",
+    "features": []
+};
+const unit = 0.00005;
+const width = 15;
+const height = 8;
+/*
+function rect(id, col, row) {
+    return {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [unit*(col*width),unit*(row*height)],
+                    [unit*(col*width+5),unit*(row*height)],
+                    [unit*(col*width+5),unit*(row*height+2)],
+                    [unit*(col*width),unit*(row*height+2)],
+                    [unit*(col*width),unit*(row*height)],
+                ]]
+            },
+            "properties" : {"id":id}
+          }
+}*/
+/*function line(id, col, row) {
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [unit*(col*width), unit*(row*height+1.5)],
+                [unit*(col*width+5), unit*(row*height+1.5)]                
+            ]
+        },
+        "properties" : {"id":id}
+    }
+}*/
+var legend = new mapboxgl.Map({
+    container: 'legend',
+    style: {
+        "version": 8,
+        "name": "Empty",
+        "sprite": "https://openmaptiles.github.io/osm-bright-gl-style/sprite",
+        "glyphs": "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=2M7vcRHumvPIiYgsvvJ9",
+        "sources":{"legendgeojson": {
+          "type":"geojson", 
+          "data": geojson
+        }},
+        "layers": [
+            {
+                "id": "legendbackground",
+                "type": "background",
+                "paint": {
+                    "background-color": "rgb(255,255,255)"
+                }
+            }
+        ]
+    },
+    center: [0,0],
+    zoom: 9,
+    renderWorldCopies: false,
+    preserveDrawingBuffer: true
+});
+
+function rectangle(id, itemRect) {
+    return {
+        "type": "Feature",
+        "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [itemRect[0],itemRect[1]],
+                    [itemRect[2],itemRect[1]],
+                    [itemRect[2],itemRect[3]],
+                    [itemRect[0],itemRect[3]],
+                    [itemRect[0],itemRect[1]],
+                ]]
+            },
+            "properties" : {"id":id}
+    };
+}
+
+function line(id, itemRect) {
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [itemRect[0], (itemRect[1] + itemRect[3])/2],
+                [itemRect[2], (itemRect[1] + itemRect[3])/2]                
+            ]
+        },
+        "properties" : {"id":id}
+    }
+}
+
+function point(id, itemRect, name) {
+    if (!name) {
+        name = "Abc";
+    }
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [itemRect[0], itemRect[3]]
+        },
+        "properties" : {"id":id, "name": name}
+    }
+}
+
+function renderItem(layer, itemRect)
+{
+    switch(layer.type) {
+        case "fill":
+            geojson.features.push(new rectangle(layer.id, itemRect));
+            legend.addLayer({
+                "id": layer.id,
+                "type": layer.type,
+                "paint": layer.paint,
+                "source": "legendgeojson",
+                "filter" : ["==","id", layer.id]
+            });
+            break;
+        case "line":
+            geojson.features.push(new line(layer.id, itemRect));
+            legend.addLayer({
+                "id": layer.id,
+                "type": layer.type,
+                "paint": layer.paint,
+                "source": "legendgeojson",
+                "filter" : ["==","id", layer.id]
+            });
+            break;
+        case "symbol":
+            let name = "Abc";
+            if (layer.id === 'place-city-capital') {
+                name = "Adam";
+            }
+            geojson.features.push(new point(layer.id, itemRect, name));
+            const layout = layer.layout;
+            layout["text-field"] = "{name}";
+            legend.addLayer({
+                "id": layer.id,
+                "type": layer.type,
+                "paint": layer.paint,
+                "layout": layout,
+                "source": "legendgeojson",
+                "filter" : ["==","id", layer.id]
+            });
+            break;
+        case "circle":
+        geojson.features.push(new point(layer.id, itemRect));
+            legend.addLayer({
+                "id": layer.id,
+                "type": layer.type,
+                "paint": layer.paint,
+                "layout": layer.layout,
+                "source": "legendgeojson",
+                "filter" : ["==","id", layer.id]
+            });
+            break;
+    }
+}
+
+function renderLegendItems() {
+    const legendElement = document.querySelector('#legend');
+    const itemPixelWidth = 100;
+    const itemPixelHeight = 30;
+    const legendBounds = legend.getBounds();
+    const legendDegreesWidth = legendBounds.getEast() - legendBounds.getWest();
+    const legendDegreesHeight = legendBounds.getSouth() - legendBounds.getNorth();
+    const legendRect = legendElement.getBoundingClientRect();
+    const legendPixelWidth = legendRect.width;
+    const legendPixelHeight = legendRect.height;
+    const layers = map.getStyle().layers;
+    let itemColumn = 0;
+    let itemRow = 0;
+    const itemDegreesWidth = legendDegreesWidth * itemPixelWidth / legendPixelWidth;
+    const itemDegreesHeight = legendDegreesHeight * itemPixelHeight / legendPixelHeight;
+    for (let i = 0;i < layers.length; i++) {
+        const degreesLeft = legendBounds.getWest() + itemColumn * itemDegreesWidth;
+        const degreesTop = legendBounds.getNorth() + itemRow * itemDegreesHeight;
+        //const itemRect = [degreesLeft, degreesTop, degreesLeft + itemDegreesWidth, degreesTop + itemDegreesHeight];
+        const rectTopLeft = legend.unproject([itemColumn * itemPixelWidth, itemRow * itemPixelHeight]);
+        const rectBottomRight = legend.unproject([(itemColumn + 1) * itemPixelWidth - 1, (itemRow + 1) * itemPixelHeight - 1]);
+        const itemRect = [rectTopLeft.lng, rectTopLeft.lat, rectBottomRight.lng, rectBottomRight.lat];
+        renderItem(layers[i], itemRect);
+        itemColumn++;
+        if ((itemColumn + 1) * itemPixelWidth > legendPixelWidth) {
+            itemColumn = 0;
+            itemRow++;
+        }
+    }
+    legend.getSource('legendgeojson').setData(geojson);
+    setTimeout(()=>{
+        let canvas = legend.getCanvas(); //document.querySelector('#map .mapboxgl-canvas');
+        let url = canvas.toDataURL('image/png');
+        //console.log(url);
+        let img = document.createElement('img');
+        img.setAttribute('src', url);
+        document.querySelector('#legendcopy').innerHTML = '';
+        document.querySelector('#legendcopy').appendChild(img);
+        /*let features = legend.queryRenderedFeatures();
+        console.log(features);
+        console.log(features[0].toJSON());*/
+        
+    }, 1000)
+}
+
+
+map.on('load', function(){
+    renderLegendItems();
+})
+map.on('zoomend', function() {
+    legend.zoomTo(map.getZoom());
+})
+legend.on('zoomend', function(){
+    geojson.features = [];
+    renderLegendItems();
+})
+</script>
+
 </body>
 </html>
