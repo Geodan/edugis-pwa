@@ -9,6 +9,8 @@
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; left:0; width:400px; height:400px }
+        #legenditems {position: absolute; left: 410px;height:400px;}
+        .legenditem {width:102px;height:32px;border:1px solid gray;}
         #legend { position:absolute;top:400px; height: 250px; left:0%; width:100%;border: 1px solid black;}
         #legendcopy {position:absolute;bottom:0;left:0; border: 1px solid red;}
         
@@ -17,6 +19,11 @@
 <body>
 
 <div id='map'></div>
+<div id='legenditems'>
+    <ul>
+        <li><div class="legenditem"></div> </li>
+    </ul>
+</div>
 <div id='legend'></div>
 <div id='legendcopy'></div>
 <script>
@@ -35,65 +42,8 @@ const geojson = {
     "type": "FeatureCollection",
     "features": []
 };
-const unit = 0.00005;
-const width = 15;
-const height = 8;
-/*
-function rect(id, col, row) {
-    return {
-            "type": "Feature",
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [[
-                    [unit*(col*width),unit*(row*height)],
-                    [unit*(col*width+5),unit*(row*height)],
-                    [unit*(col*width+5),unit*(row*height+2)],
-                    [unit*(col*width),unit*(row*height+2)],
-                    [unit*(col*width),unit*(row*height)],
-                ]]
-            },
-            "properties" : {"id":id}
-          }
-}*/
-/*function line(id, col, row) {
-    return {
-        "type": "Feature",
-        "geometry": {
-            "type": "LineString",
-            "coordinates": [
-                [unit*(col*width), unit*(row*height+1.5)],
-                [unit*(col*width+5), unit*(row*height+1.5)]                
-            ]
-        },
-        "properties" : {"id":id}
-    }
-}*/
-var legend = new mapboxgl.Map({
-    container: 'legend',
-    style: {
-        "version": 8,
-        "name": "Empty",
-        "sprite": "https://openmaptiles.github.io/osm-bright-gl-style/sprite",
-        "glyphs": "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=2M7vcRHumvPIiYgsvvJ9",
-        "sources":{"legendgeojson": {
-          "type":"geojson", 
-          "data": geojson
-        }},
-        "layers": [
-            {
-                "id": "legendbackground",
-                "type": "background",
-                "paint": {
-                    "background-color": "rgb(255,255,255)"
-                }
-            }
-        ]
-    },
-    center: [0,0],
-    zoom: 9,
-    renderWorldCopies: false,
-    preserveDrawingBuffer: true
-});
+
+let legend;
 
 function rectangle(id, itemRect) {
     return {
@@ -145,43 +95,55 @@ function renderItem(layer, itemRect)
     switch(layer.type) {
         case "fill":
             geojson.features.push(new rectangle(layer.id, itemRect));
-            legend.addLayer({
-                "id": layer.id,
-                "type": layer.type,
-                "paint": layer.paint,
-                "source": "legendgeojson",
-                "filter" : ["==","id", layer.id]
-            });
+            if (!legend.getLayer(layer.id)) {
+                legend.addLayer({
+                    "id": layer.id,
+                    "type": layer.type,
+                    "paint": layer.paint,
+                    "source": "legendgeojson",
+                    "filter" : ["==","id", layer.id]
+                });
+            }
             break;
         case "line":
             geojson.features.push(new line(layer.id, itemRect));
-            legend.addLayer({
-                "id": layer.id,
-                "type": layer.type,
-                "paint": layer.paint,
-                "source": "legendgeojson",
-                "filter" : ["==","id", layer.id]
-            });
+            if (!legend.getLayer(layer.id)) {
+                legend.addLayer({
+                    "id": layer.id,
+                    "type": layer.type,
+                    "paint": layer.paint,
+                    "source": "legendgeojson",
+                    "filter" : ["==","id", layer.id]
+                });
+            }
             break;
         case "symbol":
             let name = "Abc";
             if (layer.id === 'place-city-capital') {
                 name = "Adam";
             }
+            if (layer.id === 'highway-shield') {
+                name = "Shield";
+            }
             geojson.features.push(new point(layer.id, itemRect, name));
-            const layout = layer.layout;
-            layout["text-field"] = "{name}";
-            legend.addLayer({
-                "id": layer.id,
-                "type": layer.type,
-                "paint": layer.paint,
-                "layout": layout,
-                "source": "legendgeojson",
-                "filter" : ["==","id", layer.id]
-            });
+            if (!legend.getLayer(layer.id)) {            
+                const layout = layer.layout;
+                layout["text-field"] = "{name}";
+                const symbolLayer = {
+                    "id": layer.id,
+                    "type": layer.type,
+                    "layout": layout,
+                    "source": "legendgeojson",
+                    "filter" : ["==","id", layer.id]
+                }   
+                if (layer.paint) {
+                    symbolLayer.paint = layer.paint;
+                }
+                legend.addLayer(symbolLayer);
+            }
             break;
         case "circle":
-        geojson.features.push(new point(layer.id, itemRect));
+            geojson.features.push(new point(layer.id, itemRect));
             legend.addLayer({
                 "id": layer.id,
                 "type": layer.type,
@@ -232,23 +194,56 @@ function renderLegendItems() {
         img.setAttribute('src', url);
         document.querySelector('#legendcopy').innerHTML = '';
         document.querySelector('#legendcopy').appendChild(img);
-        /*let features = legend.queryRenderedFeatures();
-        console.log(features);
-        console.log(features[0].toJSON());*/
+        document.querySelector('.legenditem').style.background = `url(${img.src}) -200px 0`;
+        //document.querySelector('.legenditem').style.backgroundImage = `url(${img.src})`;
+        //document.querySelector('.legenditem').style.backgroundPositionX = "-400px";
+
         
     }, 1000)
 }
 
+function legendCanvas() {
+    const mapStyle = map.getStyle();
+    return new mapboxgl.Map({
+        container: 'legend',
+        style: {
+            "version": 8,
+            "name": "Empty",
+            "sprite": mapStyle.sprite,
+            "glyphs": mapStyle.glyphs,
+            "sources":{"legendgeojson": {
+            "type":"geojson", 
+            "data": geojson
+            }},
+            "layers": [
+                {
+                    "id": "legendbackground",
+                    "type": "background",
+                    "paint": {
+                        "background-color": "rgb(255,255,255)"
+                    }
+                }
+            ]
+        },
+        center: [0,0],
+        zoom: 9,
+        renderWorldCopies: false,
+        preserveDrawingBuffer: true
+    });
+}
 
 map.on('load', function(){
-    renderLegendItems();
+    legend = legendCanvas();
+    legend.on('load', function() {
+        renderLegendItems();
+        legend.on('zoomend', function(){
+            geojson.features = [];
+            renderLegendItems();
+        });
+    });
 })
 map.on('zoomend', function() {
     legend.zoomTo(map.getZoom());
-})
-legend.on('zoomend', function(){
-    geojson.features = [];
-    renderLegendItems();
 })
 </script>
 
