@@ -239,6 +239,13 @@ class WebMap extends LitElement {
       this.extraLayers.forEach(layer=>{
         if (!this.map.getSource(layer.storedSource.id)) {
           this.map.addSource(layer.storedSource.id, layer.storedSource.source);
+          if (layer.storedSource.source.tiles) {
+            const newSource = this.map.getSource(layer.storedSource.id);
+            if (!newSource.tiles) {
+              // mapbox-gl bug? explicitly set .tiles property if necessary
+              newSource.tiles = layer.storedSource.source.tiles;
+            }
+          }
         }
         layer.storedSource = null;
         delete layer.storedSource;
@@ -301,9 +308,19 @@ class WebMap extends LitElement {
             }
             break;
           case "raster-dem":
-            typedSource = {
-              type: "raster-dem",
-              url: layerSource.url
+            if (layerSource.url) {
+              typedSource = {
+                type: "raster-dem",
+                url: layerSource.url
+              }
+            } else {
+              typedSource = {
+                type: "raster-dem",
+                tileSize: layerSource.tileSize,
+                encoding: layerSource.encoding,
+                tiles: layerSource.tiles,
+                attribution: layerSource.attribution
+              }
             }
             break;
         }
