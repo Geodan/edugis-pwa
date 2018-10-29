@@ -31,6 +31,12 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, infoIcon } from './my-icons';
 
 
+import { importHref } from 'html-import-js';
+importHref ("bower_components/gm-style-mixin/gm-style-config.html");
+importHref ('bower_components/gm-button/build/dist/gm-button.html');
+importHref ('bower_components/gm-panel/build/dist/gm-panel.html');
+
+
 function getResolution (map)
 {
   // returns degrees / pixel-width
@@ -466,8 +472,22 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
+  /*<link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-panel.css">
+    <link rel="import" href="bower_components/gm-style-mixin/gm-style-config.html">
+    <link rel="import" href="">
+    <link rel="import" href="">
+    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager.css">
+    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager-group.css">
+    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager-layer.css"-->
+*/
+
   render() {
     return html`<style>
+      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-panel.css";
+      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager.css";
+      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager-group.css";
+      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager-layer.css";
+      
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       :host {
@@ -477,8 +497,28 @@ class WebMap extends LitElement {
         overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
+      #tools-menu {
+        float: left;
+        position: relative;
+        left: 10px;
+        top: 200px;
+        box-shadow: rgba(204, 204, 204, 0.5) 1px 0px 1px 1px;
+        width: 55px;
+      }
       </style>
     <div class="webmap"></div>
+    <div id="tools-menu">
+    <gm-button icon="gm:search" panel="search-panel"></gm-button>
+    <gm-button icon="gm:layermanager" panel="layermanager-panel"></gm-button>  
+    </div>
+    <gm-panel id="search-panel">
+      Put your own content here or place any of the gm-components in here.
+      The button interacts with the panel and can be used to open / close it.
+    </gm-panel>
+    <gm-panel id="layermanager-panel">
+      Put your own content here or place any of the gm-components in here.
+      The button interacts with the panel and can be used to open / close it.
+    </gm-panel>
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
     <map-measure .webmap="${this.map}" class="centertop"></map-measure>
     <map-button-ctrl controlid="3D" .webmap="${this.map}" position="top-right" .icon="${html`<b>3D</b>`}" tooltip="Pitch" @mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>

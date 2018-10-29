@@ -122,13 +122,31 @@ function renderItem(layer, itemRect)
             if (layer.id === 'place-city-capital') {
                 name = "Adam";
             }
-            if (layer.id === 'highway-shield') {
-                name = "Shield";
+            if (layer.id === 'poi-level-2') {
+                name = "Poi2";
+            }
+            if (layer.layout && layer.layout["icon-image"]) {
+                const image = layer.layout["icon-image"];
+                const start = image.split('{');
+                if (start.length > 1) {
+                    const varname = start[1].split('}')[0];
+                    //features = map.querySourceFeatures(layer.source, {sourceLayer: layer["source-layer"]});
+                    const features = map.queryRenderedFeatures({layers:[layer.id]});
+                    features.find(feature=> {
+                        if (feature.properties[varname]) {
+                            layer.layout["icon-image"] = layer.layout["icon-image"].replace(`{${varname}}`, feature.properties[varname]);
+                            return true;
+                        }
+                        return false;
+                    });
+                }
             }
             geojson.features.push(new point(layer.id, itemRect, name));
             if (!legend.getLayer(layer.id)) {            
                 const layout = layer.layout;
                 layout["text-field"] = "{name}";
+                layout["text-ignore-placement"] = true;
+                layout["text-allow-overlap"] = true;
                 const symbolLayer = {
                     "id": layer.id,
                     "type": layer.type,
@@ -139,6 +157,8 @@ function renderItem(layer, itemRect)
                 if (layer.paint) {
                     symbolLayer.paint = layer.paint;
                 }
+                delete symbolLayer.layout["icon-placement"];
+                symbolLayer.layout["icon-size"] = 1;
                 legend.addLayer(symbolLayer);
             }
             break;
