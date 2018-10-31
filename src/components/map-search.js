@@ -111,7 +111,7 @@ class MapSearch extends LitElement {
           height: 30px;
           display: flex;
           align-items: center;
-          border: 1px solid red;
+          box-sizing: border-box;
         }
         .searchbox input {
           border: none;

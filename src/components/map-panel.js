@@ -33,6 +33,9 @@ class MapPanel extends LitElement {
           width: 100%;
           padding-left: 2px;
           background-color: white;
+          max-height: 600px;
+          box-sizing: border-box;
+          overflow: auto;
         }
     </style>
     <div class="panel-wrapper">
