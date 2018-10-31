@@ -1,6 +1,7 @@
 
 import './map-iconbutton';
 import {imageSearchIcon, searchIcon, panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, closeIcon } from './my-icons';
+import {searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 
 function getIcon(osmtype) {
@@ -100,9 +101,7 @@ class MapSearch extends LitElement {
   render() {
     return html`<style>
         :host {
-          position: absolute;
-          left: 10px;
-          top: 10px;
+          
         }
         .searchbox {
           position: absolute;
@@ -176,7 +175,7 @@ class MapSearch extends LitElement {
           display: none;
         }
     </style>
-    <map-iconbutton .info="${this.info}" .icon="${imageSearchIcon}" @click="${e=>{this.active=!this.active;}}"></map-iconbutton>
+    <map-iconbutton .info="${this.info}" .icon="${gmSearchIcon}" @click="${e=>{this.active=!this.active;}}"></map-iconbutton>
     <div class="searchbox${this.active?'':' hidden'}">
       <input type="text" placeholder="${this.info}" @keyup="${(e)=>this.keyup(e)}">
       ${this.active&&this.resultList&&this.resultList.length?html`<i class="erasebutton" @click="${e=>this.searchErase(e)}">${closeIcon}</i>`:''}

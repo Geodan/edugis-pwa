@@ -26,9 +26,11 @@ import './map-button-ctrl';
 import './map-dialog';
 import './map-gsheet-form';
 import './map-info-formatted';
+import './map-panel';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { cloudDownloadIcon, infoIcon } from './my-icons';
+import { cloudDownloadIcon, languageIcon } from './my-icons';
+import { informationIcon as gmInfoIcon, layermanagerIcon } from '../gm/gm-iconset-svg';
 
 
 import { importHref } from 'html-import-js';
@@ -499,36 +501,31 @@ class WebMap extends LitElement {
       .webmap {width: 100%; height: 100%}
       #tools-menu {
         float: left;
-        position: relative;
+        position: absolute;
         left: 10px;
-        top: 200px;
+        top: 100px;
         box-shadow: rgba(204, 204, 204, 0.5) 1px 0px 1px 1px;
         width: 55px;
       }
       </style>
     <div class="webmap"></div>
     <div id="tools-menu">
-    <gm-button icon="gm:search" panel="search-panel"></gm-button>
-    <gm-button icon="gm:layermanager" panel="layermanager-panel"></gm-button>  
+      <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+      <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus"></map-iconbutton>
+      <map-panel visible="true"></map-panel>
+      <map-measure .webmap="${this.map}" class="centertop"></map-measure>
+      <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleInfo()}"></map-iconbutton>
+      <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.togglelanguagesetter()}"></map-iconbutton>
+      <map-iconbutton .icon="${html`<b>3D</b>`}" info="Pitch" @click="${e=>this.updatePitch()}"></map-iconbutton>
     </div>
-    <gm-panel id="search-panel">
-      Put your own content here or place any of the gm-components in here.
-      The button interacts with the panel and can be used to open / close it.
-    </gm-panel>
-    <gm-panel id="layermanager-panel">
-      Put your own content here or place any of the gm-components in here.
-      The button interacts with the panel and can be used to open / close it.
-    </gm-panel>
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    <map-measure .webmap="${this.map}" class="centertop"></map-measure>
+    
     <map-button-ctrl controlid="3D" .webmap="${this.map}" position="top-right" .icon="${html`<b>3D</b>`}" tooltip="Pitch" @mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
     <map-language .webmap="${this.map}" active="true" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
-    <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
     <button-expandable .icon="${cloudDownloadIcon}" info="Data catalogus">  
     <map-data-catalog .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
     </button-expandable>
     <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
-    <map-button-ctrl controlid="info" .webmap="${this.map}" position="bottom-left" .icon="${infoIcon}" tooltip="info" @mapbuttoncontrolclick="${e=>this.toggleInfo()}"></map-button-ctrl>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     ${this.infodialog?html`<map-dialog dialogtitle="Locatie-informatie" @close="${e=>{this.infodialog=null;this.requestUpdate();}}"><map-info-formatted .info="${this.featureInfo}"></map-info-formatted></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`

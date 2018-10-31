@@ -1,5 +1,5 @@
 import './map-iconbutton';
-import { rulerIcon } from './my-icons.js';
+import { measureIcon } from '../gm/gm-iconset-svg';
 
 /***
  * the following crashes polymer build, moved script load to index.html ?? :
@@ -284,10 +284,7 @@ class MapMeasure extends LitElement {
   render() {
     return html`<style>
         :host { 
-          position: absolute; 
-          top: 10px; 
-          left: 50%; 
-          margin-left: -12px; }
+        }
         .hidden {
           visibility: hidden;
         }
@@ -305,7 +302,7 @@ class MapMeasure extends LitElement {
           font-size: 12px;
         }
     </style>
-    <map-iconbutton class="${this.visible?'':'hidden'}" .info="${this.info}" .icon=${rulerIcon} @click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
+    <map-iconbutton class="${this.visible?'':'hidden'}" .info="${this.info}" .icon=${measureIcon} @click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
     <div class="measureinfo${this.active?'':' hidden'}">${this.measureInfo}</div>`
   }
 }

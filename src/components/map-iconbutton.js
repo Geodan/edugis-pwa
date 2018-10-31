@@ -23,20 +23,23 @@ class IconButton extends LitElement {
   render() {
     return html`<style>
         .button {
+          opacity: 0.9;
           display: inline-block;
-          height: 30px;
-          width: 30px;
+          height: 55px;
+          width: 55px;
+          color: rgb(51,51,51);
+          fill: rgb(51,51,51);
           box-sizing: border-box;
           background-color: white;
-          box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-          border-radius: 4px;
           text-align: center;
           user-select:none;
           cursor: pointer; /* Mouse pointer on hover */
-          padding: 3px;
+          padding: 15px;
         }
         .button:hover {
-          background-color: whitesmoke;
+          background-color: rgb(204,0,0);
+          fill: white;
+          color: white;
         }
         .hidden {
           display: none;
