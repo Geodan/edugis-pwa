@@ -7,14 +7,17 @@ import {LitElement, html} from '@polymer/lit-element';
 class MapPanel extends LitElement {
   static get properties() { 
     return { 
-      visible: Boolean,
+      active: Boolean,
     }; 
   }
   constructor() {
       super();
-      this.visible = false;      
+      this.active = false;      
   }
   render() {
+    if (!this.active) {
+      return html``;
+    }
     return html`<style>
         .panel-wrapper {
           display: flex;
@@ -28,7 +31,7 @@ class MapPanel extends LitElement {
         }
         .panel-content {
           width: 100%;
-          padding: 2px;
+          padding-left: 2px;
           background-color: white;
         }
     </style>

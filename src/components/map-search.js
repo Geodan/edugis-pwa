@@ -94,29 +94,26 @@ class MapSearch extends LitElement {
   }
   searchErase(e)
   {
-    this.shadowRoot.querySelector('input').value = "";
-    this.resultList = null;
-    this.triggerResult();
+    if (this.resultList !== null) {
+      this.shadowRoot.querySelector('input').value = "";
+      this.resultList = null;
+      this.triggerResult();
+    }
   }
   render() {
-    return html`<style>
-        :host {
-          
-        }
+    if (!this.active) {
+      this.searchErase();
+      return html``;
+    }
+    return html`<style>        
         .searchbox {
-          position: absolute;
-          left: 40px;
-          top: 0px;
-          width: 320px;
+          width: 100%;
           height: 30px;
-          box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-          border-radius: 4px;
-          background-color: white;
           display: flex;
           align-items: center;
+          border: 1px solid red;
         }
         .searchbox input {
-          position: absolute;
           border: none;
           left: 1em;
           width: calc(100% - 50px);
@@ -141,17 +138,13 @@ class MapSearch extends LitElement {
           padding-top: 6px;
         }
         .resultlist {
-          position: absolute;
-          width: 320px;
-          left: 40px;
+          right: 0px;
+          padding-left: 40px;
           top: 28px;
           border-top: none;
           font-size: 12px;
           max-height: 400px;
           overflow: auto;
-          background-color: white;
-          border-radius: 4px;
-          box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
         }
         .resultlist ul {
           list-style-type: none;
@@ -175,7 +168,6 @@ class MapSearch extends LitElement {
           display: none;
         }
     </style>
-    <map-iconbutton .info="${this.info}" .icon="${gmSearchIcon}" @click="${e=>{this.active=!this.active;}}"></map-iconbutton>
     <div class="searchbox${this.active?'':' hidden'}">
       <input type="text" placeholder="${this.info}" @keyup="${(e)=>this.keyup(e)}">
       ${this.active&&this.resultList&&this.resultList.length?html`<i class="erasebutton" @click="${e=>this.searchErase(e)}">${closeIcon}</i>`:''}

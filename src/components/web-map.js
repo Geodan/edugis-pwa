@@ -30,7 +30,7 @@ import './map-panel';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { cloudDownloadIcon, languageIcon, arrowLeftIcon } from './my-icons';
-import { informationIcon as gmInfoIcon, layermanagerIcon, drawIcon } from '../gm/gm-iconset-svg';
+import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 /*
 import { importHref } from 'html-import-js';
@@ -148,7 +148,8 @@ class WebMap extends LitElement {
       layerlist: Array,
       haslegend: Boolean,
       accesstoken: String,
-      lastClickPoint: Object
+      lastClickPoint: Object,
+      currentTool: String
     }; 
   }
   constructor() {
@@ -172,6 +173,7 @@ class WebMap extends LitElement {
     this.haslegend = false;
     this.accesstoken = undefined;
     this.lastClickPoint = undefined;
+    this.currentTool = '';
   }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
@@ -479,7 +481,15 @@ class WebMap extends LitElement {
     this.shadowRoot.querySelector('#panel-container').classList.toggle('collapsed');
     this.shadowRoot.querySelector('#button-hide-menu').classList.toggle('collapsed');
   }
+  toggleTool(name) {
+    if (this.currentTool === name) {
+      this.currentTool = '';
+    } else {
+      this.currentTool = name;
+    }
+  }
   render() {
+    
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -493,23 +503,27 @@ class WebMap extends LitElement {
       #tool-menu-container {
         position: absolute;
         display: flex;
-        width: 375px; /* #panel-container + #tools-menu */
+        align-items: flex-start;
+        max-width: 375px; /* #panel-container + #tools-menu */
         left: 10px;
         top: 100px;
-        transition: left 1s ease, width 1s ease;
+        transition: left 1s ease, max-width 1s ease;
       }
       #tool-menu-container.collapsed {
         left: -55px;
-        width: 55px;
+        max-width: 55px;
       }
       #tools-menu {
         box-shadow: rgba(204, 204, 204, 0.5) 1px 0px 1px 1px;
         width: 55px;
       }
       #panel-container {
-        width: 320px;
+        width: 0px;
         transition: width 1s ease;
         overflow: hidden;        
+      }
+      #panel-container.active {
+        width: 320px;        
       }
       #panel-container.collapsed {
         width: 0px;
@@ -559,24 +573,26 @@ class WebMap extends LitElement {
       <div id="tools-menu">
         <ul>
           <li>
-            <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+            <map-iconbutton .icon="${gmSearchIcon}" info="Adres zoeken" @click="${e=>this.toggleTool('search')}" .active="${this.currentTool==='search'}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus"></map-iconbutton>
+            <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus" @click="${e=>this.toggleTool('datacatalog')}" .active="${this.currentTool==='datacatalog'}"></map-iconbutton>
           </li><li>
-            <map-measure .webmap="${this.map}" class="centertop"></map-measure>
+            <map-iconbutton .icon="${measureIcon}" info="Afstanden meten" @click="${e=>this.toggleTool('measure')}" .active="${this.currentTool==='measure'}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleInfo()}"></map-iconbutton>
+            <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleTool('info')}" .active="${this.currentTool==='info'}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.togglelanguagesetter()}"></map-iconbutton>
+            <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.toggleTool('language')}" .active="${this.currentTool==='language'}"></map-iconbutton>
           </li><li>
             <map-iconbutton .icon="${html`<b>3D</b>`}" info="Pitch" @click="${e=>this.updatePitch()}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${drawIcon}" info="Tekenen"></map-iconbutton>
+            <map-iconbutton .icon="${drawIcon}" info="Tekenen" @click="${e=>this.toggleTool('draw')}" .active="${this.currentTool==='draw'}"></map-iconbutton>
           </li>
         </ul>
       </div>
-      <div id="panel-container">
-        <map-panel visible="true">Dag dag</map-panel>
+      <div id="panel-container" class="${this.currentTool !==''?"active":""}">
+        <map-panel .active="${this.currentTool==="search"}">
+          <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+        </map-panel>
       </div>
     </div>
       

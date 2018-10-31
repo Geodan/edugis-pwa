@@ -26,7 +26,6 @@
     "@polymer/lit-element": "^0.6.2",
     "@turf/turf": "^5.1.6",
     "@webcomponents/webcomponentsjs": "^2.1.0",
-    "html-import-js": "^1.0.1",
     "mapbox-gl": "^0.47.0",
     "proj4": "^2.5.0",
     "pwa-helpers": "^0.8.2",
