@@ -16,21 +16,26 @@ class MapPanel extends LitElement {
   }
   render() {
     return html`<style>
-        :host {
-          margin-left: -384px;
-          padding: 10px;
+        .panel-wrapper {
+          display: flex;
           pointer-events: auto;
           background-color: rgba(250,250,250,.87);
           box-shadow: 0 0 1px 1px rgba(204,204,204,.5);
           box-sizing: border-box;
+          padding: 10px;
+          width: 100%;
+          min-height: 55px;
         }
-        .visible {
-          margin-left: 0px;
-          transition: margin 1s ease;
-        }        
+        .panel-content {
+          width: 100%;
+          padding: 2px;
+          background-color: white;
+        }
     </style>
-    <div ?class="${this.visible}">
-      <div>Hallo Hallo</div>
+    <div class="panel-wrapper">
+      <div class="panel-content">
+        <slot></slot>
+      </div>
     </div>`;
   }
 }

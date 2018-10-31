@@ -6,27 +6,24 @@ import {LitElement, html} from '@polymer/lit-element';
 class IconButton extends LitElement {
   static get properties() { 
     return { 
-      visible: Boolean,
+      active: Boolean,
       icon: String,
       info: String
     }; 
   }
   constructor() {
       super();
-      this.visible = true;
-      this.icon = "";
+      this.active = false;
+      this.icon = "Bt";
       this.info = "Button";
   }
-  shouldUpdate(changedProps) {
-    return this.visible;
-  }
   render() {
-    return html`<style>
+    return html`<style>        
         .button {
           opacity: 0.9;
           display: inline-block;
-          height: 55px;
-          width: 55px;
+          height: 100%;
+          width: 100%;
           color: rgb(51,51,51);
           fill: rgb(51,51,51);
           box-sizing: border-box;
@@ -37,12 +34,14 @@ class IconButton extends LitElement {
           padding: 15px;
         }
         .button:hover {
-          background-color: rgb(204,0,0);
+          background-color: rgb(180,0,0);
           fill: white;
           color: white;
         }
-        .hidden {
-          display: none;
+        .active {
+          background-color: rgb(204,0,0);
+          fill: white;
+          color: white;
         }
     </style>
     <div title="${this.info}" class="button ${this.visible ? '' : 'hidden'}">${this.icon}</div>`;

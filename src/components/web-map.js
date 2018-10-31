@@ -29,15 +29,15 @@ import './map-info-formatted';
 import './map-panel';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { cloudDownloadIcon, languageIcon } from './my-icons';
-import { informationIcon as gmInfoIcon, layermanagerIcon } from '../gm/gm-iconset-svg';
+import { cloudDownloadIcon, languageIcon, arrowLeftIcon } from './my-icons';
+import { informationIcon as gmInfoIcon, layermanagerIcon, drawIcon } from '../gm/gm-iconset-svg';
 
-
+/*
 import { importHref } from 'html-import-js';
 importHref ("bower_components/gm-style-mixin/gm-style-config.html");
 importHref ('bower_components/gm-button/build/dist/gm-button.html');
 importHref ('bower_components/gm-panel/build/dist/gm-panel.html');
-
+*/
 
 function getResolution (map)
 {
@@ -474,22 +474,13 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
-  /*<link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-panel.css">
-    <link rel="import" href="bower_components/gm-style-mixin/gm-style-config.html">
-    <link rel="import" href="">
-    <link rel="import" href="">
-    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager.css">
-    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager-group.css">
-    <link rel="stylesheet" href="bower_components/gm-style-mixin/css/gm-layermanager-layer.css"-->
-*/
-
+  hideMenu(e) {
+    this.shadowRoot.querySelector('#tool-menu-container').classList.toggle('collapsed');
+    this.shadowRoot.querySelector('#panel-container').classList.toggle('collapsed');
+    this.shadowRoot.querySelector('#button-hide-menu').classList.toggle('collapsed');
+  }
   render() {
     return html`<style>
-      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-panel.css";
-      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager.css";
-      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager-group.css";
-      @import "${this.baseURI}bower_components/gm-style-mixin/css/gm-layermanager-layer.css";
-      
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       :host {
@@ -499,25 +490,96 @@ class WebMap extends LitElement {
         overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
-      #tools-menu {
-        float: left;
+      #tool-menu-container {
         position: absolute;
+        display: flex;
+        width: 375px; /* #panel-container + #tools-menu */
         left: 10px;
         top: 100px;
+        transition: left 1s ease, width 1s ease;
+      }
+      #tool-menu-container.collapsed {
+        left: -55px;
+        width: 55px;
+      }
+      #tools-menu {
         box-shadow: rgba(204, 204, 204, 0.5) 1px 0px 1px 1px;
         width: 55px;
       }
+      #panel-container {
+        width: 320px;
+        transition: width 1s ease;
+        overflow: hidden;        
+      }
+      #panel-container.collapsed {
+        width: 0px;
+      }
+      #tools-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      #tools-menu ul li {
+        width: 55px;
+        height: 55px;
+        border-bottom: 1px solid rgba(204,204,204,.52);
+      }
+      #button-hide-menu {
+        position: absolute;
+        top: 0;
+        right: -25px;
+        width: 25px;
+        height: 55px;
+        cursor: pointer;
+        border-left: 1px solid #c1c1c1;
+        color: #666;
+        fill: #666;
+        background-color: rgba(250,250,250,.87);
+        box-shadow: 1px 0 1px 1px rgba(204,204,204,.5);
+        line-height: 65px;
+        text-align: center;
+        white-space: nowrap;
+        transform: rotate(0deg);
+        transition: transform 1s ease-in-out;
+
+      }
+      #button-hide-menu.collapsed {
+        transform: rotate(-180deg);
+      }
+      .offset {
+        display: inline-block;
+        width: 5px;
+      }
       </style>
     <div class="webmap"></div>
-    <div id="tools-menu">
-      <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
-      <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus"></map-iconbutton>
-      <map-panel visible="true"></map-panel>
-      <map-measure .webmap="${this.map}" class="centertop"></map-measure>
-      <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleInfo()}"></map-iconbutton>
-      <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.togglelanguagesetter()}"></map-iconbutton>
-      <map-iconbutton .icon="${html`<b>3D</b>`}" info="Pitch" @click="${e=>this.updatePitch()}"></map-iconbutton>
+    <div id="tool-menu-container">
+      <div id="button-hide-menu" @click="${e=>this.hideMenu(e)}">
+        <span class="offset"></span><i>${arrowLeftIcon}</i>
+      </div>
+      <div id="tools-menu">
+        <ul>
+          <li>
+            <map-search .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+          </li><li>
+            <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus"></map-iconbutton>
+          </li><li>
+            <map-measure .webmap="${this.map}" class="centertop"></map-measure>
+          </li><li>
+            <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleInfo()}"></map-iconbutton>
+          </li><li>
+            <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.togglelanguagesetter()}"></map-iconbutton>
+          </li><li>
+            <map-iconbutton .icon="${html`<b>3D</b>`}" info="Pitch" @click="${e=>this.updatePitch()}"></map-iconbutton>
+          </li><li>
+            <map-iconbutton .icon="${drawIcon}" info="Tekenen"></map-iconbutton>
+          </li>
+        </ul>
+      </div>
+      <div id="panel-container">
+        <map-panel visible="true">Dag dag</map-panel>
+      </div>
     </div>
+      
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
     
     <map-button-ctrl controlid="3D" .webmap="${this.map}" position="top-right" .icon="${html`<b>3D</b>`}" tooltip="Pitch" @mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>

@@ -282,9 +282,7 @@ class MapMeasure extends LitElement {
     }
   }
   render() {
-    return html`<style>
-        :host { 
-        }
+    return html`<style>        
         .hidden {
           visibility: hidden;
         }
