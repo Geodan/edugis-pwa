@@ -152,7 +152,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
                     }                
                 }
             },
@@ -161,7 +161,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
                     }
                 }
             },
@@ -170,7 +170,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
                     }
                 }
             }
