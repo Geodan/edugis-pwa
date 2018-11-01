@@ -633,7 +633,7 @@ class WebMap extends LitElement {
     </div>
       
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
   }

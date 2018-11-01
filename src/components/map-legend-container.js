@@ -5,7 +5,7 @@
    Legend items can be dragged vertically to change layer ordering
 */
 
-import {layersIcon} from './my-icons';
+import {arrowRightIcon} from './my-icons';
 import './map-legend-item.js';
 import GroupedArray from '../../lib/groupedarray';
 
@@ -21,7 +21,7 @@ class MapLegendContainer extends LitElement {
       layerlist: Array,
       legendtitle: String,
       visible: Boolean,
-      opened: Boolean,
+      active: Boolean,
       zoom: Number
     }; 
   }
@@ -31,7 +31,7 @@ class MapLegendContainer extends LitElement {
       // properties
       this.layerlist = []
       this.visible = false;
-      this.opened = false;
+      this.active = false;
       this.legendtitle = "Kaartlagen en legenda's";
       this.zoom = 0;
   }
@@ -146,13 +146,13 @@ class MapLegendContainer extends LitElement {
             position: absolute;
             display: flex;
             flex-direction: column;
-            right: 45px;
-            bottom: 30px;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+            right: 10px;
+            bottom: 30px;            
+            box-shadow: 0 0 1px 1px rgba(204,204,204,.5);
+            background-color: rgba(250,250,250,.87);
+            padding: 10px;
             max-height: 90%;
             max-width: 400px;
-            background-color:white;
         }
         .legendheader {
             font-weight:bold;
@@ -160,31 +160,16 @@ class MapLegendContainer extends LitElement {
             border-bottom:1px solid lightblue;
             box-sizing: border-box;
             padding: 5px;
+            background-color: white;
         }
         .itemscroller {            
             overflow:auto;
-        }
-        .button {
-            position: absolute;
-            bottom: 30px;
-            right: 10px;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            height: 30px;
-            width: 30px;
-            padding: 3px;
-            background-color: white;
-            visibility: visible;
-            box-sizing: border-box;
-        }
-        .button:hover {
-            background-color: whitesmoke;
         }
         .hidden {
             visibility: hidden;
         }        
     </style>
-    <div class="container${this.opened? '' : ' hidden'}">
+    <div class="container${this.active? '' : ' hidden'}">
         <div class="legendheader">
             ${this.legendtitle}
         </div>
@@ -217,7 +202,11 @@ class MapLegendContainer extends LitElement {
             </div>
         </div>
     </div>
-    <div class="button" .title="${this.legendtitle}" @click="${e=>this.opened=!this.opened}">${layersIcon}</div>`;
+    <div id="button-hide-legend">
+        <span class="offset"></span>
+        <span class="offset"></span><i>${arrowRightIcon}</i>
+    </div>
+    `;
     return result;
   }
   openClose(e) {
