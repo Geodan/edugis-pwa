@@ -152,7 +152,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&key={bingkey}"
                     }                
                 }
             },
@@ -161,7 +161,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&key={bingkey}"
                     }
                 }
             },
@@ -170,7 +170,7 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&key={bingkey}"
                     }
                 }
             }
@@ -194,7 +194,7 @@ export default
                     "id" : "blaeu",
                     "type" : "raster",
                     "metadata" : {
-                        "legendurl" : "http://mapserver.edugis.nl/legends/nederland/belgica-logo.jpg"
+                        "legendurl" : "https://mapserver.edugis.nl/legends/nederland/belgica-logo.jpg"
                     },
                     "minzoom": 5.5,
                     "maxzoom": 12.5,
@@ -202,8 +202,8 @@ export default
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles" : [
-                            "http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
-                            "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                            "https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
+                            "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/blaeu.map&LAYERS=Nederland%2017e%20eeuw%20(Blaeu)&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
                         ],
                         "attribution": "EduGIS"
                     }
@@ -279,14 +279,14 @@ export default
                     "id" : "ahndsm",
                     "type" : "raster",
                     "metadata" : {
-                        "legendurl": "http://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png"
+                        "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png"
                     },
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles": [
-                            "http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
-                            "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
+                            "https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256",
+                            "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&amp;&LAYERS=hoogtes&TRANSPARENT=true&FORMAT=image%2Fgif&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A900913&BBOX={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
                         ],
                         "attribution": ""
                     }
@@ -299,7 +299,7 @@ export default
                     "type": "raster",
                     "tileSize" : 1024,
                     "tiles": [
-                        "http://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=1024&HEIGHT=1024"
+                        "https://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=1024&HEIGHT=1024"
                     ],
                     "attribution": "KNMI"
                     }
@@ -315,7 +315,7 @@ export default
                     "type": "raster",
                     "tileSize" : 1024,
                     "tiles": [
-                        "http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0q.cgi?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=nexrad-n0q-900913-conus,nexrad-n0q-900913-ak,nexrad-n0q-900913-hi,nexrad-n0q-900913-pr,nexrad-n0q-900913-m05m-conus,nexrad-n0q-900913-m05m-hi,nexrad-n0q-900913-m05m-ak,nexrad-n0q-900913-m05m-pr,nexrad-n0q-900913-m10m-conus,nexrad-n0q-900913-m10m-ak&WIDTH=1024&HEIGHT=1024&CRS=EPSG:900913&BBOX={bbox-epsg-3857}"
+                        "https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0q.cgi?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=nexrad-n0q-900913-conus,nexrad-n0q-900913-ak,nexrad-n0q-900913-hi,nexrad-n0q-900913-pr,nexrad-n0q-900913-m05m-conus,nexrad-n0q-900913-m05m-hi,nexrad-n0q-900913-m05m-ak,nexrad-n0q-900913-m05m-pr,nexrad-n0q-900913-m10m-conus,nexrad-n0q-900913-m10m-ak&WIDTH=1024&HEIGHT=1024&CRS=EPSG:900913&BBOX={bbox-epsg-3857}"
                     ],
                     "attribution": "NEXRAD"
                     }
@@ -345,7 +345,7 @@ export default
                     "type": "raster",
                     "tileSize" : 256,
                     "tiles": [
-                        "http://tiles.edugis.nl/www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
+                        "https://tiles.edugis.nl/www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
                     ],
                     "attribution": "met office"
                     }
@@ -356,13 +356,13 @@ export default
                 "type" : "raster",
                 "metadata" : {
                     "timeinterval" : 900000,
-                    "source" : "http://geoservices.knmi.nl/adaguc_portal/ => MSGCPP OGC realtime service => Precipitation rate"
+                    "source" : "https://geoservices.knmi.nl/adaguc_portal/ => MSGCPP OGC realtime service => Precipitation rate"
                 },
                 "source" : {
                     "type": "raster",
                     "tileSize" : 1024,
                     "tiles": [
-                        "http://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=lwe_precipitation_rate&WIDTH=1024&HEIGHT=1024&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=precip%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&time={time}"
+                        "https://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=lwe_precipitation_rate&WIDTH=1024&HEIGHT=1024&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=precip%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&time={time}"
                     ],
                     "attribution": "EUMETSAT/KNMI"
                     }
@@ -436,7 +436,7 @@ export default
                     "source" : {
                         "type": "raster",
                         "tileSize" : 256,
-                        "tiles": ["http://tile-c.openstreetmap.fr/hot/{z}/{x}/{y}.png"],
+                        "tiles": ["https://tile-c.openstreetmap.fr/hot/{z}/{x}/{y}.png"],
                         "attribution": "&copy; OpenStreetMap contributors"
                     }
                 }
@@ -627,7 +627,7 @@ export default
                     },
                     "source": {
                         "type": "geojson",
-                        "data": "http://research.geodan.nl/sites/ndw_viewer/traffic.json",
+                        "data": "https://research.geodan.nl/sites/ndw_viewer/traffic.json",
                         "attribution": "RubioV"
                     },
                     "paint" : {
