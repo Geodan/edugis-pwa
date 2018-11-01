@@ -758,7 +758,7 @@ class WebMap extends LitElement {
     const baseUrl = 'https://nominatim.openstreetmap.org/';
     if (iconUrl.startsWith(baseUrl)) {
       // route through edugis to workaround openstreetmap CORS error
-      iconUrl = 'http://tiles.edugis.nl/nominatim/' + iconUrl.slice(baseUrl.length);
+      iconUrl = 'https://tiles.edugis.nl/nominatim/' + iconUrl.slice(baseUrl.length);
     }
     if (!this.loadedNames) {
       this.loadedNames = [];

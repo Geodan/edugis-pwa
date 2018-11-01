@@ -395,7 +395,7 @@ export default
                         "type": "raster",
                         "tileSize" : 256,
                         "tiles": [
-                            "http://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                            "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                         ],
                         "attribution": "&copy; OpenStreetMap contributors"
                     }
@@ -478,7 +478,7 @@ export default
                 "type": "fill",
                 "source" : {
                     "type": "geojson",
-                    "data": "http://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
+                    "data": "https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
@@ -512,7 +512,7 @@ export default
                     "sources": {
                         "verkeerssnelheid amsterdam": {
                             "type": "geojson",
-                            "data": "http://tiles.edugis.nl/web.redant.net/~amsterdam/ndw/data/reistijdenAmsterdam.geojson",
+                            "data": "https://tiles.edugis.nl/web.redant.net/~amsterdam/ndw/data/reistijdenAmsterdam.geojson",
                             "attribution": "StevenF"
                         }
                     },
@@ -667,7 +667,7 @@ export default
                 },
                 "source" : {
                     "type": "geojson",
-                    "data": "http://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
+                    "data": "https://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
@@ -698,7 +698,7 @@ export default
                 },
                 "source" : {
                     "type": "geojson",
-                    "data": "http://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
+                    "data": "https://tiles.edugis.nl/geojson/cbs2017_wijken_attr.json",
                     "attribution": "cbs/pdok"
                 },
                 "paint": {
@@ -1094,7 +1094,7 @@ export default
                 "type": "sheetlayer",
                 "source" : {
                     "type":"geojson",
-                    "data": "http://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
+                    "data": "https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
                     "attribution": "cbs/pdok"
                 },
                 "sheet": {

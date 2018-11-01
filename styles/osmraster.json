@@ -17,7 +17,7 @@
       "type" : "raster",
       "tileSize" : 256,
           "tiles": [
-              "http://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+              "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
           ],
           "attribution": "&copy; OpenStreetMap contributors"
     }
