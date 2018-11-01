@@ -68,7 +68,6 @@ import {LitElement, html} from '@polymer/lit-element';
 class MapMeasure extends LitElement {
   static get properties() { 
     return { 
-      visible: Boolean,
       active: Boolean,
       webmap: Object,
       measureInfo: String
@@ -84,9 +83,8 @@ class MapMeasure extends LitElement {
         "type": "FeatureCollection",
         "features": []
       };
-      // set property defaults
-      this.visible = true;
-      this.active = false;
+      // set property defaults      
+      this.active = this.activated = false;
       this.webmap = undefined;
       this.measureInfo = "Klik beginpunt op kaart";
   }
@@ -196,10 +194,13 @@ class MapMeasure extends LitElement {
       }
     };
   };
-  toggleActive(e) {
-    this.active = !this.active;
+  updateActivation(e) {
+    if (this.active === this.activated) {
+      return;
+    }
+    this.activated = this.active;
     if (this.webmap) {
-      if (this.active) {
+      if (this.activated) {
         // setup measuring on map
         this.webmap.addSource('map-measure-geojson', {
           "type":"geojson", 
@@ -282,26 +283,17 @@ class MapMeasure extends LitElement {
     }
   }
   render() {
+    this.updateActivation();
+    if (!this.active) {
+      return html``;
+    }
     return html`<style>        
-        .hidden {
-          visibility: hidden;
-        }
         .measureinfo {
-          position: absolute;
-          top: 37px;
-          left: calc(-15em + 16px);
-          width: 30em;
-          box-sizing: border-box;
-          background-color: rgba(255, 255, 255, 0.75);
-          box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
-          border-radius: 4px;
-          padding-left: 2px;
-          text-align: center;
+          width: 100%;
           font-size: 12px;
         }
     </style>
-    <map-iconbutton class="${this.visible?'':'hidden'}" .info="${this.info}" .icon=${measureIcon} @click="${(e)=>this.toggleActive(e)}"></map-iconbutton>
-    <div class="measureinfo${this.active?'':' hidden'}">${this.measureInfo}</div>`
+    <div class="measureinfo">${this.measureInfo}</div>`
   }
 }
 customElements.define('map-measure', MapMeasure);

@@ -27,9 +27,10 @@ import './map-dialog';
 import './map-gsheet-form';
 import './map-info-formatted';
 import './map-panel';
+import './map-geolocation';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { cloudDownloadIcon, languageIcon, arrowLeftIcon } from './my-icons';
+import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 /*
@@ -93,6 +94,9 @@ const searchPoints ={
     "text-anchor": "top",
     "text-size": 14,
     "text-rotation-alignment": "map",
+    "text-ignore-placement": true,
+    "text-allow-overlap": true,
+    "icon-allow-overlap": true
   },
   "paint": {
     "text-color": "#000",
@@ -455,19 +459,23 @@ class WebMap extends LitElement {
     }
     this.resetLayerList();
   }
-  updatePitch(e) {
+  updatePitch(degrees) {
     if (this.map) {
-      switch (this.pitch) {
-        case 0:
-          this.pitch = 60;
-          break;
-        case 60: 
-          this.pitch = 30;
-          break;
-        case 30:
-        default:
-          this.pitch = 0;
-          break;
+      if (!isNaN(parseFloat(degrees)) && isFinite(degrees)) {
+        this.pitch = parseFloat(degrees);
+      } else {
+        switch (this.pitch) {
+          case 0:
+            this.pitch = 60;
+            break;
+          case 60: 
+            this.pitch = 30;
+            break;
+          case 30:
+          default:
+            this.pitch = 0;
+            break;
+        }
       }
       this.map.setPitch(this.pitch);
     }
@@ -506,8 +514,8 @@ class WebMap extends LitElement {
         align-items: flex-start;
         max-width: 375px; /* #panel-container + #tools-menu */
         left: 10px;
-        top: 100px;
-        transition: left 1s ease, max-width 1s ease;
+        top: 10px;
+        transition: left 0.5s ease, max-width 0.5s ease;
       }
       #tool-menu-container.collapsed {
         left: -55px;
@@ -519,7 +527,7 @@ class WebMap extends LitElement {
       }
       #panel-container {
         width: 0px;
-        transition: width 1s ease;
+        transition: width 0.5s ease;
         overflow: hidden;        
       }
       #panel-container.active {
@@ -554,7 +562,7 @@ class WebMap extends LitElement {
         text-align: center;
         white-space: nowrap;
         transform: rotate(0deg);
-        transition: transform 1s ease-in-out;
+        transition: transform 0.5s ease-in-out;
 
       }
       #button-hide-menu.collapsed {
@@ -579,11 +587,13 @@ class WebMap extends LitElement {
           </li><li>
             <map-iconbutton .icon="${measureIcon}" info="Afstanden meten" @click="${e=>this.toggleTool('measure')}" .active="${this.currentTool==='measure'}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${gmInfoIcon}" info="info" @click="${e=>this.toggleTool('info')}" .active="${this.currentTool==='info'}"></map-iconbutton>
+            <map-iconbutton .icon="${gmInfoIcon}" info="Locatie-informatie" @click="${e=>this.toggleTool('info')}" .active="${this.currentTool==='info'}"></map-iconbutton>
           </li><li>
             <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.toggleTool('language')}" .active="${this.currentTool==='language'}"></map-iconbutton>
           </li><li>
-            <map-iconbutton .icon="${html`<b>3D</b>`}" info="Pitch" @click="${e=>this.updatePitch()}"></map-iconbutton>
+            <map-iconbutton .icon="${html`<b>3D</b>`}" info="Kaarthoek" @click="${e=>this.toggleTool('pitch')}" .active="${this.currentTool==='pitch'}"></map-iconbutton>
+          </li><li>
+            <map-iconbutton .icon="${gpsFixedIcon}" info="Waar ben ik?" @click="${e=>this.toggleTool('geolocate')}" .active="${this.currentTool==='geolocate'}"></map-iconbutton>
           </li><li>
             <map-iconbutton .icon="${drawIcon}" info="Tekenen" @click="${e=>this.toggleTool('draw')}" .active="${this.currentTool==='draw'}"></map-iconbutton>
           </li>
@@ -593,24 +603,39 @@ class WebMap extends LitElement {
         <map-panel .active="${this.currentTool==="search"}">
           <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
         </map-panel>
+        <map-panel .active="${this.currentTool==="datacatalog"}">
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>          
+        </map-panel>
+        <map-panel .active="${this.currentTool==='measure'}">
+          <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='info'}">
+          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}"></map-info-formatted>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='language'}">
+          <map-language .active="${this.currentTool==='language'}" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='geolocate'}">
+        <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
+        </map-panel>        
+        <map-panel .active="${this.currentTool==='pitch'}">
+          ${this.currentTool==='pitch'&&this.map?html`
+          <div style="user-select:none">
+          Huidige kaarthoek: ${this.map.getPitch()}&deg;<br>
+          <button @click="${e=>this.updatePitch(60)}">60&deg;</button>
+          <button @click="${e=>this.updatePitch(30)}">30&deg;</button>
+          <button @click="${e=>this.updatePitch(0)}">0&deg;</button></div>`:``}          
+        </map-panel>
+        <map-panel .active="${this.currentTool==='draw'}">
+          <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
+        </map-panel>
       </div>
     </div>
       
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    
-    <map-button-ctrl controlid="3D" .webmap="${this.map}" position="top-right" .icon="${html`<b>3D</b>`}" tooltip="Pitch" @mapbuttoncontrolclick="${e=>this.updatePitch()}"></map-button-ctrl>
-    <map-language .webmap="${this.map}" active="true" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
-    <button-expandable .icon="${cloudDownloadIcon}" info="Data catalogus">  
-    <map-data-catalog .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>
-    </button-expandable>
     <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
-    ${this.infodialog?html`<map-dialog dialogtitle="Locatie-informatie" @close="${e=>{this.infodialog=null;this.requestUpdate();}}"><map-info-formatted .info="${this.featureInfo}"></map-info-formatted></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
-  }
-  toggleInfo() {
-    this.infodialog = !this.infodialog;
-    this.requestUpdate();
   }
   _positionString(prop) {
     // convert prop to control position
@@ -638,9 +663,6 @@ class WebMap extends LitElement {
     if (this.scalebar.toLowerCase() !== "false") {
 
       this.map.addControl(new mapboxgl.ScaleControl(), this._positionString(this.scalebar));
-    }
-    if (this.geolocate.toLowerCase() !== "false") {
-      this.map.addControl(new mapboxgl.GeolocateControl(), this._positionString(this.geolocate));
     }
     
     if (this.coordinates.toLowerCase() !== "false") {
@@ -781,7 +803,7 @@ class WebMap extends LitElement {
     }
   }
   handleInfo(e) {
-    if (!this.infodialog) {
+    if (!this.currentTool === 'info') {
       return;
     }
     this.featureInfo = this.map.queryRenderedFeatures(e.point);

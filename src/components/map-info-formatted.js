@@ -8,15 +8,20 @@ import {LitElement, html} from '@polymer/lit-element';
 class MapInfoFormatted extends LitElement {
   static get properties() { 
     return { 
+      active: Boolean,
       info: Array
     }; 
   }
   constructor() {
       super();
       this.info = [];
+      this.active = false;
   }
   render() {
-    let result = html`
+    if (!this.active) {
+      return html``;
+    }
+    return html`
       <style>
       </style>
       <div>
@@ -31,8 +36,6 @@ class MapInfoFormatted extends LitElement {
       )}
       </div>
     `;
-    console.log(result);
-    return result;
   }
 }
 customElements.define('map-info-formatted', MapInfoFormatted);
