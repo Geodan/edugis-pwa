@@ -516,6 +516,7 @@ class WebMap extends LitElement {
         left: 10px;
         top: 10px;
         transition: left 0.5s ease, max-width 0.5s ease;
+        pointer-events: none;
       }
       #tool-menu-container.collapsed {
         left: -55px;
@@ -524,14 +525,16 @@ class WebMap extends LitElement {
       #tools-menu {
         box-shadow: rgba(204, 204, 204, 0.5) 1px 0px 1px 1px;
         width: 55px;
+        pointer-events: auto;
       }
       #panel-container {
         width: 0px;
         transition: width 0.5s ease;
-        overflow: hidden;        
+        overflow: hidden;
+        pointer-events: auto;
       }
       #panel-container.active {
-        width: 320px;        
+        width: 320px;
       }
       #panel-container.collapsed {
         width: 0px;
