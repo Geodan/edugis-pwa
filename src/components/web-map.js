@@ -566,7 +566,7 @@ class WebMap extends LitElement {
         white-space: nowrap;
         transform: rotate(0deg);
         transition: transform 0.5s ease-in-out;
-
+        pointer-events: auto;
       }
       #button-hide-menu.collapsed {
         transform: rotate(-180deg);
