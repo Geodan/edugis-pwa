@@ -86,37 +86,63 @@ class MapMeasure extends LitElement {
       // set property defaults      
       this.active = this.activated = false;
       this.webmap = undefined;
-      this.measureInfo = "Klik beginpunt op kaart";
+      this.header = html`<h5>Afstand meten</h5>`;
+      this.startMessage = html`${this.header}Klik in de kaart om afstand of oppervlakte te meten.`;
+      this.measureInfo = this.startMessage;
   }
   handleMapMouseMove(e) {
     let features = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points']});
     this.webmap.getCanvas().style.cursor = (features.length) ? 'pointer' : 'crosshair';
   }
+  resetMeasurement()
+  {
+    this.geojson.features = [];
+    this.hasPolygon = false;
+    const source = this.webmap.getSource('map-measure-geojson');
+    if (source) {
+      source.setData(this.geojson);
+    }
+  }
   handleMapClick(e) {
     if (this.webmap) {
-      const map = this.webmap;
-      const clickedFeatures = map.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
-
+      let clickedFeatures = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
+      if (this.hasPolygon) {
+        this.resetMeasurement();
+        clickedFeatures = [];
+      }
+      
       // Remove the linestrings from the group
       // So we can redraw it based on the points collection
       this.geojson.features = this.geojson.features.filter(curfeature=>curfeature.geometry.type=="Point");
-
-      let hasPolygon = false;
-      // If a point feature was clicked, not closing polygon
-      if (clickedFeatures.length && !(this.geojson.features.length > 2 && this.geojson.features[0].properties.id === clickedFeatures[0].properties.id)) {
-        // remove clicked point
-        let idCounter = 1;
-        this.geojson.features = this.geojson.features
-          .filter(point=>point.properties.id !== clickedFeatures[0].properties.id)
-          .map(point=>{point.properties.id = (idCounter++).toString(); return point});
+ 
+      let point = [e.lngLat.lng, e.lngLat.lat];
+      if (clickedFeatures.length) {
+        const clickedID = clickedFeatures[0].properties.id;
+        // an existing point was clicked
+        if (this.geojson.features.length > 2 && this.geojson.features[0].properties.id === clickedID) {
+          // closing polygon
+          this.hasPolygon = true;
+          point = this.geojson.features[0].geometry.coordinates;
+          this.geojson.features.push(
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "Point",
+                "coordinates": point
+              },
+              "properties": {
+                "id": (this.geojson.features.length + 1).toString()
+              }
+            }
+          );
+        } else {
+          if (this.geojson.features[this.geojson.features.length -1].properties.id === clickedID) {
+            // clicked last point
+            this.resetMeasurement();
+          }
+        }
       } else {
         // add a new point
-        let point = [e.lngLat.lng, e.lngLat.lat];
-        if (clickedFeatures.length) {
-          // set point identical to starting point
-          point = this.geojson.features[0].geometry.coordinates;
-          hasPolygon = true;
-        }
         this.geojson.features.push(
           {
             "type": "Feature",
@@ -138,6 +164,10 @@ class MapMeasure extends LitElement {
       const pointCount = this.geojson.features.length;
       let polygon = [];
       if (pointCount > 1) {
+        this.measureInfo = html`${this.header}Klik volgend punt. <br>Klik op laatste punt om te stoppen.`;
+        if (pointCount > 2) {
+          this.measureInfo = html`${this.measureInfo}<br>Klik op eerste punt voor oppervlakte.`;
+        }
         for (let i = 1; i < pointCount; i++) {
           const point1 = this.geojson.features[i-1].geometry.coordinates;
           const point2 = this.geojson.features[i].geometry.coordinates;
@@ -156,7 +186,7 @@ class MapMeasure extends LitElement {
               }
             }
           );
-          if (hasPolygon) {
+          if (this.hasPolygon) {
             polygon.push(...line);
           }
         }
@@ -178,17 +208,22 @@ class MapMeasure extends LitElement {
             }
           )
         }
-        this.measureInfo = html`${formatDistance(distance, options.units)}
+        this.measureInfo = html`${this.measureInfo}<br>${area>0.0?"Omtrek:": "Afstand:"} <span class="label">${formatDistance(distance, options.units)}</span>
           ${polygon.length==0?
-            html`<br/>${
+            html`<br>Kompashoek (start-eind): <span class="label">${
               turf.bearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
-              } &deg;`:''}
-          ${area>0.0?html`<br/>${formatArea(area)}`:""}`
+              } &deg;</span>`:''}
+          ${area>0.0?html`<br>Oppervlakte: <span class="label">${formatArea(area)}</span>`:""}`
       } else {
-        this.measureInfo = (pointCount == 0 ? "Klik beginpunt op kaart" : "Klik volgend punt op kaart");
+        if (pointCount == 0) {
+          this.measureInfo = this.startMessage;
+        } else {
+          // pointCount == 1
+          this.measureInfo = html`${this.header}Klik volgend punt`;
+        }        
       }
       try {
-        map.getSource('map-measure-geojson').setData(this.geojson);
+        this.webmap.getSource('map-measure-geojson').setData(this.geojson);
       } catch(e) {
         console.warn('map-measure source-layer missing');
       }
@@ -278,7 +313,7 @@ class MapMeasure extends LitElement {
         this.webmap.removeSource('map-measure-geojson');
         this.geojson.features = [];
         this.webmap.getCanvas().style.cursor = '';
-        this.measureInfo = "Klik beginpunt op kaart";
+        this.measureInfo = this.startMessage;
       }
     }
   }
@@ -290,7 +325,17 @@ class MapMeasure extends LitElement {
     return html`<style>        
         .measureinfo {
           width: 100%;
-          font-size: 12px;
+          font-size: 14px;
+        }
+        .measureinfo h5 {
+          color: #555;
+          font-weight: bold;
+          font-size: 14px;
+        }
+        .label {
+          background-color: #32b4b8;
+          color: white;
+          font-weight: bold;
         }
     </style>
     <div class="measureinfo">${this.measureInfo}</div>`
