@@ -500,7 +500,7 @@ class WebMap extends LitElement {
     
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
-      @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+      /* @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";*/
       :host {
         display: inline-block;
         min-width: 200px;
@@ -607,7 +607,7 @@ class WebMap extends LitElement {
           <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
         </map-panel>
         <map-panel .active="${this.currentTool==="datacatalog"}">
-          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}"></map-data-catalog>          
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
         </map-panel>
         <map-panel .active="${this.currentTool==='measure'}">
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
@@ -636,7 +636,7 @@ class WebMap extends LitElement {
     </div>
       
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @legendremovelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @removelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
   }
@@ -681,17 +681,18 @@ class WebMap extends LitElement {
     this.map.on('render', e=>this.mapHasRendered());
     this.map.on('zoomend', e=>this.mapHasZoomed());
     
-
+    /*
     const modes = MapboxDraw.modes;
     modes.static = StaticMode;
 
     this.draw = new MapboxDraw({ modes: modes, boxSelect: false });
     this.map.addControl(this.draw, 'bottom-left');
+    */
 
     this.map.on('load', ()=>{
         this.setReferenceLayers();
         this.resetLayerList();
-        this.draw.changeMode('static');
+        //this.draw.changeMode('static');
     });
     this.addEventListener("languagechanged", e=>this.setLanguage(e));
   }

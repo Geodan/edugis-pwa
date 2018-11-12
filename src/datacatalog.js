@@ -8,7 +8,7 @@ export default
                 "source" : "styles/openmaptiles/klokantech-basic.json",
                 "metadata" : {"reference": true}
             }},
-            {"type": "reference", "title": "OSM Bright (stijl)", "layerInfo": {
+            {"type": "reference", "title": "OSM Bright (stijl)", "checked": true, "layerInfo": {
                 "id" : "OsmBright",
                 "type" : "style",
                 "source" : "styles/openmaptiles/osmbright.json",

@@ -50,7 +50,7 @@ class MapLegendItem extends LitElement {
   }
   _removeLayer(e) {
       this.dispatchEvent(
-          new CustomEvent('legendremovelayer',
+          new CustomEvent('removelayer',
             {
                 detail: {layerid: this.item.id},
                 bubbles: true,

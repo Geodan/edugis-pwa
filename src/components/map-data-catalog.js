@@ -132,6 +132,7 @@ function toWgs84(geojson, from, projs) {
 }
 
 import {LitElement, html} from '@polymer/lit-element';
+import './map-layer-tree';
 /**
 * @polymer
 * @extends HTMLElement
@@ -144,35 +145,43 @@ class MapDataCatalog extends LitElement {
   }
   constructor() {
     super();
-    this.map = null;
     this.datacatalog = null;
   }
+  setListIds(list) {
+    list.forEach(item=>{
+      if (!item.hasOwnProperty("id")) {
+        item.id = item.title;
+      }
+      if (item.sublayers) {
+        this.setListIds(item.sublayers);
+      }
+    });
+  }
   shouldUpdate(changedProps) {
+    if (changedProps.has("datacatalog")) {
+      if (this.datacatalog) {
+        this.setListIds(this.datacatalog);
+      }
+    }
     return (this.datacatalog != null);
   }
-  renderTree(nodeList) {
-    return html`<ul>${nodeList.map(node=>{
-        if (node.type==="group"){
-            return html`<li>${node.title}${this.renderTree(node.sublayers)}</li>`
-        } else {
-            return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">${node.title}</li>`;
-        }
-    })}</ul>`;
+
+  toggleLayer(e) {
+    if (e.detail.checked) {
+      this.handleClick(e, e.detail);
+    } else {
+      if (e.detail.layerInfo.id) {
+        this.dispatchEvent(
+          new CustomEvent('removelayer',
+            {
+                detail: {layerid: e.detail.layerInfo.id}
+            })
+      );
+      }
+    }
   }
   render() {
-    return html`<style>
-      :host {
-        display: inline-block;
-        min-width: 200px;
-        min-height: 200px;
-      }
-      .data {
-          cursor: pointer;
-      }
-      </style>
-    <div>
-        ${this.renderTree(this.datacatalog)}
-    </div>`
+    return html`<map-layer-tree headertext="Data-catalogus" .nodelist="${this.datacatalog}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;

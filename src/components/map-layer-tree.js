@@ -13,13 +13,15 @@ class MapLayerTree extends LitElement {
   static get properties() { 
     return { 
       nodelist: Array,
-      updates: Number
+      updates: Number,
+      headertext: String
     }; 
   }
   constructor() {
       super();
       this.nodelist = [];
       this.updates = 0;
+      this.headertext = "headertext";
   }
   toggleOpen(e, node) {
     if (node.opened) {
@@ -33,6 +35,15 @@ class MapLayerTree extends LitElement {
   toggleCheck(id) {
     this.toggleNodeInList(this.nodelist, id, false);
   }
+  isRadioNode(node) {
+    if (node.type === "radio") {
+      return true;
+    }
+    if (node.sublayers && node.sublayers.length && node.sublayers[0].type === "reference") {
+      return true;
+    }
+    return false;
+  }
   toggleNodeInList(list, id, radio) {
     if (radio) {
       if (list.find(item=>item.id === id)) {
@@ -42,10 +53,13 @@ class MapLayerTree extends LitElement {
     list.forEach(item=>{
       if (item.id === id) {
         item.checked = !item.checked;
+        this.dispatchEvent(new CustomEvent('toggleitem', 
+          {detail: item}
+        ));
         this.updates++;
       } else {
         if (item.sublayers) {
-          this.toggleNodeInList(item.sublayers, id, item.type === "radio");
+            this.toggleNodeInList(item.sublayers, id, this.isRadioNode(item));
         }
       }
     })
@@ -65,7 +79,7 @@ class MapLayerTree extends LitElement {
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
             ${node.title}
             <span class="${node.opened?'arrow-down opened':'arrow-down'}"></span>
-            ${this.renderTree(node.sublayers, node.opened, node.type === "radio", node.id)}</li>`
+            ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
           return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">
             <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
@@ -80,6 +94,11 @@ class MapLayerTree extends LitElement {
         list-style-type: none;
         padding-left: 10px;
       }
+      li ul {
+        max-height: 30em;
+        transition: 0.5s linear;
+        overflow: hidden;
+      }
       li {
         border-bottom: 1px solid gray;
         cursor: pointer;
@@ -92,10 +111,9 @@ class MapLayerTree extends LitElement {
         border-style: solid;
         border-width: 1px 1px 0 0;
         content: '';
-        display: inline-block;
         height: 8px;
-        position: absolute;
-        right: 20px;
+        float: right;
+        margin-right: 20px;
         left: auto;
         -ms-transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
@@ -104,12 +122,13 @@ class MapLayerTree extends LitElement {
         vertical-align: top;
         width: 8px;
         border-color: #555;
+        transition: transform .5s linear;
       }
       .opened {
         transform: rotate(133deg);
       }
       .closed {
-        display: none;
+        max-height: 0;
       }
       .radio-on {
         display: inline-block;
@@ -142,8 +161,25 @@ class MapLayerTree extends LitElement {
       .label {
         vertical-align: middle;
       }
+      .title {
+        font-weight: bold;
+        position: relative;
+        width: 100%;
+        height: 25px;
+        text-align: center;
+        border-bottom: 1px solid rgba(128,128,128,0.5);
+        box-sizing: border-box;
+      }
+      .wrapper {
+        width: 100%;
+        height: calc(100% - 25px);
+        overflow: auto;
+      }
     </style>
-    ${this.renderTree(this.nodelist, true)}`;
+    <div class="title">${this.headertext}</div>
+    <div class="wrapper">
+    ${this.renderTree(this.nodelist, true)}
+    </div>`;
   }
 }
 customElements.define('map-layer-tree', MapLayerTree);
