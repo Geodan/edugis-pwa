@@ -910,7 +910,7 @@ export default
                         "maxzoom": 10
                     },
                     "source-layer": "nuts_m03_2006",
-                    "paint": {
+                    "paint": {                        
                         "fill-color": {
                             "property": "cntr_code",
                             "type": "categorical",
@@ -1050,7 +1050,29 @@ export default
                               ],
                             ]
                         },
-                        "fill-outline-color": "#ffffff"
+                        "fill-outline-color": {
+                            default: "#ffffff",
+                            "property": "cntr_code",
+                            "type": "categorical",
+                            "stops": [
+                              [
+                                "AT", 
+                                "#ccc"
+                              ],
+                              [
+                                "DK", 
+                                "#ccc"
+                              ],
+                              [
+                                "LU", 
+                                "#ccc"
+                              ],
+                              [
+                                "PT", 
+                                "#ccc"
+                              ]
+                            ]
+                        }                        
                     }
                 }
             }
