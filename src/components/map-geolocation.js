@@ -1,5 +1,7 @@
 import {LitElement, html} from '@polymer/lit-element';
 
+const startUpMessage = 'Starten plaatsbepaling...';
+
 /**
 * @polymer
 * @extends HTMLElement
@@ -18,7 +20,7 @@ class MapGeolocation extends LitElement {
       this.latitude = 0;
       this.longitude = 0;
       this.tracking = false;
-      this.message = 'Starten plaatsbepaling...';
+      this.message = startUpMessage;
       this.watchId = 0;
       this.webmap = undefined;
       this.flownTo = false;
@@ -129,11 +131,12 @@ class MapGeolocation extends LitElement {
       });
     }
     this.flownTo = false;
-    this.watchId = navigator.geolocation.watchPosition(this.success.bind(this), this.error.bind(this), {enableHighAccuracy: true, timeout: 5000, maximumAge: 0});
+    this.watchId = navigator.geolocation.watchPosition(this.success.bind(this), this.error.bind(this), {enableHighAccuracy: true, timeout: 45000, maximumAge: 0});
   }
   clearMap() {
     navigator.geolocation.clearWatch(this.watchId);
     this.watchId = 0;
+    this.message = startUpMessage;
     if (this.webmap) {
       this.webmap.removeLayer('map-geolocate-radius');
       this.webmap.removeLayer('map-geolocate-point');
