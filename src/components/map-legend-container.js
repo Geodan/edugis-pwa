@@ -143,16 +143,12 @@ class MapLegendContainer extends LitElement {
     let result = html`
     <style>
         .container {
-            position: absolute;
             display: flex;
             flex-direction: column;
-            right: 10px;
-            bottom: 30px;            
             box-shadow: 0 0 1px 1px rgba(204,204,204,.5);
             background-color: rgba(250,250,250,.87);
             padding: 10px;
-            max-height: 90%;
-            max-width: 400px;
+            pointer-events: auto;
         }
         .legendheader {
             font-weight:bold;
@@ -201,10 +197,6 @@ class MapLegendContainer extends LitElement {
                     html`<map-legend-item .item="${item}" .layervisible="${item.layervisible}" isbackground="true"></map-legend-item>`)}
             </div>
         </div>
-    </div>
-    <div id="button-hide-legend">
-        <span class="offset"></span>
-        <span class="offset"></span><i>${arrowRightIcon}</i>
     </div>
     `;
     return result;

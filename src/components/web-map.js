@@ -490,6 +490,24 @@ class WebMap extends LitElement {
     this.shadowRoot.querySelector('#panel-container').classList.toggle('collapsed');
     this.shadowRoot.querySelector('#button-hide-menu').classList.toggle('collapsed');
   }
+  hideLegend(e) {
+    const container = this.shadowRoot.querySelector('#legend-container-container');
+    const button = this.shadowRoot.querySelector('#button-hide-legend');
+    button.classList.toggle('collapsed');
+    if (button.classList.contains('collapsed')) {
+      const rect = container.getBoundingClientRect();
+      const width = rect.right - rect.left;
+      container.style.right = 25-width + 'px';
+      setTimeout(()=>{
+        container.style.width = width + 'px';
+        container.style.maxWidth = width + 'px';
+      }, 500);
+    } else {
+      container.style.right = null;
+      container.style.width = null;
+      container.style.maxWidth = null;
+    }
+  }
   toggleTool(name) {
     if (this.currentTool === name) {
       this.currentTool = '';
@@ -572,15 +590,46 @@ class WebMap extends LitElement {
       #button-hide-menu.collapsed {
         transform: rotate(-180deg);
       }
+      #button-hide-legend {
+        width: 25px;
+        height: 55px;
+        cursor: pointer;
+        border-right: 1px solid #c1c1c1;
+        color: #666;
+        fill: #666;
+        background-color: rgba(250,250,250,.87);
+        box-shadow: 1px 0 1px 1px rgba(204,204,204,.5);
+        line-height: 65px;
+        text-align: center;
+        white-space: nowrap;
+        transform: rotate(-180deg);
+        transition: transform 0.5s ease-in-out;
+        pointer-events: auto;
+      }
+      #button-hide-legend.collapsed {
+        transform: rotate(0deg);
+      }
       .offset {
         display: inline-block;
         width: 5px;
       }
+      #legend-container-container {
+        position: absolute;
+        bottom: 30px;
+        right: 10px;
+        max-width: 425px; /* legend + hide-button */
+        display: flex;
+        justify-content: flex-end;
+        
+        transition: right 0.5s ease;
+        pointer-events: none;
+        box-sizing: border-box;
+      }
       .red {
-      --mdc-theme-on-primary: white;
-      --mdc-theme-primary: rgb(204,0,0);
-      --mdc-theme-on-secondary: white;
-      --mdc-theme-secondary: rgb(204,0,0);
+        --mdc-theme-on-primary: white;
+        --mdc-theme-primary: rgb(204,0,0);
+        --mdc-theme-on-secondary: white;
+        --mdc-theme-secondary: rgb(204,0,0);
       }
       .padded {
         padding: 10px;
@@ -646,7 +695,12 @@ class WebMap extends LitElement {
     </div>
       
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @removelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    <div id="legend-container-container">
+      <div id="button-hide-legend" @click="${e=>this.hideLegend(e)}">
+        <span class="offset"></span><i>${arrowLeftIcon}</i>
+      </div>
+      <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @removelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+    </div>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
   }
