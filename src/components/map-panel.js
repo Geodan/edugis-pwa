@@ -35,6 +35,7 @@ class MapPanel extends LitElement {
           background-color: white;
           max-height: 80vh;
           box-sizing: border-box;
+          color: #555;
         }
     </style>
     <div class="panel-wrapper">

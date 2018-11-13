@@ -111,7 +111,7 @@ export default
                     }
                 }
             },
-            {"type": "reference", "title": "Streets (Geodan Maps)", "layerInfo": {
+            {"type": "reference", "title": "Streets (Geodan Maps)", "id": "gmstreets", "layerInfo": {
                     "id" : "gmstreets",
                     "metadata" : {"reference": true},
                     "type" : "raster",

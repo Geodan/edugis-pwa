@@ -13,6 +13,7 @@ mapboxcss.setAttribute('rel', 'stylesheet');
 document.head.appendChild(mapboxcss);
 */
 
+import '@material/mwc-button';
 import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
@@ -575,6 +576,15 @@ class WebMap extends LitElement {
         display: inline-block;
         width: 5px;
       }
+      .red {
+      --mdc-theme-on-primary: white;
+      --mdc-theme-primary: rgb(204,0,0);
+      --mdc-theme-on-secondary: white;
+      --mdc-theme-secondary: rgb(204,0,0);
+      }
+      .padded {
+        padding: 10px;
+      }
       </style>
     <div class="webmap"></div>
     <div id="tool-menu-container">
@@ -623,11 +633,11 @@ class WebMap extends LitElement {
         </map-panel>        
         <map-panel .active="${this.currentTool==='pitch'}">
           ${this.currentTool==='pitch'&&this.map?html`
-          <div style="user-select:none">
+          <div class="padded" style="user-select:none">
           Huidige kaarthoek: ${this.map.getPitch()}&deg;<br>
-          <button @click="${e=>this.updatePitch(60)}">60&deg;</button>
-          <button @click="${e=>this.updatePitch(30)}">30&deg;</button>
-          <button @click="${e=>this.updatePitch(0)}">0&deg;</button></div>`:``}          
+          <mwc-button class="red" raised @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button><p></p>
+          <mwc-button class="red" raised @click="${e=>this.updatePitch(30)}">30&deg;</mwc-button><p></p>
+          <mwc-button class="red" raised @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button></div>`:``}          
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
