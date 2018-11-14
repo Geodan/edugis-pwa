@@ -378,6 +378,11 @@ export default
             {"type": "layer", "title": "CBS (mapproxy + qgis)", "type": "wmts", "layerInfo": {
                     "id" : "cbsbevolking2017",
                     "type": "raster",
+                    "minzoom" : 2.5,
+                    "maxzoom" : 16.5,
+                    "metadata" : {
+                        "getFeatureInfoUrl" : "https://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=cbsbevolking2017&query_layers=cbsbevolking2017"
+                    },
                     "source": {
                         "type": "raster",
                         "tileSize": 256,

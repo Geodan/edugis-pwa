@@ -28,12 +28,12 @@ class MapPanel extends LitElement {
           padding: 10px;
           width: 100%;
           min-height: 55px;
+          max-height: calc(100vh - 115px);
         }
         .panel-content {
           width: 100%;
           padding-left: 2px;
           background-color: white;
-          max-height: 80vh;
           box-sizing: border-box;
           color: #555;
         }

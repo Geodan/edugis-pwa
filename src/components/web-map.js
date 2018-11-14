@@ -34,12 +34,6 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
-/*
-import { importHref } from 'html-import-js';
-importHref ("bower_components/gm-style-mixin/gm-style-config.html");
-importHref ('bower_components/gm-button/build/dist/gm-button.html');
-importHref ('bower_components/gm-panel/build/dist/gm-panel.html');
-*/
 
 function getResolution (map)
 {
@@ -128,6 +122,20 @@ let StaticMode = {
   toDisplayFeatures : function(state, geojson, display) {
     display(geojson);
   }
+}
+
+// srs optional, defaults to 'EPSG:3857'
+// adds projected .x and .y properties to lngLat
+function projectLngLat(lngLat, srs)
+{
+    if (!srs) {
+        srs = 'EPSG:3857';
+    }
+    var project = proj4('EPSG:4326', srs);
+    var p = project.forward({x: lngLat.lng, y: lngLat.lat});    
+    lngLat.x = p.x;
+    lngLat.y = p.y;
+    return lngLat;
 }
 
 import {LitElement, html} from '@polymer/lit-element';
@@ -870,17 +878,135 @@ class WebMap extends LitElement {
       this.map.getSource('map-search-geojson').setData(searchGeoJson);
     }
   }
+  XMLtoGeoJSON(xmlString)
+  {
+      const result = {"type": "FeatureCollection", "features": []};
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString,"text/xml");
+      const root = xmlDoc.getElementsByTagName("GetFeatureInfoResponse");
+      if (root && root.length) {
+          const layers = root[0].getElementsByTagName("Layer");
+          const layerInfo = {};
+          for (var i = 0; i < layers.length; i++) {
+              layerInfo.name = layers[i].getAttribute('name');
+              const features = layers[i].getElementsByTagName('Feature');
+              if (features && features.length) {
+                  for (let j = 0; j < features.length; j++) {
+                      const featureInfo = {};                  
+                      featureInfo.properties = {};
+                      const attributes = features[j].getElementsByTagName('Attribute');
+                      if (attributes && attributes.length) {
+                          for (let k = 0; k < attributes.length; k++) {
+                              const attrName = attributes[k].getAttribute('name');
+                              if (attrName != 'geometry') {
+                                  featureInfo.properties[attrName] = attributes[k].getAttribute('value');
+                              } else {
+                                  let geometryString = attributes[k].getAttribute('value');
+                                  const endPos = geometryString.indexOf('(');
+                                  const type = geometryString.substring(0, endPos).trim();
+                                  geometryString = geometryString.substring(endPos).split(',').map(function(pair){return "["+pair.trim().replace(" ", ",")+"]"}).join(",").replace(/\(/g,"[").replace(/\)/g,"]");
+                                  featureInfo.geometry = {"type": type, "coordinates": JSON.parse(geometryString)};
+                              }
+                          }
+                      }
+                      
+                      const featureObject = {"type": "Feature", "properties": featureInfo.properties, "geometry": featureInfo.geometry, "layername": layerInfo.name};
+                      
+                      const bBoxInfo = {};
+                      const boundingBox = features[j].getElementsByTagName('BoundingBox');
+                      if (boundingBox && boundingBox.length) {
+                          bBoxInfo.left = boundingBox[0].getAttribute('minx');
+                          bBoxInfo.right = boundingBox[0].getAttribute('maxx');
+                          bBoxInfo.top = boundingBox[0].getAttribute('maxy');
+                          bBoxInfo.bottom = boundingBox[0].getAttribute('miny');
+                          bBoxInfo.srs = boundingBox[0].getAttribute('SRS');
+                          featureObject.bbox = [parseFloat(bBoxInfo.left), parseFloat(bBoxInfo.bottom), parseFloat(bBoxInfo.right), parseFloat(bBoxInfo.top)];
+                      }
+                      
+                      if (result.srs) {
+                          if (bBoxInfo.srs != result.srs) {
+                              // set deviating feature srs
+                              featureObject.srs =  bBoxInfo.srs;
+                          }
+                      } else {
+                          if (bBoxInfo.srs) {
+                              // set global GeoJSON srs
+                              result.srs =  bBoxInfo.srs;
+                          }
+                      }
+                      result.features.push(featureObject);
+                  }
+              }
+          }        
+      } else {
+          // unknown xml format or not xml?
+      }
+      return result;
+  }
+  queryWMSFeatures(lngLat, featureinfoUrl) {
+    const wmtsResolution = (2 * 20037508.342789244) / (256 * Math.pow(2, (Math.round(this.zoom+1))));
+    // get webmercator coordinates for clicked point
+    const clickedPointMercator = projectLngLat(lngLat);
+    // create 3 x 3 pixel bounding box in webmercator coordinates
+    const leftbottom = {x: clickedPointMercator.x - 1.5 * wmtsResolution, y: clickedPointMercator.y - 1.5 * wmtsResolution};
+    const righttop = {x: clickedPointMercator.x + 1.5 * wmtsResolution, y: clickedPointMercator.y + 1.5 * wmtsResolution};
+    // getFeatureinfo url for center pixel of 3x3 pixel area
+    const params = "&width=3&height=3&x=1&y=1&srs=epsg:3857&info_format=text/xml&bbox=";
+    const url=featureinfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
+    return fetch(url).then(response=>response.text()).then(response=>this.XMLtoGeoJSON(response));
+  }
+  waitingForResponse(id) {
+    return {
+      "type":"Feature",
+      "layer": {"id": id},
+      "geometry": null,
+      "properties": {"info": "waiting for response..."}
+    };
+  }
   handleInfo(e) {
-    if (!this.currentTool === 'info') {
+    if (this.currentTool !== 'info') {
+      this.infoClicked = false;
+      if (this.featureInfo.length) {
+        this.featureInfo = [];
+      }
       return;
     }
-    if (e.type === "mousemove" && this.infoClicked) {
+    if (e.type === "mousemove" && !this.infoClicked) {
+      this.featureInfo = this.map.queryRenderedFeatures(e.point);
       return;
     }
     if (e.type === "click") {
       this.infoClicked = true;
+      const layers = this.map.getStyle().layers;
+      const featureInfo = [];
+      for (let i = 0; i < layers.length; i++) {
+        if (layers[i].metadata && layers[i].metadata.getFeatureInfoUrl) {
+          if ((layers[i].minzoom === undefined || this.zoom >= layers[i].minzoom) &&
+           (layers[i].maxzoom === undefined || this.zoom <= layers[i].maxzoom )) {
+             let wmsFeatures = this.waitingForResponse(layers[i].id);
+             featureInfo.push(wmsFeatures);
+             this.queryWMSFeatures(e.lngLat, layers[i].metadata.getFeatureInfoUrl)
+              .then(feature=>{
+                console.log(feature);
+                if (feature.features.length) {
+                  wmsFeatures.properties = feature.features[0].properties;
+                } else {
+                  wmsFeatures.properties = {};
+                }
+                this.featureInfo = [...this.featureInfo];
+                this.requestUpdate();
+              });
+           }
+        } else {
+          const features = this.map.queryRenderedFeatures(e.point, {layers:[layers[i].id]});
+          if (features.length) {
+            featureInfo.push(...features.reverse());
+          }
+        }
+      }
+      this.featureInfo = featureInfo.reverse();
     }
-    this.featureInfo = this.map.queryRenderedFeatures(e.point);
+    
   }
 }
 customElements.define('web-map', WebMap);

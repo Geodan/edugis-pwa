@@ -25,9 +25,10 @@ class MapInfoFormatted extends LitElement {
       <style>
         .header {
           font-weight: bold;
+          height: 1.5em;
         }
         .content {
-          max-height: 30vh;
+          height: calc(100% - 1.5em);
           overflow: auto;
         }
       </style>
@@ -37,9 +38,11 @@ class MapInfoFormatted extends LitElement {
         html`
           <table>
             <tr><th colspan="2" align="center">${feature.layer.id}</th></tr>
-            ${Object.keys(feature.properties).map(key=>
-              html`<tr><td align="right"><i>${key}</i>:</td><td>${feature.properties[key]}</td></tr>`
-            )}
+            ${Object.keys(feature.properties).length?
+              Object.keys(feature.properties).map(key=>
+                html`<tr><td align="right"><i>${key}</i>:</td><td>${feature.properties[key]}</td></tr>`
+              )
+            : html`<tr><td colspan="2" align="center">geen info</td></tr>`}
           </table>`
       )}
       </div>
