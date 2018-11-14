@@ -149,6 +149,8 @@ class MapLegendContainer extends LitElement {
             background-color: rgba(250,250,250,.87);
             padding: 10px;
             pointer-events: auto;
+            max-height: calc(100vh - 245px);
+            overflow: auto;
         }
         .legendheader {
             font-weight:bold;
