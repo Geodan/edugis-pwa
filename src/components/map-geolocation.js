@@ -2,6 +2,11 @@ import {LitElement, html} from '@polymer/lit-element';
 
 const startUpMessage = 'Starten plaatsbepaling...';
 
+/* polyfill */
+Math.log10 = Math.log10 || function(x) {
+  return Math.log(x) * Math.LOG10E;
+};
+
 /**
 * @polymer
 * @extends HTMLElement
@@ -71,10 +76,12 @@ class MapGeolocation extends LitElement {
     }
   }
   success(pos){
-    this.message = html`Locatie:<br>
-    Breedte: ${pos.coords.latitude}<br>
-    Lengte: ${pos.coords.longitude}<br>
-    Nauwkeurigheid: ${pos.coords.accuracy} m`;
+    // 1 meter => 6 digit coordinate, 10 meter => 5 digit coordinate, 100 meter 4 digit coordinate etc.
+    const factor = 6 - Math.round(Math.log10(pos.coords.accuracy));
+    this.message = html`<b>Locatie</b><br>
+    <b>Breedte:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
+    <b>Lengte:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
+    <b>Nauwkeurigheid:</b> ${Math.round(pos.coords.accuracy)} m`;
     this.requestUpdate();
     if (this.webmap) {
       this.geojson.features = [];
