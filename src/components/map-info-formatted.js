@@ -23,14 +23,22 @@ class MapInfoFormatted extends LitElement {
     }
     return html`
       <style>
+        .header {
+          font-weight: bold;
+        }
+        .content {
+          max-height: 30vh;
+          overflow: auto;
+        }
       </style>
-      <div>
+      <div class="header">Informatie</div>
+      <div class="content">
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
           <table>
-            <tr><th cols="2" align="center">${feature.layer.id}</th></tr>
+            <tr><th colspan="2" align="center">${feature.layer.id}</th></tr>
             ${Object.keys(feature.properties).map(key=>
-              html`<tr><td align="right">${key}:</td><td>${feature.properties[key]}</td></tr>`
+              html`<tr><td align="right"><i>${key}</i>:</td><td>${feature.properties[key]}</td></tr>`
             )}
           </table>`
       )}

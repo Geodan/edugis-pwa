@@ -620,7 +620,6 @@ class WebMap extends LitElement {
         max-width: 425px; /* legend + hide-button */
         display: flex;
         justify-content: flex-end;
-        
         transition: right 0.5s ease;
         pointer-events: none;
         box-sizing: border-box;
@@ -817,6 +816,7 @@ class WebMap extends LitElement {
   }
   mapClick(e) {
     this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];
+    this.handleInfo(e);
   }
   getIcon(iconUrl) {
     const name = iconUrl.split('/').pop().split('.').shift();
@@ -873,6 +873,12 @@ class WebMap extends LitElement {
   handleInfo(e) {
     if (!this.currentTool === 'info') {
       return;
+    }
+    if (e.type === "mousemove" && this.infoClicked) {
+      return;
+    }
+    if (e.type === "click") {
+      this.infoClicked = true;
     }
     this.featureInfo = this.map.queryRenderedFeatures(e.point);
   }
