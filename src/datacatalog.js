@@ -213,6 +213,9 @@ export default
                 "id" : "hoogspanningsnet_2018",
                 "type" : "raster",
                 "minzoom": 4.5,
+                "metadata": {
+                    "getFeatureInfoUrl" : "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/Hoogspanningsnet_2018.qgs&layers=Hoogspanningsnet_2018&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES=&query_layers=Hoogspanningsnet_2018"
+                },
                 "source" : {
                         "type": "raster",
                         "tileSize" : 256,
@@ -228,7 +231,8 @@ export default
                 "type" : "raster",
                 "minzoom" : 16.5,
                 "metadata" : {
-                    "legendurl" : "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=false&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&"
+                    "legendurl" : "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=false&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&",
+                    "getFeatureInfoUrl" : "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&query_layers=dakdelen2&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES="
                 },
                 "source" : {
                         "type": "raster",
@@ -246,7 +250,9 @@ export default
                 "type" : "raster",
                 "minzoom" : 15,
                 "metadata" : {
-                    "legendurl" : "https://map.data.amsterdam.nl/maps/parkeervakken?transparent=false&LAYER=parkeervakken&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&"
+                    "legendurl" : "https://map.data.amsterdam.nl/maps/parkeervakken?transparent=false&LAYER=parkeervakken&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&",
+                    "getFeatureInfoUrl" : "https://map.data.amsterdam.nl/maps/parkeervakken?query_layers=parkeervakken&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo",
+                    "getFeatureInfoFormat" : "application/json"
                 },
                 "source" : {
                         "type": "raster",
@@ -263,7 +269,8 @@ export default
                     "id" : "fietstocht",
                     "type" : "raster",
                     "metadata" : {
-                        "legendurl": ""
+                        "legendurl": "",
+                        "getFeatureInfoUrl" : "https://services.geodan.nl/public/data/my/gws/ZLTO6584XXXX/ows?query_layers=Route_06330481-61aa-4b74-b76a-33bf23e17acf&LAYERS=Route_06330481-61aa-4b74-b76a-33bf23e17acf&VERSION=1.3.0&SERVICEKEY=3dc8818a-d126-11e7-a442-005056805b87&EXCEPTIONS=INIMAGE&SERVICE=WMS&REQUEST=GetFeatureInfo&STYLES="
                     },
                     "source" : {
                         "type": "raster",
@@ -279,7 +286,9 @@ export default
                     "id" : "ahndsm",
                     "type" : "raster",
                     "metadata" : {
-                        "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png"
+                        "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
+                        "getFeatureInfoUrl" : "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map&SERVICE=WMS&VERSION=1.1.0&REQUEST=GetFeatureInfo&EXCEPTIONS=application/vnd.ogc.se_xml&layers=hoogte&query_layers=hoogte",
+                        "getFeatureInfoFormat" : "application/vnd.ogc.gml"
                     },
                     "source" : {
                         "type": "raster",
@@ -295,6 +304,10 @@ export default
             {"type": "layer", "title": "Neerslagradar KNMI", "type":"wms", "layerInfo": {
                 "id" : "knmineerslag",
                 "type" : "raster",
+                "metadata" : {
+                    "getFeatureInfoUrl" : "https://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&query_layers=RADNL_OPER_R___25PCPRR_L3_COLOR&STYLES=rainbow%2Fnearest&",
+                    "getFeatureInfoFormat" : "application/json"
+                },
                 "source" : {
                     "type": "raster",
                     "tileSize" : 1024,
@@ -309,7 +322,7 @@ export default
                 "id" : "usaweatherradar",
                 "type" : "raster",
                 "metadata" : {
-                    "legendurl" : ""
+                    "legendurl" : ""                    
                 },
                 "source" : {
                     "type": "raster",
@@ -324,11 +337,14 @@ export default
             {"type": "layer", "title": "Neerslagradar Duitsland", "type":"wms", "layerInfo": {
                 "id" : "Radarkomposit",
                 "type" : "raster",
+                "metadata": {
+                    "getFeatureInfoUrl" : "https://maps.dwd.de/geoserver/ows?SERVICE=WMS&REQUEST=GetFeatureInfo&STYLES=&VERSION=1.3.0&LAYERS=dwd:RX-Produkt&QUERY_LAYERS=dwd:RX-Produkt",
+                },
                 "source" : {
                     "type": "raster",
                     "tileSize" : 1024,
                     "tiles": [
-                        "https://maps.dwd.de:443/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=dwd:RX-Produkt&WIDTH=1024&HEIGHT=1024&CRS=EPSG:3857&BBOX={bbox-epsg-3857}"
+                        "https://maps.dwd.de/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=dwd:RX-Produkt&WIDTH=1024&HEIGHT=1024&CRS=EPSG:3857&BBOX={bbox-epsg-3857}"
                     ],
                     "attribution": "dwd.de"
                     }

@@ -884,6 +884,7 @@ class WebMap extends LitElement {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlString,"text/xml");
       const root = xmlDoc.getElementsByTagName("GetFeatureInfoResponse");
+   
       if (root && root.length) {
           const layers = root[0].getElementsByTagName("Layer");
           const layerInfo = {};
@@ -939,11 +940,60 @@ class WebMap extends LitElement {
               }
           }        
       } else {
-          // unknown xml format or not xml?
+        const gmlInfo = xmlDoc.getElementsByTagNameNS("http://www.opengis.net/gml", "featureMember");
+        if (gmlInfo.length) {
+          const xmlDoc2 = parser.parseFromString(gmlInfo[0].innerHTML,"text/xml");
+          const attrs = [].slice.call(xmlDoc2.children[0].children).map(attr=>[attr.tagName.split(':')[1], attr.textContent]);
+          const featureInfo = {};
+  
+          featureInfo.properties = attrs.reduce((result, attr)=>
+              {
+              if (attr[0] != 'geometry') {
+                result[attr[0]]=attr[1];
+              }
+              return result;
+            },
+          {});
+          featureInfo.geometry = null; /* todo: GML geometry parser */
+          result.features.push(featureInfo);
+        } else {
+          const mapserverGmlInfo = xmlDoc.getElementsByTagNameNS("http://www.opengis.net/gml", "boundedBy");
+          if (mapserverGmlInfo.length && mapserverGmlInfo[0].parentElement && mapserverGmlInfo[0].parentElement.parentElement) {
+            const xmlDoc2 = parser.parseFromString(mapserverGmlInfo[0].parentElement.parentElement.innerHTML, "text/xml");
+            const attrs = [].slice.call(xmlDoc2.children[0].children).map(attr=>[attr.tagName, attr.textContent]);
+            const featureInfo = {};
+            featureInfo.properties = attrs.reduce((result, attr)=>
+                {
+                if (attr[0] != 'gml:boundedBy') {
+                  result[attr[0]]=attr[1];
+                }
+                return result;
+              },
+            {});
+            featureInfo.geometry = null;
+            result.features.push(featureInfo);
+          } else {
+            // unknown xml format or not xml?
+          }
+        }          
       }
       return result;
   }
-  queryWMSFeatures(lngLat, featureinfoUrl) {
+  jsonToGeoJSON(json) {
+    return {
+      "type": "FeatureCollection", 
+      "features": json.map(item=>{
+        return {
+          "type":"Feature",
+          "geometry": {"type": "Point", "coords": item.point.coords},
+          "properties": item
+        }
+      })
+    }
+  }
+  queryWMSFeatures(lngLat, metadata) {
+    const featureInfoUrl = metadata.getFeatureInfoUrl;
+    const featureInfoFormat = metadata.getFeatureInfoFormat ? metadata.getFeatureInfoFormat : 'text/xml';
     const wmtsResolution = (2 * 20037508.342789244) / (256 * Math.pow(2, (Math.round(this.zoom+1))));
     // get webmercator coordinates for clicked point
     const clickedPointMercator = projectLngLat(lngLat);
@@ -951,9 +1001,15 @@ class WebMap extends LitElement {
     const leftbottom = {x: clickedPointMercator.x - 1.5 * wmtsResolution, y: clickedPointMercator.y - 1.5 * wmtsResolution};
     const righttop = {x: clickedPointMercator.x + 1.5 * wmtsResolution, y: clickedPointMercator.y + 1.5 * wmtsResolution};
     // getFeatureinfo url for center pixel of 3x3 pixel area
-    const params = "&width=3&height=3&x=1&y=1&srs=epsg:3857&info_format=text/xml&bbox=";
-    const url=featureinfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
-    return fetch(url).then(response=>response.text()).then(response=>this.XMLtoGeoJSON(response));
+    const params = `&width=3&height=3&x=1&y=1&crs=EPSG:3857&srs=EPSG:3857&info_format=${featureInfoFormat}&bbox=`;
+    const url=featureInfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
+    return fetch(url)
+      .then(response=>{
+        if (featureInfoFormat === 'application/json') {
+          return response.json().then(json=>this.jsonToGeoJSON(json));
+        }
+        return response.text().then(text=>this.XMLtoGeoJSON(text))}
+      );
   }
   waitingForResponse(id) {
     return {
@@ -985,11 +1041,18 @@ class WebMap extends LitElement {
            (layers[i].maxzoom === undefined || this.zoom <= layers[i].maxzoom )) {
              let wmsFeatures = this.waitingForResponse(layers[i].id);
              featureInfo.push(wmsFeatures);
-             this.queryWMSFeatures(e.lngLat, layers[i].metadata.getFeatureInfoUrl)
+             this.queryWMSFeatures(e.lngLat, layers[i].metadata)
               .then(feature=>{
-                console.log(feature);
                 if (feature.features.length) {
-                  wmsFeatures.properties = feature.features[0].properties;
+                  if (feature.features.length == 1) {
+                    wmsFeatures.properties = feature.features[0].properties;
+                  } else {
+                    // multiple features found
+                    wmsFeatures.properties = {};
+                    feature.features.forEach(feature=>{
+                      wmsFeatures.properties = Object.assign(wmsFeatures.properties, feature.properties);
+                    });
+                  }
                 } else {
                   wmsFeatures.properties = {};
                 }
