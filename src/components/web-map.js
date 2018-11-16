@@ -535,6 +535,9 @@ class WebMap extends LitElement {
         overflow: hidden;
       }
       .webmap {width: 100%; height: 100%}
+      .mapboxgl-ctrl.mapboxgl-ctrl-group.mapboxgl-ctrl-zoom {
+        background: rgba(255, 255, 255, 0.75);
+      }
       #tool-menu-container {
         position: absolute;
         display: flex;
@@ -544,7 +547,7 @@ class WebMap extends LitElement {
         top: 10px;
         transition: left 0.5s ease, max-width 0.5s ease;
         pointer-events: none;
-      }
+      }      
       #tool-menu-container.collapsed {
         left: -55px;
         max-width: 55px;
@@ -623,7 +626,7 @@ class WebMap extends LitElement {
       }
       #legend-container-container {
         position: absolute;
-        bottom: 30px;
+        top: 10px;
         right: 10px;
         max-width: 425px; /* legend + hide-button */
         display: flex;
@@ -732,7 +735,7 @@ class WebMap extends LitElement {
     
     if (this.navigation.toLowerCase() !== "false") {
       this.map.addControl(new ZoomControl(), this._positionString(this.navigation));
-      this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));
+      this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));      
     }
     if (this.scalebar.toLowerCase() !== "false") {
 
