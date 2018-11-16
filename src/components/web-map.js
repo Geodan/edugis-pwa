@@ -605,7 +605,7 @@ class WebMap extends LitElement {
         width: 25px;
         height: 55px;
         cursor: pointer;
-        border-right: 1px solid #c1c1c1;
+        border-left: 1px solid #c1c1c1;
         color: #666;
         fill: #666;
         background-color: rgba(250,250,250,.87);

@@ -165,14 +165,15 @@ class MapLayerTree extends LitElement {
         font-weight: bold;
         position: relative;
         width: 100%;
-        height: 25px;
+        height: 30px;
+        padding: 5px;
         text-align: center;
-        border-bottom: 1px solid rgba(128,128,128,0.5);
+        border-bottom: 1px solid lightblue;
         box-sizing: border-box;
       }
       .wrapper {
         width: 100%;
-        height: calc(100% - 25px);
+        height: calc(100% - 30px);
         overflow: auto;
       }
     </style>

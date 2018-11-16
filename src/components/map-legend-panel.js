@@ -152,6 +152,7 @@ class MapLegendPanel extends LitElement {
         .legendcontainer {
           text-align: right;
           padding-right: 5px;
+          background: white;
         }
       </style>
       <div class="legendcontainer">${legendContent}</div>`;

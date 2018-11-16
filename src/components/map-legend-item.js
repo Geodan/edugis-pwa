@@ -299,7 +299,8 @@ input[type=range]:focus::-ms-fill-upper {
             width: 1em;
         }
         .gray {
-            color: gray;
+            color: lightgray;
+            fill: lightgray;
         }
         .slidercontainer {
             position: relative;
@@ -318,7 +319,23 @@ input[type=range]:focus::-ms-fill-upper {
             font-size: smaller;
             top: 3px;
         }
-        
+        .folder-icon {
+            display: inline-block;
+            height: 12px;
+            width: 16px;
+            margin-left: 2px;
+        }
+        .folder-sheet {
+            height: 10px;
+            width: 16px;
+            background-color:#888;
+        }
+        .folder-tab {
+            height: 2px;
+            width: 6px;
+            border-radius: 1px 4px 0 0;
+            background-color: #888;
+        }
     </style>
     <div class="legenditem">
         <div class="header ${this.item.type?this.item.type:(this.item._ga_group?(this.item._ga_depth == 1?'sourcegroup':'sourcelayergroup'):'')}" .layerid="${this.item.id}">
@@ -326,10 +343,10 @@ input[type=range]:focus::-ms-fill-upper {
             ${this.item._ga_group ? 
                 html`
                 <i class="icon" title="Layer group" @click="${e=>this._toggleOpenClose(e)}">
-                ${this.item._ga_open?arrowDropDownIcon:arrowRightIcon}</i>`
+                <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div>`
                 :
                 html`
-                <i class="icon">${layerIcon}</i>`}            
+                <i class="icon">${layerIcon}</i>`}
             <lit-draghandle class="${layerOnMap?undefined:'gray'}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" .isdraggable="${!this.isbackground}">
                 ${this.item.id?this.item.id:(this.item["source-layer"]?this.item["source-layer"]:this.item.source)}
             </lit-draghandle>
