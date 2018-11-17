@@ -47,6 +47,10 @@ class MapGSheetForm extends LitElement {
   }
   createLayerFromGeojson(geojson, attribute, attribution) {
     geojson.features = geojson.features.sort((feature1, feature2)=>feature1.properties[attribute]-feature2.properties[attribute]);
+    const values = geojson.features
+      .map(feature=>feature.properties[attribute])
+      .filter(value=>value !== undefined)
+      .sort((value1, value2)=>value1-value2);
     const maplayer = {
       "id" : "sheetlayer",
       "type" : "fill",
@@ -61,10 +65,10 @@ class MapGSheetForm extends LitElement {
             "step",
             ["get", attribute],
             "#fef0d9",
-            parseFloat(geojson.features[Math.floor(geojson.features.length/5)].properties[attribute]), "#fdcc8a",
-            parseFloat(geojson.features[Math.floor(geojson.features.length*2/5)].properties[attribute]),"#fc8d59",
-            parseFloat(geojson.features[Math.floor(geojson.features.length*3/5)].properties[attribute]),"#e34a33",
-            parseFloat(geojson.features[Math.floor(geojson.features.length*4/5)].properties[attribute]),"#b30000"
+            parseFloat(values[Math.floor(values.length/5)]), "#fdcc8a",
+            parseFloat(values[Math.floor(values.length*2/5)]),"#fc8d59",
+            parseFloat(values[Math.floor(values.length*3/5)]),"#e34a33",
+            parseFloat(values[Math.floor(values.length*4/5)]),"#b30000"
           ],
           "fill-outline-color": "#444"
       }
