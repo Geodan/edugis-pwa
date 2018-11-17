@@ -77,7 +77,7 @@ class MapLayerTree extends LitElement {
       <ul class="${opened?'':'closed'}">${nodeList.map(node=>{
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
-            ${node.title}
+            <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div> ${node.title}
             <span class="${node.opened?'arrow-down opened':'arrow-down'}"></span>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
@@ -90,6 +90,7 @@ class MapLayerTree extends LitElement {
   }
   render() {
     return html`<style>
+      @import '${this.baseURI}/src/components/folder-icon.css';
       ul {
         list-style-type: none;
         padding-left: 10px;
