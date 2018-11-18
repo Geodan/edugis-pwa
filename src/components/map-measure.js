@@ -54,8 +54,21 @@ function formatArea(a) {
   if (a  < 10000) {
     return html`${Math.round(a)} m<sup>2</sup>`
   }
+  if (a < 100000) {
+    const hectares = Math.round(a /100) / 100;
+    return  `${hectares} ha`;
+  }
   if (a < 1000000) {
-    return Math.round(a /10000) + " ha"
+    const hectares = Math.round(a /1000) / 10;
+    return  `${hectares} ha`;
+  }
+  if (a < 10000000){
+    const km2 = Math.round(a / 10000) / 100;
+    return html`${km2} km<sup>2<sup>`;
+  }
+  if (a < 100000000){
+    const km2 = Math.round(a / 100000) / 10;
+    return html`${km2} km<sup>2<sup>`;
   }
   return html`${Math.round(a / 1000000)} km<sup>2</sup>`
 }
