@@ -23,11 +23,97 @@ class MapLayerTree extends LitElement {
       this.updates = 0;
       this.headertext = "headertext";
   }
+  scaleHintToZoomLevel(hint)
+  {
+    for (let level = 0, calc = 110692.6408; level < 22; level++, calc /= 2.0) {
+      if (hint > calc) {
+        return level;
+      }
+    }
+  }
+  layerToNode(Layer, Request) {
+    const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
+      "id" : Layer.Name,
+      "type" : "raster",
+      "metadata" : {
+          "title" : Layer.Title,
+          "legendurl": Layer.Style[0].LegendURL[0].OnlineResource,
+          "getFeatureInfoUrl": Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
+      },
+      "source" : {
+          "type": "raster",
+          "tileSize" : 256,
+          "tiles": [
+              Request.GetMap.DCPType[0].HTTP.Get.OnlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&styles=" + encodeURIComponent(Layer.Style[0].Name)
+          ],
+          "attribution": Layer.Attribution && Layer.Attribution.Title ? Layer.Attribution.Title: ""
+          }
+      }
+    }
+    if (Layer.ScaleHint) {
+      if (Layer.ScaleHint.max) {
+        node.layerInfo.minzoom = this.scaleHintToZoomLevel(Layer.ScaleHint.max);
+        node.layerInfo.source.minzoom = node.layerInfo.minzoom;
+      }
+      if (Layer.ScaleHint.min) {
+        node.layerInfo.maxzoom = this.scaleHintToZoomLevel(Layer.ScaleHint.min);
+        node.layerInfo.source.maxzoom = node.layerInfo.maxzoom;
+      }
+    }
+    return node;
+  }
+  capabilitiesToCatalogNodes(xml) {
+    const parser = new WMSCapabilities();
+    const json = parser.parse(xml);
+    const result = [];
+    if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {
+      // non-empty root layer
+      const node = this.layerToNode(json.Capability.Layer, json.Capability.Request);      
+      result.push(node);
+    }
+    if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
+      json.Capability.Layer.Layer.forEach(Layer=>{
+        result.push(this.layerToNode(Layer, json.Capability.Request));
+      })
+    }
+    return result;
+  }
+  replaceSubNode(parentNode, nodeId)
+  {
+    const subNode = parentNode.sublayers.find(node=>node.id==nodeId);
+    if (subNode) {
+      fetch(subNode.layerInfo.url).then(response=>{
+        const contentType = response.headers.get('content-type');
+        if (contentType) {
+          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml')) { 
+            // caps 1.1.1 or caps 1.3.0
+            response.text().then(xml=>this.capabilitiesToCatalogNodes(xml))
+            .then(newNodes=> {
+              for (let i = 0; i < parentNode.sublayers.length; i++) {
+                if (parentNode.sublayers[i].id === nodeId) {
+                  parentNode.sublayers.splice(i, 1, ...newNodes);
+                  this.requestUpdate();
+                }
+              }
+            })
+          }                
+        }
+      });
+    }
+  }
   toggleOpen(e, node) {
     if (node.opened) {
       node.opened = false;
     } else {
       node.opened = true;
+      if (node.sublayers.find(node=>node.type==='getcapabilities')) {
+        // sublayers has nodes of type 'getcapabilities', fetch capabilities and replace with result
+        for (let i = 0; i < node.sublayers.length; i++) {
+          if (node.sublayers[i].type === 'getcapabilities') {
+            this.replaceSubNode(node,node.sublayers[i].id);
+          }
+        }
+      }
     }
     e.stopPropagation();
     this.updates++;
@@ -96,7 +182,7 @@ class MapLayerTree extends LitElement {
         padding-left: 10px;
       }
       li ul {
-        max-height: 30em;
+        max-height: 50em;
         transition: 0.5s linear;
         overflow: hidden;
       }

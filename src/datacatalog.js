@@ -177,7 +177,7 @@ export default
         ]},
         {"type": "group", "title": "WMS", "sublayers": 
         [
-            {"type": "layer", "title": "PDOK Luchtfoto", "type":"wms", "layerInfo": {
+            { "title": "PDOK Luchtfoto", "type":"wms", "layerInfo": {
                     "id" : "pdokluchtfoto",
                     "type" : "raster",
                     "source" : {
@@ -190,7 +190,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Blaeu", "type":"wms", "layerInfo": {
+            { "title": "Blaeu", "type":"wms", "layerInfo": {
                     "id" : "blaeu",
                     "type" : "raster",
                     "metadata" : {
@@ -209,7 +209,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Pico hoogspanningsnet 2018", "type":"wms", "layerInfo": {
+            { "title": "Pico hoogspanningsnet 2018", "type":"wms", "layerInfo": {
                 "id" : "hoogspanningsnet_2018",
                 "type" : "raster",
                 "minzoom": 4.5,
@@ -226,7 +226,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Pico dakdelen 2018", "type":"wms", "layerInfo": {
+            { "title": "Pico dakdelen 2018", "type":"wms", "layerInfo": {
                 "id" : "dakdelen_2018",
                 "type" : "raster",
                 "minzoom" : 16.5,
@@ -245,7 +245,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Parkeervakken Amsterdam", "type":"wms", "layerInfo": {
+            { "title": "Parkeervakken Amsterdam", "type":"wms", "layerInfo": {
                 "id" : "amsparkeervakken",
                 "type" : "raster",
                 "minzoom" : 15,
@@ -265,7 +265,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Fietstocht Bert en Joep", "type":"wms", "layerInfo": {
+            { "title": "Fietstocht Bert en Joep", "type":"wms", "layerInfo": {
                     "id" : "fietstocht",
                     "type" : "raster",
                     "metadata" : {
@@ -282,7 +282,7 @@ export default
                     }
                 }
             },            
-            {"type": "layer", "title": "Actueel Hoogtebestand NL (DSM)", "type":"wms", "layerInfo": {
+            { "title": "Actueel Hoogtebestand NL (DSM)", "type":"wms", "layerInfo": {
                     "id" : "ahndsm",
                     "type" : "raster",
                     "metadata" : {
@@ -301,7 +301,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Neerslagradar KNMI", "type":"wms", "layerInfo": {
+            { "title": "Neerslagradar KNMI", "type":"wms", "layerInfo": {
                 "id" : "knmineerslag",
                 "type" : "raster",
                 "metadata" : {
@@ -318,7 +318,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Neerslagradar USA", "type":"wms", "layerInfo": {
+            { "title": "Neerslagradar USA", "type":"wms", "layerInfo": {
                 "id" : "usaweatherradar",
                 "type" : "raster",
                 "metadata" : {
@@ -334,7 +334,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Neerslagradar Duitsland", "type":"wms", "layerInfo": {
+            { "title": "Neerslagradar Duitsland", "type":"wms", "layerInfo": {
                 "id" : "Radarkomposit",
                 "type" : "raster",
                 "metadata": {
@@ -350,7 +350,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Neerslagradar Groot Britannie", "type":"wms", "layerInfo": {
+            { "title": "Neerslagradar Groot Britannie", "type":"wms", "layerInfo": {
                 "id" : "metofficeradar",
                 "type" : "raster",
                 "metadata" : {
@@ -367,7 +367,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "KNMI neerslag", "type":"wms", "layerInfo": {
+            { "title": "KNMI neerslag", "type":"wms", "layerInfo": {
                 "id" : "eumetsatknmi",
                 "type" : "raster",
                 "metadata" : {
@@ -385,13 +385,28 @@ export default
                 }
             }
         ]},
-        {"type": "group", "title": "WMS Service", "sublayers": 
+        {"type": "group", "title": "WMS GetCapabilities", "sublayers": 
         [
-            {"type": "layer", "title": "To do", "layerInfo": {}}
+            {"type": "getcapabilities", "title": "bbg2012caps", "layerInfo":
+                {
+                    "id" : "bbg2012",
+                    "url": "https://tiles.edugis.nl/mapproxy/bbg2012/service?service=WMS&version=1.3.0&request=getcapabilities",
+                    "deniedlayers" : "",
+                    "allowedlayers" : ""
+                }
+            },
+            {"type": "getcapabilities", "title": "blaeucaps", "layerInfo":
+                {
+                    "id" : "blaeucaps",
+                    "url": "http://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/blaeu.map",
+                    "deniedlayers" : "",
+                    "allowedlayers" : ""
+                }
+            }
         ]},
         {"type": "group", "title": "WMTS", "sublayers": 
         [
-            {"type": "layer", "title": "CBS (mapproxy + qgis)", "type": "wmts", "layerInfo": {
+            { "title": "CBS (mapproxy + qgis)", "type": "wmts", "layerInfo": {
                     "id" : "cbsbevolking2017",
                     "type": "raster",
                     "minzoom" : 2.5,
@@ -409,7 +424,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Openstreetmap (wmts)", "type":"wmts", "layerInfo": {
+            { "title": "Openstreetmap (wmts)", "type":"wmts", "layerInfo": {
                     "id" : "openstreetmap",
                     "type" : "raster",
                     "source" : {
@@ -422,7 +437,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Openstreetmap gray", "type":"wmts", "layerInfo": {
+            { "title": "Openstreetmap gray", "type":"wmts", "layerInfo": {
                     "id" : "openstreetmapgray",
                     "type" : "raster",
                     "source" : {
@@ -435,7 +450,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "PDOK luchtfoto's (WMTS)", "type":"wmts", "layerInfo": {
+            { "title": "PDOK luchtfoto's (WMTS)", "type":"wmts", "layerInfo": {
                     "id" : "pdokluchtfotowmts",
                     "type" : "raster",
                     "metadata" : {
@@ -451,7 +466,7 @@ export default
                     }
                 },
             },
-            {"type": "layer", "title": "OSM frankrijk (wmts)", "type":"wmts", "layerInfo": {
+            { "title": "OSM frankrijk (wmts)", "type":"wmts", "layerInfo": {
                     "id" : "osmfr",
                     "type" : "raster",
                     "source" : {
@@ -462,7 +477,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Mapbox satellite", "type":"wmts", "layerInfo": {
+            { "title": "Mapbox satellite", "type":"wmts", "layerInfo": {
                     "id" : "satellite",
                     "type" : "raster",
                     "source" : {
@@ -472,7 +487,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
+            { "title": "Streets (Geodan Maps)", "type":"wmts", "layerInfo": {
                     "id" : "geodanmaps streets",
                     "type" : "raster",
                     "source" : {
@@ -494,7 +509,7 @@ export default
         ]},
         {"type": "group", "title": "GeoJSON", "sublayers": 
         [
-            {"type": "layer", "title": "CBS Gemeenten (2.1 MB)", "layerInfo": {
+            {"type": "geojson", "title": "CBS Gemeenten (2.1 MB)", "layerInfo": {
                 "id" : "cbsgemeenten2017",
                 "type": "fill",
                 "source" : {
@@ -508,7 +523,7 @@ export default
                     "fill-outline-color": "#444"
                 }
             }},
-            {"type": "layer", "title": "Fietstocht Bert en Joep (punten)", "layerInfo": {
+            {"type": "geojson", "title": "Fietstocht Bert en Joep (punten)", "layerInfo": {
                 "id" : "fietstochtpunten",
                 "type": "circle",
                 "metadata" : {
@@ -524,7 +539,7 @@ export default
                     "circle-color": "#FA0"
                 }
             }},
-            {"type": "layer", "title": "Verkeerssnelheid Amsterdam", "layerInfo": {
+            {"type": "geojson", "title": "Verkeerssnelheid Amsterdam", "layerInfo": {
                 "id" : "verkeerssnelheidamsterdam",
                 "type": "style",
                 "source" : {
@@ -639,7 +654,7 @@ export default
                     ]
                 }
             }},        
-            {"type": "layer", "title": "NDW Weglussen", 
+            {"type": "geojson", "title": "NDW Weglussen", 
                 "layerInfo": {
                     "id" : "ndwweglussen",
                     "type": "line",
@@ -680,7 +695,7 @@ export default
         ]},
         {"type": "group", "title": "TopoJSON", "sublayers": 
         [
-            {"type": "layer", "title": "CBS wijken (1.5 MB)", "layerInfo": {
+            {"type": "topojson", "title": "CBS wijken (1.5 MB)", "layerInfo": {
                 "id" : "cbswijken2017",
                 "type": "fill",
                 "metadata" : {
@@ -711,7 +726,7 @@ export default
                     "fill-outline-color": "#444"
                 }
             }},
-            {"type": "layer", "title": "CBS bevolkingsdichtheid 2.5D", "layerInfo": {
+            {"type": "topojson", "title": "CBS bevolkingsdichtheid 2.5D", "layerInfo": {
                 "id" : "cbswijken2017inwoners",
                 "type": "fill-extrusion",
                 "metadata" : {
@@ -748,7 +763,7 @@ export default
         ]},
         {"type": "group", "title": "Vector Tile", "sublayers": 
         [
-            {"type": "layer", "title": "NL buildings", "layerInfo": 
+            {"type": "vectortile", "title": "NL buildings", "layerInfo": 
                 {
                     "id": "gebouwkenmerken",
                     "type": "fill",
@@ -817,7 +832,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "NL buildings 3D", "layerInfo": {
+            {"type": "vectortile", "title": "NL buildings 3D", "layerInfo": {
                 "id": "building3D",
                 "type": "fill-extrusion",
                 "source": {
@@ -886,23 +901,23 @@ export default
                     "fill-extrusion-opacity": 0.8
                 }
             }}, 
-            {"type": "layer", "title": "BGT vector (stijl)", "layerInfo": {
+            {"type": "vectortile", "title": "BGT vector (stijl)", "layerInfo": {
                 "id" : "bgtvector",
                 "type" : "style",
                 "source" : "styles/bgt.json",
                 "metadata" : {"reference": false}
             }},
-            {"type": "layer", "title": "OSM rails vector (stijl)", "layerInfo": {
+            {"type": "vectortile", "title": "OSM rails vector (stijl)", "layerInfo": {
                 "id" : "osmrail",
                 "type" : "style",
                 "source" : "styles/osmrail.json"
             }},
-            {"type": "layer", "title": "Mapbox Traffic (stijl)", "layerInfo": {
+            {"type": "vectortile", "title": "Mapbox Traffic (stijl)", "layerInfo": {
                 "id" : "mapboxtraffice",
                 "type" : "style",
                 "source" : "styles/mapboxtraffic.json"
             }},
-            {"type": "layer", "title": "EduGIS nuts_m03_2006", "layerInfo": {
+            {"type": "vectortile", "title": "EduGIS nuts_m03_2006", "layerInfo": {
                     "id" : "EduGIS_nuts_m03_2006",
                     "type" : "line",
                     "source": {
@@ -919,7 +934,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "EduGIS nuts_m03_2006 fill", "layerInfo": 
+            {"type": "vectortile", "title": "EduGIS nuts_m03_2006 fill", "layerInfo": 
                 {
                     "id" : "EduGIS_nuts_m03_2006_fill",
                     "type" : "fill",
@@ -1100,7 +1115,7 @@ export default
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
         [
-            {"type": "layer", "title": "Mapbox hillshading", "layerInfo": {
+            {"type": "rasterdem", "title": "Mapbox hillshading", "layerInfo": {
                     "id": "hillshading",
                     "type": "hillshade",
                     "source": {
@@ -1109,7 +1124,7 @@ export default
                     }
                 }
             },
-            {"type": "layer", "title": "Nextzen hillshading", "layerInfo": {
+            {"type": "rasterdem", "title": "Nextzen hillshading", "layerInfo": {
                     "id": "mapzenhillshading",
                     "type": "hillshade",
                     "source": {
@@ -1132,12 +1147,12 @@ export default
         ]},
         {"type": "group", "title": "Google spreadsheet", "sublayers": 
         [
-            {"type": "layer", "title": "Google spreadsheet layer", "layerInfo": {
+            {"type": "sheetlayer", "title": "Google spreadsheet layer", "layerInfo": {
                 "id": "sheet gemeenten2017",
                 "type": "sheetlayer",
                 "source" : {
                     "type":"geojson",
-                    "data": "https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd.json",
+                    "data": "https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd1.json",
                     "attribution": "cbs/pdok"
                 },
                 "sheet": {
@@ -1151,6 +1166,6 @@ export default
         ]},
         {"type": "group", "title": "CSV", "sublayers": 
         [
-            {"type": "layer", "title": "CSV Layer", "layerInfo": {}}
+            {"type": "csvlayer", "title": "CSV Layer", "layerInfo": {}}
         ]}
 ];
