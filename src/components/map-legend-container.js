@@ -149,7 +149,7 @@ class MapLegendContainer extends LitElement {
             background-color: rgba(250,250,250,.87);
             padding: 10px;
             pointer-events: auto;
-            max-height: calc(100vh - 245px);
+            max-height: calc(100vh - 255px);
             overflow: auto;
             color: #555;
             fill: #555;
