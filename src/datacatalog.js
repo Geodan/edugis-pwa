@@ -396,7 +396,7 @@ export default
             {"type": "getcapabilities", "title": "blaeucaps", "layerInfo":
                 {
                     "id" : "blaeucaps",
-                    "url": "http://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/blaeu.map",
+                    "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/blaeu.map",
                     "deniedlayers" : "amsterdam_1945",
                     "allowedlayers": ""
                 }
