@@ -121,16 +121,16 @@ class MapLegendItem extends LitElement {
   render() {
     let layerIcon = undefined;
     let layerViewIcon = '';
-    if (this.item.maxzoom && this.zoom > this.item.maxzoom) {
+    if (this.item.maxzoom && this.zoom >= this.item.maxzoom) {
         layerViewIcon = zoomOutIcon;
     } else {
-        if (this.item.minzoom && this.zoom < this.item.minzoom) {
+        if (this.item.minzoom && this.zoom <= this.item.minzoom) {
             layerViewIcon = zoomInIcon;
         } else {
             layerViewIcon = expandMoreIcon;
         }
     }
-    const layerOnMap = this.layervisible && (!this.item.maxzoom || this.zoom < this.item.maxzoom) && (!this.item.minzoom || this.zoom > this.item.minzoom);
+    const layerOnMap = this.layervisible && (!this.item.maxzoom || this.zoom <= this.item.maxzoom) && (!this.item.minzoom || this.zoom >= this.item.minzoom);
     if (!this.item._ga_group) {
         switch (this.item.type) {
             case "fill":
