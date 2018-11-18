@@ -1083,8 +1083,13 @@ class WebMap extends LitElement {
         }
       }
       if (this.streetViewOn) {
-        this.getStreetViewImage(e.lngLat).then(imageurl=>console.log(imageurl));
-        featureInfo.push({"type":"feature", "properties": {"image": "todo"}, "layer": {"id":"streetview"}});
+        const streetViewInfo = {"type":"feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview"}};
+        featureInfo.push(streetViewInfo);
+        this.getStreetViewImage(e.lngLat).then(imageurl=>{
+          streetViewInfo.properties.image = imageurl;
+          this.featureInfo = [...this.featureInfo];
+          this.requestUpdate();
+        });
       }
       this.featureInfo = featureInfo.reverse();
     }

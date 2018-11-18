@@ -66,14 +66,16 @@ class MapInfoFormatted extends LitElement {
       </style>
       <div class="header">Informatie</div>
       <div class="content">
-      <div class="right" @click="${e=>this.toggleStreetView(e)}"><span>StreetView</span><div class="${this.streetViewOn?'check-on':'check-off'}"></div>
+      <div class="right" @click="${e=>this.toggleStreetView(e)}">
+        <span>StreetView</span><div class="${this.streetViewOn?'check-on':'check-off'}"></div>
+      </div>
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
           <table>
             <tr><th colspan="2" align="center">${feature.layer.id}</th></tr>
             ${Object.keys(feature.properties).length?
               Object.keys(feature.properties).map(key=>
-                html`<tr><td align="right"><i>${key}</i>:</td><td>${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?JSON.stringify(feature.properties[key]):feature.properties[key]}</td></tr>`
+                html`<tr><td align="right"><i>${key}</i>:</td><td>${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?JSON.stringify(feature.properties[key]):feature.properties[key].startsWith('https://maps.googleapis.com')?html`<img src="${feature.properties[key]}">`:feature.properties[key]}</td></tr>`
               )
             : html`<tr><td colspan="2" align="center">geen info</td></tr>`}
           </table>`
