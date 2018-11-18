@@ -60,20 +60,61 @@ class MapLayerTree extends LitElement {
         node.layerInfo.source.maxzoom = node.layerInfo.maxzoom;
       }
     }
+    if (Layer.EX_GeographicBoundingBox) {
+      node.layerInfo.source.bounds = Layer.EX_GeographicBoundingBox;      
+    } else if (Layer.LatLonBoundingBox) {
+      node.layerInfo.source.bounds = Layer.LatLonBoundingBox;
+    } else if (Layer.BoundingBox) {
+      const bbox4326 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:4326');
+      if (bbox4326) {
+        node.layerInfo.source.bounds = bbox4326.extent;
+      }
+      const bbox3857 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:3857' || bbox.crs==='EPSG:900913');
+      if (bbox3857) {
+        const forward = proj4(proj4.Proj("EPSG:3857"), proj4.WGS84).forward;
+        node.layerInfo.source.bounds = [...forward(bbox3857.extent[0], bbox3857.extent[1]), ...forward(bbox3857.extent[2],bbox3857.extent[3])];
+      }
+    } 
     return node;
   }
-  capabilitiesToCatalogNodes(xml) {
+  allowedLayer(Layer, deniedlayers, allowedlayers) {
+    if (deniedlayers.length) {
+      if (deniedlayers.find(layer=>layer === Layer.Name)) {
+        return false;
+      }
+    }
+    if (allowedlayers.length) {
+      return (allowedlayers.find(layer=>layer === Layer.Name));
+    }
+    return true;
+  }
+  convertToArray(layerlist) {
+    if (!layerlist) {
+      return [];
+    }
+    if (Array.isArray(layerlist)){
+      return layerlist;
+    }
+    return layerlist.split(',');
+  }
+  capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
     const parser = new WMSCapabilities();
     const json = parser.parse(xml);
     const result = [];
+    deniedlayers = this.convertToArray(deniedlayers);
+    allowedlayers = this.convertToArray(allowedlayers);
     if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {
       // non-empty root layer
-      const node = this.layerToNode(json.Capability.Layer, json.Capability.Request);      
-      result.push(node);
+      if (this.allowedLayer(json.Capability.Layer, deniedlayers, allowedlayers)) {
+        result.push(this.layerToNode(json.Capability.Layer, json.Capability.Request));
+      }
     }
     if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
+      // array of sublayers
       json.Capability.Layer.Layer.forEach(Layer=>{
-        result.push(this.layerToNode(Layer, json.Capability.Request));
+        if (this.allowedLayer(Layer, deniedlayers, allowedlayers)) {
+          result.push(this.layerToNode(Layer, json.Capability.Request));
+        }
       })
     }
     return result;
@@ -83,14 +124,23 @@ class MapLayerTree extends LitElement {
     const subNode = parentNode.sublayers.find(node=>node.id==nodeId);
     if (subNode) {
       fetch(subNode.layerInfo.url).then(response=>{
+        if (!response.ok) {
+          throw Error(`${nodeId}: req rejected with status ${response.status} ${response.statusText}`);
+        }
         const contentType = response.headers.get('content-type');
         if (contentType) {
           if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml')) { 
             // caps 1.1.1 or caps 1.3.0
-            response.text().then(xml=>this.capabilitiesToCatalogNodes(xml))
+            response.text().then(xml=>{
+              const nodes = this.capabilitiesToCatalogNodes(xml, subNode.layerInfo.deniedlayers, subNode.layerInfo.allowedlayers);
+              if (nodes.length == 0) {
+                nodes.push({"title": `${nodeId}: 0 layers or failed`});
+              }
+              return nodes;
+            })
             .then(newNodes=> {
               for (let i = 0; i < parentNode.sublayers.length; i++) {
-                if (parentNode.sublayers[i].id === nodeId) {
+                if (parentNode.sublayers[i].id === nodeId) {                  
                   parentNode.sublayers.splice(i, 1, ...newNodes);
                   this.requestUpdate();
                 }
@@ -98,6 +148,9 @@ class MapLayerTree extends LitElement {
             })
           }                
         }
+      }).catch(reason=>{
+        subNode.title=`${nodeId}: ${reason}`;
+        this.requestUpdate();
       });
     }
   }

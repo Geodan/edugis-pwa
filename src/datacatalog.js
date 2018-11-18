@@ -390,17 +390,15 @@ export default
             {"type": "getcapabilities", "title": "bbg2012caps", "layerInfo":
                 {
                     "id" : "bbg2012",
-                    "url": "https://tiles.edugis.nl/mapproxy/bbg2012/service?service=WMS&version=1.3.0&request=getcapabilities",
-                    "deniedlayers" : "",
-                    "allowedlayers" : ""
+                    "url": "https://tiles.edugis.nl/mapproxy/bbg2012/service?service=WMS&version=1.3.0&request=getcapabilities"                    
                 }
             },
             {"type": "getcapabilities", "title": "blaeucaps", "layerInfo":
                 {
                     "id" : "blaeucaps",
                     "url": "http://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/blaeu.map",
-                    "deniedlayers" : "",
-                    "allowedlayers" : ""
+                    "deniedlayers" : "amsterdam_1945",
+                    "allowedlayers": ""
                 }
             }
         ]},
