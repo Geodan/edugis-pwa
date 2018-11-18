@@ -682,7 +682,7 @@ class WebMap extends LitElement {
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
         </map-panel>
         <map-panel .active="${this.currentTool==='info'}">
-          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}"></map-info-formatted>
+          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}" @togglestreetview="${e=>this.toggleStreetView(e)}"></map-info-formatted>
         </map-panel>
         <map-panel .active="${this.currentTool==='language'}">
           <map-language .active="${this.currentTool==='language'}" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
@@ -1022,6 +1022,18 @@ class WebMap extends LitElement {
       "properties": {"info": "waiting for response..."}
     };
   }
+  toggleStreetView(e) {
+    this.streetViewOn = e.detail.streetview;
+  }
+  getStreetViewImage(lngLat)
+  {
+    const url = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lngLat.lat},${lngLat.lng}&key=${EduGISkeys.google}`;
+    return fetch(url).then(response=>response.json()).then(json=>{
+      console.log(json);
+      const imageUrl = `https://maps.googleapis.com/maps/api/streetview?size=600x300&pano=${json.pano_id}&key=${EduGISkeys.google}`;
+      return imageUrl;
+    })
+  }
   handleInfo(e) {
     if (this.currentTool !== 'info') {
       this.infoClicked = false;
@@ -1069,6 +1081,10 @@ class WebMap extends LitElement {
             featureInfo.push(...features.reverse());
           }
         }
+      }
+      if (this.streetViewOn) {
+        this.getStreetViewImage(e.lngLat).then(imageurl=>console.log(imageurl));
+        featureInfo.push({"type":"feature", "properties": {"image": "todo"}, "layer": {"id":"streetview"}});
       }
       this.featureInfo = featureInfo.reverse();
     }
