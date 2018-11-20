@@ -1,6 +1,6 @@
 export default 
     [
-        {"type": "group", "title": "Referentiekaarten", "sublayers": 
+        {"type": "group", "title": "Achtergrondlagen", "sublayers": 
         [
             {"type": "reference", "title": "Klokantech Basic (stijl)", "layerInfo": {
                 "id" : "klokantechbasic",
@@ -175,6 +175,7 @@ export default
                 }
             }
         ]},
+        {"type": "group", "title": "Thematische lagen", "sublayers": [
         {"type": "group", "title": "WMS", "sublayers": 
         [
             { "title": "PDOK Luchtfoto", "type":"wms", "layerInfo": {
@@ -1166,4 +1167,5 @@ export default
         [
             {"type": "csvlayer", "title": "CSV Layer", "layerInfo": {}}
         ]}
+    ]}
 ];

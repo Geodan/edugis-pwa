@@ -240,9 +240,9 @@ class MapLayerTree extends LitElement {
         overflow: hidden;
       }
       li {
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid lightgray;
         cursor: pointer;
-        line-height: 1.8em;
+        line-height: 2.5em;
       }
       li:last-child {
         border-bottom: none;
@@ -253,12 +253,12 @@ class MapLayerTree extends LitElement {
         content: '';
         height: 8px;
         float: right;
-        margin-right: 20px;
+        margin-right: 10px;
         left: auto;
         -ms-transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
-        margin-top: 4px;
+        margin-top: 6px;
         vertical-align: top;
         width: 8px;
         border-color: #555;
@@ -313,13 +313,18 @@ class MapLayerTree extends LitElement {
       }
       .wrapper {
         width: 100%;
+        padding-right: 5%;
         height: calc(100% - 30px);
+        font-size: 12px;
         overflow: auto;
+        box-sizing: border-box;
       }
     </style>
     <div class="title">${this.headertext}</div>
     <div class="wrapper">
-    ${this.renderTree(this.nodelist, true)}
+      <div>
+        ${this.renderTree(this.nodelist, true)}
+      </div>
     </div>`;
   }
 }
