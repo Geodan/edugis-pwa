@@ -235,9 +235,8 @@ class MapLayerTree extends LitElement {
         padding-left: 10px;
       }
       li ul {
-        max-height: 50em;
+        max-height: 90em;
         transition: 0.5s linear;
-        overflow: hidden;
       }
       li {
         border-bottom: 1px solid lightgray;
@@ -269,6 +268,7 @@ class MapLayerTree extends LitElement {
       }
       .closed {
         max-height: 0;
+        overflow: hidden;
       }
       .radio-on {
         display: inline-block;
@@ -322,7 +322,9 @@ class MapLayerTree extends LitElement {
     </style>
     <div class="title">${this.headertext}</div>
     <div class="wrapper">
-      ${this.renderTree(this.nodelist, true)}
+      <div>
+        ${this.renderTree(this.nodelist, true)}
+      </div>
     </div>`;
   }
 }
