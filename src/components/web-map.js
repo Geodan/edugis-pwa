@@ -13,7 +13,6 @@ mapboxcss.setAttribute('rel', 'stylesheet');
 document.head.appendChild(mapboxcss);
 */
 
-import '@material/mwc-button';
 import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
@@ -29,6 +28,7 @@ import './map-gsheet-form';
 import './map-info-formatted';
 import './map-panel';
 import './map-geolocation';
+import './map-pitch';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
@@ -635,15 +635,6 @@ class WebMap extends LitElement {
         pointer-events: none;
         box-sizing: border-box;
       }
-      .red {
-        --mdc-theme-on-primary: white;
-        --mdc-theme-primary: rgb(204,0,0);
-        --mdc-theme-on-secondary: white;
-        --mdc-theme-secondary: rgb(204,0,0);
-      }
-      .padded {
-        padding: 10px;
-      }
       </style>
     <div class="webmap"></div>
     <div id="tool-menu-container">
@@ -691,12 +682,7 @@ class WebMap extends LitElement {
         <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
         </map-panel>        
         <map-panel .active="${this.currentTool==='pitch'}">
-          ${this.currentTool==='pitch'&&this.map?html`
-          <div class="padded" style="user-select:none">
-          Huidige kaarthoek: ${this.map.getPitch()}&deg;<br>
-          <mwc-button class="red" raised @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button><p></p>
-          <mwc-button class="red" raised @click="${e=>this.updatePitch(30)}">30&deg;</mwc-button><p></p>
-          <mwc-button class="red" raised @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button></div>`:``}          
+          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
