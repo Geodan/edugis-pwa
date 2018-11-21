@@ -302,11 +302,15 @@ class MapDataCatalog extends LitElement {
       }
       if (layerInfo.metadata && layerInfo.metadata.bing && layerInfo.source.url) {
         const bingMetadata = await fetch(layerInfo.source.url).then(data=>data.json());
+        const sourceMaxzoom = layerInfo.source.maxzoom;
         layerInfo.source = {
           "type" : "raster",
           "tileSize" : 256,
           "attribution" : bingMetadata.resourceSets[0].resources[0].imageryProviders.map(provider=>provider.attribution).join('|'),
           "tiles": bingMetadata.resourceSets[0].resources[0].imageUrlSubdomains.map(domain=>bingMetadata.resourceSets[0].resources[0].imageUrl.replace('{subdomain}', domain).replace('{culture}', 'nl-BE'))
+        }
+        if (sourceMaxzoom) {
+          layerInfo.source.maxzoom = sourceMaxzoom;
         }
       }
       this.dispatchEvent(new CustomEvent('addlayer', 

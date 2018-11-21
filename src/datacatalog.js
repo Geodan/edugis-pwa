@@ -119,7 +119,8 @@ export default
                         "type": "raster",
                         "tileSize" : 256,            
                         "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
-                        "attribution": "&copy; GeodanMaps"
+                        "attribution": "&copy; GeodanMaps",
+                        "maxzoom" : 19
                     }
                 }
             },
@@ -131,7 +132,8 @@ export default
                         "type": "raster",
                         "tileSize" : 256,            
                         "tiles": [ "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"],
-                        "attribution": "&copy; ESRI"
+                        "attribution": "&copy; ESRI",
+                        "maxzoom" : 18
                     }
                 }
             },
@@ -143,7 +145,8 @@ export default
                         "type": "raster",
                         "tileSize" : 256,            
                         "tiles": [ "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"],
-                        "attribution": "&copy; ESRI"
+                        "attribution": "&copy; ESRI",
+                        "maxzoom" : 11
                     }
                 }
             },
@@ -152,7 +155,8 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom" : 19
                     }                
                 }
             },
@@ -161,7 +165,8 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom" : 18
                     }
                 }
             },
@@ -170,7 +175,8 @@ export default
                     "metadata" : {"reference": true, "bing": true},
                     "type" : "raster",
                     "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}"
+                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom": 18
                     }
                 }
             }
