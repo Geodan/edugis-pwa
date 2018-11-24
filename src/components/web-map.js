@@ -29,6 +29,7 @@ import './map-info-formatted';
 import './map-panel';
 import './map-geolocation';
 import './map-pitch';
+import './map-selected-layers';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
@@ -695,7 +696,20 @@ class WebMap extends LitElement {
       <div id="button-hide-legend" @click="${e=>this.hideLegend(e)}">
         <span class="offset"></span><i>${arrowLeftIcon}</i>
       </div>
-      <map-legend-container .layerlist="${this.layerlist}" .visible="${this.haslegend}" .active="${true}" .zoom="${this.zoom}" @movelayer="${e=>this.moveLayer(e)}" @updatevisibility="${(e) => this.updateLayerVisibility(e)}" @updateopacity="${(e)=>this.updateLayerOpacity(e)}" @removelayer="${(e) => this.removeLayer(e)}"></map-legend-container>
+      <map-selected-layers .layerlist="${this.layerlist}" 
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
+        @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
+        @removelayer="${(e) => this.removeLayer(e)}">
+      </map-selected-layers>
+      <mmap-legend-container .layerlist="${this.layerlist}" 
+        .visible="${this.haslegend}" 
+        .active="${true}" 
+        .zoom="${this.zoom}" 
+        @movelayer="${e=>this.moveLayer(e)}" 
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
+        @updateopacity="${(e)=>this.updateLayerOpacity(e)}" 
+        @removelayer="${(e) => this.removeLayer(e)}">
+      </mmap-legend-container>
     </div>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`

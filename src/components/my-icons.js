@@ -108,3 +108,96 @@ export const languageIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="2
 export const landscapeIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>`;
 export const arrowLeftIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z"/><path fill="none" d="M0 0h24v24H0z"/></svg>`;
 export const gpsFixedIcon = svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>`;
+export const gpsFixedIconNew = svg`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g id="Final" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19.5,11.5 C19.5,15.919 15.918,19.5 11.5,19.5 C7.082,19.5 3.5,15.919 3.5,11.5 C3.5,7.082 7.082,3.5 11.5,3.5 C15.918,3.5 19.5,7.082 19.5,11.5 L19.5,11.5 Z" id="Stroke-1793"></path>
+        <path d="M15,11.5 C15,13.434 13.434,15 11.5,15 C9.567,15 8,13.434 8,11.5 C8,9.567 9.567,8 11.5,8 C13.434,8 15,9.567 15,11.5 L15,11.5 Z" id="Stroke-1794"></path>
+        <path d="M11.5,0.5 L11.5,3.5" id="Stroke-1795"></path>
+        <path d="M11.5,19.5 L11.5,22.5" id="Stroke-1796"></path>
+        <path d="M22.5,11.5 L19.5,11.5" id="Stroke-1797"></path>
+        <path d="M3.5,11.5 L0.5,11.5" id="Stroke-1798"></path>
+</g></svg>`;
+export const settingsIcon = svg`
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-(1)" stroke="#4A4A4A">
+            <g id="Group-8" transform="translate(1,1)">
+                <g id="Stroke-814-+-Stroke-815" transform="translate(4.000000, 4.000000)" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15.6666,9 L15.6666,7 L13.5019333,7 C13.3626,6.422 13.1346,5.546 12.8332667,5.052 L14.3639333,3.522 L12.4779333,1.636 L10.9466,3.16666667 C10.4532667,2.86533333 9.57793333,2.638 8.99993333,2.49866667 L8.99993333,0.333333333 L6.99993333,0.333333333 L6.99993333,2.49866667 C6.42193333,2.638 5.54593333,2.86533333 5.0526,3.16666667 L3.52126667,1.636 L1.63526667,3.522 L3.1666,5.05266667 C2.86526667,5.546 2.63726667,6.422 2.49726667,7 L0.333266667,7 L0.333266667,9 L2.49726667,9 C2.63726667,9.578 2.86526667,10.454 3.1666,10.9473333 L1.63526667,12.4786667 L3.52126667,14.364 L5.05193333,12.8326667 C5.54593333,13.1346667 6.42193333,13.3626667 6.99993333,13.5026667 L6.99993333,15.6666667 L8.99993333,15.6666667 L8.99993333,13.5026667 C9.57793333,13.3626667 10.4539333,13.1346667 10.9466,12.8333333 L12.4786,14.364 L14.3639333,12.4786667 L12.8332667,10.9473333 C13.1346,10.454 13.3626,9.578 13.5026,9 L15.6666,9 Z" id="Stroke-814"></path>
+                    <path d="M11,8 C11,9.65733333 9.65666667,11 8,11 C6.34333333,11 5,9.65733333 5,8 C5,6.34333333 6.34333333,5 8,5 C9.65666667,5 11,6.34333333 11,8 L11,8 Z" id="Stroke-815"></path>
+                </g>
+                <circle id="Oval-Copy" cx="12" cy="12" r="12"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
+</svg>`;
+export const visibleCircleIcon = svg`
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-(1)" stroke="#4A4A4A">
+            <g id="Group-6-Copy" transform="translate(1,1)">
+                <g id="Stroke-148-+-Stroke-149" transform="translate(4.000000, 8.000000)" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8,9 C3.76533333,9 0.333333333,4.66666667 0.333333333,4.66666667 C0.333333333,4.66666667 3.76533333,0.333333333 8,0.333333333 C12.2346667,0.333333333 15.6666667,4.66666667 15.6666667,4.66666667 C15.6666667,4.66666667 12.2346667,9 8,9 Z" id="Stroke-148"></path>
+                    <path d="M10.6666667,4.66666667 C10.6666667,6.14 9.47266667,7.33333333 8,7.33333333 C6.52733333,7.33333333 5.33333333,6.14 5.33333333,4.66666667 C5.33333333,3.19333333 6.52733333,2 8,2 C9.47266667,2 10.6666667,3.19333333 10.6666667,4.66666667 L10.6666667,4.66666667 Z" id="Stroke-149"></path>
+                </g>
+                <circle id="Oval" cx="12" cy="12" r="12"></circle>
+            </g>
+        </g>
+    </g>
+</svg>`;
+export const invisibleCircleIcon = svg`
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-(1)" stroke="#4A4A4A">
+            <g id="Group-2" transform="tranlate(1,1)">
+                <g id="Group-Copy-3" transform="translate(4.000000, 5.000000)" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13.0117333,4.19206667 C14.6377333,5.36806667 15.6664,6.66673333 15.6664,6.66673333 C15.6664,6.66673333 12.2344,11.0000667 7.99973333,11.0000667 C7.30706667,11.0000667 5.9984,10.6900667 5.9984,10.6900667" id="Stroke-213"></path>
+                    <path d="M2.97853333,9.13413333 C1.35786667,7.96013333 0.3332,6.6668 0.3332,6.6668 C0.3332,6.6668 3.76586667,2.33346667 7.99986667,2.33346667 C8.5732,2.33346667 9.13186667,2.4128 9.6692,2.55013333" id="Stroke-214"></path>
+                    <path d="M5.33333333,6.66666667 C5.33333333,5.19333333 6.52733333,4 8,4" id="Stroke-215"></path>
+                    <path d="M10.6666667,6.66666667 C10.6666667,8.14 9.47266667,9.33333333 8,9.33333333" id="Stroke-216"></path>
+                    <path d="M14.5,0.166666667 L1.5,13.1666667" id="Stroke-217"></path>
+                </g>
+                <g id="Group-6-Copy-3">
+                    <circle id="Oval" cx="12" cy="12" r="12"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>`;
+export const arrowOpenedCircleIcon = svg`
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-(1)" transform="translate(1,1)">
+            <g id="Group-7">
+                <polyline id="arrow-copy-44" stroke="#5A5A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(11.857197, 12.563890) rotate(-90.000000) translate(-11.857197, -12.563890) " points="13.714395 8 10 12.5638897 13.714395 17.1277795"></polyline>
+                <circle id="Oval-Copy-2" stroke="#4A4A4A" cx="12" cy="12" r="12"></circle>
+            </g>
+        </g>
+    </g>
+</svg>`;
+export const trashBinCircleIcon = svg`
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-(1)" stroke="#4A4A4A">
+            <g transform="translate(1,1)">
+                <g id="Group-6-Copy-2">
+                    <circle id="Oval" cx="12" cy="12" r="12"></circle>
+                </g>
+                <g id="verwijder-icoon-copy-8" transform="translate(6.000000, 5.000000)" stroke-linecap="round" stroke-linejoin="round">
+                    <g id="Group-14">
+                        <path d="M2.56,15.04 L10.24,15.04" id="Stroke-1"></path>
+                        <path d="M2.56,15.04 L1.28,0.32" id="Stroke-4"></path>
+                        <path d="M10.24,15.04 L11.52,0.32" id="Stroke-6"></path>
+                        <path d="M0.32,0.32 L12.48,0.32" id="Stroke-8"></path>
+                        <path d="M4.48,0.32 L5.12,15.04" id="Stroke-10"></path>
+                        <path d="M8.32,0.32 L7.68,15.04" id="Stroke-12"></path>
+                    </g>
+                    <path d="M2.24,11.2 L10.56,11.2" id="Stroke-15"></path>
+                    <path d="M1.92,7.36 L10.88,7.36" id="Stroke-16"></path>
+                    <path d="M1.6,3.52 L11.2,3.52" id="Stroke-17"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>`;
