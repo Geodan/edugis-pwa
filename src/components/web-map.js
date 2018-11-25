@@ -629,7 +629,7 @@ class WebMap extends LitElement {
         position: absolute;
         top: 10px;
         right: 10px;
-        max-width: 425px; /* legend + hide-button */
+        max-width: 325px; /* legend + hide-button */
         display: flex;
         justify-content: flex-end;
         transition: right 0.5s ease;
@@ -696,8 +696,10 @@ class WebMap extends LitElement {
       <div id="button-hide-legend" @click="${e=>this.hideLegend(e)}">
         <span class="offset"></span><i>${arrowLeftIcon}</i>
       </div>
-      <map-selected-layers .layerlist="${this.layerlist}" 
-        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
+      <map-selected-layers 
+        .layerlist="${this.layerlist}"
+        .zoom="${this.zoom}"
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
         @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
         @removelayer="${(e) => this.removeLayer(e)}">
       </map-selected-layers>

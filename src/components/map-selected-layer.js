@@ -15,6 +15,7 @@ class MapSelectedLayer extends LitElement {
     return { 
       active: {type: Boolean},
       layer: {type: Object},
+      zoom: {type: Number},
       updatecount: {type: Number}
     }; 
   }
@@ -22,10 +23,28 @@ class MapSelectedLayer extends LitElement {
     super();
     this.active = true;
     this.layer = undefined;
+    this.zoom = 0;
     this.updatecount = 0;
     this.percentage = 100;
+    this.inrange = true;
   }
   shouldUpdate(changedProps) {
+    if (changedProps.has('zoom')) {
+      const minzoom = this.layer.minzoom ? this.layer.minzoom : 0;
+      const maxzoom = this.layer.maxzoom ? this.layer.maxzoom : 24;
+      this.outofrange = this.zoom < minzoom || this.zoom > maxzoom;
+    }
+    if (changedProps.has('layer')) {
+      // set layer defaults
+      if (this.layer) {
+        if (!this.layer.metadata) {
+          this.layer.metadata = {};
+        }
+      }
+      if (!this.layer.metadata.hasOwnProperty('legendvisible')) {
+        this.layer.metadata.legendvisible = ((!this.layer.metadata.reference) && this.layer.type !== "background");
+      }
+    }
     return this.active;
   }
   render() {
@@ -36,16 +55,30 @@ class MapSelectedLayer extends LitElement {
       border-radius: 4px;
       padding: 10px;
       margin-top: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px;
+    }
+    .layercontainer:hover {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+    .titlebox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .layertitle {
       display: inline-block;
     }
+    .lightgray {
+      color: #ccc;
+    }
+    .iconbox {
+      width: 86px;
+      display: flex;
+      justify-content: flex-end;
+    }
     .iconcontainer {
-      display: block;
-      float: right;
+      display: inline-block;
       cursor: pointer;
-      margin-left: 2px;
-      overflow: visible;
     }
     .closed {
       transform: rotate(-90deg);
@@ -53,18 +86,24 @@ class MapSelectedLayer extends LitElement {
     }
     .legendcontainer {
       margin-top: 4px;
+      border-top: 1px solid #F3F3F3;
+      padding-top: 4px;
     }
     </style>
     <div class="layercontainer">
-      <div class="layertitle">${this.layer.metadata && this.layer.metadata.title?this.layer.metadata.title:this.layer.id}</div>
-      ${this.layer.metadata && this.layer.metadata.layervisible !== false ? 
-        html`<div title="inklappen" class="iconcontainer${this.layer.metadata && this.layer.metadata.legendvisible?'':' closed'}" @click="${e=>this.toggleLegend(e)}">${arrowOpenedCircleIcon}</div>`
-      : html``}
-      ${this.layer.metadata && this.layer.metadata.legendvisible && this.layer.metadata.layervisible !== false?
-        html`          
-          <div title="instellingen" class="iconcontainer" @click="${e=>this.toggleSettings(e)}">${settingsIcon}</div>`
-      : html``}
-      <div title="zichtbaarheid" class="iconcontainer" @click="${e=>this.toggleVisibility(e)}">${this.layer && this.layer.metadata && this.layer.metadata.layervisible === false?invisibleCircleIcon:visibleCircleIcon}</div>
+      <div class="titlebox">
+        <div class="layertitle${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.layer.metadata && this.layer.metadata.title?this.layer.metadata.title:this.layer.id}</div>
+        <div class="iconbox">
+          <div title="zichtbaarheid" class="iconcontainer" @click="${e=>this.toggleVisibility(e)}">${this.layer && this.layer.metadata && this.layer.metadata.layervisible === false?invisibleCircleIcon:visibleCircleIcon}</div>
+          ${(!this.outofrange) && this.layer.metadata && this.layer.metadata.legendvisible && this.layer.metadata.layervisible !== false?
+            html`          
+              <div title="instellingen" class="iconcontainer" @click="${e=>this.toggleSettings(e)}">${settingsIcon}</div>`
+          : html``}
+          ${this.layer.metadata && this.layer.metadata.layervisible !== false ? 
+            html`<div title="inklappen" class="iconcontainer${this.layer.metadata && this.layer.metadata.legendvisible?'':' closed'}" @click="${e=>this.toggleLegend(e)}">${arrowOpenedCircleIcon}</div>`
+          : html``}
+        </div>
+      </div>
       ${this.renderSettings()}
       ${this.renderLegend()}
     </div>
@@ -75,6 +114,13 @@ class MapSelectedLayer extends LitElement {
         this.layer.metadata && 
         this.layer.metadata.legendvisible &&
         this.layer.metadata.layervisible !== false ) {
+      if (this.outofrange) {
+        if (this.zoom < this.layer.minzoom) {
+          return html`<div class="legendcontainer">Zoom verder in</div>`
+        } else {
+          return html`<div class="legendcontainer">Zoom verder uit</div>`
+        }
+      }
       if (this.layer.metadata.legendurl) {
         return html`<div class="legendcontainer"><img src="${this.layer.metadata.legendurl}"></div>`
       }
@@ -93,6 +139,7 @@ class MapSelectedLayer extends LitElement {
     if (this.layer && this.layer.metadata && 
         this.layer.metadata.legendvisible &&
         this.layer.metadata.settingsvisible &&
+        (!this.outofrange) &&
         this.layer.metadata.layervisible !== false) {
       if (!this.layer.metadata.hasOwnProperty('opacity')) {
         this.layer.metadata.opacity = 100;
@@ -103,7 +150,8 @@ class MapSelectedLayer extends LitElement {
           margin-top: 10px;
         }
         .transparencycontainer, .trashbincontainer {
-          border-bottom: 1px solid #F3F3F3;
+          border-top: 1px solid #F3F3F3;
+          padding-top: 4px;
         }
         .slidercontainer {
           margin-top: -10px;

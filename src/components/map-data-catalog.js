@@ -288,6 +288,9 @@ class MapDataCatalog extends LitElement {
       if (!layerInfo.metadata) {
         layerInfo.metadata = {};
       }
+      if (!layerInfo.metadata.title) {
+        layerInfo.metadata.title = node.title;
+      }
       if (node.type === 'wms') {
         if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
           layerInfo.metadata.legendurl = this.extractLegendUrl(node.layerInfo);

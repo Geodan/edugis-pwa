@@ -150,7 +150,7 @@ export const invisibleCircleIcon = svg`
 <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Artboard-(1)" stroke="#4A4A4A">
-            <g id="Group-2" transform="tranlate(1,1)">
+            <g id="Group-2" transform="translate(1,1)">
                 <g id="Group-Copy-3" transform="translate(4.000000, 5.000000)" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M13.0117333,4.19206667 C14.6377333,5.36806667 15.6664,6.66673333 15.6664,6.66673333 C15.6664,6.66673333 12.2344,11.0000667 7.99973333,11.0000667 C7.30706667,11.0000667 5.9984,10.6900667 5.9984,10.6900667" id="Stroke-213"></path>
                     <path d="M2.97853333,9.13413333 C1.35786667,7.96013333 0.3332,6.6668 0.3332,6.6668 C0.3332,6.6668 3.76586667,2.33346667 7.99986667,2.33346667 C8.5732,2.33346667 9.13186667,2.4128 9.6692,2.55013333" id="Stroke-214"></path>
