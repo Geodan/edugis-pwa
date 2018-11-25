@@ -16,23 +16,37 @@ class MapGeolocation extends LitElement {
     return { 
       active: Boolean,
       message: String,
-      webmap: Object
+      webmap: Object,
+      updatecount: Number
     }; 
   }
   constructor() {
       super();
       this.active = false;
+      this.updatecount = 0;
       this.latitude = 0;
       this.longitude = 0;
       this.tracking = false;
       this.message = startUpMessage;
-      this.watchId = 0;
+      this.watchId = undefined;
       this.webmap = undefined;
       this.flownTo = false;
       this.geojson = {
         "type": "FeatureCollection",
         "features": []
       };
+  }
+  shouldUpdate(changedProps) {
+    if (changedProps.has('active')) {
+      if (this.active && this.watchId === undefined) {
+        setTimeout(()=>this.prepareMap(), 0);
+      } else {
+        if (!this.active && this.watchId !== undefined) {
+          this.clearMap();
+        }
+      }
+    }
+    return this.active;
   }
   geoJSONCircle (pos, radius, points) {
     if(!points) points = 64;
@@ -82,7 +96,6 @@ class MapGeolocation extends LitElement {
     <b>Breedte:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
     <b>Lengte:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
     <b>Nauwkeurigheid:</b> ${Math.round(pos.coords.accuracy)} m`;
-    this.requestUpdate();
     if (this.webmap) {
       this.geojson.features = [];
       this.geojson.features.push(this.geoJSONCircle(pos, pos.coords.accuracy));
@@ -138,12 +151,13 @@ class MapGeolocation extends LitElement {
       });
     }
     this.flownTo = false;
-    this.watchId = navigator.geolocation.watchPosition(this.success.bind(this), this.error.bind(this), {enableHighAccuracy: true, timeout: 45000, maximumAge: 0});
+    this.watchId = navigator.geolocation.watchPosition((pos)=>this.success(pos), (err)=>this.error(err), {enableHighAccuracy: true, timeout: 45000, maximumAge: 0});
   }
   clearMap() {
     navigator.geolocation.clearWatch(this.watchId);
-    this.watchId = 0;
+    this.watchId = undefined;
     this.message = startUpMessage;
+    this.geojson.features = [];
     if (this.webmap) {
       this.webmap.removeLayer('map-geolocate-radius');
       this.webmap.removeLayer('map-geolocate-point');
@@ -151,15 +165,6 @@ class MapGeolocation extends LitElement {
     }
   }
   render() {
-    if (!this.active) {
-      if (this.watchId != 0) {
-        this.clearMap();
-      }
-      return html``;
-    }
-    if (!this.watchId) {
-      this.prepareMap();      
-    }
     return html`
     <div>
       ${this.message}
