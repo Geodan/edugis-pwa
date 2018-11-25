@@ -1,186 +1,5 @@
 export default 
     [
-        {"type": "group", "title": "Achtergrondlagen", "sublayers": 
-        [
-            {"type": "reference", "title": "Klokantech Basic (stijl)", "layerInfo": {
-                "id" : "klokantechbasic",
-                "type" : "style",
-                "source" : "styles/openmaptiles/klokantech-basic.json",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "OSM Bright (stijl)", "checked": true, "layerInfo": {
-                "id" : "OsmBright",
-                "type" : "style",
-                "source" : "styles/openmaptiles/osmbright.json",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "Positron (stijl)", "layerInfo": {
-                "id" : "Positron",
-                "type" : "style",
-                "source" : "styles/openmaptiles/positron.json",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "Dark Matter (stijl)", "layerInfo": {
-                "id" : "DarkMatter",
-                "type" : "style",
-                "source" : "styles/openmaptiles/dark-matter.json",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "MapBox Streets v8 (stijl)", "layerInfo": {
-                "id" : "streets-v8",
-                "type" : "style",
-                "source" : "mapbox://styles/mapbox/streets-v8",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "MapBox Streets v9 (stijl)", "layerInfo": {
-                "id" : "streets-v9",
-                "type" : "style",
-                "source" : "mapbox://styles/mapbox/streets-v9",
-                "metadata" : {"reference": true}
-            }},
-            {"type": "reference", "title": "Openstreetmap (stijl)", "layerInfo": {
-                "id" : "OsmRaster",
-                "type" : "style",
-                "source" : "styles/osmraster.json",
-                "metadata" : {"reference": true},
-            }},
-            {"type": "reference", "title": "Alleen grenzen", "layerInfo": 
-                {
-                    "id" : "Boundaries",
-                    "type" : "style",
-                    "source" : {
-                        "version": 8,
-                        "name": "Grenzen",
-                        "sources": {
-                            "openmaptileboundaries": {
-                                "type": "vector",
-                                "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json?key={key}"
-                            }
-                        },
-                        "layers": [
-                            {
-                                "id": "boundary_state",
-                                "type": "line",
-                                "metadata": {
-                                  "mapbox:group": "a14c9607bc7954ba1df7205bf660433f"
-                                },
-                                "source": "openmaptileboundaries",
-                                "source-layer": "boundary",
-                                "filter": [
-                                  "==",
-                                  "admin_level",
-                                  2
-                                ],
-                                "layout": {
-                                  "line-cap": "round",
-                                  "line-join": "round",
-                                  "visibility": "visible"
-                                },
-                                "paint": {
-                                    "line-color": "rgb(230, 204, 207)",
-                                    "line-width": {
-                                      "base": 1.1,
-                                      "stops": [
-                                        [
-                                          3,
-                                          1
-                                        ],
-                                        [
-                                          22,
-                                          20
-                                        ]
-                                      ]
-                                    },
-                                    "line-blur": {
-                                      "base": 1,
-                                      "stops": [
-                                        [
-                                          0,
-                                          0.4
-                                        ],
-                                        [
-                                          22,
-                                          4
-                                        ]
-                                      ]
-                                    },
-                                    "line-opacity": 1
-                                  }
-                            }      
-                        ]
-                    }
-                }
-            },
-            {"type": "reference", "title": "Streets (Geodan Maps)", "id": "gmstreets", "layerInfo": {
-                    "id" : "gmstreets",
-                    "metadata" : {"reference": true},
-                    "type" : "raster",
-                    "source" : {
-                        "type": "raster",
-                        "tileSize" : 256,            
-                        "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
-                        "attribution": "&copy; GeodanMaps",
-                        "maxzoom" : 19
-                    }
-                }
-            },
-            {"type": "reference", "title": "ESRI World Map topo", "layerInfo": {
-                    "id" : "worldmaptopo",
-                    "metadata" : {"reference": true},
-                    "type" : "raster",
-                    "source" : {
-                        "type": "raster",
-                        "tileSize" : 256,            
-                        "tiles": [ "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"],
-                        "attribution": "&copy; ESRI",
-                        "maxzoom" : 18
-                    }
-                }
-            },
-            {"type": "reference", "title": "ESRI Natural World Map", "layerInfo": {
-                    "id" : "natgeoworldmap",
-                    "metadata" : {"reference": true},
-                    "type" : "raster",
-                    "source" : {
-                        "type": "raster",
-                        "tileSize" : 256,            
-                        "tiles": [ "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"],
-                        "attribution": "&copy; ESRI",
-                        "maxzoom" : 11
-                    }
-                }
-            },
-            {"type": "reference", "title": "Microsoft BING Kaart", "layerInfo": {
-                    "id" : "bingmaproad",
-                    "metadata" : {"reference": true, "bing": true},
-                    "type" : "raster",
-                    "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                        "maxzoom" : 19
-                    }                
-                }
-            },
-            {"type": "reference", "title": "Microsoft BING Hybride", "layerInfo": {
-                    "id" : "bingmaphybrid",
-                    "metadata" : {"reference": true, "bing": true},
-                    "type" : "raster",
-                    "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                        "maxzoom" : 18
-                    }
-                }
-            },
-            {"type": "reference", "title": "Microsoft BING Luchtfoto", "layerInfo": {
-                    "id" : "bingmapaerial",
-                    "metadata" : {"reference": true, "bing": true},
-                    "type" : "raster",
-                    "source" : {
-                        "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                        "maxzoom": 18
-                    }
-                }
-            }
-        ]},
         {"type": "group", "title": "Thematische lagen", "sublayers": [
         {"type": "group", "title": "WMS", "sublayers": 
         [
@@ -1173,5 +992,186 @@ export default
         [
             {"type": "csvlayer", "title": "CSV Layer", "layerInfo": {}}
         ]}
-    ]}
+    ]},
+    {"type": "group", "title": "Achtergrondlagen", "sublayers": 
+    [
+        {"type": "reference", "title": "Klokantech Basic (stijl)", "layerInfo": {
+            "id" : "klokantechbasic",
+            "type" : "style",
+            "source" : "styles/openmaptiles/klokantech-basic.json",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "OSM Bright (stijl)", "checked": true, "layerInfo": {
+            "id" : "OsmBright",
+            "type" : "style",
+            "source" : "styles/openmaptiles/osmbright.json",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "Positron (stijl)", "layerInfo": {
+            "id" : "Positron",
+            "type" : "style",
+            "source" : "styles/openmaptiles/positron.json",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "Dark Matter (stijl)", "layerInfo": {
+            "id" : "DarkMatter",
+            "type" : "style",
+            "source" : "styles/openmaptiles/dark-matter.json",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "MapBox Streets v8 (stijl)", "layerInfo": {
+            "id" : "streets-v8",
+            "type" : "style",
+            "source" : "mapbox://styles/mapbox/streets-v8",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "MapBox Streets v9 (stijl)", "layerInfo": {
+            "id" : "streets-v9",
+            "type" : "style",
+            "source" : "mapbox://styles/mapbox/streets-v9",
+            "metadata" : {"reference": true}
+        }},
+        {"type": "reference", "title": "Openstreetmap (stijl)", "layerInfo": {
+            "id" : "OsmRaster",
+            "type" : "style",
+            "source" : "styles/osmraster.json",
+            "metadata" : {"reference": true},
+        }},
+        {"type": "reference", "title": "Alleen grenzen", "layerInfo": 
+            {
+                "id" : "Boundaries",
+                "type" : "style",
+                "source" : {
+                    "version": 8,
+                    "name": "Grenzen",
+                    "sources": {
+                        "openmaptileboundaries": {
+                            "type": "vector",
+                            "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json?key={key}"
+                        }
+                    },
+                    "layers": [
+                        {
+                            "id": "boundary_state",
+                            "type": "line",
+                            "metadata": {
+                              "mapbox:group": "a14c9607bc7954ba1df7205bf660433f"
+                            },
+                            "source": "openmaptileboundaries",
+                            "source-layer": "boundary",
+                            "filter": [
+                              "==",
+                              "admin_level",
+                              2
+                            ],
+                            "layout": {
+                              "line-cap": "round",
+                              "line-join": "round",
+                              "visibility": "visible"
+                            },
+                            "paint": {
+                                "line-color": "rgb(230, 204, 207)",
+                                "line-width": {
+                                  "base": 1.1,
+                                  "stops": [
+                                    [
+                                      3,
+                                      1
+                                    ],
+                                    [
+                                      22,
+                                      20
+                                    ]
+                                  ]
+                                },
+                                "line-blur": {
+                                  "base": 1,
+                                  "stops": [
+                                    [
+                                      0,
+                                      0.4
+                                    ],
+                                    [
+                                      22,
+                                      4
+                                    ]
+                                  ]
+                                },
+                                "line-opacity": 1
+                              }
+                        }      
+                    ]
+                }
+            }
+        },
+        {"type": "reference", "title": "Streets (Geodan Maps)", "id": "gmstreets", "layerInfo": {
+                "id" : "gmstreets",
+                "metadata" : {"reference": true},
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,            
+                    "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
+                    "attribution": "&copy; GeodanMaps",
+                    "maxzoom" : 19
+                }
+            }
+        },
+        {"type": "reference", "title": "ESRI World Map topo", "layerInfo": {
+                "id" : "worldmaptopo",
+                "metadata" : {"reference": true},
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,            
+                    "tiles": [ "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"],
+                    "attribution": "&copy; ESRI",
+                    "maxzoom" : 18
+                }
+            }
+        },
+        {"type": "reference", "title": "ESRI Natural World Map", "layerInfo": {
+                "id" : "natgeoworldmap",
+                "metadata" : {"reference": true},
+                "type" : "raster",
+                "source" : {
+                    "type": "raster",
+                    "tileSize" : 256,            
+                    "tiles": [ "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"],
+                    "attribution": "&copy; ESRI",
+                    "maxzoom" : 11
+                }
+            }
+        },
+        {"type": "reference", "title": "Microsoft BING Kaart", "layerInfo": {
+                "id" : "bingmaproad",
+                "metadata" : {"reference": true, "bing": true},
+                "type" : "raster",
+                "source" : {
+                    "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                    "maxzoom" : 19
+                }                
+            }
+        },
+        {"type": "reference", "title": "Microsoft BING Hybride", "layerInfo": {
+                "id" : "bingmaphybrid",
+                "metadata" : {"reference": true, "bing": true},
+                "type" : "raster",
+                "source" : {
+                    "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                    "maxzoom" : 18
+                }
+            }
+        },
+        {"type": "reference", "title": "Microsoft BING Luchtfoto", "layerInfo": {
+                "id" : "bingmapaerial",
+                "metadata" : {"reference": true, "bing": true},
+                "type" : "raster",
+                "source" : {
+                    "url" : "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                    "maxzoom": 18
+                }
+            }
+        }
+    ]},
 ];
