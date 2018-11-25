@@ -36,8 +36,8 @@ class MapSelectedLayers extends LitElement {
   }
   shouldUpdate(changedProps) {
     if (changedProps.has('layerlist')) {
-      this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference)));
-      this.referenceLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background');
+      this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference))).reverse();
+      this.referenceLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background').reverse();
     }
     return this.active;
   }
