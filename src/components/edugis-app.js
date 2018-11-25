@@ -154,7 +154,7 @@ footer {
           </ul>
         </nav>
     </header>
-    <web-map navigation="bottom-right" scalebar="true" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
+    <web-map navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2018 EduGIS, Geodan</footer>
     `;
   }
