@@ -58,8 +58,16 @@
 
     <script src="node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
     <link href="node_modules/mapbox-gl/dist/mapbox-gl.css" rel="stylesheet">
-    <script src="node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.js"></script>
+    <!-- script src="node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.js"></script>
     <link href="node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css" rel="stylesheet"-->
+    
+    <!-- workaround bug mapbox-gl v.051, https://github.com/mapbox/mapbox-gl-js/issues/7589 -->
+    <style>
+      .mapboxgl-ctrl.mapboxgl-ctrl-attrib p {
+        display: inline-block;
+        margin: 2px;
+      }
+    </style>
 
     <!-- load turf globally because import causes polymer build out of heap memory error -->
     <script src="node_modules/@turf/turf/turf.min.js"></script>

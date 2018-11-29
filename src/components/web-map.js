@@ -504,7 +504,7 @@ class WebMap extends LitElement {
     this.shadowRoot.querySelector('#button-hide-menu').classList.toggle('collapsed');
   }
   hideLegend(e) {
-    const container = this.shadowRoot.querySelector('#legend-container-container');
+    const container = this.shadowRoot.querySelector('#legend-container-container');    
     const button = this.shadowRoot.querySelector('#button-hide-legend');
     button.classList.toggle('collapsed');
     if (button.classList.contains('collapsed')) {
@@ -533,6 +533,11 @@ class WebMap extends LitElement {
     
     return html`<style>
       @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
+      /* workaround bug mapbox-gl v.051, https://github.com/mapbox/mapbox-gl-js/issues/7589 */
+      .mapboxgl-ctrl.mapboxgl-ctrl-attrib p {
+        display: inline-block;
+        margin: 2px;
+      }
       /* @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";*/
       :host {
         display: inline-block;
@@ -634,7 +639,6 @@ class WebMap extends LitElement {
         position: absolute;
         top: 10px;
         right: 10px;
-        max-width: 325px; /* legend + hide-button */
         display: flex;
         justify-content: flex-end;
         transition: right 0.5s ease;

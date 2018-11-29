@@ -58,6 +58,7 @@ class MapSelectedLayers extends LitElement {
         display: flex;
         flex-direction: column;
         max-height: calc(100vh - 175px);
+        overflow: auto;
       }
       .opener {
         border-bottom: 1px solid lightgray;
@@ -85,35 +86,52 @@ class MapSelectedLayers extends LitElement {
         transform: rotate(133deg);
       }
       .setcontainer {
-        max-height: 80vh;
-        transition: max-height .5s ease-in;
+        transition: height .5s ease-in-out;
         border-bottom: 1px solid lightgray;
-        flex-grow: 5;
-        overflow: auto;
         padding: 10px;
       }
       .closed {
-        max-height: 0;
+        height: 0;
+        padding: 0;
         overflow: hidden;
       }
     </style>
     <div class="border">
       <div class="outercontainer">
-        <div class="opener" @click="${e=>this.toggleSet(e)}">Geselecteerde thematische kaartlagen<span class="arrow-down opened"></span></div>
+        <div class="opener" @click="${e=>this.toggleSetOpen(e)}">Geselecteerde thematische kaartlagen<span class="arrow-down opened"></span></div>
         <div class="setcontainer">
           <map-selected-layer-set .layerlist="${this.thematicLayers}" .zoom="${this.zoom}"></map-selected-layer-set>
         </div>
-        <div class="opener" @click="${e=>this.toggleSet(e)}">Geselecteerde achtergrondlagen<span class="arrow-down"></span></div>
+        <div class="opener" @click="${e=>this.toggleSetOpen(e)}">Geselecteerde achtergrondlagen<span class="arrow-down"></span></div>
         <div class="setcontainer closed">
           <map-selected-layer-set .layerlist="${this.referenceLayers}" .zoom="${this.zoom}"></map-selected-layer-set>
         </div>
       </div>
     </div>`;
   }
-  toggleSet(e) {
+  toggleSetOpen(e) {
     const arrow = e.currentTarget.querySelector("span");
     arrow.classList.toggle("opened");
-    e.currentTarget.nextElementSibling.classList.toggle('closed');
+    const setContainer = e.currentTarget.nextElementSibling;
+    if (setContainer.classList.contains('closed')) {
+      // open the set
+      setContainer.style.height = 0; 
+      setTimeout(()=>setContainer.style.height=setContainer.scrollHeight + 'px', 100);
+      setTimeout(()=>{
+        setContainer.classList.remove('closed');
+        setContainer.style.height = null;
+      }, 600);
+    } else {
+      // close the set
+      setContainer.style.height = setContainer.scrollHeight + 'px';
+      setContainer.style.overflow = 'hidden';
+      setTimeout(()=>setContainer.style.height = 0, 100);
+      setTimeout(()=>{
+        setContainer.classList.add('closed');
+        setContainer.style.height = null;
+        setContainer.style.overflow = null;
+      }, 600);
+    }
   }
 }
 customElements.define('map-selected-layers', MapSelectedLayers);
