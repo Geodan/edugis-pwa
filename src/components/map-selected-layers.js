@@ -51,6 +51,7 @@ class MapSelectedLayers extends LitElement {
         background-color: rgba(250,250,250);
         font-size: 12px;
         color: #555;
+        fill: #777;
         margin: 0;
         padding: 10px;
         pointer-events: auto;

@@ -4,6 +4,10 @@ import {settingsIcon,
   invisibleCircleIcon, 
   arrowOpenedCircleIcon, 
   trashBinCircleIcon} from './my-icons';
+import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, tripOriginIcon as circleIcon, 
+    blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, 
+    verticalAlignBottom as backgroundIcon, landscapeIcon, zoomInIcon, zoomOutIcon } from './my-icons';
+
 import './map-slider';
 
 /**
@@ -66,10 +70,11 @@ class MapSelectedLayer extends LitElement {
       align-items: center;
     }
     .layertitle {
-      display: inline-block;
+      text-align: center;
     }
     .lightgray {
       color: #ccc;
+      fill: #ccc;
     }
     .iconbox {
       width: 86px;
@@ -92,6 +97,7 @@ class MapSelectedLayer extends LitElement {
     </style>
     <div class="layercontainer">
       <div class="titlebox">
+        <div class="${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.getIcon(this.layer.type)}</div> 
         <div class="layertitle${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.layer.metadata && this.layer.metadata.title?this.layer.metadata.title:this.layer.id}</div>
         <div class="iconbox">
           <div title="zichtbaarheid" class="iconcontainer" @click="${e=>this.toggleVisibility(e)}">${this.layer && this.layer.metadata && this.layer.metadata.layervisible === false?invisibleCircleIcon:visibleCircleIcon}</div>
@@ -108,6 +114,41 @@ class MapSelectedLayer extends LitElement {
       ${this.renderLegend()}
     </div>
     `;
+  }
+  getIcon(type) {
+    let layerIcon = '';
+    switch (type) {
+      case "fill":
+          layerIcon = areaIcon;
+          break;
+      case "line":
+          layerIcon = lineIcon;
+          break;
+      case "symbol":
+          layerIcon = textIcon;
+          break;
+      case "circle":
+          layerIcon = circleIcon;
+          break;
+      case "heatmap":
+          layerIcon = heatmapIcon;
+          break;
+      case "fill-extrusion":
+          layerIcon = "3D";
+          break;
+      case "raster":
+          layerIcon = rasterIcon;
+          break;
+      case "hillshade":
+          layerIcon = landscapeIcon;
+          break;
+      case "background":
+          layerIcon = backgroundIcon;
+          break;
+      default:
+          break;
+    }
+    return layerIcon;
   }
   renderLegend(){
     if (this.layer && 
