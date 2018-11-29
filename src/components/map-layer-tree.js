@@ -155,10 +155,18 @@ class MapLayerTree extends LitElement {
     }
   }
   toggleOpen(e, node) {
+    const list = e.currentTarget.querySelector('ul');
+    const arrow = e.currentTarget.querySelector('.arrow-down');
     if (node.opened) {
-      node.opened = false;
+      // close this list
+      list.style.height = list.scrollHeight + 'px';
+      arrow.classList.remove('opened');
+      setTimeout(()=>list.style.height = 0, 100);
+      setTimeout(()=>{
+          node.opened = false;
+          //list.classList.remove("open");
+      }, 1000)
     } else {
-      node.opened = true;
       if (node.sublayers.find(node=>node.type==='getcapabilities')) {
         // sublayers has nodes of type 'getcapabilities', fetch capabilities and replace with result
         for (let i = 0; i < node.sublayers.length; i++) {
@@ -167,9 +175,18 @@ class MapLayerTree extends LitElement {
           }
         }
       }
+      // open this list
+      list.style.height = 0;
+      arrow.classList.add('opened');
+      setTimeout(()=>list.style.height = list.scrollHeight + 'px', 100);
+      setTimeout(()=>{
+          list.style.height = 'auto';
+          node.opened = true;
+          //list.classList.add("open");
+      }, 1000);
     }
     e.stopPropagation();
-    this.updates++;
+    //this.updates++;
   }
   toggleCheck(id) {
     this.toggleNodeInList(this.nodelist, id, false);
@@ -213,11 +230,11 @@ class MapLayerTree extends LitElement {
   }
   renderTree(nodeList, opened, radio, groupname) {
     return html`
-      <ul class="${opened?'':'closed'}">${nodeList.map(node=>{
+      <ul class="${opened?'open':''}">${nodeList.map(node=>{
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
             <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div> ${node.title}
-            <span class="${node.opened?'arrow-down opened':'arrow-down'}"></span>
+            <span class="arrow-down"></span>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
           return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">
@@ -233,10 +250,12 @@ class MapLayerTree extends LitElement {
       ul {
         list-style-type: none;
         padding-left: 10px;
+        overflow: hidden;
+        transition: height 0.5s ease-in-out;
+        height: 0;
       }
-      li ul {
-        max-height: 90em;
-        transition: 0.5s linear;
+      ul.open {
+        height: auto;
       }
       li {
         border-bottom: 1px solid lightgray;
@@ -261,14 +280,10 @@ class MapLayerTree extends LitElement {
         vertical-align: top;
         width: 8px;
         border-color: #555;
-        transition: transform .5s linear;
+        transition: transform .5s ease-in-out;
       }
       .opened {
         transform: rotate(133deg);
-      }
-      .closed {
-        max-height: 0;
-        overflow: hidden;
       }
       .radio-on {
         display: inline-block;

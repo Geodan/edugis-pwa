@@ -454,7 +454,11 @@ class WebMap extends LitElement {
           this.requestUpdate();
         } else {
           if (!this.map.getLayer(layerInfo.id)) {
-            this.map.addLayer(layerInfo);
+            if (layerInfo.type === "webgltraffic") {
+              this.map.addLayer(new TrafficLayer(layerInfo.source.data));
+            } else {
+              this.map.addLayer(layerInfo);
+            }
           }
         }
       }
@@ -518,6 +522,7 @@ class WebMap extends LitElement {
     }
   }
   toggleTool(name) {
+    this.infoClicked = false;
     if (this.currentTool === name) {
       this.currentTool = '';
     } else {

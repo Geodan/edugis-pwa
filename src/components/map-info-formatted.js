@@ -29,6 +29,9 @@ class MapInfoFormatted extends LitElement {
         })
     );
   }
+  shouldUpdate(changedProps) {
+    return this.active;
+  }
   render() {
     if (!this.active) {
       return html``;
@@ -42,6 +45,7 @@ class MapInfoFormatted extends LitElement {
         .content {
           height: calc(100% - 1.5em);
           overflow: auto;
+          font-size: 12px;
         }
         .check-on {
         display: inline-block;
@@ -57,33 +61,49 @@ class MapInfoFormatted extends LitElement {
         vertical-align: middle;
         background: url('${this.baseURI}/images/checkradio.png') 20px 0px;
       }
-      .right {
-        text-align: right;
-        float: right;
-        cursor: pointer;
-        user-select: none;
+      .streetviewcontainer {
+        display: flex;
+        flex-direction:row;
+        justify-content: flex-end;
+      }
+      .layer {
+        text-align: center;
+        font-weight: bold;
+        border-top: 1px solid lightgray;
+      }
+      .attributename {
+        width: 90%;
+        text-align: center;
+        font-style: italic;
+      }
+      .attributevalue {
+        width: 90%;
+        text-align: center;
+        border-bottom: 1px solid lightgray;
       }
       </style>
       <div class="header">Informatie</div>
       <div class="content">
-      <div class="right" @click="${e=>this.toggleStreetView(e)}">
+      <div class="streetviewcontainer">
+      <div @click="${e=>this.toggleStreetView(e)}">
         <span>StreetView</span><div class="${this.streetViewOn?'check-on':'check-off'}"></div>
+      </div>
       </div>
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
-          <table>
-            <tr><th colspan="2" align="center">${feature.layer.id}</th></tr>
+          <div>
+            <div class="layer">${feature.layer.id}</div>
             ${Object.keys(feature.properties).length?
               Object.keys(feature.properties).map(key=>
-                html`<tr><td align="right"><i>${key}</i>:</td>
-                  <td>${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?
+              html`<div class="attributename">${key}</div>
+                  <div class="attributevalue">${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?
                         JSON.stringify(feature.properties[key])
                       :feature.properties[key].startsWith && feature.properties[key].startsWith('https://maps.googleapis.com')?
                           html`<img src="${feature.properties[key]}">`
-                        :feature.properties[key]}</td></tr>`
+                        :feature.properties[key]}</div>`
               )
-            : html`<tr><td colspan="2" align="center">geen info</td></tr>`}
-          </table>`
+            : html`<div class="attributevalue">geen info</div>`}
+          </div>`
       )}
       </div>
     `;

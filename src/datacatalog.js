@@ -935,6 +935,52 @@ export default
                         }                        
                     }
                 }
+            },
+            {"type": "vectortile", "title": "Martin Global Administrative areas", "layerInfo": 
+                {
+                    "id": "gadm36",
+                    "type": "fill",
+                    "source": {
+                        "id": "gadm36",
+                        "type": "vector",
+                        "tiles":["https://saturnus.geodan.nl/martin/gadm36.alllevels/{z}/{x}/{y}.pbf"],
+                        "minzoom": 5,
+                        "maxzoom": 22
+                    },
+                    "source-layer": "gadm36.alllevels",
+                    "minzoom": 5,
+                    "maxzoom": 22,
+                    "layout": {
+                      "visibility": "visible"
+                    },
+                    "paint": {
+                      "fill-color": "#ccc",
+                      "fill-outline-color": "#000"
+                    }
+                }
+            },
+            {"type": "vectortile", "title": "MVT Server Global Administrative areas", "layerInfo": 
+                {
+                    "id": "mvtgadm36",
+                    "type": "fill",
+                    "source": {
+                        "id": "mvtgadm36",
+                        "type": "vector",
+                        "tiles":["https://tiles.edugis.nl/mvt/gadmalllevels2/{z}/{x}/{y}.mvt"],
+                        "minzoom": 5,
+                        "maxzoom": 22
+                    },
+                    "source-layer": "gadmalllevels2",
+                    "minzoom": 5,
+                    "maxzoom": 22,
+                    "layout": {
+                      "visibility": "visible"
+                    },
+                    "paint": {
+                      "fill-color": "#ccc",
+                      "fill-outline-color": "#000"
+                    }
+                }
             }
         ]},
         { "type":"group", "title": "Hoogte rasters (DEM)", "sublayers":
@@ -991,7 +1037,23 @@ export default
         {"type": "group", "title": "CSV", "sublayers": 
         [
             {"type": "csvlayer", "title": "CSV Layer", "layerInfo": {}}
-        ]}
+        ]},
+        {"type" :"group", "title": "Web-GL layers", "sublayers":
+            [
+                {
+                    "title": "NDW Traffic",
+                    "layerInfo": {
+                        "id": "webgltraffic", 
+                        "type": "webgltraffic",
+                        "source" : {
+                            "type": "webgltraffic",
+                            "data": "https://research.geodan.nl/sites/ndw_viewer/traffic.json",
+                            "attribution": "ndw"
+                        }
+                    }
+                }
+            ]
+        }
     ]},
     {"type": "group", "title": "Achtergrondlagen", "sublayers": 
     [
