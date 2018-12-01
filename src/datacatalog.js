@@ -605,53 +605,19 @@ export default
                       "visibility": "visible"
                     },
                     "paint": {
-                      "fill-color": {
-                        "property": "pandtype",
-                        "type": "categorical",
-                        "default": "rgba(44, 127, 184, 1)",
-                        "stops": [
-                          [
-                            "",
+                        "fill-color": [
+                            "match", ["get", "pandtype"],
+                            "kantoorpand", "rgba(255, 0, 121, 1)",
+                            "tussenwoning","blue", 
+                            "winkelgebouw", "rgba(83, 16, 162, 1)",
+                            "appartement midden", "rgba(146, 95, 48, 1)",
+                            "appartement laag","rgba(146, 140, 48, 1)",
+                            "appartement hoog","rgba(113, 107, 76, 1)",
+                            "schoolgebouw","rgba(50, 165, 81, 1)",
+                            "gemengd gebouw","rgba(88, 75, 84, 1)",
+                            "bijeenkomstgebouw", "rgba(40, 128, 35, 1)",
                             "rgba(44, 127, 184, 1)"
-                          ],
-                          [
-                            "kantoorpand",
-                            "rgba(255, 0, 121, 1)"
-                          ],
-                          [
-                            "tussenwoning",
-                            "blue"
-                          ],
-                          [
-                            "winkelgebouw",
-                            "rgba(83, 16, 162, 1)"
-                          ],
-                          [
-                            "appartement midden",
-                            "rgba(146, 95, 48, 1)"
-                          ],
-                          [
-                            "appartement laag",
-                            "rgba(146, 140, 48, 1)"
-                          ],
-                          [
-                            "appartement hoog",
-                            "rgba(113, 107, 76, 1)"
-                          ],
-                          [
-                            "schoolgebouw",
-                            "rgba(50, 165, 81, 1)"
-                          ],
-                          [
-                            "gemengd gebouw",
-                            "rgba(88, 75, 84, 1)"
-                          ],
-                          [
-                            "bijeenkomstgebouw",
-                            "rgba(40, 128, 35, 1)"
-                          ]
-                        ]
-                      },
+                        ],
                       "fill-outline-color": "rgba(193, 193, 177, 1)"
                     }
                 }
@@ -670,53 +636,19 @@ export default
                 "minzoom": 13,
                 "maxzoom": 24,
                 "paint": {
-                    "fill-extrusion-color": {
-                    "property": "pandtype",
-                    "type": "categorical",
-                    "default": "rgba(44, 127, 184, 1)",
-                    "stops": [
-                        [
-                        "",
+                    "fill-extrusion-color": [
+                        "match", ["get", "pandtype"],
+                        "kantoorpand", "rgba(255, 0, 121, 1)",
+                        "tussenwoning","blue", 
+                        "winkelgebouw", "rgba(83, 16, 162, 1)",
+                        "appartement midden", "rgba(146, 95, 48, 1)",
+                        "appartement laag","rgba(146, 140, 48, 1)",
+                        "appartement hoog","rgba(113, 107, 76, 1)",
+                        "schoolgebouw","rgba(50, 165, 81, 1)",
+                        "gemengd gebouw","rgba(88, 75, 84, 1)",
+                        "bijeenkomstgebouw", "rgba(40, 128, 35, 1)",
                         "rgba(44, 127, 184, 1)"
-                        ],
-                        [
-                        "kantoorpand",
-                        "rgba(255, 0, 121, 1)"
-                        ],
-                        [
-                        "tussenwoning",
-                        "blue"
-                        ],
-                        [
-                        "winkelgebouw",
-                        "rgba(83, 16, 162, 1)"
-                        ],
-                        [
-                        "appartement midden",
-                        "rgba(146, 95, 48, 1)"
-                        ],
-                        [
-                        "appartement laag",
-                        "rgba(146, 140, 48, 1)"
-                        ],
-                        [
-                        "appartement hoog",
-                        "rgba(113, 107, 76, 1)"
-                        ],
-                        [
-                        "schoolgebouw",
-                        "rgba(50, 165, 81, 1)"
-                        ],
-                        [
-                        "gemengd gebouw",
-                        "rgba(88, 75, 84, 1)"
-                        ],
-                        [
-                        "bijeenkomstgebouw",
-                        "rgba(40, 128, 35, 1)"
-                        ]
-                    ]
-                    },
+                    ],
                     "fill-extrusion-height": {
                     "property": "hoogte",
                     "type": "identity"
@@ -771,168 +703,52 @@ export default
                     },
                     "source-layer": "nuts_m03_2006",
                     "paint": {                        
-                        "fill-color": {
-                            "property": "cntr_code",
-                            "type": "categorical",
-                            "default": "rgba(0, 0, 0, 0)",
-                            "stops": [                              
-                              [
-                                "NL", 
-                                "rgba(251,180,174, 0.8)"
-                              ],
-                              [
-                                "IS", 
-                                "rgba(251,180,174, 0.8)"
-                              ],
-                              [
-                                "CZ", 
-                                "rgba(251,180,174, 0.8)"
-                              ],
-                              [
-                                "DE",
-                                "rgba(179,205,227, 0.8)"
-                              ],
-                              [
-                                "EE",
-                                "rgba(179,205,227, 0.8)"
-                              ],
-                              [
-                                "RO",
-                                "rgba(179,205,227, 0.8)"
-                              ],
-                              [
-                                "BE",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "MK",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "LT",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "SK",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "FR",
-                                "rgba(222,203,228, 0.8)"
-                              ],
-                              [
-                                "FI",
-                                "rgba(222,203,228, 0.8)"
-                              ],
-                              [
-                                "HU",
-                                "rgba(222,203,228, 0.8)"
-                              ],
-                              [
-                                "LI",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "SI",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "ES",
-                                "rgba(254,217,166, 0.8)"
-                              ],
-                              [
-                                "GR",
-                                "rgba(254,217,166, 0.8)"
-                              ],
-                              [
-                                "PL",
-                                "rgba(254,217,166, 0.8)"
-                              ],
-                              [
-                                "HR",
-                                "rgba(254,217,166, 0.8)"
-                              ],
-                              [
-                                "PT",
-                                "rgba(255,255,204, 0.8)"
-                              ],
-                              [
-                                "LU",
-                                "rgba(255,255,204, 0.8)"
-                              ],
-                              [
-                                "AT",
-                                "rgba(255,255,204, 0.8)"
-                              ],
-                              [
-                                "CY",
-                                "rgba(251,180,174, 0.8)"
-                              ],
-                              [
-                                "IT",
-                                "rgba(229,216,189, 0.8)"
-                              ],
-                              [
-                                "TR",
-                                "rgba(229,216,189, 0.8)"
-                              ],
-                              [
-                                "LV",
-                                "rgba(229,216,189, 0.8)"
-                              ],
-                              [
-                                "CH",
-                                "rgba(253,218,236, 0.8)"
-                              ],
-                              [
-                                "BG",
-                                "rgba(253,218,236, 0.8)"
-                              ],
-                              [
-                                "DK",
-                                "rgba(255,255,204, 0.8)"
-                              ],
-                              [
-                                "SE",
-                                "rgba(251,180,174, 0.8)"
-                              ],
-                              [
-                                "NO",
-                                "rgba(179,205,227, 0.8)"
-                              ],
-                              [
-                                "UK",
-                                "rgba(204,235,197, 0.8)"
-                              ],
-                              [
-                                "IE",
-                                "rgba(222,203,228, 0.8)"
-                              ],
-                            ]
-                        },
-                        "fill-outline-color": {
-                            default: "#ffffff",
-                            "property": "cntr_code",
-                            "type": "categorical",
-                            "stops": [
-                              [
-                                "AT", 
-                                "#ccc"
-                              ],
-                              [
-                                "DK", 
-                                "#ccc"
-                              ],
-                              [
-                                "LU", 
-                                "#ccc"
-                              ],
-                              [
-                                "PT", 
-                                "#ccc"
-                              ]
-                            ]
-                        }                        
+                        "fill-color": [
+                            "match", ["get", "cntr_code"],
+                            "NL", "rgba(251,180,174, 0.8)",
+                            "IS", "rgba(251,180,174, 0.8)",
+                            "CZ", "rgba(251,180,174, 0.8)",
+                            "DE", "rgba(179,205,227, 0.8)",
+                            "EE", "rgba(179,205,227, 0.8)",
+                            "RO", "rgba(179,205,227, 0.8)",
+                            "BE", "rgba(204,235,197, 0.8)",
+                            "MK", "rgba(204,235,197, 0.8)",
+                            "LT", "rgba(204,235,197, 0.8)",
+                            "SK", "rgba(204,235,197, 0.8)",
+                            "FR", "rgba(222,203,228, 0.8)",
+                            "FI", "rgba(222,203,228, 0.8)",
+                            "HU", "rgba(222,203,228, 0.8)",
+                            "LI", "rgba(204,235,197, 0.8)",
+                            "SI", "rgba(204,235,197, 0.8)",
+                            "ES", "rgba(254,217,166, 0.8)",
+                            "GR", "rgba(254,217,166, 0.8)",
+                            "PL", "rgba(254,217,166, 0.8)",
+                            "HR", "rgba(254,217,166, 0.8)",
+                            "PT", "rgba(255,255,204, 0.8)",
+                            "LU", "rgba(255,255,204, 0.8)",
+                            "AT", "rgba(255,255,204, 0.8)",
+                            "CY", "rgba(251,180,174, 0.8)",
+                            "IT", "rgba(229,216,189, 0.8)",
+                            "TR", "rgba(229,216,189, 0.8)",
+                            "LV", "rgba(229,216,189, 0.8)",
+                            "CH", "rgba(253,218,236, 0.8)",
+                            "BG", "rgba(253,218,236, 0.8)",
+                            "DK", "rgba(255,255,204, 0.8)",
+                            "SE", "rgba(251,180,174, 0.8)",
+                            "NO", "rgba(179,205,227, 0.8)",
+                            "UK", "rgba(204,235,197, 0.8)",
+                            "IE", "rgba(222,203,228, 0.8)",
+                            "rgba(0, 0, 0, 0)"
+                        ]
+                        ,
+                        "fill-outline-color": [
+                            "match", ["get", "cntr_code"],
+                            "AT", "#ccc",
+                            "DK", "#ccc",
+                            "LU", "#ccc",
+                            "PT", "#ccc",
+                            "#ffffff"
+                        ]                      
                     }
                 }
             },
