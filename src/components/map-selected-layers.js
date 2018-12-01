@@ -46,6 +46,8 @@ class MapSelectedLayers extends LitElement {
       .border {
         background-color: rgba(250,250,250,.87);
         padding: 10px;
+        box-sizing: border-box;
+        max-width: 325px;
       }
       .outercontainer {
         background-color: rgba(250,250,250);
@@ -88,7 +90,6 @@ class MapSelectedLayers extends LitElement {
       .setcontainer {
         transition: height .5s ease-in-out;
         border-bottom: 1px solid lightgray;
-        padding: 10px;
       }
       .closed {
         height: 0;
