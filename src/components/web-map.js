@@ -430,6 +430,7 @@ class WebMap extends LitElement {
         setTimeout(()=>{
           this.resetLayerList();          
           this.styleLoading = false;
+          this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
         }, 1000);
       });
       this.map.setStyle(layerInfo.source);
@@ -637,9 +638,10 @@ class WebMap extends LitElement {
       }
       #legend-container-container {
         position: absolute;
+        display: flex;
+        flex-direction: row;
         top: 10px;
         right: 10px;
-        display: flex;
         justify-content: flex-end;
         transition: right 0.5s ease;
         pointer-events: none;
@@ -797,6 +799,12 @@ class WebMap extends LitElement {
 
   mapHasRendered() {
     if (this.resetLayerListRequested) {
+      if (!this.map.style.stylesheet) {
+        /* mapbox-gl bug? getStyle() throws exception on empty style */
+        this.layerlist = [];
+        console.log("layerlist empty")
+        return;
+      }
       const layerlist = this.map.getStyle().layers;
       this.updateLayerCalculatedPaintProperties(layerlist);
       this.layerlist = [...layerlist];
