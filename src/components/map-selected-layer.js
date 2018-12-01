@@ -9,6 +9,7 @@ import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, tripOriginIcon 
     verticalAlignBottom as backgroundIcon, landscapeIcon, zoomInIcon, zoomOutIcon } from './my-icons';
 
 import './map-slider';
+import './map-legend-panel';
 
 /**
 * @polymer
@@ -32,15 +33,20 @@ class MapSelectedLayer extends LitElement {
     this.percentage = 100;
     this.inrange = true;
   }
+  checkZoomRange()
+  {
+    const minzoom = this.layer.minzoom ? this.layer.minzoom : 0;
+    const maxzoom = this.layer.maxzoom ? this.layer.maxzoom : 24;
+    this.outofrange = this.zoom < minzoom || this.zoom > maxzoom;
+  }
   shouldUpdate(changedProps) {
     if (changedProps.has('zoom')) {
-      const minzoom = this.layer.minzoom ? this.layer.minzoom : 0;
-      const maxzoom = this.layer.maxzoom ? this.layer.maxzoom : 24;
-      this.outofrange = this.zoom < minzoom || this.zoom > maxzoom;
+      this.checkZoomRange();
     }
     if (changedProps.has('layer')) {
       // set layer defaults
       if (this.layer) {
+        this.checkZoomRange();
         if (!this.layer.metadata) {
           this.layer.metadata = {};
         }
@@ -162,10 +168,9 @@ class MapSelectedLayer extends LitElement {
           return html`<div class="legendcontainer">Zoom verder uit</div>`
         }
       }
-      if (this.layer.metadata.legendurl) {
-        return html`<div class="legendcontainer"><img src="${this.layer.metadata.legendurl}"></div>`
-      }
-      return html`<div class="legendcontainer">Geen legenda beschikbaar</div>`;  
+      return html`<div class="legendcontainer">
+        <map-legend-panel .maplayer="${this.layer}"></map-legend-panel>
+      </div>`;
     }
     return html``;
   }
