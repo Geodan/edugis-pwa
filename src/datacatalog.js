@@ -236,13 +236,14 @@ export default
                     "minzoom" : 2.5,
                     "maxzoom" : 16.5,
                     "metadata" : {
-                        "getFeatureInfoUrl" : "https://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=cbsbevolking2017&query_layers=cbsbevolking2017"
+                        "getFeatureInfoUrl" : "https://tiles.edugis.nl/mapproxy/cbsbevolking2017/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=cbsbevolking2017&query_layers=cbsbevolking2017",
+                        "legendurl" : "https://map.edugis.nl/legends2/cbsbevolking2017legend.png"
                     },
                     "source": {
                         "type": "raster",
                         "tileSize": 256,
                         "tiles": [
-                            "https://saturnus.geodan.nl/mapproxy/cbsbevolking2017/wmts/cbsbevolking2017/spherical_mercator/{z}/{x}/{y}.png"
+                            "https://tiles.edugis.nl/mapproxy/cbsbevolking2017/wmts/cbsbevolking2017/spherical_mercator/{z}/{x}/{y}.png"
                         ],
                         "attribution": "&copy; Geodan, CBS"
                     }
@@ -694,6 +695,8 @@ export default
                 {
                     "id" : "EduGIS_nuts_m03_2006_fill",
                     "type" : "fill",
+                    "maxzoom" : 10,
+                    "minzoom" : 3,
                     "source": {
                         "id": "nuts_m03_2006_fill",
                         "type": "vector",
