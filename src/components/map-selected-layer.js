@@ -21,7 +21,8 @@ class MapSelectedLayer extends LitElement {
       active: {type: Boolean},
       layer: {type: Object},
       zoom: {type: Number},
-      updatecount: {type: Number}
+      updatecount: {type: Number},
+      datagetter: {type: Object},
     }; 
   }
   constructor() {
@@ -32,6 +33,7 @@ class MapSelectedLayer extends LitElement {
     this.updatecount = 0;
     this.percentage = 100;
     this.inrange = true;
+    this.datagetter = {};
   }
   checkZoomRange()
   {
@@ -169,7 +171,7 @@ class MapSelectedLayer extends LitElement {
         }
       }
       return html`<div class="legendcontainer">
-        <map-legend-panel .maplayer="${this.layer}"></map-legend-panel>
+        <map-legend-panel .maplayer="${this.layer}" .zoom="${this.zoom}"></map-legend-panel>
       </div>`;
     }
     return html``;
@@ -237,7 +239,42 @@ class MapSelectedLayer extends LitElement {
           <div class="trashbinicon" @click="${e=>this.removeLayer(e)}" title="kaartlaag verwijderen">${trashBinCircleIcon}</div>
           <div class="trashtext">De laag kan weer toegevoegd worden via het data-catalogus menu</div>
         </div>
+        <div class="editlegend">
+        ${this.renderLegendEditor()}
+        </div>
       </div>`
+    }
+  }
+  renderLegendEditor()
+  {
+    let data;
+    if (this.datagetter && this.datagetter.querySourceFeatures) {
+      data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
+    }
+    console.log(`number of elements: ${data.length}`);
+    if (data.length) {
+      const properties = {...data[0].properties};
+      const minmaxproperties = {min:{}, max:{}};
+      for (let key in properties) {
+        if (typeof properties[key] === "number") {
+          minmaxproperties.min[key] = Number.MAX_VALUE;
+          minmaxproperties.max[key] = Number.MIN_VALUE;
+        } else if (typeof properties[key] === "string") {
+          minmaxproperties.min[key] = "zzzzzzz";
+          minmaxproperties.max[key] = "";
+        }
+      }
+      console.log(data.reduce((minmaxproperties, feature)=>{
+        for (let key in feature.properties) {
+          if (feature.properties[key] > minmaxproperties.max[key]) {
+            minmaxproperties.max[key] = feature.properties[key];
+          }
+          if (feature.properties[key] < minmaxproperties.min[key]) {
+            minmaxproperties.min[key] = feature.properties[key];
+          }
+        }
+        return minmaxproperties;
+      }, minmaxproperties));
     }
   }
   toggleSettings(e) {

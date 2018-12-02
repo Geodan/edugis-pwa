@@ -710,9 +710,11 @@ class WebMap extends LitElement {
       <map-selected-layers 
         .layerlist="${this.layerlist}"
         .zoom="${this.zoom}"
+        .datagetter="${this.datagetter}"
         @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
         @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
         @removelayer="${(e) => this.removeLayer(e)}">
+
       </map-selected-layers>
       <mmap-legend-container .layerlist="${this.layerlist}" 
         .visible="${this.haslegend}" 
@@ -726,6 +728,13 @@ class WebMap extends LitElement {
     </div>
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
+  }
+  getData()
+  {
+    if (!this.map) {
+      return {};
+    }
+    return {querySourceFeatures: this.map.querySourceFeatures.bind(this.map)};
   }
   _positionString(prop) {
     // convert prop to control position
@@ -745,6 +754,9 @@ class WebMap extends LitElement {
         center: [this.lon,this.lat],
         zoom: this.zoom
     });
+    this.datagetter = {
+      querySourceFeatures: this.map.querySourceFeatures.bind(this.map)
+    };
     
     if (this.navigation.toLowerCase() !== "false") {
       this.map.addControl(new ZoomControl(), this._positionString(this.navigation));

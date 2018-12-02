@@ -10,12 +10,14 @@ class MapSelectedLayerSet extends LitElement {
       active: {type: Boolean},
       layerlist: {type: Array},
       zoom: {type: Number},
+      datagetter : {type: Object},
     }; 
   }
   constructor() {
       super();
       this.active = true;
       this.zoom = 0;
+      this.datagetter = {};
   }
   shouldUpdate(changedProps) {
       return this.active;
@@ -40,7 +42,7 @@ class MapSelectedLayerSet extends LitElement {
         <div class="layercontainer">Geen lagen geselecteerd</div>`;
     }
     return html`
-    ${this.layerlist.map(layer=>html`<map-selected-layer .layer="${layer}" .zoom="${this.zoom}"></map-selected-layer>`)}
+    ${this.layerlist.map(layer=>html`<map-selected-layer .layer="${layer}" .zoom="${this.zoom}" .datagetter="${this.datagetter}"></map-selected-layer>`)}
     `;
   }
 }

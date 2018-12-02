@@ -11,6 +11,7 @@ class MapSelectedLayers extends LitElement {
       active: {type: Boolean},
       layerlist: {type: Array, hasChanged: this.listChanged},
       zoom: {type: Number},
+      datagetter: {type: Object}
     }; 
   }
   constructor() {
@@ -20,6 +21,7 @@ class MapSelectedLayers extends LitElement {
       this.layerlist = [];
       this.thematicLayers = [];
       this.referenceLayers = [];
+      this.datagetter = {};
   }
   listChanged(newList, oldList) {
     if (newList.length != oldList.length) {
@@ -101,11 +103,11 @@ class MapSelectedLayers extends LitElement {
       <div class="outercontainer">
         <div class="opener" @click="${e=>this.toggleSetOpen(e)}">Geselecteerde thematische kaartlagen<span class="arrow-down opened"></span></div>
         <div class="setcontainer">
-          <map-selected-layer-set .layerlist="${this.thematicLayers}" .zoom="${this.zoom}"></map-selected-layer-set>
+          <map-selected-layer-set .layerlist="${this.thematicLayers}" .zoom="${this.zoom}" .datagetter="${this.datagetter}"></map-selected-layer-set>
         </div>
         <div class="opener" @click="${e=>this.toggleSetOpen(e)}">Geselecteerde achtergrondlagen<span class="arrow-down"></span></div>
         <div class="setcontainer closed">
-          <map-selected-layer-set .layerlist="${this.referenceLayers}" .zoom="${this.zoom}"></map-selected-layer-set>
+          <map-selected-layer-set .layerlist="${this.referenceLayers}" .zoom="${this.zoom}" .datagetter="${this.datagetter}"></map-selected-layer-set>
         </div>
       </div>
     </div>`;
