@@ -240,6 +240,27 @@ class WebMap extends LitElement {
       }
     }
   }
+  updateSingleLayerColor(id, fillColor) {
+    const layer = this.map.getLayer(id);
+    if (layer) {
+      switch (layer.type) {
+        case 'fill':
+          this.map.setPaintProperty(id, 'fill-color', fillColor);
+          break;
+      }
+    }
+  }
+  updateLayerColor(e) {
+    if (this.map) {
+      if (Array.isArray(e.detail.layerid)) {
+        e.detail.layerid.forEach(id=>{
+          this.updateSingleLayerColor(id, e.detail.fillcolor);
+        })
+      } else {
+        this.updateSingleLayerColor(e.detail.layerid, e.detail.fillcolor);
+      }
+    }
+  }
   removeLayer(e) {
     if (this.map) {
       const targetLayer = this.map.getLayer(e.detail.layerid);
@@ -711,6 +732,7 @@ class WebMap extends LitElement {
         .layerlist="${this.layerlist}"
         .zoom="${this.zoom}"
         .datagetter="${this.datagetter}"
+        @changecolor="${e=>this.updateLayerColor(e)}"
         @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
         @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
         @removelayer="${(e) => this.removeLayer(e)}">
