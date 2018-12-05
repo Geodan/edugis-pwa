@@ -240,12 +240,17 @@ class WebMap extends LitElement {
       }
     }
   }
-  updateSingleLayerColor(id, fillColor) {
+  updateSingleLayerColor(id, colorInfo) {
     const layer = this.map.getLayer(id);
     if (layer) {
       switch (layer.type) {
         case 'fill':
-          this.map.setPaintProperty(id, 'fill-color', fillColor);
+          if (colorInfo.fillcolor) {
+            this.map.setPaintProperty(id, 'fill-color', colorInfo.fillcolor);
+          }
+          if (colorInfo.linecolor) {
+            this.map.setPaintProperty(id, 'fill-outline-color', colorInfo.linecolor);
+          }
           break;
       }
     }
@@ -254,10 +259,10 @@ class WebMap extends LitElement {
     if (this.map) {
       if (Array.isArray(e.detail.layerid)) {
         e.detail.layerid.forEach(id=>{
-          this.updateSingleLayerColor(id, e.detail.fillcolor);
+          this.updateSingleLayerColor(id, e.detail);
         })
       } else {
-        this.updateSingleLayerColor(e.detail.layerid, e.detail.fillcolor);
+        this.updateSingleLayerColor(e.detail.layerid, e.detail);
       }
     }
   }

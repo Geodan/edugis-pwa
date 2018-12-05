@@ -350,8 +350,8 @@ class MapSelectedLayer extends LitElement {
           }
         </style>
         <div class="legendeditcontainer">
-        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e)}"> <label for="fillcolor">vlakkleur</label><br>
-        <input id="linecolor" type="color" value="${outlineColor}"> <label for="linecolor">lijnkleur</label>
+        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
+        <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
         </div>
         `
       } else if (typeof fillColor === "string") {
@@ -363,21 +363,19 @@ class MapSelectedLayer extends LitElement {
           }
         </style>
         <div class="legendeditcontainer">
-        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e)}"> <label for="fillcolor">vlakkleur</label>
+        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
         </div>
         `
       }
     }
     return html``;
   }
-  updateColor(e)
+  updateColor(e, colorInfo)
   {
-    console.log(e.currentTarget.value);
+    //console.log(e.currentTarget.value);
+    colorInfo.layerid = this.layer.id;
     this.dispatchEvent(new CustomEvent('changecolor', {
-      detail: {
-        layerid: this.layer.id,
-        fillcolor: e.currentTarget.value
-      },
+      detail: colorInfo,
       bubbles: true,
       composed: true,
     }));
