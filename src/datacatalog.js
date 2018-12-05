@@ -993,7 +993,7 @@ export default
                     "type": "raster",
                     "tileSize" : 256,            
                     "tiles": [ "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"],
-                    "attribution": "&copy; GeodanMaps",
+                    "attribution": '&copy; <a href="https://www.geodan.nl" target="_BLANK">Geodan</a> | <a href="https://carto.com" target="_BLANK">&copy; CARTO</a> | <a href="https://opendatacommons.org/licenses/odbl/1.0/" target="_BLANK">&copy; OpenStreetMap contributors</a>',
                     "maxzoom" : 19
                 }
             }
