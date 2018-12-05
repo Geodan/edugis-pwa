@@ -352,8 +352,8 @@ class MapSelectedLayer extends LitElement {
               }
             </style>
             <div class="legendeditcontainer">
-            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
-            <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
+            <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updatePaintProperty(e, {filloutlinecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
             </div>
             `
           } else if (typeof fillColor === "string") {
@@ -365,7 +365,7 @@ class MapSelectedLayer extends LitElement {
               }
             </style>
             <div class="legendeditcontainer">
-            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
             </div>
             `
           }
@@ -375,6 +375,7 @@ class MapSelectedLayer extends LitElement {
         {
           const paint = this.layer.paint;
           let lineColor = paint["line-color"];
+          let lineWidth = paint["line-width"];
           if (typeof lineColor === "string") {
             lineColor = colorToHex(lineColor);
             return html`
@@ -383,9 +384,19 @@ class MapSelectedLayer extends LitElement {
                 border-top: 1px solid #F3F3F3;
                 padding-top: 4px;
               }
+              .sliderwidthcontainer {
+                height: 40px;
+                width: 168px;
+                --mdc-theme-primary: #ccc;
+                --mdc-theme-secondary: #555;
+              }
             </style>
             <div class="legendeditcontainer">
-            <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="fillcolor">lijnkleur</label>
+            <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updatePaintProperty(e, {linecolor: e.currentTarget.value})}"> <label for="fillcolor">lijnkleur</label>
+            <div class="sliderwidthcontainer">
+              Lijndikte: ${lineWidth}
+              <map-slider @slidervaluechange="${e=>{this.layer.paint['line-width'] = e.detail.value / 10; this.updatePaintProperty(e, {linewidth: e.detail.value / 10})}}" value="${1 * lineWidth}"></map-slider>
+            </div>
             </div>
             `
           }
@@ -396,15 +407,16 @@ class MapSelectedLayer extends LitElement {
     
     return html``;
   }
-  updateColor(e, colorInfo)
+  updatePaintProperty(e, propertyInfo)
   {
     //console.log(e.currentTarget.value);
-    colorInfo.layerid = this.layer.id;
-    this.dispatchEvent(new CustomEvent('changecolor', {
-      detail: colorInfo,
+    propertyInfo.layerid = this.layer.id;
+    this.dispatchEvent(new CustomEvent('changepaintproperty', {
+      detail: propertyInfo,
       bubbles: true,
       composed: true,
     }));
+    this.updatecount++;
   }
   toggleSettings(e) {
     if (!this.layer.metadata) {

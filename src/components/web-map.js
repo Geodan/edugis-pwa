@@ -241,33 +241,31 @@ class WebMap extends LitElement {
       }
     }
   }
-  updateSingleLayerColor(id, colorInfo) {
+  updateSingleLayerPaintProperty(id, propertyInfo) {
     const layer = this.map.getLayer(id);
     if (layer) {
-      switch (layer.type) {
-        case 'fill':
-          if (colorInfo.fillcolor) {
-            this.map.setPaintProperty(id, 'fill-color', colorInfo.fillcolor);
-          }
-          if (colorInfo.linecolor) {
-            this.map.setPaintProperty(id, 'fill-outline-color', colorInfo.linecolor);
-          }
-          break;
-        case 'line':
-          if (colorInfo.linecolor) {
-            this.map.setPaintProperty(id, 'line-color', colorInfo.linecolor);
-          }
+      if (propertyInfo.fillcolor) {
+        this.map.setPaintProperty(id, 'fill-color', propertyInfo.fillcolor);
+      }
+      if (propertyInfo.filloutlinecolor) {
+        this.map.setPaintProperty(id, 'fill-outline-color', propertyInfo.filloutlinecolor);
+      }
+      if (propertyInfo.linecolor) {
+        this.map.setPaintProperty(id, 'line-color', propertyInfo.linecolor);
+      }
+      if (propertyInfo.linewidth) {
+        this.map.setPaintProperty(id, 'line-width', propertyInfo.linewidth);
       }
     }
   }
-  updateLayerColor(e) {
+  updateLayerPaintProperty(e) {
     if (this.map) {
       if (Array.isArray(e.detail.layerid)) {
         e.detail.layerid.forEach(id=>{
-          this.updateSingleLayerColor(id, e.detail);
+          this.updateSingleLayerPaintProperty(id, e.detail);
         })
       } else {
-        this.updateSingleLayerColor(e.detail.layerid, e.detail);
+        this.updateSingleLayerPaintProperty(e.detail.layerid, e.detail);
       }
     }
   }
@@ -749,7 +747,7 @@ class WebMap extends LitElement {
         .layerlist="${this.layerlist}"
         .zoom="${this.zoom}"
         .datagetter="${this.datagetter}"
-        @changecolor="${e=>this.updateLayerColor(e)}"
+        @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
         @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
         @removelayer="${(e) => this.removeLayer(e)}">
