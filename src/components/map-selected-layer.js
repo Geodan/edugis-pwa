@@ -334,40 +334,66 @@ class MapSelectedLayer extends LitElement {
         return minmaxproperties;
       }, minmaxproperties));
     }
-    if (this.layer.type === "fill") {
-      const paint = this.layer.paint;
-      let fillColor = paint["fill-color"];
-      let outlineColor = paint["fill-outline-color"];
-      if (typeof fillColor === "string" && typeof outlineColor === "string")
-      {
-        fillColor = colorToHex(fillColor);
-        outlineColor = colorToHex(outlineColor);
-        return html`
-        <style>
-          .legendeditcontainer {
-            border-top: 1px solid #F3F3F3;
-            padding-top: 4px;
+    switch (this.layer.type) {
+      case "fill":
+        {
+          const paint = this.layer.paint;
+          let fillColor = paint["fill-color"];
+          let outlineColor = paint["fill-outline-color"];
+          if (typeof fillColor === "string" && typeof outlineColor === "string")
+          {
+            fillColor = colorToHex(fillColor);
+            outlineColor = colorToHex(outlineColor);
+            return html`
+            <style>
+              .legendeditcontainer {
+                border-top: 1px solid #F3F3F3;
+                padding-top: 4px;
+              }
+            </style>
+            <div class="legendeditcontainer">
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
+            <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
+            </div>
+            `
+          } else if (typeof fillColor === "string") {
+            return html`
+            <style>
+              .legendeditcontainer {
+                border-top: 1px solid #F3F3F3;
+                padding-top: 4px;
+              }
+            </style>
+            <div class="legendeditcontainer">
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
+            </div>
+            `
           }
-        </style>
-        <div class="legendeditcontainer">
-        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
-        <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
-        </div>
-        `
-      } else if (typeof fillColor === "string") {
-        return html`
-        <style>
-          .legendeditcontainer {
-            border-top: 1px solid #F3F3F3;
-            padding-top: 4px;
+        }
+        break;
+      case "line":
+        {
+          const paint = this.layer.paint;
+          let lineColor = paint["line-color"];
+          if (typeof lineColor === "string") {
+            lineColor = colorToHex(lineColor);
+            return html`
+            <style>
+              .legendeditcontainer {
+                border-top: 1px solid #F3F3F3;
+                padding-top: 4px;
+              }
+            </style>
+            <div class="legendeditcontainer">
+            <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updateColor(e, {linecolor: e.currentTarget.value})}"> <label for="fillcolor">lijnkleur</label>
+            </div>
+            `
           }
-        </style>
-        <div class="legendeditcontainer">
-        <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updateColor(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
-        </div>
-        `
-      }
+        }
+      default:
+        break;
     }
+    
     return html``;
   }
   updateColor(e, colorInfo)
