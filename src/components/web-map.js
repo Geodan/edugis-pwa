@@ -412,6 +412,9 @@ class WebMap extends LitElement {
       this.map.addSource(id, style.sources[id]);
     }
     style.layers.forEach(layer=>{
+      if (!layer.metadata) {
+        layer.metadata = {};
+      }
       layer.metadata.styletitle=styleTitle;
       this.addLayer({detail:layer});
     });

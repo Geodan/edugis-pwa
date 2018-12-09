@@ -199,9 +199,6 @@ class MapLegendPanel extends LitElement {
             result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, label: `${paintFillColor[i]}`});
           }
       }
-      
-        
-      
     } else if (paintFillColor === Object(paintFillColor)) {
       if (paintFillColor.hasOwnProperty('property')) {
         result.propertyname = paintFillColor.property;
