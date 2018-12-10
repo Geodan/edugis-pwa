@@ -399,6 +399,10 @@ class MapSelectedLayer extends LitElement {
             <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {"fill-color": e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
             </div>
             `
+          } else if (Array.isArray(fillColor)) {
+
+          } else if (fillColor === Object(fillColor)) {
+
           }
         }
         break;

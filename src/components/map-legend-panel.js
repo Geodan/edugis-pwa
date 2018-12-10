@@ -4,6 +4,9 @@
 */
 
 import {LitElement, html, svg} from '@polymer/lit-element';
+import '../utils/mbox-style-parse.js';
+import mbStyleParser from '../utils/mbox-style-parse.js';
+
 
 
 /**
@@ -138,27 +141,7 @@ class MapLegendPanel extends LitElement {
       </svg>`;
     })}`
   }
-  getZoomDependentValue(value) {
-    let result = value;
-    if (Array.isArray(value) && value.length > 4 && value[0] === "interpolate" && Array.isArray(value[2]) && value[2][0] === "zoom") {      
-      for (let i = 3; i < value.length - 1; i+=2) {
-        result = value[i+1];
-        if (this.zoom < value[i]) {
-          break;
-        } 
-      }
-    } else if (value === Object(value)) {
-      if (value.stops && !value.hasOwnProperty('property')) {
-        for (let i = 0; i < value.stops.length; i++) {
-          result = value.stops[i][1];
-          if (this.zoom < value.stops[i][0]) {
-            break;
-          } 
-        }        
-      }
-    }
-    return result;
-  }
+  
   fillLegend()
   {
     // legend should have one or more items
@@ -170,11 +153,11 @@ class MapLegendPanel extends LitElement {
     const paint = this.maplayer.metadata.paint ? this.maplayer.metadata.paint : this.maplayer.paint;
     let paintFillColor = "white";
     if (paint && paint['fill-color']) {
-      paintFillColor = this.getZoomDependentValue(paint['fill-color']);
+      paintFillColor = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-color']);
     }
     let outlineColor = "gray";
     if (paint && paint['fill-outline-color']) {
-      outlineColor = this.getZoomDependentValue(paint['fill-outline-color']);
+      outlineColor = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-outline-color']);
     } 
     // todo: get more complex outlinecolor if applicable
     if (typeof outlineColor !== 'string') {
