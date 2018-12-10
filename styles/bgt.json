@@ -111,7 +111,7 @@
     "source": "bgtbegroeidterreindeel",
     "source-layer": "bgtbegroeidterreindeel",
     "paint":  {
-        "fill-color": "rgba(231,2401,211,1)",
+        "fill-color": "rgba(231,240,211,1)",
         "fill-outline-color": "rgba(189,130,116,1)"
     }
   },

@@ -15,7 +15,8 @@ class MapLegendPanel extends LitElement {
     return { 
       legendurl: String,
       zoom: Number,
-      maplayer: Object
+      maplayer: Object,
+      updatecount: Number
     }; 
   }
   constructor() {
@@ -166,7 +167,7 @@ class MapLegendPanel extends LitElement {
     // convert to array of {propertyname, [{fillColor, outlineColor, label}]}
     
     const result = {propertyname: "", items: []};
-    const paint = this.maplayer.paint;
+    const paint = this.maplayer.metadata.paint ? this.maplayer.metadata.paint : this.maplayer.paint;
     let paintFillColor = "white";
     if (paint && paint['fill-color']) {
       paintFillColor = this.getZoomDependentValue(paint['fill-color']);

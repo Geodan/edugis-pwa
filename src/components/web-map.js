@@ -244,17 +244,10 @@ class WebMap extends LitElement {
   updateSingleLayerPaintProperty(id, propertyInfo) {
     const layer = this.map.getLayer(id);
     if (layer) {
-      if (propertyInfo.fillcolor) {
-        this.map.setPaintProperty(id, 'fill-color', propertyInfo.fillcolor);
-      }
-      if (propertyInfo.filloutlinecolor) {
-        this.map.setPaintProperty(id, 'fill-outline-color', propertyInfo.filloutlinecolor);
-      }
-      if (propertyInfo.linecolor) {
-        this.map.setPaintProperty(id, 'line-color', propertyInfo.linecolor);
-      }
-      if (propertyInfo.linewidth) {
-        this.map.setPaintProperty(id, 'line-width', propertyInfo.linewidth);
+      for (let key in propertyInfo) {
+        if (key !== "layerid") {
+          this.map.setPaintProperty(id, key, propertyInfo[key]);  
+        }
       }
     }
   }
@@ -409,7 +402,9 @@ class WebMap extends LitElement {
   }
   applyStyle(style, styleTitle) {
     for (let id in style.sources) {
-      this.map.addSource(id, style.sources[id]);
+      if (!this.map.getSource(id)) {
+        this.map.addSource(id, style.sources[id]);
+      }
     }
     style.layers.forEach(layer=>{
       if (!layer.metadata) {

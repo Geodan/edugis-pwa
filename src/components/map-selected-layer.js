@@ -67,6 +67,14 @@ function colorToHex(colorString) {
     const rgb = hslToRgb(colorString[0], colorString[1], colorString[2]);
     return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
   }
+  if (colorString.startsWith('rgba(')) {
+    const rgb = colorString.substring(5).split(',').map(value=>parseFloat(value));
+    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+  }
+  if (colorString.startsWith('rgb(')) {
+    const rgb = colorString.substring(4).split(',').map(value=>parseFloat(value));
+    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+  }
 }
 
 /**
@@ -167,13 +175,8 @@ class MapSelectedLayer extends LitElement {
         <div class="layertitle${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.layer.metadata && this.layer.metadata.title?this.layer.metadata.title:this.layer.id}</div>
         <div class="iconbox">
           <div title="zichtbaarheid" class="iconcontainer" @click="${e=>this.toggleVisibility(e)}">${this.layer && this.layer.metadata && this.layer.metadata.layervisible === false?invisibleCircleIcon:visibleCircleIcon}</div>
-          ${(!this.outofrange) && this.layer.metadata && this.layer.metadata.legendvisible && this.layer.metadata.layervisible !== false?
-            html`          
-              <div title="instellingen" class="iconcontainer" @click="${e=>this.toggleSettings(e)}">${settingsIcon}</div>`
-          : html``}
-          ${this.layer.metadata && this.layer.metadata.layervisible !== false ? 
-            html`<div title="inklappen" class="iconcontainer${this.layer.metadata && this.layer.metadata.legendvisible?'':' closed'}" @click="${e=>this.toggleLegend(e)}">${arrowOpenedCircleIcon}</div>`
-          : html``}
+          <div title="instellingen" class="iconcontainer" @click="${e=>this.toggleSettings(e)}">${settingsIcon}</div>          
+          <div title="inklappen" class="iconcontainer${this.layer.metadata && this.layer.metadata.legendvisible && this.layer.metadata.layervisible!==false?'':' closed'}" @click="${e=>this.toggleLegend(e)}">${arrowOpenedCircleIcon}</div>
         </div>
       </div>
       ${this.renderSettings()}
@@ -229,7 +232,7 @@ class MapSelectedLayer extends LitElement {
         }
       }
       return html`<div class="legendcontainer">
-        <map-legend-panel .maplayer="${this.layer}" .zoom="${this.zoom}"></map-legend-panel>
+        <map-legend-panel .maplayer="${this.layer}" .zoom="${this.zoom}" .updatecount="${this.updatecount}"></map-legend-panel>
       </div>`;
     }
     return html``;
@@ -238,15 +241,22 @@ class MapSelectedLayer extends LitElement {
     if (!this.layer.metadata) {
       this.layer.metadata = {};
     }
-    this.layer.metadata.legendvisible = !this.layer.metadata.legendvisible;
+    if (this.layer.metadata.layervisible !== false) {
+      this.layer.metadata.legendvisible = !this.layer.metadata.legendvisible;
+    } else {
+      this.toggleVisibility();
+      this.layer.metadata.legendvisible = true;
+    }
     this.updatecount++;
   }
+  layerFeaturesVisible() {
+    return (!this.outofrange) && this.layer.metadata.layervisible !== false;
+  }
   renderSettings() {
+    // ${(!this.outofrange) && this.layer.metadata && this.layer.metadata.legendvisible && this.layer.metadata.layervisible !== false?
+          
     if (this.layer && this.layer.metadata && 
-        this.layer.metadata.legendvisible &&
-        this.layer.metadata.settingsvisible &&
-        (!this.outofrange) &&
-        this.layer.metadata.layervisible !== false) {
+        this.layer.metadata.settingsvisible) {
       if (!this.layer.metadata.hasOwnProperty('opacity')) {
         this.layer.metadata.opacity = 100;
       }
@@ -278,7 +288,6 @@ class MapSelectedLayer extends LitElement {
         }
         .label {
           display: inline-block;
-          top: 10px;
           font-weight: bold;
         }
         .trashtext {
@@ -286,26 +295,56 @@ class MapSelectedLayer extends LitElement {
         }
       </style>
       <div class="settingscontainer">
+      <div class="trashbincontainer">
+          <div class="label">Laag verwijderen</div>
+          <div class="trashbinicon" @click="${e=>this.removeLayer(e)}" title="kaartlaag verwijderen">${trashBinCircleIcon}</div>
+          <div class="trashtext">De laag kan weer toegevoegd worden via het data-catalogus menu</div>
+        </div>        
+        ${this.layerFeaturesVisible()?html`
         <div class="transparencycontainer">
-          <div class="label">Transparantie:</div><div class="percentage">${100-this.layer.metadata.opacity}%</div>
+          <div class="label">Laag-transparantie:</div><div class="percentage">${100-this.layer.metadata.opacity}%</div>
           <div class="slidercontainer">
             <map-slider @slidervaluechange="${e=>this.updateTransparency(e)}" value="${100-this.layer.metadata.opacity}"></map-slider>
           </div>
-        </div>
-        <div class="trashbincontainer">
-          <div class="label">Kaartlaag verwijderen</div>
-          <div class="trashbinicon" @click="${e=>this.removeLayer(e)}" title="kaartlaag verwijderen">${trashBinCircleIcon}</div>
-          <div class="trashtext">De laag kan weer toegevoegd worden via het data-catalogus menu</div>
-        </div>
+        </div>`:''}
+        ${this.layerFeaturesVisible()?html`
         <div class="editlegend">
         ${this.renderLegendEditor()}
-        </div>
+        </div>`:''}
       </div>`
     }
   }
+  legendEditorStyle() {
+    return html`
+    <style>
+      .legendeditcontainer {
+        border-top: 1px solid #F3F3F3;
+        padding-top: 4px;
+      }
+      .legendeditcontainer {
+        border-top: 1px solid #F3F3F3;
+        padding-top: 4px;
+      }
+      .linewidthlabel {
+        margin-top: 10px;                
+      }
+      .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .sliderwidthcontainer {
+        height: 55px;
+        width: 168px;
+        margin-top: -15px;
+        margin-bottom: -10px;
+        --mdc-theme-primary: #ccc;
+        --mdc-theme-secondary: #555;
+      }
+    </style>`;
+  }
   renderLegendEditor()
   {
-    let data;
+    /* let data;
     if (this.datagetter && this.datagetter.querySourceFeatures) {
       data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
     }
@@ -333,11 +372,11 @@ class MapSelectedLayer extends LitElement {
         }
         return minmaxproperties;
       }, minmaxproperties));
-    }
+    } */
     switch (this.layer.type) {
       case "fill":
         {
-          const paint = this.layer.paint;
+          const paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
           let fillColor = paint["fill-color"];
           let outlineColor = paint["fill-outline-color"];
           if (typeof fillColor === "string" && typeof outlineColor === "string")
@@ -345,27 +384,19 @@ class MapSelectedLayer extends LitElement {
             fillColor = colorToHex(fillColor);
             outlineColor = colorToHex(outlineColor);
             return html`
-            <style>
-              .legendeditcontainer {
-                border-top: 1px solid #F3F3F3;
-                padding-top: 4px;
-              }
-            </style>
+            ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
-            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
-            <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updatePaintProperty(e, {filloutlinecolor: e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
+            <div class="title">Laag aanpassen</div>
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {"fill-color": e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label><br>
+            <input id="linecolor" type="color" value="${outlineColor}" @input="${e=>this.updatePaintProperty(e, {"fill-outline-color": e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
             </div>
             `
           } else if (typeof fillColor === "string") {
             return html`
-            <style>
-              .legendeditcontainer {
-                border-top: 1px solid #F3F3F3;
-                padding-top: 4px;
-              }
-            </style>
+            ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
-            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {fillcolor: e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
+            <div class="title">Laag aanpassen</div>
+            <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {"fill-color": e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
             </div>
             `
           }
@@ -373,30 +404,22 @@ class MapSelectedLayer extends LitElement {
         break;
       case "line":
         {
-          const paint = this.layer.paint;
+          const paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
           let lineColor = paint["line-color"];
           let lineWidth = paint["line-width"];
           if (typeof lineColor === "string") {
             lineColor = colorToHex(lineColor);
             return html`
-            <style>
-              .legendeditcontainer {
-                border-top: 1px solid #F3F3F3;
-                padding-top: 4px;
-              }
-              .sliderwidthcontainer {
-                height: 40px;
-                width: 168px;
-                --mdc-theme-primary: #ccc;
-                --mdc-theme-secondary: #555;
-              }
-            </style>
+            ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
-            <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updatePaintProperty(e, {linecolor: e.currentTarget.value})}"> <label for="fillcolor">lijnkleur</label>
-            <div class="sliderwidthcontainer">
-              Lijndikte: ${lineWidth}
-              <map-slider @slidervaluechange="${e=>{this.layer.paint['line-width'] = e.detail.value / 10; this.updatePaintProperty(e, {linewidth: e.detail.value / 10})}}" value="${1 * lineWidth}"></map-slider>
-            </div>
+              <div class="title">Laag aanpassen</div>
+              <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updatePaintProperty(e, {"line-color": e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
+              <div class="linewidthlabel">
+                Lijndikte: ${lineWidth}
+                </div>
+              <div class="sliderwidthcontainer">
+                <map-slider @slidervaluechange="${e=>{this.layer.paint['line-width'] = e.detail.value / 10; this.updatePaintProperty(e, {"line-width": e.detail.value / 10})}}" value="${1 * lineWidth}"></map-slider>
+              </div>
             </div>
             `
           }
@@ -404,12 +427,12 @@ class MapSelectedLayer extends LitElement {
       default:
         break;
     }
-    
     return html``;
   }
   updatePaintProperty(e, propertyInfo)
   {
     //console.log(e.currentTarget.value);
+    this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, propertyInfo);
     propertyInfo.layerid = this.layer.id;
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
       detail: propertyInfo,
@@ -425,7 +448,7 @@ class MapSelectedLayer extends LitElement {
     this.layer.metadata.settingsvisible = !this.layer.metadata.settingsvisible;
     this.updatecount++;
   }
-  toggleVisibility(e) {
+  toggleVisibility() {
     if (this.toggleDebounce) {
         return;
     }
