@@ -110,7 +110,10 @@ class MBStyleParser
         case "step":
           {
             // element[1] is ["get", "propertyname"]
-            result = {legendTitle: styleArray[1][1], items: []};
+            result = {legendTitle: styleArray[1][1], items: [], type: "seq"};
+            if (typeof styleArray[3] === "string") {
+              result.type = "qual"
+            }
             const paintProperties = {};
             paintProperties[paintPropertyName] = this.colorToHex(styleArray[2]);
             result.items.push({paint: paintProperties, label: typeof styleArray[3] === "string" ? styleArray[3] : '< ' + styleArray[3]});
@@ -127,7 +130,10 @@ class MBStyleParser
         case "match":
           {
             // element[1] is ["get", "propertyname"] (?)
-            result = {legendTitle: styleArray[1][1], items: []};
+            result = {legendTitle: styleArray[1][1], items: [], type: "seq"};
+            if (typeof styleArray[2] === "string") {
+              result.type = "qual";
+            }
             const defaultProperty = {}
             defaultProperty[paintPropertyName] = this.colorToHex(styleArray[styleArray.length - 1]);
             result.items.push({paint: defaultProperty, label: ''});
@@ -148,6 +154,23 @@ class MBStyleParser
   }
   styleObjectToItems(styleObject, paintPropertyName) {
     // convert mapbox paint style object to legend with items
+    let result;
+    if (styleObject === Object(styleObject)) {
+      if (styleObject.hasOwnProperty('property')) {
+        result = {legendTitle: styleObject.property, items: [], type: "seq"};
+        if (typeof styleObject.stops[0][0] === "string") {
+          result.type = "qual";
+        }
+        result.propertyname = styleObject.property;
+        if (styleObject.stops) {
+          result.items = styleObject.stops.map(stop=>{
+            const paint = {}
+            paint[paintPropertyName] = this.colorToHex(stop[1]);
+            return {paint: paint, label: stop[0]}});
+        }
+      }
+    }
+    return result;
   }
   paintStyleToLegendItems(paintStyle, legendType, zoom)
   {
