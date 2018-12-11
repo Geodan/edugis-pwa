@@ -10,72 +10,8 @@ import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, tripOriginIcon 
 
 import './map-slider';
 import './map-legend-panel';
-
-/**
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
- *
- * @param   {number}  h       The hue
- * @param   {number}  s       The saturation
- * @param   {number}  l       The lightness
- * @return  {Array}           The RGB representation
- */
-function hslToRgb(h, s, l){
-  var r, g, b;
-
-  s = s / 100;
-  l = l / 100;
-  if(s == 0){
-      r = g = b = l; // achromatic
-  }else{
-      var hue2rgb = function hue2rgb(p, q, t){
-          if(t < 0) t += 1;
-          if(t > 1) t -= 1;
-          if(t < 1/6) return p + (q - p) * 6 * t;
-          if(t < 1/2) return q;
-          if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-          return p;
-      }
-
-      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      var p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1/3);
-      g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1/3);
-  }
-
-  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
-}
-
-function colorToHex(colorString) {
-  colorString = colorString.replace(' ', '');
-  if (colorString.startsWith('#')) {
-    if (colorString.length === 4) {
-      colorString = colorString.split('').map((char,index)=>index?char+char:char).join('');
-    }
-    return colorString;
-  }
-  if (colorString.startsWith('hsl(')) {
-    colorString = colorString.substring(4).split(',').map(value=>parseFloat(value));
-    const rgb = hslToRgb(colorString[0], colorString[1], colorString[2]);
-    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
-  }
-  if (colorString.startsWith('hsla(')) {
-    colorString = colorString.substring(5).split(',').map(value=>parseFloat(value));
-    const rgb = hslToRgb(colorString[0], colorString[1], colorString[2]);
-    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
-  }
-  if (colorString.startsWith('rgba(')) {
-    const rgb = colorString.substring(5).split(',').map(value=>parseFloat(value));
-    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
-  }
-  if (colorString.startsWith('rgb(')) {
-    const rgb = colorString.substring(4).split(',').map(value=>parseFloat(value));
-    return "#" + rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
-  }
-}
+import mbStyleParser from '../utils/mbox-style-parse.js';
+import colorbrewer from '../../lib/colorbrewer.js';
 
 /**
 * @polymer
@@ -381,8 +317,8 @@ class MapSelectedLayer extends LitElement {
           let outlineColor = paint["fill-outline-color"];
           if (typeof fillColor === "string" && typeof outlineColor === "string")
           {
-            fillColor = colorToHex(fillColor);
-            outlineColor = colorToHex(outlineColor);
+            fillColor = mbStyleParser.colorToHex(fillColor);
+            outlineColor = mbStyleParser.colorToHex(outlineColor);
             return html`
             ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
@@ -399,10 +335,53 @@ class MapSelectedLayer extends LitElement {
             <input id="fillcolor" type="color" value="${fillColor}" @input="${e=>this.updatePaintProperty(e, {"fill-color": e.currentTarget.value})}"> <label for="fillcolor">vlakkleur</label>
             </div>
             `
-          } else if (Array.isArray(fillColor)) {
-
-          } else if (fillColor === Object(fillColor)) {
-
+          } else {
+            const legendInfo = mbStyleParser.paintStyleToLegendItems(fillColor, 'fill', this.zoom);
+            if (legendInfo.items && legendInfo.items.length) {
+              const numClasses = legendInfo.items.length;
+              let schemes = colorbrewer.filter(scheme=>scheme.type==="seq" && scheme.sets.length > numClasses - 3).map(scheme=>{
+                const result = scheme.sets[numClasses - 3];
+                result.name = scheme.name;
+                result.type = scheme.type;
+                return result;
+              });
+              return html`
+              <style>
+                .schemescontainer {
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: wrap;
+                }
+                .colorscheme {
+                  display: flex;
+                  flex-direction: column;
+                  margin-right: 1px;
+                  cursor: pointer;
+                  border: 2px solid white;
+                }
+                .colorscheme:hover {
+                  border: 2px solid lightgray;
+                }
+                .color {
+                  width: 15px;
+                  height: 10px;
+                  margin-bottom: 1px;
+                  border: 1px solid gray;
+                }
+              </style>
+              <div class="label">Kleurschema</div>
+              <div class="schemescontainer">
+              ${schemes.map(scheme=>
+                  html`
+                    <div class="colorscheme" @click="${e=>this.updateColorScheme(e, scheme)}">
+                      ${scheme.colors.map(color=>
+                          html`<div class="color" style="background-color: ${color};"></div>`
+                      )}
+                    </div>
+                  `
+              )}
+              </div>`
+            }
           }
         }
         break;
@@ -412,7 +391,7 @@ class MapSelectedLayer extends LitElement {
           let lineColor = paint["line-color"];
           let lineWidth = paint["line-width"];
           if (typeof lineColor === "string") {
-            lineColor = colorToHex(lineColor);
+            lineColor = mbStyleParser.colorToHex(lineColor);
             return html`
             ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
@@ -432,6 +411,20 @@ class MapSelectedLayer extends LitElement {
         break;
     }
     return html``;
+  }
+  updateColorScheme(e, scheme) {
+    //console.log(scheme);
+    const currentColor = this.layer.paint["fill-color"];
+    if (Array.isArray(currentColor) && currentColor.length) {
+      switch (currentColor[0]) {
+        case "step":
+          for (let j=0, i = 2; i < currentColor.length; i += 2, j++) {
+            currentColor[i] = scheme.colors[j];
+          }
+          this.updatePaintProperty(e, {"fill-color": currentColor});
+          break;
+      }
+    }
   }
   updatePaintProperty(e, propertyInfo)
   {

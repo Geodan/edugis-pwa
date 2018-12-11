@@ -191,7 +191,8 @@ class MapLegendPanel extends LitElement {
         }
       }
     } else if (typeof paintFillColor === "string") {
-      result.items.push({fillColor: paintFillColor, outlineColor: outlineColor, label: ''});
+      result.propertyname = '';
+      result.items.push({fillColor: paintFillColor, outlineColor: outlineColor, label: this.maplayer.metadata.title});
     }
     
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
