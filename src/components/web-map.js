@@ -173,6 +173,7 @@ class WebMap extends LitElement {
     this.viewbox = undefined;
     // default property values
     this.mapstyle = this.baseURI + "styles/openmaptiles/osmbright.json";
+    this.mapstyleid = "OsmBright";
     this.mapstyletitle = "OSM bright (stijl)";
     this.lon = 5.0;
     this.lat = 52.0;
@@ -262,21 +263,33 @@ class WebMap extends LitElement {
       }
     }
   }
+  removeSourceIfOrphaned(source) {
+    const otherSourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
+    if (otherSourceLayers.length === 0) {
+      if (this.map.getSource(source)) {
+        this.map.removeSource(source);
+      }
+    }
+  }
   removeLayer(e) {
     if (this.map) {
       const targetLayer = this.map.getLayer(e.detail.layerid);
       if (targetLayer) {
         const source = targetLayer.source;
         this.map.removeLayer(targetLayer.id);
-        const sourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
-        if (sourceLayers.length == 0) {
-          if (this.map.getSource(source)) {
-            this.map.removeSource(source);
-          }
-        }        
-        this.resetLayerList();
-        this.map._update(true); // TODO: how refresh map without calling private "_update()"?
+        this.removeSourceIfOrphaned(source);
+        
+      } else {
+        // layer not found, check if this layer is a style
+        const styleLayers = this.map.getStyle().layers.filter(layer=>layer.metadata?layer.metadata.styleid === e.detail.layerid:false);
+        styleLayers.forEach(layer=>{
+          const source = layer.source;
+          this.map.removeLayer(layer.id);
+          this.removeSourceIfOrphaned(source);
+        });
       }
+      this.resetLayerList();
+      this.map._update(true); // TODO: how refresh map without calling private "_update()"?
     }
   }
   restoreNoneReferenceLayers()
@@ -388,19 +401,25 @@ class WebMap extends LitElement {
       return false;
     });
   }
-  setReferenceLayers(styleTitle) {
+  setReferenceLayers(styleId, styleTitle) {
     this.map.getStyle().layers.forEach(layer=>{
-      if (layer.metadata) {
-        layer.metadata.reference = true;
-        if (styleTitle && !layer.metadata.styletitle) {
-          layer.metadata.styletitle = styleTitle;
-        }
+      let mapLayer = layer;
+      if (mapLayer.metadata) {
+        mapLayer.metadata.reference = true;
       } else {
-        this.map.getLayer(layer.id).metadata = {reference: true};
+        // get reference to original layer
+        mapLayer = this.map.getLayer(layer.id);
+        mapLayer.metadata = {reference: true};
+      }
+      if (styleId && !mapLayer.metadata.styleid) {
+        mapLayer.metadata.styleid = styleId;
+      }
+      if (styleTitle && !mapLayer.metadata.styletitle) {
+        mapLayer.metadata.styletitle = styleTitle;
       }
     });
   }
-  applyStyle(style, styleTitle) {
+  applyStyle(style, styleId, styleTitle) {
     for (let id in style.sources) {
       if (!this.map.getSource(id)) {
         this.map.addSource(id, style.sources[id]);
@@ -411,13 +430,14 @@ class WebMap extends LitElement {
         layer.metadata = {};
       }
       layer.metadata.styletitle=styleTitle;
+      layer.metadata.styleid=styleId;
       this.addLayer({detail:layer});
     });
   }
-  loadStyle(url, styleTitle) {
+  loadStyle(url, styleId, styleTitle) {
     if (typeof url === 'object') {
       // no need to dereference url
-      return this.applyStyle(url, styleTitle);
+      return this.applyStyle(url, styleId, styleTitle);
     }
     if (url.split('/')[0].indexOf(':') === -1) {
       // relative url
@@ -427,7 +447,7 @@ class WebMap extends LitElement {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
-      this.applyStyle(style, styleTitle);
+      this.applyStyle(style, styleId, styleTitle);
     });
   }
   removeReferenceLayers()  {
@@ -440,7 +460,8 @@ class WebMap extends LitElement {
     });
   }
   addStyle(layerInfo) {
-    const styleTitle = layerInfo.metadata.title ? layerInfo.metadata.title : layerInfo.id ? layerInfo.id : "style title not defined";
+    const styleId = layerInfo.id;
+    const styleTitle = layerInfo.metadata.title ? layerInfo.metadata.title : styleId ? styleId : "style title not defined";
     if (layerInfo.metadata && layerInfo.metadata.reference) {
       if (this.styleLoading) {
         return;
@@ -456,7 +477,7 @@ class WebMap extends LitElement {
       /* set callback for map.setStyle() */
       this.map.once('styledata', ()=>{
         /* add reference metadata to new layers set by setStyle() */
-        this.setReferenceLayers(styleTitle);
+        this.setReferenceLayers(styleId, styleTitle);
         /* restore old non-reference layers */
         this.restoreNoneReferenceLayers();
         
@@ -470,7 +491,7 @@ class WebMap extends LitElement {
       this.map.setStyle(layerInfo.source);
     } else {
       /* add style to existing layers */
-      this.loadStyle(layerInfo.source, styleTitle);
+      this.loadStyle(layerInfo.source, styleId, styleTitle);
     }
   }
   addLayer(e) {
@@ -824,7 +845,7 @@ class WebMap extends LitElement {
     */
 
     this.map.on('load', ()=>{
-        this.setReferenceLayers(this.mapstyletitle);
+        this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
         this.resetLayerList();
         //this.draw.changeMode('static');
     });
