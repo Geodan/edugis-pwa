@@ -339,7 +339,7 @@ class MapSelectedLayer extends LitElement {
             const legendInfo = mbStyleParser.paintStyleToLegendItems(fillColor, 'fill', this.zoom);
             if (legendInfo.items && legendInfo.items.length) {
               const numClasses = legendInfo.items.length;
-              let schemes = colorbrewer.filter(scheme=>scheme.type==="seq" && scheme.sets.length > numClasses - 3).map(scheme=>{
+              let schemes = colorbrewer.filter(scheme=>scheme.type===legendInfo.type && scheme.sets.length > numClasses - 3).map(scheme=>{
                 const result = scheme.sets[numClasses - 3];
                 result.name = scheme.name;
                 result.type = scheme.type;
@@ -423,6 +423,20 @@ class MapSelectedLayer extends LitElement {
           }
           this.updatePaintProperty(e, {"fill-color": currentColor});
           break;
+        case "match":
+          currentColor[currentColor.length - 1] = scheme.colors[0];
+          for (let j = 1, i = 3; i < currentColor.length; i +=2, j++) {
+            currentColor[i] = scheme.colors[j];
+          }
+          this.updatePaintProperty(e, {"fill-color": currentColor});
+          break;
+      }
+    } else if (currentColor === Object(currentColor)) {
+      if (currentColor.stops) {
+        currentColor.stops.forEach((stop, index)=>stop[1] = scheme.colors[index]);
+        this.updatePaintProperty(e, {
+          "fill-color": currentColor
+        })
       }
     }
   }
