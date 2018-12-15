@@ -962,10 +962,15 @@ class WebMap extends LitElement {
               }
           };
         });
+        this.map.getSource('map-search-geojson').setData(searchGeoJson);
       } else {
         searchGeoJson.features = [];
+        this.map.removeLayer(searchPoints.id);
+        this.map.removeLayer(searchLines.id);
+        this.map.removeLayer(searchSurface.id);
+        this.map.removeSource('map-search-geojson');
       }
-      this.map.getSource('map-search-geojson').setData(searchGeoJson);
+      
     }
   }
   XMLtoGeoJSON(xmlString)
