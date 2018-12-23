@@ -69,7 +69,7 @@ function detectCrs(geojson, projs) {
 }
 
 function determineCrs(crs, projs) {
-  if (typeof crs === 'string' || crs instanceof String) {
+  if (typeof crs === 'string') {
     return projs[crs] || proj4.Proj(crs);
   }
 

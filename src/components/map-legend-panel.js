@@ -221,6 +221,11 @@ class MapLegendPanel extends LitElement {
           legendContent = html`legend not available for type ${this.maplayer.type}</div>`;
       }
     }
+    let legendopacity;
+    if (this.maplayer.metadata.hasOwnProperty("opacity")) {
+      legendopacity = `opacity: ${this.maplayer.metadata.opacity / 100.0};`
+    }
+
     return html`
       <style>
         .legendcontainer {
@@ -229,7 +234,7 @@ class MapLegendPanel extends LitElement {
           background: white;
         }
       </style>
-      <div class="legendcontainer">${legendContent}</div>`;
+      <div class="legendcontainer" style="${legendopacity?legendopacity:''}">${legendContent}</div>`;
   }
 }
 
