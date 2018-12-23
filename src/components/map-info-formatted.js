@@ -52,14 +52,14 @@ class MapInfoFormatted extends LitElement {
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 20px 20px;
+        background: url('${document.baseURI}/images/checkradio.png') 20px 20px;
       }
       .check-off {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 20px 0px;
+        background: url('${document.baseURI}/images/checkradio.png') 20px 0px;
       }
       .streetviewcontainer {
         display: flex;

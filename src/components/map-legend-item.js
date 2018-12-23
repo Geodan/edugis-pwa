@@ -12,6 +12,7 @@ import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon 
 import './dragdrop/lit-draghandle';
 import './map-legend-panel';
 import {LitElement, html} from '@polymer/lit-element';
+import {foldercss} from './folder-icon.css.js';
 
 /**
 * @polymer
@@ -253,8 +254,8 @@ input[type=range]:focus::-ms-fill-upper {
 }
 </style>`;
     return html`
+    ${foldercss}
     <style>
-        @import '${this.baseURI}/src/components/folder-icon.css';
         :host {
             display:block;
         }

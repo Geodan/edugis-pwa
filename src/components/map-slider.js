@@ -1,5 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import {MDCSlider} from '@material/slider/index';
+import {mdcslidercss} from '../../lib/mdc.slider.css';
 
 /**
 * @polymer
@@ -22,8 +23,8 @@ class MapSlider extends LitElement {
   }
   render() {
     return html`
+      ${mdcslidercss}
       <style>
-        @import "node_modules/@material/slider/dist/mdc.slider.css";
         .mdc-slider:not(.mdc-slider--disabled) .mdc-slider__track-container {
           background-color: var(--mdc-theme-primary, rgba(1, 135, 134, 0.26)); 
         }

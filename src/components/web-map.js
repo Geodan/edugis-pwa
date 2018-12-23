@@ -172,7 +172,7 @@ class WebMap extends LitElement {
     this.pitch = 0;
     this.viewbox = undefined;
     // default property values
-    this.mapstyle = this.baseURI + "styles/openmaptiles/osmbright.json";
+    this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
     this.mapstyleid = "OsmBright";
     this.mapstyletitle = "OSM bright (stijl)";
     this.lon = 5.0;
@@ -440,7 +440,7 @@ class WebMap extends LitElement {
     }
     if (url.split('/')[0].indexOf(':') === -1) {
       // relative url
-      url = this.baseURI + url;
+      url = document.baseURI + url;
     } 
     if (url.indexOf('mapbox:') === 0) {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
@@ -587,13 +587,13 @@ class WebMap extends LitElement {
   render() {
     
     return html`<style>
-      @import "${this.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
+      @import "${document.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
       /* workaround bug mapbox-gl v.051, https://github.com/mapbox/mapbox-gl-js/issues/7589 */
       .mapboxgl-ctrl.mapboxgl-ctrl-attrib p {
         display: inline-block;
         margin: 2px;
       }
-      /* @import "${this.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";*/
+      /* @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";*/
       :host {
         display: inline-block;
         min-width: 200px;

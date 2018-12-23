@@ -1,4 +1,5 @@
 import {LitElement, html} from '@polymer/lit-element';
+import {foldercss} from './folder-icon.css.js';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -271,8 +272,8 @@ class MapLayerTree extends LitElement {
     })}</ul>`;
   }
   render() {
-    return html`<style>
-      @import '${this.baseURI}/src/components/folder-icon.css';
+    return html`${foldercss}
+      <style>
       ul {
         list-style-type: none;
         padding-left: 10px;
@@ -316,28 +317,28 @@ class MapLayerTree extends LitElement {
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 0 0;
+        background: url('${document.baseURI}/images/checkradio.png') 0 0;
       }
       .radio-off {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 0 20px;
+        background: url('${document.baseURI}/images/checkradio.png') 0 20px;
       }
       .check-on {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 20px 20px;
+        background: url('${document.baseURI}/images/checkradio.png') 20px 20px;
       }
       .check-off {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${this.baseURI}/images/checkradio.png') 20px 0px;
+        background: url('${document.baseURI}/images/checkradio.png') 20px 0px;
       }
       .label {
         vertical-align: middle;
