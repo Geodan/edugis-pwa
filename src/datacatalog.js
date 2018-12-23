@@ -274,7 +274,7 @@ export default
                   "title": "fmi",
                   "layerInfo": {
                     "id": "fmi",
-                    "url": "http://openwms.fmi.fi/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities&"
+                    "url": "https://openwms.fmi.fi/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities&"
                   }
                 }
               ]
