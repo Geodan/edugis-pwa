@@ -1,8 +1,8 @@
 {
-  "name": "pwa-starter-kit",
-  "version": "0.8.0",
+  "name": "edugis",
+  "version": "0.8.1",
   "contributors": [
-    "The Polymer Authors"
+    "Anne Blankert"
   ],
   "license": "BSD-3-Clause",
   "repository": "Polymer/pwa-starter-kit",

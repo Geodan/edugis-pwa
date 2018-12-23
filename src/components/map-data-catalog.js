@@ -140,12 +140,14 @@ import './map-layer-tree';
 class MapDataCatalog extends LitElement {
   static get properties() { 
     return { 
-      datacatalog: Object
+      datacatalog: Object,
+      maplayers: Array
     }; 
   }
   constructor() {
     super();
     this.datacatalog = null;
+    this.maplayers = [];
   }
   setListIds(list) {
     list.forEach(item=>{
@@ -181,7 +183,7 @@ class MapDataCatalog extends LitElement {
     }
   }
   render() {
-    return html`<map-layer-tree headertext="Data-catalogus" .nodelist="${this.datacatalog}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="Data-catalogus" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;
@@ -280,7 +282,7 @@ class MapDataCatalog extends LitElement {
     }
     return legendUrl;
   }
-  async handleClickAsync(e, node) {
+  async handleClick(e, node) {
     if (node.layerInfo && node.layerInfo.id) {
       const layerInfo = node.layerInfo;
       this.insertServiceKey(layerInfo);
@@ -320,9 +322,6 @@ class MapDataCatalog extends LitElement {
         {detail: layerInfo}
       ))
     }
-  }
-  handleClick(e, node) {
-    setTimeout(()=>this.handleClickAsync(e, node), 0);
   }
 }
 

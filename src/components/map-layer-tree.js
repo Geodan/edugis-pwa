@@ -2,8 +2,8 @@ import {LitElement, html} from '@polymer/lit-element';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
-   Nodes are expected to be structured as follows
-   [{title:"group", opened: false, type: "check|radio", subnodes: []}, {title:"title2", itemid: "id"}]
+   Nodes are expected to be structured as follows (only group-nodes have property "subnodes"):
+   [{title:"group title", opened: true|false, type: "check|radio", subnodes: []}, {title:"title2", itemid: "id"}]
 */
 /**
 * @polymer
@@ -13,6 +13,7 @@ class MapLayerTree extends LitElement {
   static get properties() { 
     return { 
       nodelist: Array,
+      maplayers: Array,
       updates: Number,
       headertext: String
     }; 
@@ -22,6 +23,31 @@ class MapLayerTree extends LitElement {
       this.nodelist = [];
       this.updates = 0;
       this.headertext = "headertext";
+      this.maplayers = [];
+  }
+  updateChecked(nodeList, layerids)
+  {
+    nodeList.forEach(node=>{
+      node.checked = layerids.has(node.layerInfo?node.layerInfo.id:node.id);
+      if (node.sublayers) {
+        this.updateChecked(node.sublayers, layerids);
+      }
+    });
+  }
+  shouldUpdate(changedProps) {
+    if (changedProps.has("maplayers")) {
+      const layerids = this.maplayers.reduce((result, layer)=>{
+        if (layer.metadata.styleid) {
+          result.add(layer.metadata.styleid);
+        } else {
+          result.add(layer.id);
+        }
+        return result;
+      }, new Set());
+      // layerids now contains list of active map layers 
+      this.updateChecked(this.nodelist, layerids)  
+    }
+    return true;
   }
   scaleHintToZoomLevel(hint)
   {
@@ -224,7 +250,7 @@ class MapLayerTree extends LitElement {
     const input = e.currentTarget.querySelector("div");        
     if (input) {
       const id = input.getAttribute("id");
-      this.toggleCheck(id);    
+      this.toggleCheck(id);
       e.stopPropagation();
     }
   }

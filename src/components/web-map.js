@@ -277,8 +277,7 @@ class WebMap extends LitElement {
       if (targetLayer) {
         const source = targetLayer.source;
         this.map.removeLayer(targetLayer.id);
-        this.removeSourceIfOrphaned(source);
-        
+        this.removeSourceIfOrphaned(source);        
       } else {
         // layer not found, check if this layer is a style
         const styleLayers = this.map.getStyle().layers.filter(layer=>layer.metadata?layer.metadata.styleid === e.detail.layerid:false);
@@ -734,7 +733,7 @@ class WebMap extends LitElement {
           <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
         </map-panel>
         <map-panel .active="${this.currentTool==="datacatalog"}">
-          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
         </map-panel>
         <map-panel .active="${this.currentTool==='measure'}">
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
