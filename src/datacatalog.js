@@ -225,7 +225,7 @@ export default
                   "type":"raster",
                   "tileSize":256,
                   "tiles":[
-                    "https://tiles.edugis.nl/www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}"
+                    "https://tiles.edugis.nl/www.metoffice.gov.uk/public/data/LayerCache/OBSERVATIONS/ItemBbox/RADAR_UK_Composite_Highres/{x}/{y}/{z}/png?styles=Bitmap+1km+Blue-Pale+blue+gradient+0.01+to+32mm%2Fhr&TIME={time}&key={metofficekey}"
                   ],
                   "attribution":"met office"
                 }
@@ -256,7 +256,7 @@ export default
         {
           "type":"group",
           "title":"WMS GetCapabilities",
-          "sublayers":[
+          "sublayers":[    
             {
               "type":"getcapabilities",
               "title":"bbg2012caps",
@@ -264,6 +264,20 @@ export default
                 "id":"bbg2012",
                 "url":"https://tiles.edugis.nl/mapproxy/bbg2012/service?service=WMS&version=1.3.0&request=getcapabilities"
               }
+            },
+            {
+              "type": "group",
+              "title" : "Finse meteorologische dienst",
+              "sublayers" :[
+                {
+                  "type": "getcapabilities",
+                  "title": "fmi",
+                  "layerInfo": {
+                    "id": "fmi",
+                    "url": "http://openwms.fmi.fi/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities&"
+                  }
+                }
+              ]
             },
             {
               "type":"getcapabilities",
