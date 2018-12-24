@@ -296,6 +296,9 @@ class MapLayerTree extends LitElement {
         cursor: pointer;
         line-height: 2.5em;
       }
+      li ul {
+        cursor: default;
+      }
       li:last-child {
         border-bottom: none;
       }
