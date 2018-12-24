@@ -10,13 +10,17 @@ class MapSlider extends LitElement {
   static get properties() { 
     return { 
       active: Boolean,
-      value: Number
+      value: Number,
+      minvalue: Number,
+      maxvalue: Number
     }; 
   }
   constructor() {
       super();
       this.active = true;
-      this.value = 100;
+      this.minvalue = 0;
+      this.maxvalue = 100;
+      this.value = this.minvalue;
   }
   shouldUpdate(changedProps) {
       return this.active;
@@ -30,7 +34,7 @@ class MapSlider extends LitElement {
         }
       </style>
       <div class="mdc-slider" tabindex="0" @MDCSlider:input="${e=>this.change(e)}" @MDCSlider:change="${e=>this.change(e)}" role="slider"
-            aria-valuemin="0" aria-valuemax="100" aria-valuenow="${this.value}"
+            aria-valuemin="${this.minvalue}" aria-valuemax="${this.maxvalue}" aria-valuenow="${this.value}"
             aria-label="Select Value">
         <div class="mdc-slider__track-container">
           <div class="mdc-slider__track"></div>

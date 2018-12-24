@@ -253,13 +253,37 @@ class MapSelectedLayer extends LitElement {
           <div class="slidercontainer">
             <map-slider @slidervaluechange="${e=>this.updateTransparency(e)}" value="${100-this.layer.metadata.opacity}"></map-slider>
           </div>
-        </div>`:''}
-        ${this.layerFeaturesVisible()?html`
+        </div>
+        ${this.renderIlluminationDirectionSlider()}
         <div class="editlegend">
         ${this.renderLegendEditor()}
         </div>`:''}
       </div>`
     }
+  }
+  renderIlluminationDirectionSlider()
+  {
+    if (this.layer.type !== 'hillshade') {
+      return '';
+    }
+    if (!this.layer.metadata.paint) {
+      this.layer.metadata.paint = {};
+    }
+    if (!this.layer.metadata.paint.hasOwnProperty('hillshade-illumination-direction')) {
+      this.layer.metadata.paint['hillshade-illumination-direction'] = this.layer.paint?
+        this.layer.paint['hillshade-illumination-direction']?
+          this.layer.paint['hillshade-illumination-direction']
+        :335
+      :335;
+    }
+    return html`
+      <div class="transparencycontainer">
+        <div class="label">Lichtbron:</div><div class="percentage">${Math.round(this.layer.metadata.paint['hillshade-illumination-direction'])}&deg;</div>
+        <div class="slidercontainer">
+          <map-slider maxvalue="359" @slidervaluechange="${e=>this.updatePaintProperty(e, {"hillshade-illumination-direction": e.currentTarget.value})}" value="${this.layer.metadata.paint['hillshade-illumination-direction']}"></map-slider>
+        </div>
+      </div>
+    `
   }
   legendEditorStyle() {
     return html`
