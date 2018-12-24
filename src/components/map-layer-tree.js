@@ -61,8 +61,10 @@ class MapLayerTree extends LitElement {
   layerToNode(Layer, Request) {
     let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
     // upgrade to https (cannot load from http)
-    onlineResource.protocol = 'https:';
-    onlineResource.port = 443;
+    if (onlineResource.protocol === 'http') {
+      onlineResource.protocol = 'https:';
+      onlineResource.port = 443;
+    }
     onlineResource = onlineResource.toString();
     const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
       "id" : Layer.Name,
