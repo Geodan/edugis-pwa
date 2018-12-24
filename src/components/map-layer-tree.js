@@ -38,7 +38,7 @@ class MapLayerTree extends LitElement {
   shouldUpdate(changedProps) {
     if (changedProps.has("maplayers")) {
       const layerids = this.maplayers.reduce((result, layer)=>{
-        if (layer.metadata.styleid) {
+        if (layer.metadata && layer.metadata.styleid) {
           result.add(layer.metadata.styleid);
         } else {
           result.add(layer.id);
