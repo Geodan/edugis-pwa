@@ -228,6 +228,9 @@ class WebMap extends LitElement {
         case 'symbol':
           this.map.setPaintProperty(id, 'text-opacity', opacity);
           break;
+        case 'hillshade':
+          this.map.setPaintProperty(id, 'hillshade-exaggeration', opacity);
+          break;
       }
     }
   }

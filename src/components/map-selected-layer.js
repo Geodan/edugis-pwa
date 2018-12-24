@@ -194,7 +194,18 @@ class MapSelectedLayer extends LitElement {
     if (this.layer && this.layer.metadata && 
         this.layer.metadata.settingsvisible) {
       if (!this.layer.metadata.hasOwnProperty('opacity')) {
-        this.layer.metadata.opacity = 100;
+        switch (this.layer.type) {
+          case 'hillshade':
+            this.layer.metadata.opacity = this.layer.paint?
+              this.layer.paint['hillshade-exaggeration']?
+                this.layer.paint['hillshade-exaggeration']*100
+              :50
+            :50;
+            break;
+          default:
+            this.layer.metadata.opacity = 100;
+            break;
+        }
       }
       return html`
       <style>
