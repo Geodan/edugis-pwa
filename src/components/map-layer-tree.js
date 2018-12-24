@@ -59,6 +59,11 @@ class MapLayerTree extends LitElement {
     }
   }
   layerToNode(Layer, Request) {
+    let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
+    // upgrade to https (cannot load from http)
+    onlineResource.protocol = 'https:';
+    onlineResource.port = 443;
+    onlineResource = onlineResource.toString();
     const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
       "id" : Layer.Name,
       "type" : "raster",
@@ -71,7 +76,7 @@ class MapLayerTree extends LitElement {
           "type": "raster",
           "tileSize" : 256,
           "tiles": [
-              Request.GetMap.DCPType[0].HTTP.Get.OnlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&style=" + encodeURIComponent(Layer.Style[0].Name)
+              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&styles=" // + encodeURIComponent(Layer.Style[0].Name)
           ],
           "attribution": Layer.Attribution && Layer.Attribution.Title ? Layer.Attribution.Title: ""
           }
