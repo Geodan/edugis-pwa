@@ -61,18 +61,23 @@ class MapLayerTree extends LitElement {
   layerToNode(Layer, Request) {
     let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
     // upgrade to https (cannot load from http)
-    if (onlineResource.protocol === 'http') {
+    if (onlineResource.protocol === 'http:') {
       onlineResource.protocol = 'https:';
       onlineResource.port = 443;
     }
     onlineResource = onlineResource.toString();
+    let featureInfoResource = new URL(Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource);
+    if (featureInfoResource.protocol === 'http:') {
+      featureInfoResource.protocol = 'https:';
+      featureInfoResource.port = 443;
+    }
     const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
       "id" : Layer.Name,
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
           "legendurl": Layer.Style[0].LegendURL[0].OnlineResource,
-          "getFeatureInfoUrl": Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
+          "getFeatureInfoUrl": featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
       },
       "source" : {
           "type": "raster",
