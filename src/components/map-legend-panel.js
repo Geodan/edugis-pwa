@@ -232,6 +232,7 @@ class MapLegendPanel extends LitElement {
           text-align: left;
           padding-left: 5px;
           background: white;
+          overflow: hidden;
         }
       </style>
       <div class="legendcontainer" style="${legendopacity?legendopacity:''}">${legendContent}</div>`;
