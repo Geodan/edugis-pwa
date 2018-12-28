@@ -1,0 +1,56 @@
+{
+    "map": {
+        "zoom": 12,
+        "center": [4.90, 52.37],
+        "pitch" : 0,
+        "style" : {
+            "version": 8,
+            "name": "OsmRaster",
+            "id": "ciwf3o3u2008z2pmsdfasxq",
+            "sources": {
+              "osmraster": {
+                "type" : "raster",
+                "tileSize" : 256,
+                    "tiles": [
+                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                    ],
+                    "attribution": "&copy; OpenStreetMap contributors",
+                    "maxzoom": 19
+              }
+            },
+            "layers": [
+              {
+                "id" : "openstreetmap",
+                "type" : "raster",
+                "metadata" : {
+                  "legendurl" : "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                },
+                "source" : "osmraster"
+              }
+            ]
+        }  
+    },
+    "datacatalog" : {
+
+    },
+    "tools" : {
+        "toolbar": {"hidden" : 0},
+        "search" : {"visible": 1, "order" : 0},
+        "datacatalog" : {"visible": 1, "order" : 1},
+        "measure" : {"visible": 1, "order": 2},
+        "info" : {"visible" : 1, "order": 3},
+        "maplanguage" : {"visible" : 1, "order": 4},
+        "pitch" : {"visible" : 1, "order": 5},
+        "geolocate" : {"visible" : 1, "order": 6},
+        "draw" : {"visible" : 1, "order": 7},
+        "legend" : {"visible" : 1, "position" : "top-right", "hidden" : 0},
+        "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
+        "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
+        "coordinates" : {"visible" : 1, "position" : "bottom-center"},
+        "scale": {"visible" : 1, "position" : "bottom-right"},
+        "currenttool": null
+    },
+    "keys" : {
+        "mapboxaccesstoken" : null
+    }
+}
