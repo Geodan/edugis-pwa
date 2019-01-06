@@ -150,7 +150,8 @@ class WebMap extends LitElement {
       mapstyle: String, 
       lon: Number, 
       lat: Number, 
-      zoom: Number, 
+      zoom: Number,
+      pitch: Number,
       navigation: String,
       scalebar: String,
       geolocate: String,
@@ -163,7 +164,8 @@ class WebMap extends LitElement {
       haslegend: Boolean,
       accesstoken: String,
       lastClickPoint: Object,
-      currentTool: String
+      currentTool: String,
+      configurl: String
     }; 
   }
   constructor() {
@@ -182,6 +184,7 @@ class WebMap extends LitElement {
     this.zoom = 6;
     this.resolution = 0;
     this.navigation = "false";
+    this.zoomlevel = "false";
     this.scalebar = "false";
     this.geolocate = "false";
     this.coordinates = "false";
@@ -190,6 +193,22 @@ class WebMap extends LitElement {
     this.accesstoken = undefined;
     this.lastClickPoint = undefined;
     this.currentTool = '';
+    this.toolList = [
+      {tool:"toolbar", visible: true, position: "opened", order: 0, info:""},
+      {tool:"search", visible: true, position: "", order: 0, info:"Adres zoeken", icon: gmSearchIcon},
+      {tool:"datacatalog", visible: true, position: "", order: 1, info:"Data-catalogus", icon:layermanagerIcon},
+      {tool:"measure", visible: true, position: "", order: 2, info:"Afstanden meten", icon: measureIcon},
+      {tool:"info", visible: true, position: "", order: 3, info: "Locatie-informatie", icon: gmInfoIcon},
+      {tool:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
+      {tool:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
+      {tool:"geolocate", visible: true, position: "", order: 6, info: "Waar ben ik?", icon: gpsFixedIcon},
+      {tool:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
+      {tool:"zoomlevel", visible: true, position: "bottom-left", order: 8, info: "Zoom-niveau"},
+      {tool:"navigation", visible: true, position: "bottom-left", order: 9, info: "Zoom, Roteer"},
+      {tool:"coordinates", visible: true, position: "bottom-center", order: 10},
+      {tool:"scale", visible: true, position: "bottom-right", order: 11, info: "Schaalbalk"},
+      {tool:"legend", visible: true, position: "opened", order: 12, info: "Legenda en kaartlagen"},
+    ];
   }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
@@ -587,6 +606,54 @@ class WebMap extends LitElement {
       this.currentTool = name;
     }
   }
+  renderToolbarTools()
+  {
+    const toolbar = this.toolList.find(tool=>tool.tool==="toolbar");
+    if (!toolbar.visible) {
+      return '';
+    }
+    return html`
+    <div id="tool-menu-container">
+      <div id="button-hide-menu" @click="${e=>this.hideMenu(e)}">
+        <span class="offset"></span><i>${arrowLeftIcon}</i>
+      </div>
+      <div id="tools-menu">
+        <ul>
+          ${this.toolList.filter(tool=>tool.visible).sort((a,b)=>a.order-b.order).filter(tool=>tool.icon).map(tool=>{
+            return html`<li>
+              <map-iconbutton .icon="${tool.icon}" info="${tool.info}" @click="${e=>this.toggleTool(tool.tool)}" .active="${this.currentTool===tool.tool}"></map-iconbutton>
+            </li>`
+          })}
+        </ul>
+      </div>
+      <div id="panel-container" class="${this.currentTool !==''?"active":""}">
+        <map-panel .active="${this.currentTool==="search"}">
+          <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+        </map-panel>
+        <map-panel .active="${this.currentTool==="datacatalog"}">
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='measure'}">
+          <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='info'}">
+          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}" @togglestreetview="${e=>this.toggleStreetView(e)}"></map-info-formatted>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='maplanguage'}">
+          <map-language .active="${this.currentTool==='maplanguage'}" language="autodetect" @languagechanged="${e=>this.setLanguage(e)}"></map-language>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='geolocate'}">
+        <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
+        </map-panel>        
+        <map-panel .active="${this.currentTool==='pitch'}">
+          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='draw'}">
+          <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
+        </map-panel>
+      </div>
+    </div>`
+  }
   render() {
     
     return html`<style>
@@ -706,59 +773,7 @@ class WebMap extends LitElement {
       }
       </style>
     <div class="webmap"></div>
-    <div id="tool-menu-container">
-      <div id="button-hide-menu" @click="${e=>this.hideMenu(e)}">
-        <span class="offset"></span><i>${arrowLeftIcon}</i>
-      </div>
-      <div id="tools-menu">
-        <ul>
-          <li>
-            <map-iconbutton .icon="${gmSearchIcon}" info="Adres zoeken" @click="${e=>this.toggleTool('search')}" .active="${this.currentTool==='search'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${layermanagerIcon}" info="Data-catalogus" @click="${e=>this.toggleTool('datacatalog')}" .active="${this.currentTool==='datacatalog'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${measureIcon}" info="Afstanden meten" @click="${e=>this.toggleTool('measure')}" .active="${this.currentTool==='measure'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${gmInfoIcon}" info="Locatie-informatie" @click="${e=>this.toggleTool('info')}" .active="${this.currentTool==='info'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${languageIcon}" info="Kaarttaal" @click="${e=>this.toggleTool('language')}" .active="${this.currentTool==='language'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${html`<b>3D</b>`}" info="Kaarthoek" @click="${e=>this.toggleTool('pitch')}" .active="${this.currentTool==='pitch'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${gpsFixedIcon}" info="Waar ben ik?" @click="${e=>this.toggleTool('geolocate')}" .active="${this.currentTool==='geolocate'}"></map-iconbutton>
-          </li><li>
-            <map-iconbutton .icon="${drawIcon}" info="Tekenen" @click="${e=>this.toggleTool('draw')}" .active="${this.currentTool==='draw'}"></map-iconbutton>
-          </li>
-        </ul>
-      </div>
-      <div id="panel-container" class="${this.currentTool !==''?"active":""}">
-        <map-panel .active="${this.currentTool==="search"}">
-          <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
-        </map-panel>
-        <map-panel .active="${this.currentTool==="datacatalog"}">
-          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
-        </map-panel>
-        <map-panel .active="${this.currentTool==='measure'}">
-          <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
-        </map-panel>
-        <map-panel .active="${this.currentTool==='info'}">
-          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}" @togglestreetview="${e=>this.toggleStreetView(e)}"></map-info-formatted>
-        </map-panel>
-        <map-panel .active="${this.currentTool==='language'}">
-          <map-language .active="${this.currentTool==='language'}" language="autodetect" @togglelanguagesetter="${e=>this.toggleLanguageSetter(e)}"></map-language>
-        </map-panel>
-        <map-panel .active="${this.currentTool==='geolocate'}">
-        <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
-        </map-panel>        
-        <map-panel .active="${this.currentTool==='pitch'}">
-          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
-        </map-panel>
-        <map-panel .active="${this.currentTool==='draw'}">
-          <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
-        </map-panel>
-      </div>
-    </div>
-      
+    ${this.renderToolbarTools()}  
     <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
     <div id="legend-container-container">
       <div id="button-hide-legend" @click="${e=>this.hideLegend(e)}">
@@ -802,7 +817,8 @@ class WebMap extends LitElement {
     }
     return propl;
   }
-  firstUpdated() {
+  initMap()
+  {
     if (this.accesstoken) {
       mapboxgl.accessToken = this.accesstoken;
     }
@@ -810,16 +826,21 @@ class WebMap extends LitElement {
         container: this.shadowRoot.querySelector('div'), 
         style: this.mapstyle,
         center: [this.lon,this.lat],
-        zoom: this.zoom
+        zoom: this.zoom,
+        pitch: this.pitch
     });
     this.datagetter = {
       querySourceFeatures: this.map.querySourceFeatures.bind(this.map)
     };
     
-    if (this.navigation.toLowerCase() !== "false") {
+    if (this.zoomlevel.toLowerCase() !== "false") {
       this.map.addControl(new ZoomControl(), this._positionString(this.navigation));
+    }
+
+    if (this.navigation.toLowerCase() !== "false") {
       this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));      
     }
+
     if (this.scalebar.toLowerCase() !== "false") {
 
       this.map.addControl(new mapboxgl.ScaleControl(), this._positionString(this.scalebar));
@@ -851,13 +872,70 @@ class WebMap extends LitElement {
         this.resetLayerList();
         //this.draw.changeMode('static');
     });
-    this.addEventListener("languagechanged", e=>this.setLanguage(e));
+  }
+  applyConfig(config) {
+    if (config.keys && config.keys.mapboxaccesstoken) {
+      this.accesstoken = config.keys.mapboxaccesstoken;
+    }
+    if (config.map) {
+      if (config.map.center) {
+        this.lon = config.map.center[0];
+        this.lat = config.map.center[1];
+      }
+      if (config.map.hasOwnProperty('zoom')) {
+        this.zoom = config.map.zoom;
+      }
+      if (config.map.hasOwnProperty('pitch')) {
+        this.pitch = config.map.pitch;
+      }
+      if (config.map.style) {
+        this.mapstyle = config.map.style;
+      }
+    }
+    if (config.tools) {
+      if (config.tools.navigation) {
+        if (config.tools.navigation.visible) {
+          this.navigation = config.tools.navigation.position;
+        } else {
+          this.navigation = "false";
+        }
+      }
+      if (config.tools.zoomlevel) {
+        if (config.tools.zoomlevel.visible) {
+          this.zoomlevel = config.tools.zoomlevel.position;
+        } else {
+          this.zoomlevel = "false";
+        }
+      }
+      if (config.tools.geolocate) {
+        if (config.tools.geolocate.visible) {
+
+        } else {
+          this.geolocate = "false";
+        }
+      }
+    }
+  }
+  firstUpdated() {
+    if (this.configurl) {
+      fetch(this.configurl).then(response=>{
+          if (response.status >= 200 && response.status < 300) {
+              return response.json()
+          }
+          throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
+        }).then(config=>{
+          this.applyConfig(config);
+          this.initMap();
+      }).catch(error=>console.error(error));
+    } else {
+      this.initMap();
+    }
   }
 
   updateLayerCalculatedPaintProperties(layerlist) {
     layerlist.forEach(layer=>{
       const mapLayer = this.map.getLayer(layer.id);
-      if (mapLayer.paint) {
+      if (mapLayer && mapLayer.paint) {
         layer._paint = mapLayer.paint;
       }
     });
