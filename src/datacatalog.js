@@ -350,13 +350,13 @@ export default
               }
             },
             {
-              "title":"PDOK luchtfoto's (WMTS)",
+              "title":"PDOK luchtfoto's 2016 (WMTS)",
               "type":"wmts",
               "layerInfo":{
-                "id":"pdokluchtfotowmts",
+                "id":"pdokluchtfotowmts2016",
                 "type":"raster",
                 "metadata":{
-                  "legendurl":"https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?format=image/png&service=WMS&version=1.1.1&styles=default&layer=Actueel_ortho25&REQUEST=GetLegendGraphic"
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
                 },
                 "source":{
                   "type":"raster",
@@ -364,7 +364,50 @@ export default
                   "tiles":[
                     "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                   ],
-                  "attribution":"PDOK"
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18
+                }
+              }
+            },
+            {
+              "title":"PDOK luchtfoto's 2017 (WMTS)",
+              "type":"wmts",
+              "layerInfo":{
+                "id":"pdokluchtfotowmts2017",
+                "type":"raster",
+                "metadata":{
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2017_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                  ],
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18
+                }
+              }
+            },{
+              "title":"PDOK luchtfoto's 2018 (WMTS)",
+              "type":"wmts",
+              "layerInfo":{
+                "id":"pdokluchtfotowmts2018",
+                "type":"raster",
+                "metadata":{
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2018_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                  ],
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18
                 }
               }
             },
