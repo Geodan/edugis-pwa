@@ -356,7 +356,7 @@ export default
                 "id":"pdokluchtfotowmts2016",
                 "type":"raster",
                 "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2016.png"
                 },
                 "source":{
                   "type":"raster",
@@ -377,7 +377,7 @@ export default
                 "id":"pdokluchtfotowmts2017",
                 "type":"raster",
                 "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2017.png"
                 },
                 "source":{
                   "type":"raster",
@@ -397,7 +397,7 @@ export default
                 "id":"pdokluchtfotowmts2018",
                 "type":"raster",
                 "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png"
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2018.png"
                 },
                 "source":{
                   "type":"raster",
