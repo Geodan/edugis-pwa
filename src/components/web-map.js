@@ -164,7 +164,7 @@ class WebMap extends LitElement {
       haslegend: Boolean,
       accesstoken: String,
       lastClickPoint: Object,
-      currentname: String,
+      currentTool: String,
       configurl: String
     }; 
   }
@@ -575,12 +575,19 @@ class WebMap extends LitElement {
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
   }
-  hideMenu(e) {
-    this.shadowRoot.querySelector('#tool-menu-container').classList.toggle('collapsed');
-    this.shadowRoot.querySelector('#panel-container').classList.toggle('collapsed');
-    this.shadowRoot.querySelector('#button-hide-menu').classList.toggle('collapsed');
+  toggleToolMenu(opened) {
+    const collapsed = this.shadowRoot.querySelector('#tool-menu-container').classList.contains('collapsed');
+    if (collapsed && (opened === undefined || opened)) {
+      this.shadowRoot.querySelector('#tool-menu-container').classList.remove('collapsed');
+      this.shadowRoot.querySelector('#panel-container').classList.remove('collapsed');
+      this.shadowRoot.querySelector('#button-hide-menu').classList.remove('collapsed');  
+    } else {
+      this.shadowRoot.querySelector('#tool-menu-container').classList.add('collapsed');
+      this.shadowRoot.querySelector('#panel-container').classList.add('collapsed');
+      this.shadowRoot.querySelector('#button-hide-menu').classList.add('collapsed');
+    }
   }
-  hideLegend(e) {
+  toggleLegend(e) {
     const container = this.shadowRoot.querySelector('#legend-container-container');    
     const button = this.shadowRoot.querySelector('#button-hide-legend');
     button.classList.toggle('collapsed');
@@ -609,7 +616,7 @@ class WebMap extends LitElement {
   renderToolbarTools()
   {
     const toolbar = this.toolList.find(tool=>tool.name==="toolbar");
-    if (toolbar && !toolbar.visible) {
+    if (!toolbar || !toolbar.visible) {
       return '';
     }
     const tools = this.toolList.filter(tool=>tool.visible && tool.icon);
@@ -617,8 +624,8 @@ class WebMap extends LitElement {
       return '';
     }
     return html`
-    <div id="tool-menu-container">
-      <div id="button-hide-menu" @click="${e=>this.hideMenu(e)}">
+    <div id="tool-menu-container" class="${toolbar.position==='opened'?'':'collapsed'}">
+      <div id="button-hide-menu" @click="${e=>this.toggleToolMenu()}" class="${toolbar.position==='opened'?'':'collapsed'}">
         <span class="offset"></span><i>${arrowLeftIcon}</i>
       </div>
       <div id="tools-menu">
@@ -657,6 +664,44 @@ class WebMap extends LitElement {
         </map-panel>
       </div>
     </div>`
+  }
+  renderCoordinates(){
+    const tool = this.toolList.find(tool=>tool.name==='coordinates');
+    if (tool && tool.visible) {
+      return html`<map-coordinates visible="true" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>` 
+    }
+    return '';
+  }
+  renderLegend() {
+    const legend = this.toolList.find(tool=>tool.name==='legend');
+    if (!legend || !legend.visible) {
+      return html``;
+    }
+    return html`
+    <div id="legend-container-container" class="${legend.position==='opened'?'':'collapsed'}">
+      <div id="button-hide-legend" @click="${e=>this.toggleLegend(e)}" class="${legend.position==='opened'?'':'collapsed'}">
+        <span class="offset"></span><i>${arrowLeftIcon}</i>
+      </div>
+      <map-selected-layers 
+        .layerlist="${this.layerlist}"
+        .zoom="${this.zoom}"
+        .datagetter="${this.datagetter}"
+        @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
+        @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
+        @removelayer="${(e) => this.removeLayer(e)}">
+
+      </map-selected-layers>
+      <mmap-legend-container .layerlist="${this.layerlist}" 
+        .visible="${this.haslegend}" 
+        .active="${true}" 
+        .zoom="${this.zoom}" 
+        @movelayer="${e=>this.moveLayer(e)}" 
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
+        @updateopacity="${(e)=>this.updateLayerOpacity(e)}" 
+        @removelayer="${(e) => this.removeLayer(e)}">
+      </mmap-legend-container>
+    </div>`;
   }
   render() {
     
@@ -777,32 +822,9 @@ class WebMap extends LitElement {
       }
       </style>
     <div class="webmap"></div>
-    ${this.renderToolbarTools()}  
-    <map-coordinates .visible="${this.coordinates.toLowerCase() !== 'false'}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>
-    <div id="legend-container-container">
-      <div id="button-hide-legend" @click="${e=>this.hideLegend(e)}">
-        <span class="offset"></span><i>${arrowLeftIcon}</i>
-      </div>
-      <map-selected-layers 
-        .layerlist="${this.layerlist}"
-        .zoom="${this.zoom}"
-        .datagetter="${this.datagetter}"
-        @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
-        @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
-        @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
-        @removelayer="${(e) => this.removeLayer(e)}">
-
-      </map-selected-layers>
-      <mmap-legend-container .layerlist="${this.layerlist}" 
-        .visible="${this.haslegend}" 
-        .active="${true}" 
-        .zoom="${this.zoom}" 
-        @movelayer="${e=>this.moveLayer(e)}" 
-        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
-        @updateopacity="${(e)=>this.updateLayerOpacity(e)}" 
-        @removelayer="${(e) => this.removeLayer(e)}">
-      </mmap-legend-container>
-    </div>
+    ${this.renderToolbarTools()}
+    ${this.renderCoordinates()}
+    ${this.renderLegend()}
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap="${this.map}"></map-spinner>`
   }
@@ -911,6 +933,13 @@ class WebMap extends LitElement {
           for (let prop in mapTool) {
             if (confTool.hasOwnProperty(prop)) {
               mapTool[prop] = confTool[prop];
+            }
+          }
+          if (toolName === 'toolbar' || toolName === 'legend') {
+            if (confTool.opened) {
+              mapTool.position = "opened";
+            } else {
+              mapTool.position = "collapsed";
             }
           }
         }
