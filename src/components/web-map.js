@@ -164,7 +164,7 @@ class WebMap extends LitElement {
       haslegend: Boolean,
       accesstoken: String,
       lastClickPoint: Object,
-      currentTool: String,
+      currentname: String,
       configurl: String
     }; 
   }
@@ -194,20 +194,20 @@ class WebMap extends LitElement {
     this.lastClickPoint = undefined;
     this.currentTool = '';
     this.toolList = [
-      {tool:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {tool:"search", visible: true, position: "", order: 0, info:"Adres zoeken", icon: gmSearchIcon},
-      {tool:"datacatalog", visible: true, position: "", order: 1, info:"Data-catalogus", icon:layermanagerIcon},
-      {tool:"measure", visible: true, position: "", order: 2, info:"Afstanden meten", icon: measureIcon},
-      {tool:"info", visible: true, position: "", order: 3, info: "Locatie-informatie", icon: gmInfoIcon},
-      {tool:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
-      {tool:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
-      {tool:"geolocate", visible: true, position: "", order: 6, info: "Waar ben ik?", icon: gpsFixedIcon},
-      {tool:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
-      {tool:"zoomlevel", visible: true, position: "bottom-left", order: 8, info: "Zoom-niveau"},
-      {tool:"navigation", visible: true, position: "bottom-left", order: 9, info: "Zoom, Roteer"},
-      {tool:"coordinates", visible: true, position: "bottom-center", order: 10},
-      {tool:"scale", visible: true, position: "bottom-right", order: 11, info: "Schaalbalk"},
-      {tool:"legend", visible: true, position: "opened", order: 12, info: "Legenda en kaartlagen"},
+      {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
+      {name:"search", visible: true, position: "", order: 0, info:"Adres zoeken", icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, position: "", order: 1, info:"Data-catalogus", icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 2, info:"Afstanden meten", icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 3, info: "Locatie-informatie", icon: gmInfoIcon},
+      {name:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
+      {name:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
+      {name:"geolocate", visible: true, position: "", order: 6, info: "Waar ben ik?", icon: gpsFixedIcon},
+      {name:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 8, info: "Zoom-niveau"},
+      {name:"navigation", visible: true, position: "bottom-left", order: 9, info: "Zoom, Roteer"},
+      {name:"coordinates", visible: true, position: "bottom-center", order: 10},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 11, info: "Schaalbalk"},
+      {name:"legend", visible: true, position: "opened", order: 12, info: "Legenda en kaartlagen"},
     ];
   }
   updateSingleLayerVisibility(id, visible) {
@@ -608,8 +608,12 @@ class WebMap extends LitElement {
   }
   renderToolbarTools()
   {
-    const toolbar = this.toolList.find(tool=>tool.tool==="toolbar");
-    if (!toolbar.visible) {
+    const toolbar = this.toolList.find(tool=>tool.name==="toolbar");
+    if (toolbar && !toolbar.visible) {
+      return '';
+    }
+    const tools = this.toolList.filter(tool=>tool.visible && tool.icon);
+    if (tools.length == 0) {
       return '';
     }
     return html`
@@ -619,9 +623,9 @@ class WebMap extends LitElement {
       </div>
       <div id="tools-menu">
         <ul>
-          ${this.toolList.filter(tool=>tool.visible).sort((a,b)=>a.order-b.order).filter(tool=>tool.icon).map(tool=>{
+          ${tools.sort((a,b)=>a.order-b.order).map(tool=>{
             return html`<li>
-              <map-iconbutton .icon="${tool.icon}" info="${tool.info}" @click="${e=>this.toggleTool(tool.tool)}" .active="${this.currentTool===tool.tool}"></map-iconbutton>
+              <map-iconbutton .icon="${tool.icon}" info="${tool.info}" @click="${e=>this.toggleTool(tool.name)}" .active="${this.currentTool===tool.name}"></map-iconbutton>
             </li>`
           })}
         </ul>
@@ -832,23 +836,25 @@ class WebMap extends LitElement {
     this.datagetter = {
       querySourceFeatures: this.map.querySourceFeatures.bind(this.map)
     };
-    
-    if (this.zoomlevel.toLowerCase() !== "false") {
-      this.map.addControl(new ZoomControl(), this._positionString(this.navigation));
-    }
-
-    if (this.navigation.toLowerCase() !== "false") {
-      this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(this.navigation));      
-    }
-
-    if (this.scalebar.toLowerCase() !== "false") {
-
-      this.map.addControl(new mapboxgl.ScaleControl(), this._positionString(this.scalebar));
-    }
-    
-    if (this.coordinates.toLowerCase() !== "false") {
-      this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
-    }
+    const controlTools = this.toolList.filter(tool=>tool.position !== "").sort((a,b)=>a.order-b.order);
+    controlTools.forEach(tool=>{
+      if (tool.visible) {
+        switch (tool.name) {
+          case "zoomlevel":
+              this.map.addControl(new ZoomControl(), this._positionString(tool.position));
+            break;
+          case "navigation":
+            this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(tool.position));
+            break;
+          case "coordinates":
+            this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
+            break;
+          case "scalebar":
+            this.map.addControl(new mapboxgl.ScaleControl(), this._positionString(tool.position));
+            break;
+        }
+      }
+    });
     this.featureInfo = [];
     this.map.on('mousemove', e=>this.handleInfo(e));
     
@@ -874,8 +880,13 @@ class WebMap extends LitElement {
     });
   }
   applyConfig(config) {
-    if (config.keys && config.keys.mapboxaccesstoken) {
-      this.accesstoken = config.keys.mapboxaccesstoken;
+    if (config.keys) {
+      for (let keyname in config.keys) {
+        EduGISkeys[keyname] = config.keys[keyname];
+      }
+      if (EduGISkeys.mapboxaccesstoken) {
+        this.accesstoken = EduGISkeys.mapboxaccesstoken;
+      }
     }
     if (config.map) {
       if (config.map.center) {
@@ -893,25 +904,15 @@ class WebMap extends LitElement {
       }
     }
     if (config.tools) {
-      if (config.tools.navigation) {
-        if (config.tools.navigation.visible) {
-          this.navigation = config.tools.navigation.position;
-        } else {
-          this.navigation = "false";
-        }
-      }
-      if (config.tools.zoomlevel) {
-        if (config.tools.zoomlevel.visible) {
-          this.zoomlevel = config.tools.zoomlevel.position;
-        } else {
-          this.zoomlevel = "false";
-        }
-      }
-      if (config.tools.geolocate) {
-        if (config.tools.geolocate.visible) {
-
-        } else {
-          this.geolocate = "false";
+      for (let toolName in config.tools) {
+        const confTool = config.tools[toolName];
+        const mapTool = this.toolList.find(tool=>tool.name === toolName);
+        if (mapTool) {
+          for (let prop in mapTool) {
+            if (confTool.hasOwnProperty(prop)) {
+              mapTool[prop] = confTool[prop];
+            }
+          }
         }
       }
     }
@@ -963,7 +964,41 @@ class WebMap extends LitElement {
   resetLayerList() {
     this.resetLayerListRequested = true;
   }
-  
+  shouldUpdate(changedProperties) {
+    if (changedProperties.has('zoomlevel')) {
+      const tool = this.toolList.find(tool=>tool.name==="zoomlevel");
+      if (tool) {
+        tool.visible = (this.zoomlevel.toLowerCase() !== "false");
+        tool.position = this.zoomlevel.toLowerCase();
+      }
+    }
+    
+    if (changedProperties.has("navigation")) {
+      const tool = this.toolList.find(tool=>tool.name==="navigation");
+      if (tool) {
+        tool.visible = (this.navigation.toLowerCase() !== "false");
+        tool.position = this.navigation.toLowerCase();
+      }
+    }
+    
+    if (changedProperties.has("scalebar")) {
+      const tool = this.toolList.find(tool=>tool.name==="scalebar");
+      if (tool) {
+        tool.visible = (this.scalebar.toLowerCase() !== "false");
+        tool.position = this.scalebar.toLowerCase();
+      }
+    }
+
+    if (changedProperties.has("coordinates")) {
+      const tool = this.toolList.find(tool=>tool.name==="coordinates");
+      if (tool) {
+        tool.visible = (this.coordinates.toLowerCase() !== "false");
+        tool.position = this.coordinates.toLowerCase();
+      }
+    }
+
+    return true;
+  }
   _mapMoveEnd() {
     const bounds = this.map.getBounds();
     this.viewbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
