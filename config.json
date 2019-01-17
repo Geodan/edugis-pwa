@@ -5,8 +5,8 @@
         "pitch" : 0,
         "style" : {
             "version": 8,
-            "name": "OsmRaster",
-            "id": "ciwf3o3u2008z2pmsdfasxq",
+            "name": "OpenStreetMap",
+            "id": "openstreetmap",
             "sources": {
               "osmraster": {
                 "type" : "raster",
@@ -30,9 +30,24 @@
             ]
         }  
     },
-    "datacatalog" : {
-
-    },
+    "datacatalog" : [
+        {
+            "title":"Openstreetmap (wmts)",
+            "type":"reference",
+            "layerInfo":{
+              "id":"openstreetmap",
+              "type":"raster",
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                ],
+                "attribution":"&copy; OpenStreetMap contributors"
+              }
+            }
+          }
+    ],
     "tools" : {
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 0},

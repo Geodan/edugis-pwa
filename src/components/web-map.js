@@ -923,7 +923,12 @@ class WebMap extends LitElement {
       }
       if (config.map.style) {
         this.mapstyle = config.map.style;
+        this.mapstyleid = config.map.style.id;
+        this.mapstyletitle = config.map.style.name;
       }
+    }
+    if (config.datacatalog) {
+      this.datacatalog = config.datacatalog;    
     }
     if (config.tools) {
       for (let toolName in config.tools) {

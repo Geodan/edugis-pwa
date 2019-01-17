@@ -380,7 +380,7 @@ class MapLayerTree extends LitElement {
     <div class="title">${this.headertext}</div>
     <div class="wrapper">
       <div>
-        ${this.renderTree(this.nodelist, true)}
+        ${this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')}
       </div>
     </div>`;
   }
