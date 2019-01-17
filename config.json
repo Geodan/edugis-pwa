@@ -32,16 +32,38 @@
     },
     "datacatalog" : [
         {
-            "title":"Openstreetmap (wmts)",
+            "title":"Openstreetmap",
             "type":"reference",
             "layerInfo":{
               "id":"openstreetmap",
               "type":"raster",
+              "metadata":{
+                "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+              },
               "source":{
                 "type":"raster",
                 "tileSize":256,
                 "tiles":[
                   "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                ],
+                "attribution":"&copy; OpenStreetMap contributors"
+              }
+            }
+          },
+          {
+            "title":"Openstreetmap Gray",
+            "type":"reference",
+            "layerInfo":{
+              "id":"openstreetmapgray",
+              "type":"raster",
+              "metadata":{
+                "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                 ],
                 "attribution":"&copy; OpenStreetMap contributors"
               }

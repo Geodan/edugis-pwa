@@ -323,6 +323,9 @@ export default
               "layerInfo":{
                 "id":"openstreetmap",
                 "type":"raster",
+                "metadata":{
+                  "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
@@ -339,6 +342,9 @@ export default
               "layerInfo":{
                 "id":"openstreetmapgray",
                 "type":"raster",
+                "metadata":{
+                  "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
@@ -417,6 +423,9 @@ export default
               "layerInfo":{
                 "id":"osmfr",
                 "type":"raster",
+                "metadata":{
+                  "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
