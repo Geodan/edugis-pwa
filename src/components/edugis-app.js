@@ -23,6 +23,16 @@ import { menuIcon } from './my-icons.js';
 import './web-map.js';
 import './snack-bar.js';
 
+function getHashParameters()
+{
+  const hash = location.hash.substr(1);
+  return hash.split('&').reduce(function (result, item) {
+    var parts = item.split('=');
+    result[parts[0]] = parts[1];
+    return result;
+  }, {});
+}
+
 import datacatalog from '../datacatalog.js';
 /**
 * @polymer
@@ -32,14 +42,12 @@ class EduGISApp extends (LitElement) {
   static get properties() {
     return {
       appTitle: String,
-      _page: String,
-      _drawerOpened: Boolean,
-      _snackbarOpened: Boolean,
-      _offline: Boolean
+      configUrl: String
     }
   }
   constructor() {
     super();
+    this.configUrl = getHashParameters().configurl;
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
@@ -154,38 +162,20 @@ footer {
           </ul>
         </nav>
     </header>
-    <web-map configurl="config.json" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
+    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2018 EduGIS, Geodan</footer>
     `;
   }
-/*
   firstUpdated() {
-    //installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
-    //installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
-    //installMediaQueryWatcher(`(min-width: 460px)`,
-       // (matches) => store.dispatch(updateLayout(matches)));
+    window.addEventListener("hashchange", ()=>this.hashChanged());
   }
-*/
-/*
-  updated(properties, changeList) {
-    if ('_page' in changeList) {
-      const pageTitle = properties.appTitle + ' - ' + changeList._page;
-      updateMetadata({
-          title: pageTitle,
-          description: pageTitle
-          // This object also takes an image property, that points to an img src.
-      });
+  hashChanged() {    
+    const result = getHashParameters();
+    if (result.configurl) {
+      this.configUrl = result.configurl;
     }
+    console.log(result);
   }
-*/
-  /*
-  _stateChanged(state) {
-    this._page = state.app.page;
-    this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
-    this._drawerOpened = state.app.drawerOpened;
-  }
-  */
 }
 
 window.customElements.define('edugis-app', EduGISApp);

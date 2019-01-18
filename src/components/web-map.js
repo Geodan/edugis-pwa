@@ -848,6 +848,9 @@ class WebMap extends LitElement {
     if (this.accesstoken) {
       mapboxgl.accessToken = this.accesstoken;
     }
+    if (this.map) {
+      this.map.remove();
+    }
     this.map = new mapboxgl.Map({
         container: this.shadowRoot.querySelector('div'), 
         style: this.mapstyle,
@@ -955,17 +958,20 @@ class WebMap extends LitElement {
       }
     }
   }
+  loadConfig(configurl) {
+    fetch(configurl).then(response=>{
+      if (response.status >= 200 && response.status < 300) {
+          return response.json()
+      }
+      throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
+    }).then(config=>{
+      this.applyConfig(config);
+      this.initMap();
+    }).catch(error=>console.error(error));
+  }
   firstUpdated() {
     if (this.configurl) {
-      fetch(this.configurl).then(response=>{
-          if (response.status >= 200 && response.status < 300) {
-              return response.json()
-          }
-          throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
-        }).then(config=>{
-          this.applyConfig(config);
-          this.initMap();
-      }).catch(error=>console.error(error));
+      this.loadConfig(this.configurl);
     } else {
       this.initMap();
     }
@@ -1032,6 +1038,12 @@ class WebMap extends LitElement {
       if (tool) {
         tool.visible = (this.coordinates.toLowerCase() !== "false");
         tool.position = this.coordinates.toLowerCase();
+      }
+    }
+
+    if (changedProperties.has("configurl")) {
+      if (this.map) {
+        this.loadConfig(this.configurl);
       }
     }
 
