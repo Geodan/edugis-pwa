@@ -922,6 +922,10 @@ class WebMap extends LitElement {
         this.pitch = config.map.pitch;
       }
       if (config.map.style) {
+        if (!config.map.style.glyphs) {
+          config.map.style.glyphs = `https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
+          //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
+        }
         this.mapstyle = config.map.style;
         this.mapstyleid = config.map.style.id;
         this.mapstyletitle = config.map.style.name;
