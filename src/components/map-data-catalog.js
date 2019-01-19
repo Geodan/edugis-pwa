@@ -257,7 +257,7 @@ class MapDataCatalog extends LitElement {
       })
     }
   }
-  extractLegendUrl(layerInfo)
+  guessLegendUrl(layerInfo)
   {
     let legendUrl = '';
     let tileUrl = layerInfo.source.url;
@@ -295,7 +295,7 @@ class MapDataCatalog extends LitElement {
       }
       if (node.type === 'wms') {
         if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
-          layerInfo.metadata.legendurl = this.extractLegendUrl(node.layerInfo);
+          layerInfo.metadata.legendurl = this.guessLegendUrl(node.layerInfo);
         }
       }
       layerInfo.metadata.reference = (node.type === "reference");
