@@ -27,7 +27,12 @@
     "node_modules/wms-capabilities/dist/wms-capabilities.min.js",
     "node_modules/proj4/dist/proj4.js",
     "src/keys.js",
-    "layout.html"
+    "layout.html",
+    "demo.html",
+    "maps/config.json",
+    "maps/config2.json",
+    "maps/qgis.json",
+    "maps/fietstocht.json"
   ],
   "builds": [
     {

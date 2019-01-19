@@ -31,6 +31,8 @@ import './map-geolocation';
 import './map-pitch';
 import './map-selected-layers';
 
+import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
+
 import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
@@ -515,7 +517,7 @@ class WebMap extends LitElement {
       this.loadStyle(layerInfo.source, styleId, styleTitle);
     }
   }
-  addLayer(e) {
+  async addLayer(e) {
     const layerInfo = e.detail;
     if (layerInfo.type === 'style') {
       this.addStyle(layerInfo);
@@ -534,6 +536,12 @@ class WebMap extends LitElement {
             if (layerInfo.type === "webgltraffic") {
               this.map.addLayer(new TrafficLayer(layerInfo.source.data));
             } else {
+              if (layerInfo.source.type == "geojson" && layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
+                await convertTopoJsonLayer(layerInfo);
+              } 
+              if (layerInfo.source.type == "geojson" && layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
+                await convertProjectedGeoJsonLayer(layerInfo);
+              }
               this.map.addLayer(layerInfo);
             }
           }
