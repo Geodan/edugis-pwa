@@ -547,6 +547,9 @@ class WebMap extends LitElement {
           }
         }
       }
+      if (layerInfo.metadata && layerInfo.metadata.hasOwnProperty('opacity')) {
+        this.updateSingleLayerOpacity(layerInfo.id, layerInfo.metadata.opacity / 100);
+      }
       this.resetLayerList();
     }
   }
@@ -913,11 +916,14 @@ class WebMap extends LitElement {
         //this.draw.changeMode('static');
     });
   }
-  addActiveLayers() {
+  async addActiveLayers() {
     if (!this.activeLayers) {
       return;
     }
-    this.activeLayers.forEach(layerInfo=>this.addLayer({detail:layerInfo}));
+    for (let i = 0; i < this.activeLayers.length; i++) {
+      const layerInfo = this.activeLayers[i]
+      await this.addLayer({detail: layerInfo});
+    }
     this.activeLayers = null;
   }
   getCheckedLayerIds(nodeList, layerids) {
@@ -1001,6 +1007,7 @@ class WebMap extends LitElement {
         this.initMap();
       }).catch(error=>console.error(error));
     } else {
+      this.applyConfig(this.datacatalog);
       this.initMap();
     }
   }
