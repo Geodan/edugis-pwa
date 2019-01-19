@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EduGIS overzicht</title>
+    <link rel="icon" href="images/favicon.ico">
+    <style>
+    @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0b.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        /* THe browser draws the text immediately in the fallback font if the font
+        isn't loaded, then swaps it with the webfont when it eventually loads
+        See: https://developers.google.com/web/updates/2016/02/font-display
+        */
+        font-display: auto;
+    }
+    body {
+        margin: 0;
+        /* This is a font-stack that tries to use the system-default sans-serifs first */
+        font-family: 'Open Sans',sans-serif,'Arial','Helvetica',"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100%;
+        padding: 0;
+    }
+    .overview {
+        position: absolute;
+        width: 20%;
+    }
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 20%;
+        width: 80%;
+        height: 100vh;
+        border: 0;
+        padding: 0;
+        margin: 0;          
+    }
+    </style>
+</head>
+<body>
+    <div class="overview">
+        Hier komen de voorbeelden...<p>
+        <a href="index.html#configurl=maps/config.json" target="edugismap">config.json</a><br>
+        <a href="index.html#configurl=maps/config2.json" target="edugismap">config2.json</a><br>
+        <br><b>QGIS Server</b><br>
+        <a href="index.html#configurl=maps/qgis.json" target="edugismap">qgis cbs</a><br>
+        <a href="index.html#configurl=" target="edugismap">Default</a><br>
+        <br><b>Json service</b><br>
+        <a href="index.html#configurl=maps/fietstocht.json" target="edugismap">Fietstocht</a><br>
+    </div>
+    <iframe name="edugismap" src="index.html" width="80%" height="100%"></iframe>
+</body>
+</html>
