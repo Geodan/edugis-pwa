@@ -901,8 +901,30 @@ class WebMap extends LitElement {
     this.map.on('load', ()=>{
         this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
         this.resetLayerList();
+        this.addActiveLayers();
         //this.draw.changeMode('static');
     });
+  }
+  addActiveLayers() {
+    if (!this.activeLayers) {
+      return;
+    }
+    this.activeLayers.forEach(layerInfo=>this.addLayer({detail:layerInfo}));
+    this.activeLayers = null;
+  }
+  getCheckedLayerIds(nodeList, layerids) {
+    // recursively lookup checked nodes and return array
+    if (!layerids) {
+      layerids = [];
+    }
+    nodeList.forEach(node=>{
+      if (node.sublayers) {
+        this.getCheckedLayerIds(node.sublayers, layerids);
+      } else if (node.checked) {
+        layerids.push({order: node.checked, layerInfo: node.layerInfo});
+      }
+    });
+    return layerids;
   }
   applyConfig(config) {
     if (config.keys) {
@@ -935,6 +957,7 @@ class WebMap extends LitElement {
       }
     }
     if (config.datacatalog) {
+      this.activeLayers = this.getCheckedLayerIds(config.datacatalog).sort((a,b)=>a.order>b.order).map(layer=>layer.layerInfo);
       this.datacatalog = config.datacatalog;    
     }
     if (config.tools) {
@@ -959,15 +982,19 @@ class WebMap extends LitElement {
     }
   }
   loadConfig(configurl) {
-    fetch(configurl).then(response=>{
-      if (response.status >= 200 && response.status < 300) {
-          return response.json()
-      }
-      throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
-    }).then(config=>{
-      this.applyConfig(config);
+    if (configurl && configurl !== '') {
+      fetch(configurl).then(response=>{
+        if (response.status >= 200 && response.status < 300) {
+            return response.json()
+        }
+        throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
+      }).then(config=>{
+        this.applyConfig(config);
+        this.initMap();
+      }).catch(error=>console.error(error));
+    } else {
       this.initMap();
-    }).catch(error=>console.error(error));
+    }
   }
   firstUpdated() {
     if (this.configurl) {

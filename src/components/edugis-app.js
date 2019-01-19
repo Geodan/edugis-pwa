@@ -171,10 +171,11 @@ footer {
   }
   hashChanged() {    
     const result = getHashParameters();
-    if (result.configurl) {
+    if (result.hasOwnProperty('configurl')) {
       this.configUrl = result.configurl;
+    } else {
+      this.configUrl = "";
     }
-    console.log(result);
   }
 }
 
