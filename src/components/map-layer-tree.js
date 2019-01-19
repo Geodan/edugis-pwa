@@ -1,5 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import {foldercss} from './folder-icon.css.js';
+import {capabilitiesToCatalogNodes} from '../utils/capabilities';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -50,117 +51,9 @@ class MapLayerTree extends LitElement {
     }
     return true;
   }
-  scaleHintToZoomLevel(hint)
+  replaceNode(nodeList, nodeId)
   {
-    for (let level = 0, calc = 110692.6408; level < 22; level++, calc /= 2.0) {
-      if (hint > calc) {
-        return level;
-      }
-    }
-  }
-  layerToNode(Layer, Request) {
-    let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
-    // upgrade to https (cannot load from http)
-    if (onlineResource.protocol === 'http:') {
-      onlineResource.protocol = 'https:';
-      onlineResource.port = 443;
-    }
-    onlineResource = onlineResource.toString();
-    let featureInfoResource = new URL(Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource);
-    if (featureInfoResource.protocol === 'http:') {
-      featureInfoResource.protocol = 'https:';
-      featureInfoResource.port = 443;
-    }
-    const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
-      "id" : Layer.Name,
-      "type" : "raster",
-      "metadata" : {
-          "title" : Layer.Title,
-          "legendurl": Layer.Style[0].LegendURL[0].OnlineResource,
-          "getFeatureInfoUrl": featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
-      },
-      "source" : {
-          "type": "raster",
-          "tileSize" : 256,
-          "tiles": [
-              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&styles=" // + encodeURIComponent(Layer.Style[0].Name)
-          ],
-          "attribution": Layer.Attribution && Layer.Attribution.Title ? Layer.Attribution.Title: ""
-          }
-      }
-    }
-    if (Layer.ScaleHint) {
-      if (Layer.ScaleHint.max) {
-        node.layerInfo.minzoom = this.scaleHintToZoomLevel(Layer.ScaleHint.max);
-        node.layerInfo.source.minzoom = node.layerInfo.minzoom;
-      }
-      if (Layer.ScaleHint.min) {
-        node.layerInfo.maxzoom = this.scaleHintToZoomLevel(Layer.ScaleHint.min);
-        node.layerInfo.source.maxzoom = node.layerInfo.maxzoom;
-      }
-    }
-    if (Layer.EX_GeographicBoundingBox) {
-      node.layerInfo.source.bounds = Layer.EX_GeographicBoundingBox;      
-    } else if (Layer.LatLonBoundingBox) {
-      node.layerInfo.source.bounds = Layer.LatLonBoundingBox;
-    } else if (Layer.BoundingBox) {
-      const bbox4326 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:4326');
-      if (bbox4326) {
-        node.layerInfo.source.bounds = bbox4326.extent;
-      }
-      const bbox3857 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:3857' || bbox.crs==='EPSG:900913');
-      if (bbox3857) {
-        const forward = proj4(proj4.Proj("EPSG:3857"), proj4.WGS84).forward;
-        node.layerInfo.source.bounds = [...forward(bbox3857.extent[0], bbox3857.extent[1]), ...forward(bbox3857.extent[2],bbox3857.extent[3])];
-      }
-    } 
-    return node;
-  }
-  allowedLayer(Layer, deniedlayers, allowedlayers) {
-    if (deniedlayers.length) {
-      if (deniedlayers.find(layer=>layer === Layer.Name)) {
-        return false;
-      }
-    }
-    if (allowedlayers.length) {
-      return (allowedlayers.find(layer=>layer === Layer.Name));
-    }
-    return true;
-  }
-  convertToArray(layerlist) {
-    if (!layerlist) {
-      return [];
-    }
-    if (Array.isArray(layerlist)){
-      return layerlist;
-    }
-    return layerlist.split(',');
-  }
-  capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
-    const parser = new WMSCapabilities();
-    const json = parser.parse(xml);
-    const result = [];
-    deniedlayers = this.convertToArray(deniedlayers);
-    allowedlayers = this.convertToArray(allowedlayers);
-    if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {
-      // non-empty root layer
-      if (this.allowedLayer(json.Capability.Layer, deniedlayers, allowedlayers)) {
-        result.push(this.layerToNode(json.Capability.Layer, json.Capability.Request));
-      }
-    }
-    if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
-      // array of sublayers
-      json.Capability.Layer.Layer.forEach(Layer=>{
-        if (this.allowedLayer(Layer, deniedlayers, allowedlayers)) {
-          result.push(this.layerToNode(Layer, json.Capability.Request));
-        }
-      })
-    }
-    return result;
-  }
-  replaceSubNode(parentNode, nodeId)
-  {
-    const subNode = parentNode.sublayers.find(node=>node.id==nodeId);
+    const subNode = nodeList.find(node=>node.id==nodeId);
     if (subNode) {
       fetch(subNode.layerInfo.url).then(response=>{
         if (!response.ok) {
@@ -171,21 +64,21 @@ class MapLayerTree extends LitElement {
           if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml')) { 
             // caps 1.1.1 or caps 1.3.0
             response.text().then(xml=>{
-              const nodes = this.capabilitiesToCatalogNodes(xml, subNode.layerInfo.deniedlayers, subNode.layerInfo.allowedlayers);
+              const nodes = capabilitiesToCatalogNodes(xml, subNode.layerInfo.deniedlayers, subNode.layerInfo.allowedlayers);
               if (nodes.length == 0) {
                 nodes.push({"title": `${nodeId}: 0 layers or failed`});
               }
               return nodes;
             })
             .then(newNodes=> {
-              for (let i = 0; i < parentNode.sublayers.length; i++) {
-                if (parentNode.sublayers[i].id === nodeId) {                  
-                  parentNode.sublayers.splice(i, 1, ...newNodes);
+              for (let i = 0; i < nodeList.length; i++) {
+                if (nodeList[i].id === nodeId) {                  
+                  nodeList.splice(i, 1, ...newNodes);
                   this.requestUpdate();
                 }
               }
             })
-          }                
+          }
         }
       }).catch(reason=>{
         subNode.title=`${nodeId}: ${reason}`;
@@ -210,7 +103,7 @@ class MapLayerTree extends LitElement {
         // sublayers has nodes of type 'getcapabilities', fetch capabilities and replace with result
         for (let i = 0; i < node.sublayers.length; i++) {
           if (node.sublayers[i].type === 'getcapabilities') {
-            this.replaceSubNode(node,node.sublayers[i].id);
+            this.replaceNode(node.sublayers,node.sublayers[i].id);
           }
         }
       }
@@ -276,6 +169,10 @@ class MapLayerTree extends LitElement {
             <span class="arrow-down"></span>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
+          if (opened && node.type === 'getcapabilities') {
+            this.replaceNode(nodeList, node.id);
+            return html`<li>Loading...</li>`;
+          }
           return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">
             <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
             <span class="label">${node.title}</span>

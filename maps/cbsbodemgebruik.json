@@ -32,10 +32,12 @@
     },
     "datacatalog" : [
       {
-        "type":"getcapabilities",
         "title":"bbg2012caps",
+        "checked" : 1,
+        "type":"getcapabilities",
         "layerInfo":{
           "id":"bbg2012",
+          "checkedlayers": "cbsbodemgebruik2012",
           "url":"https://tiles.edugis.nl/mapproxy/bbg2012/service?service=WMS&version=1.3.0&request=getcapabilities"
         }
       },

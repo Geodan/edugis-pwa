@@ -32,6 +32,7 @@ import './map-pitch';
 import './map-selected-layers';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
+import {getCapabilitiesNodes} from '../utils/capabilities';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
@@ -536,11 +537,13 @@ class WebMap extends LitElement {
             if (layerInfo.type === "webgltraffic") {
               this.map.addLayer(new TrafficLayer(layerInfo.source.data));
             } else {
-              if (layerInfo.source.type == "geojson" && layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
-                await convertTopoJsonLayer(layerInfo);
-              } 
-              if (layerInfo.source.type == "geojson" && layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
-                await convertProjectedGeoJsonLayer(layerInfo);
+              if (layerInfo.source.type === "geojson") {
+                if (layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
+                  await convertTopoJsonLayer(layerInfo);
+                } 
+                if (layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
+                  await convertProjectedGeoJsonLayer(layerInfo);
+                }
               }
               this.map.addLayer(layerInfo);
             }
@@ -921,24 +924,49 @@ class WebMap extends LitElement {
       return;
     }
     for (let i = 0; i < this.activeLayers.length; i++) {
-      const layerInfo = this.activeLayers[i]
-      await this.addLayer({detail: layerInfo});
+      const layerInfo = this.activeLayers[i];
+      if (layerInfo.type === 'getcapabilities') {
+        if (layerInfo.hasOwnProperty('checkedlayers')) {
+          if (!Array.isArray(layerInfo.checkedlayers)) {
+            layerInfo.checkedlayers = layerInfo.checkedlayers.split(',');
+          }
+          let nodes = await getCapabilitiesNodes(layerInfo);
+          nodes = nodes.filter(node=>layerInfo.checkedlayers.includes(node.layerInfo.id));
+          for (let j = 0; j < nodes.length; j++) {
+            await this.addLayer({detail: nodes[j].layerInfo});
+          }
+        }
+      } else {
+        await this.addLayer({detail: layerInfo});
+      }
     }
     this.activeLayers = null;
   }
-  getCheckedLayerIds(nodeList, layerids) {
-    // recursively lookup checked nodes and return array
-    if (!layerids) {
-      layerids = [];
+  setUntypedLayerInfos(nodeList, layerInfos){
+    if (!layerInfos) {
+      layerInfos = [];
     }
     nodeList.forEach(node=>{
       if (node.sublayers) {
-        this.getCheckedLayerIds(node.sublayers, layerids);
-      } else if (node.checked) {
-        layerids.push({order: node.checked, layerInfo: node.layerInfo});
+        this.setUntypedLayerInfos(node.sublayers, layerInfos);
+      } else if (!node.layerInfo.type) {
+        node.layerInfo.type = node.type;
       }
     });
-    return layerids;
+  }
+  getCheckedLayerInfos(nodeList, layerInfos) {
+    // recursively lookup checked nodes and return array
+    if (!layerInfos) {
+      layerInfos = [];
+    }
+    nodeList.forEach(node=>{
+      if (node.sublayers) {
+        this.getCheckedLayerInfos(node.sublayers, layerInfos);
+      } else if (node.checked) {
+        layerInfos.push({order: node.checked, layerInfo: node.layerInfo});
+      }
+    });
+    return layerInfos;
   }
   applyConfig(config) {
     if (config.keys) {
@@ -971,7 +999,8 @@ class WebMap extends LitElement {
       }
     }
     if (config.datacatalog) {
-      this.activeLayers = this.getCheckedLayerIds(config.datacatalog).sort((a,b)=>a.order>b.order).map(layer=>layer.layerInfo);
+      this.setUntypedLayerInfos(config.datacatalog);
+      this.activeLayers = this.getCheckedLayerInfos(config.datacatalog).sort((a,b)=>a.order>b.order).map(layer=>layer.layerInfo);
       this.datacatalog = config.datacatalog;    
     }
     if (config.tools) {
