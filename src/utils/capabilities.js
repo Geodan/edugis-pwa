@@ -47,7 +47,7 @@ function layerToNode(Layer, Request) {
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
-          "legendurl": Layer.Style[0].LegendURL[0].OnlineResource,
+          "legendurl": Layer.Style ? Layer.Style[0].LegendURL[0].OnlineResource : undefined,
           "getFeatureInfoUrl": featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
       },
       "source" : {

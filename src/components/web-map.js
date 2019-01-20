@@ -931,9 +931,11 @@ class WebMap extends LitElement {
             layerInfo.checkedlayers = layerInfo.checkedlayers.split(',');
           }
           let nodes = await getCapabilitiesNodes(layerInfo);
-          nodes = nodes.filter(node=>layerInfo.checkedlayers.includes(node.layerInfo.id));
-          for (let j = 0; j < nodes.length; j++) {
-            await this.addLayer({detail: nodes[j].layerInfo});
+          for (let j = 0; j < layerInfo.checkedlayers.length; j++) {
+            const node = nodes.find(node=>node.layerInfo.id===layerInfo.checkedlayers[j]);
+            if (node) {
+              await this.addLayer({detail: node.layerInfo});
+            }
           }
         }
       } else {
@@ -1311,16 +1313,19 @@ class WebMap extends LitElement {
       return result;
   }
   jsonToGeoJSON(json) {
-    return {
-      "type": "FeatureCollection", 
-      "features": json.map(item=>{
-        return {
-          "type":"Feature",
-          "geometry": {"type": "Point", "coords": item.point.coords},
-          "properties": item
-        }
-      })
+    if (Array.isArray(json)) {
+      return {
+        "type": "FeatureCollection", 
+        "features": json.map(item=>{
+          return {
+            "type":"Feature",
+            "geometry": {"type": "Point", "coords": item.point.coords},
+            "properties": item
+          }
+        })
+      }
     }
+    return json;
   }
   queryWMSFeatures(lngLat, metadata) {
     const featureInfoUrl = metadata.getFeatureInfoUrl;
