@@ -2,22 +2,13 @@
     "map": {
         "zoom": 4,
         "center": [10.1, 50.9],
-        "pitch" : 0,
-        "style" : {
-            "version": 8,
-            "name": "Nut3",
-            "id": "nuts3",
-            "sources": {
-            },
-            "layers": [
-            ]
-        }  
+        "pitch" : 0
     },
     "datacatalog" : [
       {
         "type":"vectortile",
         "title":"EduGIS nuts_m03_2006 fill",
-        "checked": 0,
+        "checked": 2,
         "layerInfo":{
           "id":"EduGIS_nuts_m03_2006_fill",
           "type":"fill",
@@ -133,6 +124,7 @@
           {
             "type":"reference",
             "title":"OSM Bright (stijl)",
+            "checked": 1,
             "layerInfo":{
               "id":"OsmBright",
               "type":"style",
@@ -143,8 +135,7 @@
             }
           },{
             "title":"Openstreetmap",
-            "type":"reference",
-            "checked": 0,
+            "type":"reference",            
             "layerInfo":{
               "id":"openstreetmap",
               "type":"raster",

@@ -2,33 +2,7 @@
     "map": {
         "zoom": 7,
         "center": [5.30, 52.3],
-        "pitch" : 0,
-        "style" : {
-            "version": 8,
-            "name": "OpenStreetMap",
-            "id": "openstreetmap",
-            "sources": {
-              "osmraster": {
-                "type" : "raster",
-                "tileSize" : 256,
-                    "tiles": [
-                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                    ],
-                    "attribution": "&copy; OpenStreetMap contributors",
-                    "maxzoom": 19
-              }
-            },
-            "layers": [
-              {
-                "id" : "openstreetmap",
-                "type" : "raster",
-                "metadata" : {
-                  "legendurl" : "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                },
-                "source" : "osmraster"
-              }
-            ]
-        }  
+        "pitch" : 0
     },
     "datacatalog" : [
       {

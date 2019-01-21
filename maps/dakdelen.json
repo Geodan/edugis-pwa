@@ -2,39 +2,13 @@
     "map": {
         "zoom": 17,
         "center": [6.09283, 52.50234],
-        "pitch" : 0,
-        "style" : {
-            "version": 8,
-            "name": "OpenStreetMap",
-            "id": "openstreetmapgray",
-            "sources": {
-              "osmraster": {
-                "type" : "raster",
-                "tileSize" : 256,
-                    "tiles": [
-                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                    ],
-                    "attribution": "&copy; OpenStreetMap contributors",
-                    "maxzoom": 19
-              }
-            },
-            "layers": [
-              {
-                "id" : "openstreetmapgray",
-                "type" : "raster",
-                "metadata" : {
-                  "legendurl" : "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                },
-                "source" : "osmraster"
-              }
-            ]
-        }  
+        "pitch" : 0
     },
     "datacatalog" : [
       {
         "title":"Pico dakdelen 2018",
         "type":"wms",
-        "checked": 1,
+        "checked": 2,
         "layerInfo":{
           "id":"dakdelen_2018",
           "type":"raster",
@@ -80,6 +54,7 @@
           {
             "title":"Openstreetmap Gray",
             "type":"reference",
+            "checked": 1,
             "layerInfo":{
               "id":"openstreetmapgray",
               "type":"raster",

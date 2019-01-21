@@ -38,6 +38,9 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function getResolution (map)
 {
@@ -913,48 +916,50 @@ class WebMap extends LitElement {
     */
 
     this.map.on('load', ()=>{
-        this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
-        this.resetLayerList();
-        this.addActiveLayers();
+        if (this.activeLayers) {
+          this.map.once('styledata', ()=>{
+            /* add reference metadata to new layers set by setStyle() */
+            this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
+            this.resetLayerList();
+          });
+          this.addActiveLayers();
+        } else {
+          this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
+          this.resetLayerList();
+        }
         //this.draw.changeMode('static');
     });
   }
   async addActiveLayers() {
-    if (!this.activeLayers) {
-      return;
-    }
-    for (let i = 0; i < this.activeLayers.length; i++) {
+    for (let i = 0; this.activeLayers && i < this.activeLayers.length; i++) {
       const layerInfo = this.activeLayers[i];
+      if (layerInfo.metadata && layerInfo.metadata.reference) {
+        this.mapstyleid = layerInfo.id;
+      }
       if (layerInfo.type === 'getcapabilities') {
         if (layerInfo.hasOwnProperty('checkedlayers')) {
           if (!Array.isArray(layerInfo.checkedlayers)) {
             layerInfo.checkedlayers = layerInfo.checkedlayers.split(',');
           }
           let nodes = await getCapabilitiesNodes(layerInfo);
-          for (let j = 0; j < layerInfo.checkedlayers.length; j++) {
+          const activeLayers = this.activeLayers;
+          for (let j = 0; this.activeLayers === activeLayers && j < layerInfo.checkedlayers.length; j++) {
             const node = nodes.find(node=>node.layerInfo.id===layerInfo.checkedlayers[j]);
             if (node) {
               await this.addLayer({detail: node.layerInfo});
+              while (!this.map.loaded()) {
+                await timeout(50);  
+              }
             }
           }
         }
       } else {
         await this.addLayer({detail: layerInfo});
+        while (!this.map.loaded()) {
+          await timeout(50);
+        }
       }
     }
-    this.activeLayers = null;
-  }
-  setUntypedLayerInfos(nodeList, layerInfos){
-    if (!layerInfos) {
-      layerInfos = [];
-    }
-    nodeList.forEach(node=>{
-      if (node.sublayers) {
-        this.setUntypedLayerInfos(node.sublayers, layerInfos);
-      } else if (!node.layerInfo.type) {
-        node.layerInfo.type = node.type;
-      }
-    });
   }
   getCheckedLayerInfos(nodeList, layerInfos) {
     // recursively lookup checked nodes and return array
@@ -970,7 +975,51 @@ class WebMap extends LitElement {
     });
     return layerInfos;
   }
+  prepareLayerInfos(nodeList) {
+    let activeReferenceLayer = undefined;
+    nodeList.forEach(node=>{
+      if (node.sublayers) {
+        this.prepareLayerInfos(node.sublayers);
+      } else {
+        if (!node.layerInfo.type) {
+          node.layerInfo.type = node.type;
+        }
+        if (node.type === 'reference') {
+          if (!activeReferenceLayer) {
+            activeReferenceLayer = node;
+          }
+          if (node.checked) {
+            activeReferenceLayer = node;
+          }
+          if (!node.layerInfo.metadata) {
+            node.layerInfo.metadata = {};
+          }
+          node.layerInfo.metadata.reference = true;
+          if (node.layerInfo.type === 'style') {
+            node.layerInfo.metadata.styleid = node.layerInfo.id;
+            node.layerInfo.metadata.styletitle = node.title;
+          }
+        } else {
+          // checked non reference nodes should have a numbered checked property starting at 2
+          // checked property 1 is reserved for the reference layer
+          if (node.checked) {
+            if (isNaN(parseInt(node.checked))) {
+              node.checked = 2;
+            } else {
+              node.checked = parseInt(node.checked) + 1;
+            }
+          }
+        }
+      }
+    });
+    if (activeReferenceLayer) {
+      // set reference layer order to first
+      activeReferenceLayer.checked = 1;
+    }
+  }
   applyConfig(config) {
+    this.activeLayers = null;
+    this.currentTool = '';
     if (config.keys) {
       for (let keyname in config.keys) {
         EduGISkeys[keyname] = config.keys[keyname];
@@ -990,18 +1039,27 @@ class WebMap extends LitElement {
       if (config.map.hasOwnProperty('pitch')) {
         this.pitch = config.map.pitch;
       }
-      if (config.map.style) {
-        if (!config.map.style.glyphs) {
-          config.map.style.glyphs = `https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
-          //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
-        }
-        this.mapstyle = config.map.style;
-        this.mapstyleid = config.map.style.id;
-        this.mapstyletitle = config.map.style.name;
+      if (!config.map.style) {
+        config.map.style = {
+          "version": 8,
+          "name": "EmptyStyle",
+          "id": "emptystyle",
+          "sources": {
+          },
+          "layers": [
+          ]
+        } 
       }
+      if (!config.map.style.glyphs) {
+        config.map.style.glyphs = `https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
+        //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
+      }
+      this.mapstyle = config.map.style;
+      this.mapstyleid = config.map.style.id;
+      this.mapstyletitle = config.map.style.name;
     }
     if (config.datacatalog) {
-      this.setUntypedLayerInfos(config.datacatalog);
+      this.prepareLayerInfos(config.datacatalog);
       this.activeLayers = this.getCheckedLayerInfos(config.datacatalog).sort((a,b)=>a.order>b.order).map(layer=>layer.layerInfo);
       this.datacatalog = config.datacatalog;    
     }
