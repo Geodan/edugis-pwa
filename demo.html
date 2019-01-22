@@ -20,13 +20,23 @@
         font-display: auto;
     }
     body {
-        margin: 0;
+        margin: 0 0 0 10px;
         /* This is a font-stack that tries to use the system-default sans-serifs first */
         font-family: 'Open Sans',sans-serif,'Arial','Helvetica',"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         min-height: 100%;
         padding: 0;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    a:visited {
+        color: dimgray;
     }
     .overview {
         position: absolute;
