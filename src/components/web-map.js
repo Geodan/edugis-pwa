@@ -1137,7 +1137,7 @@ class WebMap extends LitElement {
     }
     if (config.datacatalog) {
       this.prepareLayerInfos(config.datacatalog);
-      this.activeLayers = this.getCheckedLayerInfos(config.datacatalog).sort((a,b)=>a.order>b.order).map(layer=>layer.layerInfo);
+      this.activeLayers = this.getCheckedLayerInfos(config.datacatalog).sort((a,b)=>a.order-b.order).map(layer=>layer.layerInfo);
       this.datacatalog = config.datacatalog;    
     }
     if (config.tools) {
