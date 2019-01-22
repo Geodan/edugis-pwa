@@ -1,13 +1,50 @@
 {
     "map": {
-        "zoom": 5,
-        "center": [4.90, 52.37],
+        "zoom": 7,
+        "center": [5.28, 52.16],
         "pitch" : 0
     },
     "datacatalog" : [
-        {
+      {
+        "type":"sheetlayer",
+        "title":"Google spreadsheet layer",
+        "checked": true,
+        "layerInfo":{
+          "id":"sheet gemeenten2017",
+          "type":"sheetlayer",
+          "source":{
+            "type":"geojson",
+            "data":"https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd1.json",
+            "attribution":"cbs/pdok"
+          },
+          "sheet":{
+            "description":"cbs gemeentedata 2017",
+            "key":"1SCzqMGqclDJAwY0YKDDzfmc35RpLJCi-w_0_SMAJHI0",
+            "georeference":"relation",
+            "sheetcolumn":"A",
+            "datacolumn":"statnaam"
+          }
+        }
+      },
+      {
+        "type": "group",
+        "title": "Achtergrondlagen",
+        "sublayers":[
+          {
+            "type":"reference",
+            "title":"OSM Bright (stijl)",
+            "layerInfo":{
+              "id":"OsmBright",
+              "type":"style",
+              "source":"styles/openmaptiles/osmbright.json",
+              "metadata":{
+                "reference":true
+              }
+            }
+          },{
             "title":"Openstreetmap",
             "type":"reference",
+            "checked": true,
             "layerInfo":{
               "id":"openstreetmap",
               "type":"raster",
@@ -27,7 +64,6 @@
           {
             "title":"Openstreetmap Gray",
             "type":"reference",
-            "checked": true,
             "layerInfo":{
               "id":"openstreetmapgray",
               "type":"raster",
@@ -44,16 +80,18 @@
               }
             }
           }
+        ]
+      }
     ],
     "tools" : {
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 0},
         "datacatalog" : {"visible": 1, "order" : 1},
-        "measure" : {"visible": 0, "order": 2},
-        "info" : {"visible" : 0, "order": 3},
+        "measure" : {"visible": 1, "order": 2},
+        "info" : {"visible" : 1, "order": 3},
         "maplanguage" : {"visible" : 0, "order": 4},
-        "pitch" : {"visible" : 0, "order": 5},
-        "geolocate" : {"visible" : 0, "order": 6},
+        "pitch" : {"visible" : 1, "order": 5},
+        "geolocate" : {"visible" : 1, "order": 6},
         "draw" : {"visible" : 0, "order": 7},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},

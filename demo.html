@@ -31,6 +31,8 @@
     .overview {
         position: absolute;
         width: 20%;
+        height: 100vh;
+        overflow: auto;
     }
     iframe {
         position: absolute;
@@ -45,12 +47,7 @@
     </style>
 </head>
 <body>
-    <div class="overview">
-        Hier komen de voorbeelden...<p>
-        <a href="index.html#configurl=" target="edugismap">Default</a><br>
-        <a href="index.html#configurl=maps/config.json" target="edugismap">config.json</a><br>
-        <a href="index.html#configurl=maps/config2.json" target="edugismap">config2.json</a><br>
-
+    <div class="overview">        
         <br><b>Simple map</b><br>
         <a href="index.html#configurl=maps/styleonly.json" target="edugismap">NL 17th century, no data catalog, style only</a><br>
        
@@ -73,6 +70,27 @@
 
         <br><b>Vector</b><br>
         <a href="index.html#configurl=maps/vectornuts3.json" target="edugismap">Nuts 3</a><br>
+        <a href="index.html#configurl=maps/adamverkeer.json" target="edugismap">Amsterdam verkeer (service)</a><br>
+        <a href="index.html#configurl=maps/gemgeojson.json" target="edugismap">CBS Gemeenten (geojson, 2.1 MB)</a><br>
+
+        <br><b>Stijlen</b><br>
+        <a href="index.html#configurl=maps/metroparijs.json" target="edugismap">Metrolijnen Parijs</a><br>
+        <a href="index.html#configurl=maps/gsheet.json" target="edugismap">Spreadsheetkaart</a><br>
+
+        <br><b>3D</b><br>
+        <a href="index.html#configurl=maps/buildingextrusion.json" target="edugismap">3D Gebouwen</a><br>
+        <a href="index.html#configurl=maps/thematic3D.json" target="edugismap">3D Thematisch</a><br>
+        <a href="index.html#configurl=maps/fietstocht3D.json" target="edugismap">Hillshading</a><br>
+
+        <br><b>Distance and Surface</b><br>
+        <a href="index.html#configurl=maps/adamnewyork.json" target="edugismap">Afstand Amsterdam New York</a><br>
+        <a href="index.html#configurl=maps/greenland.json" target="edugismap">Compare GreenLand and Arabian Peninsula surface </a><br>
+
+        <br><b>WebGL</b><br>
+        <a href="index.html#configurl=maps/webglanimation.json" target="edugismap">Traffic Animation</a><br>
+
+        <br><b>Map Language</b><br>
+        <a href="index.html#configurl=maps/maplanguage.json" target="edugismap">Change Map Language</a><br>
     </div>
     <iframe name="edugismap" src="index.html" width="80%" height="100%"></iframe>
 </body>
