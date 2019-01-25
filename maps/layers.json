@@ -1,0 +1,399 @@
+{
+    "map": {
+        "zoom": 6.5,
+        "center": [5.375, 52.168],
+        "pitch" : 0
+    },
+    "datacatalog" : [
+        {
+            "type": "group",
+            "title": "Achtergrondlagen",
+            "sublayers": [
+                {
+                    "title":"Openstreetmap",
+                    "type":"reference",
+                    "checked": true,
+                    "layerInfo":{
+                        "id":"openstreetmap",
+                        "type":"raster",
+                        "metadata":{
+                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                        },
+                        "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                            "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution":"&copy; OpenStreetMap contributors"
+                        }
+                    }
+                },
+                {
+                    "title":"Openstreetmap Grijs",
+                    "type":"reference",
+                    "layerInfo":{
+                      "id":"openstreetmapgray",
+                      "type":"raster",
+                      "metadata":{
+                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                      },
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                          "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution":"&copy; OpenStreetMap contributors"
+                      }
+                    }
+                },
+                {
+                    "type":"reference",
+                    "title":"Microsoft BING Kaart",
+                    "layerInfo":{
+                      "id":"bingmaproad",
+                      "metadata":{
+                        "reference":true,
+                        "bing":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom":19
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"Microsoft BING Hybride",
+                    "layerInfo":{
+                      "id":"bingmaphybrid",
+                      "metadata":{
+                        "reference":true,
+                        "bing":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom":18
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"Microsoft BING Luchtfoto",
+                    "layerInfo":{
+                      "id":"bingmapaerial",
+                      "metadata":{
+                        "reference":true,
+                        "bing":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                        "maxzoom":18
+                      }
+                    }
+                },
+                {
+                    "title":"PDOK BRT Achtergrondkaart",
+                    "type":"reference",
+                    "layerInfo":{
+                      "id":"brtachtergrondkaart",
+                      "type":"raster",
+                      "metadata":{
+                        "reference": true
+                      },
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                          "http://t1.edugis.nl/tiles/tilecache.py?LAYERS=brtachtergrondkaart&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=256&height=256&BBOX={bbox-epsg-3857}"
+                        ],
+                        "attribution":"PDOK",
+                        "minzoom": 5,
+                        "maxzoom": 18
+                      }
+                    }
+                },
+                {
+                    "title":"PDOK luchtfoto's 2016 (WMTS)",
+                    "type":"reference",
+                    "layerInfo":{
+                      "id":"pdokluchtfotowmts2016",
+                      "type":"raster",
+                      "metadata":{
+                        "reference": true,
+                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2016.png"
+                      },
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                        ],
+                        "attribution":"PDOK",
+                        "minzoom": 5,
+                        "maxzoom": 18
+                      }
+                    }
+                },
+                {
+                    "title":"PDOK luchtfoto's 2018 (WMTS)",
+                    "type":"reference",
+                    "layerInfo":{
+                      "id":"pdokluchtfotowmts2018",
+                      "type":"raster",
+                      "metadata":{
+                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2018.png",
+                        "reference": true
+                      },
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2018_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                        ],
+                        "attribution":"PDOK",
+                        "minzoom": 5,
+                        "maxzoom": 18
+                      }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "title": "Administratieve indelingen",
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Provincies, gemeenten, wijken en buurten (2005)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"provgemwijk2005",
+                            "layerInfo":{
+                              "id":"provgemwijk2005",
+                              "url":"https://kaart.edugis.nl/data/nederland/adm_grenzen_2005.xml",
+                              "deniedlayers":"",
+                              "allowedlayers":"",
+                              "checkedlayers": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Provincies, gemeenten, wijken en buurten (2010)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"provgemwijk2010",
+                            "layerInfo":{
+                              "id":"provgemwijk2010",
+                              "url":"https://kaart.edugis.nl/data/nederland/adm_grenzen_2010.xml",
+                              "deniedlayers":"",
+                              "allowedlayers":"",
+                              "checkedlayers": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Provincies, gemeenten, wijken en buurten (2017)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"provgemwijk2017",
+                            "layerInfo":{
+                              "id":"provgemwijk2017",
+                              "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/Administratieve_Indelingen.qgs&service=WMS&version=1.1.1&request=getcapabilities",
+                              "deniedlayers":"Administratieve_Indelingen",
+                              "allowedlayers":"",
+                              "checkedlayers": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Overige indelingen",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"admgrenzenoverig",
+                            "layerInfo":{
+                              "id":"admgrenzenoverig",
+                              "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/adm_indelingen_overig.qgs&service=WMS&version=1.1.1&request=getcapabilities",
+                              "deniedlayers":"adm_indelingen_overig",
+                              "allowedlayers":"",
+                              "checkedlayers": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "title": "Gebouwen",
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Panden e.d.",
+                    "sublayers": [
+                        {
+                            "type": "wms",
+                            "title": "panden - bouwjaar",
+                            "layerInfo": {
+                                "id": "pandenbouwjaar",
+                                "type":"raster",
+                                "minzoom":13,
+                                "maxzoom":22,
+                                "metadata":{
+                                    "getFeatureInfoUrl":"https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&service=WMS&version=1.1.1&request=GETFEATUREINFO&LAYERS=gknBouwjaar&QUERY_LAYERS=gknBouwjaar",
+                                    "legendurl":"https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&request=GetLegendGraphic&service=WMS&itemFONTSIZE=8&format=png&layertitle=false&layer=gknBouwjaar"
+                                },
+                                "source":{
+                                    "type":"raster",
+                                    "tileSize":512,
+                                    "tiles":[
+                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
+                                    ],
+                                    "attribution":"Pico, Kadaster"
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "panden - energielabel",
+                            "layerInfo": {
+                                "id": "pandennergielabel",
+                                "type":"raster",
+                                "minzoom":13,
+                                "maxzoom":22,
+                                "metadata":{
+                                    "legendurl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&request=GetLegendGraphic&service=WMS&itemFONTSIZE=8&format=png&layertitle=false&layer=rvoLabel2017",
+	                                "getFeatureInfoUrl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017&QUERY_LAYERS=rvoLabel2017&SERVICE=WMS&VERSION=1.1.1&REQUEST=GETFEATUREINFO"
+                                },
+                                "source":{
+                                    "type":"raster",
+                                    "tileSize":512,
+                                    "tiles":[
+                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&transparent=true&LAYERS=rvoLabel2017&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
+                                    ],
+                                    "attribution":"Pico, Kadaster"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Verblijfsobjecten",
+                    "sublayers": [
+                        
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Monumenten",
+                    "sublayers": [
+                        
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Aggregaties",
+                    "sublayers": [
+                        
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "title": "Voorzieningen",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Bevolking",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Landschap, grond en bodem",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Water (hydrografie)",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Landbouw",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Milieu",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Toekomst",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Topografie",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Energietransitie",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Lelystad Next-level",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Historische kaarten",
+            "sublayers": []
+        },
+        {
+            "type": "group",
+            "title": "Toegevoegde gegevens",
+            "sublayers": []
+        }
+    ]     
+    ,
+    "tools" : {
+        "toolbar": {"opened" : 1},
+        "search" : {"visible": 1, "order" : 1},
+        "datacatalog" : {"visible": 1, "order" : 2},
+        "measure" : {"visible": 1, "order": 0},
+        "info" : {"visible" : 1, "order": 3},
+        "maplanguage" : {"visible" : 1, "order": 4},
+        "pitch" : {"visible" : 1, "order": 5},
+        "geolocate" : {"visible" : 1, "order": 6},
+        "draw" : {"visible" : 0, "order": 7},
+        "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
+        "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
+        "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
+        "coordinates" : {"visible" : 1, "position" : "bottom-center"},
+        "scalebar": {"visible" : 1, "position" : "bottom-right"},
+        "currenttool": null
+    },
+    "keys" : {
+        "mapboxaccesstoken" : null
+    }
+}
