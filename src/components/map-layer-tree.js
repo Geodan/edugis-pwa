@@ -61,7 +61,7 @@ class MapLayerTree extends LitElement {
         }
         const contentType = response.headers.get('content-type');
         if (contentType) {
-          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml')) { 
+          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) { 
             // caps 1.1.1 or caps 1.3.0
             response.text().then(xml=>{
               const nodes = capabilitiesToCatalogNodes(xml, subNode.layerInfo.deniedlayers, subNode.layerInfo.allowedlayers);

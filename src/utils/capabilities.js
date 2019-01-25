@@ -118,7 +118,7 @@ export function getCapabilitiesNodes(node) {
         }
         const contentType = response.headers.get('content-type');
         if (contentType) {
-          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml')) { 
+          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) { 
             // caps 1.1.1 or caps 1.3.0
             return response.text().then(xml=>{
               const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers);
