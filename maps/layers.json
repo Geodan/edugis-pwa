@@ -113,7 +113,8 @@
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
-                        "maxzoom": 18
+                        "maxzoom": 18,
+                        "bounds": [-1.6,47.5,13.0,56.0]
                       }
                     }
                 },
@@ -135,7 +136,8 @@
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
-                        "maxzoom": 18
+                        "maxzoom": 18,
+                        "bounds" : [2.75,50.50, 7.5, 53.6]
                       }
                     }
                 },
@@ -157,7 +159,8 @@
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
-                        "maxzoom": 18
+                        "maxzoom": 18,
+                        "bounds" : [2.75,50.50, 7.5, 53.6]
                       }
                     }
                 }
@@ -253,10 +256,6 @@
                                 "type":"raster",
                                 "minzoom":13,
                                 "maxzoom":22,
-                                "metadata":{
-                                    "getFeatureInfoUrl":"https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&service=WMS&version=1.1.1&request=GETFEATUREINFO&LAYERS=gknBouwjaar&QUERY_LAYERS=gknBouwjaar",
-                                    "legendurl":"https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&request=GetLegendGraphic&service=WMS&itemFONTSIZE=8&format=png&layertitle=false&layer=gknBouwjaar"
-                                },
                                 "source":{
                                     "type":"raster",
                                     "tileSize":512,
@@ -275,17 +274,34 @@
                                 "type":"raster",
                                 "minzoom":13,
                                 "maxzoom":22,
-                                "metadata":{
-                                    "legendurl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&request=GetLegendGraphic&service=WMS&itemFONTSIZE=8&format=png&layertitle=false&layer=rvoLabel2017",
-	                                "getFeatureInfoUrl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017&QUERY_LAYERS=rvoLabel2017&SERVICE=WMS&VERSION=1.1.1&REQUEST=GETFEATUREINFO"
+                                "source":{
+                                    "type":"raster",
+                                    "tileSize":512,
+                                    "tiles":[
+                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
+                                    ],
+                                    "attribution":"Pico, Kadaster"
+                                }
+                            }
+                        },
+                        {
+                            "title": "Kadastrale kaart",
+                            "type": "wms",
+                            "layerInfo": {
+                                "id": "kadastralekaart",
+                                "minzoom": 16,
+                                "title": "Kadastralekaart",
+                                "type": "raster",
+                                "metadata": {
+                                    "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wms?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
                                 },
                                 "source":{
                                     "type":"raster",
                                     "tileSize":512,
                                     "tiles":[
-                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&transparent=true&LAYERS=rvoLabel2017&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
+                                        "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wms?LAYERS=kadastralekaart"
                                     ],
-                                    "attribution":"Pico, Kadaster"
+                                    "attribution":"PDOK, Kadaster"
                                 }
                             }
                         }

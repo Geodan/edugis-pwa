@@ -1,3 +1,5 @@
+import {wmsUrl} from './wmsurl';
+
 function convertToArray(layerlist) {
     if (!layerlist) {
         return [];
@@ -29,6 +31,23 @@ function scaleHintToZoomLevel(hint)
     }
 }
 
+function preferredFeatureInfoFormat(formats) {
+  if (formats.includes('application/json')) {
+    return 'application/json';
+  }
+  if (formats.includes('application/vnd.ogc.gml')) {
+    return 'application/vnd.ogc.gml';
+  }
+  if (formats.includes('application/xml')) {
+    return 'application/xml';
+  }
+  if (formats.includes('text/plain')) {
+    return 'text/plain';
+  }
+  // not supported
+  return '';
+}
+
 function layerToNode(Layer, Request) {
     let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
     // upgrade to https (cannot load from http)
@@ -42,22 +61,28 @@ function layerToNode(Layer, Request) {
       featureInfoResource.protocol = 'https:';
       featureInfoResource.port = 443;
     }
-    const node = { "title": Layer.Title, "id": Layer.Name, "type":"wms", "layerInfo": {
+    const node = { "title": Layer.Title, "id": Layer.Name, "type":"wmsfromcaps", "layerInfo": {
       "id" : Layer.Name,
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
-          "legendurl": Layer.Style ? Layer.Style[0].LegendURL[0].OnlineResource : undefined,
-          "getFeatureInfoUrl": featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
+          "legendurl": Layer.Style ? Layer.Style[0].LegendURL[0].OnlineResource : undefined
       },
       "source" : {
           "type": "raster",
-          "tileSize" : 256,
+          "tileSize" : 512,
           "tiles": [
-              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&styles=" // + encodeURIComponent(Layer.Style[0].Name)
+              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=512&height=512&styles=" // + encodeURIComponent(Layer.Style[0].Name)
           ],
           "attribution": Layer.Attribution && Layer.Attribution.Title ? Layer.Attribution.Title: ""
           }
+      }
+    }
+    if (Layer.queryable) {
+      const getFeatureInfoFormat = preferredFeatureInfoFormat(Request.GetFeatureInfo.Format);
+      if (getFeatureInfoFormat != '') {
+        node.layerInfo.metadata.getFeatureInfoUrl = featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
+        node.layerInfo.metadata.getFeatureInfoFormat = getFeatureInfoFormat;
       }
     }
     if (Layer.ScaleHint) {
@@ -112,13 +137,14 @@ export function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
 }
 
 export function getCapabilitiesNodes(node) {
-    return fetch(node.url).then(response=>{
+    const url = wmsUrl(node.url, 'getcapabilities');
+    return fetch(url).then(response=>{
         if (!response.ok) {
           throw Error(`${node.id}: req rejected with status ${response.status} ${response.statusText}`);
         }
         const contentType = response.headers.get('content-type');
         if (contentType) {
-          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) { 
+          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) {
             // caps 1.1.1 or caps 1.3.0
             return response.text().then(xml=>{
               const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers);

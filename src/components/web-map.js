@@ -33,6 +33,7 @@ import './map-selected-layers';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
 import {getCapabilitiesNodes} from '../utils/capabilities';
+import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
@@ -547,31 +548,6 @@ class WebMap extends LitElement {
       layerInfo.source.url = layerInfo.source.url.replace('{time}', now);
     }
   }
-  guessLegendUrl(layerInfo)
-  {
-    let legendUrl = '';
-    let tileUrl = layerInfo.source.url;
-    if (!tileUrl) {
-      tileUrl = layerInfo.source.tiles[0];
-    }
-    if (tileUrl) {
-      const urlparts = tileUrl.split('?'); // [baseurl,querystring]
-      const params = urlparts[1].split('&').map(param=>param.split('='))
-        .filter(param=>
-          ["BBOX", "REQUEST", "SRS", "WIDTH",
-           "HEIGHT", "TRANSPARENT"].indexOf(param[0].toUpperCase()) == -1
-        )
-        .map(param=>{
-          if (param[0].toUpperCase() === 'LAYERS') {
-            return ['layer', param[1].split(',')[0]];
-          }
-          return param;
-        })
-        .map(param=>param.join('=')).join('&');
-      legendUrl = urlparts[0] + '?' + params + '&REQUEST=GetLegendGraphic';
-    }
-    return legendUrl;
-  }
   async addLayer(e) {
     const layerInfo = e.detail;
     if (layerInfo.type === 'style') {
@@ -582,8 +558,12 @@ class WebMap extends LitElement {
       this.insertTime(layerInfo);
       if (layerInfo.metadata.wms) {
         if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
-          layerInfo.metadata.legendurl = this.guessLegendUrl(layerInfo);
+          layerInfo.metadata.legendurl = wmsUrl(layerInfo.source.tiles[0], 'getlegendgraphic');
         }
+        if (!layerInfo.metadata.getFeatureInfoUrl && layerInfo.metadata.getFeatureInfoUrl !== '') {
+          layerInfo.metadata.getFeatureInfoUrl = wmsUrl(layerInfo.source.tiles[0], 'getfeatureinfo');
+        }
+        layerInfo.source.tiles = layerInfo.source.tiles.map(tile=>wmsUrl(tile, 'getmap'));
       }
       if (layerInfo.metadata.bing && layerInfo.source.url) {
         const bingMetadata = await fetch(layerInfo.source.url).then(data=>data.json());
@@ -1485,10 +1465,10 @@ class WebMap extends LitElement {
         return response.text().then(text=>this.XMLtoGeoJSON(text))}
       );
   }
-  waitingForResponse(id) {
+  waitingForResponse(layer) {
     return {
       "type":"Feature",
-      "layer": {"id": id},
+      "layer": {"id": layer.id, "metadata": layer.metadata},
       "geometry": null,
       "properties": {"info": "waiting for response..."}
     };
@@ -1525,7 +1505,7 @@ class WebMap extends LitElement {
         if (layers[i].metadata && layers[i].metadata.getFeatureInfoUrl) {
           if ((layers[i].minzoom === undefined || this.zoom >= layers[i].minzoom) &&
            (layers[i].maxzoom === undefined || this.zoom <= layers[i].maxzoom )) {
-             let wmsFeatures = this.waitingForResponse(layers[i].id);
+             let wmsFeatures = this.waitingForResponse(layers[i]);
              featureInfo.push(wmsFeatures);
              this.queryWMSFeatures(e.lngLat, layers[i].metadata)
               .then(feature=>{
@@ -1554,7 +1534,7 @@ class WebMap extends LitElement {
         }
       }
       if (this.streetViewOn) {
-        const streetViewInfo = {"type":"feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview"}};
+        const streetViewInfo = {"type":"feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
         featureInfo.push(streetViewInfo);
         this.getStreetViewImage(e.lngLat).then(imageurl=>{
           streetViewInfo.properties.image = imageurl;

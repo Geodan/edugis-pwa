@@ -92,7 +92,7 @@ class MapInfoFormatted extends LitElement {
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
           <div>
-            <div class="layer">${feature.layer.id}</div>
+            <div class="layer">${feature.layer.metadata?feature.layer.metadata.title?feature.layer.metadata.title:feature.layer.id:feature.layer.id}</div>
             ${Object.keys(feature.properties).length?
               Object.keys(feature.properties).map(key=>
               html`<div class="attributename">${key}</div>
