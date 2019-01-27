@@ -117,6 +117,10 @@ export function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
     const parser = new WMSCapabilities();
     const json = parser.parse(xml);
     const result = [];
+    if (!json.Capability) {
+      // no capabilities
+      return result;
+    }
     deniedlayers = convertToArray(deniedlayers);
     allowedlayers = convertToArray(allowedlayers);
     if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {

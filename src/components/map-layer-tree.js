@@ -1,6 +1,7 @@
 import {LitElement, html} from '@polymer/lit-element';
 import {foldercss} from './folder-icon.css.js';
-import {capabilitiesToCatalogNodes} from '../utils/capabilities';
+import {getCapabilitiesNodes} from '../utils/capabilities';
+
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -55,34 +56,18 @@ class MapLayerTree extends LitElement {
   {
     const subNode = nodeList.find(node=>node.id==nodeId);
     if (subNode) {
-      fetch(subNode.layerInfo.url).then(response=>{
-        if (!response.ok) {
-          throw Error(`${nodeId}: req rejected with status ${response.status} ${response.statusText}`);
-        }
-        const contentType = response.headers.get('content-type');
-        if (contentType) {
-          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) { 
-            // caps 1.1.1 or caps 1.3.0
-            response.text().then(xml=>{
-              const nodes = capabilitiesToCatalogNodes(xml, subNode.layerInfo.deniedlayers, subNode.layerInfo.allowedlayers);
-              if (nodes.length == 0) {
-                nodes.push({"title": `${nodeId}: 0 layers or failed`});
-              }
-              return nodes;
-            })
-            .then(newNodes=> {
-              for (let i = 0; i < nodeList.length; i++) {
-                if (nodeList[i].id === nodeId) {                  
-                  nodeList.splice(i, 1, ...newNodes);
-                  this.requestUpdate();
-                }
-              }
-            })
+      getCapabilitiesNodes(subNode.layerInfo)
+        .then(newNodes=> {
+          for (let i = 0; i < nodeList.length; i++) {
+            if (nodeList[i].id === nodeId) {                  
+              nodeList.splice(i, 1, ...newNodes);
+              this.requestUpdate();
+            }
           }
-        }
-      }).catch(reason=>{
-        subNode.title=`${nodeId}: ${reason}`;
-        this.requestUpdate();
+        })  
+        .catch(reason=>{
+          subNode.title=`${nodeId}: ${reason}`;
+          this.requestUpdate();
       });
     }
   }

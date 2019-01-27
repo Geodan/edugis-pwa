@@ -230,10 +230,25 @@
                             "title":"admgrenzenoverig",
                             "layerInfo":{
                               "id":"admgrenzenoverig",
-                              "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/adm_indelingen_overig.qgs&service=WMS&version=1.1.1&request=getcapabilities",
+                              "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/adm_indelingen_overig.qgs",
                               "deniedlayers":"adm_indelingen_overig",
                               "allowedlayers":"",
                               "checkedlayers": ""
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Waterschappen",
+                            "layerInfo": {
+                                "id": "waterschappen",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.nationaalgeoregister.nl/wsaeenhedeninspire/wms?layers=waterschapsgrens"]
+                                }
                             }
                         }
                     ]
