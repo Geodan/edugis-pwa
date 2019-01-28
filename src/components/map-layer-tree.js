@@ -1,6 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import {foldercss} from './folder-icon.css.js';
-import {getCapabilitiesNodes} from '../utils/capabilities';
+import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 
 
 /* This component renders a tree of nodes as a collapsible tree
@@ -58,6 +58,7 @@ class MapLayerTree extends LitElement {
     if (subNode) {
       getCapabilitiesNodes(subNode.layerInfo)
         .then(newNodes=> {
+          copyMetadataToCapsNodes(subNode.layerInfo, newNodes);
           for (let i = 0; i < nodeList.length; i++) {
             if (nodeList[i].id === nodeId) {                  
               nodeList.splice(i, 1, ...newNodes);

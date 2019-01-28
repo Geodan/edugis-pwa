@@ -32,7 +32,7 @@ import './map-pitch';
 import './map-selected-layers';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
-import {getCapabilitiesNodes} from '../utils/capabilities';
+import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
@@ -570,6 +570,10 @@ class WebMap extends LitElement {
         }
         layerInfo.source.tiles = layerInfo.source.tiles.map(tile=>wmsUrl(tile, 'getmap'));
       }
+      if (layerInfo.metadata.tilecacheurl && layerInfo.source.tiles) {
+        let search = new URL(layerInfo.source.tiles[0]).search;
+        layerInfo.source.tiles = layerInfo.metadata.tilecacheurl.map(url=>url+search);
+      }
       if (layerInfo.metadata.bing && layerInfo.source.url) {
         const bingMetadata = await fetch(layerInfo.source.url).then(data=>data.json());
         const sourceMaxzoom = layerInfo.source.maxzoom;
@@ -998,6 +1002,7 @@ class WebMap extends LitElement {
             layerInfo.checkedlayers = layerInfo.checkedlayers.split(',');
           }
           let nodes = await getCapabilitiesNodes(layerInfo);
+          copyMetadataToCapsNodes(layerInfo, nodes);
           const activeLayers = this.activeLayers;
           for (let j = 0; this.activeLayers === activeLayers && j < layerInfo.checkedlayers.length; j++) {
             const node = nodes.find(node=>node.layerInfo.id===layerInfo.checkedlayers[j]);
