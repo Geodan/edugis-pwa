@@ -560,8 +560,13 @@ class WebMap extends LitElement {
         if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
           layerInfo.metadata.legendurl = wmsUrl(layerInfo.source.tiles[0], 'getlegendgraphic');
         }
-        if (!layerInfo.metadata.getFeatureInfoUrl && layerInfo.metadata.getFeatureInfoUrl !== '') {
-          layerInfo.metadata.getFeatureInfoUrl = wmsUrl(layerInfo.source.tiles[0], 'getfeatureinfo');
+        if (layerInfo.metadata.getFeatureInfoUrl !== '') {
+          // layer is queryable
+          if (layerInfo.metadata.getFeatureInfoUrl) {
+            layerInfo.metadata.getFeatureInfoUrl = wmsUrl(layerInfo.metadata.getFeatureInfoUrl, 'getfeatureinfo');
+          } else {
+            layerInfo.metadata.getFeatureInfoUrl = wmsUrl(layerInfo.source.tiles[0], 'getfeatureinfo');
+          }
         }
         layerInfo.source.tiles = layerInfo.source.tiles.map(tile=>wmsUrl(tile, 'getmap'));
       }
