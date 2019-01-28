@@ -7,7 +7,7 @@ function convertToArray(layerlist) {
     if (Array.isArray(layerlist)){
         return layerlist;
     }
-    return layerlist.split(',');
+    return layerlist.split(',').map(layer=>layer.trim());
 }
 
 function allowedLayer(Layer, deniedlayers, allowedlayers) {
@@ -113,7 +113,7 @@ function layerToNode(Layer, Request) {
     return node;
 }
 
-export function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
+function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
     const parser = new WMSCapabilities();
     const json = parser.parse(xml);
     const result = [];
@@ -164,4 +164,15 @@ export function getCapabilitiesNodes(node) {
             throw Error('content-type not set in getcapabilities response');
         }
     });
+}
+
+export function copyMetadataToCapsNodes(sourceLayerInfo, capsNodes) {
+  capsNodes.forEach(node=>{
+    if (!node.layerInfo.metadata) {
+      node.layerInfo.metadata = {};
+    }
+    if (sourceLayerInfo.tilecacheurl) {
+      node.layerInfo.metadata.tilecacheurl = sourceLayerInfo.tilecacheurl;
+    }
+  });
 }
