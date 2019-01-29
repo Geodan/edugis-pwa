@@ -250,6 +250,37 @@
                                     "tiles": ["https://geodata.nationaalgeoregister.nl/wsaeenhedeninspire/wms?layers=waterschapsgrens"]
                                 }
                             }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Percelen",
+                            "layerInfo": {
+                                "id": "percelenwms",
+                                "type": "raster",
+                                "minzoom": 14,
+                                "metadata" : {
+                                    "getFeatureInfoUrl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&LAYERS=perceel",
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                    "legendurl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&version=1.1.0&service=WMS&request=GetLegendGraphic&layer=perceel&format=image/png&STYLE=default"
+                                },
+                                "source": {
+                                    "minzoom": 14,
+                                    "type": "raster",
+                                    "tileSize": 256,
+                                    "tiles": ["http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/kadaster.map&LAYERS=perceel&width=256&height=256"]
+                                }
+                            }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"coropgebieden",
+                            "layerInfo":{
+                              "id":"coropgebieden",
+                              "url":"https://tiles.edugis.nl/mapproxy/COROP_gebieden/service?",
+                              "deniedlayers":"",
+                              "allowedlayers":"",
+                              "checkedlayers": ""
+                            }
                         }
                     ]
                 }
@@ -319,6 +350,18 @@
                                     "attribution":"PDOK, Kadaster"
                                 }
                             }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"Liplaatsen en Standplaatsen",
+                            "layerInfo":{
+                              "id":"ligstandplaats",
+                              "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
+                              "deniedlayers":"",
+                              "allowedlayers":"ligplaatsen,standplaatsen",
+                              "checkedlayers": "",
+                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
                         }
                     ]
                 },
@@ -326,14 +369,57 @@
                     "type": "group",
                     "title": "Verblijfsobjecten",
                     "sublayers": [
-                        
+                        {
+                            "type":"getcapabilities",
+                            "title":"verblijfsobjecten",
+                            "layerInfo":{
+                              "id":"verblijfsobjecten",
+                              "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
+                              "deniedlayers":"",
+                              "allowedlayers":"gebruiksdoel, panden_oppervlakte",
+                              "checkedlayers": "",
+                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
                     ]
                 },
                 {
                     "type": "group",
                     "title": "Monumenten",
                     "sublayers": [
-                        
+                        {
+                            "type": "wms",
+                            "title": "Monument",
+                            "layerInfo": {
+                                "type": "raster",
+                                "id": "monument",
+                                "metadata": {
+                                    "legendurl" : "https://www.atlasleefomgeving.nl/documents/10156/115096/Rijksmonumenten/aeef6538-e086-41dd-b8d9-24c0b9aaa1eb?t=1471598655569",
+                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
+                                },
+                                "source" : {
+                                    "type" : "raster",
+                                    "tiles": ["http://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Werelderfgoed",
+                            "layerInfo": {
+                                "type": "raster",
+                                "id": "werelderfgoed",
+                                "metadata": {
+                                    "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
+                                    "legendurl" : "https://www.atlasleefomgeving.nl/documents/10156/115096/Werelderfgoed/50d7e6f1-88fd-48c7-bd8b-2beddf1fa1ad?t=1470644514690",
+                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
+                                },
+                                "source" : {
+                                    "type" : "raster",
+                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=rce:WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
+                                }
+                            }
+                        }
                     ]
                 },
                 {
