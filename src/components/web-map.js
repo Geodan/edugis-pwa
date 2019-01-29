@@ -573,6 +573,13 @@ class WebMap extends LitElement {
       if (layerInfo.metadata.tilecacheurl && layerInfo.source.tiles) {
         let search = new URL(layerInfo.source.tiles[0]).search;
         layerInfo.source.tiles = layerInfo.metadata.tilecacheurl.map(url=>url+search);
+        delete layerInfo.metadata.tilecacheurl;
+      }
+      if (layerInfo.metadata.proxy) {
+        layerInfo.source.tiles = layerInfo.source.tiles
+          .map(url=>layerInfo.metadata.proxy + encodeURIComponent(url).replace('%7Bbbox-epsg-3857%7D', '{bbox-epsg-3857}'));
+        layerInfo.metadata.featureinfoproxy = layerInfo.metadata.proxy;
+        delete layerInfo.metadata.proxy;
       }
       if (layerInfo.metadata.bing && layerInfo.source.url) {
         const bingMetadata = await fetch(layerInfo.source.url).then(data=>data.json());
@@ -1466,7 +1473,10 @@ class WebMap extends LitElement {
     const righttop = {x: clickedPointMercator.x + 1.5 * wmtsResolution, y: clickedPointMercator.y + 1.5 * wmtsResolution};
     // getFeatureinfo url for center pixel of 3x3 pixel area
     const params = `&width=3&height=3&x=1&y=1&crs=EPSG:3857&srs=EPSG:3857&info_format=${featureInfoFormat}&bbox=`;
-    const url=featureInfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
+    let url=featureInfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
+    if (metadata.featureinfoproxy) {
+      url = metadata.featureinfoproxy + encodeURIComponent(url);
+    }
     return fetch(url)
       .then(response=>{
         if (featureInfoFormat === 'application/json') {
