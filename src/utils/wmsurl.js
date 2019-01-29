@@ -14,7 +14,7 @@ export function wmsUrl(baseUrl, request)
         case 'GETMAP':
             wmsParameters.push(["TRANSPARENT", "TRUE"]);
             wmsParameters.push(["LAYERS", ""]);
-            wmsParameters.push(["FORMAT", "IMAGE/PNG"]);
+            wmsParameters.push(["FORMAT", "image/png"]);
             wmsParameters.push(["STYLES", ""]);
             wmsParameters.push(["SRS", "EPSG:3857"]);
             wmsParameters.push(["BBOX", "{bbox-epsg-3857}"]);
@@ -24,14 +24,14 @@ export function wmsUrl(baseUrl, request)
         case 'GETLEGENDGRAPHIC':
             wmsParameters.push(["LAYER", ""]);
             wmsParameters.push(["LAYERS", ""]);
-            wmsParameters.push(["FORMAT", "IMAGE/PNG"]);
+            wmsParameters.push(["FORMAT", "image/png"]);
             wmsParameters.push(["STYLES", ""]);
             wmsRemoveParameters.push(...["BBOX","SRS","QUERY_LAYERS"]);
             break;
         case 'GETFEATUREINFO':
             wmsParameters.push(["LAYERS", ""]);
             wmsParameters.push(["QUERY_LAYERS", ""]);
-            wmsParameters.push(["FORMAT", "IMAGE/PNG"]);
+            wmsParameters.push(["FORMAT", "image/png"]);
             wmsParameters.push(["STYLES", ""]);
             break;
     }
