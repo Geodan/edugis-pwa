@@ -142,6 +142,13 @@ footer {
   box-sizing: border-box;
   padding-left: 0.5em;
 }
+footer a {
+  text-decoration: none;
+  color: white;
+}
+footer a:hover {
+  text-decoration: underline;
+}
 
 .App-search {
   position: absolute;
@@ -163,7 +170,7 @@ footer {
         </nav>
     </header>
     <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
-    <footer className="App-footer">&copy;2019 EduGIS, Geodan</footer>
+    <footer className="App-footer">&copy;2019 <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }
   firstUpdated() {
