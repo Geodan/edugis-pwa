@@ -26,6 +26,7 @@ export function wmsUrl(baseUrl, request)
             wmsParameters.push(["LAYERS", ""]);
             wmsParameters.push(["FORMAT", "image/png"]);
             wmsParameters.push(["STYLES", ""]);
+            wmsParameters.push(["STYLE", ""]);
             wmsRemoveParameters.push(...["BBOX","SRS","QUERY_LAYERS"]);
             break;
         case 'GETFEATUREINFO':
@@ -62,6 +63,10 @@ export function wmsUrl(baseUrl, request)
         const legendLayer = wmsParameters.find(parameter=>parameter[0] === 'LAYER');
         if (legendLayer[1] === "") {
             legendLayer[1] = wmsParameters.find(parameter=>parameter[0] === 'LAYERS')[1];
+        }
+        const legendStyle = wmsParameters.find(parameter=>parameter[0] === 'STYLE');
+        if (legendStyle[1] === "") {
+            legendStyle[1] = wmsParameters.find(parameter=>parameter[0] === 'STYLES')[1];
         }
     }
     urlInfo.search = "";
