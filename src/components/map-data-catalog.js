@@ -20,7 +20,7 @@ class MapDataCatalog extends LitElement {
   setListIds(list) {
     list.forEach(item=>{
       if (!item.hasOwnProperty("id")) {
-        item.id = item.title;
+        item.id = `${item.title.replace(' ', '_')}_${item.type?item.type.replace(' ', '_'):'untyped'}_id`;
       }
       if (item.sublayers) {
         this.setListIds(item.sublayers);
