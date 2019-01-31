@@ -419,6 +419,22 @@
                                     "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=rce:WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
                                 }
                             }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Stads- en Dorpsgezichten",
+                            "layerInfo": {
+                                "type": "raster",
+                                "id": "stadsendorpsgezichten",
+                                "metadata": {
+                                    "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
+                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
+                                },
+                                "source" : {
+                                    "type" : "raster",
+                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?LAYERS=Townscapes&STYLES=Erfgoedetalage_StadsEnDorpsgezicht"]
+                                }
+                            }
                         }
                     ]
                 },
@@ -426,7 +442,18 @@
                     "type": "group",
                     "title": "Aggregaties",
                     "sublayers": [
-                        
+                        {
+                            "type":"getcapabilities",
+                            "title":"Aggregaties",
+                            "layerInfo":{
+                              "id":"aggregaties",
+                              "url":"https://kaart.edugis.nl/data/nederland/bag_aggregaties.xml",
+                              "deniedlayers":"",
+                              "allowedlayers":"",
+                              "checkedlayers": "",
+                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
                     ]
                 }
             ]
@@ -434,12 +461,239 @@
         {
             "type": "group",
             "title": "Voorzieningen",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title":"Buiten- en Voorschoolse opvang",
+                    "sublayers" : [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Buiten- en Voorschoolse opvang",
+                            "layerInfo":{
+                                "id":"buitenenvoorschoolseopvang",
+                                "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_bso.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Onderwijs",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Onderwijs",
+                            "layerInfo":{
+                                "id":"voorzieningenonderwijs",
+                                "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_onderwijs.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Zorg",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Zorg",
+                            "layerInfo":{
+                                "id":"voorzieningenzorg",
+                                "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_zorg.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Openbaar vervoer",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Openbaar vervoer",
+                            "layerInfo":{
+                                "id":"voorzieningenov",
+                                "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_ov.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Fietsroutes",
+                    
+                    "sublayers": [
+                        {
+                            "type":"wms",
+                            "title":"Fietsroutes",
+                            "layerInfo":{
+                                "id":"fietsrouteswms",
+                                "metadata": {
+                                    "legendurl": ""
+                                },
+                                "type": "raster",
+                                "source": {
+                                    "type": "raster",
+                                    "tileSize" : 512,
+                                    "tiles": ["https://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?layers=knooppunten,netwerken"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Bioscopen",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Bioscopen",
+                            "layerInfo":{
+                                "id":"bioscopen",
+                                "url":"https://kaart.edugis.nl/data/nederland/bioscopen.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Bevolking",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Dichtheid",
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Bevolkingsdichtheid 1830 - 1960",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Bevolkingsdichtheid 1830 - 1960",
+                                    "layerInfo":{
+                                        "id":"bevolkingsdichtheid1830",
+                                        "url":"https://kaart.edugis.nl/data/nederland/gemeenten_historisch.xml",
+                                        "deniedlayers":"",
+                                        "allowedlayers":"",
+                                        "checkedlayers": "",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Bevolkingsdichtheid 2005",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Bevolkingsdichtheid 2005",
+                                    "layerInfo":{
+                                        "id":"bevolkingsdichtheid2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolkings_dichtheid.xml",
+                                        "deniedlayers":"",
+                                        "allowedlayers":"",
+                                        "checkedlayers": "",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Bevolkingsdichtheid 2010",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Bevolkingsdichtheid 2010",
+                                    "layerInfo":{
+                                        "id":"bevolkingsdichtheid2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolkings_dichtheid_2010.xml",
+                                        "deniedlayers":"",
+                                        "allowedlayers":"",
+                                        "checkedlayers": "",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Bevolkingsdichtheid 2017",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Bevolkingsdichtheid 2017",
+                                    "layerInfo":{
+                                        "id":"bevolkingsdichtheid2017",
+                                        "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/Bevolkingsdichtheid.qgs",
+                                        "deniedlayers":"Bevolkingsdichtheid",
+                                        "allowedlayers":"",
+                                        "checkedlayers": ""
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Welvaart",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Wonen",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Werken (2005)",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Leeftijd",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Huishoudens",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Herkomst",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Politiek",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
