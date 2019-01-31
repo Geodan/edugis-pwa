@@ -242,7 +242,7 @@ class MapMeasure extends LitElement {
       }
     };
   };
-  updateActivation(e) {
+  updateActivation() {
     if (this.active === this.activated) {
       return;
     }
@@ -319,19 +319,26 @@ class MapMeasure extends LitElement {
         // remove measuring from map
         this.webmap.off('click', this._boundHandleClick);
         this.webmap.off('mousemove', this._boundHandleMapMouseMove);
-        this.webmap.removeLayer('map-measure-line');
-        this.webmap.removeLayer('map-measure-points');
-        this.webmap.removeLayer('map-measure-line-length');
-        this.webmap.removeLayer('map-measure-surface');
-        this.webmap.removeSource('map-measure-geojson');
+        if (this.webmap.isStyleLoaded()) { // false if webmap got replaced
+          this.webmap.removeLayer('map-measure-line');
+          this.webmap.removeLayer('map-measure-points');
+          this.webmap.removeLayer('map-measure-line-length');
+          this.webmap.removeLayer('map-measure-surface');
+          this.webmap.removeSource('map-measure-geojson');  
+        }
         this.geojson.features = [];
         this.webmap.getCanvas().style.cursor = '';
         this.measureInfo = this.startMessage;
       }
     }
   }
+  shouldUpdate(changedProperties) {
+    if (changedProperties.has('active')) {
+      this.updateActivation();
+    }
+    return true;
+  }
   render() {
-    this.updateActivation();
     if (!this.active) {
       return html``;
     }
