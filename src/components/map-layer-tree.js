@@ -56,18 +56,21 @@ class MapLayerTree extends LitElement {
   {
     const subNode = nodeList.find(node=>node.id==nodeId);
     if (subNode) {
+      subNode.type = 'gettingcapabilities'; // prevent new replace while loading
       getCapabilitiesNodes(subNode.layerInfo)
         .then(newNodes=> {
           copyMetadataToCapsNodes(subNode.layerInfo, newNodes);
           for (let i = 0; i < nodeList.length; i++) {
             if (nodeList[i].id === nodeId) {                  
               nodeList.splice(i, 1, ...newNodes);
-              this.requestUpdate();
+              //this.requestUpdate();
             }
           }
+          this.requestUpdate();
         })  
         .catch(reason=>{
           subNode.title=`${nodeId}: ${reason}`;
+          subNode.type='error';
           this.requestUpdate();
       });
     }
