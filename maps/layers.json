@@ -196,10 +196,7 @@
                             "title":"provgemwijk2010",
                             "layerInfo":{
                               "id":"provgemwijk2010",
-                              "url":"https://kaart.edugis.nl/data/nederland/adm_grenzen_2010.xml",
-                              "deniedlayers":"",
-                              "allowedlayers":"",
-                              "checkedlayers": ""
+                              "url":"https://kaart.edugis.nl/data/nederland/adm_grenzen_2010.xml"
                             }
                         }
                     ]
@@ -214,9 +211,7 @@
                             "layerInfo":{
                               "id":"provgemwijk2017",
                               "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/Administratieve_Indelingen.qgs&service=WMS&version=1.1.1&request=getcapabilities",
-                              "deniedlayers":"Administratieve_Indelingen",
-                              "allowedlayers":"",
-                              "checkedlayers": ""
+                              "deniedlayers":"Administratieve_Indelingen"
                             }
                         }
                     ]
@@ -231,9 +226,7 @@
                             "layerInfo":{
                               "id":"admgrenzenoverig",
                               "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/adm_indelingen_overig.qgs",
-                              "deniedlayers":"adm_indelingen_overig",
-                              "allowedlayers":"",
-                              "checkedlayers": ""
+                              "deniedlayers":"adm_indelingen_overig"
                             }
                         },
                         {
@@ -276,10 +269,7 @@
                             "title":"coropgebieden",
                             "layerInfo":{
                               "id":"coropgebieden",
-                              "url":"https://tiles.edugis.nl/mapproxy/COROP_gebieden/service?",
-                              "deniedlayers":"",
-                              "allowedlayers":"",
-                              "checkedlayers": ""
+                              "url":"https://tiles.edugis.nl/mapproxy/COROP_gebieden/service?"
                             }
                         }
                     ]
@@ -359,7 +349,6 @@
                               "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
                               "deniedlayers":"",
                               "allowedlayers":"ligplaatsen,standplaatsen",
-                              "checkedlayers": "",
                               "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -375,9 +364,7 @@
                             "layerInfo":{
                               "id":"verblijfsobjecten",
                               "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
-                              "deniedlayers":"",
                               "allowedlayers":"gebruiksdoel, panden_oppervlakte",
-                              "checkedlayers": "",
                               "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -448,9 +435,6 @@
                             "layerInfo":{
                               "id":"aggregaties",
                               "url":"https://kaart.edugis.nl/data/nederland/bag_aggregaties.xml",
-                              "deniedlayers":"",
-                              "allowedlayers":"",
-                              "checkedlayers": "",
                               "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -472,9 +456,6 @@
                             "layerInfo":{
                                 "id":"buitenenvoorschoolseopvang",
                                 "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_bso.xml",
-                                "deniedlayers":"",
-                                "allowedlayers":"",
-                                "checkedlayers": "",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -490,9 +471,6 @@
                             "layerInfo":{
                                 "id":"voorzieningenonderwijs",
                                 "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_onderwijs.xml",
-                                "deniedlayers":"",
-                                "allowedlayers":"",
-                                "checkedlayers": "",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -508,9 +486,6 @@
                             "layerInfo":{
                                 "id":"voorzieningenzorg",
                                 "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_zorg.xml",
-                                "deniedlayers":"",
-                                "allowedlayers":"",
-                                "checkedlayers": "",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -526,9 +501,6 @@
                             "layerInfo":{
                                 "id":"voorzieningenov",
                                 "url":"https://kaart.edugis.nl/data/nederland/voorzieningen_ov.xml",
-                                "deniedlayers":"",
-                                "allowedlayers":"",
-                                "checkedlayers": "",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -567,9 +539,6 @@
                             "layerInfo":{
                                 "id":"bioscopen",
                                 "url":"https://kaart.edugis.nl/data/nederland/bioscopen.xml",
-                                "deniedlayers":"",
-                                "allowedlayers":"",
-                                "checkedlayers": "",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         }
@@ -661,37 +630,283 @@
                 {
                     "type": "group",
                     "title": "Welvaart",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Investeringen (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Investeringen (2005)",
+                                    "layerInfo":{
+                                        "id":"investeringen2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_investering_2005.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Welvaart (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Welvaart (2005)",
+                                    "layerInfo":{
+                                        "id":"welvaart2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/welvaart.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Welvaart (2010)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Welvaart (2010)",
+                                    "layerInfo":{
+                                        "id":"welvaart2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/welvaart_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Wonen",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Wonen (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Wonen (2005)",
+                                    "layerInfo":{
+                                        "id":"wonen2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/wonen.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Wonen (2010)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Wonen (2010)",
+                                    "layerInfo":{
+                                        "id":"wonen2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/wonen_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Werken (2005)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Werken (2005)",
+                            "layerInfo":{
+                                "id":"wonen2005",
+                                "url":"https://kaart.edugis.nl/data/nederland/bevolking_arbeid.xml",
+                                "deniedlayers":"",
+                                "allowedlayers":"",
+                                "checkedlayers": "",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Leeftijd",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Leeftijd (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Leeftijd (2005)",
+                                    "layerInfo":{
+                                        "id":"leeftijd2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_leeftijd.xml",
+                                        "deniedlayers": "cbs_vergrijzing_gemeenten_65plus_1988,cbs_vergrijzing_gemeenten_65plus_2009,cbs_vergrijzing_provincies_65plus_1988,cbs_vergrijzing_provincies_65plus_2009",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Leeftijd (2010)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Leeftijd (2010)",
+                                    "layerInfo":{
+                                        "id":"leeftijd2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_leeftijd_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Leeftijd overig",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Leeftijd overig",
+                                    "layerInfo":{
+                                        "id":"leeftijdoverig",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_leeftijd.xml",
+                                        "allowedlayers": "cbs_vergrijzing_gemeenten_65plus_1988,cbs_vergrijzing_gemeenten_65plus_2009,cbs_vergrijzing_provincies_65plus_1988,cbs_vergrijzing_provincies_65plus_2009",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Huishoudens",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Huishoudens (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Huishoudens (2005)",
+                                    "layerInfo":{
+                                        "id":"huishoudens2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_huishoudens.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Huishoudens (2010)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Huishoudens (2010)",
+                                    "layerInfo":{
+                                        "id":"huishoudens2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_huishoudens_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Herkomst",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Herkomst (2005)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Herkomst (2005)",
+                                    "layerInfo":{
+                                        "id":"herkomst2005",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_herkomst.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Herkomst (2010)",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Herkomst (2010)",
+                                    "layerInfo":{
+                                        "id":"herkomst2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/bevolking_herkomst_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Politiek",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "group",
+                            "title": "Politiek 2006",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Politiek 2006",
+                                    "layerInfo":{
+                                        "id":"politiek2006",
+                                        "url":"https://kaart.edugis.nl/data/nederland/verkiezingen.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Politiek 2010",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Politiek 2010",
+                                    "layerInfo":{
+                                        "id":"politiek2010",
+                                        "url":"https://kaart.edugis.nl/data/nederland/verkiezingen_2010.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Politiek 2012",
+                            "sublayers": [
+                                {
+                                    "type":"getcapabilities",
+                                    "title":"Politiek 2012",
+                                    "layerInfo":{
+                                        "id":"politiek2012",
+                                        "url":"https://kaart.edugis.nl/data/nederland/verkiezingen_2012.xml",
+                                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -751,12 +966,12 @@
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 1},
         "datacatalog" : {"visible": 1, "order" : 2},
-        "measure" : {"visible": 1, "order": 0},
+        "measure" : {"visible": 1, "order": 4},
         "info" : {"visible" : 1, "order": 3},
-        "maplanguage" : {"visible" : 1, "order": 4},
-        "pitch" : {"visible" : 1, "order": 5},
-        "geolocate" : {"visible" : 1, "order": 6},
-        "draw" : {"visible" : 0, "order": 7},
+        "maplanguage" : {"visible" : 1, "order": 5},
+        "pitch" : {"visible" : 1, "order": 6},
+        "geolocate" : {"visible" : 1, "order": 7},
+        "draw" : {"visible" : 0, "order": 8},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
         "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
