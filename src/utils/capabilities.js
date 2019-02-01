@@ -107,7 +107,7 @@ function layerToNode(Layer, Request) {
       const bbox3857 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:3857' || bbox.crs==='EPSG:900913');
       if (bbox3857) {
         const forward = proj4(proj4.Proj("EPSG:3857"), proj4.WGS84).forward;
-        node.layerInfo.source.bounds = [...forward(bbox3857.extent[0], bbox3857.extent[1]), ...forward(bbox3857.extent[2],bbox3857.extent[3])];
+        node.layerInfo.source.bounds = [...forward([bbox3857.extent[0], bbox3857.extent[1]]), ...forward([bbox3857.extent[2],bbox3857.extent[3]])];
       }
     } 
     return node;
