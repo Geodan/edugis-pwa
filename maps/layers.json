@@ -913,32 +913,350 @@
         {
             "type": "group",
             "title": "Landschap, grond en bodem",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Bodem",
+                    "sublayers": [
+                        {
+                            "type": "wms",
+                            "title": "Gemiddelde bodemdaling",
+                            "layerInfo": {
+                                "id": "bodemdaling",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Magnitude van de laatste 100 aardbevingen in Nederland",
+                            "layerInfo": {
+                                "id": "magnitudeaardbeving",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geoservices.knmi.nl/cgi-bin/inspire/aardbevingen_nederland.cgi?layers=magnitude"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Olie- en gasvelden",
+                            "layerInfo": {
+                                "id": "oliegasvelden",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://www.nlog.nl/arcgis/services/nlog/gdw_ng_field_utm/MapServer/WmsServer?layers=0"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Hoogte",
+                    "sublayers": [
+                        {
+                            "type": "wms",
+                            "title": "Hoogte (AHN)",
+                            "layerInfo": {
+                                "id": "hoogteahn",
+                                "type": "raster",
+                                "metadata": {
+                                    "legendurl": "http://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
+                                    "getFeatureInfoUrl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map&layers=hoogte",
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "http://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes"]
+                                }
+                            }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"hoogte",
+                            "layerInfo":{
+                                "id":"hoogte",
+                                "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map",
+                                "allowedlayers": "Hoogtelijnen,Hoogtelabels",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Gemiddelde bodemdaling",
+                            "id": "gemiddeldbodemdaling2",
+                            "layerInfo": {
+                                "id": "bodemdaling2",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Grondsoorten",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"grondsoorten",
+                            "layerInfo":{
+                                "id":"grondsoorten",
+                                "url":"https://kaart.edugis.nl/data/nederland/bodem.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Geologie",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"geologie",
+                            "layerInfo":{
+                                "id":"geologie",
+                                "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/geologie.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Landschappen",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"landschappen",
+                            "layerInfo":{
+                                "id":"landschappen",
+                                "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/landschappen.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Fysisch Geografische Regio's",
+                            "layerInfo": {
+                                "id": "fysichgeografischeregios",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.nationaalgeoregister.nl/fysischgeografischeregios/wms?layers=fysischgeografischeregios"]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Bodemgebruik",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"cbsbodemgebruik2012",
+                            "layerInfo":{
+                                "id":"cbsbodemgebruik2012",
+                                "deniedlayers": "bbg2012",
+                                "url":"https://tiles.edugis.nl/mapproxy/bbg2012/service"
+                            }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"cbsbodemgebruik",
+                            "layerInfo":{
+                                "id":"cbsbodemgebruik",
+                                "url":"https://kaart.edugis.nl/data/nederland/cbs_bodemgebruik.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Ruimtegebruik",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"ruimtegebruik",
+                            "layerInfo":{
+                                "id":"ruimtegebruik",
+                                "url":"https://kaart.edugis.nl/data/nederland/ehs.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Gebieden met een speciale status",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"specialestatus",
+                            "layerInfo":{
+                                "id":"specialestatus",
+                                "url":"https://kaart.edugis.nl/data/nederland/gebieden_speciale_status.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Water (hydrografie)",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Rivieren",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Noordzee",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Overstromingsrisico",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Overstromingsschade",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Overstromingsmodel",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Zuiderzeeland",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Zeeuwse delta",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Landbouw",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Landbouw (2005)",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Landbouw (2010)",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Milieu",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Luchtvervuiling",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Luchtvervuiling (2016)",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Luchtvervuiling (2006)",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Toekomst",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Bevolkingsgroei",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Plannen: Nieuwe Kaart",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Nederland nu en later",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Topografie",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Topografie",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Topografie 1:25.000",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Topografie 1:50.000",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Topografie 1:250.000",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
@@ -953,7 +1271,23 @@
         {
             "type": "group",
             "title": "Historische kaarten",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Historische kaarten Blaeu (ca. 1650)",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Overig",
+                    "sublayers": []
+                },
+                {
+                    "type": "group",
+                    "title": "Zuid-Limburg",
+                    "sublayers": []
+                }
+            ]
         },
         {
             "type": "group",
