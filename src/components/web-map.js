@@ -1171,7 +1171,9 @@ class WebMap extends LitElement {
       }).then(config=>{
         this.applyConfig(config);
         this.initMap();
-      }).catch(error=>console.error(error));
+      }).catch(error=>{
+        alert(`Error loading config:\n${configurl}\n${error}`);
+      });
     } else {
       this.applyConfig(this.datacatalog);
       this.initMap();
@@ -1426,9 +1428,8 @@ class WebMap extends LitElement {
           result.features.push(featureInfo);
         } else {
           const mapserverGmlInfo = xmlDoc.getElementsByTagNameNS("http://www.opengis.net/gml", "boundedBy");
-          if (mapserverGmlInfo.length && mapserverGmlInfo[0].parentElement && mapserverGmlInfo[0].parentElement.parentElement) {
-            const xmlDoc2 = parser.parseFromString(mapserverGmlInfo[0].parentElement.parentElement.innerHTML, "text/xml");
-            const attrs = [].slice.call(xmlDoc2.children[0].children).map(attr=>[attr.tagName, attr.textContent]);
+          if (mapserverGmlInfo.length && mapserverGmlInfo[0].parentElement) {
+            const attrs = [].slice.call(mapserverGmlInfo[0].parentElement.children).map(attr=>[attr.tagName, attr.textContent]);
             const featureInfo = {};
             featureInfo.properties = attrs.reduce((result, attr)=>
                 {
