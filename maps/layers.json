@@ -109,7 +109,7 @@
                         "type":"raster",
                         "tileSize":256,
                         "tiles":[
-                          "http://t1.edugis.nl/tiles/tilecache.py?LAYERS=brtachtergrondkaart&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=256&height=256&BBOX={bbox-epsg-3857}"
+                          "https://t1.edugis.nl/tiles/tilecache.py?LAYERS=brtachtergrondkaart&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=256&height=256&BBOX={bbox-epsg-3857}"
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
@@ -1140,37 +1140,107 @@
                 {
                     "type": "group",
                     "title": "Rivieren",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"water",
+                            "layerInfo":{
+                                "id":"water",
+                                "url":"https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/water.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Noordzee",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Noordzee",
+                            "layerInfo":{
+                                "id":"noordzee",
+                                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/noordzee.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Overstromingsrisico",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Overstromingsrisico",
+                            "layerInfo":{
+                                "id":"overstromingsrisico",
+                                "url": "https://kaart.edugis.nl/data/nederland/waterdieptes.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Overstromingsschade",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Overstromingsschade",
+                            "layerInfo":{
+                                "id":"overstromingsschade",
+                                "url": "https://kaart.edugis.nl/data/nederland/overstromingsschade.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Overstromingsmodel",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Overstromingsmodel",
+                            "layerInfo":{
+                                "id":"overstromingsmodel",
+                                "url": "https://kaart.edugis.nl/data/nederland/water_overstromingsmodel.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Zuiderzeeland",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Zuiderzeeland",
+                            "layerInfo":{
+                                "id":"zuiderzeeland",
+                                "url": "https://kaart.edugis.nl/data/nederland/zuiderzeeland.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Zeeuwse delta",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Zeeuwse delta",
+                            "layerInfo":{
+                                "id":"zeeuwsedelta",
+                                "url": "https://kaart.edugis.nl/data/nederland/zeeuwse_delta.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -1181,12 +1251,32 @@
                 {
                     "type": "group",
                     "title": "Landbouw (2005)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Landbouw (2005)",
+                            "layerInfo":{
+                                "id":"landbouw2005",
+                                "url": "https://kaart.edugis.nl/data/nederland/landbouw.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Landbouw (2010)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Landbouw (2010)",
+                            "layerInfo":{
+                                "id":"landbouw2010",
+                                "url": "https://kaart.edugis.nl/data/nederland/landbouw_2010.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -1196,18 +1286,255 @@
             "sublayers": [
                 {
                     "type": "group",
-                    "title": "Luchtvervuiling",
-                    "sublayers": []
+                    "title": "Lichtvervuiling",
+                    "sublayers": [
+                        {
+                            "type": "wms",
+                            "title": "Lichtvervuiling",
+                            "layerInfo": {
+                                "id": "lichtvervuiling",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Hemelhelderheid in de avond zonder bewolking",
+                            "layerInfo": {
+                                "id": "licht_20150315_gm_hhavondbew",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Hemelhelderheid in de nacht met bewolking",
+                            "layerInfo": {
+                                "id": "licht_20150315_gm_hhnachtbew",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtbew"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Hemelhelderheid in de nacht zonder bewolking",
+                            "layerInfo": {
+                                "id": "dmg:licht_20150315_gm_hhnachtonbew",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtonbew"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Lichtemissie Nederland, foto van ISS (2012)",
+                            "layerInfo": {
+                                "id": "dmg:licht_emissie_iss_nl_2012",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_emissie_iss_nl_2012"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Lichtemissie Nederland (2012)",
+                            "layerInfo": {
+                                "id": "dmg:licht_lichtemissie_2012",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_lichtemissie_2012"]
+                                }
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Luchtvervuiling (2016)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type": "wms",
+                            "title": "Luchtkwaliteitsindex (actueel)",
+                            "layerInfo": {
+                                "id": "lucht:actueel_lki",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht:actueel_lki"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Ozon (actueel)",
+                            "layerInfo": {
+                                "id": "luchtactueel_03",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht%3Aactueel_o3&STYLES=lucht_o3"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Fijnstof (2016)",
+                            "layerInfo": {
+                                "id": "rivm_nsl_20180324_gm_pm102016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_pm102016"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Stikstofdepositie (2016)",
+                            "layerInfo": {
+                                "id": "rivm_r19_gm_n-depositie",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_r19_gm_n-depositie"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Stikstofdioxide concentratie (2016)",
+                            "layerInfo": {
+                                "id": "rivm_nsl_20180324_gm_NO22016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_NO22016"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Zwaveldioxide concentratie (2016)",
+                            "layerInfo": {
+                                "id": "gcn_conc_so2_2016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:conc_so2_2016"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Roet (2016)",
+                            "layerInfo": {
+                                "id": "rivm_nsl_20180324_gm_ec2016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_ec2016"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Potentieelzuur depositie (2016)",
+                            "layerInfo": {
+                                "id": "gcn_depo_potz_2016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:depo_potz_2016"]
+                                }
+                            }
+                        },
+                        {
+                            "type": "wms",
+                            "title": "Koolstofdioxide (2016)",
+                            "layerInfo": {
+                                "id": "gcn_conc_ec_2016",
+                                "type": "raster",
+                                "metadata": {
+                                    "getFeatureInfoFormat":"application/json"
+                                },
+                                "source": {
+                                    "type": "raster",
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=conc_ec_2016"]
+                                }
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Luchtvervuiling (2006)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Luchtvervuiling (2006)",
+                            "layerInfo":{
+                                "id":"luchtvervuiling2006",
+                                "url": "https://kaart.edugis.nl/data/nederland/milieu.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -1218,17 +1545,47 @@
                 {
                     "type": "group",
                     "title": "Bevolkingsgroei",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Bevolkingsgroei",
+                            "layerInfo":{
+                                "id":"bevolkingsgroei",
+                                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/provincies_inwoners.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Plannen: Nieuwe Kaart",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"De Nieuwe Kaart",
+                            "layerInfo":{
+                                "id":"denieuwekaart",
+                                "url": "https://kaart.edugis.nl/data/nederland/nkn.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Nederland nu en later",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Nederland nu en later",
+                            "layerInfo":{
+                                "id":"nlnuenlater",
+                                "url": "https://kaart.edugis.nl/data/nederland/lus.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -1237,36 +1594,224 @@
             "title": "Topografie",
             "sublayers": [
                 {
-                    "type": "group",
-                    "title": "Topografie",
-                    "sublayers": []
+                    "type":"getcapabilities",
+                    "title":"Topografie",
+                    "layerInfo":{
+                        "id":"topografie",
+                        "url": "https://kaart.edugis.nl/data/nederland/topografie.xml",
+                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                    }
                 },
                 {
-                    "type": "group",
-                    "title": "Topografie 1:25.000",
-                    "sublayers": []
-                },
-                {
-                    "type": "group",
-                    "title": "Topografie 1:50.000",
-                    "sublayers": []
-                },
-                {
-                    "type": "group",
-                    "title": "Topografie 1:250.000",
-                    "sublayers": []
+                    "type":"getcapabilities",
+                    "title":"Topografie250",
+                    "layerInfo":{
+                        "id":"topografie250",
+                        "deniedlayers": "topografie",
+                        "url": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/base.map",
+                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                    }
                 }
             ]
         },
         {
             "type": "group",
             "title": "Energietransitie",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "wms",
+                    "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",
+                    "layerInfo": {
+                        "id": "rivm_r88_20170621_gm_actueel_uhi",
+                        "type": "raster",
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "type": "raster",
+                            "tiles": ["https://geodata.rivm.nl/geoserver/dank/ows?layers=rivm_r88_20170621_gm_actueel_uhi"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Gemiddelde elektriciteitslevering per woning (kWh/jaar) in 2014",
+                    "layerInfo": {
+                        "id": "elektriciteit_pc6_woningen_2014",
+                        "type": "raster",
+                        "minzoom" : 11,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom" : 11,
+                            "type": "raster",
+                            "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=elektriciteit_pc6_woningen_2014&style=Woningen_elektriciteit"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Gemiddelde elektriciteitslevering per bedrijf (kWh/jaar) in 2014",
+                    "layerInfo": {
+                        "id": "elektriciteit_pc6_bedrijven_2014",
+                        "type": "raster",
+                        "minzoom" : 11,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom" : 11,
+                            "type": "raster",
+                            "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=elektriciteit_pc6_bedrijven_2014&style=Bedrijven_elektriciteit"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Gemiddelde gaslevering per woning (m3/jaar) in 2014",
+                    "layerInfo": {
+                        "id": "aardgas_pc6_woningen_2014",
+                        "type": "raster",
+                        "minzoom" : 11,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom" : 11,
+                            "type": "raster",
+                            "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=aardgas_pc6_woningen_2014&style=Woningen_aardgas"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Gemiddelde gaslevering per bedrijf (m3/jaar) in 2014",
+                    "layerInfo": {
+                        "id": "aardgas_pc6_bedrijven_2014",
+                        "type": "raster",
+                        "minzoom" : 11,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom" : 11,
+                            "type": "raster",
+                            "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=aardgas_pc6_bedrijven_2014&style=Bedrijven_aardgas"]
+                        }
+                    }
+                },
+                {
+                    "type":"getcapabilities",
+                    "title":"Energietransitie",
+                    "layerInfo":{
+                        "id":"energietransitie",
+                        "deniedlayers": "zonlocaties",
+                        "url": "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/zonlocaties.qgs"
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Energielabels",
+                    "layerInfo": {
+                        "id": "rvoLabel2017",
+                        "type": "raster",
+                        "minzoom": 12,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom": 12,
+                            "type": "raster",
+                            "tiles": ["https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&layers=rvoLabel2017"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Risico's bij accuproductie",
+                    "layerInfo": {
+                        "id": "Risico_accuproductie",
+                        "type": "raster",
+                        "maxzoom": 7,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "maxzoom": 7,
+                            "type": "raster",
+                            "tiles": ["https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/Risico accuproductie.qgs&layers=Risico%20accuproductie"]
+                        }
+                    }
+                }
+            ]
         },
         {
             "type": "group",
             "title": "Lelystad Next-level",
-            "sublayers": []
+            "sublayers": [
+                {
+                    "type": "wms",
+                    "title": "Windturbines Flevoland",
+                    "layerInfo": {
+                        "id": "MI_WINDTURBINES",
+                        "type": "raster",
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "type": "raster",
+                            "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_WINDTURBINES"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Geluidsbelasting provinciale wegen Flevoland",
+                    "layerInfo": {
+                        "id": "MI_LDEN_CONTOUREN",
+                        "type": "raster",
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "type": "raster",
+                            "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_LDEN_CONTOUREN"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Verwachte bodemdaling Flevopolder 2011-2030",
+                    "layerInfo": {
+                        "id": "Bodemdaling_OFL-2011-2030",
+                        "type": "raster",
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "type": "raster",
+                            "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=Bodemdaling_OFL-2011-2030"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Diepte IJsselmeer",
+                    "layerInfo": {
+                        "id": "ijg_diep_2012",
+                        "type": "raster",
+                        "metadata": {
+                            "proxy": "https://t2.edugis.nl/cgi-bin/proxy.cgi?url=",
+                            "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                        },
+                        "source": {
+                            "type": "raster",
+                            "tiles": ["https://geoservices.rijkswaterstaat.nl/ijsselmeergebied_diepte?&layers=ijg_diep_2012"]
+                        }
+                    }
+                }
+            ]
         },
         {
             "type": "group",
@@ -1275,24 +1820,51 @@
                 {
                     "type": "group",
                     "title": "Historische kaarten Blaeu (ca. 1650)",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Historische kaarten",
+                            "layerInfo":{
+                                "id":"blaeu",
+                                "allowedlayers": "Nederland 17e eeuw (Blaeu),Amsterdam 17e eeuw (Blaeu),Noord-Holland 17e eeuw (Blaeu),Friesland 17e eeuw (Blaeu),Groningen 17e eeuw (Blaeu),Drenthe 17e eeuw (Blaeu),Overijssel 17e eeuw (Blaeu),Gelderland 17e eeuw (Blaeu),Utrecht 17e eeuw (Blaeu),Noord-Holland Zuid 17e eeuw (Blaeu),Zeeland 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Delfland 17e eeuw (Blaeu),Brabant 17e eeuw (Blaeu),Limburg 17e eeuw (Blaeu)",
+                                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/blaeu.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Overig",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Overige historische kaarten",
+                            "layerInfo":{
+                                "id":"blaeuoverig",
+                                "deniedlayers": "amsterdam_1945,Nederland 17e eeuw (Blaeu),Amsterdam 17e eeuw (Blaeu),Noord-Holland 17e eeuw (Blaeu),Friesland 17e eeuw (Blaeu),Groningen 17e eeuw (Blaeu),Drenthe 17e eeuw (Blaeu),Overijssel 17e eeuw (Blaeu),Gelderland 17e eeuw (Blaeu),Utrecht 17e eeuw (Blaeu),Noord-Holland Zuid 17e eeuw (Blaeu),Zeeland 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Delfland 17e eeuw (Blaeu),Brabant 17e eeuw (Blaeu),Limburg 17e eeuw (Blaeu)",
+                                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/blaeu.map",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 },
                 {
                     "type": "group",
                     "title": "Zuid-Limburg",
-                    "sublayers": []
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"Zuid-Limburg",
+                            "layerInfo":{
+                                "id":"zuidlimburg",
+                                "url": "https://kaart.edugis.nl/data/nederland/zuid_limburg.xml",
+                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                            }
+                        }
+                    ]
                 }
             ]
-        },
-        {
-            "type": "group",
-            "title": "Toegevoegde gegevens",
-            "sublayers": []
         }
     ]     
     ,
