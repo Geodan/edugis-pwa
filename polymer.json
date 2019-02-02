@@ -51,7 +51,8 @@
     "maps/cbsbodemgebruik.json",
     "maps/histcaps.json",
     "maps/dakdelen.json",
-    "maps/hitteeiland.json"
+    "maps/hitteeiland.json",
+    "maps/layers.json"
   ],
   "builds": [
     {
