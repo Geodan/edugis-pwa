@@ -69,7 +69,7 @@ class MapSelectedLayer extends LitElement {
       border-radius: 4px;
       padding: 10px;
       margin-top: 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
     }
     .layercontainer:hover {
       box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);

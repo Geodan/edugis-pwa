@@ -32,7 +32,7 @@ class MapSelectedLayerSet extends LitElement {
             border-radius: 4px;
             padding: 10px;
             margin-top: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
             cursor: default;
             -moz-user-select: none;
             -webkit-user-select: none;
