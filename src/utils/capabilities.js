@@ -24,11 +24,13 @@ function allowedLayer(Layer, deniedlayers, allowedlayers) {
 
 function scaleHintToZoomLevel(hint)
   {
-    for (let level = 0, calc = 110692.6408; level < 22; level++, calc /= 2.0) {
+    let level = 0;
+    for (let calc = 110692.6408; level < 22; level++, calc /= 2.0) {
       if (hint > calc) {
         return level;
       }
     }
+    return level;
 }
 
 function preferredFeatureInfoFormat(formats) {
