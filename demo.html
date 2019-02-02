@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        const loc = window.location.toString();
+        if (loc.startsWith('http://')) {
+            if (!loc.startsWith('http://localhost')) {
+                window.location = 'https://' + loc.substr(7);
+            }
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -40,9 +48,12 @@
     }
     .overview {
         position: absolute;
+        left: 0;
+        padding-left: 5px;
         width: 20%;
         height: 100vh;
         overflow: auto;
+        box-sizing: border-box;
     }
     iframe {
         position: absolute;
@@ -61,6 +72,8 @@
         <br><b>Simple map</b><br>
         <a href="index.html#configurl=maps/styleonly.json" target="edugismap">NL 17th century, no data catalog, style only</a><br>
        
+        <br><b>EduGIS</b><br>
+        <a href="index.html#configurl=maps/layers.json" target="edugismap">EduGIS Nederland</a><br>
 
         <br><b>QGIS Server</b><br>
         <a href="index.html#configurl=maps/cbsbevolking.json" target="edugismap">CBS bevolking (qgis)</a><br>
