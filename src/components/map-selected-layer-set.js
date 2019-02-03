@@ -42,7 +42,7 @@ class MapSelectedLayerSet extends LitElement {
         <div class="layercontainer">Geen lagen geselecteerd</div>`;
     }
     return html`
-    ${this.layerlist.map(layer=>html`<map-selected-layer .layer="${layer}" .zoom="${this.zoom}" .datagetter="${this.datagetter}"></map-selected-layer>`)}
+    ${this.layerlist.map(layer=>html`<map-selected-layer .layer="${layer}" .bounds="${layer.metadata.bounds}" .zoom="${this.zoom}" .datagetter="${this.datagetter}"></map-selected-layer>`)}
     `;
   }
 }

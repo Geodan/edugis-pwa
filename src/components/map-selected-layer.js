@@ -3,6 +3,7 @@ import {settingsIcon,
   visibleCircleIcon,
   invisibleCircleIcon, 
   arrowOpenedCircleIcon, 
+  arrowForwardIcon,
   trashBinCircleIcon} from './my-icons';
 import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, tripOriginIcon as circleIcon, 
     blurOnIcon as heatmapIcon, textFieldsIcon as textIcon, gridOnIcon as rasterIcon, 
@@ -23,6 +24,7 @@ class MapSelectedLayer extends LitElement {
       active: {type: Boolean},
       layer: {type: Object},
       zoom: {type: Number},
+      bounds: {type: String},
       updatecount: {type: Number},
       datagetter: {type: Object},
     }; 
@@ -32,6 +34,7 @@ class MapSelectedLayer extends LitElement {
     this.active = true;
     this.layer = undefined;
     this.zoom = 0;
+    this.bounds = "";
     this.updatecount = 0;
     this.percentage = 100;
     this.inrange = true;
@@ -104,6 +107,35 @@ class MapSelectedLayer extends LitElement {
       border-top: 1px solid #F3F3F3;
       padding-top: 4px;
     }
+    .direction {
+      display: inline-flex;
+      align-self: center;
+    }
+    .direction svg {
+      height: 1em;
+      width: 1em;
+    }
+    .SE {
+      transform: rotate(45deg);
+    }
+    .S {
+      transform: rotate(90deg);
+    }
+    .SW {
+      transform: rotate(135deg);
+    }
+    .W {
+      transform: rotate(180deg);
+    }
+    .NW {
+      transform: rotate(225deg);
+    }
+    .N {
+      transform: rotate(270deg);
+    }
+    .NE {
+      transform: rotate(315deg);
+    }
     </style>
     <div class="layercontainer">
       <div class="titlebox">
@@ -160,16 +192,19 @@ class MapSelectedLayer extends LitElement {
         this.layer.metadata && 
         this.layer.metadata.legendvisible &&
         this.layer.metadata.layervisible !== false ) {
-      if (this.outofrange) {
-        if (this.zoom < this.layer.minzoom) {
-          return html`<div class="legendcontainer">Zoom verder in</div>`
-        } else {
-          return html`<div class="legendcontainer">Zoom verder uit</div>`
+        if (this.bounds && this.bounds != "") {
+            return html`<div class="legendcontainer">Kaartlaag buiten kaartbeeld <span class="direction ${this.bounds}">${arrowForwardIcon}</span></div>`
         }
-      }
-      return html`<div class="legendcontainer">
-        <map-legend-panel .maplayer="${this.layer}" .zoom="${this.zoom}" .updatecount="${this.updatecount}"></map-legend-panel>
-      </div>`;
+        if (this.outofrange) {
+          if (this.zoom < this.layer.minzoom) {
+            return html`<div class="legendcontainer">Zoom verder in</div>`
+          } else {
+            return html`<div class="legendcontainer">Zoom verder uit</div>`
+          }
+        }
+        return html`<div class="legendcontainer">
+          <map-legend-panel .maplayer="${this.layer}" .zoom="${this.zoom}" .updatecount="${this.updatecount}"></map-legend-panel>
+        </div>`;
     }
     return html``;
   }

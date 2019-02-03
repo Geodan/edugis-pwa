@@ -1234,6 +1234,7 @@ class WebMap extends LitElement {
       this.updateLayerCalculatedPaintProperties(layerlist);
       this.layerlist = [...layerlist];
       this.checkMapIsLanguageSwitcherCapable(true);
+      this.updateInBounds();
       this.resetLayerListRequested = false;
     }
   }
@@ -1282,6 +1283,36 @@ class WebMap extends LitElement {
 
     return true;
   }
+  updateInBounds() {
+    let changed = false;
+    this.layerlist.forEach(layer=>{
+      let result = ""
+      const source = this.map.getSource(layer.source);
+      if (source.bounds) {
+        if (this.viewbox[1] > source.bounds[3]) {
+          result = "S"
+        }
+        if (this.viewbox[3] < source.bounds[1]) {
+          result = "N"
+        }
+        if (this.viewbox[0] > source.bounds[2]) {
+          // source west of viewbox
+          result += "W";
+        }
+        if (this.viewbox[2] < source.bounds[0]) {
+          result += "E";
+        }
+      }
+      if (layer.metadata.bounds != result) {
+        changed = true;
+        layer.metadata.bounds = result;
+      }
+    });
+    if (changed) {
+      this.layerlist = [...this.layerlist];
+      //this.requestUpdate();
+    }
+  }
   _mapMoveEnd() {
     const bounds = this.map.getBounds();
     this.viewbox = [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()];
@@ -1299,6 +1330,7 @@ class WebMap extends LitElement {
         pitch: this.map.getPitch()}
       }
     ));
+    this.updateInBounds();
     this.requestUpdate();
   }
   setLanguage(e) {
