@@ -159,8 +159,10 @@ class MapLayerTree extends LitElement {
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
           if (opened && node.type === 'getcapabilities') {
-            this.replaceNode(nodeList, node.id);
-            return html`<li>Loading...</li>`;
+              this.replaceNode(nodeList, node.id);
+          }
+          if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
+            return html`<li><img src="${document.baseURI}/images/spinner.gif"> Loading...</li>`;
           }
           return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">
             <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
