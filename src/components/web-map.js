@@ -675,18 +675,22 @@ class WebMap extends LitElement {
     const container = this.shadowRoot.querySelector('#legend-container-container');    
     const button = this.shadowRoot.querySelector('#button-hide-legend');
     button.classList.toggle('collapsed');
+    const rect = container.getBoundingClientRect();
+    const width = rect.right - rect.left;  
     if (button.classList.contains('collapsed')) {
-      const rect = container.getBoundingClientRect();
-      const width = rect.right - rect.left;
       container.style.right = 25-width + 'px';
       setTimeout(()=>{
-        container.style.width = width + 'px';
-        container.style.maxWidth = width + 'px';
+        container.style.right = 'auto';
+        container.style.left = 'calc(100% - 25px';
       }, 500);
     } else {
-      container.style.right = null;
       container.style.width = null;
       container.style.maxWidth = null;
+      container.style.left = null;
+      container.style.right = 25-width + 'px';
+      setTimeout(()=>{
+        container.style.right = null;
+      }, 20)
     }
   }
   toggleTool(name) {
