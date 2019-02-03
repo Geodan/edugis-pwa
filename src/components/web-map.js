@@ -1310,7 +1310,6 @@ class WebMap extends LitElement {
     });
     if (changed) {
       this.layerlist = [...this.layerlist];
-      //this.requestUpdate();
     }
   }
   _mapMoveEnd() {
