@@ -159,12 +159,9 @@ footer a:hover {
 </style>
     <header>
       <img src="${document.baseURI}images/edugislogo.png" alt="logo"/>
-        <nav class="topnav">
+        <nav class="topnav">        
           <ul>
-            <li class="menuitem"><a href="#">openen</a></li>
-            <li class="menuitem"><a href="#">opslaan</a></li>
-            <li class="menuitem"><a href="#">permalink</a></li>
-            <li class="menuitem"><a href="#">help</a></li>
+            <li class="menuitem"><a href="help.html" target="edugishelp">help</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
