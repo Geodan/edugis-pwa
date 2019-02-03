@@ -239,6 +239,7 @@
                                     "getFeatureInfoFormat":"application/json"
                                 },
                                 "source": {
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type": "raster",
                                     "tiles": ["https://geodata.nationaalgeoregister.nl/wsaeenhedeninspire/wms?layers=waterschapsgrens"]
                                 }
@@ -257,6 +258,7 @@
                                     "legendurl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&version=1.1.0&service=WMS&request=GetLegendGraphic&layer=perceel&format=image/png&STYLE=default"
                                 },
                                 "source": {
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "minzoom": 14,
                                     "type": "raster",
                                     "tileSize": 256,
@@ -293,6 +295,7 @@
                                 "minzoom":13,
                                 "maxzoom":22,
                                 "source":{
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type":"raster",
                                     "tileSize":512,
                                     "tiles":[
@@ -313,6 +316,7 @@
                                 "source":{
                                     "type":"raster",
                                     "tileSize":512,
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles":[
                                         "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
                                     ],
@@ -332,6 +336,7 @@
                                     "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wms?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
                                 },
                                 "source":{
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type":"raster",
                                     "tileSize":512,
                                     "tiles":[
@@ -385,6 +390,7 @@
                                     "getFeatureInfoFormat": "application/vnd.ogc.gml"
                                 },
                                 "source" : {
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
                                     "tiles": ["http://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
                                 }
@@ -402,6 +408,7 @@
                                     "getFeatureInfoFormat": "application/vnd.ogc.gml"
                                 },
                                 "source" : {
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
                                     "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=rce:WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
                                 }
@@ -418,6 +425,7 @@
                                     "getFeatureInfoFormat": "application/vnd.ogc.gml"
                                 },
                                 "source" : {
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
                                     "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?LAYERS=Townscapes&STYLES=Erfgoedetalage_StadsEnDorpsgezicht"]
                                 }
@@ -522,6 +530,7 @@
                                 "type": "raster",
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tileSize" : 512,
                                     "tiles": ["https://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?layers=knooppunten,netwerken"]
                                 }
@@ -929,6 +938,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
                                 }
                             }
@@ -982,6 +992,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
                                          "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
                                          "http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
@@ -1011,6 +1022,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
                                 }
                             }
@@ -1299,6 +1311,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
                                 }
                             }
@@ -1314,6 +1327,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
                                 }
                             }
@@ -1329,6 +1343,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtbew"]
                                 }
                             }
@@ -1344,6 +1359,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtonbew"]
                                 }
                             }
@@ -1359,6 +1375,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_emissie_iss_nl_2012"]
                                 }
                             }
@@ -1374,6 +1391,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_lichtemissie_2012"]
                                 }
                             }
@@ -1395,6 +1413,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht:actueel_lki"]
                                 }
                             }
@@ -1410,6 +1429,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht%3Aactueel_o3&STYLES=lucht_o3"]
                                 }
                             }
@@ -1425,6 +1445,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_pm102016"]
                                 }
                             }
@@ -1440,6 +1461,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_r19_gm_n-depositie"]
                                 }
                             }
@@ -1455,6 +1477,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_NO22016"]
                                 }
                             }
@@ -1470,6 +1493,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:conc_so2_2016"]
                                 }
                             }
@@ -1485,6 +1509,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_ec2016"]
                                 }
                             }
@@ -1500,6 +1525,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:depo_potz_2016"]
                                 }
                             }
@@ -1515,6 +1541,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
+                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=conc_ec_2016"]
                                 }
                             }
@@ -1629,6 +1656,7 @@
                         },
                         "source": {
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geodata.rivm.nl/geoserver/dank/ows?layers=rivm_r88_20170621_gm_actueel_uhi"]
                         }
                     }
@@ -1646,6 +1674,7 @@
                         "source": {
                             "minzoom" : 11,
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=elektriciteit_pc6_woningen_2014&style=Woningen_elektriciteit"]
                         }
                     }
@@ -1663,6 +1692,7 @@
                         "source": {
                             "minzoom" : 11,
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=elektriciteit_pc6_bedrijven_2014&style=Bedrijven_elektriciteit"]
                         }
                     }
@@ -1680,6 +1710,7 @@
                         "source": {
                             "minzoom" : 11,
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=aardgas_pc6_woningen_2014&style=Woningen_aardgas"]
                         }
                     }
@@ -1695,6 +1726,7 @@
                             "getFeatureInfoFormat":"application/json"
                         },
                         "source": {
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "minzoom" : 11,
                             "type": "raster",
                             "tiles": ["https://geodata.nationaalgeoregister.nl/cbsenergieleveringen/ows?layers=aardgas_pc6_bedrijven_2014&style=Bedrijven_aardgas"]
@@ -1723,6 +1755,7 @@
                         "source": {
                             "minzoom": 12,
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&layers=rvoLabel2017"]
                         }
                     }
@@ -1761,6 +1794,7 @@
                         },
                         "source": {
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_WINDTURBINES"]
                         }
                     }
@@ -1776,6 +1810,7 @@
                         },
                         "source": {
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_LDEN_CONTOUREN"]
                         }
                     }
@@ -1791,6 +1826,7 @@
                         },
                         "source": {
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=Bodemdaling_OFL-2011-2030"]
                         }
                     }
@@ -1807,6 +1843,7 @@
                         },
                         "source": {
                             "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://geoservices.rijkswaterstaat.nl/ijsselmeergebied_diepte?&layers=ijg_diep_2012"]
                         }
                     }
