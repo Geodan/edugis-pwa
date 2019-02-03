@@ -1288,6 +1288,9 @@ class WebMap extends LitElement {
     this.layerlist.forEach(layer=>{
       let result = ""
       const source = this.map.getSource(layer.source);
+      if (!source) {
+        return;
+      }
       if (source.bounds) {
         if (this.viewbox[1] > source.bounds[3]) {
           result = "S"
