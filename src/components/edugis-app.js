@@ -128,7 +128,7 @@ web-map {
   width: 100%;
   bottom: 1.5em;
   box-sizing: border-box;
-  background: lightslategray;
+  background: white;
 }
 
 footer {
