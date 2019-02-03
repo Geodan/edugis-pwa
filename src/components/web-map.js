@@ -703,7 +703,8 @@ class WebMap extends LitElement {
     if (!toolbar || !toolbar.visible) {
       return '';
     }
-    const tools = this.toolList.filter(tool=>tool.visible && tool.icon);
+    const showLanguageTool = this.checkMapIsLanguageSwitcherCapable();
+    const tools = this.toolList.filter(tool=>tool.visible && tool.icon && (tool.name!=='maplanguage' || showLanguageTool));
     if (tools.length == 0) {
       return '';
     }
@@ -927,6 +928,22 @@ class WebMap extends LitElement {
     }
     return propl;
   }
+  checkMapIsLanguageSwitcherCapable(recheck)
+  {
+    if (recheck) {
+      this.isLanguageSwitcherCapable = undefined;
+    }
+    if (this.isLanguageSwitcherCapable !== undefined) {
+      return this.isLanguageSwitcherCapable;
+    }
+    if (!this.map) {
+      return this.isLanguageSwitcherCapable = undefined;
+    }
+    if (!this.map.isStyleLoaded() && !recheck) {
+      return this.isLanguageSwitcherCapable = undefined;
+    }
+    return this.isLanguageSwitcherCapable = this.map.getStyle().layers.find(layer=>layer.source === 'openmaptiles' && layer.metadata.reference == true) !== undefined;
+  }
   initMap()
   {
     if (this.accesstoken) {
@@ -981,6 +998,7 @@ class WebMap extends LitElement {
     this.draw = new MapboxDraw({ modes: modes, boxSelect: false });
     this.map.addControl(this.draw, 'bottom-left');
     */
+
 
     this.map.on('load', ()=>{
         if (this.activeLayers) {
@@ -1211,6 +1229,7 @@ class WebMap extends LitElement {
       const layerlist = this.map.getStyle().layers;
       this.updateLayerCalculatedPaintProperties(layerlist);
       this.layerlist = [...layerlist];
+      this.checkMapIsLanguageSwitcherCapable(true);
       this.resetLayerListRequested = false;
     }
   }
