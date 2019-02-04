@@ -21,6 +21,7 @@
             "type":"raster",
             "tileSize":512,
             "maxzoom": 15,
+            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
             "tiles":[
               "https://geodata.rivm.nl/geoserver/dank/wms?LAYERS=rivm_r88_20170621_gm_actueel_uhi&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=512&HEIGHT=512"
             ],
@@ -47,7 +48,7 @@
                 "tiles":[
                   "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                 ],
-                "attribution":"&copy; OpenStreetMap contributors"
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
               }
             }
           },
@@ -66,7 +67,7 @@
                 "tiles":[
                   "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                 ],
-                "attribution":"&copy; OpenStreetMap contributors"
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
               }
             }
           }
