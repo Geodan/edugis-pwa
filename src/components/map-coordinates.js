@@ -51,7 +51,7 @@ class MapCoordinates extends LitElement {
         font-size: 12px;
         position: absolute;
         display: inline-block;
-        width: 20em;
+        width: 16em;
         bottom: 10px;
         left: 50%;
         margin-left: -10em;
