@@ -65,6 +65,7 @@ class MapSelectedLayer extends LitElement {
     return this.active;
   }
   render() {
+    const layerIcon = this.getIcon(this.layer.type);
     return html`<style>
     .layercontainer {
       display: block;
@@ -139,7 +140,7 @@ class MapSelectedLayer extends LitElement {
     </style>
     <div class="layercontainer">
       <div class="titlebox">
-        <div class="${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.getIcon(this.layer.type)}</div> 
+        <div class="${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}" title="${layerIcon.title}">${layerIcon.icon}</div> 
         <div class="layertitle${this.outofrange || this.layer.metadata.layervisible === false ?' lightgray':''}">${this.layer.metadata && this.layer.metadata.title?this.layer.metadata.title:this.layer.id}</div>
         <div class="iconbox">
           <div title="zichtbaarheid" class="iconcontainer" @click="${e=>this.toggleVisibility(e)}">${this.layer && this.layer.metadata && this.layer.metadata.layervisible === false?invisibleCircleIcon:visibleCircleIcon}</div>
@@ -153,34 +154,34 @@ class MapSelectedLayer extends LitElement {
     `;
   }
   getIcon(type) {
-    let layerIcon = '';
+    let layerIcon = {icon: '', title: ''};
     switch (type) {
       case "fill":
-          layerIcon = areaIcon;
+          layerIcon = {icon: areaIcon, title: 'vlak'};
           break;
       case "line":
-          layerIcon = lineIcon;
+          layerIcon = {icon: lineIcon, title: 'lijn'};
           break;
       case "symbol":
-          layerIcon = textIcon;
+          layerIcon = {icon: textIcon, title: 'tekst'};
           break;
       case "circle":
-          layerIcon = circleIcon;
+          layerIcon = {icon: circleIcon, title: 'cirkel'};
           break;
       case "heatmap":
-          layerIcon = heatmapIcon;
+          layerIcon = {icon: heatmapIcon, title: 'heatmap'};
           break;
       case "fill-extrusion":
-          layerIcon = "3D";
+          layerIcon = {icon: "3D", title: '3D'};
           break;
       case "raster":
-          layerIcon = rasterIcon;
+          layerIcon = {icon: rasterIcon, title: 'raster'};
           break;
       case "hillshade":
-          layerIcon = landscapeIcon;
+          layerIcon = {icon: landscapeIcon, title: 'hillshade'};
           break;
       case "background":
-          layerIcon = backgroundIcon;
+          layerIcon = {icon: backgroundIcon, title: 'achtergrond'};
           break;
       default:
           break;
