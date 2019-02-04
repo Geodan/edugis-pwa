@@ -115,7 +115,7 @@
                 "tiles":[
                   "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                 ],
-                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
               }
             }
           },
@@ -134,7 +134,7 @@
                 "tiles":[
                   "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                 ],
-                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
               }
             }
           }
