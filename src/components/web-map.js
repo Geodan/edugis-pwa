@@ -613,7 +613,7 @@ class WebMap extends LitElement {
                 } 
                 if (layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
                   await convertProjectedGeoJsonLayer(layerInfo);
-                }
+                }                
               }              
               this.map.addLayer(layerInfo);
             }
@@ -1291,24 +1291,25 @@ class WebMap extends LitElement {
       if (!source) {
         return;
       }
-      if (source.bounds) {
-        if (this.viewbox[1] > source.bounds[3]) {
+      const bounds = source.bounds ? source.bounds : layer.metadata.bounds;
+      if (bounds) {
+        if (this.viewbox[1] > bounds[3]) {
           result = "S"
         }
-        if (this.viewbox[3] < source.bounds[1]) {
+        if (this.viewbox[3] < bounds[1]) {
           result = "N"
         }
-        if (this.viewbox[0] > source.bounds[2]) {
+        if (this.viewbox[0] > bounds[2]) {
           // source west of viewbox
           result += "W";
         }
-        if (this.viewbox[2] < source.bounds[0]) {
+        if (this.viewbox[2] < bounds[0]) {
           result += "E";
         }
       }
-      if (layer.metadata.bounds != result) {
+      if (layer.metadata.boundspos != result) {
         changed = true;
-        layer.metadata.bounds = result;
+        layer.metadata.boundspos = result;
       }
     });
     if (changed) {

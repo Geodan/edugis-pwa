@@ -24,7 +24,7 @@ class MapSelectedLayer extends LitElement {
       active: {type: Boolean},
       layer: {type: Object},
       zoom: {type: Number},
-      bounds: {type: String},
+      boundspos: {type: String},
       updatecount: {type: Number},
       datagetter: {type: Object},
     }; 
@@ -34,7 +34,7 @@ class MapSelectedLayer extends LitElement {
     this.active = true;
     this.layer = undefined;
     this.zoom = 0;
-    this.bounds = "";
+    this.boundspos = "";
     this.updatecount = 0;
     this.percentage = 100;
     this.inrange = true;
@@ -192,8 +192,8 @@ class MapSelectedLayer extends LitElement {
         this.layer.metadata && 
         this.layer.metadata.legendvisible &&
         this.layer.metadata.layervisible !== false ) {
-        if (this.bounds && this.bounds != "") {
-            return html`<div class="legendcontainer">Kaartlaag buiten kaartbeeld <span class="direction ${this.bounds}">${arrowForwardIcon}</span></div>`
+        if (this.boundspos && this.boundspos != "") {
+            return html`<div class="legendcontainer">Kaartlaag buiten kaartbeeld <span class="direction ${this.boundspos}">${arrowForwardIcon}</span></div>`
         }
         if (this.outofrange) {
           if (this.zoom < this.layer.minzoom) {
