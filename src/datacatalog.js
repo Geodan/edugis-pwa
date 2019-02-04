@@ -332,7 +332,7 @@ export default
                   "tiles":[
                     "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                   ],
-                  "attribution":"&copy; OpenStreetMap contributors"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
                 }
               }
             },
@@ -351,7 +351,7 @@ export default
                   "tiles":[
                     "https://saturnus.geodan.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                   ],
-                  "attribution":"&copy; OpenStreetMap contributors"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
                 }
               }
             },
@@ -432,7 +432,7 @@ export default
                   "tiles":[
                     "https://tile-c.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                   ],
-                  "attribution":"&copy; OpenStreetMap contributors"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\" target=\"copyright\">OpenStreetMap contributors</a>"
                 }
               }
             },
