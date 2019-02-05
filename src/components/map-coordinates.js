@@ -55,15 +55,18 @@ class MapCoordinates extends LitElement {
     if (changedProps.has('clickpoint') && this.clickpoint && this.clickpoint.length === 2) {
       this.clickpointHtml = html`
         <style>
+          #clickpoint {
+            cursor: pointer;
+          }
           #copied {
             position: absolute;
             width: 0;
             text-align: center;
             margin-left: -2.5em;
-            margin-top: -1.5em;
+            top: 2px;
             display: inline-block;
             opacity: 0;
-            background: white;            
+            background: white;
           }
           .ul:hover {
             text-decoration: underline;
