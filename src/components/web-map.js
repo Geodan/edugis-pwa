@@ -1293,7 +1293,7 @@ class WebMap extends LitElement {
       if (!source) {
         return;
       }
-      const bounds = source.bounds ? source.bounds : layer.metadata.bounds;
+      const bounds = source.bounds ? source.bounds : layer.metadata ? layer.metadata.bounds : undefined;
       if (bounds) {
         if (this.viewbox[1] > bounds[3]) {
           result = "S"
@@ -1309,7 +1309,7 @@ class WebMap extends LitElement {
           result += "E";
         }
       }
-      if (layer.metadata.boundspos != result) {
+      if (layer.metadata && layer.metadata.boundspos != result) {
         changed = true;
         layer.metadata.boundspos = result;
       }

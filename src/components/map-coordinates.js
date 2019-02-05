@@ -31,6 +31,19 @@ class MapCoordinates extends LitElement {
     this.resolution = 0.0;
     this.clickpoint = [];
   }
+  copyCoords(e) {
+    const copy = this.shadowRoot.querySelector('#copied');
+    copy.innerHTML = `${this.clickpoint[0].toFixed(this.factor)} ${this.clickpoint[1].toFixed(this.factor)}`;
+    window.getSelection().removeAllRanges();
+    const range = document.createRange();
+    range.selectNode(copy);
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+    copy.innerHTML = 'Copied!';
+    copy.classList.add('animate');
+    setTimeout(()=>copy.classList.remove('animate'), 1500);
+  }
   shouldUpdate(changedProps) {
     if (changedProps.has('resolution')) {
       if (this.resolution > 0) {
@@ -40,7 +53,28 @@ class MapCoordinates extends LitElement {
       }
     }    
     if (changedProps.has('clickpoint') && this.clickpoint && this.clickpoint.length === 2) {
-      this.clickpointHtml = html`<br/>Click: ${this.clickpoint[0].toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${this.clickpoint[1].toFixed(this.factor)}&deg;&#x2195`;
+      this.clickpointHtml = html`
+        <style>
+          #copied {
+            position: absolute;
+            width: 0;
+            text-align: center;
+            margin-left: -2.5em;
+            margin-top: -1.5em;
+            display: inline-block;
+            opacity: 0;
+            background: white;            
+          }
+          .ul:hover {
+            text-decoration: underline;
+          }
+          #copied.animate {
+            width: 5em;
+            opacity: 1;
+          }
+        </style>        
+        <div id="clickpoint" @click="${e=>this.copyCoords(e)}"><span class="ul">Click</span>: ${this.clickpoint[0].toFixed(this.factor)}&deg;&#x2194;&nbsp;&nbsp;${this.clickpoint[1].toFixed(this.factor)}&deg;&#x2195</div>
+        <div id="copied">Copied!</div>`;
     }
     return this.visible;
   }
