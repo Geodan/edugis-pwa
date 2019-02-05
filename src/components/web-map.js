@@ -1308,10 +1308,31 @@ class WebMap extends LitElement {
         if (this.viewbox[2] < bounds[0]) {
           result += "E";
         }
-      }
-      if (layer.metadata && layer.metadata.boundspos != result) {
-        changed = true;
-        layer.metadata.boundspos = result;
+        if (result != '' && this.map.bearing !== 0) {
+          const viewcenter = [(this.viewbox[0] + this.viewbox[2]) / 2, (this.viewbox[1] + this.viewbox[3])/2];
+          const layercenter = [(bounds[0] + bounds[2])/2, (bounds[1] + bounds[3])/2];
+          let angle = turf.bearing(viewcenter, layercenter) - this.map.getBearing();
+          if (angle < 0) {
+            angle += 360;
+          }
+          result = "";
+          if (angle < 65 || angle >= 290) {
+            result = "N"
+          }
+          if (angle > 120 && angle < 250) {
+            result = "S"
+          }
+          if (angle >= 25 && angle <= 160) {
+            result += "E";
+          }
+          if (angle >= 200 && angle <= 340) {
+            result += "W"
+          }
+        }
+        if (layer.metadata && layer.metadata.boundspos != result) {
+          changed = true;
+          layer.metadata.boundspos = result;
+        }
       }
     });
     if (changed) {
