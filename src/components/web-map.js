@@ -30,13 +30,14 @@ import './map-panel';
 import './map-geolocation';
 import './map-pitch';
 import './map-selected-layers';
+import {render} from 'lit-html';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { gpsFixedIcon, languageIcon, arrowLeftIcon } from './my-icons';
+import { gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
@@ -695,6 +696,7 @@ class WebMap extends LitElement {
   }
   toggleTool(name) {
     this.infoClicked = false;
+    this.updateInfoMarker();
     if (this.currentTool === name) {
       this.currentTool = '';
     } else {
@@ -1564,6 +1566,24 @@ class WebMap extends LitElement {
       return imageUrl;
     })
   }
+  updateInfoMarker(lngLat) {
+    if (!lngLat) {
+      if (this.marker) {
+        this.marker.remove();
+      }
+      this.marker = null;
+      return;
+    }
+    if (!this.markerDiv) {
+      this.markerDiv = document.createElement('div');
+      this.markerDiv.style = 'fill: blue;'
+      render (outlineInfoIcon, this.markerDiv);
+    }
+    if (this.marker) {
+      this.marker.remove();
+    }
+    this.marker = new mapboxgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
+  }
   handleInfo(e) {
     if (this.currentTool !== 'info') {
       this.infoClicked = false;
@@ -1578,6 +1598,7 @@ class WebMap extends LitElement {
     }
     if (e.type === "click") {
       this.infoClicked = true;
+      this.updateInfoMarker(e.lngLat);
       const layers = this.map.getStyle().layers;
       const featureInfo = [];
       for (let i = 0; i < layers.length; i++) {
