@@ -89,6 +89,7 @@ class MapGSheetForm extends LitElement {
       fetch(layerinfo.mapurl).then(json=>json.json()).then(geojson=>{
         this.linkSheetDataToGeoJson(geojson, layerinfo.datacolumn, data, layerinfo.sheetcolumn);
         this.createLayerFromGeojson(geojson, data.values[0][1], 'cbs');
+        this.dispatchEvent(new CustomEvent('close', {bubbles: true}));
       }).catch(reason=>alert(`error (${layerinfo.mapurl}): ${reason}`))
     }).catch(reason=>alert(`error (${sheetApiUrl}): ${reason}`));
   }
