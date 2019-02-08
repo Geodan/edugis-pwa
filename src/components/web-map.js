@@ -30,6 +30,7 @@ import './map-panel';
 import './map-geolocation';
 import './map-pitch';
 import './map-selected-layers';
+import './map-draw';
 import {render} from 'lit-html';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
@@ -752,6 +753,7 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
+          <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}"></map-draw>
         </map-panel>
       </div>
     </div>`
@@ -948,7 +950,7 @@ class WebMap extends LitElement {
     if (!this.map.isStyleLoaded() && !recheck) {
       return this.isLanguageSwitcherCapable = undefined;
     }
-    return this.isLanguageSwitcherCapable = this.map.getStyle().layers.find(layer=>layer.source === 'openmaptiles' && layer.metadata.reference == true) !== undefined;
+    return this.isLanguageSwitcherCapable = this.map.getStyle().layers.find(layer=>layer.source === 'openmaptiles' && layer.metadata && layer.metadata.reference == true) !== undefined;
   }
   initMap()
   {
