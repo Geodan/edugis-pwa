@@ -20,6 +20,11 @@ cd this_repository
 npm install
 ```
 
+## Add API keys
+copy `src/keys.js.example` to `src/keys.js`  
+and optionally update `src/keys.js` with your keys in order to use services that require such API keys
+
+
 ## Local run and develop
 ```
 polymer serve
