@@ -31,7 +31,6 @@ class IconButton extends LitElement {
           text-align: center;
           user-select:none;
           cursor: pointer; /* Mouse pointer on hover */
-          padding: 15px;
         }
         .button:hover {
           background-color: gray;

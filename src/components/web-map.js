@@ -22,7 +22,6 @@ import './map-legend-container.js';
 import './map-measure';
 import './map-language';
 import './map-search';
-import './map-button-ctrl';
 import './map-dialog';
 import './map-gsheet-form';
 import './map-info-formatted';
@@ -855,6 +854,7 @@ class WebMap extends LitElement {
       #tools-menu ul li {
         width: 55px;
         height: 55px;
+        line-height: 67px; /* vertically center svg */
         border-bottom: 1px solid rgba(204,204,204,.52);
       }
       #button-hide-menu {
