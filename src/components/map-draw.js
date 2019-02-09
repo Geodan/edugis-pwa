@@ -1,5 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
-
+import './map-iconbutton';
+import {pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon} from './my-icons';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -91,11 +92,14 @@ class MapDraw extends LitElement {
     return html`
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+      .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
       </style>
-      <button @click="${(e)=>this.draw.changeMode('draw_point')}">punt</button>
-      <button @click="${(e)=>this.draw.changeMode('draw_line_string')}">lijn</button>
-      <button @click="${(e)=>this.draw.changeMode('draw_polygon')}">vlak</button>
-      <button>delete</button><br>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_point')}"><map-iconbutton info="punt" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_line_string')}"><map-iconbutton info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_polygon')}"><map-iconbutton info="vlak" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer"><map-iconbutton info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer"><map-iconbutton info="groepeer" .icon="${combineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer"><map-iconbutton info="splits" .icon="${uncombineIcon}"></map-iconbutton></div>
       ${this.selectedFeatures.map(feature=>{
         return Object.keys(feature.properties).map(key=>html`
           <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
@@ -107,8 +111,9 @@ class MapDraw extends LitElement {
     if (this.map) {
       // store map.boxZoom
       this.boxZoomable = this.map.boxZoom.isEnabled();
+      this._setMapDrawLayersVisibility(false);
       this.draw = new MapboxDraw({
-        displayControlsDefault: true
+        displayControlsDefault: false
       });
       this.map.addControl(this.draw, 'bottom-right');
       if (this.featureCollection.features.length) {
@@ -117,6 +122,23 @@ class MapDraw extends LitElement {
       this.map.on('draw.create', (e)=>this._featuresCreated(e));
       this.map.on('draw.selectionchange', (e)=>this._featuresSelected(e));
       this.map.on('draw.update', (e)=>this._featuresUpdated(e));
+    }
+  }
+  _removeDrawFromMap()
+  {
+    if (this.map) {
+      this._updateMapDrawLayers();
+      this._setMapDrawLayersVisibility(true);
+      this.map.removeControl(this.draw);
+
+      this.selectedFeatures = [];
+      
+      // restore map.boxZoom
+      if (this.boxZoomable) {
+        this.map.boxZoom.enable();
+      } else {
+        this.map.boxZoom.disable();
+      }
     }
   }
   _updateMapDrawLayer(layer, typenames) {
@@ -137,23 +159,18 @@ class MapDraw extends LitElement {
     this.featureCollection = this.draw.getAll();
     this._updateMapDrawLayer(drawPolygons, ["Polygon", "MultiPolygon"]);
     this._updateMapDrawLayer(drawLines, ["LineString", "MultiLineString"]);
-    this._updateMapDrawLayer(drawPoints, ["Point", "MultiPoint"]);
+    this._updateMapDrawLayer(drawPoints, ["Point", "MultiPoint"]);    
   }
-  _removeDrawFromMap()
-  {
-    if (this.map) {
-      this._updateMapDrawLayers(); 
-      this.map.removeControl(this.draw);
-
-      this.selectedFeatures = [];
-      
-      // restore map.boxZoom
-      if (this.boxZoomable) {
-        this.map.boxZoom.enable();
-      } else {
-        this.map.boxZoom.disable();
-      }      
+  _setMapLayerVisibity(layer, visible) {
+    const mapLayer = this.map.getLayer(layer.id);
+    if (mapLayer) {
+      this.map.setLayoutProperty(layer.id, 'visibility', visible?'visible':'none');
     }
+  }
+  _setMapDrawLayersVisibility(visible) {
+    this._setMapLayerVisibity(drawPolygons, visible);
+    this._setMapLayerVisibity(drawLines, visible);
+    this._setMapLayerVisibity(drawPoints, visible);
   }
   _setDefaultFeatureProperties(feature) {
     if (!feature.properties.name) {

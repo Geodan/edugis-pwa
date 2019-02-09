@@ -751,7 +751,7 @@ class WebMap extends LitElement {
           <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
-          <div style="width:100%">tekenen tijdelijk niet beschikbaar</div>
+          <div style="width:100%">Tekenen</div>
           <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}"></map-draw>
         </map-panel>
       </div>
