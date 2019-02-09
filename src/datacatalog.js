@@ -413,7 +413,7 @@ export default
                   ],
                   "attribution":"PDOK",
                   "minzoom": 5,
-                  "maxzoom": 18
+                  "maxzoom": 19
                 }
               }
             },
