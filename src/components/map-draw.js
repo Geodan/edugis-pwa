@@ -1,6 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import './map-iconbutton';
-import {pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon} from './my-icons';
+import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon} from './my-icons';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -60,7 +60,8 @@ class MapDraw extends LitElement {
     return {
       active: {type: Boolean},
       map: {type: Object},
-      selectedFeatures: {type: Array}
+      selectedFeatures: {type: Array},
+      drawMode: {type: String}
     }; 
   }
   constructor() {
@@ -68,6 +69,7 @@ class MapDraw extends LitElement {
       this.map = null;
       this.active = false;
       this.selectedFeatures = [];
+      this.drawMode = 'simple_select';
       this.featureCollection = {"type": "FeatureCollection", "features": []};
   }
   createRenderRoot() {
@@ -88,18 +90,38 @@ class MapDraw extends LitElement {
     }
     return true;
   }
+  _canCombineFeatures()
+  {
+    if (this.selectedFeatures.length < 2) {
+      return false;
+    }
+    const featureType = this.selectedFeatures[0].geometry.type.replace('Multi','');
+    for (let i = 1; i < this.selectedFeatures.length; i++) {
+      if (this.selectedFeatures[i].geometry.type.replace('Multi','') !== featureType) {
+        return false;
+      }
+    }
+    return true;
+  }
   render() {
+    if (!this.active) {
+      return html``;
+    }
+    const disableDelete = (this.selectedFeatures.length === 0);
+    const disableCombine = !this._canCombineFeatures();
+    const disableUncombine = !(this.selectedFeatures.length === 1 && this.selectedFeatures[0].geometry.type.startsWith('Multi'));
     return html`
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
       </style>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_point')}"><map-iconbutton info="punt" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_line_string')}"><map-iconbutton info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode('draw_polygon')}"><map-iconbutton info="vlak" .icon="${polygonIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer"><map-iconbutton info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer"><map-iconbutton info="groepeer" .icon="${combineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer"><map-iconbutton info="splits" .icon="${uncombineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="select" .icon="${selectIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_polygon')}"><map-iconbutton info="vlak" .active="${this.drawMode === 'draw_polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>!disableCombine && this.draw.combineFeatures()}"><map-iconbutton info="groepeer" .disabled="${disableCombine}" .icon="${combineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
       ${this.selectedFeatures.map(feature=>{
         return Object.keys(feature.properties).map(key=>html`
           <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
@@ -113,20 +135,34 @@ class MapDraw extends LitElement {
       this.boxZoomable = this.map.boxZoom.isEnabled();
       this._setMapDrawLayersVisibility(false);
       this.draw = new MapboxDraw({
-        displayControlsDefault: false
+        displayControlsDefault: true,
+        keybindings: true,
+        controls: {point: false, line_string: false, polygon: false, trash: false, combine_features: false, uncombine_features: false}
       });
       this.map.addControl(this.draw, 'bottom-right');
       if (this.featureCollection.features.length) {
         this.draw.set(this.featureCollection);
       }
-      this.map.on('draw.create', (e)=>this._featuresCreated(e));
-      this.map.on('draw.selectionchange', (e)=>this._featuresSelected(e));
-      this.map.on('draw.update', (e)=>this._featuresUpdated(e));
+      this.map.on('draw.create', this.featuresCreated = (e)=>this._featuresCreated(e));
+      this.map.on('draw.selectionchange', this.featuresSelected = (e)=>this._featuresSelected(e));
+      this.map.on('draw.update', this.featuresUpdated = (e)=>this._featuresUpdated(e));
+      this.map.on('draw.modechange', this.drawModeChange = (e)=>this._drawModeChange(e));
+      this.map.on('draw.delete', this.drawDelete = (e)=>this._drawDelete(e));
+      this.map.on('draw.combine', this.drawCombine = (e)=>this._drawCombine(e));
+      this.map.on('draw.uncombine', this.drawUncombine = (e)=>this._drawUncombine(e));
+      this.keyDownBound = this._keyDown.bind(this);
+      this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
     }
   }
   _removeDrawFromMap()
   {
     if (this.map) {
+      this.map.off('draw.create', this.featuresCreated);
+      this.map.off('draw.selectionchange', this.featuresSelected);
+      this.map.off('draw.update', this.featuresUpdated);
+      this.map.off('draw.modechange', this.drawModeChange);
+      this.map.off('draw.delete', this.drawDelete);
+      this.map.getCanvasContainer().removeEventListener('keydown', this.keyDown);
       this._updateMapDrawLayers();
       this._setMapDrawLayersVisibility(true);
       this.map.removeControl(this.draw);
@@ -139,6 +175,22 @@ class MapDraw extends LitElement {
       } else {
         this.map.boxZoom.disable();
       }
+    }
+  }
+  _drawModeChange(e) {
+    this.drawMode = e.mode;
+  }
+  _keyDown(event) {
+    if ((event.srcElement || event.target).classList[0] !== 'mapboxgl-canvas') return; // we only handle events on the map
+    if ((event.keyCode === 8 || event.keyCode === 46)) {
+      event.preventDefault();
+      this.draw.trash();
+    } else if (event.keyCode === 49) {
+      this.draw.changeMode(this.drawMode = 'draw_point');
+    } else if (event.keyCode === 50) {
+      this.draw.changeMode(this.drawMode = 'draw_line_string');
+    } else if (event.keyCode === 51) {
+      this.draw.changeMode(this.drawMode = 'draw_polygon');
     }
   }
   _updateMapDrawLayer(layer, typenames) {
@@ -178,13 +230,16 @@ class MapDraw extends LitElement {
     }
     switch(feature.geometry.type) {
       case 'Point':
+      case 'MultiPoint':
         this.draw.setFeatureProperty(feature.id, 'latitude', feature.geometry.coordinates[1])
         this.draw.setFeatureProperty(feature.id, 'longitude', feature.geometry.coordinates[0])
         break;
       case 'LineString':
+      case 'MultiLineString':
         this.draw.setFeatureProperty(feature.id, 'length', turf.length(feature));
         break;
       case 'Polygon':
+      case 'MultiPolygon':
         this.draw.setFeatureProperty(feature.id, 'perimeter', turf.length(feature));
         this.draw.setFeatureProperty(feature.id, 'area', turf.area(feature));
         break;
@@ -194,20 +249,33 @@ class MapDraw extends LitElement {
     this.draw.setFeatureProperty(feature.id, key, e.target.value);
   }
   _featuresCreated(e) {
-    console.log('created');
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
-    console.log(e.features);
   }
   _featuresSelected(e) {
-    console.log('selected');
     this.selectedFeatures = [];
     setTimeout(()=>this.selectedFeatures = e.features, 0);
-    console.log(e.features);
   }
   _featuresUpdated(e) {
-    console.log('updated');
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
+  }
+  _drawDelete(e) {
+    console.log('delete')
     console.log(e.features);
+    this.selectedFeatures = [];
+  }
+  _drawCombine(e) {
+    this.selectedFeatures = [];
+    setTimeout(()=>{
+      //e.createdFeatures.forEach(feature=>this._setDefaultFeatureProperties(feature));
+      this.selectedFeatures = e.createdFeatures;
+    }, 100);
+  }
+  _drawUncombine(e) {
+    this.selectedFeatures = [];
+    setTimeout(()=>{
+      //e.createdFeatures.forEach(feature=>this._setDefaultFeatureProperties(feature));
+      this.selectedFeatures = e.createdFeatures;
+    }, 100);
   }
 }
 customElements.define('map-draw', MapDraw);
