@@ -253,16 +253,16 @@
                                 "type": "raster",
                                 "minzoom": 14,
                                 "metadata" : {
-                                    "getFeatureInfoUrl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&LAYERS=perceel",
+                                    "getFeatureInfoUrl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&LAYERS=perceel",
                                     "getFeatureInfoFormat":"application/vnd.ogc.gml",
-                                    "legendurl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&version=1.1.0&service=WMS&request=GetLegendGraphic&layer=perceel&format=image/png&STYLE=default"
+                                    "legendurl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/kadaster.map&version=1.1.0&service=WMS&request=GetLegendGraphic&layer=perceel&format=image/png&STYLE=default"
                                 },
                                 "source": {
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "minzoom": 14,
                                     "type": "raster",
                                     "tileSize": 256,
-                                    "tiles": ["http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/kadaster.map&LAYERS=perceel&width=256&height=256"]
+                                    "tiles": ["https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/kadaster.map&LAYERS=perceel&width=256&height=256"]
                                 }
                             }
                         },
@@ -392,7 +392,7 @@
                                 "source" : {
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
-                                    "tiles": ["http://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
+                                    "tiles": ["https://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
                                 }
                             }
                         },
@@ -986,17 +986,17 @@
                                 "id": "hoogteahn",
                                 "type": "raster",
                                 "metadata": {
-                                    "legendurl": "http://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
-                                    "getFeatureInfoUrl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map&layers=hoogte",
+                                    "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
+                                    "getFeatureInfoUrl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map&layers=hoogte",
                                     "getFeatureInfoFormat":"application/vnd.ogc.gml"
                                 },
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["http://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "http://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "http://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "http://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes"]
+                                    "tiles": ["https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
+                                         "https://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes"]
                                 }
                             }
                         },
@@ -1635,7 +1635,7 @@
                     "layerInfo":{
                         "id":"topografie250",
                         "deniedlayers": "topografie",
-                        "url": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/base.map",
+                        "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/base.map",
                         "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                     }
                 }
