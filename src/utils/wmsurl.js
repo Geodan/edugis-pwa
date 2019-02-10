@@ -1,7 +1,7 @@
 export function wmsUrl(baseUrl, request)
 {
     // build WMS URL from baseURL and request
-    const wmsParameters = [
+    let wmsParameters = [
         ["REQUEST", request.toUpperCase()],
         ["SERVICE", "WMS"],
         ["VERSION", "1.1.1"]
@@ -68,6 +68,8 @@ export function wmsUrl(baseUrl, request)
         if (legendStyle[1] === "") {
             legendStyle[1] = wmsParameters.find(parameter=>parameter[0] === 'STYLES')[1];
         }
+        // remove 'layers' and 'styles' parameters
+        wmsParameters = wmsParameters.filter(parameter=>parameter[0] !== 'LAYERS' && parameter[0] !== 'STYLES');
     }
     urlInfo.search = "";
     extraParameters.forEach(parameter=>urlInfo.searchParams.append(parameter[0], parameter[1]));
