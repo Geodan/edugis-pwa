@@ -158,10 +158,14 @@ class MapGeolocation extends LitElement {
     this.watchId = undefined;
     this.message = startUpMessage;
     this.geojson.features = [];
-    if (this.webmap) {
-      this.webmap.removeLayer('map-geolocate-radius');
-      this.webmap.removeLayer('map-geolocate-point');
-      this.webmap.removeSource('map-geolocate');
+    try {
+      if (this.webmap) {
+        this.webmap.removeLayer('map-geolocate-radius');
+        this.webmap.removeLayer('map-geolocate-point');
+        this.webmap.removeSource('map-geolocate');
+      }
+    } catch (err) {
+      console.warn('geolocate.clearMap: exception ' + err);
     }
   }
   render() {
