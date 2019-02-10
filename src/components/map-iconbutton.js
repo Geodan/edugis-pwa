@@ -7,6 +7,7 @@ class IconButton extends LitElement {
   static get properties() { 
     return { 
       active: Boolean,
+      disabled: Boolean,
       icon: String,
       info: String
     }; 
@@ -14,6 +15,7 @@ class IconButton extends LitElement {
   constructor() {
       super();
       this.active = false;
+      this.disabled = false;
       this.icon = "Bt";
       this.info = "Button";
   }
@@ -37,6 +39,11 @@ class IconButton extends LitElement {
           fill: white;
           color: white;
         }
+        .button.disabled:hover {
+          background-color: white;
+          color: rgb(160,160,160);
+          fill: rgb(160,160,160);
+        }
         .button.active:hover {
           background-color: rgb(160,0,0);
           fill: white;
@@ -47,8 +54,13 @@ class IconButton extends LitElement {
           fill: white;
           color: white;
         }
+        .disabled {
+          background-color: white;
+          fill: rgb(160,160,160);
+          color: rgb(160,160,160);
+        }
     </style>
-    <div title="${this.info}" class="button ${this.active ? 'active' : ''}">${this.icon}</div>`;
+    <div title="${this.info}" class="button ${this.active ? 'active' : ''} ${this.disabled?' disabled':''}">${this.icon}</div>`;
   }
 }
 customElements.define('map-iconbutton', IconButton);
