@@ -228,7 +228,8 @@
                             "title":"ahn1",
                             "layerInfo":{
                                 "id":"ahn1",
-                                "url":"https://geodata.nationaalgeoregister.nl/ahn1/wms?"
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn1/wms?",
+                                "scalehinttype": "paper"
                             }
                         }
                     ]
@@ -242,7 +243,8 @@
                             "title":"ahn2",
                             "layerInfo":{
                                 "id":"ahn2",
-                                "url":"https://geodata.nationaalgeoregister.nl/ahn2/wms?"
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn2/wms?",
+                                "scalehinttype": "paper"
                             }
                         }
                     ]
@@ -256,7 +258,8 @@
                             "title":"ahn3",
                             "layerInfo":{
                                 "id":"ahn3",
-                                "url":"https://geodata.nationaalgeoregister.nl/ahn3/wms?"
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn3/wms?",
+                                "scalehinttype": "paper"
                             }
                         }
                     ]
@@ -269,7 +272,8 @@
                             "title":"auland",
                             "layerInfo":{
                                 "id":"au",
-                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_landsgrens"
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_landsgrens",
+                                "scalehinttype": "paper"
                             }
                         },
                         {
@@ -277,7 +281,8 @@
                             "title":"auprovincies",
                             "layerInfo":{
                                 "id":"au",
-                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_provincies"
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_provincies",
+                                "scalehinttype": "paper"
                             }
                         },
                         {
@@ -285,7 +290,8 @@
                             "title":"augemeenten",
                             "layerInfo":{
                                 "id":"au",
-                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_gemeenten"
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_gemeenten",
+                                "scalehinttype": "paper"
                             }
                         }
                     ]
@@ -296,10 +302,11 @@
                     "sublayers":[
                         {
                             "type":"getcapabilities",
-                            "title":"inspiredadressen",
+                            "title":"Adressen [wms]",
                             "layerInfo":{
                                 "id":"inspiredadressen",
-                                "url":"https://geodata.nationaalgeoregister.nl/inspireadressen/wms?"
+                                "url":"https://geodata.nationaalgeoregister.nl/inspireadressen/wms?",
+                                "scalehinttype": "paper"
                             }
                         }
                     ]

@@ -22,10 +22,14 @@ function allowedLayer(Layer, deniedlayers, allowedlayers) {
     return true;
 }
 
-function scaleHintToZoomLevel(hint)
+function scaleHintToZoomLevel(hint, scaleHintType)
   {
     let level = 0;
-    for (let calc = 110692.6408; level < 22; level++, calc /= 2.0) {
+    let calc = 110692.6408;
+    if (scaleHintType === 'paper') {
+      calc = 250000000;
+    }
+    for (; level < 22; level++, calc /= 2.0) {
       if (hint > calc) {
         return level;
       }
@@ -50,7 +54,7 @@ function preferredFeatureInfoFormat(formats) {
   return '';
 }
 
-function layerToNode(Layer, Request) {
+function layerToNode(Layer, Request, scaleHintType) {
     let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
     // upgrade to https (cannot load from http)
     if (onlineResource.protocol === 'http:') {
@@ -89,11 +93,11 @@ function layerToNode(Layer, Request) {
     }
     if (Layer.ScaleHint) {
       if (Layer.ScaleHint.max) {
-        node.layerInfo.minzoom = scaleHintToZoomLevel(Layer.ScaleHint.max);
+        node.layerInfo.minzoom = scaleHintToZoomLevel(Layer.ScaleHint.max, scaleHintType);
         node.layerInfo.source.minzoom = node.layerInfo.minzoom;
       }
       if (Layer.ScaleHint.min) {
-        node.layerInfo.maxzoom = scaleHintToZoomLevel(Layer.ScaleHint.min);
+        node.layerInfo.maxzoom = scaleHintToZoomLevel(Layer.ScaleHint.min, scaleHintType);
         node.layerInfo.source.maxzoom = node.layerInfo.maxzoom;
       }
     }
@@ -115,7 +119,7 @@ function layerToNode(Layer, Request) {
     return node;
 }
 
-function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
+function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers, scaleHintType) {
     const parser = new WMSCapabilities();
     const json = parser.parse(xml);
     const result = [];
@@ -128,14 +132,14 @@ function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
     if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {
         // non-empty root layer
         if (allowedLayer(json.Capability.Layer, deniedlayers, allowedlayers)) {
-            result.push(layerToNode(json.Capability.Layer, json.Capability.Request));
+            result.push(layerToNode(json.Capability.Layer, json.Capability.Request, scaleHintType));
         }
     }
     if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
         // array of sublayers
         json.Capability.Layer.Layer.forEach(Layer=>{
             if (allowedLayer(Layer, deniedlayers, allowedlayers)) {
-                result.push(layerToNode(Layer, json.Capability.Request));
+                result.push(layerToNode(Layer, json.Capability.Request, scaleHintType));
             }
         });
     }
@@ -144,6 +148,7 @@ function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers) {
 
 export function getCapabilitiesNodes(node) {
     const url = wmsUrl(node.url, 'getcapabilities');
+    const scaleHintType = node.scalehinttype === 'paper' ? 'paper' : 'resolution';
     return fetch(url).then(response=>{
         if (!response.ok) {
           throw Error(`${node.id}: req rejected with status ${response.status} ${response.statusText}`);
@@ -153,7 +158,7 @@ export function getCapabilitiesNodes(node) {
           if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) {
             // caps 1.1.1 or caps 1.3.0
             return response.text().then(xml=>{
-              const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers);
+              const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers, scaleHintType);
               if (nodes.length == 0) {
                 nodes.push({"title": `${nodeId}: 0 layers or failed`});
               }
