@@ -1,0 +1,330 @@
+{
+    "temp": ["{baseUrl}ahn1/wms?",
+        "{baseUrl}ahn2/wms?",
+        "{baseUrl}ahn3/wms?",
+        "{baseUrl}inspire/au/wms?styles=AdministrativeUnit_landsgrens",
+        "{baseUrl}inspire/au/wms?styles=AdministrativeUnit_provincies",
+        "{baseUrl}inspire/au/wms?styles=AdministrativeUnit_gemeenten",
+        "{baseUrl}inspireadressen/wms?",
+        "{baseUrl}inspire/ad/wms?",
+        "{baseUrl}aan/wms?","{baseUrl}afvalwater/wms?","{baseUrl}asbestscholenkaart/wms?","{baseUrl}bag/wms?","{baseUrl}bagterugmeldingen/wms?","{baseUrl}brpgewaspercelen/wms?","{baseUrl}inspire/ps/wms?","{baseUrl}beschermdenatuurmonumenten/wms?","{baseUrl}bestuurlijkegrenzen/wms?","{baseUrl}bodemkaart50000/wms?","{baseUrl}geomorfologischekaart50000/wms?","{baseUrl}brobhr/wms?","{baseUrl}brocpt/wms?","{baseUrl}brogmw/wms?","{baseUrl}cbspostcode4/wms?","{baseUrl}cbspostcode6/wms?","{baseUrl}cbsprovincies/wms?","{baseUrl}cbsvierkanten100mv2/wms?","{baseUrl}cbsvierkanten500mv2/wms?","{baseUrl}cultgis/wms?","{baseUrl}digitaaltopografischbestand/wms?","{baseUrl}dronenoflyzones/wms?","{baseUrl}ecotopen/wms?","{baseUrl}fietsknooppuntennetwerk/wms?","{baseUrl}fysischgeografischeregios/wms?","{baseUrl}inspire/bu/wms?","{baseUrl}geluidskaartenschiphol/wms?","{baseUrl}geluidskaartenspoorwegen/wms?","{baseUrl}inspire/gn/wms?","{baseUrl}nl/rws/hy-n/wms?","{baseUrl}inspire/hy-p/wms?","{baseUrl}indgebfunderingsproblematiek/wms?","{baseUrl}inspire/cp/wms?","{baseUrl}kadastralekaartv3/wms?","{baseUrl}lfroutes/wms?","{baseUrl}lawroutes/wms?","{baseUrl}luchtfoto/rgb/wms?","{baseUrl}luchtfoto/infrarood/wms?","{baseUrl}mosselenoesterhabitats/wms?","{baseUrl}mosselzaadinvanginstallaties/wms?","{baseUrl}napinfo/wms?","{baseUrl}nhi/wms?","{baseUrl}nationaleparken/wms?","{baseUrl}streekpaden/wms?","{baseUrl}natura2000/wms?","{baseUrl}nwbvaarwegen/wms?","{baseUrl}nwbwegen/wms?","{baseUrl}noordzeevaarwegmarkeringenrd/wms?","{baseUrl}rwsoppervlaktewaterlichamen/wms?","{baseUrl}overheidsdiensten/wms?","{baseUrl}omgevingswarmte/wms?","{baseUrl}reststromen/wms?","{baseUrl}restwarmte/wms?","{baseUrl}publiekrechtelijkebeperking/wms?","{baseUrl}rdinfo/wms?","{baseUrl}plu/wms?","{baseUrl}schelpdierenpercelen/wms?","{baseUrl}schelpdierwater/wms?","{baseUrl}spoorwegen/wms?","{baseUrl}inspire/su-grid/wms?","{baseUrl}inspire/su-vector/wms?","{baseUrl}stortenloswallen/wms?","{baseUrl}bgtterugmeldingen/wms?","{baseUrl}brtterugmeldingen/wms?","{baseUrl}top10nlv2/wms?","{baseUrl}top100raster/wms?","{baseUrl}top250raster/wms?","{baseUrl}top500raster/wms?","{baseUrl}top1000raster/wms?","{baseUrl}vin/wms?","{baseUrl}verkeersscheidingsstelsel/wms?","{baseUrl}inspire/tn/wms?","{baseUrl}inspire/tn-c/wms?","{baseUrl}inspire/tn-a/wms?","{baseUrl}inspire/tn-ra/wms?","{baseUrl}inspire/tn-w/wms?","{baseUrl}nl/rws/tn-w/wms?","{baseUrl}inspire/tn-ro/wms?","{baseUrl}nl/rws/tn-ro/wms?","{baseUrl}wsaeenhedeninspire/wms?","{baseUrl}wshydrografieinspire/wms?","{baseUrl}wskunstwerkenimwa/wms?","{baseUrl}wsdiensteninspire/wms?","{baseUrl}wsaoppervlaktewaterenimwa/wms?","{baseUrl}wswaterbeheergebiedenimwa/wms?","{baseUrl}weggeg/wms?","{baseUrl}wetlands/wms?","{baseUrl}windkaart/wms?","{baseUrl}cbsenergieleveringen/wms?","{baseUrl}bestandbodemgebruik2008/wms?","{baseUrl}bestandbodemgebruik2010/wms?","{baseUrl}bestandbodemgebruik2012/wms?","{baseUrl}bevolkingskernen2008/wms?","{baseUrl}bevolkingskernen2011/wms?","{baseUrl}cbsgebiedsindelingen/wms?","{baseUrl}wijkenbuurten2017/wms?","{baseUrl}wijkenbuurten2016/wms?","{baseUrl}wijkenbuurten2015/wms?","{baseUrl}wijkenbuurten2014/wms?","{baseUrl}wijkenbuurten2013/wms?","{baseUrl}wijkenbuurten2012/wms?","{baseUrl}wijkenbuurten2011/wms?","{baseUrl}wijkenbuurten2010/wms?","{baseUrl}wijkenbuurten2009/wms?","{baseUrl}rwsgeluidskaarten/wms?","{baseUrl}habitatrichtlijnverspreidinghabitattypen/wms?","{baseUrl}habitatrichtlijnverspreidingsoorten/wms?","{baseUrl}historischerivierkaarten/wms?","{baseUrl}kweldervegetatie/wms?","{baseUrl}neainfolagenkadaster/wms?","{baseUrl}nok2014/wms?","{baseUrl}nok2013/wms?","{baseUrl}nok2012/wms?","{baseUrl}nok2011/wms?","{baseUrl}nok2010/wms?","{baseUrl}nok2007/wms?","http://test.geodata.nationaalgeoregister.nl/regionalewandelroutesnederland/wms?","{baseUrl}vogelrichtlijnverspreidingsoorten/wms?","{baseUrl}zeegraskartering/wms?"],
+    "map": {
+        "zoom": 7,
+        "center": [5.31, 52.31],
+        "pitch" : 0
+    },
+    "datacatalog" : [
+        {
+            "type": "group",
+            "title": "Achtergrond",
+            "sublayers":[
+                {
+                    "type": "reference",
+                    "title": "BGT - Achtergrond [tms]",
+                    "layerInfo": {
+                    "id": "BGT_- Achtergrond [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/bgtachtergrond/EPSG:3857/{z}/{x}/{y}.png"
+                        ]
+                    }
+                    }
+                },
+                {
+                    "title": "BRT achtergrondkaart [tms]",
+                    "type": "reference",
+                    "checked": true,
+                    "layerInfo": {
+                    "id": "BRT_achtergrondkaart [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "© CC-BY Kadaster"
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "BRT achtergrondkaart Grijs [tms]",
+                    "layerInfo": {
+                    "id": "BRT_achtergrondkaart Grijs [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartgrijs/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "© CC-BY Kadaster"
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "BRT achtergrondkaart Pastel [tms]",
+                    "layerInfo": {
+                    "id": "BRT_achtergrondkaart Pastel [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartpastel/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "© CC-BY Kadaster"
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "BRT achtergrondkaart Water [tms]",
+                    "layerInfo": {
+                    "id": "BRT_achtergrondkaart Water [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartwater/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "© CC-BY Kadaster"
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "TOP10NL [tms]",
+                    "layerInfo": {
+                    "id": "TOP10NL_[tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nlv2/EPSG:3857/{z}/{x}/{y}.png8"
+                        ]
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "TOP250raster [tms]",
+                    "layerInfo": {
+                    "id": "TOP250raster_[tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top250raster/EPSG:3857/{z}/{x}/{y}.png"
+                        ]
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "OpenTopo achtergrondkaart [tms]",
+                    "layerInfo": {
+                    "id": "OpenTopo_achtergrondkaart [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/opentopoachtergrondkaart/EPSG:3857/{z}/{x}/{y}.jpeg"
+                        ],
+                        "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "Luchtfoto PDOK [tms]",
+                    "layerInfo": {
+                    "id": "Luchtfoto_PDOK [tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                        ]
+                    }
+                    }
+                },
+                {
+                    "type": "reference",
+                    "title": "Luchtfotolabels [tms]",
+                    "layerInfo": {
+                    "id": "Luchtfotolabels_[tms]_id",
+                    "type": "raster",
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/lufolabels/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
+                    }
+                    }
+                },
+                {
+                    "title":"Openstreetmap",
+                    "type":"reference",
+                    "layerInfo":{
+                    "id":"openstreetmap",
+                    "type":"raster",
+                    "metadata":{
+                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                    },
+                    "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                    }
+                    }
+                },
+                {
+                    "title":"Openstreetmap Gray",
+                    "type":"reference",
+                    "layerInfo":{
+                    "id":"openstreetmapgray",
+                    "type":"raster",
+                    "metadata":{
+                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                    },
+                    "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                    }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "title": "Publieke PDOK Services",
+            "sublayers": [
+                {
+                    "type": "group",
+                    "title": "Actueel Hoogtebestand Nederland (AHN1)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"ahn1",
+                            "layerInfo":{
+                                "id":"ahn1",
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn1/wms?"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Actueel Hoogtebestand Nederland (AHN2)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"ahn2",
+                            "layerInfo":{
+                                "id":"ahn2",
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn2/wms?"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Actueel Hoogtebestand Nederland (AHN3)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"ahn3",
+                            "layerInfo":{
+                                "id":"ahn3",
+                                "url":"https://geodata.nationaalgeoregister.nl/ahn3/wms?"
+                            }
+                        }
+                    ]
+                },{
+                    "type": "group",
+                    "title": "Administratieve Eenhenden (INSPIRE geharmoniseerd)",
+                    "sublayers": [
+                        {
+                            "type":"getcapabilities",
+                            "title":"auland",
+                            "layerInfo":{
+                                "id":"au",
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_landsgrens"
+                            }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"auprovincies",
+                            "layerInfo":{
+                                "id":"au",
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_provincies"
+                            }
+                        },
+                        {
+                            "type":"getcapabilities",
+                            "title":"augemeenten",
+                            "layerInfo":{
+                                "id":"au",
+                                "url":"https://geodata.nationaalgeoregister.nl/inspire/au/wms?styles=AdministrativeUnit_gemeenten"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Adressen",
+                    "sublayers":[
+                        {
+                            "type":"getcapabilities",
+                            "title":"inspiredadressen",
+                            "layerInfo":{
+                                "id":"inspiredadressen",
+                                "url":"https://geodata.nationaalgeoregister.nl/inspireadressen/wms?"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }      
+    ],
+    "tools" : {
+        "toolbar": {"opened" : 1},
+        "search" : {"visible": 1, "order" : 0},
+        "datacatalog" : {"visible": 1, "order" : 1},
+        "measure" : {"visible": 1, "order": 2},
+        "info" : {"visible" : 1, "order": 3},
+        "maplanguage" : {"visible" : 0, "order": 4},
+        "pitch" : {"visible" : 1, "order": 5},
+        "geolocate" : {"visible" : 1, "order": 6},
+        "draw" : {"visible" : 0, "order": 7},
+        "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
+        "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
+        "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
+        "coordinates" : {"visible" : 1, "position" : "bottom-center"},
+        "scalebar": {"visible" : 1, "position" : "bottom-right"},
+        "currenttool": null
+    },
+    "keys" : {
+        "mapboxaccesstoken" : null
+    }
+}
