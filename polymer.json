@@ -53,7 +53,8 @@
     "maps/histcaps.json",
     "maps/dakdelen.json",
     "maps/hitteeiland.json",
-    "maps/layers.json"
+    "maps/layers.json",
+    "maps/pdok.json"
   ],
   "builds": [
     {
