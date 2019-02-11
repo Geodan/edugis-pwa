@@ -51,9 +51,13 @@ class MapGSheetForm extends LitElement {
       .map(feature=>feature.properties[attribute])
       .filter(value=>value !== undefined)
       .sort((value1, value2)=>value1-value2);
+    const title = this.layerinfo.metadata?this.layerinfo.metadata.title?this.layerinfo.metadata.title:this.layerinfo.id:this.layerinfo.id;
     const maplayer = {
-      "id" : "sheetlayer",
+      "id" : this.layerinfo.id,
       "type" : "fill",
+      "metadata" : {
+        "title": title
+      },
       "source" : {
         "type": "geojson",
         "data": geojson,
