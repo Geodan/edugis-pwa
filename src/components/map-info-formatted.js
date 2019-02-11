@@ -98,7 +98,7 @@ class MapInfoFormatted extends LitElement {
               html`<div class="attributename">${key}</div>
                   <div class="attributevalue">${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?
                         JSON.stringify(feature.properties[key])
-                      :feature.properties[key].startsWith && feature.properties[key].startsWith('https://maps.googleapis.com')?
+                      :typeof feature.properties[key] === 'string' && feature.properties[key].startsWith('https://maps.googleapis.com')?
                           html`<img src="${feature.properties[key]}">`
                         :feature.properties[key]}</div>`
               )
