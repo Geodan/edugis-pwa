@@ -10,24 +10,31 @@
             "title": "Achtergrond",
             "sublayers":[
                 {
-                    "type": "reference",
-                    "title": "BGT - Achtergrond [tms]",
-                    "layerInfo": {
-                    "id": "BGT_- Achtergrond [tms]_id",
-                    "type": "raster",
-                    "source": {
-                        "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/bgtachtergrond/EPSG:3857/{z}/{x}/{y}.png"
-                        ]
-                    }
+                    "title":"BGT Achtergrond",
+                    "type":"reference",
+                    "checked": true,
+                    "layerInfo":{
+                      "id":"brtachtergrondkaart",
+                      "type":"raster",
+                      "metadata":{
+                        "reference": true
+                      },
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                          "https://t1.edugis.nl/tiles/tilecache.py?LAYERS=brtachtergrondkaart&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=256&height=256&BBOX={bbox-epsg-3857}"
+                        ],
+                        "attribution":"PDOK",
+                        "minzoom": 5,
+                        "maxzoom": 18,
+                        "bounds": [-1.6,47.5,13.0,56.0]
+                      }
                     }
                 },
                 {
                     "title": "BRT achtergrondkaart [tms]",
                     "type": "reference",
-                    "checked": true,
                     "layerInfo": {
                     "id": "BRT_achtergrondkaart [tms]_id",
                     "type": "raster",
