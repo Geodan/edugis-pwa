@@ -27,7 +27,7 @@ function scaleHintToZoomLevel(hint, scaleHintType)
     let level = 0;
     let calc = 110692.6408;
     if (scaleHintType === 'paper') {
-      calc = 250000000;
+      calc = 500000000;
     }
     for (; level < 22; level++, calc /= 2.0) {
       if (hint > calc) {
@@ -62,17 +62,26 @@ function layerToNode(Layer, Request, scaleHintType) {
       onlineResource.port = 443;
     }
     onlineResource = onlineResource.toString();
-    let featureInfoResource = new URL(Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource);
+    let featureInfoResource;
+    if (Request.GetFeatureInfo && Request.GetFeatureInfo.DCPType && Request.GetFeatureInfo.DCPType.length) {
+      featureInfoResource = new URL(Request.GetFeatureInfo.DCPType[0].HTTP.Get.OnlineResource);
+    } else {
+      featureInfoResource = onlineResource;
+    }
     if (featureInfoResource.protocol === 'http:') {
       featureInfoResource.protocol = 'https:';
       featureInfoResource.port = 443;
+    }
+    let legendurl = undefined;
+    if (Layer.Style && Layer.Style.length && Layer.Style[0].LegendURL && Layer.Style[0].LegendURL.length) {
+      legendurl = Layer.Style[0].LegendURL[0].OnlineResource;
     }
     const node = { "title": Layer.Title, "id": Layer.Name, "type":"wmsfromcaps", "layerInfo": {
       "id" : Layer.Name,
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
-          "legendurl": Layer.Style ? Layer.Style[0].LegendURL[0].OnlineResource : undefined
+          "legendurl": legendurl
       },
       "source" : {
           "type": "raster",
@@ -85,7 +94,7 @@ function layerToNode(Layer, Request, scaleHintType) {
       }
     }
     if (Layer.queryable) {
-      const getFeatureInfoFormat = preferredFeatureInfoFormat(Request.GetFeatureInfo.Format);
+      const getFeatureInfoFormat = Request && Request.GetFeatureInfo && Request.GetFeatureInfo.Format && Request.GetFeatureInfo.Format.length ? preferredFeatureInfoFormat(Request.GetFeatureInfo.Format): '';
       if (getFeatureInfoFormat != '') {
         node.layerInfo.metadata.getFeatureInfoUrl = featureInfoResource + "service=WMS&version=1.1.1&request=GetFeatureInfo&layers=" + encodeURIComponent(Layer.Name) + "&query_layers=" + encodeURIComponent(Layer.Name)
         node.layerInfo.metadata.getFeatureInfoFormat = getFeatureInfoFormat;
@@ -155,7 +164,7 @@ export function getCapabilitiesNodes(node) {
         }
         const contentType = response.headers.get('content-type');
         if (contentType) {
-          if (contentType === 'application/vnd.ogc.wms_xml' || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) {
+          if (contentType.startsWith('application/vnd.ogc.wms_xml') || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) {
             // caps 1.1.1 or caps 1.3.0
             return response.text().then(xml=>{
               const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers, scaleHintType);
