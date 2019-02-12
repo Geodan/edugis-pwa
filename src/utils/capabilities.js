@@ -54,6 +54,14 @@ function preferredFeatureInfoFormat(formats) {
   return '';
 }
 
+function layerGroup(Layer) {
+  return {
+    "type" : "group",
+    "title": Layer.Title,
+    "sublayers" :[]
+  }
+}
+
 function layerToNode(Layer, Request, scaleHintType) {
     let onlineResource = new URL(Request.GetMap.DCPType[0].HTTP.Get.OnlineResource);
     // upgrade to https (cannot load from http)
@@ -145,10 +153,17 @@ function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers, scaleHintT
         }
     }
     if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
-        // array of sublayers
+        // array of sublayers        
         json.Capability.Layer.Layer.forEach(Layer=>{
-            if (allowedLayer(Layer, deniedlayers, allowedlayers)) {
+            if (Layer.Name && Layer.Name != '') {
+              if (allowedLayer(Layer, deniedlayers, allowedlayers)) {
                 result.push(layerToNode(Layer, json.Capability.Request, scaleHintType));
+              }
+            }
+            if (Layer.Layer && Layer.Layer.length) {
+              const node = layerGroup(Layer);
+              node.sublayers = Layer.Layer.map(layer=>layerToNode(layer, json.Capability.Request, scaleHintType));
+              result.push(node);
             }
         });
     }
@@ -184,11 +199,16 @@ export function getCapabilitiesNodes(node) {
 
 export function copyMetadataToCapsNodes(sourceLayerInfo, capsNodes) {
   capsNodes.forEach(node=>{
-    if (!node.layerInfo.metadata) {
-      node.layerInfo.metadata = {};
+    if (node.layerInfo) {
+      if (!node.layerInfo.metadata) {
+        node.layerInfo.metadata = {};
+      }
+      if (sourceLayerInfo.tilecacheurl) {
+        node.layerInfo.metadata.tilecacheurl = sourceLayerInfo.tilecacheurl;
+      }
     }
-    if (sourceLayerInfo.tilecacheurl) {
-      node.layerInfo.metadata.tilecacheurl = sourceLayerInfo.tilecacheurl;
-    }
+    if (node.sublayers) {
+      copyMetadataToCapsNodes(sourceLayerInfo, node.sublayers);
+    } 
   });
 }

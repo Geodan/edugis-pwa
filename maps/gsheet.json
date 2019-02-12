@@ -7,10 +7,11 @@
     "datacatalog" : [
       {
         "type":"sheetlayer",
-        "title":"Google spreadsheet layer",
+        "title":"Google spreadsheet bevolkingsdichtheid",
         "checked": true,
         "layerInfo":{
-          "id":"sheet gemeenten2017",
+          "id":"sheetlayer1",
+          "title": "Bevolkingsdichtheid",
           "type":"sheetlayer",
           "source":{
             "type":"geojson",
@@ -20,6 +21,27 @@
           "sheet":{
             "description":"cbs gemeentedata 2017",
             "key":"1SCzqMGqclDJAwY0YKDDzfmc35RpLJCi-w_0_SMAJHI0",
+            "georeference":"relation",
+            "sheetcolumn":"A",
+            "datacolumn":"statnaam"
+          }
+        }
+      },
+      {
+        "type":"sheetlayer",
+        "title":"Google spreadsheet kinderen",
+        "layerInfo":{
+          "id":"sheetlayer2",
+          "title": "% kinderen tot 15 jaar",
+          "type":"sheetlayer",
+          "source":{
+            "type":"geojson",
+            "data":"https://tiles.edugis.nl/geojson/cbsgebiedsindelingen_cbs_gemeente_2017_gegeneraliseerd1.json",
+            "attribution":"cbs/pdok"
+          },
+          "sheet":{
+            "description":"cbs gemeentedata 2017",
+            "key":"16a8kioqvlJIKPPAMFOOnic5l4k7vIka4wrjxyWFkQAg",
             "georeference":"relation",
             "sheetcolumn":"A",
             "datacolumn":"statnaam"

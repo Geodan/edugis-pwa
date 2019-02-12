@@ -36,179 +36,179 @@
                     "title": "BRT achtergrondkaart [tms]",
                     "type": "reference",
                     "layerInfo": {
-                    "id": "BRT_achtergrondkaart [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "BRT_achtergrondkaart [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png"
-                        ],
-                        "attribution": "© CC-BY Kadaster"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png"
+                            ],
+                            "attribution": "© CC-BY Kadaster"
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "BRT achtergrondkaart Grijs [tms]",
                     "layerInfo": {
-                    "id": "BRT_achtergrondkaart Grijs [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "BRT_achtergrondkaart Grijs [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartgrijs/EPSG:3857/{z}/{x}/{y}.png"
-                        ],
-                        "attribution": "© CC-BY Kadaster"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartgrijs/EPSG:3857/{z}/{x}/{y}.png"
+                            ],
+                            "attribution": "© CC-BY Kadaster"
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "BRT achtergrondkaart Pastel [tms]",
                     "layerInfo": {
-                    "id": "BRT_achtergrondkaart Pastel [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "BRT_achtergrondkaart Pastel [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartpastel/EPSG:3857/{z}/{x}/{y}.png"
-                        ],
-                        "attribution": "© CC-BY Kadaster"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartpastel/EPSG:3857/{z}/{x}/{y}.png"
+                            ],
+                            "attribution": "© CC-BY Kadaster"
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "BRT achtergrondkaart Water [tms]",
                     "layerInfo": {
-                    "id": "BRT_achtergrondkaart Water [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "BRT_achtergrondkaart Water [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartwater/EPSG:3857/{z}/{x}/{y}.png"
-                        ],
-                        "attribution": "© CC-BY Kadaster"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartwater/EPSG:3857/{z}/{x}/{y}.png"
+                            ],
+                            "attribution": "© CC-BY Kadaster"
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "TOP10NL [tms]",
                     "layerInfo": {
-                    "id": "TOP10NL_[tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "TOP10NL_[tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nlv2/EPSG:3857/{z}/{x}/{y}.png8"
-                        ]
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top10nlv2/EPSG:3857/{z}/{x}/{y}.png8"
+                            ]
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "TOP250raster [tms]",
                     "layerInfo": {
-                    "id": "TOP250raster_[tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "TOP250raster_[tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top250raster/EPSG:3857/{z}/{x}/{y}.png"
-                        ]
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/top250raster/EPSG:3857/{z}/{x}/{y}.png"
+                            ]
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "OpenTopo achtergrondkaart [tms]",
                     "layerInfo": {
-                    "id": "OpenTopo_achtergrondkaart [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "OpenTopo_achtergrondkaart [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/opentopoachtergrondkaart/EPSG:3857/{z}/{x}/{y}.jpeg"
-                        ],
-                        "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/opentopoachtergrondkaart/EPSG:3857/{z}/{x}/{y}.jpeg"
+                            ],
+                            "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "Luchtfoto PDOK [tms]",
                     "layerInfo": {
-                    "id": "Luchtfoto_PDOK [tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "Luchtfoto_PDOK [tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
-                        ]
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                            ]
+                        }
                     }
                 },
                 {
                     "type": "reference",
                     "title": "Luchtfotolabels [tms]",
                     "layerInfo": {
-                    "id": "Luchtfotolabels_[tms]_id",
-                    "type": "raster",
-                    "source": {
+                        "id": "Luchtfotolabels_[tms]_id",
                         "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                        "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/lufolabels/EPSG:3857/{z}/{x}/{y}.png"
-                        ],
-                        "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
-                    }
+                        "source": {
+                            "type": "raster",
+                            "tileSize": 256,
+                            "tiles": [
+                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/lufolabels/EPSG:3857/{z}/{x}/{y}.png"
+                            ],
+                            "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
+                        }
                     }
                 },
                 {
                     "title":"Openstreetmap",
                     "type":"reference",
                     "layerInfo":{
-                    "id":"openstreetmap",
-                    "type":"raster",
-                    "metadata":{
-                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                    },
-                    "source":{
+                        "id":"openstreetmap",
                         "type":"raster",
-                        "tileSize":256,
-                        "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                        ],
-                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-                    }
+                        "metadata":{
+                            "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                        },
+                        "source":{
+                            "type":"raster",
+                            "tileSize":256,
+                            "tiles":[
+                                "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                            ],
+                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                        }
                     }
                 },
                 {
                     "title":"Openstreetmap Gray",
                     "type":"reference",
                     "layerInfo":{
-                    "id":"openstreetmapgray",
-                    "type":"raster",
-                    "metadata":{
-                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                    },
-                    "source":{
+                        "id":"openstreetmapgray",
                         "type":"raster",
-                        "tileSize":256,
-                        "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                        ],
-                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-                    }
+                        "metadata":{
+                            "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                        },
+                        "source":{
+                            "type":"raster",
+                            "tileSize":256,
+                            "tiles":[
+                                "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                            ],
+                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                        }
                     }
                 }
             ]
