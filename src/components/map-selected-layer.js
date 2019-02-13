@@ -281,7 +281,7 @@ class MapSelectedLayer extends LitElement {
       <div class="trashbincontainer">
           <div class="label">Laag verwijderen</div>
           <div class="trashbinicon" @click="${e=>this.removeLayer(e)}" title="kaartlaag verwijderen">${trashBinCircleIcon}</div>
-          <div class="trashtext">De laag kan weer toegevoegd worden via het data-catalogus menu</div>
+          <div class="trashtext">De laag kan weer toegevoegd worden via menu <i>Lagenselectie</i></div>
         </div>        
         ${this.layerFeaturesVisible()?html`
         <div class="transparencycontainer">

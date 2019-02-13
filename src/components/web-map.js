@@ -204,7 +204,7 @@ class WebMap extends LitElement {
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 0, info:"Adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, position: "", order: 1, info:"Data-catalogus", icon:layermanagerIcon},
+      {name:"datacatalog", visible: true, position: "", order: 1, info:"Lagenselectie", icon:layermanagerIcon},
       {name:"measure", visible: true, position: "", order: 2, info:"Afstanden meten", icon: measureIcon},
       {name:"info", visible: true, position: "", order: 3, info: "Locatie-informatie", icon: gmInfoIcon},
       {name:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},

@@ -51,7 +51,7 @@ class MapDataCatalog extends LitElement {
     }
   }
   render() {
-    return html`<map-layer-tree headertext="Data-catalogus" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="Lagenselectie" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;
