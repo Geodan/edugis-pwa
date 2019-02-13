@@ -66,7 +66,7 @@ class MapCoordinates extends LitElement {
             top: 2px;
             display: inline-block;
             opacity: 0;
-            background: white;
+            background: lightyellow;
           }
           .ul:hover {
             text-decoration: underline;
