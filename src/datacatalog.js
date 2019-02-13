@@ -127,7 +127,8 @@ export default
                   "tiles":[
                     "https://services.geodan.nl/public/data/my/gws/ZLTO6584XXXX/ows?LAYERS=Route_06330481-61aa-4b74-b76a-33bf23e17acf&FORMAT=image%2Fpng&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICEKEY=3dc8818a-d126-11e7-a442-005056805b87&EXCEPTIONS=INIMAGE&SERVICE=WMS&REQUEST=GetMap&STYLES=&sld=https%3A%2F%2Fservices.geodan.nl%2Fpublic%2Fdocument%2FZLTO6584XXXX%2Fapi%2Fdata%2FZLTO6584XXXX%2Fstyles%2FZLTO6584XXXX_public%3ARoute_06330481-61aa-4b74-b76a-33bf23e17acf%3ARoute_zwart&CRS=EPSG%3A3857&bbox={bbox-epsg-3857}&WIDTH=256&HEIGHT=256"
                   ],
-                  "attribution":"StevenF"
+                  "attribution":"StevenF",
+                  "bounds": [8.89, 59.60, 11.62, 63.58]
                 }
               }
             },
@@ -188,7 +189,8 @@ export default
                   "tiles":[
                     "https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0q.cgi?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=nexrad-n0q-900913-conus,nexrad-n0q-900913-ak,nexrad-n0q-900913-hi,nexrad-n0q-900913-pr,nexrad-n0q-900913-m05m-conus,nexrad-n0q-900913-m05m-hi,nexrad-n0q-900913-m05m-ak,nexrad-n0q-900913-m05m-pr,nexrad-n0q-900913-m10m-conus,nexrad-n0q-900913-m10m-ak&WIDTH=1024&HEIGHT=1024&CRS=EPSG:900913&BBOX={bbox-epsg-3857}"
                   ],
-                  "attribution":"NEXRAD"
+                  "attribution":"NEXRAD",
+                  "bounds":[-160,14,-60,72]
                 }
               }
             },
@@ -205,7 +207,7 @@ export default
                   "type":"raster",
                   "tileSize":1024,
                   "tiles":[
-                    "https://maps.dwd.de/geoserver/ows?SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=dwd:RX-Produkt&WIDTH=1024&HEIGHT=1024&CRS=EPSG:3857&BBOX={bbox-epsg-3857}"
+                    "https://maps.dwd.de/geoserver/ows?LAYERS=dwd:RX-Produkt"
                   ],
                   "attribution":"dwd.de"
                 }
@@ -213,7 +215,7 @@ export default
             },
             {
               "title":"Neerslagradar Groot Britannie",
-              "type":"wms",
+              "type":"wmsviatiles",
               "layerInfo":{
                 "id":"metofficeradar",
                 "type":"raster",
@@ -245,7 +247,7 @@ export default
                   "type":"raster",
                   "tileSize":1024,
                   "tiles":[
-                    "https://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=lwe_precipitation_rate&WIDTH=1024&HEIGHT=1024&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=precip%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&time={time}"
+                    "https://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?LAYERS=lwe_precipitation_rate&STYLES=precip%2Fnearest&time={time}"
                   ],
                   "attribution":"EUMETSAT/KNMI"
                 }
