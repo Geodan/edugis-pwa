@@ -952,6 +952,19 @@ class WebMap extends LitElement {
     }
     return this.isLanguageSwitcherCapable = this.map.getStyle().layers.find(layer=>layer.source === 'openmaptiles' && layer.metadata && layer.metadata.reference == true) !== undefined;
   }
+  disableRightMouseDragRotate()
+  {
+    const onMouseDown = this.map.dragRotate.onMouseDown;
+    this.map.dragRotate.onMouseDown = function (e) {
+      if (e.button === 2) {
+        // right mouse button clicked
+        event = new MouseEvent({button: 2, ctrlKey:true});
+        onMouseDown(event);
+      } else {
+        onMouseDown(e);
+      }
+    }
+  }
   initMap()
   {
     if (this.accesstoken) {
@@ -998,15 +1011,6 @@ class WebMap extends LitElement {
     this.map.on('click', (e)=>this.mapClick(e));
     this.map.on('render', e=>this.mapHasRendered());
     this.map.on('zoomend', e=>this.mapHasZoomed());
-    
-    /*
-    const modes = MapboxDraw.modes;
-    modes.static = StaticMode;
-
-    this.draw = new MapboxDraw({ modes: modes, boxSelect: false });
-    this.map.addControl(this.draw, 'bottom-left');
-    */
-
 
     this.map.on('load', ()=>{
         if (this.activeLayers) {
@@ -1020,7 +1024,7 @@ class WebMap extends LitElement {
           this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
           this.resetLayerList();
         }
-        //this.draw.changeMode('static');
+        this.disableRightMouseDragRotate();
     });
   }
   async addActiveLayers() {
