@@ -1,6 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import './map-iconbutton';
-import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon} from './my-icons';
+import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon} from './my-icons';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -71,6 +71,7 @@ class MapDraw extends LitElement {
       this.selectedFeatures = [];
       this.drawMode = 'simple_select';
       this.featureCollection = {"type": "FeatureCollection", "features": []};
+      this.featureCount = 0;
   }
   createRenderRoot() {
     return this;
@@ -114,6 +115,7 @@ class MapDraw extends LitElement {
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
+      .right {float: right}
       </style>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="select" .icon="${selectIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
@@ -122,6 +124,7 @@ class MapDraw extends LitElement {
       <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableCombine && this.draw.combineFeatures()}"><map-iconbutton info="groepeer" .disabled="${disableCombine}" .icon="${combineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.featureCount > 0 && this._downLoad()}"><map-iconbutton info="opslaan" .disabled="${this.featureCount === 0}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
       ${this.selectedFeatures.map(feature=>{
         return Object.keys(feature.properties).map(key=>html`
           <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
@@ -142,6 +145,7 @@ class MapDraw extends LitElement {
       this.map.addControl(this.draw, 'bottom-right');
       if (this.featureCollection.features.length) {
         this.draw.set(this.featureCollection);
+        this.featureCount = this.featureCollection.features.length;
       }
       this.map.on('draw.create', this.featuresCreated = (e)=>this._featuresCreated(e));
       this.map.on('draw.selectionchange', this.featuresSelected = (e)=>this._featuresSelected(e));
@@ -209,9 +213,10 @@ class MapDraw extends LitElement {
   _updateMapDrawLayers()
   {
     this.featureCollection = this.draw.getAll();
+    this.featureCount = this.featureCollection.features.length;
     this._updateMapDrawLayer(drawPolygons, ["Polygon", "MultiPolygon"]);
     this._updateMapDrawLayer(drawLines, ["LineString", "MultiLineString"]);
-    this._updateMapDrawLayer(drawPoints, ["Point", "MultiPoint"]);    
+    this._updateMapDrawLayer(drawPoints, ["Point", "MultiPoint"]);
   }
   _setMapLayerVisibity(layer, visible) {
     const mapLayer = this.map.getLayer(layer.id);
@@ -250,6 +255,7 @@ class MapDraw extends LitElement {
   }
   _featuresCreated(e) {
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
+    this.featureCount += e.features.length;
   }
   _featuresSelected(e) {
     this.selectedFeatures = [];
@@ -261,6 +267,7 @@ class MapDraw extends LitElement {
   _drawDelete(e) {
     console.log('delete')
     console.log(e.features);
+    this.featureCount -= e.features.length;
     this.selectedFeatures = [];
   }
   _drawCombine(e) {
@@ -276,6 +283,11 @@ class MapDraw extends LitElement {
       //e.createdFeatures.forEach(feature=>this._setDefaultFeatureProperties(feature));
       this.selectedFeatures = e.createdFeatures;
     }, 100);
+  }
+  _downLoad(e) {
+    const json = JSON.stringify(this.draw.getAll());
+    const blob = new Blob([json], {type: "application/json"});
+    window.saveAs(blob, 'edugisdraw.geojson');
   }
 }
 customElements.define('map-draw', MapDraw);

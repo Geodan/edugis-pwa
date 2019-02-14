@@ -2121,7 +2121,7 @@
         "maplanguage" : {"visible" : 0, "order": 4},
         "pitch" : {"visible" : 1, "order": 5},
         "geolocate" : {"visible" : 1, "order": 6},
-        "draw" : {"visible" : 0, "order": 7},
+        "draw" : {"visible" : 1, "order": 7},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
         "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},

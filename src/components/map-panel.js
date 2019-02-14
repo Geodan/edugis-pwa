@@ -32,7 +32,7 @@ class MapPanel extends LitElement {
         }
         .panel-content {
           width: 100%;
-          padding-left: 8px;
+          padding: 2px 8px 8px 8px;
           background-color: white;
           box-sizing: border-box;
           color: #555;

@@ -1,6 +1,5 @@
 build/
 node_modules/
-bower_components/
 test/integration/screenshots-current/
 _site/
 .DS_Store
