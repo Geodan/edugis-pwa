@@ -11,6 +11,7 @@
     "lib/wms-capabilities.min.js",
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/@turf/turf/turf.min.js",
+    "node_modules/file-saver/dist/FileSaver.min.js",
     "push-manifest.json",
     "styles/openmaptiles/positron.json",
     "styles/openmaptiles/osmbright.json",
