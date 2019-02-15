@@ -39,7 +39,7 @@ class MapPanel extends LitElement {
         }
     </style>
     <div class="panel-wrapper">
-      <div class="panel-content">
+      <div class="panel-content" @dragover="${e=>e.preventDefault()}" @drop="${e=>e.preventDefault()}">
         <slot></slot>
       </div>
     </div>`;

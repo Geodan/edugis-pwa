@@ -1210,6 +1210,14 @@ class WebMap extends LitElement {
     }
   }
   firstUpdated() {
+    const mapcontainer = this.shadowRoot.querySelector('div');
+    mapcontainer.addEventListener('dragover', (e)=>{
+      console.log('dragover'); 
+      e.preventDefault()
+    });
+    mapcontainer.addEventListener('drop', (ev)=>{
+      ev.preventDefault();
+    });
     if (this.configurl) {
       this.loadConfig(this.configurl);
     } else {

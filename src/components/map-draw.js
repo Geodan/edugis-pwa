@@ -1,6 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import './map-iconbutton';
-import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon} from './my-icons';
+import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -115,8 +115,16 @@ class MapDraw extends LitElement {
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
       .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
-      .right {float: right}
+      .right {float: right; margin-left: 4px;}
+      .dropzone {display: inline-block; height: 24px; width: 200px; border: 1px dashed gray; border-radius: 2px;}
+      .dragover {background-color: lightgray;}
       </style>
+      <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
+      <input type="file" id="fileElem" accept=".json,.geojson" style="display:none" @change="${e=>this._handleFiles(e)}">
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.featureCount > 0 && this._downLoad()}"><map-iconbutton info="opslaan" .disabled="${this.featureCount === 0}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop geojson here</map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<br><br>`: ``}
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="select" .icon="${selectIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
@@ -124,12 +132,13 @@ class MapDraw extends LitElement {
       <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableCombine && this.draw.combineFeatures()}"><map-iconbutton info="groepeer" .disabled="${disableCombine}" .icon="${combineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
-      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.featureCount > 0 && this._downLoad()}"><map-iconbutton info="opslaan" .disabled="${this.featureCount === 0}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
+      
       ${this.selectedFeatures.map(feature=>{
         return Object.keys(feature.properties).map(key=>html`
           <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
           );
       })}
+      </div>
     `
   }
   _addDrawToMap(){ 
@@ -265,8 +274,6 @@ class MapDraw extends LitElement {
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
   }
   _drawDelete(e) {
-    console.log('delete')
-    console.log(e.features);
     this.featureCount -= e.features.length;
     this.selectedFeatures = [];
   }
@@ -289,5 +296,55 @@ class MapDraw extends LitElement {
     const blob = new Blob([json], {type: "application/json"});
     window.saveAs(blob, 'edugisdraw.geojson');
   }
+  _readFile(file)
+  {
+    const reader = new FileReader();
+    reader.onload = (e) => this._processGeoJson(e.target.result);
+    reader.readAsText(file);
+  }
+  _handleFiles(e) {
+    const file = this.querySelector('#fileElem').files[0];
+    this._readFile(file);
+  }
+  _processGeoJson(data) {
+    try {
+      const json = JSON.parse(data);
+      if (json.type && (json.type == 'Feature' || json.type == 'FeatureCollection')) {
+        const bbox = turf.square(turf.bbox(json));
+        const bboxPolygon = turf.bboxPolygon(bbox);
+        if (turf.area(bboxPolygon) < 5000) {
+          this.map.jumpTo({center: turf.centroid(bboxPolygon).geometry.coordinates, zoom: 20 });
+        } else {
+          this.map.fitBounds(bbox);
+        }
+        this.draw.add(json);
+        this.featureCount = this.draw.getAll().features.length;
+      } else {
+        alert ('this json file is not recognized as geojson');
+      }
+    } catch(error) {
+      alert('invalid json: ' + error);
+    }
+  }
+  _handleDrop(ev) {
+    ev.preventDefault();
+    this.querySelector('.dropzone').classList.remove('dragover');
+    if (ev.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      for (let i = 0; i < ev.dataTransfer.items.length; i++) {
+        // If dropped items aren't files, reject them
+        if (ev.dataTransfer.items[i].kind === 'file') {
+            let file = ev.dataTransfer.items[i].getAsFile();
+            this._readFile(file);
+        }
+      }
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+        this._readFile(ev.dataTransfer.files[i])        
+      }
+    }
+  }
+
 }
 customElements.define('map-draw', MapDraw);
