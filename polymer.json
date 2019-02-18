@@ -55,7 +55,8 @@
     "maps/dakdelen.json",
     "maps/hitteeiland.json",
     "maps/layers.json",
-    "maps/pdok.json"
+    "maps/pdok.json",
+    "maps/zonnepanelen.json"
   ],
   "builds": [
     {
