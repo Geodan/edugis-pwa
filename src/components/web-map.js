@@ -758,7 +758,7 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
-          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}"></map-import-export>
+          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}"></map-import-export>
         </map-panel>
       </div>
     </div>`

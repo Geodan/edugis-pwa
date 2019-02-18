@@ -11,17 +11,21 @@ class MapImportExport extends LitElement {
   static get properties() { 
     return {
       active: {type: Boolean},
-      map: {type: Object}
+      map: {type: Object},
+      datacatalog: {type: Array},
+      onlyselected: {type: Boolean}
     }; 
   }
   constructor() {
       super();
       this.map = null;
       this.active = false;
+      this.datacatalog = [];
+      this.onlyselected = false;
   }
-  createRenderRoot() {
+  /* createRenderRoot() {
     return this;
-  }
+  }*/
   shouldUpdate(changedProp){
     return true;
   }
@@ -39,15 +43,34 @@ class MapImportExport extends LitElement {
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
       <input type="file" id="fileElem" accept=".json" style="display:none" @change="${e=>this._openFiles(e)}">
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="opslaan" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
-      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop config json here</map-iconbutton></div>`: ''}
+      <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> Alleen geselecteerde kaartlagen opslaan <br>
       </div>
     `
   }
+  _selectedLayersAndGroups(list) {
+    const result = [];
+    list.forEach(item=>{
+      if (item.checked) {
+        result.push(item);
+      }
+      if (item.sublayers) {
+        const subresult = this._selectedLayersAndGroups(item.sublayers);
+        if (subresult.length) {
+          const groupItem = {...item};
+          groupItem.sublayers = subresult;
+          result.push(groupItem);
+        }
+      }
+    })
+    return result;
+  }
   _saveFile(e) {
+    console.log(this.onlyselected);
     const json = {
         map: { zoom: this.map.getZoom(),center: this.map.getCenter(), pitch: this.map.getPitch(), bearing: this.map.getBearing()},
-        datacatalog: [],
+        datacatalog: this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : this.datacatalog,
         tools: this.toollist.reduce((result, tool)=>{
             result[tool.name] = {};
             if (tool.hasOwnProperty('opened')) {result[tool.name].opened = tool.opened};
@@ -60,6 +83,9 @@ class MapImportExport extends LitElement {
     const blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});
     window.saveAs(blob, 'edugismap.json');
   }
+  _toggleOnlyVisible(e) {
+    this.onlyselected = !this.onlyselected;
+  }
   _readFile(file)
   {
     const reader = new FileReader();
@@ -67,7 +93,7 @@ class MapImportExport extends LitElement {
     reader.readAsText(file);
   }
   _openFiles(e) {
-    const file = this.querySelector('#fileElem').files[0];
+    const file = this.shadowRoot.querySelector('#fileElem').files[0];
     this._readFile(file);
   }
   _processGeoJson(data) {
@@ -101,6 +127,5 @@ class MapImportExport extends LitElement {
       }
     }
   }
-
 }
 customElements.define('map-import-export', MapImportExport);
