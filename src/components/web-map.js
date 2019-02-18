@@ -30,6 +30,7 @@ import './map-geolocation';
 import './map-pitch';
 import './map-selected-layers';
 import './map-draw';
+import './map-import-export';
 import {render} from 'lit-html';
 
 import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
@@ -37,7 +38,7 @@ import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabiliti
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon } from './my-icons';
+import { importExportIcon, gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
@@ -211,11 +212,12 @@ class WebMap extends LitElement {
       {name:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
       {name:"geolocate", visible: true, position: "", order: 6, info: "Waar ben ik?", icon: gpsFixedIcon},
       {name:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
-      {name:"zoomlevel", visible: true, position: "bottom-left", order: 8, info: "Zoom-niveau"},
-      {name:"navigation", visible: true, position: "bottom-left", order: 9, info: "Zoom, Roteer"},
-      {name:"coordinates", visible: true, position: "bottom-center", order: 10},
-      {name:"scalebar", visible: true, position: "bottom-right", order: 11, info: "Schaalbalk"},
-      {name:"legend", visible: true, position: "opened", order: 12, info: "Legenda en kaartlagen"},
+      {name:"importexport", visible: true, position: "", order: 8, info: "Kaart opslaan / openen", icon: importExportIcon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 9, info: "Zoom-niveau"},
+      {name:"navigation", visible: true, position: "bottom-left", order: 10, info: "Zoom, Roteer"},
+      {name:"coordinates", visible: true, position: "bottom-center", order: 11},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 12, info: "Schaalbalk"},
+      {name:"legend", visible: true, position: "opened", order: 13, info: "Legenda en kaartlagen"},
     ];
   }
   updateSingleLayerVisibility(id, visible) {
@@ -754,6 +756,10 @@ class WebMap extends LitElement {
           <div style="width:100%">Tekenen</div>
           <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}"></map-draw>
         </map-panel>
+        <map-panel .active="${this.currentTool==='importexport'}">
+          <div style="width:100%">Kaart opslaan / openen</div>
+          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}"></map-import-export>
+        </map-panel>
       </div>
     </div>`
   }
@@ -981,7 +987,8 @@ class WebMap extends LitElement {
         pitch: this.pitch
     });
     this.datagetter = {
-      querySourceFeatures: this.map.querySourceFeatures.bind(this.map)
+      querySourceFeatures: this.map.querySourceFeatures.bind(this.map),
+      getSource: (sourcename) => this.map.getSource(sourcename)
     };
     const controlTools = this.toolList.filter(tool=>tool.position !== "").sort((a,b)=>a.order-b.order);
     controlTools.forEach(tool=>{
