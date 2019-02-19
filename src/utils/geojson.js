@@ -174,9 +174,9 @@ export class GeoJSON {
   static createLayers(json) {
     const result = [];
     if (json.features && json.features.length) {
-      const fillFeatures = json.features.filter(feature=>feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon');
-      const lineFeatures = json.features.filter(feature=>feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString');
-      const pointFeatures = json.features.filter(feature=>feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint');
+      const fillFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
+      const lineFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
+      const pointFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
       if (fillFeatures.length) {
         result.push( 
         {
