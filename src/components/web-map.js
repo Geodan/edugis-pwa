@@ -33,7 +33,7 @@ import './map-draw';
 import './map-import-export';
 import {render} from 'lit-html';
 
-import {convertProjectedGeoJsonLayer, convertTopoJsonLayer} from '../utils/geojson';
+import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
@@ -149,6 +149,7 @@ function projectLngLat(lngLat, srs)
 }
 
 import {LitElement, html} from '@polymer/lit-element';
+import MapImportExport from './map-import-export';
 /**
 * @polymer
 * @extends HTMLElement
@@ -612,10 +613,10 @@ class WebMap extends LitElement {
             } else {
               if (layerInfo.source.type === "geojson") {
                 if (layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
-                  await convertTopoJsonLayer(layerInfo);
+                  await GeoJSON.convertTopoJsonLayer(layerInfo);
                 } 
                 if (layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
-                  await convertProjectedGeoJsonLayer(layerInfo);
+                  await GeoJSON.convertProjectedGeoJsonLayer(layerInfo);
                 }                
               }              
               this.map.addLayer(layerInfo);
@@ -1175,6 +1176,7 @@ class WebMap extends LitElement {
       this.datacatalog = config.datacatalog;    
     }
     if (config.tools) {
+      this.toolList.forEach(tool=>tool.visible=(tool.name==='toolbar'));
       for (let toolName in config.tools) {
         const confTool = config.tools[toolName];
         /* if (toolName === 'currenttool' && confTool) {
@@ -1219,18 +1221,29 @@ class WebMap extends LitElement {
   firstUpdated() {
     const mapcontainer = this.shadowRoot.querySelector('div');
     mapcontainer.addEventListener('dragover', (e)=>{
-      console.log('dragover'); 
       e.preventDefault()
     });
-    mapcontainer.addEventListener('drop', (ev)=>{
-      ev.preventDefault();
-    });
+    mapcontainer.addEventListener('drop', (ev)=> this.handleDrop(ev));
     if (this.configurl) {
       this.loadConfig(this.configurl);
     } else {
       this.initMap();
     }
   }
+
+  handleDrop(ev) {
+    MapImportExport.handleDrop(ev).then(json=>{
+      if (json.map && json.tools) {
+        this.applyConfig(json);
+        this.initMap();
+      } else if (json.features && json.features.length) {
+        const layers = GeoJSON.createLayers(json);
+        layers.forEach(layer=>this.addLayer({detail: layer}));
+      } else {
+        alert ('Valid json, but content not recognized');
+      }
+    })
+  };
 
   updateLayerCalculatedPaintProperties(layerlist) {
     layerlist.forEach(layer=>{

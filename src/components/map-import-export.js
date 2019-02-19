@@ -7,7 +7,7 @@ import {openfileIcon, downloadIcon} from './my-icons';
 * @polymer
 * @extends HTMLElement
 */
-class MapImportExport extends LitElement {
+export default class MapImportExport extends LitElement {
   static get properties() { 
     return {
       active: {type: Boolean},
@@ -36,7 +36,7 @@ class MapImportExport extends LitElement {
       .dropzone {display: inline-block; height: 24px; width: 200px; border: 1px dashed gray; border-radius: 2px;}
       .dragover {background-color: lightgray;}
       </style>
-      <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
+      <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDropZoneDrop(e)}">
       <input type="file" id="fileElem" accept=".json" style="display:none" @change="${e=>this._openFiles(e)}">
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="opslaan" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
@@ -45,8 +45,10 @@ class MapImportExport extends LitElement {
     `
   }
   _saveFile(e) {
+    const center = this.map.getCenter();
+
     const json = {
-        map: { zoom: this.map.getZoom(),center: this.map.getCenter(), pitch: this.map.getPitch(), bearing: this.map.getBearing()},
+        map: { zoom: this.map.getZoom(),center: [center.lng, center.lat], pitch: this.map.getPitch(), bearing: this.map.getBearing()},
         datacatalog: [],
         tools: this.toollist.reduce((result, tool)=>{
             result[tool.name] = {};
@@ -60,45 +62,73 @@ class MapImportExport extends LitElement {
     const blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});
     window.saveAs(blob, 'edugismap.json');
   }
-  _readFile(file)
-  {
+
+  static _readFileAsText(inputFile) {
     const reader = new FileReader();
-    reader.onload = (e) => this._processGeoJson(e.target.result);
-    reader.readAsText(file);
+  
+    return new Promise((resolve, reject) => {
+      reader.onerror = () => {
+        reader.abort();
+        reject(new DOMException("Problem parsing input file."));
+      };
+  
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsText(inputFile);
+    });
+  };
+  static async _readFile(file)
+  {
+    try {
+        const text = await MapImportExport._readFileAsText(file);
+        return MapImportExport._processGeoJson(text);
+    } catch(error) {
+        return {error: error}
+    }
   }
   _openFiles(e) {
     const file = this.querySelector('#fileElem').files[0];
-    this._readFile(file);
+    MapImportExport._readFileAsText(file);
   }
-  _processGeoJson(data) {
+  static _processGeoJson(data) {
     try {
       const json = JSON.parse(data);
-      if (json.map && json.datacatalog && json.tools && json.keys) {
-        
-      } else {
-        alert ('this json file is not recognized as an EduGIS configuration');
-      }
+      return json;
     } catch(error) {
-      alert('invalid json: ' + error);
+      return {error: 'invalid json'};
     }
   }
-  _handleDrop(ev) {
+  static async handleDrop(ev) {
     ev.preventDefault();
-    this.querySelector('.dropzone').classList.remove('dragover');
     if (ev.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
       for (let i = 0; i < ev.dataTransfer.items.length; i++) {
         // If dropped items aren't files, reject them
         if (ev.dataTransfer.items[i].kind === 'file') {
             let file = ev.dataTransfer.items[i].getAsFile();
-            this._readFile(file);
+            return await MapImportExport._readFile(file);
         }
       }
     } else {
       // Use DataTransfer interface to access the file(s)
       for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        this._readFile(ev.dataTransfer.files[i])        
+        return await MapImportExport._readFile(ev.dataTransfer.files[i])
       }
+    }
+    return {}
+  }
+  _handleDropZoneDrop(ev) {
+    this.querySelector('.dropzone').classList.remove('dragover');
+    const json = MapImportExport.handleDrop(ev);
+    if (json.error) {
+        alert('error: ' + json.error);
+    } else {
+        if (json.map && json.datacatalog && json.tools && json.keys) {
+            return json;
+        } else {
+            alert ('this json file is not recognized as an EduGIS configuration');
+        }
     }
   }
 

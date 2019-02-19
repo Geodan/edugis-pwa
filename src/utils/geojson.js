@@ -1,17 +1,19 @@
 // Checks if `list` looks like a `[x, y]`.
-function isXY(list) {
+
+export class GeoJSON {
+  static _isXY(list) {
     return list.length >= 2 &&
       typeof list[0] === 'number' &&
       typeof list[1] === 'number';
   }
-  
-  function traverseCoords(coordinates, callback) {
-    if (isXY(coordinates)) return callback(coordinates);
-    return coordinates.map(function(coord){return traverseCoords(coord, callback);});
+
+  static _traverseCoords(coordinates, callback) {
+    if (GeoJSON._isXY(coordinates)) return callback(coordinates);
+    return coordinates.map(function(coord){return GeoJSON._traverseCoords(coord, callback);});
   }
-  
+
   // Simplistic shallow clone that will work for a normal GeoJSON object.
-  function clone(obj) {
+  static _clone(obj) {
     if (null == obj || 'object' !== typeof obj) return obj;
     var copy = obj.constructor();
     for (var attr in obj) {
@@ -20,11 +22,11 @@ function isXY(list) {
     return copy;
   }
   
-  function traverseGeoJson(geometryCb, nodeCb, geojson) {
+  static _traverseGeoJson(geometryCb, nodeCb, geojson) {
     if (geojson == null) return geojson;
   
-    var r = clone(geojson);
-    var self = traverseGeoJson.bind(this, geometryCb, nodeCb);
+    var r = GeoJSON._clone(geojson);
+    var self = GeoJSON._traverseGeoJson.bind(this, geometryCb, nodeCb);
   
     switch (geojson.type) {
     case 'Feature':
@@ -45,8 +47,8 @@ function isXY(list) {
   
     return r;
   }
-  
-  function detectCrs(geojson, projs) {
+
+  static _detectCrs(geojson, projs) {
     var crsInfo = geojson.crs,
         crs;
   
@@ -66,20 +68,20 @@ function isXY(list) {
   
     return crs;
   }
-  
-  function determineCrs(crs, projs) {
+
+  static _determineCrs(crs, projs) {
     if (typeof crs === 'string') {
       return projs[crs] || proj4.Proj(crs);
     }
   
     return crs;
   }
-  
-  function calcBbox(geojson) {
+
+  static _calcBbox(geojson) {
     var min = [Number.MAX_VALUE, Number.MAX_VALUE],
         max = [-Number.MAX_VALUE, -Number.MAX_VALUE];
-    traverseGeoJson(function(_gj) {
-      traverseCoords(_gj.coordinates, function(xy) {
+    GeoJSON._traverseGeoJson(function(_gj) {
+      GeoJSON._traverseCoords(_gj.coordinates, function(xy) {
         min[0] = Math.min(min[0], xy[0]);
         min[1] = Math.min(min[1], xy[1]);
         max[0] = Math.max(max[0], xy[0]);
@@ -88,16 +90,15 @@ function isXY(list) {
     }, null, geojson);
     return [min[0], min[1], max[0], max[1]];
   }
-  
-  function reproject(geojson, from, to, projs) {
+
+  static _reproject(geojson, from, to, projs) {
     projs = projs || {};
     if (!from) {
-      from = detectCrs(geojson, projs);
+      from = GeoJSON._detectCrs(geojson, projs);
     } else {
-      from = determineCrs(from, projs);
+      from = GeoJSON._determineCrs(from, projs);
     }
-  
-    to = determineCrs(to, projs);
+    to = GeoJSON._determineCrs(to, projs);
     var transform = proj4(from, to).forward.bind(transform);
   
     var transformGeometryCoords = function(gj) {
@@ -106,31 +107,33 @@ function isXY(list) {
       if (gj.crs) {
         delete gj.crs;
       }
-      gj.coordinates = traverseCoords(gj.coordinates, transform);
+      gj.coordinates = GeoJSON._traverseCoords(gj.coordinates, transform);
     }
   
     var transformBbox = function(gj) {
       if (gj.bbox) {
-        gj.bbox = calcBbox(gj);
+        gj.bbox = GeoJSON._calcBbox(gj);
       }
     }
   
-    return traverseGeoJson(transformGeometryCoords, transformBbox, geojson);
+    return GeoJSON._traverseGeoJson(transformGeometryCoords, transformBbox, geojson);
   }
-  
-  function reverse(geojson) {
-    return traverseGeoJson(function(gj) {
+
+  /*
+  _reverse(geojson) {
+    return this._traverseGeoJson(function(gj) {
       gj.coordinates = traverseCoords(gj.coordinates, function(xy) {
         return [ xy[1], xy[0] ];
       });
     }, null, geojson);
   }
+  */
   
-  function toWgs84(geojson, from, projs) {
-    return reproject(geojson, from, proj4.WGS84, projs);
+  static _toWgs84(geojson, from, projs) {
+    return GeoJSON._reproject(geojson, from, proj4.WGS84, projs);
   }
   
-  export function convertTopoJsonLayer(layerInfo) {
+  static convertTopoJsonLayer(layerInfo) {
     return fetch(layerInfo.source.data).then(data=> {
       return data.json().then(json=>{
         // replace url with topojson first object converted to geojson
@@ -140,21 +143,96 @@ function isXY(list) {
       })
     }).catch(reason=>console.log(reason));
   }
-  export function convertProjectedGeoJsonLayer(layerInfo) {
+
+  static convertProjectedGeoJsonLayer(layerInfo) {
     const crs = layerInfo.metadata.crs;
     if (typeof layerInfo.data == 'object') {
       return new Promise((resolve, reject)=>{
         if (!layerInfo.metadata.originaldata) {
           layerInfo.metadata.originaldata = layerinfo.source.data;
-          layerInfo.source.data = toWgs84(layerInfo.source.data, proj4.Proj("EPSG:8557"));
+          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:8557"));
         }
         resolve();
       })
     } else {
       return fetch(layerInfo.source.data).then(data=>data.json()).then(json=>{
         layerInfo.metadata.originaldata = layerInfo.source.data;
-        layerInfo.source.data = toWgs84(json, proj4.Proj("EPSG:3857"));
+        layerInfo.source.data = GeoJSON._toWgs84(json, proj4.Proj("EPSG:3857"));
         return layerInfo;
       })
     }
   }
+
+  static _uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  // returns a point-layer, line-layer, fill-layer if point, line, polygon features exist
+  static createLayers(json) {
+    const result = [];
+    if (json.features && json.features.length) {
+      const fillFeatures = json.features.filter(feature=>feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon');
+      const lineFeatures = json.features.filter(feature=>feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString');
+      const pointFeatures = json.features.filter(feature=>feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint');
+      if (fillFeatures.length) {
+        result.push( 
+        {
+            "metadata": {"title": "GeoJSON fill-layer"},
+            "id": GeoJSON._uuidv4(),
+            "type":"fill",
+            "source":{
+              "type":"geojson",
+              "data": {"type": "FeatureCollection", "features": fillFeatures},
+              "attribution":"unknown"
+            },
+            "paint":{
+              "fill-color":"#ccc",
+              "fill-opacity":0.6,
+              "fill-outline-color":"#444"
+            }
+        });
+      }
+      if (lineFeatures.length) {
+        result.push(
+          {
+            "metadata": {"title": "GeoJSON line-layer"},
+            "id": GeoJSON._uuidv4(),
+            "type":"line",
+            "source":{
+              "type":"geojson",
+              "data": {"type": "FeatureCollection", "features": lineFeatures},
+              "attribution":"unknown"
+            },
+            "paint":{
+              "line-color":"#000",
+              "line-width": 2
+            }
+          });
+      }
+      if (pointFeatures.length) {
+        result.push(
+          {
+              "metadata": {"title": "GeoJSON point-layer"},
+              "id": GeoJSON._uuidv4(),
+              "type":"circle",
+              "source":{
+                "type":"geojson",
+                "data": {"type": "FeatureCollection", "features": pointFeatures},
+                "attribution":"unknown"
+              },
+              "paint":{
+                "circle-color":"#FA0",
+                "circle-radius": 10,
+                "circle-stroke-width": 1,
+                "circle-stroke-color": "#FFF"
+              }
+          }
+        );
+      }
+    }
+    return result;
+  }
+}
