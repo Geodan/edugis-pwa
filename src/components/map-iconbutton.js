@@ -60,7 +60,7 @@ class IconButton extends LitElement {
           color: rgb(160,160,160);
         }
     </style>
-    <div title="${this.info}" class="button ${this.active ? 'active' : ''} ${this.disabled?' disabled':''}">${this.icon}</div>`;
+    <div title="${this.info}" class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}">${this.icon}</div>`;
   }
 }
 customElements.define('map-iconbutton', IconButton);
