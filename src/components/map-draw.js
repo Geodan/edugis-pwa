@@ -1,5 +1,6 @@
 import {LitElement, html} from '@polymer/lit-element';
 import './map-iconbutton';
+import {GeoJSON} from '../utils/geojson'
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
 
 const drawPolygons = {
@@ -206,18 +207,29 @@ class MapDraw extends LitElement {
       this.draw.changeMode(this.drawMode = 'draw_polygon');
     }
   }
+  _setSource(layer, features) {
+    const source = this.map.getSource(layer.id);
+    if (source) {
+      source.setData({"type":"FeatureCollection", "features": features});
+    } else if (this.sourceRetries > 0) {
+      this.sourceRetries--;
+      setTimeout(()=>this._setSource(layer, features), 200);
+    } else {
+      console.log('_setsource failed for layer ' + layer.id);
+    }
+  }
   _updateMapDrawLayer(layer, typenames) {
     const typedFeatures = this.featureCollection.features
       .filter(feature=>typenames.includes(feature.geometry.type));
     if (typedFeatures.length) {
       if (!this.map.getLayer(layer.id)) {
-        this.map.addLayer(layer)
+        this.dispatchEvent(new CustomEvent('addlayer', {
+          detail: layer
+        }));
       }
     }
-    const source = this.map.getSource(layer.id);
-    if (source) {
-      source.setData({"type":"FeatureCollection", "features": typedFeatures});
-    }
+    this.sourceRetries = 10;
+    this._setSource(layer, typedFeatures);
   }
   _updateMapDrawLayers()
   {
@@ -306,10 +318,17 @@ class MapDraw extends LitElement {
     const file = this.querySelector('#fileElem').files[0];
     this._readFile(file);
   }
+  _cleanupJson(data) {
+    if (data.features) {
+      // remove null geometries
+      data.features = data.features.filter(feature=>feature.geometry);
+    }
+  }
   _processGeoJson(data) {
     try {
       const json = JSON.parse(data);
       if (json.type && (json.type == 'Feature' || json.type == 'FeatureCollection')) {
+        this._cleanupJson(json)
         const bbox = turf.square(turf.bbox(json));
         const bboxPolygon = turf.bboxPolygon(bbox);
         if (turf.area(bboxPolygon) < 5000) {

@@ -349,37 +349,78 @@ class MapSelectedLayer extends LitElement {
       }
     </style>`;
   }
+  _getLayerStylePropertyName() {
+      switch (this.layer.type) {
+        case 'fill':
+          return (this.layer.paint['fill-color'].property);
+        case 'line':
+          return (this.layer.paint['line-color'].property);
+      }
+  }
+  _getMinMax(data, property) {
+    const maxstr = 'zzzzzzzz';
+    const result = {
+      type: "undefined",
+      min: Number.MAX_VALUE,
+      max: Number.MIN_VALUE,
+      minstr: maxstr,
+      maxstr: '',
+      undefinedcount: 0
+    };
+    if (data.length) {
+      data.forEach(element=>{
+        const value = element.properties[property];
+        switch (typeof value) {
+          case 'undefined':
+            result.undefinedcount++;
+          case 'number':
+            if (value < result.min) {
+              result.min = value;
+            }
+            if (value > result.max) {
+              result.max = value;
+            }
+            break;
+          case 'string':
+            if (value < result.minstr) {
+              result.minstr = value;
+            }
+            if (value > result.maxstr) {
+              result.maxstr = value;
+            }
+            break;
+        }
+      });
+    }
+    if (result.minstr === maxstr) {
+      result.minstr = '';
+    }
+    if (result.min > result.max) {
+      result.min = result.max = 0;
+    }
+    return result;
+  }
+  _getDataProperties() {
+    const stylePropertyName = this._getLayerStylePropertyName();
+    let data;
+    if (this.datagetter && this.datagetter.getSource) {
+      const source = this.datagetter.getSource(this.layer.source);
+      if (source.type === 'geojson') {
+        data = source._data.features;
+      }
+    }
+    if (!data) {
+      if (this.datagetter && this.datagetter.querySourceFeatures) {
+        data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
+      }
+    }
+    const minmax = this._getMinMax(data, stylePropertyName);
+    return {property: stylePropertyName, minmax: minmax, values: data.map(item=>item.properties[stylePropertyName])}
+  }
+
   renderLegendEditor()
   {
-    /* let data;
-    if (this.datagetter && this.datagetter.querySourceFeatures) {
-      data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
-    }
-    console.log(`number of elements: ${data.length}`);
-    if (data.length) {
-      const properties = {...data[0].properties};
-      const minmaxproperties = {min:{}, max:{}};
-      for (let key in properties) {
-        if (typeof properties[key] === "number") {
-          minmaxproperties.min[key] = Number.MAX_VALUE;
-          minmaxproperties.max[key] = Number.MIN_VALUE;
-        } else if (typeof properties[key] === "string") {
-          minmaxproperties.min[key] = "zzzzzzz";
-          minmaxproperties.max[key] = "";
-        }
-      }
-      console.log(data.reduce((minmaxproperties, feature)=>{
-        for (let key in feature.properties) {
-          if (feature.properties[key] > minmaxproperties.max[key]) {
-            minmaxproperties.max[key] = feature.properties[key];
-          }
-          if (feature.properties[key] < minmaxproperties.min[key]) {
-            minmaxproperties.min[key] = feature.properties[key];
-          }
-        }
-        return minmaxproperties;
-      }, minmaxproperties));
-    } */
+    
     switch (this.layer.type) {
       case "fill":
         {
@@ -408,6 +449,7 @@ class MapSelectedLayer extends LitElement {
             `
           } else {
             const legendInfo = mbStyleParser.paintStyleToLegendItems(fillColor, 'fill', this.zoom);
+            const dataProperties = this._getDataProperties();
             if (legendInfo.items && legendInfo.items.length) {
               const numClasses = legendInfo.items.length;
               let schemes = colorbrewer.filter(scheme=>scheme.type===legendInfo.type && scheme.sets.length > numClasses - 3).map(scheme=>{
@@ -451,7 +493,32 @@ class MapSelectedLayer extends LitElement {
                     </div>
                   `
               )}
-              </div>`
+              </div>
+              <div class="label">Hoeveelheid dataklassen</div>
+              <div class="classcontainer">
+              Verschuif de grenslijnen om de klassewaarden te veranderen<br>
+              <b>Name</b> ${dataProperties.property}<br>
+              <b>Count</b> ${dataProperties.values.length}<br>
+              <b>min</b> ${dataProperties.minmax.min}<br>
+              <b>max</b> ${dataProperties.minmax.max}<br>
+              <b>minstr</b> ${dataProperties.minmax.minstr}<br>
+              <b>maxstr</b> ${dataProperties.minmax.maxstr}<br>
+              <b>undefined</b> ${dataProperties.minmax.undefinedcount}<br>
+              Hoeveelheid dataklassen <select>
+                <option ?selected="${numClasses===2}" value="2">2</option>
+                <option ?selected="${numClasses===3}" value="3">3</option>
+                <option ?selected="${numClasses===4}" value="4">4</option>
+                <option ?selected="${numClasses===5}" value="5">5</option>
+                <option ?selected="${numClasses===6}" value="6">6</option>
+                <option ?selected="${numClasses===7}" value="7">7</option>
+                <option ?selected="${numClasses===8}" value="8">8</option>
+                <option ?selected="${numClasses===9}" value="9">9</option>
+              </select>
+              <br>
+              Verdeling van dataklassen<br>
+              <button>Kwantiel</button><button>Interval</button><button>Willekeurig</button>
+              </div>
+              `
             }
           }
         }

@@ -58,7 +58,7 @@ export default class MapImportExport extends LitElement {
       if (item.sublayers) {
         const subresult = this._selectedLayersAndGroups(item.sublayers);
         if (subresult.length) {
-          const groupItem = {...item};
+          const groupItem = Object.assign({}, item);
           groupItem.sublayers = subresult;
           result.push(groupItem);
         }
@@ -115,7 +115,11 @@ export default class MapImportExport extends LitElement {
   }
   _openFiles(e) {
     const file = this.shadowRoot.querySelector('#fileElem').files[0];
-    MapImportExport._readFileAsText(file);
+    MapImportExport._readFile(file).then(json=>{
+        this.dispatchEvent(new CustomEvent('jsondata', {
+          detail: json
+        }))
+    })
   }
   static _processGeoJson(data) {
     try {
@@ -145,17 +149,12 @@ export default class MapImportExport extends LitElement {
     return {}
   }
   _handleDropZoneDrop(ev) {
-    this.querySelector('.dropzone').classList.remove('dragover');
-    const json = MapImportExport.handleDrop(ev);
-    if (json.error) {
-        alert('error: ' + json.error);
-    } else {
-        if (json.map && json.datacatalog && json.tools && json.keys) {
-            return json;
-        } else {
-            alert ('this json file is not recognized as an EduGIS configuration');
-        }
-    }
+    this.shadowRoot.querySelector('.dropzone').classList.remove('dragover');
+    MapImportExport.handleDrop(ev).then(json=>{
+      this.dispatchEvent(new CustomEvent('jsondata', {
+        detail: json
+      }))
+    })
   }
 }
 customElements.define('map-import-export', MapImportExport);

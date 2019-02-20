@@ -755,11 +755,11 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <div style="width:100%">Tekenen</div>
-          <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}"></map-draw>
+          <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-draw>
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
-          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}"></map-import-export>
+          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @jsondata="${e=>this._processJson(e.detail)}"></map-import-export>
         </map-panel>
       </div>
     </div>`
@@ -1230,18 +1230,24 @@ class WebMap extends LitElement {
       this.initMap();
     }
   }
+  
+  _processJson(json) {
+    if (json.map && json.tools) {
+      this.applyConfig(json);
+      this.initMap();
+    } else if (json.features && json.features.length) {
+      const layers = GeoJSON.createLayers(json);
+      layers.forEach(layer=>this.addLayer({detail: layer}));
+    } else if (json.error) {
+      alert('Json error: ' + json.error);
+    } else {
+      alert ('Valid json, but content not recognized');
+    }
+  }
 
   handleDrop(ev) {
     MapImportExport.handleDrop(ev).then(json=>{
-      if (json.map && json.tools) {
-        this.applyConfig(json);
-        this.initMap();
-      } else if (json.features && json.features.length) {
-        const layers = GeoJSON.createLayers(json);
-        layers.forEach(layer=>this.addLayer({detail: layer}));
-      } else {
-        alert ('Valid json, but content not recognized');
-      }
+     this._processJson(json);
     })
   };
 
