@@ -234,6 +234,9 @@ class MapLegendPanel extends LitElement {
           background: white;
           overflow: hidden;
         }
+        .legendcontainer img {
+          max-width: calc(100% - 3px);
+        }
       </style>
       <div class="legendcontainer" style="${legendopacity?legendopacity:''}">${legendContent}</div>`;
   }

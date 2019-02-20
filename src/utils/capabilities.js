@@ -101,6 +101,11 @@ function layerToNode(Layer, Request, scaleHintType) {
           }
       }
     }
+    if (legendurl === undefined) {
+      const url = wmsUrl(onlineResource + "layers=" + encodeURIComponent(Layer.Name), 'getlegendgraphic');
+      node.layerInfo.metadata.legendurl = url;
+      node.layerInfo.metadata.legendguessed = true;
+    }
     if (Layer.queryable) {
       const getFeatureInfoFormat = Request && Request.GetFeatureInfo && Request.GetFeatureInfo.Format && Request.GetFeatureInfo.Format.length ? preferredFeatureInfoFormat(Request.GetFeatureInfo.Format): '';
       if (getFeatureInfoFormat != '') {
