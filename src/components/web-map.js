@@ -76,6 +76,7 @@ const searchSource = {
 const searchLines = {        
   "id": "map-search-line",
   "type": "line",
+  "metadata": {"isToolLayer": true},
   "source": "map-search-geojson",
   "layout": {
       "line-join": "round",
@@ -90,6 +91,7 @@ const searchLines = {
 const searchPoints ={
   "id": "map-search-points",
   "type": "symbol",
+  "metadata": {"isToolLayer": true},
   "source": "map-search-geojson",            
   "layout": {                        
     "icon-image": "{icon}",
@@ -113,6 +115,7 @@ const searchPoints ={
 const searchSurface = {
   "id": "map-search-surface",
   "type": "fill",
+  "metadata": {"isToolLayer": true},
   "source": "map-search-geojson",
   "layout": {
     "visibility": "visible"

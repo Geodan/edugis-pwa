@@ -257,6 +257,7 @@ class MapMeasure extends LitElement {
         this.webmap.addLayer({        
           "id": "map-measure-line",
           "type": "line",
+          "metadata": {"isToolLayer": true},
           "source": "map-measure-geojson",
           "layout": {
               "line-join": "round",
@@ -272,6 +273,7 @@ class MapMeasure extends LitElement {
         this.webmap.addLayer({
           "id": "map-measure-points",
           "type": "circle",
+          "metadata": {"isToolLayer": true},
           "source": "map-measure-geojson",            
           "paint": {
             "circle-radius": 5,
@@ -285,6 +287,7 @@ class MapMeasure extends LitElement {
         this.webmap.addLayer({
           "id": "map-measure-surface",
           "type": "fill",
+          "metadata": {"isToolLayer": true},
           "source": "map-measure-geojson",
           "filter": ['==', '$type', "Polygon"],
           "layout": {
@@ -299,6 +302,7 @@ class MapMeasure extends LitElement {
           "id": "map-measure-line-length",
           "type": "symbol",
           "source": "map-measure-geojson",
+          "metadata": {"isToolLayer": true},
           "filter": ['==', '$type', 'LineString'],
           "layout": {
             "symbol-placement": "line",

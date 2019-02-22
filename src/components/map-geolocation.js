@@ -123,6 +123,7 @@ class MapGeolocation extends LitElement {
       this.webmap.addLayer({
         "id": "map-geolocate-radius",
         "type": "fill",
+        "metadata": {"isToolLayer": true},
         "source": "map-geolocate",            
         "paint": {
           "fill-color": "rgba(149,201,253,0.3)",
@@ -136,6 +137,7 @@ class MapGeolocation extends LitElement {
       this.webmap.addLayer({
         "id": "map-geolocate-point",
         "type": "circle",
+        "metadata": {"isToolLayer": true},
         "source": "map-geolocate",     
         "paint": {
           "circle-radius": 10,

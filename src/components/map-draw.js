@@ -152,6 +152,7 @@ class MapDraw extends LitElement {
         keybindings: true,
         controls: {point: false, line_string: false, polygon: false, trash: false, combine_features: false, uncombine_features: false}
       });
+      this.draw.options.styles.forEach(style=>style.metadata = {isToolLayer: true});
       this.map.addControl(this.draw, 'bottom-right');
       if (this.featureCollection.features.length) {
         this.draw.set(this.featureCollection);
