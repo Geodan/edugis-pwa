@@ -121,7 +121,7 @@ export default class MapImportExport extends LitElement {
   {
     try {
         const text = await MapImportExport._readFileAsText(file);
-        return MapImportExport._processGeoJson(text);
+        return MapImportExport._processGeoJson(text, file.name);
     } catch(error) {
         return {error: error}
     }
@@ -134,10 +134,10 @@ export default class MapImportExport extends LitElement {
         }))
     })
   }
-  static _processGeoJson(data) {
+  static _processGeoJson(data, filename) {
     try {
       const json = JSON.parse(data);
-      return json;
+      return {filename: filename, geojson: json};
     } catch(error) {
       return {error: 'invalid json'};
     }

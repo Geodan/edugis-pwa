@@ -1238,7 +1238,7 @@ class WebMap extends LitElement {
     if (json.map && json.tools) {
       this.applyConfig(json);
       this.initMap();
-    } else if (json.features && json.features.length) {
+    } else if (json.geojson && json.geojson.features && json.geojson.features.length) {
       const layers = GeoJSON.createLayers(json);
       layers.forEach(layer=>this.addLayer({detail: layer}));
     } else if (json.error) {

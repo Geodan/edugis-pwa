@@ -173,6 +173,8 @@ export class GeoJSON {
   // returns a point-layer, line-layer, fill-layer if point, line, polygon features exist
   static createLayers(json) {
     const result = [];
+    const filename = json.filename.replace(/\.[^/.]+$/,"");
+    json = json.geojson;
     if (json.features && json.features.length) {
       const fillFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
       const lineFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
@@ -180,7 +182,7 @@ export class GeoJSON {
       if (fillFeatures.length) {
         result.push( 
         {
-            "metadata": {"title": "GeoJSON fill-layer"},
+            "metadata": {"title": `${filename} fill`},
             "id": GeoJSON._uuidv4(),
             "type":"fill",
             "source":{
@@ -198,7 +200,7 @@ export class GeoJSON {
       if (lineFeatures.length) {
         result.push(
           {
-            "metadata": {"title": "GeoJSON line-layer"},
+            "metadata": {"title": `${filename} line`},
             "id": GeoJSON._uuidv4(),
             "type":"line",
             "source":{
@@ -215,7 +217,7 @@ export class GeoJSON {
       if (pointFeatures.length) {
         result.push(
           {
-              "metadata": {"title": "GeoJSON point-layer"},
+              "metadata": {"title": `${filename} point`},
               "id": GeoJSON._uuidv4(),
               "type":"circle",
               "source":{
