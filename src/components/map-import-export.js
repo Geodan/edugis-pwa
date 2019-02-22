@@ -35,20 +35,30 @@ export default class MapImportExport extends LitElement {
     }
     return html`
       <style>
+      .rowcontainer {display: flex; align-items: flex-end;}
+      .dropzone {flex-grow: 10; height: 24px; border: 1px dashed gray; border-radius: 2px; margin-right: 4px;}
       .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
-      .right {float: right; margin-left: 4px;}
-      .dropzone {display: inline-block; height: 24px; width: 200px; border: 1px dashed gray; border-radius: 2px;}
       .dragover {background-color: lightgray;}
+      .spacer {flex-grow: 10;}
       </style>
-      <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDropZoneDrop(e)}">
-      <input type="file" id="fileElem" accept=".json" style="display:none" @change="${e=>this._openFiles(e)}">
-      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="opslaan" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
-      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
-      ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop config json here</map-iconbutton></div>`: ''}
-      <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> Alleen geselecteerde kaartlagen opslaan <br>
       <hr>
+      <div>Openen</div>
+      <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDropZoneDrop(e)}">
+      <div class="rowcontainer">
+        <input type="file" id="fileElem" accept=".json" style="display:none" @change="${e=>this._openFiles(e)}">
+        ${window.saveAs ? html`<div class="dropzone" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop config json here</map-iconbutton></div>`: ''}
+        ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
+      </div>
+      <hr>
+      <div>Opslaan</div>
+      <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> Alleen geselecteerde kaartlagen<br>
       Zichtbare tools:<br>
+      <div class="rowcontainer">
+      <div class="spacer">
       ${this.toollist.map(tool=>html`<input type="checkbox" name="${tool.name}" ?checked="${tool.visible}" @click="${e=>tool.visible=!tool.visible}">${tool.name}<br>`)}
+      </div>
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="opslaan" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
+      </div>
       </div>
     `
   }
