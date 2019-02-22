@@ -46,6 +46,9 @@ export default class MapImportExport extends LitElement {
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop config json here</map-iconbutton></div>`: ''}
       <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> Alleen geselecteerde kaartlagen opslaan <br>
+      <hr>
+      Zichtbare tools:<br>
+      ${this.toollist.map(tool=>html`<input type="checkbox" name="${tool.name}" ?checked="${tool.visible}" @click="${e=>tool.visible=!tool.visible}">${tool.name}<br>`)}
       </div>
     `
   }
@@ -82,7 +85,7 @@ export default class MapImportExport extends LitElement {
         keys: {}
     }
     const blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});
-    window.saveAs(blob, 'edugismap.json');
+    window.saveAs(blob, 'mapconfig.json');
   }
 
   _toggleOnlyVisible(e) {
