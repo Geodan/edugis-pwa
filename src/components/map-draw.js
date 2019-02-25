@@ -48,7 +48,10 @@ const drawPoints = {
   },
   "paint" : {
     "circle-radius": 6,
-    "circle-color" : "#FCC",
+    "circle-color" : "#000",
+    "circle-opacity": 0.3,
+    "circle-stroke-color": "#000",
+    "circle-stroke-width": 2
   }
 }
 

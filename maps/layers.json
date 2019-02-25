@@ -50,6 +50,54 @@
                 },
                 {
                     "type":"reference",
+                    "title":"OSM Helder (stijl)",
+                    "layerInfo":{
+                      "id":"OsmBright",
+                      "type":"style",
+                      "source":"styles/openmaptiles/osmbright.json",
+                      "metadata":{
+                        "reference":true
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"OSM Basis (stijl)",
+                    "layerInfo":{
+                      "id":"klokantechbasic",
+                      "type":"style",
+                      "source":"styles/openmaptiles/klokantech-basic.json",
+                      "metadata":{
+                        "reference":true
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"OSM Positron (stijl)",
+                    "layerInfo":{
+                      "id":"Positron",
+                      "type":"style",
+                      "source":"styles/openmaptiles/positron.json",
+                      "metadata":{
+                        "reference":true
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"OSM Donker (stijl)",
+                    "layerInfo":{
+                      "id":"DarkMatter",
+                      "type":"style",
+                      "source":"styles/openmaptiles/dark-matter.json",
+                      "metadata":{
+                        "reference":true
+                      }
+                    }
+                  },
+                {
+                    "type":"reference",
                     "title":"Microsoft BING Kaart",
                     "layerInfo":{
                       "id":"bingmaproad",
@@ -1914,7 +1962,8 @@
         "maplanguage" : {"visible" : 1, "order": 5},
         "pitch" : {"visible" : 1, "order": 6},
         "geolocate" : {"visible" : 1, "order": 7},
-        "draw" : {"visible" : 0, "order": 8},
+        "draw" : {"visible" : 1, "order": 8},
+        "importexport": {"visible": 0, "order": 9},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
         "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
