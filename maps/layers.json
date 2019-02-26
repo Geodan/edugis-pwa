@@ -396,7 +396,7 @@
                         },
                         {
                             "type":"getcapabilities",
-                            "title":"Liplaatsen en Standplaatsen",
+                            "title":"Ligplaatsen en Standplaatsen",
                             "layerInfo":{
                               "id":"ligstandplaats",
                               "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",

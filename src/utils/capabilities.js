@@ -11,6 +11,9 @@ function convertToArray(layerlist) {
 }
 
 function allowedLayer(Layer, deniedlayers, allowedlayers) {
+    if (!Layer.Name || Layer.Name === '') {
+      return true;
+    }
     if (deniedlayers.length) {
       if (deniedlayers.find(layer=>layer === Layer.Name)) {
         return false;
@@ -141,37 +144,43 @@ function layerToNode(Layer, Request, scaleHintType) {
     return node;
 }
 
+function addNodesFromLayer(Layer, Request, scaleHintType, deniedlayers, allowedlayers) {
+  if (!Array.isArray(Layer)) {
+    Layer = [Layer];
+  }
+  let result = [];
+  Layer.forEach(layer=>{
+    if (layer.Name && layer.Name !== '') {
+      if (allowedLayer(layer, deniedlayers, allowedlayers)) {
+        result.push(layerToNode(layer, Request, scaleHintType))
+      }
+    }
+    if (layer.Layer && allowedLayer(layer.Layer, deniedlayers, allowedlayers)) {
+      // layer has sublayers
+      const sublayers = addNodesFromLayer(layer.Layer, Request, scaleHintType, deniedlayers, allowedlayers);
+      if (result.length === 0) {
+        result = sublayers;
+      } else {
+        const node = layerGroup(layer);
+        node.sublayers = sublayers;
+        result.push(node);
+      }
+    }
+  })
+  return result;
+}
+
 function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers, scaleHintType) {
     const parser = new WMSCapabilities();
     const json = parser.parse(xml);
-    const result = [];
+    
     if (!json.Capability) {
       // no capabilities
-      return result;
+      return [];
     }
     deniedlayers = convertToArray(deniedlayers);
     allowedlayers = convertToArray(allowedlayers);
-    if (json.Capability.Layer.Name && json.Capability.Layer.Name !== '') {
-        // non-empty root layer
-        if (allowedLayer(json.Capability.Layer, deniedlayers, allowedlayers)) {
-            result.push(layerToNode(json.Capability.Layer, json.Capability.Request, scaleHintType));
-        }
-    }
-    if (json.Capability.Layer.Layer && json.Capability.Layer.Layer.length) {
-        // array of sublayers        
-        json.Capability.Layer.Layer.forEach(Layer=>{
-            if (Layer.Name && Layer.Name != '') {
-              if (allowedLayer(Layer, deniedlayers, allowedlayers)) {
-                result.push(layerToNode(Layer, json.Capability.Request, scaleHintType));
-              }
-            }
-            if (Layer.Layer && Layer.Layer.length) {
-              const node = layerGroup(Layer);
-              node.sublayers = Layer.Layer.map(layer=>layerToNode(layer, json.Capability.Request, scaleHintType));
-              result.push(node);
-            }
-        });
-    }
+    const result = addNodesFromLayer(json.Capability.Layer, json.Capability.Request, scaleHintType, deniedlayers, allowedlayers)
     return result;
 }
 
