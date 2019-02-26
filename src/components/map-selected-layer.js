@@ -420,7 +420,6 @@ class MapSelectedLayer extends LitElement {
 
   renderLegendEditor()
   {
-    
     switch (this.layer.type) {
       case "fill":
         {
@@ -449,7 +448,9 @@ class MapSelectedLayer extends LitElement {
             `
           } else {
             const legendInfo = mbStyleParser.paintStyleToLegendItems(fillColor, 'fill', this.zoom);
-            const dataProperties = this._getDataProperties();
+            if (!this.dataProperties) {
+              this.dataProperties = this._getDataProperties();
+            }
             if (legendInfo.items && legendInfo.items.length) {
               const numClasses = legendInfo.items.length;
               let schemes = colorbrewer.filter(scheme=>scheme.type===legendInfo.type && scheme.sets.length > numClasses - 3).map(scheme=>{
@@ -497,14 +498,14 @@ class MapSelectedLayer extends LitElement {
               <div class="label">Hoeveelheid dataklassen</div>
               <div class="classcontainer">
               Verschuif de grenslijnen om de klassewaarden te veranderen<br>
-              <b>Name</b> ${dataProperties.property}<br>
-              <b>Count</b> ${dataProperties.values.length}<br>
-              <b>min</b> ${dataProperties.minmax.min}<br>
-              <b>max</b> ${dataProperties.minmax.max}<br>
-              <b>minstr</b> ${dataProperties.minmax.minstr}<br>
-              <b>maxstr</b> ${dataProperties.minmax.maxstr}<br>
-              <b>undefined</b> ${dataProperties.minmax.undefinedcount}<br>
-              Hoeveelheid dataklassen <select>
+              <b>Name</b> ${this.dataProperties.property}<br>
+              <b>Count</b> ${this.dataProperties.values.length}<br>
+              <b>min</b> ${this.dataProperties.minmax.min}<br>
+              <b>max</b> ${this.dataProperties.minmax.max}<br>
+              <b>minstr</b> ${this.dataProperties.minmax.minstr}<br>
+              <b>maxstr</b> ${this.dataProperties.minmax.maxstr}<br>
+              <b>undefined</b> ${this.dataProperties.minmax.undefinedcount}<br>
+              Hoeveelheid dataklassen <select @change="${e=>this.reclass(e)}">
                 <option ?selected="${numClasses===2}" value="2">2</option>
                 <option ?selected="${numClasses===3}" value="3">3</option>
                 <option ?selected="${numClasses===4}" value="4">4</option>
@@ -552,7 +553,7 @@ class MapSelectedLayer extends LitElement {
   }
   updateColorScheme(e, scheme) {
     //console.log(scheme);
-    const currentColor = this.layer.paint["fill-color"];
+    const currentColor = this.layer.metadata.paint? this.layer.metadata.paint['fill-color']: this.layer.paint["fill-color"];
     if (Array.isArray(currentColor) && currentColor.length) {
       switch (currentColor[0]) {
         case "step":
@@ -642,6 +643,25 @@ class MapSelectedLayer extends LitElement {
       )
     );
   }
+  reclass(e) {
+    const newClassCount = e.currentTarget.value;
+    this.numClasses = newClassCount;
+    /* equal interval */
+    const interval = (this.dataProperties.minmax.max - this.dataProperties.minmax.min) / newClassCount;
+    const paint = {
+      "fill-color":[
+      "step",
+      ["get", this._getLayerStylePropertyName()],
+      "#f7fcf0"
+    ]};
+    for (let i = 1; i < newClassCount; i++) {
+      paint["fill-color"].push(i * interval, 'red')
+    }
+    this.layer.metadata.paint = paint;
+    this.updatePaintProperty(e, paint);
+  }
+
+  
   removeLayer(e) {
     this.dispatchEvent(
       new CustomEvent('removelayer',
