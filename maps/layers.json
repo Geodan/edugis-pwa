@@ -1842,7 +1842,7 @@
                         },
                         "source": {
                             "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "bounds": [5.03, 52.18,6.06, 52.93],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_WINDTURBINES"]
                         }
                     }
@@ -1858,7 +1858,7 @@
                         },
                         "source": {
                             "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "bounds": [5.117, 52.202, 6.032, 52.871],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=MI_LDEN_CONTOUREN"]
                         }
                     }
@@ -1874,7 +1874,7 @@
                         },
                         "source": {
                             "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "bounds": [5.390, 52.323, 5.933, 52.617],
                             "tiles": ["https://geo2.flevoland.nl/geoserver/Extern/wms?layers=Bodemdaling_OFL-2011-2030"]
                         }
                     }
@@ -1891,7 +1891,7 @@
                         },
                         "source": {
                             "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "bounds": [4.950, 52.207, 6.328, 53.263],
                             "tiles": ["https://geoservices.rijkswaterstaat.nl/ijsselmeergebied_diepte?&layers=ijg_diep_2012"]
                         }
                     }
