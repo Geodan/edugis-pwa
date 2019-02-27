@@ -1540,7 +1540,7 @@ export default
               "tiles":[
                 "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
               ],
-              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>",
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom":17
             }
           }
@@ -1561,7 +1561,7 @@ export default
               "tiles":[
                 "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
               ],
-              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>",
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom":17
             }
           }
@@ -1581,7 +1581,7 @@ export default
               "tiles":[
                 "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
               ],
-              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>",
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom":16
             }
           }
