@@ -575,7 +575,9 @@ class WebMap extends LitElement {
             layerInfo.metadata.getFeatureInfoUrl = wmsUrl(layerInfo.source.tiles[0], 'getfeatureinfo');
           }
         }
-        layerInfo.source.tiles = layerInfo.source.tiles.map(tile=>wmsUrl(tile, 'getmap'));
+        if (layerInfo.source && layerInfo.source.tiles) {
+          layerInfo.source.tiles = layerInfo.source.tiles.map(tile=>wmsUrl(tile, 'getmap'));
+        }
       }
       if (layerInfo.metadata.tilecacheurl && layerInfo.source.tiles) {
         let search = new URL(layerInfo.source.tiles[0]).search;
