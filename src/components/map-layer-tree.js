@@ -1,4 +1,4 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 

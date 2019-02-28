@@ -73,7 +73,7 @@ function formatArea(a) {
   return html`${Math.round(a / 1000000)} km<sup>2</sup>`
 }
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 /**
 * @polymer
 * @extends HTMLElement

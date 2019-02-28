@@ -11,7 +11,7 @@ import {panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon 
 
 import './dragdrop/lit-draghandle';
 import './map-legend-panel';
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import {foldercss} from './folder-icon.css.js';
 
 /**

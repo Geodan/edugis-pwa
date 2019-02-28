@@ -31,7 +31,7 @@ import './map-pitch';
 import './map-selected-layers';
 import './map-draw';
 import './map-import-export';
-import {render} from 'lit-html';
+//import {render} from 'lit-html';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -151,7 +151,7 @@ function projectLngLat(lngLat, srs)
     return lngLat;
 }
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html, svg} from 'lit-element';
 import MapImportExport from './map-import-export';
 /**
 * @polymer
@@ -1642,8 +1642,10 @@ class WebMap extends LitElement {
     }
     if (!this.markerDiv) {
       this.markerDiv = document.createElement('div');
-      this.markerDiv.style = 'fill: blue;'
-      render (outlineInfoIcon, this.markerDiv);
+      this.markerDiv.style = 'fill: blue;';
+      this.markerDiv.innerHTML = outlineInfoIcon.getHTML();
+      this.markerDiv.innerHTML = this.markerDiv.firstElementChild.innerHTML;
+      //render (outlineInfoIcon, this.markerDiv); // no longer works?
     }
     if (this.marker) {
       this.marker.remove();

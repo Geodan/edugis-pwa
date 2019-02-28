@@ -1,4 +1,4 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import {MDCSlider} from '@material/slider/index';
 import {mdcslidercss} from '../../lib/mdc.slider.css';
 

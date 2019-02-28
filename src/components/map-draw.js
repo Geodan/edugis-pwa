@@ -1,4 +1,4 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import './map-iconbutton';
 import {GeoJSON} from '../utils/geojson'
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
