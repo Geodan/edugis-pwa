@@ -1792,6 +1792,24 @@
                 },
                 {
                     "type": "wms",
+                    "title": "Zonpotentie velden",
+                    "layerInfo": {
+                        "id": "zonpotentie",
+                        "type": "raster",
+                        "minzoom": 12,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom": 12,
+                            "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
+                        }
+                    }
+                },
+                {
+                    "type": "wms",
                     "title": "Energielabels",
                     "layerInfo": {
                         "id": "rvoLabel2017",
