@@ -418,6 +418,16 @@ class MapSelectedLayer extends LitElement {
     return {property: stylePropertyName, minmax: minmax, values: data.map(item=>item.properties[stylePropertyName])}
   }
 
+  getColorSchemes(numClasses, legendType) {
+    return colorbrewer.filter(scheme=>scheme.type===legendType && scheme.sets.length > numClasses - 3)
+      .map(scheme=>{
+        const result = scheme.sets[numClasses - 3];
+        result.name = scheme.name;
+        result.type = scheme.type;
+        return result;
+      });
+  }
+
   renderLegendEditor()
   {
     switch (this.layer.type) {
@@ -448,17 +458,13 @@ class MapSelectedLayer extends LitElement {
             `
           } else {
             const legendInfo = mbStyleParser.paintStyleToLegendItems(fillColor, 'fill', this.zoom);
+            this.legendType = legendInfo.type;
             if (!this.dataProperties) {
               this.dataProperties = this._getDataProperties();
             }
             if (legendInfo.items && legendInfo.items.length) {
               const numClasses = legendInfo.items.length;
-              let schemes = colorbrewer.filter(scheme=>scheme.type===legendInfo.type && scheme.sets.length > numClasses - 3).map(scheme=>{
-                const result = scheme.sets[numClasses - 3];
-                result.name = scheme.name;
-                result.type = scheme.type;
-                return result;
-              });
+              let schemes = this.getColorSchemes(numClasses, legendInfo.type);
               return html`
               <style>
                 .schemescontainer {
@@ -506,7 +512,6 @@ class MapSelectedLayer extends LitElement {
               <b>maxstr</b> ${this.dataProperties.minmax.maxstr}<br>
               <b>undefined</b> ${this.dataProperties.minmax.undefinedcount}<br>
               Hoeveelheid dataklassen <select @change="${e=>this.reclass(e)}">
-                <option ?selected="${numClasses===2}" value="2">2</option>
                 <option ?selected="${numClasses===3}" value="3">3</option>
                 <option ?selected="${numClasses===4}" value="4">4</option>
                 <option ?selected="${numClasses===5}" value="5">5</option>
@@ -553,6 +558,7 @@ class MapSelectedLayer extends LitElement {
   }
   updateColorScheme(e, scheme) {
     //console.log(scheme);
+    this.currentSchemeName = scheme.name;
     const currentColor = this.layer.metadata.paint? this.layer.metadata.paint['fill-color']: this.layer.paint["fill-color"];
     if (Array.isArray(currentColor) && currentColor.length) {
       switch (currentColor[0]) {
@@ -646,16 +652,27 @@ class MapSelectedLayer extends LitElement {
   reclass(e) {
     const newClassCount = e.currentTarget.value;
     this.numClasses = newClassCount;
+    const schemes = this.getColorSchemes(newClassCount, this.legendType);
+    let scheme;
+    if (this.currentSchemeName) {
+      scheme = schemes.find(scheme=>scheme.name===this.currentSchemeName);
+      if (!scheme) {
+        scheme = schemes[0];
+      }
+    } else {
+      scheme = schemes[0];
+    }
+    
     /* equal interval */
     const interval = (this.dataProperties.minmax.max - this.dataProperties.minmax.min) / newClassCount;
     const paint = {
       "fill-color":[
       "step",
       ["get", this._getLayerStylePropertyName()],
-      "#f7fcf0"
+      scheme.colors[0]
     ]};
     for (let i = 1; i < newClassCount; i++) {
-      paint["fill-color"].push(i * interval, 'red')
+      paint["fill-color"].push(i * interval, scheme.colors[i])
     }
     this.layer.metadata.paint = paint;
     this.updatePaintProperty(e, paint);

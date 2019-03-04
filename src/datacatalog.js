@@ -334,7 +334,7 @@ export default
                   "tiles":[
                     "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                   ],
-                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>"
                 }
               }
             },
@@ -353,7 +353,7 @@ export default
                   "tiles":[
                     "https://saturnus.geodan.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                   ],
-                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>"
                 }
               }
             },
@@ -434,7 +434,7 @@ export default
                   "tiles":[
                     "https://tile-c.openstreetmap.fr/hot/{z}/{x}/{y}.png"
                   ],
-                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>"
                 }
               }
             },
@@ -1521,6 +1521,68 @@ export default
               ],
               "attribution":"&copy; ESRI",
               "maxzoom":11
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Toner",
+          "layerInfo":{
+            "id":"stamentoner",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "scheme": "tms",
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":17
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Watercolor",
+          "layerInfo":{
+            "id":"stamenwatercolor",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "scheme": "tms",
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":17
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Terrain",
+          "layerInfo":{
+            "id":"stamenterrain",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":16
             }
           }
         },
