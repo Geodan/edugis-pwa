@@ -350,12 +350,26 @@ class MapSelectedLayer extends LitElement {
     </style>`;
   }
   _getLayerStylePropertyName() {
+      let paint;
       switch (this.layer.type) {
         case 'fill':
-          return (this.layer.paint['fill-color'].property);
+          paint = this.layer.paint['fill-color'];
+          break;
         case 'line':
-          return (this.layer.paint['line-color'].property);
+          paint = this.layer.paint['line-color'];
+          break;
       }
+      if (paint.property) {
+        return property;
+      }
+      if (Array.isArray(paint)) {
+        if (paint[0] === "step") {
+          if (paint[1][0] === "get") {
+            return paint[1][1];
+          }
+        }
+      }
+      return undefined;
   }
   _getMinMax(data, property) {
     const maxstr = 'zzzzzzzz';
