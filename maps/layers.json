@@ -145,6 +145,69 @@
                     }
                 },
                 {
+                    "type":"reference",
+                    "title":"Stamen Toner",
+                    "layerInfo":{
+                      "id":"stamentoner",
+                      "metadata":{
+                        "reference":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "scheme": "tms",
+                        "tiles":[
+                          "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                        "maxzoom":17
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"Stamen Waterverf",
+                    "layerInfo":{
+                      "id":"stamenwatercolor",
+                      "metadata":{
+                        "reference":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "scheme": "tms",
+                        "tiles":[
+                          "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                        "maxzoom":17
+                      }
+                    }
+                  },
+                  {
+                    "type":"reference",
+                    "title":"Stamen Terrein",
+                    "layerInfo":{
+                      "id":"stamenterrain",
+                      "metadata":{
+                        "reference":true
+                      },
+                      "type":"raster",
+                      "source":{
+                        "type":"raster",
+                        "tileSize":256,
+                        "scheme": "tms",
+                        "tiles":[
+                          "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                        "maxzoom":16
+                      }
+                    }
+                },
+                {
                     "title":"PDOK BRT Achtergrondkaart",
                     "type":"reference",
                     "layerInfo":{
@@ -1788,6 +1851,24 @@
                         "id":"energietransitie",
                         "deniedlayers": "zonlocaties",
                         "url": "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/zonlocaties.qgs"
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "Zonpotentie velden",
+                    "layerInfo": {
+                        "id": "zonpotentie",
+                        "type": "raster",
+                        "minzoom": 12,
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                        },
+                        "source": {
+                            "minzoom": 12,
+                            "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
+                        }
                     }
                 },
                 {
