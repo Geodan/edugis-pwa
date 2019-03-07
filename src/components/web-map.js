@@ -208,13 +208,13 @@ class WebMap extends LitElement {
     this.currentTool = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {name:"search", visible: true, position: "", order: 0, info:"Adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, position: "", order: 1, info:"Lagenselectie", icon:layermanagerIcon},
-      {name:"measure", visible: true, position: "", order: 2, info:"Afstanden meten", icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 3, info: "Locatie-informatie", icon: gmInfoIcon},
+      {name:"search", visible: true, position: "", order: 0, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, position: "", order: 1, info:"Kaartlagen", icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 2, info:"Afstand en oppervlakte meten", icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 3, info: "Informatie uit de kaart halen", icon: gmInfoIcon},
       {name:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
       {name:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
-      {name:"geolocate", visible: true, position: "", order: 6, info: "Waar ben ik?", icon: gpsFixedIcon},
+      {name:"geolocate", visible: true, position: "", order: 6, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
       {name:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
       {name:"importexport", visible: true, position: "", order: 8, info: "Kaart opslaan / openen", icon: importExportIcon},
       {name:"zoomlevel", visible: true, position: "bottom-left", order: 9, info: "Zoom-niveau"},
@@ -705,6 +705,7 @@ class WebMap extends LitElement {
   toggleTool(name) {
     this.infoClicked = false;
     this.updateInfoMarker();
+    this.featureInfo = [];
     if (this.currentTool === name) {
       this.currentTool = '';
     } else {
@@ -759,7 +760,6 @@ class WebMap extends LitElement {
           <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
-          <div style="width:100%">Tekenen</div>
           <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-draw>
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
@@ -1710,7 +1710,11 @@ class WebMap extends LitElement {
           this.requestUpdate();
         });
       }
-      this.featureInfo = featureInfo.reverse();
+      if (featureInfo.length == 0) {
+        this.featureInfo = [{layer:{metadata:{title:'Geselecteerde kaartlagen'}},properties:[]}];
+      } else {
+        this.featureInfo = featureInfo.reverse();
+      }
     }
     
   }
