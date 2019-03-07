@@ -28,6 +28,7 @@
     "@turf/turf": "^5.1.6",
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "file-saver": "^2.0.0",
+    "hopscotch": "^0.3.1",
     "lit-element": "^2.0.1",
     "mapbox-gl": "^0.51.0",
     "proj4": "^2.5.0",
