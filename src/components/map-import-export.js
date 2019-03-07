@@ -153,11 +153,13 @@ export default class MapImportExport extends LitElement {
             return await MapImportExport._readFile(file);
         }
       }
+      return false;
     } else {
       // Use DataTransfer interface to access the file(s)
       for (var i = 0; i < ev.dataTransfer.files.length; i++) {
         return await MapImportExport._readFile(ev.dataTransfer.files[i])
       }
+      return false;
     }
     return {}
   }

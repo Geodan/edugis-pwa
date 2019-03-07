@@ -1245,6 +1245,8 @@ class WebMap extends LitElement {
       layers.forEach(layer=>this.addLayer({detail: layer}));
     } else if (json.error) {
       alert('Json error: ' + json.error);
+    } else if (json === false) {
+      alert('Dropped item not recognized as a file');
     } else {
       alert ('Valid json, but content not recognized');
     }
