@@ -161,7 +161,6 @@ export default class MapImportExport extends LitElement {
       }
       return false;
     }
-    return {}
   }
   _handleDropZoneDrop(ev) {
     this.shadowRoot.querySelector('.dropzone').classList.remove('dragover');
