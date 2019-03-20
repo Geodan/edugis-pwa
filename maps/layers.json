@@ -1879,13 +1879,13 @@
                         "type": "raster",
                         "minzoom": 12,
                         "metadata": {
-                            "getFeatureInfoFormat":"application/json"
+                            
                         },
                         "source": {
                             "minzoom": 12,
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&layers=rvoLabel2017"]
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/picolabels/wms?layers=rvoLabel2017"]
                         }
                     }
                 },
