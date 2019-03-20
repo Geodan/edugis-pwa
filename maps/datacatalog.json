@@ -84,7 +84,7 @@
                   "minzoom": 16.5,
                   "tileSize": 512,
                   "tiles": [
-                    "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=true&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&WIDTH=512&HEIGHT=512"
+                    "https://tiles.edugis.nl/mapproxy/picodakdelen/wms?LAYERS=dakdelen2"
                   ],
                   "attribution": "Pico"
                 }
