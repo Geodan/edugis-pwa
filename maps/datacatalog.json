@@ -1191,6 +1191,28 @@
                   "fill-outline-color": "#000"
                 }
               }
+            },
+            {
+              "type": "vectortile",
+              "title": "Nederland postcodes",
+              "layerInfo": {
+                "id": "nlpostcode",
+                "type": "circle",
+                "source": {
+                  "id": "nlpostcode",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/mvt/postcode/{z}/{x}/{y}.mvt"
+                  ],
+                  "minzoom": 8,
+                  "maxzoom": 16
+                },
+                "source-layer": "postcode",                
+                "paint": {
+                  "circle-radius": 5,
+                  "circle-color": "#FA0"
+                }
+              }
             }
           ]
         },
