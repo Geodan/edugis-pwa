@@ -133,12 +133,11 @@
                         "id": "OpenTopo_achtergrondkaart [tms]_id",
                         "type": "raster",
                         "source": {
+                            "tileSize": 512,
                             "type": "raster",
-                            "tileSize": 256,
-                            "tiles": [
-                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/opentopoachtergrondkaart/EPSG:3857/{z}/{x}/{y}.jpeg"
-                            ],
-                            "attribution": "OSM-elementen: © bijdragers OpenStreetMap"
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
+                            "attribution": "<a href=\"https://www.opentopo.nl/\" target=\"attribution\">OpenTopo</a>"
                         }
                     }
                 },
@@ -188,7 +187,7 @@
                             "tiles":[
                                 "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                             ],
-                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>"
                         }
                     }
                 },
@@ -207,7 +206,7 @@
                             "tiles":[
                                 "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                             ],
-                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>"
                         }
                     }
                 }

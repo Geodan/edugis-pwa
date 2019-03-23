@@ -252,7 +252,6 @@ class MapLayerTree extends LitElement {
         width: 100%;
         height: 30px;
         padding: 5px;
-        text-align: center;
         border-bottom: 1px solid lightblue;
         box-sizing: border-box;
       }
