@@ -41,13 +41,14 @@ import datacatalog from '../datacatalog.js';
 class EduGISApp extends (LitElement) {
   static get properties() {
     return {
-      appTitle: String,
-      configUrl: String
+      appTitle: {type: String},
+      configUrl: {type: String}
     }
   }
   constructor() {
     super();
     this.configUrl = getHashParameters().configurl;
+    this.helpstart = getHashParameters().helpstart;
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
@@ -172,6 +173,38 @@ footer a:hover {
   }
   firstUpdated() {
     window.addEventListener("hashchange", ()=>this.hashChanged());
+    this.doHelpstart();
+  }
+  doHelpstart() {
+    if (this.helpstart) {
+      setTimeout(()=>{
+          var tour = {
+              id: "hello-hopscotch",
+              steps: [
+                  {
+                      title: "Kaart",
+                      content: "Je kunt van wereldwijd tot aan je eigen huis in- en uitzoomen en de kaart verslepen naar bijna elke plek op de wereld.",
+                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
+                      placement: "top"
+                  },
+                  {
+                      title: "Gereedschappen",
+                      content: "Met deze knoppen doe je bewerkingen op de kaart, houd de muis stil boven de knoppen voor meer uitleg over de knop",
+                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
+                      placement: "right"
+                  },
+                  {
+                      title: "Legenda",
+                      content: "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden",
+                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-selected-layers'),
+                      placement: "left"
+                  }
+              ]
+            };
+            // Start the tour!
+            hopscotch.startTour(tour);
+      }, 2000)
+    }
   }
   hashChanged() {    
     const result = getHashParameters();
@@ -179,6 +212,12 @@ footer a:hover {
       this.configUrl = result.configurl;
     } else {
       this.configUrl = "";
+    }
+    if (result.hasOwnProperty('helpstart')) {
+      this.helpstart = result.helpstart;
+      this.doHelpstart();
+    } else {
+      this.helpstart = false;
     }
   }
 }
