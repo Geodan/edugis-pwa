@@ -58,7 +58,8 @@
     "maps/hitteeiland.json",
     "maps/layers.json",
     "maps/pdok.json",
-    "maps/zonnepanelen.json"
+    "maps/zonnepanelen.json",
+    "maps/datacatalog.json"
   ],
   "builds": [
     {

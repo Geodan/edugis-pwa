@@ -1213,7 +1213,7 @@
                   "id": "nlpostcode",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
+                    "https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
                   ],
                   "minzoom": 8,
                   "maxzoom": 16
@@ -1249,7 +1249,7 @@
                   "id": "nlpopulatiegemgeb",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/fct_populatie_201901.populatie_pc2/{z}/{x}/{y}?geom_column=geomgbw&columns=bu_inw_totaal"
+                    "https://tiles.edugis.nl/v1/mvt/fct_populatie_201901.populatie_pc2/{z}/{x}/{y}?geom_column=geomgbw&columns=bu_inw_totaal"
                   ],
                   "minzoom": 5,
                   "maxzoom": 13
@@ -1272,7 +1272,7 @@
                   "id": "francedepartement",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/france.departement/{z}/{x}/{y}"
+                    "https://tiles.edugis.nl/v1/mvt/france.departement/{z}/{x}/{y}"
                   ],
                   "minzoom": 4,
                   "maxzoom": 16
