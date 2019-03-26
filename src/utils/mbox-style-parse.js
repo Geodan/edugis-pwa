@@ -35,6 +35,47 @@ class MBStyleParser
     }
     return result;
   }
+  getPropertyInfo(paintProperty, defaultLabel) {
+    if (!defaultLabel) {
+      defaultLabel = '';
+    }
+    const result = {propertyname: "", items: []};
+    if (Array.isArray(paintProperty) && paintProperty.length) {
+      switch(paintProperty[0]) {
+        case "step":
+          // element[1] is ["get", "propertyname"] (?)
+          result.propertyname = paintProperty[1][1];
+          result.items.push({fillColor: paintProperty[2], outlineColor: outlineColor, label: `< ${paintProperty[3]}`});
+          for (let i = 3; i < paintProperty.length - 2; i+=2) {
+            // get color
+            result.items.push({fillColor: paintProperty[i+1], outlineColor: outlineColor, label: `[${paintProperty[i]} - ${paintProperty[i+2]})`});
+          }
+          result.items.push({fillColor: paintProperty[paintProperty.length - 1], outlineColor, label: `> ${paintProperty[paintProperty.length - 2]}`})
+          break;
+        case "match":
+          // element[1] is ["get", "propertyname"] (?)
+          result.propertyname = typeof paintProperty[1][1] === "string"? paintProperty[1][1]:"expressie";
+          result.items.push({value: paintProperty[paintProperty.length - 1], label: ''});
+          for (let i = 2; i < paintProperty.length - 1; i+=2) {
+            result.items.push({value: paintProperty[i+1], label: `${paintProperty[i]}`});
+          }
+      }
+    } else if (paintProperty === Object(paintProperty)) {
+      if (paintProperty.hasOwnProperty('property')) {
+        result.propertyname = paintProperty.property;
+        if (paintProperty.stops) {
+          result.items = paintProperty.stops.map(stop=>{return {value:stop[1], label: stop[0]}});
+        }
+      }
+    } else {
+      result.propertyname = '';
+      result.items.push({value: paintProperty, label: defaultLabel});
+    }
+    return result;
+  }
+  getZoomDependentPropertyInfo(zoom, property, defaultLabel) {
+    return this.getPropertyInfo(this.getZoomDependentValue(zoom, property, defaultLabel));
+  }
   colorToHex(propertyValue) {
     if (typeof propertyValue !== "string") {
       return propertyValue;
@@ -136,7 +177,24 @@ class MBStyleParser
     }
     return result;
   }
+
+  propertyType(property) {
+    if (Array.isArray(property)) {
+      return "expression";
+    }
+    if (property.property) {
+      return "function";
+    }
+    if (typeof property === "string") {
+      return "string";
+    }
+    if (typeof property === "") {
+      return "number";
+    }
+  }
 }
+
+
 
 const mbStyleParser = new MBStyleParser();
 

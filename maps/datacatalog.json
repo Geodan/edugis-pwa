@@ -483,9 +483,20 @@
           "title": "WFS",
           "sublayers": [{
             "type": "layer",
-            "title": "To do(via mvt proxy?)",
+            "title": "CBS Coropgebieden 2019 (PDOK WFS)",
             "layerInfo": {
-
+              "id": "cbscorop2019",
+              "type": "fill",
+              "source": {
+                "type": "geojson",
+                "data": "https://geodata.nationaalgeoregister.nl/cbsgebiedsindelingen/wfs?request=GetFeature&service=wfs&version=2.0.0&outputformat=application/json&typename=cbsgebiedsindelingen:cbs_coropsubgebied_2019_gegeneraliseerd&srsname=EPSG:4326",
+                "attribution": "PDOK"
+              },
+              "paint": {
+                "fill-color": "#ccc",
+                "fill-opacity": 0.6,
+                "fill-outline-color": "#444"
+              }
             }
           }]
         },
@@ -1202,15 +1213,75 @@
                   "id": "nlpostcode",
                   "type": "vector",
                   "tiles": [
-                    "https://tiles.edugis.nl/mvt/postcode/{z}/{x}/{y}.mvt"
+                    "https://anneb.geodan.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
                   ],
                   "minzoom": 8,
                   "maxzoom": 16
                 },
-                "source-layer": "postcode",                
+                "source-layer": "postcode.postcode2019q1",
                 "paint": {
                   "circle-radius": 5,
-                  "circle-color": "#FA0"
+                  "circle-color": [
+                    "match",
+                    ["%", ["to-number", ["get", "pc4"]],10],
+                    0, "aqua",
+                    1, "green",
+                    2, "red",
+                    3, "orange",
+                    4, "blue",
+                    5, "yellow",
+                    6, "purple",
+                    7, "brown",
+                    8, "olive",
+                    9, "teal",
+                    "gray"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Bevolking pc2 bebouwd",
+              "layerInfo": {
+                "id": "nlpopulatiegemgeb",
+                "type": "fill",
+                "source": {
+                  "id": "nlpopulatiegemgeb",
+                  "type": "vector",
+                  "tiles": [
+                    "https://anneb.geodan.nl/v1/mvt/fct_populatie_201901.populatie_pc2/{z}/{x}/{y}?geom_column=geomgbw&columns=bu_inw_totaal"
+                  ],
+                  "minzoom": 5,
+                  "maxzoom": 13
+                },
+                "source-layer": "fct_populatie_201901.populatie_pc2",
+                "paint": {
+                  "fill-color": "green",
+                  "fill-opacity": 0.6,
+                  "fill-outline-color": "black"
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "France Departement",
+              "layerInfo": {
+                "id": "francedepartement",
+                "type": "fill",
+                "source": {
+                  "id": "francedepartement",
+                  "type": "vector",
+                  "tiles": [
+                    "https://anneb.geodan.nl/v1/mvt/france.departement/{z}/{x}/{y}"
+                  ],
+                  "minzoom": 4,
+                  "maxzoom": 16
+                },
+                "source-layer": "france.departement",
+                "paint": {
+                  "fill-color": "gray",
+                  "fill-opacity": 0.6,
+                  "fill-outline-color": "black"
                 }
               }
             }
@@ -1677,7 +1748,7 @@
       "order": 8
     },
     "importexport": {
-      "visible": 0,
+      "visible": 1,
       "order": 9
     },
     "legend": {
