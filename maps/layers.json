@@ -234,6 +234,10 @@
                     "layerInfo": {
                         "id": "OpenTopo_achtergrondkaart [tms]_id",
                         "type": "raster",
+                        "metadata": {
+                            "reference": true,
+                            "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
+                        },
                         "source": {
                             "tileSize": 512,
                             "type": "raster",
