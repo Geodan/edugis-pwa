@@ -3,7 +3,7 @@
    If the layer style is editable, this container also provides buttons to access layer-legend edit dialogs
 */
 
-import {LitElement, html, svg} from '@polymer/lit-element';
+import {LitElement, html, svg} from 'lit-element';
 import '../utils/mbox-style-parse.js';
 import mbStyleParser from '../utils/mbox-style-parse.js';
 

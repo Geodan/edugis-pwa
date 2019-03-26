@@ -228,8 +228,21 @@
                         "bounds": [-1.6,47.5,13.0,56.0]
                       }
                     }
-                },
-                {
+                },{
+                    "type": "reference",
+                    "title": "OpenTopo achtergrondkaart [tms]",
+                    "layerInfo": {
+                        "id": "OpenTopo_achtergrondkaart [tms]_id",
+                        "type": "raster",
+                        "source": {
+                            "tileSize": 512,
+                            "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
+                            "attribution": "PDOK"
+                        }
+                    }
+                },{
                     "title":"PDOK luchtfoto's 2016 (WMTS)",
                     "type":"reference",
                     "layerInfo":{
@@ -1879,13 +1892,13 @@
                         "type": "raster",
                         "minzoom": 12,
                         "metadata": {
-                            "getFeatureInfoFormat":"application/json"
+                            
                         },
                         "source": {
                             "minzoom": 12,
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&layers=rvoLabel2017"]
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/picolabels/wms?layers=rvoLabel2017"]
                         }
                     }
                 },

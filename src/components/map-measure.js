@@ -73,7 +73,7 @@ function formatArea(a) {
   return html`${Math.round(a / 1000000)} km<sup>2</sup>`
 }
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 /**
 * @polymer
 * @extends HTMLElement
@@ -99,7 +99,7 @@ class MapMeasure extends LitElement {
       // set property defaults      
       this.active = this.activated = false;
       this.webmap = undefined;
-      this.header = html`<h5>Afstand meten</h5>`;
+      this.header = html`<h5>Afstand en oppervlakte meten</h5>`;
       this.startMessage = html`${this.header}Klik in de kaart om afstand of oppervlakte te meten.`;
       this.measureInfo = this.startMessage;
   }

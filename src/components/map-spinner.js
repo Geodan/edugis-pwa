@@ -1,6 +1,6 @@
 import {spinnerIcon} from './my-icons';
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 
 /**
 * @polymer

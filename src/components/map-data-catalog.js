@@ -1,5 +1,5 @@
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import './map-layer-tree';
 /**
 * @polymer
@@ -51,7 +51,7 @@ class MapDataCatalog extends LitElement {
     }
   }
   render() {
-    return html`<map-layer-tree headertext="Lagenselectie" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="Kaartlaag-kiezer" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;

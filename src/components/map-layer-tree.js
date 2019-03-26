@@ -1,4 +1,4 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 
@@ -252,7 +252,6 @@ class MapLayerTree extends LitElement {
         width: 100%;
         height: 30px;
         padding: 5px;
-        text-align: center;
         border-bottom: 1px solid lightblue;
         box-sizing: border-box;
       }

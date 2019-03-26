@@ -1,4 +1,4 @@
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 import './map-iconbutton';
 import {GeoJSON} from '../utils/geojson'
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
@@ -118,25 +118,31 @@ class MapDraw extends LitElement {
     return html`
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+      .header {font-weight: bold;height: 1.5em;border-bottom: 1px solid lightgray; padding-bottom: 3px; margin-bottom: 6px;}
       .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
       .right {float: right; margin-left: 4px;}
-      .dropzone {display: inline-block; height: 24px; width: 200px; border: 1px dashed gray; border-radius: 2px;}
+      .dropzone {display: inline-block; height: 24px; width: 210px; border: 1px dashed gray; border-radius: 2px;}
       .dragover {background-color: lightgray;}
+      .buttonbar {border-top: 1px solid lightgray;margin-top: 5px;padding-top: 5px;}
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
+      <div class="header">Tekenen</div>
+      <div>Bestanden importeren en exporteren</div>
       <input type="file" id="fileElem" accept=".json,.geojson" style="display:none" @change="${e=>this._handleFiles(e)}">
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.featureCount > 0 && this._downLoad()}"><map-iconbutton info="opslaan" .disabled="${this.featureCount === 0}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
-      ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop geojson here</map-iconbutton></div>`: ''}
-      ${window.saveAs ? html`<br><br>`: ``}
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="select" .icon="${selectIcon}"></map-iconbutton></div>
+      ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">zet hier geojson neer</map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<br>`: ``}
+      <div class="buttonbar">
+      <div>Bewerken</div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_polygon')}"><map-iconbutton info="vlak" .active="${this.drawMode === 'draw_polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableCombine && this.draw.combineFeatures()}"><map-iconbutton info="groepeer" .disabled="${disableCombine}" .icon="${combineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
-      
+      </div>
       ${this.selectedFeatures.map(feature=>{
         return Object.keys(feature.properties).map(key=>html`
           <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
@@ -170,11 +176,13 @@ class MapDraw extends LitElement {
       this.map.on('draw.uncombine', this.drawUncombine = (e)=>this._drawUncombine(e));
       this.keyDownBound = this._keyDown.bind(this);
       this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
+      setTimeout(()=>this.draw.changeMode(this.drawMode = 'simple_select'), 100);
     }
   }
   _removeDrawFromMap()
   {
     if (this.map) {
+      this.draw.changeMode(this.drawMode = 'simple_select');
       this.map.off('draw.create', this.featuresCreated);
       this.map.off('draw.selectionchange', this.featuresSelected);
       this.map.off('draw.update', this.featuresUpdated);

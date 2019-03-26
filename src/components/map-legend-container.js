@@ -9,7 +9,7 @@ import {arrowRightIcon} from './my-icons';
 import './map-legend-item.js';
 import GroupedArray from '../../lib/groupedarray';
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 
 /**
 * @polymer

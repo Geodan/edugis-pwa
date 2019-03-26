@@ -15,7 +15,7 @@
 */
 
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 /**
 * @polymer
 * @extends HTMLElement

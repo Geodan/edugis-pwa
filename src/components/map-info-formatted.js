@@ -1,5 +1,5 @@
 
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 
 /**
 * @polymer
@@ -82,13 +82,14 @@ class MapInfoFormatted extends LitElement {
         border-bottom: 1px solid lightgray;
       }
       </style>
-      <div class="header">Informatie</div>
+      <div class="header">Informatie uit de kaart</div>
       <div class="content">
       <div class="streetviewcontainer">
       <div @click="${e=>this.toggleStreetView(e)}">
         <span>StreetView</span><div class="${this.streetViewOn?'check-on':'check-off'}"></div>
       </div>
       </div>
+      ${this.info.length == 0? 'Klik op een element in de kaart voor informatie over dat element':''}
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
         html`
           <div>
@@ -102,7 +103,7 @@ class MapInfoFormatted extends LitElement {
                           html`<img src="${feature.properties[key]}">`
                         :feature.properties[key]}</div>`
               )
-            : html`<div class="attributevalue">geen info</div>`}
+            : html`<div class="attributevalue">geen info beschikbaar op deze locatie</div>`}
           </div>`
       )}
       </div>
