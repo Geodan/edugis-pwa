@@ -121,6 +121,9 @@ export default class MapImportExport extends LitElement {
   {
     try {
         const text = await MapImportExport._readFileAsText(file);
+        if (file.name.endsWith('.csv')) {
+          // probably a csv file
+        }
         return MapImportExport._processGeoJson(text, file.name);
     } catch(error) {
         return {error: error}
