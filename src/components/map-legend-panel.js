@@ -141,6 +141,54 @@ class MapLegendPanel extends LitElement {
       </svg>`;
     })}`
   }
+
+  circleRadiusLegend(radiusInfo) {
+    if (radiusInfo.items.length > 1) {
+      return radiusInfo.items.map(radius=>
+          svg`
+            <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
+            <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:red;" />
+            </svg>
+          `
+        );
+    }
+  }
+  circleColorLegend(colorInfo, strokeInfo, radiusInfo) {
+    return colorInfo.items.map(color=>
+      html`
+        ${svg`
+        <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
+          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${strokeInfo.items.length?'stroke-width:1;stroke:strokeInfo.items[0].value':''}" />
+        </svg> 
+        `}
+        ${color.label}<br>
+        `
+      );
+  }
+  circleLegend() {
+    const paint = this.maplayer.metadata.paint ? this.maplayer.metadata.paint : this.maplayer.paint;
+    let colorInfo = {propertyname: this.maplayer.metadata.title, items: ['white'] };
+    if (paint && paint['circle-color']) {
+      colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], this.maplayer.metadata.title);
+    }
+    let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [5]};
+    if (paint && paint['circle-radius']) {
+      radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], this.maplayer.metadata.title);
+    }
+    let strokeInfo = {propertyname: this.maplayer.metadata.title, items: []};
+    if (paint && paint['circle-stroke-color']) {
+      strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], this.maplayer.metadata.title);
+      if (strokeInfo.value.length > 1) {
+        // not supported
+        strokeInfo.value = [];
+      }
+    }
+    
+    return html`
+      ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo)}
+      ${this.circleRadiusLegend(radiusInfo)}
+    `
+  }
   
   fillLegend()
   {
@@ -216,6 +264,9 @@ class MapLegendPanel extends LitElement {
           break;
         case 'line':
           legendContent = this.lineLegend();
+          break;
+        case 'circle':
+          legendContent = this.circleLegend();
           break;
         default:
           legendContent = html`legend not available for type ${this.maplayer.type}</div>`;
