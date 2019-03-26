@@ -12,6 +12,8 @@
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/@turf/turf/turf.min.js",
     "node_modules/file-saver/dist/FileSaver.min.js",
+    "node_modules/hopscotch/dist/js/hopscotch.min.js",
+    "node_modules/hopscotch/dist/css/hopscotch.min.css",
     "push-manifest.json",
     "styles/openmaptiles/positron.json",
     "styles/openmaptiles/osmbright.json",
