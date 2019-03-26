@@ -1040,6 +1040,30 @@ class WebMap extends LitElement {
         this.disableRightMouseDragRotate();
     });
   }
+  addCheckedLayersFromCapabilitiesNodes(layer) {
+    if (!Array.isArray(layer)) {
+      layer = [layer];
+    }
+    
+  }
+  findLayer(id, layers) {
+    if (!Array.isArray(layers)) {
+      layers = [layers];
+    }
+    for (let i = 0; i < layers.length; i++) {
+      const layer = layers[i];
+      if (layer.layerInfo && layer.layerInfo.id === id) {
+        return layer;
+      }
+      if (layer.sublayers) {
+        const subresult = this.findLayer(id, layer.sublayers);
+        if (subresult) {
+          return subresult;
+        }
+      }
+    }
+    return undefined;
+  }
   async addActiveLayers() {
     for (let i = 0; this.activeLayers && i < this.activeLayers.length; i++) {
       const layerInfo = this.activeLayers[i];
@@ -1054,8 +1078,9 @@ class WebMap extends LitElement {
           let nodes = await getCapabilitiesNodes(layerInfo);
           copyMetadataToCapsNodes(layerInfo, nodes);
           const activeLayers = this.activeLayers;
+          // find and add checkedLayers in capabilities by order of checkedLayers
           for (let j = 0; this.activeLayers === activeLayers && j < layerInfo.checkedlayers.length; j++) {
-            const node = nodes.find(node=>node.layerInfo.id===layerInfo.checkedlayers[j]);
+            const node = this.findLayer(layerInfo.checkedlayers[j], nodes);
             if (node) {
               await this.addLayer({detail: node.layerInfo});
               while (!this.map.loaded()) {
