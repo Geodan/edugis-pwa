@@ -123,6 +123,19 @@ export default class MapImportExport extends LitElement {
         const text = await MapImportExport._readFileAsText(file);
         if (file.name.endsWith('.csv')) {
           // probably a csv file
+          if (window.Papa) {
+            const result = Papa.parse(text, {
+              header: true,
+              skipEmptyLines: true
+            });
+            if (result.data.length) {
+              return {filename: file.name, json: result}
+            } else {
+              return {error: 'invalid or empty csv'};
+            }
+          } else {
+            return {error: 'Cannot load csv, parser not available'};
+          }
         }
         return MapImportExport._processGeoJson(text, file.name);
     } catch(error) {
