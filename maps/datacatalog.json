@@ -234,26 +234,6 @@
                   "attribution": "met office"
                 }
               }
-            },
-            {
-              "title": "KNMI neerslag",
-              "type": "wms",
-              "layerInfo": {
-                "id": "eumetsatknmi",
-                "type": "raster",
-                "metadata": {
-                  "timeinterval": 900000,
-                  "source": "https://geoservices.knmi.nl/adaguc_portal/ => MSGCPP OGC realtime service => Precipitation rate"
-                },
-                "source": {
-                  "type": "raster",
-                  "tileSize": 1024,
-                  "tiles": [
-                    "https://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?LAYERS=lwe_precipitation_rate&STYLES=precip%2Fnearest&time={time}"
-                  ],
-                  "attribution": "EUMETSAT/KNMI"
-                }
-              }
             }
           ]
         },
@@ -1209,6 +1189,7 @@
               "layerInfo": {
                 "id": "nlpostcode",
                 "type": "circle",
+                "minzoom": 8,
                 "source": {
                   "id": "nlpostcode",
                   "type": "vector",
