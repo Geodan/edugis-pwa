@@ -85,6 +85,8 @@ class MapSelectedLayer extends LitElement {
     }
     .layertitle {
       text-align: center;
+      max-width: 155px;
+      overflow: auto;
     }
     .lightgray {
       color: #ccc;
