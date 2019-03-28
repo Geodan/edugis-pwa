@@ -721,6 +721,27 @@
                   ]
                 }
               }
+            },
+            {
+              "type":"geojson",
+              "title":"ISOdistance Geodan Amsterdam",
+              "layerInfo":{
+                "id":"GMIsochroone",
+                "metadata": {
+                  "memorygeojson": true
+                },
+                "type":"fill",
+                "source":{
+                  "type":"geojson",
+                  "data":"https://services.geodan.nl/routing/v2/isochrone/fiets_18kmu?x=4.9130490&y=52.3423083&direction=from&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&overlap=false&output=polygon&calculationMode=distance&precision=0.98&servicekey={geodanmapskey}",
+                  "attribution":"GeodanMaps"
+                },
+                "paint":{
+                  "fill-color": "red",
+                  "fill-outline-color": "gray",
+                  "fill-opacity":["interpolate", ["linear"], ["get","isochroneEnd"],0,1,20,0]
+                }
+              }
             }
           ]
         },
