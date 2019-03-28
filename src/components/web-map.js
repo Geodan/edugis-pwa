@@ -529,6 +529,9 @@ class WebMap extends LitElement {
       if (layerInfo.source.url) {
         layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, EduGISkeys[key]);
       }
+      if (layerInfo.source.data && typeof layerInfo.source.data === "string") {
+        layerInfo.source.data = layerInfo.source.data.replace(keyTemplate, EduGISkeys[key]);
+      }
     }
   }
   insertTime(layerInfo){
@@ -612,7 +615,19 @@ class WebMap extends LitElement {
                 } 
                 if (layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
                   await GeoJSON.convertProjectedGeoJsonLayer(layerInfo);
-                }                
+                }
+                if (layerInfo.metadata && layerInfo.metadata.memorygeojson && !layerInfo.metadata.originaldata) {
+                  const spinner = this.shadowRoot.querySelector('map-spinner');
+                  let spinnerstarted = false;
+                  if (spinner && !spinner.getAttribute('visible')) {
+                    spinner.setAttribute('visible', "1");
+                    spinnerstarted = true;
+                  }
+                  await GeoJSON.loadGeoJsonToMemory(layerInfo);
+                  if (spinnerstarted) {
+                    spinner.setAttribute('visible', '0');
+                  }
+                }
               }              
               this.map.addLayer(layerInfo);
             }
@@ -1250,6 +1265,38 @@ class WebMap extends LitElement {
       this.initMap();
     }
   }
+  _loadCSVLatLon(json) {
+    const longitude = json.json.meta.find(field=>field.trim().toLowerCase() === "longitude");
+    const latitude = json.json.meta.find(field=>field.trim().toLowerCase() === "latitude");
+    const layer = {
+      "metadata": {
+        "title": json.filename
+      },
+      "id" : GeoJSON._uuidv4(),
+      "type": "circle",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": json.json.data.map(row=>{
+            return {
+              "type": "feature",
+              "properties": row,
+              "geometry": {
+                "type":"Point",
+                "coordinates": [row[longitude], row[latitude]]
+              }
+            }
+          })
+        },
+        "paint": {
+          "circle-radius": 5,
+          "circle-color":  "red"
+        }
+      }
+    }
+    this.addLayer({detail: layer});
+  }
   _loadCSV(json) {
     // handle added csv (converted to json with papaparse)
 
@@ -1392,9 +1439,13 @@ class WebMap extends LitElement {
       alert('Dropped item not recognized as a file');
     } else if (json.json && json.json.data) {
       if (json.json.data.length) {
-        this._loadCSV(json);
+        if (json.json.meta.fields.find(field=>field.trim().toLowerCase === "longitude") && json.json.meta.fields.find(field=>field.trim().toLowerCase() === "latitude")) {
+          this._loadCSVLatLon(json);
+        } else {
+          this._loadCSV(json);
+        }
       } else {
-        alert ('CSV file is empty')
+        alert ('CSV file is corrupt or empty')
       }
     } else {
       alert ('Valid data, but content not recognized');

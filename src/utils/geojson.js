@@ -144,6 +144,18 @@ export class GeoJSON {
     }).catch(reason=>console.log(reason));
   }
 
+  static loadGeoJsonToMemory(layerInfo) {
+    if (typeof layerInfo.source.data === "string") {
+      return fetch(layerInfo.source.data)
+        .then(data=>data.json())
+        .then(json=>{
+          layerInfo.metadata.originaldata = layerInfo.source.data;
+          layerInfo.source.data = json;
+          return layerInfo;
+        });     
+    }    
+  }
+
   static convertProjectedGeoJsonLayer(layerInfo) {
     const crs = layerInfo.metadata.crs;
     if (typeof layerInfo.data == 'object') {
