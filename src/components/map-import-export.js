@@ -129,7 +129,7 @@ export default class MapImportExport extends LitElement {
               skipEmptyLines: true
             });
             if (result.data.length) {
-              return {filename: file.name, json: result}
+              return {filename: file.name, data: result}
             } else {
               return {error: 'invalid or empty csv'};
             }
@@ -137,23 +137,23 @@ export default class MapImportExport extends LitElement {
             return {error: 'Cannot load csv, parser not available'};
           }
         }
-        return MapImportExport._processGeoJson(text, file.name);
+        return MapImportExport._parseJson(text, file.name);
     } catch(error) {
         return {error: error}
     }
   }
   _openFiles(e) {
     const file = this.shadowRoot.querySelector('#fileElem').files[0];
-    MapImportExport._readFile(file).then(json=>{
-        this.dispatchEvent(new CustomEvent('jsondata', {
-          detail: json
+    MapImportExport._readFile(file).then(droppedFile=>{
+        this.dispatchEvent(new CustomEvent('droppedfile', {
+          detail: droppedFile
         }))
     })
   }
-  static _processGeoJson(data, filename) {
+  static _parseJson(data, filename) {
     try {
       const json = JSON.parse(data);
-      return {filename: filename, geojson: json};
+      return {filename: filename, data: json};
     } catch(error) {
       return {error: 'invalid json'};
     }
@@ -180,9 +180,9 @@ export default class MapImportExport extends LitElement {
   }
   _handleDropZoneDrop(ev) {
     this.shadowRoot.querySelector('.dropzone').classList.remove('dragover');
-    MapImportExport.handleDrop(ev).then(json=>{
-      this.dispatchEvent(new CustomEvent('jsondata', {
-        detail: json
+    MapImportExport.handleDrop(ev).then(droppedFile=>{
+      this.dispatchEvent(new CustomEvent('droppedfile', {
+        detail: droppedFile
       }))
     })
   }

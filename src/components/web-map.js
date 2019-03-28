@@ -769,7 +769,7 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
-          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @jsondata="${e=>this._processJson(e.detail)}"></map-import-export>
+          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-import-export>
         </map-panel>
       </div>
     </div>`
@@ -1265,12 +1265,12 @@ class WebMap extends LitElement {
       this.initMap();
     }
   }
-  _loadCSVLatLon(json) {
-    const longitude = json.json.meta.find(field=>field.trim().toLowerCase() === "longitude");
-    const latitude = json.json.meta.find(field=>field.trim().toLowerCase() === "latitude");
+  _loadCSVLatLon(droppedFile) {
+    const longitude = droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "longitude");
+    const latitude = droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "latitude");
     const layer = {
       "metadata": {
-        "title": json.filename
+        "title": droppedFile.filename
       },
       "id" : GeoJSON._uuidv4(),
       "type": "circle",
@@ -1278,7 +1278,7 @@ class WebMap extends LitElement {
         "type": "geojson",
         "data": {
           "type": "FeatureCollection",
-          "features": json.json.data.map(row=>{
+          "features": droppedFile.data.data.map(row=>{
             return {
               "type": "feature",
               "properties": row,
@@ -1288,16 +1288,16 @@ class WebMap extends LitElement {
               }
             }
           })
-        },
-        "paint": {
-          "circle-radius": 5,
-          "circle-color":  "red"
         }
+      },
+      "paint": {
+        "circle-radius": 5,
+        "circle-color":  "red"
       }
     }
     this.addLayer({detail: layer});
   }
-  _loadCSV(json) {
+  _loadCSV(droppedFile) {
     // handle added csv (converted to json with papaparse)
 
     // json.json.data = json.json.data.filter(row=>row.hasOwnProperty('Postcode'));
@@ -1305,7 +1305,7 @@ class WebMap extends LitElement {
     const layerid = GeoJSON._uuidv4();
     const layer = {
       "metadata": {
-        "title": `${json.filename}`,
+        "title": `${droppedFile.filename}`,
         "isToolLayer": true,
         "key": "postcode"
       },
@@ -1336,9 +1336,9 @@ class WebMap extends LitElement {
     const vectorKeyName = layer.metadata.key;
     const sourceLayer = layer["source-layer"];
 
-    let csvKeyName = json.json.meta.fields.find(fieldname=>fieldname === vectorKeyName);
+    let csvKeyName = droppedFile.data.meta.fields.find(fieldname=>fieldname === vectorKeyName);
     if (!csvKeyName) {
-      csvKeyName = json.json.meta.fields.find(fieldname=>fieldname.toLowerCase() === vectorKeyName.toLowerCase());
+      csvKeyName = droppedFile.data.meta.fields.find(fieldname=>fieldname.toLowerCase() === vectorKeyName.toLowerCase());
     }
     if (!csvKeyName) {
       alert(`CSV file should have column named: '${vectorKeyName}'`)
@@ -1348,7 +1348,7 @@ class WebMap extends LitElement {
     this.addLayer({detail: layer});
     const layer2id = GeoJSON._uuidv4();
     const layer2 = {
-      "metadata": {"title": `${json.filename}`},
+      "metadata": {"title": `${droppedFile.filename}`},
       "id": layer2id,
       "type":"circle",
       "minzoom": 8,
@@ -1381,7 +1381,7 @@ class WebMap extends LitElement {
     
     const geocodedKeys = new Map();
     const jsonFeatures = [];
-    const csvKeys = new Set(json.json.data.map(row=>row[csvKeyName]));
+    const csvKeys = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
 
     const handleSourceData = e=>{
       if (e.isSourceLoaded && e.source.id === layerid) {
@@ -1393,7 +1393,7 @@ class WebMap extends LitElement {
           if (csvKeys.has(key)) {
             needsUpdate = true;
             csvKeys.delete(key);
-            jsonFeatures.push(...json.json.data.filter(row=>row[csvKeyName] === key).map(row=>{
+            jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === key).map(row=>{
               return {
                 "type":"feature", 
                 properties: Object.assign({}, vectorFeature.properties, row),
@@ -1426,23 +1426,23 @@ class WebMap extends LitElement {
     this.addLayer({detail:layer2});
   }
 
-  _processJson(json) {
-    if (json.map && json.tools) {
-      this.applyConfig(json);
-      this.initMap();
-    } else if (json.geojson && json.geojson.features && json.geojson.features.length) {
-      const layers = GeoJSON.createLayers(json);
-      layers.forEach(layer=>this.addLayer({detail: layer}));
-    } else if (json.error) {
-      alert('Json error: ' + json.error);
-    } else if (json === false) {
+  _processDroppedFile(droppedFile) {
+    if (droppedFile === false) {
       alert('Dropped item not recognized as a file');
-    } else if (json.json && json.json.data) {
-      if (json.json.data.length) {
-        if (json.json.meta.fields.find(field=>field.trim().toLowerCase === "longitude") && json.json.meta.fields.find(field=>field.trim().toLowerCase() === "latitude")) {
-          this._loadCSVLatLon(json);
+    } else if (droppedFile.error) {
+      alert('Json error: ' + droppedFile.error);
+    } else if (droppedFile.data.map && droppedFile.data.tools) {
+      this.applyConfig(droppedFile.data);
+      this.initMap();
+    } else if (droppedFile.data.type && (droppedFile.data.type === "Feature" || droppedFile.data.type === "FeatureCollection")) {
+      const layers = GeoJSON.createLayers(droppedFile);
+      layers.forEach(layer=>this.addLayer({detail: layer}));
+    } else if (droppedFile.data && droppedFile.data.data) {
+      if (droppedFile.data.data.length) {
+        if (droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "longitude") && droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "latitude")) {
+          this._loadCSVLatLon(droppedFile);
         } else {
-          this._loadCSV(json);
+          this._loadCSV(droppedFile);
         }
       } else {
         alert ('CSV file is corrupt or empty')
@@ -1453,8 +1453,8 @@ class WebMap extends LitElement {
   }
 
   handleDrop(ev) {
-    MapImportExport.handleDrop(ev).then(json=>{
-     this._processJson(json);
+    MapImportExport.handleDrop(ev).then(droppedFile=>{
+     this._processDroppedFile(droppedFile);
     })
   };
 

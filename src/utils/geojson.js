@@ -183,14 +183,25 @@ export class GeoJSON {
   }
 
   // returns a point-layer, line-layer, fill-layer if point, line, polygon features exist
-  static createLayers(json) {
+  static createLayers(droppedFile) {
     const result = [];
-    const filename = json.filename.replace(/\.[^/.]+$/,"");
-    json = json.geojson;
-    if (json.features && json.features.length) {
-      const fillFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
-      const lineFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
-      const pointFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
+    const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
+    const geojson = droppedFile.data;
+    if (geojson.type === "Feature") {
+      // convert to FeatureCollection
+      geojson.type = "FeatureCollection";
+      geojson.features = [{
+        "type": "Feature",
+        "geometry": object.assign({}, geojson.geometry),
+        "properties": object.assign({}, geojson.properties)
+      }];
+      delete geojson.geometry;
+      delete geojson.properties;
+    }
+    if (geojson.features && geojson.features.length) {
+      const fillFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
+      const lineFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
+      const pointFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
       if (fillFeatures.length) {
         result.push( 
         {
