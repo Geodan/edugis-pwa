@@ -153,12 +153,12 @@ class MapLegendPanel extends LitElement {
         );
     }
   }
-  circleColorLegend(colorInfo, strokeInfo, radiusInfo) {
+  circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo) {
     return colorInfo.items.map(color=>
       html`
         ${svg`
         <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
-          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${strokeInfo.items.length?'stroke-width:1;stroke:strokeInfo.items[0].value':''}" />
+          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${opacityInfo.items.length?`fill-opacity:${opacityInfo.items[0].value};`:''}${strokeInfo.items.length?`stroke-width:1;stroke:${strokeInfo.items[0].value}`:''}" />
         </svg> 
         `}
         ${color.label}<br>
@@ -170,6 +170,14 @@ class MapLegendPanel extends LitElement {
     let colorInfo = {propertyname: this.maplayer.metadata.title, items: ['white'] };
     if (paint && paint['circle-color']) {
       colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], this.maplayer.metadata.title);
+    }
+    let opacityInfo = {propertyname: this.maplayer.metadata.title, item: []};
+    if (paint && paint['circle-opacity']) {
+      opacityInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-opacity'], this.maplayer.metadata.title);
+      if (opacityInfo.items.length > 1) {
+        // not supported
+        opacityInfo.items = [];
+      }
     }
     let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [5]};
     if (paint && paint['circle-radius']) {
@@ -185,7 +193,7 @@ class MapLegendPanel extends LitElement {
     }
     
     return html`
-      ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo)}
+      ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo)}
       ${this.circleRadiusLegend(radiusInfo)}
     `
   }
