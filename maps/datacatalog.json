@@ -1751,11 +1751,11 @@
     },
     "importexport": {
       "visible": 1,
-      "order": 9
+      "order": 109
     },
     "datatoolbox": {
       "visible": 1,
-      "order": 109
+      "order": 110
     },
     "legend": {
       "visible": 1,
