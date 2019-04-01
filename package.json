@@ -29,6 +29,7 @@
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "file-saver": "^2.0.0",
     "hopscotch": "^0.3.1",
+    "jsts": "^2.0.3",
     "lit-element": "^2.0.1",
     "mapbox-gl": "^0.51.0",
     "papaparse": "^4.6.3",

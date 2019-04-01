@@ -1,5 +1,17 @@
 // Checks if `list` looks like a `[x, y]`.
 
+class Feature {
+  constructor(typeName) {
+    this.type = "Feature";
+    this.properties = {};
+    this.geometry = {
+      "type": typeName,
+      "coordinates": []
+    }
+  }
+}
+
+
 export class GeoJSON {
   static _isXY(list) {
     return list.length >= 2 &&
@@ -260,4 +272,5 @@ export class GeoJSON {
     }
     return result;
   }
+  static Feature = Feature;
 }

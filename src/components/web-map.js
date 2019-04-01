@@ -31,6 +31,7 @@ import './map-pitch';
 import './map-selected-layers';
 import './map-draw';
 import './map-import-export';
+import './map-data-toolbox';
 //import {render} from 'lit-html';
 
 import {GeoJSON} from '../utils/geojson';
@@ -38,7 +39,7 @@ import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabiliti
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { importExportIcon, gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon } from './my-icons';
+import { importExportIcon, gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, wrenchIcon } from './my-icons';
 import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
@@ -208,20 +209,21 @@ class WebMap extends LitElement {
     this.currentTool = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {name:"search", visible: true, position: "", order: 0, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, position: "", order: 1, info:"Kaartlagen", icon:layermanagerIcon},
-      {name:"measure", visible: true, position: "", order: 2, info:"Afstand en oppervlakte meten", icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 3, info: "Informatie uit de kaart halen", icon: gmInfoIcon},
-      {name:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
-      {name:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
-      {name:"geolocate", visible: true, position: "", order: 6, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
-      {name:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
-      {name:"importexport", visible: true, position: "", order: 8, info: "Kaart opslaan / openen", icon: importExportIcon},
-      {name:"zoomlevel", visible: true, position: "bottom-left", order: 9, info: "Zoom-niveau"},
-      {name:"navigation", visible: true, position: "bottom-left", order: 10, info: "Zoom, Roteer"},
-      {name:"coordinates", visible: true, position: "bottom-center", order: 11},
-      {name:"scalebar", visible: true, position: "bottom-right", order: 12, info: "Schaalbalk"},
-      {name:"legend", visible: true, position: "opened", order: 13, info: "Legenda en kaartlagen"},
+      {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 102, info:"Afstand en oppervlakte meten", icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: gmInfoIcon},
+      {name:"maplanguage", visible: true, position: "", order: 104, info: "Kaarttaal", icon: languageIcon},
+      {name:"pitch", visible: true, position: "", order: 105, info: "Kaarthoek", icon: html`<b>3D</b>`},
+      {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
+      {name:"draw", visible: true, position: "", order: 107, info: "Tekenen", icon: drawIcon},
+      {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gegevens combineren", icon: wrenchIcon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
+      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
+      {name:"coordinates", visible: true, position: "bottom-center", order: 202},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: "Schaalbalk"},
+      {name:"legend", visible: true, position: "opened", order: 204, info: "Legenda en kaartlagen"},
     ];
   }
   updateSingleLayerVisibility(id, visible) {
@@ -771,6 +773,10 @@ class WebMap extends LitElement {
           <div style="width:100%">Kaart opslaan / openen</div>
           <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-import-export>
         </map-panel>
+        <map-panel .active="${this.currentTool==='datatoolbox'}">
+          <div style="width:100%"></div>
+          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-data-toolbox>
+        </map-panel>
       </div>
     </div>`
   }
@@ -1280,7 +1286,7 @@ class WebMap extends LitElement {
           "type": "FeatureCollection",
           "features": droppedFile.data.data.map(row=>{
             return {
-              "type": "feature",
+              "type": "Feature",
               "properties": row,
               "geometry": {
                 "type":"Point",
@@ -1333,6 +1339,8 @@ class WebMap extends LitElement {
       alert(`layer.metadata.key not defined for CSV join layer`);
       return;
     }
+    this.addLayer({detail: layer});
+
     const vectorKeyName = layer.metadata.key;
     const sourceLayer = layer["source-layer"];
 
@@ -1344,8 +1352,6 @@ class WebMap extends LitElement {
       alert(`CSV file should have column named: '${vectorKeyName}'`)
       return;
     }
-
-    this.addLayer({detail: layer});
     const layer2id = GeoJSON._uuidv4();
     const layer2 = {
       "metadata": {"title": `${droppedFile.filename}`},
@@ -1395,7 +1401,7 @@ class WebMap extends LitElement {
             csvKeys.delete(key);
             jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === key).map(row=>{
               return {
-                "type":"feature", 
+                "type":"Feature", 
                 properties: Object.assign({}, vectorFeature.properties, row),
                 geometry:vectorFeature.geometry  
               }
@@ -1904,7 +1910,7 @@ class WebMap extends LitElement {
         }
       }
       if (this.streetViewOn) {
-        const streetViewInfo = {"type":"feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
+        const streetViewInfo = {"type":"Feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
         featureInfo.push(streetViewInfo);
         this.getStreetViewImage(e.lngLat).then(imageurl=>{
           streetViewInfo.properties.image = imageurl;

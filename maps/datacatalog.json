@@ -1719,62 +1719,69 @@
     },
     "search": {
       "visible": 1,
-      "order": 1
+      "order": 101
     },
     "datacatalog": {
       "visible": 1,
-      "order": 2
-    },
-    "measure": {
-      "visible": 1,
-      "order": 4
+      "order": 102
     },
     "info": {
       "visible": 1,
-      "order": 3
+      "order": 103
+    },
+    "measure": {
+      "visible": 1,
+      "order": 104
     },
     "maplanguage": {
       "visible": 1,
-      "order": 5
+      "order": 105
     },
     "pitch": {
       "visible": 1,
-      "order": 6
+      "order": 106
     },
     "geolocate": {
       "visible": 1,
-      "order": 7
+      "order": 107
     },
     "draw": {
       "visible": 1,
-      "order": 8
+      "order": 108
     },
     "importexport": {
       "visible": 1,
       "order": 9
     },
+    "datatoolbox": {
+      "visible": 1,
+      "order": 109
+    },
     "legend": {
       "visible": 1,
       "position": "top-right",
-      "opened": 1
+      "opened": 1,
+      "order": 200
     },
     "zoomlevel": {
       "visible": 1,
       "position": "bottom-left",
-      "order": 0
+      "order": 201
     },
     "navigation": {
-      "visible": 1,
+      "visible": 201,
       "position": "bottom-left",
-      "order": 1
+      "order": 202
     },
     "coordinates": {
       "visible": 1,
-      "position": "bottom-center"
+      "position": "bottom-center",
+      "order": 203
     },
     "scalebar": {
       "visible": 1,
-      "position": "bottom-right"
+      "position": "bottom-right",
+      "order": 204
     },
     "currenttool": null
   },

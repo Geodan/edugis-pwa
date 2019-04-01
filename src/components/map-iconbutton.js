@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html,svg} from 'lit-element';
 /**
 * @polymer
 * @extends HTMLElement
@@ -6,17 +6,17 @@ import {LitElement, html} from 'lit-element';
 class IconButton extends LitElement {
   static get properties() { 
     return { 
-      active: Boolean,
-      disabled: Boolean,
-      icon: String,
-      info: String
+      active: {type: Boolean},
+      disabled: {type: Boolean},
+      icon: {type: String},
+      info: {type: String}
     }; 
   }
   constructor() {
       super();
       this.active = false;
       this.disabled = false;
-      this.icon = "Bt";
+      this.icon = svg`<svg height="24" width="60" viewbox="0 0 60 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="24" class="normal">icon?</text></svg>`;
       this.info = "Button";
   }
   render() {
@@ -60,7 +60,7 @@ class IconButton extends LitElement {
           color: rgb(160,160,160);
         }
     </style>
-    <div title="${this.info}" class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}">${this.icon}</div>`;
+    <div title="${this.info}" class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}">${this.icon}<slot></slot></div>`;
   }
 }
 customElements.define('map-iconbutton', IconButton);

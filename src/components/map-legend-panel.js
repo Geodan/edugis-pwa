@@ -178,9 +178,9 @@ class MapLegendPanel extends LitElement {
     let strokeInfo = {propertyname: this.maplayer.metadata.title, items: []};
     if (paint && paint['circle-stroke-color']) {
       strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], this.maplayer.metadata.title);
-      if (strokeInfo.value.length > 1) {
+      if (strokeInfo.items.length > 1) {
         // not supported
-        strokeInfo.value = [];
+        strokeInfo.items = [];
       }
     }
     
