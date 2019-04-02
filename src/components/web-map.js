@@ -32,7 +32,6 @@ import './map-selected-layers';
 import './map-draw';
 import './map-import-export';
 import './map-data-toolbox';
-//import {render} from 'lit-html';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
