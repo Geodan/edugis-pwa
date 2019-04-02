@@ -171,7 +171,7 @@ class MapLegendPanel extends LitElement {
     if (paint && paint['circle-color']) {
       colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], this.maplayer.metadata.title);
     }
-    let opacityInfo = {propertyname: this.maplayer.metadata.title, item: []};
+    let opacityInfo = {propertyname: this.maplayer.metadata.title, items: []};
     if (paint && paint['circle-opacity']) {
       opacityInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-opacity'], this.maplayer.metadata.title);
       if (opacityInfo.items.length > 1) {
