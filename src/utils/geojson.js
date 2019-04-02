@@ -27,7 +27,7 @@ export class GeoJSON {
   // Simplistic shallow clone that will work for a normal GeoJSON object.
   static _clone(obj) {
     if (null == obj || 'object' !== typeof obj) return obj;
-    var copy = obj.constructor();
+    var copy = {};
     for (var attr in obj) {
       if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
@@ -81,7 +81,7 @@ export class GeoJSON {
     return crs;
   }
 
-  static _determineCrs(crs, projs) {
+  static _getProj(crs, projs) {
     if (typeof crs === 'string') {
       return projs[crs] || proj4.Proj(crs);
     }
@@ -103,14 +103,14 @@ export class GeoJSON {
     return [min[0], min[1], max[0], max[1]];
   }
 
-  static _reproject(geojson, from, to, projs) {
+  static _project(geojson, from, to, projs) {
     projs = projs || {};
     if (!from) {
       from = GeoJSON._detectCrs(geojson, projs);
     } else {
-      from = GeoJSON._determineCrs(from, projs);
+      from = GeoJSON._getProj(from, projs);
     }
-    to = GeoJSON._determineCrs(to, projs);
+    to = GeoJSON._getProj(to, projs);
     var transform = proj4(from, to).forward.bind(transform);
   
     var transformGeometryCoords = function(gj) {
@@ -142,7 +142,7 @@ export class GeoJSON {
   */
   
   static _toWgs84(geojson, from, projs) {
-    return GeoJSON._reproject(geojson, from, proj4.WGS84, projs);
+    return GeoJSON._project(geojson, from, proj4.WGS84, projs);
   }
   
   static convertTopoJsonLayer(layerInfo) {
@@ -174,7 +174,7 @@ export class GeoJSON {
       return new Promise((resolve, reject)=>{
         if (!layerInfo.metadata.originaldata) {
           layerInfo.metadata.originaldata = layerinfo.source.data;
-          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:8557"));
+          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:3857"));
         }
         resolve();
       })
@@ -272,5 +272,7 @@ export class GeoJSON {
     }
     return result;
   }
-  static Feature = Feature;
+  static Feature(typeName) {
+    return new Feature(typeName);
+  }
 }
