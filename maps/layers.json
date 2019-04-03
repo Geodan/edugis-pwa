@@ -20,12 +20,12 @@
                         "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
                         },
                         "source":{
-                        "type":"raster",
-                        "tileSize":256,
-                        "tiles":[
-                            "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                        ],
-                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                            "type":"raster",
+                            "tileSize":256,
+                            "tiles":[
+                                "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                            ],
+                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
                         }
                     }
                 },
@@ -1440,7 +1440,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1456,7 +1457,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1472,7 +1474,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtbew"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtbew"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1488,7 +1491,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtonbew"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtonbew"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1504,7 +1508,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_emissie_iss_nl_2012"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_emissie_iss_nl_2012"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1520,7 +1525,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_lichtemissie_2012"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_lichtemissie_2012"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         }
@@ -1542,7 +1548,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht:actueel_lki"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht:actueel_lki"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1558,7 +1565,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht%3Aactueel_o3&STYLES=lucht_o3"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht%3Aactueel_o3&STYLES=lucht_o3"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1574,7 +1582,8 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_pm102016"]
+                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_pm102016"],
+                                    "attribution":"RIVM"
                                 }
                             }
                         },
@@ -1785,7 +1794,8 @@
                         "source": {
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://geodata.rivm.nl/geoserver/dank/ows?layers=rivm_r88_20170621_gm_actueel_uhi"]
+                            "tiles": ["https://geodata.rivm.nl/geoserver/dank/ows?layers=rivm_r88_20170621_gm_actueel_uhi"],
+                            "attribution":"RIVM"
                         }
                     }
                 },
@@ -1886,7 +1896,8 @@
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://tiles.edugis.nl/mapproxy/rivmnea/wms?layers=Greenspread_20181101_v_zonnevelden"],
                             "tiles2": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"],
-                            "tiles3": ["https://tiles.edugis.nl/mapproxy/rivmnea/wmts/Greenspread_20181101_v_zonnevelden/spherical_mercator/{z}/{x}/{y}.png"]
+                            "tiles3": ["https://tiles.edugis.nl/mapproxy/rivmnea/wmts/Greenspread_20181101_v_zonnevelden/spherical_mercator/{z}/{x}/{y}.png"],
+                            "attribution":"RIVM"
                         }
                     }
                 },
