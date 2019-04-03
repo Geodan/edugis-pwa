@@ -29,13 +29,13 @@ class MapDataToolDistance extends LitElement {
   }
   render() {
     return html`
-      <b>Afstand</b>
-      <p>Bereken de kortste afstand van alle elementen in een kaartlaag naar de dichtsbijzijnde elementen in een andere kaartlaag</p>
-      <p><b>Invoer:</b> 2 kaartlagen</p>
-      <p><b>Uitvoer:</b> 1 nieuwe kaartlaag met afstanden</p>
-      <b>Eerste kaartlaag:</b>
+      <b>Afstand</b><br>
+      Bereken de kortste afstand van alle elementen in een kaartlaag naar de dichtsbijzijnde elementen in een andere kaartlaag
+      <p><b>Invoer:</b> 2 kaartlagen (punt/lijn/vlak)<br>
+      <b>Uitvoer:</b> 1 nieuwe kaartlaag met afstanden</p>
+      <b>Eerste kaartlaag:</b><br>
       ${this._renderLayerList()}
-      <b>Tweede kaartlaag:</b>
+      <b>Tweede kaartlaag:</b><br>
       ${this._renderLayerList()}
       <div class='buttoncontainer'><map-iconbutton @click="${e=>this._handleClick(e)}" .disabled="${!this.buttonEnabled}" info="berekenen">Berekenen</map-icon-button></div>
     `

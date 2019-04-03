@@ -19,8 +19,10 @@ class MapDataToolbox extends LitElement {
   static get styles() {
     return css`
       .header {font-weight: bold;height: 1.5em;border-bottom: 1px solid lightgray; padding-bottom: 3px; margin-bottom: 6px;}
-      .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
-      .buttonbar {}
+      .buttoncontainer {display:inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
+      .buttonbar {max-height: 100px; overflow: auto; border: 1px solid black;}
+      .tool {border-bottom: 1px dashed gray;}
+      .tool:hover {background-color: lightgray;}
     `
   }
   constructor() {
@@ -35,20 +37,26 @@ class MapDataToolbox extends LitElement {
     }
     return html`
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
-        <div class="header">Gegevens combineren</div>
-          <div class="buttonbar">            
-            <div class="buttoncontainer">
-              <map-iconbutton info="Afstanden" .icon=${dummyIcon} @click="${e=>this.currentTool='distancetool'}"></map-iconbutton>
+        <div class="header">Gereedschapskist</div>
+          <div class="buttonbar">
+            <div class="tool">
+              <div class="buttoncontainer">
+                <map-iconbutton info="Afstanden" .icon=${dummyIcon} @click="${e=>this.currentTool='distancetool'}"></map-iconbutton>
+              </div> 
+              Afstandstool
             </div>
+            <div class="tool">
             <div class="buttoncontainer">
               <map-iconbutton info="tool2" .icon=${dummyIcon} @click="${e=>this.currentTool='tool2'}"></map-iconbutton>
-            </div>
+            </div> Tool2</div>
+            <div class="tool">
             <div class="buttoncontainer">
               <map-iconbutton info="tool3" .icon=${dummyIcon} @click="${e=>this.currentTool='tool3'}"></map-iconbutton>
-            </div>
+            </div> Tool3 </div>
+            <div class="tool">
             <div class="buttoncontainer">
               <map-iconbutton info="tool4" .icon=${dummyIcon} @click="${e=>this.currentTool='tool4'}"></map-iconbutton>
-            </div>
+            </div> Tool4 </div>
         </div>
         <div class="toolpanel">
           ${this._renderCurrentTool()}
