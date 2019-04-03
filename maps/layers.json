@@ -1876,15 +1876,17 @@
                     "layerInfo": {
                         "id": "zonpotentie",
                         "type": "raster",
-                        "minzoom": 12,
+                        "minzoom": 8.5,
                         "metadata": {
                             "getFeatureInfoFormat":"application/json"
                         },
                         "source": {
-                            "minzoom": 12,
+                            "minzoom": 9,
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/rivmnea/wms?layers=Greenspread_20181101_v_zonnevelden"],
+                            "tiles2": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"],
+                            "tiles3": ["https://tiles.edugis.nl/mapproxy/rivmnea/wmts/Greenspread_20181101_v_zonnevelden/spherical_mercator/{z}/{x}/{y}.png"]
                         }
                     }
                 },
