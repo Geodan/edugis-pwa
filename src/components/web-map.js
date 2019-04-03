@@ -217,7 +217,7 @@ class WebMap extends LitElement {
       {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
       {name:"draw", visible: true, position: "", order: 107, info: "Tekenen", icon: drawIcon},
       {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
-      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gegevens combineren", icon: wrenchIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: wrenchIcon},
       {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
       {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
@@ -1350,6 +1350,10 @@ class WebMap extends LitElement {
     if (!csvKeyName) {
       alert(`CSV file should have column named: '${vectorKeyName}'`)
       return;
+    }
+    if (vectorKeyName.toLowerCase() === 'postcode') {
+      // remove possible spaces from csv postcode
+      droppedFile.data.data.forEach(item=>item[csvKeyName]=item[csvKeyName].replace(' ', ''))
     }
     const layer2id = GeoJSON._uuidv4();
     const layer2 = {
