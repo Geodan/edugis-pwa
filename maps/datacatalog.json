@@ -1286,6 +1286,36 @@
                   "fill-outline-color": "black"
                 }
               }
+            },
+            {
+              "type": "vectortile",
+              "title": "Transport",
+              "layerInfo": {
+                "id": "openmaptilestransport",
+                "type": "line",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/openmaptiles/data/v3/{z}/{x}/{y}.pbf?key=test"
+                  ]
+                },
+                "source-layer" : "transportation",
+                "filter": [
+                  "all",
+                  [
+                    "==",
+                    "$type",
+                    "LineString"
+                  ]
+                ],
+                "layout": {
+                  "line-join": "round"
+                },
+                "paint": {
+                  "line-color": "#000000",
+                  "line-width": 1
+                }
+              }
             }
           ]
         },
