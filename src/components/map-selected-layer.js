@@ -49,8 +49,11 @@ class MapSelectedLayer extends LitElement {
   shouldUpdate(changedProps) {
     if (changedProps.has('zoom')) {
       this.checkZoomRange();
+      this.dataProperties = null;
     }
     if (changedProps.has('layer')) {
+      this.dataProperties = null;
+      this.dataPropertyName = null;
       // set layer defaults
       if (this.layer) {
         this.checkZoomRange();
@@ -155,6 +158,132 @@ class MapSelectedLayer extends LitElement {
     </div>
     `;
   }
+  niceNumbers (range, round) {
+    const exponent = Math.floor(Math.log10(range));
+    const fraction = range / Math.pow(10, exponent);
+    let niceFraction;
+    if (round) {
+      if (fraction < 1.5) niceFraction = 1;
+      else if (fraction < 3) niceFraction = 2;
+      else if (fraction < 7) niceFraction = 5;
+      else niceFraction = 10;
+    } else {
+      if (fraction <= 1.0) niceFraction = 1;
+      else if (fraction <= 2) niceFraction = 2;
+      else if (fraction <= 5) niceFraction = 5;
+      else niceFraction = 10;
+    }
+    return niceFraction * Math.pow(10, exponent);
+  }
+  getLinearTicks (min, max, maxTicks) {
+    var range = this.niceNumbers(max - min, false);
+    var tickSpacing = this.niceNumbers(range / (maxTicks - 1), true);
+    return {
+      min: Math.floor(min / tickSpacing) * tickSpacing,
+      max: Math.ceil(max / tickSpacing) * tickSpacing,
+      tickWidth: tickSpacing
+    };
+  }
+  quantile(arr, p) {
+    let len = arr.length, id;
+    if ( p === 0.0 ) {
+      return arr[ 0 ];
+    }
+    if ( p === 1.0 ) {
+      return arr[ len-1 ];
+    }
+    id = ( len*p ) - 1;
+
+    // [2] Is the index an integer?
+    if ( id === Math.floor( id ) ) {
+      // Value is the average between the value at id and id+1:
+      return ( arr[ id ] + arr[ id+1 ] ) / 2.0;
+    }
+    // [3] Round up to the next index:
+    id = Math.ceil( id );
+    return arr[ id ];
+  }
+  updated() {
+    if (window.Chart && this.dataProperties) {
+      const canvas = this.shadowRoot.querySelector('canvas');
+      if (canvas) {
+        let histogram;
+        let labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+        let values = [12, 19, 3, 5, 2, 3];
+        if (this.dataProperties.type === "string") {
+          histogram = new Map();
+          for (let i = 0; i < this.dataProperties.values.string.length; i++) {
+            const value = this.dataProperties.values.string[i];
+            const count = histogram.get(value);
+            histogram.set(value, count?count+1:1);
+          }
+          labels = Array.from(histogram.keys());
+        } else if (this.dataProperties.type === "number") {
+          histogram = new Map();
+          labels = [];
+          const arr = this.dataProperties.values.number;
+          const min = arr[0];
+          const max = arr[arr.length - 1];
+          // Freedman-Diaconis, https://www.answerminer.com/blog/binning-guide-ideal-histogram
+          const iqr = this.quantile(arr, 0.75) - this.quantile(arr, 0.25);
+          const bins = Math.round((max - min) / (2 * (iqr/Math.pow(arr.length, 1/3))));
+
+          const linearTicks = this.getLinearTicks(min, max, bins);
+          const binwidth = linearTicks.tickWidth;
+          for (let i = 0; i < bins; i++) {
+            histogram.set(i, 0);
+            labels.push(Math.round(10000 * (linearTicks.min + i * binwidth)) / 10000);
+          }
+          labels[bins - 1] = linearTicks.max;
+          for (let i = 0; i < arr.length; i++) {
+            const value = arr[i];
+            const bin = Math.floor((value - min)/binwidth);
+            histogram.set(bin, histogram.get(bin) + 1);
+          }
+        }
+        if (histogram) {
+          values = Array.from(histogram.values());
+        }
+        var ctx = canvas.getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: this.dataPropertyName,
+                    data: values,
+                    backgroundColor: "blue" /*[
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ]*/,
+                    borderColor: "white" /*[
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ]*/,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+      }
+    }
+  }
   getIcon(type) {
     let layerIcon = {icon: '', title: ''};
     switch (type) {
@@ -241,7 +370,7 @@ class MapSelectedLayer extends LitElement {
             :50;
             break;
           default:
-            this.layer.metadata.opacity = 100;
+            this.layer.metadata.opacity = 100; // todo set to original layer opacity
             break;
         }
       }
@@ -373,6 +502,70 @@ class MapSelectedLayer extends LitElement {
       }
       return undefined;
   }
+  _getMinMax2(data, property) {
+    const result = {
+      type: "undefined",
+      undefinedcount: 0,
+      nullcount: 0,
+      values: {}
+    };
+    let values = data.map(element=>element.properties[property]);
+    if (values.length) {
+      result.undefinedcount = values.filter(item=>item === undefined).length;
+      if (result.undefinedcount) {
+        values = values.filter(item=>item !== undefined);
+      }
+      result.nullcount = values.filter(value=>value===null).length;
+      if (result.nullcount) {
+        values = values.filter(item=>item !== null);
+      }
+      values = values.sort();
+      
+      if (typeof values[0] === typeof values[values.length -1]) {
+        // all values of same type
+        result.type = typeof values[0];
+        result.values[result.type] = values;
+      } else {
+        result.type = "mixed";
+        result.values['string'] = values.filter(value=>typeof value === "string");
+        result.values['number'] = values.filter(value=>typeof value === 'number');
+        if (values.length > result.values.string.length + result.values.number.length) {
+          result.values['other'] = values.filter(value=>value !== null && typeof value !== "string" && typeof value !== "number");
+        }
+      }
+      return result;
+    }
+  }
+  
+  _setDataProperties(){
+    if (this.dataProperties) {
+      return;
+    }
+    if (!this.dataPropertyName) {
+      this.dataPropertyName = this._getLayerStylePropertyName();
+    }
+    let data;
+    if (this.datagetter && this.datagetter.getSource) {
+      const source = this.datagetter.getSource(this.layer.source);
+      if (source.type === 'geojson') {
+        data = source.serialize().data.features;
+      }
+    }
+    if (!data) {
+      if (this.datagetter && this.datagetter.querySourceFeatures) {
+        data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
+      }
+    }
+    if (!this.dataPropertyName && data && data.length) {
+      const properties = data[0].properties;
+      const keys = Object.keys(properties);
+      if (keys.length) {
+        this.dataPropertyName = keys[0]; // todo: create property chooser
+      }
+    }
+    this.dataProperties = this._getMinMax2(data, this.dataPropertyName);
+  }
+  
   _getMinMax(data, property) {
     const maxstr = 'zzzzzzzz';
     const result = {
@@ -417,17 +610,24 @@ class MapSelectedLayer extends LitElement {
     return result;
   }
   _getDataProperties() {
-    const stylePropertyName = this._getLayerStylePropertyName();
+    let stylePropertyName = this._getLayerStylePropertyName();
     let data;
     if (this.datagetter && this.datagetter.getSource) {
       const source = this.datagetter.getSource(this.layer.source);
       if (source.type === 'geojson') {
-        data = source._data.features;
+        data = source.serialize().data.features;
       }
     }
     if (!data) {
       if (this.datagetter && this.datagetter.querySourceFeatures) {
         data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
+      }
+    }
+    if (!stylePropertyName && data && data.length) {
+      const properties = data[0].properties;
+      const keys = Object.keys(properties);
+      if (keys.length) {
+        stylePropertyName = keys[0]; // todo: create property chooser
       }
     }
     const minmax = this._getMinMax(data, stylePropertyName);
@@ -442,6 +642,15 @@ class MapSelectedLayer extends LitElement {
         result.type = scheme.type;
         return result;
       });
+  }
+
+  renderChart() {
+    return html`
+      <style>
+        canvas {width: 100%; height: auto; border: 1px solid lightblue}
+      </style>
+      <canvas width=1000 height=500></canvas>
+    `
   }
 
   renderLegendEditor()
@@ -547,22 +756,25 @@ class MapSelectedLayer extends LitElement {
         break;
       case "line":
         {
+          const title = this.layer.metadata && this.layer.metadata.title ? this.layer.metadata.title : this.layer.id;
           const paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
-          let lineColor = paint["line-color"];
-          let lineWidth = paint["line-width"];
-          if (typeof lineColor === "string") {
-            lineColor = mbStyleParser.colorToHex(lineColor);
+          let lineColor = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint["line-color"], title);
+          let lineWidth = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint["line-width"], title);
+          this._setDataProperties();
+          if (lineColor.items.length === 1) {
+            lineColor = mbStyleParser.colorToHex(lineColor.items[0].value);
             return html`
             ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
               <div class="title">Laag aanpassen</div>
               <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updatePaintProperty(e, {"line-color": e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
               <div class="linewidthlabel">
-                Lijndikte: ${lineWidth}
+                Lijndikte: ${lineWidth.items[0].value}
                 </div>
               <div class="sliderwidthcontainer">
                 <map-slider @slidervaluechange="${e=>{this.layer.paint['line-width'] = e.detail.value / 10; this.updatePaintProperty(e, {"line-width": e.detail.value / 10})}}" value="${1 * lineWidth}"></map-slider>
               </div>
+              ${this.renderChart()}
             </div>
             `
           }
