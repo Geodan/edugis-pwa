@@ -226,15 +226,17 @@ class MapSelectedLayer extends LitElement {
           const max = arr[arr.length - 1];
           // Freedman-Diaconis, https://www.answerminer.com/blog/binning-guide-ideal-histogram
           const iqr = this.quantile(arr, 0.75) - this.quantile(arr, 0.25);
-          const bins = Math.round((max - min) / (2 * (iqr/Math.pow(arr.length, 1/3))));
+          let bins = Math.round((max - min) / (2 * (iqr/Math.pow(arr.length, 1/3))));
 
           const linearTicks = this.getLinearTicks(min, max, bins);
           const binwidth = linearTicks.tickWidth;
+          bins = Math.ceil((max - min) / binwidth);
           for (let i = 0; i < bins; i++) {
             histogram.set(i, 0);
-            labels.push(Math.round(10000 * (linearTicks.min + i * binwidth)) / 10000);
+            const start = Math.round(10000 * (linearTicks.min + i * binwidth)) / 10000;
+            const end = Math.round(10000 * (linearTicks.min + (i+1) * binwidth)) / 10000;
+            labels.push(`${start} - ${end}`);
           }
-          labels[bins - 1] = linearTicks.max;
           for (let i = 0; i < arr.length; i++) {
             const value = arr[i];
             const bin = Math.floor((value - min)/binwidth);
@@ -244,13 +246,16 @@ class MapSelectedLayer extends LitElement {
         if (histogram) {
           values = Array.from(histogram.values());
         }
-        var ctx = canvas.getContext('2d');
-        var myChart = new Chart(ctx, {
+        const ctx = canvas.getContext('2d');
+        if (this.chart) {
+          this.chart.destroy();
+        }
+        this.chart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: this.dataPropertyName,
+                    label: `aantal ${this.dataPropertyName}`,
                     data: values,
                     backgroundColor: "blue" /*[
                         'rgba(255, 99, 132, 0.2)',
