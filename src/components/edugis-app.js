@@ -167,7 +167,7 @@ footer a:hover {
           </ul>
         </nav>
     </header>
-    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
+    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2019 <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }

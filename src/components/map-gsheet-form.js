@@ -88,7 +88,7 @@ class MapGSheetForm extends LitElement {
       sheetcolumn : this.shadowRoot.querySelector('#sheetcolumn').value,
       datacolumn : this.shadowRoot.querySelector('#datacolumn').value
     }
-    const sheetApiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${layerinfo.sheetkey}/values/A:B?key=${EduGISkeys.google}`;
+    const sheetApiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${layerinfo.sheetkey}/values/A:B?key=${APIkeys.google}`;
     fetch(sheetApiUrl).then(data=>data.json()).then(data=>{
       fetch(layerinfo.mapurl).then(json=>json.json()).then(geojson=>{
         this.linkSheetDataToGeoJson(geojson, layerinfo.datacolumn, data, layerinfo.sheetcolumn);
