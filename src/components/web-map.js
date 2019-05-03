@@ -38,8 +38,8 @@ import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabiliti
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { importExportIcon, gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, wrenchIcon } from './my-icons';
-import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
+import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon } from './my-icons';
+import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -211,13 +211,13 @@ class WebMap extends LitElement {
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
       {name:"datacatalog", visible: true, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
       {name:"measure", visible: true, position: "", order: 102, info:"Afstand en oppervlakte meten", icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: gmInfoIcon},
+      {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: infoIcon},
       {name:"maplanguage", visible: true, position: "", order: 104, info: "Kaarttaal", icon: languageIcon},
-      {name:"pitch", visible: true, position: "", order: 105, info: "Kaarthoek", icon: html`<b>3D</b>`},
-      {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
+      {name:"pitch", visible: true, position: "", order: 105, info: "Kaarthoek", icon: threeDIcon},
+      {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsIcon},
       {name:"draw", visible: true, position: "", order: 107, info: "Tekenen", icon: drawIcon},
       {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
-      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: wrenchIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: combineToolIcon},
       {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
       {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},

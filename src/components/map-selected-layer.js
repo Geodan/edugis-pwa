@@ -255,28 +255,20 @@ class MapSelectedLayer extends LitElement {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: `aantal ${this.dataPropertyName}`,
+                    label: `aantal ${this.layer.metadata.title}`, //`aantal ${this.dataPropertyName}`,
                     data: values,
-                    backgroundColor: "blue" /*[
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ]*/,
-                    borderColor: "white" /*[
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ]*/,
+                    backgroundColor: "#2e7dba" ,
+                    borderColor: "white" ,
                     borderWidth: 1
                 }]
             },
             options: {
+                title: {
+                    display: true,
+                    position: 'bottom',
+                    padding: 0,
+                    text: this.dataPropertyName
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -654,7 +646,7 @@ class MapSelectedLayer extends LitElement {
       <style>
         canvas {width: 100%; height: auto; border: 1px solid lightblue}
       </style>
-      <canvas width=1000 height=500></canvas>
+      <canvas width=1000 height=1000></canvas>
     `
   }
 

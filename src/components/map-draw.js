@@ -4,6 +4,9 @@ import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, un
 
 const drawPolygons = {
   "id": "drawPolygons",
+  "metadata": {
+    "title": "Getekende vlakken"
+  },
   "type": "fill",
   "source": {
     "type": "geojson",
@@ -21,6 +24,9 @@ const drawPolygons = {
 
 const drawLines = {
   "id": "drawLines",
+  "metadata": {
+    "title": "Getekende lijnen"
+  },
   "type": "line",
   "source" : {
     "type": "geojson",
@@ -37,6 +43,9 @@ const drawLines = {
 
 const drawPoints = {
   "id": "drawPoints",
+  "metadata": {
+    "title": "Getekende punten"
+  },
   "type": "circle",
   "source" : {
     "type": "geojson",

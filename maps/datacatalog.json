@@ -1316,6 +1316,37 @@
                   "line-width": 1
                 }
               }
+            },
+            {
+              "type": "vectortile",
+              "title": "Adressen",
+              "layerInfo": {
+                "id": "openmaptilesaddress",
+                "type": "circle",
+                "minzoom": 14,
+                "source": {
+                  "minzoom": 14,
+                  "maxzoom": 14,
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/openmaptiles/data/v3/{z}/{x}/{y}.pbf"
+                  ]
+                },
+                "source-layer" : "housenumber",
+                "filter": [
+                  "all",
+                  [
+                    "==",
+                    "$type",
+                    "Point"
+                  ]
+                ],
+                "paint": {
+                  "circle-color": "yellow",
+                  "circle-radius": 3,
+                  "circle-stroke-color": "gray"
+                }
+              }
             }
           ]
         },
