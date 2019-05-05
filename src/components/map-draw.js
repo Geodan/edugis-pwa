@@ -73,7 +73,8 @@ class MapDraw extends LitElement {
       active: {type: Boolean},
       map: {type: Object},
       selectedFeatures: {type: Array},
-      drawMode: {type: String}
+      drawMode: {type: String},
+      message: {type: String}
     }; 
   }
   constructor() {
@@ -84,6 +85,8 @@ class MapDraw extends LitElement {
       this.drawMode = 'simple_select';
       this.featureCollection = {"type": "FeatureCollection", "features": []};
       this.featureCount = 0;
+      this.message = null;
+      this.timeoutId = null;
   }
   createRenderRoot() {
     return this;
@@ -121,43 +124,59 @@ class MapDraw extends LitElement {
       return html``;
     }
     const disableDelete = (this.selectedFeatures.length === 0);
-    const disableCombine = !this._canCombineFeatures();
-    const disableUncombine = !(this.selectedFeatures.length === 1 && this.selectedFeatures[0].geometry.type.startsWith('Multi'));
     return html`
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
-      .header {font-weight: bold;height: 1.5em;border-bottom: 1px solid lightgray; padding-bottom: 3px; margin-bottom: 6px;}
-      .buttoncontainer {display: inline-block; width: 20px; height: 20px; border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;}
+      .drawcontainer {font-size:14px;}
+      .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;}
       .right {float: right; margin-left: 4px;}
       .dropzone {display: inline-block; height: 24px; width: 210px; border: 1px dashed gray; border-radius: 2px;}
-      .dragover {background-color: lightgray;}
-      .buttonbar {border-top: 1px solid lightgray;margin-top: 5px;padding-top: 5px;}
+      .dragover {background-color: lightgray;} 
+      .buttonbar {font-size: 0;}
+      .buttoncontainer {display: inline-block; box-sizing: border-box; width: 55px; height: 55px; line-height:75px;fill:darkgray;}
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
       <div class="header">Tekenen</div>
+      ${this._renderFileImportExport()}
+      <div>Klik in de kaart om een figuur te tekenen. Dubbelklik om te stoppen (lijn en vlak).</div>
+      <div class="buttonbar">
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_polygon')}"><map-iconbutton info="vlak" .active="${this.drawMode === 'draw_polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
+      ${this._renderCombineButtons()}
+      </div>
+      ${this.selectedFeatures.map(feature=>{
+        return Object.keys(feature.properties).map(key=>html`
+          <hr>${this._translateKey(key)}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${this.draw.get(feature.id).properties[key]}">\n`
+          );
+      })}
+      ${this.message?html`<br>${this.message}`:''}
+      </div>
+    `
+  }
+  _renderFileImportExport() {
+    return html``;
+    /*return html`
       <div>Bestanden importeren en exporteren</div>
       <input type="file" id="fileElem" accept=".json,.geojson" style="display:none" @change="${e=>this._handleFiles(e)}">
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.featureCount > 0 && this._downLoad()}"><map-iconbutton info="opslaan" .disabled="${this.featureCount === 0}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<div class="dropzone right" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">zet hier geojson neer</map-iconbutton></div>`: ''}
       ${window.saveAs ? html`<br>`: ``}
-      <div class="buttonbar">
-      <div>Bewerken</div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="punt" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="lijn" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_polygon')}"><map-iconbutton info="vlak" .active="${this.drawMode === 'draw_polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>!disableDelete && this.draw.trash()}"><map-iconbutton .disabled="${disableDelete}" info="verwijder" .icon="${trashIcon}"></map-iconbutton></div>
+      `;*/
+  }
+  _renderCombineButtons(){
+    return html``;
+    /*
+    const disableCombine = !this._canCombineFeatures();
+    const disableUncombine = !(this.selectedFeatures.length === 1 && this.selectedFeatures[0].geometry.type.startsWith('Multi'));
+    return html`
       <div class="buttoncontainer" @click="${(e)=>!disableCombine && this.draw.combineFeatures()}"><map-iconbutton info="groepeer" .disabled="${disableCombine}" .icon="${combineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
-      </div>
-      ${this.selectedFeatures.map(feature=>{
-        return Object.keys(feature.properties).map(key=>html`
-          <hr>${key}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${feature.properties[key]}">\n`
-          );
-      })}
-      </div>
     `
+    */
   }
   _addDrawToMap(){ 
     if (this.map) {
@@ -185,6 +204,24 @@ class MapDraw extends LitElement {
       this.keyDownBound = this._keyDown.bind(this);
       this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
       setTimeout(()=>this.draw.changeMode(this.drawMode = 'simple_select'), 100);
+    }
+  }
+  _translateKey (key) {
+    switch (key) {
+      case 'latitude':
+        return 'Breedtegraad';
+      case 'longitude':
+        return 'Lengtegraad';
+      case 'name':
+        return 'Naam'
+      case 'perimeter':
+        return 'Omtrek (km)';
+      case 'area':
+        return 'Oppervlak (m2)';
+      case 'length':
+        return 'Lengte (km)';
+      default:
+        return key;
     }
   }
   _removeDrawFromMap()
@@ -293,6 +330,7 @@ class MapDraw extends LitElement {
   }
   _updateFeatureProperty(e, feature, key) {
     this.draw.setFeatureProperty(feature.id, key, e.target.value);
+    this._setMessage(`'${e.target.value}' opgeslagen`)
   }
   _featuresCreated(e) {
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
@@ -304,6 +342,8 @@ class MapDraw extends LitElement {
   }
   _featuresUpdated(e) {
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
+    this.selectedFeatures = [];
+    setTimeout(()=>this.selectedFeatures = e.features, 0);
   }
   _drawDelete(e) {
     this.featureCount -= e.features.length;
@@ -382,6 +422,16 @@ class MapDraw extends LitElement {
       for (var i = 0; i < ev.dataTransfer.files.length; i++) {
         this._readFile(ev.dataTransfer.files[i])        
       }
+    }
+  }
+  _setMessage(message) {
+    if (message !== null && this.timeoutId != null) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+    this.message = message;
+    if (message !== null) {
+      this.timeoutId = setTimeout(()=>this._setMessage(null), 5000)
     }
   }
 
