@@ -2,8 +2,12 @@ import {LitElement, html, svg, css} from 'lit-element';
 import {GeoJSON} from '../utils/geojson';
 import GeoJSONParser from '../../node_modules/jsts/org/locationtech/jts/io/GeoJSONParser';
 import DistanceOp from '../../node_modules/jsts/org/locationtech/jts/operation/distance/DistanceOp';
+import {customSelectCss} from './custom-select-css.js';
+import './wc-button';
 
 const dummyIcon = svg`<svg height="24" width="24" viewbox="0 0 24 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="16" class="normal">A</text></svg>`;
+
+let addedLayerCounter = 0;
 
 /**
 * @polymer
@@ -13,45 +17,54 @@ class MapDataToolDistance extends LitElement {
   static get properties() { 
     return {
       map: {type: Object},
-      buttonEnabled : {type: Boolean}
+      buttonEnabled : {type: Boolean},
+      resultMessage: {type: String}
     }; 
   }
   static get styles() {
     return css`
-      select {max-width: calc(100% - 10px)}
+      ${customSelectCss()}
       .buttoncontainer {border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;width:150px;margin-top:5px;}
+      .red {
+        --dark-color: rgb(204,0,0);
+        --light-color: white;
+        width: 100%;
+      }
     `
   }
   constructor() {
       super();
       this.map = null;
       this.buttonEnabled = false;
+      this.resultMessage = null;
+      this.timeoutId = null;
   }
   render() {
     return html`
-      <b>Afstand</b><br>
-      Bereken de kortste afstand van alle elementen in een kaartlaag naar de dichtsbijzijnde elementen in een andere kaartlaag
-      <p><b>Invoer:</b> 2 kaartlagen (punt/lijn/vlak)<br>
-      <b>Uitvoer:</b> 1 nieuwe kaartlaag met afstanden</p>
-      <b>Eerste kaartlaag:</b><br>
-      ${this._renderLayerList()}
-      <b>Tweede kaartlaag:</b><br>
-      ${this._renderLayerList()}
-      <div class='buttoncontainer'><map-iconbutton @click="${e=>this._handleClick(e)}" .disabled="${!this.buttonEnabled}" info="berekenen">Berekenen</map-icon-button></div>
+      <b>Afstand berekenen</b><p>
+      Bereken de kortste afstand van alle elementen in kaartlaag 1 tot het dichtsbijzijnde element in kaartlaag 2.<p></p>
+      <b>Kaartlaag 1</b><br>
+      ${this._renderLayerList()}<p></p>
+      <b>Kaartlaag 2</b><br>
+      ${this._renderLayerList()}<p></p>
+      <wc-button class="red" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
+      ${this.resultMessage?this.resultMessage:''}
+    </div>
     `
   }
   _renderLayerList() {
-    const layers = this.map.getStyle().layers.filter(layer=>layer.metadata && !layer.metadata.reference && !layer.metadata.isToolLayer);
+    const layers = this.map.getStyle().layers.filter(layer=>layer.metadata && !layer.metadata.reference && !layer.metadata.isToolLayer && ['fill','line','circle','symbol'].includes(layer.type));
     if (layers.length < 2) {
       return html`${layers.length} kaartlagen aanwezig (minimmaal 2 nodig)`;
     }
-    return html`<select @change="${e=>this._layerSelected(e)}">
+    return html`<div class="styled-select"><select @change="${e=>this._layerSelected(e)}">
+    <option value="" disabled selected>Selecteer kaartlaag</option>
     ${layers.map(layer=>html`<option value=${layer.id}>${layer.metadata.title?layer.metadata.title:layer.id}</option>`)}
-    </select>`
+    </select><span class="arrow"></span></div>`
   }
   _layerSelected(e) {
     const selections = this.shadowRoot.querySelectorAll('select');
-    this.buttonEnabled = (selections.length === 2 && (selections[0].value != selections[1].value))
+    this.buttonEnabled = (selections.length === 2 && (selections[0].value != selections[1].value) && (selections[0].value !== '') && selections[1].value !== '')
   }
   _getFeatures(layerid) {
     return new Promise((resolve, reject)=>{
@@ -149,6 +162,7 @@ class MapDataToolDistance extends LitElement {
     return GeoJSON._project(distanceGeojson, 'EPSG:3857', 'EPSG:4326')
   }
   async _calculateDistances(layer1id, layer2id) {
+    this.buttonEnabled = false;
     const sourceFeatures1 = await this._getFeatures(layer1id);
     const sourceFeatures2 = await this._getFeatures(layer2id);
     let resultFeatures;
@@ -166,7 +180,7 @@ class MapDataToolDistance extends LitElement {
     const newLayer = {
       id: GeoJSON._uuidv4(),
       metadata: {
-        title: 'Berekende afstanden'
+        title: 'Berekende afstanden' + (addedLayerCounter ? ` (${addedLayerCounter + 1})` : '')
       },
       type: "line",
       source : {
@@ -178,12 +192,13 @@ class MapDataToolDistance extends LitElement {
         "line-width": 1
       }
     }
-    
+    addedLayerCounter++;
     this.dispatchEvent(new CustomEvent('addlayer', {
       detail: newLayer,
       bubbles: true,
       composed: true
     }));
+    this._showResultMessage(`Kaartlaag: '${newLayer.metadata.title}' toegevoegd` )
   }
   _handleClick(e) {
     if (!this.buttonEnabled) {
@@ -194,6 +209,17 @@ class MapDataToolDistance extends LitElement {
       const layer1id = selections[0].value;
       const layer2id = selections[1].value;
       this._calculateDistances(layer1id, layer2id);
+    }
+  }
+  _showResultMessage(message) {
+    if (this.message !== null && this.timeoutId !== null) {
+      clearTimeout(this.timeoutId);
+    }
+    this.resultMessage = message;
+    if (this.message !== null ) {
+      this.timeoutId = setTimeout(()=>this._showResultMessage(null), 10000);
+    } else {
+      this.timeoutId = null;
     }
   }
 }
