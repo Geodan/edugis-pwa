@@ -39,7 +39,7 @@ import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon } from './my-icons';
-import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
+import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -1338,7 +1338,7 @@ class WebMap extends LitElement {
       alert(`layer.metadata.key not defined for CSV join layer`);
       return;
     }
-    this.addLayer({detail: layer});
+    //this.addLayer({detail: layer});
 
     const vectorKeyName = layer.metadata.key;
     const sourceLayer = layer["source-layer"];
@@ -1393,6 +1393,7 @@ class WebMap extends LitElement {
     const csvKeys = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
 
     const handleSourceData = e=>{
+      console.log(`e.isSourceLoad: ${e.isSourceLoaded}, e.source.id: ${e.source.id}`);
       if (e.isSourceLoaded && e.source.id === layerid) {
         let vectorFeatures = this.map.querySourceFeatures(layerid, {sourceLayer:sourceLayer});
         const zoomLevel = this.map.getZoom();
@@ -1432,6 +1433,7 @@ class WebMap extends LitElement {
       }
     }
     this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
+    this.addLayer({detail: layer});
     this.addLayer({detail:layer2});
   }
 
