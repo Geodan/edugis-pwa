@@ -34,11 +34,11 @@ class MapPitch extends LitElement {
   render() {
     return html`
       <style>
-        .red {
+        .edugisblue {
         --mdc-theme-on-primary: white;
-        --mdc-theme-primary: rgb(204,0,0);
+        --mdc-theme-primary: #2E7DBA;
         --mdc-theme-on-secondary: white;
-        --mdc-theme-secondary: rgb(204,0,0);
+        --mdc-theme-secondary: #2E7DBA;
       }
       .padded {
         padding: 10px;
@@ -52,9 +52,9 @@ class MapPitch extends LitElement {
       </style>
       <div class="padded" style="user-select:none">
       <div class="heading">Huidige kaarthoek</div>
-      <mwc-button class="red" ?outlined="${this.pitch!==0}" ?unelevated="${this.pitch===0}" @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button>
-      <mwc-button class="red" ?outlined="${this.pitch===0 || this.pitch===60}" ?unelevated="${this.pitch!==0 && this.pitch!==60}" @click="${e=>this.updatePitch(this.pitch===0||this.pitch===60?30:this.pitch)}">${this.pitch!==0 && this.pitch!==60?Math.round(this.pitch):30}&deg;</mwc-button>
-      <mwc-button class="red" ?outlined="${this.pitch!==60}" ?unelevated="${this.pitch===60}" @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button></div>`;          
+      <mwc-button class="edugisblue" ?outlined="${this.pitch!==0}" ?unelevated="${this.pitch===0}" @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button>
+      <mwc-button class="edugisblue" ?outlined="${this.pitch===0 || this.pitch===60}" ?unelevated="${this.pitch!==0 && this.pitch!==60}" @click="${e=>this.updatePitch(this.pitch===0||this.pitch===60?30:this.pitch)}">${this.pitch!==0 && this.pitch!==60?Math.round(this.pitch):30}&deg;</mwc-button>
+      <mwc-button class="edugisblue" ?outlined="${this.pitch!==60}" ?unelevated="${this.pitch===60}" @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button></div>`;          
   }
   updated() {
     // remove focus from buttons

@@ -45,12 +45,12 @@ class IconButton extends LitElement {
           fill: rgb(160,160,160);
         }
         .button.active:hover {
-          background-color: rgb(160,0,0);
+          background-color: #5897c8;
           fill: white;
           color: white;
         }
         .active {
-          background-color: rgb(204,0,0);
+          background-color: #2E7DBA;
           fill: white;
           color: white;
         }

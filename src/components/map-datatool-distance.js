@@ -25,8 +25,8 @@ class MapDataToolDistance extends LitElement {
     return css`
       ${customSelectCss()}
       .buttoncontainer {border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;width:150px;margin-top:5px;}
-      .red {
-        --dark-color: rgb(204,0,0);
+      .edugisblue {
+        --dark-color: #2E7DBA;
         --light-color: white;
         width: 100%;
       }
@@ -47,7 +47,7 @@ class MapDataToolDistance extends LitElement {
       ${this._renderLayerList()}<p></p>
       <b>Kaartlaag 2</b><br>
       ${this._renderLayerList()}<p></p>
-      <wc-button class="red" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
+      <wc-button class="edugisblue" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
       ${this.resultMessage?this.resultMessage:''}
     </div>
     `
