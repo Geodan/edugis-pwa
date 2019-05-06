@@ -12,7 +12,6 @@
                 {
                     "title":"Openstreetmap",
                     "type":"reference",
-                    "checked": true,
                     "layerInfo":{
                         "id":"openstreetmap",
                         "type":"raster",
@@ -51,6 +50,7 @@
                 {
                     "type":"reference",
                     "title":"OSM Helder (stijl)",
+                    "checked": true,
                     "layerInfo":{
                       "id":"OsmBright",
                       "type":"style",
@@ -2068,13 +2068,14 @@
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 1},
         "datacatalog" : {"visible": 1, "order" : 2},
-        "measure" : {"visible": 1, "order": 4},
-        "info" : {"visible" : 1, "order": 3},
+        "measure" : {"visible": 1, "order": 3},
+        "info" : {"visible" : 1, "order": 4},
         "maplanguage" : {"visible" : 1, "order": 5},
         "pitch" : {"visible" : 1, "order": 6},
         "geolocate" : {"visible" : 1, "order": 7},
         "draw" : {"visible" : 1, "order": 8},
         "importexport": {"visible": 0, "order": 9},
+        "datatoolbox": {"visible": 1, "order": 10},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
         "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},

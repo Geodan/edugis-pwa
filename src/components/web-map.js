@@ -1393,7 +1393,6 @@ class WebMap extends LitElement {
     const csvKeys = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
 
     const handleSourceData = e=>{
-      console.log(`e.isSourceLoad: ${e.isSourceLoaded}, e.source.id: ${e.source.id}`);
       if (e.isSourceLoaded && e.source.id === layerid) {
         let vectorFeatures = this.map.querySourceFeatures(layerid, {sourceLayer:sourceLayer});
         const zoomLevel = this.map.getZoom();
@@ -1840,7 +1839,6 @@ class WebMap extends LitElement {
   {
     const url = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lngLat.lat},${lngLat.lng}&key=${APIkeys.google}`;
     return fetch(url).then(response=>response.json()).then(json=>{
-      console.log(json);
       const imageUrl = `https://maps.googleapis.com/maps/api/streetview?size=600x300&pano=${json.pano_id}&key=${APIkeys.google}`;
       return imageUrl;
     })
