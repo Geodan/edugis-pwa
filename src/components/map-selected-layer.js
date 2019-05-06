@@ -176,12 +176,17 @@ class MapSelectedLayer extends LitElement {
     return niceFraction * Math.pow(10, exponent);
   }
   getLinearTicks (min, max, maxTicks) {
-    var range = this.niceNumbers(max - min, false);
-    var tickSpacing = this.niceNumbers(range / (maxTicks - 1), true);
+    const range = this.niceNumbers(max - min, false);
+    let tickSpacing;
+    if (range === 0) {
+        tickSpacing = 1;
+    } else {
+        tickSpacing = this.niceNumbers(range / (maxTicks), true);
+    }
     return {
-      min: Math.floor(min / tickSpacing) * tickSpacing,
-      max: Math.ceil(max / tickSpacing) * tickSpacing,
-      tickWidth: tickSpacing
+        min: Math.floor(min / tickSpacing) * tickSpacing,
+        max: Math.ceil(max / tickSpacing) * tickSpacing,
+        tickWidth: tickSpacing
     };
   }
   quantile(arr, p) {
@@ -226,8 +231,15 @@ class MapSelectedLayer extends LitElement {
           const max = arr[arr.length - 1];
           // Freedman-Diaconis, https://www.answerminer.com/blog/binning-guide-ideal-histogram
           const iqr = this.quantile(arr, 0.75) - this.quantile(arr, 0.25);
-          let bins = Math.round((max - min) / (2 * (iqr/Math.pow(arr.length, 1/3))));
-
+          let bins;
+          if (max === min) {
+            bins = 1;
+          } else {
+            bins = Math.round((max - min) / (2 * (iqr/Math.pow(arr.length, 1/3))));
+          }
+          if (bins > 100) {
+            bins = 100;
+          }
           const linearTicks = this.getLinearTicks(min, max, bins);
           const binwidth = linearTicks.tickWidth;
           bins = Math.ceil((max - min) / binwidth);
