@@ -29,6 +29,7 @@ h2 {
 }
 .button {
     display: block;
+    box-sizing: border-box;
     background-color: #2E7DBA;
     border: 1px solid #2E7DBA;
     border-radius: 4px;
