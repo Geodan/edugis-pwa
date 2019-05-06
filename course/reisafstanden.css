@@ -1,0 +1,40 @@
+body {
+    font-family: 'Open Sans',sans-serif,'Arial','Helvetica',"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 14px;
+    color: #333333
+}
+h2 {
+    color: #2E7DBA;
+}
+.voortgang, .stap {
+    width: 100%;
+    border: none;
+}
+.tool {
+    border: 1px solid gray;
+    padding: 6px;
+    margin-right: 2px;
+    vertical-align: top;
+}
+.nav {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+.toolinfo {
+    display: flex;
+}
+#scholieren {
+    width: 80%;
+}
+.button {
+    display: block;
+    background-color: #2E7DBA;
+    border: 1px solid #2E7DBA;
+    border-radius: 4px;
+    color: white;
+    padding: 4px;
+    font-weight: bold;
+    width: 80%;
+    text-align: center;
+}
