@@ -27,6 +27,9 @@ h2 {
 #scholieren {
     width: 80%;
 }
+a {
+    text-decoration: none;
+}
 .button {
     display: block;
     box-sizing: border-box;
@@ -38,4 +41,11 @@ h2 {
     font-weight: bold;
     width: 80%;
     text-align: center;
+}
+.button.double {
+    width: 150px;
+}
+.button.secondary {
+    color: #2E7DBA;
+    background-color: white;
 }
