@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit-element';
 import './map-iconbutton';
-import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
+import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -124,6 +124,7 @@ class MapDraw extends LitElement {
       return html``;
     }
     const disableDelete = (this.selectedFeatures.length === 0);
+    // <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
     return html`
       <style>
       @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -134,13 +135,15 @@ class MapDraw extends LitElement {
       .dragover {background-color: lightgray;} 
       .buttonbar {font-size: 0;}
       .buttoncontainer {display: inline-block; box-sizing: border-box; width: 55px; height: 55px; line-height:75px;fill:darkgray;}
+      .message {background-color: rgba(146,195,41,0.98);width: 100%;box-shadow: 2px 2px 4px 0; height: 36px; color: white; font-weight: bold; line-height: 36px;padding: 2px;}
+      .iconcontainer {display: inline-block; width: 24px; height: 24px; fill: white; margin: 5px; vertical-align: middle;}
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
       <div class="header">Tekenen</div>
       ${this._renderFileImportExport()}
       <div>Klik in de kaart om een figuur te tekenen. Dubbelklik om te stoppen (lijn en vlak).</div>
       <div class="buttonbar">
-      <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
+      
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_point')}"><map-iconbutton .active="${this.drawMode === 'draw_point'}" info="teken punt" .icon="${pointIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_line_string')}"><map-iconbutton .active="${this.drawMode === 'draw_line_string'}" info="teken lijn" .icon="${lineIcon}"></map-iconbutton></div>
       <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'draw_polygon')}"><map-iconbutton info="teken vlak" .active="${this.drawMode === 'draw_polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
@@ -152,7 +155,7 @@ class MapDraw extends LitElement {
           <hr>${this._translateKey(key)}<br><input type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${this.draw.get(feature.id).properties[key]}">\n`
           );
       })}
-      ${this.message?html`<br>${this.message}`:''}
+      ${this._renderMessage()}
       </div>
     `
   }
@@ -177,6 +180,14 @@ class MapDraw extends LitElement {
       <div class="buttoncontainer" @click="${(e)=>!disableUncombine && this.draw.uncombineFeatures()}"><map-iconbutton info="splits" .disabled="${disableUncombine}" .icon="${uncombineIcon}"></map-iconbutton></div>
     `
     */
+  }
+  _renderMessage() {
+    if (this.message) {
+      return html`
+      <div class="message"><div class="iconcontainer">${checkIcon}</div>${this.message}</div>
+      `
+    }
+    return ''
   }
   _addDrawToMap(){ 
     if (this.map) {
@@ -431,7 +442,7 @@ class MapDraw extends LitElement {
     }
     this.message = message;
     if (message !== null) {
-      this.timeoutId = setTimeout(()=>this._setMessage(null), 5000)
+      this.timeoutId = setTimeout(()=>this._setMessage(null), 4000)
     }
   }
 
