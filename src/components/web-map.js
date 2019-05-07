@@ -32,13 +32,14 @@ import './map-selected-layers';
 import './map-draw';
 import './map-import-export';
 import './map-data-toolbox';
+import './map-sheet-tool';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon } from './my-icons';
+import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
@@ -218,6 +219,7 @@ class WebMap extends LitElement {
       {name:"draw", visible: true, position: "", order: 107, info: "Tekenen", icon: drawIcon},
       {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
       {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: combineToolIcon},
+      {name:"sheetimport", visible: true, position: "", order: 110, info: "Tabel uploaden", icon: sheetIcon},
       {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
       {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
@@ -775,6 +777,10 @@ class WebMap extends LitElement {
         <map-panel .active="${this.currentTool==='datatoolbox'}">
           <div style="width:100%"></div>
           <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-data-toolbox>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='sheetimport'}">
+          <div style="width:100%"></div>
+          <map-sheet-tool .active="${this.currentTool==='sheetimport'}" .map="${this.map}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-sheet-tool>
         </map-panel>
       </div>
     </div>`
