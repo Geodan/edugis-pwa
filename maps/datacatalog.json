@@ -444,6 +444,22 @@
                   "attribution": "&copy; GeodanMaps"
                 }
               }
+            },
+            {
+              "title": "NASA Satelliet true color",
+              "type": "wmts",
+              "layerInfo": { 
+                "id": "nasasatellitetruecolor",
+                "type": "raster",
+                "source" : {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://map1.vis.earthdata.nasa.gov/wmts-webmerc/wmts.cgi?layer=MODIS_Terra_CorrectedReflectance_TrueColor&style=default&tilematrixset=GoogleMapsCompatible_Level9&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}&TIME=2019-05-26"
+                  ],
+                  "attribution": "Nasa"
+                }
+              }
             }
           ]
         },
@@ -1344,7 +1360,8 @@
                 "paint": {
                   "circle-color": "yellow",
                   "circle-radius": 3,
-                  "circle-stroke-color": "gray"
+                  "circle-stroke-color": "gray",
+                  "circle-stroke-width": 1
                 }
               }
             }
