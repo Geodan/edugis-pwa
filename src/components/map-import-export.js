@@ -79,12 +79,74 @@ export default class MapImportExport extends LitElement {
     })
     return result;
   }
+  findGroup(title, layers) {
+    if (!Array.isArray(layers)) {
+      layers = [layers];
+    }
+    for (let i = 0; i < layers.length; i++) {
+      const layer = layers[i];
+      if (layer.title && layer.title === title) {
+        return layer;
+      }
+      if (layer.sublayers) {
+        const subresult = this.findGroup(title, layer.sublayers);
+        if (subresult) {
+          return subresult;
+        }
+      }
+    }
+    return undefined;
+  }
   _saveFile(e) {
     const center = this.map.getCenter();
-
+    let datacatalog = this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : [ ...this.datacatalog];
+    const layers = this.map.getStyle().layers;
+    const drawPoints = layers.find(layer=>layer.id === 'drawPoints');
+    const drawLines = layers.find(layer=>layer.id === 'drawLines');
+    const drawPolygons = layers.find(layer=>layer.id === 'drawPolygons');
+    if (drawPoints || drawLines || drawPolygons) {
+      let drawGroup = this.findGroup("Getekende lagen");
+      if (!drawGroup) {
+        drawGroup = {
+          "type": "group",
+          "title": "Getekende lagen",
+          "sublayers": []
+        }
+        datacatalog.push(drawGroup);
+      }
+      if (drawPoints) {
+        drawPoints.source = this.map.getSource(drawPoints.source).serialize();
+        drawGroup.sublayers.push({
+          "type": "geojson",
+          "title": "Getekende punten",
+          "checked": true,
+          "layerInfo": drawPoints
+        });
+      }
+      if (drawLines) {
+        drawLines.source = this.map.getSource(drawLines.source).serialize();
+        drawGroup.sublayers.push({
+          "type": "geojson",
+          "title": "Getekende lijnen",
+          "checked": true,
+          "layerInfo": drawLines
+        });
+      }
+      if (drawPolygons) {
+        drawPolygons.source = this.map.getSource(drawPolygons.source).serialize();
+        drawGroup.sublayers.push({
+          "type": "geojson",
+          "title": "Getekende Vlakken",
+          "checked": true,
+          "layerInfo": drawPolygons
+        });
+      }      
+    } else {
+      datacatalog = datacatalog.filter(item=>item.title !== 'Getekende lagen')
+    }
     const json = {
         map: { zoom: this.map.getZoom(),center: [center.lng, center.lat], pitch: this.map.getPitch(), bearing: this.map.getBearing()},
-        datacatalog: this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : this.datacatalog,
+        datacatalog: datacatalog,
         tools: this.toollist.reduce((result, tool)=>{
             result[tool.name] = {};
             if (tool.hasOwnProperty('opened')) {result[tool.name].opened = tool.opened};

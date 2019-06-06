@@ -788,6 +788,33 @@ class MapSelectedLayer extends LitElement {
             `
           }
         }
+        break;
+      case "circle":
+        {
+          const title = this.layer.metadata && this.layer.metadata.title ? this.layer.metadata.title : this.layer.id;
+          let paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
+          let circleColor = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint["circle-color"], title);
+          let circleRadius = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint["circle-radius"], title);
+          let circleStrokeColor = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint["circle-stroke-color"])
+          if (circleColor.items.length === 1) {
+            circleColor = mbStyleParser.colorToHex(circleColor.items[0].value);
+            return html`
+              ${this.legendEditorStyle()}
+              <div class="legendeditcontainer">
+                <div class="title">Laag aanpassen</div>
+                <input id="circlecolor" type="color" value="${circleColor}" @input="${e=>this.updatePaintProperty(e, {"circle-color": e.currentTarget.value})}"> <label for="linecolor">cirkelkleur</label>
+                <div class="linewidthlabel">
+                  Straal: ${circleRadius.items[0].value}
+                  </div>
+                <div class="sliderwidthcontainer">
+                  <map-slider @slidervaluechange="${e=>{this.layer.paint['circle-radius'] = e.detail.value * 1; this.updatePaintProperty(e, {"circle-radius": e.detail.value * 1})}}" value="${circleRadius.items[0].value}"></map-slider>
+                </div>
+                
+              </div>
+            `
+          }
+        }
+        break;
       default:
         break;
     }

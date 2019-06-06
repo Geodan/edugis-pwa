@@ -189,6 +189,40 @@ class MapDraw extends LitElement {
     }
     return ''
   }
+  _getFeaturesFromLayer(layerid)
+  {
+    let result = [];
+    const layer = this.map.getStyle().layers.find(layer=>layer.id===layerid);
+    if (layer) {
+      let source = layer.source;
+      if (typeof source === "string") {
+        source = this.map.getSource(source).serialize();
+      }
+      result = source.data.features;
+    }
+    return result;
+  }
+  _updateFeatureCollection()
+  {
+    if (this.featureCollection.features.length === 0) {
+      let features = this._getFeaturesFromLayer('drawPoints');
+      if (features.length) {
+        this.featureCollection.features = features;
+      }
+      features = this._getFeaturesFromLayer('drawLines');
+      if (features.length) {
+        this.featureCollection.features = [...this.featureCollection.features, ...features];
+      }
+      features = this._getFeaturesFromLayer('drawPolygons');
+      if (features.length) {
+        this.featureCollection.features = [...this.featureCollection.features, ...features];
+      }
+    }
+    if (this.featureCollection.features.length) {
+      this.draw.set(this.featureCollection);
+      this.featureCount = this.featureCollection.features.length;
+    }
+  }
   _addDrawToMap(){ 
     if (this.map) {
       // store map.boxZoom
@@ -201,10 +235,7 @@ class MapDraw extends LitElement {
       });
       this.draw.options.styles.forEach(style=>style.metadata = {isToolLayer: true});
       this.map.addControl(this.draw, 'bottom-right');
-      if (this.featureCollection.features.length) {
-        this.draw.set(this.featureCollection);
-        this.featureCount = this.featureCollection.features.length;
-      }
+      this._updateFeatureCollection(); 
       this.map.on('draw.create', this.featuresCreated = (e)=>this._featuresCreated(e));
       this.map.on('draw.selectionchange', this.featuresSelected = (e)=>this._featuresSelected(e));
       this.map.on('draw.update', this.featuresUpdated = (e)=>this._featuresUpdated(e));
@@ -246,7 +277,7 @@ class MapDraw extends LitElement {
       this.map.off('draw.delete', this.drawDelete);
       this.map.getCanvasContainer().removeEventListener('keydown', this.keyDown);
       this._updateMapDrawLayers();
-      this._setMapDrawLayersVisibility(true);
+      this._setMapDrawLayersVisibility(true);  
       this.map.removeControl(this.draw);
 
       this.selectedFeatures = [];

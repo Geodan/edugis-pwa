@@ -1176,8 +1176,8 @@ class WebMap extends LitElement {
     }
   }
   applyConfig(config) {
-    this.activeLayers = null;
     this.currentTool = '';
+    this.activeLayers = null;    
     if (config.keys) {
       for (let keyname in config.keys) {
         APIkeys[keyname] = config.keys[keyname];
@@ -1469,6 +1469,7 @@ class WebMap extends LitElement {
   }
 
   handleDrop(ev) {
+    this.currentTool = '';
     MapImportExport.handleDrop(ev).then(droppedFile=>{
      this._processDroppedFile(droppedFile);
     })

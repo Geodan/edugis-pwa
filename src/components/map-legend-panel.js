@@ -184,7 +184,7 @@ class MapLegendPanel extends LitElement {
       radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], this.maplayer.metadata.title);
     }
     let strokeInfo = {propertyname: this.maplayer.metadata.title, items: []};
-    if (paint && paint['circle-stroke-color']) {
+    if (paint && paint['circle-stroke-color'] && paint['circle-stroke-width']) {
       strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], this.maplayer.metadata.title);
       if (strokeInfo.items.length > 1) {
         // not supported
