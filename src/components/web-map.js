@@ -186,6 +186,7 @@ class WebMap extends LitElement {
     super();
     this.map = null;
     this.pitch = 0;
+    this.bearing = 0;
     this.viewbox = undefined;
     // default property values
     this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
@@ -1006,7 +1007,8 @@ class WebMap extends LitElement {
         style: this.mapstyle,
         center: [this.lon,this.lat],
         zoom: this.zoom,
-        pitch: this.pitch
+        pitch: this.pitch,
+        bearing: this.bearing
     });
     this.datagetter = {
       querySourceFeatures: this.map.querySourceFeatures.bind(this.map),
@@ -1196,6 +1198,9 @@ class WebMap extends LitElement {
       }
       if (config.map.hasOwnProperty('pitch')) {
         this.pitch = config.map.pitch;
+      }
+      if (config.map.hasOwnProperty('bearing')) {
+        this.bearing = config.map.bearing;
       }
       if (!config.map.style) {
         config.map.style = {
