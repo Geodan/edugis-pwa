@@ -79,17 +79,20 @@ export default class MapImportExport extends LitElement {
     })
     return result;
   }
-  findGroup(title, layers) {
+  getDataCatalogItem(idOrTitle, layers) {
     if (!Array.isArray(layers)) {
       layers = [layers];
     }
     for (let i = 0; i < layers.length; i++) {
       const layer = layers[i];
-      if (layer.title && layer.title === title) {
+      if (layer.id && layer.id === idOrTitle) {
+        return layer;
+      }
+      if (layer.title && layer.title === idOrTitle) {
         return layer;
       }
       if (layer.sublayers) {
-        const subresult = this.findGroup(title, layer.sublayers);
+        const subresult = this.getDataCatalogItem(idOrTitle, layer.sublayers);
         if (subresult) {
           return subresult;
         }
@@ -100,49 +103,43 @@ export default class MapImportExport extends LitElement {
   _saveFile(e) {
     const center = this.map.getCenter();
     let datacatalog = this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : [ ...this.datacatalog];
+    datacatalog = datacatalog.filter(item=>item.id !== 'extralayers');
     const layers = this.map.getStyle().layers;
-    const drawPoints = layers.find(layer=>layer.id === 'drawPoints');
-    const drawLines = layers.find(layer=>layer.id === 'drawLines');
-    const drawPolygons = layers.find(layer=>layer.id === 'drawPolygons');
-    if (drawPoints || drawLines || drawPolygons) {
-      let drawGroup = this.findGroup("Getekende lagen");
-      if (!drawGroup) {
-        drawGroup = {
+    const extraLayers = layers.filter(layer=>{
+      if (layer.metadata.reference || layer.metadata.isToolLayer) {
+        return false;
+      }
+      if (layer.id) {
+        return !this.getDataCatalogItem(layer.id, this.datacatalog);
+      } else if (layer.title) {
+        return !this.getDataCatalogItem(layer.title, this.datacatalog);
+      }
+      return false;
+    })
+    if (extraLayers.length) {
+      const extraLayersGroup = {
           "type": "group",
-          "title": "Getekende lagen",
+          "title": "Toegevoegde lagen",
+          "id": "extralayers",
           "sublayers": []
+      };      
+      datacatalog.push(extraLayersGroup);
+
+      for (let extraLayer of extraLayers) {
+        if (extraLayer.type === 'line' || extraLayer.type === 'fill' || extraLayer.type === 'circle' || extraLayer.type === 'symbol') {
+          let source = extraLayer.source;
+          if (typeof source === 'string') {
+            source = this.map.getSource(source).serialize();
+            extraLayer.source = source;
+          }
         }
-        datacatalog.push(drawGroup);
-      }
-      if (drawPoints) {
-        drawPoints.source = this.map.getSource(drawPoints.source).serialize();
-        drawGroup.sublayers.push({
+        extraLayersGroup.sublayers.push({
           "type": "geojson",
-          "title": "Getekende punten",
+          "title": extraLayer.metadata.title,
           "checked": true,
-          "layerInfo": drawPoints
-        });
-      }
-      if (drawLines) {
-        drawLines.source = this.map.getSource(drawLines.source).serialize();
-        drawGroup.sublayers.push({
-          "type": "geojson",
-          "title": "Getekende lijnen",
-          "checked": true,
-          "layerInfo": drawLines
-        });
-      }
-      if (drawPolygons) {
-        drawPolygons.source = this.map.getSource(drawPolygons.source).serialize();
-        drawGroup.sublayers.push({
-          "type": "geojson",
-          "title": "Getekende Vlakken",
-          "checked": true,
-          "layerInfo": drawPolygons
-        });
+          "layerInfo": extraLayer
+        })
       }      
-    } else {
-      datacatalog = datacatalog.filter(item=>item.title !== 'Getekende lagen')
     }
     const json = {
         map: { zoom: this.map.getZoom(),center: [center.lng, center.lat], pitch: this.map.getPitch(), bearing: this.map.getBearing()},
