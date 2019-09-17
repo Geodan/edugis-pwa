@@ -43,7 +43,7 @@ class MapSheetTool extends LitElement {
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
         <div class="header">Tabel inlezen</div>
         <br>
-        <input type="file" id="fileElem" accept=".csv" style="display:none" @change="${e=>this._handleFiles(e)}">
+        <input type="file" id="fileElem" accept=".csv,.xls,.xlsx" style="display:none" @change="${e=>this._handleFiles(e)}">
         <wc-button class="edugisblue" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}">Tabel uploaden</wc-button>
         <br>
       </div>

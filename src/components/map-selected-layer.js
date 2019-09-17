@@ -643,6 +643,8 @@ class MapSelectedLayer extends LitElement {
     return {property: stylePropertyName, minmax: minmax, values: data.map(item=>item.properties[stylePropertyName])}
   }
 
+  // legendTypes 'div', 'qual', 'seq'
+  // for diverging, qualitative and sequential legends
   getColorSchemes(numClasses, legendType) {
     return colorbrewer.filter(scheme=>scheme.type===legendType && scheme.sets.length > numClasses - 3)
       .map(scheme=>{

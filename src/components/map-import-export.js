@@ -176,9 +176,38 @@ export default class MapImportExport extends LitElement {
       reader.readAsText(inputFile);
     });
   };
+  static _readSpreadsheet(inputFile) {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onerror = () => {
+        reader.abort();
+        reject(new DOMException("Problem parsing input file."));
+      };  
+      reader.onload = (e) => {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, {type: 'array'});
+        resolve(workbook);
+      };
+      reader.readAsArrayBuffer(inputFile);
+    });
+  }
+
   static async _readFile(file)
   {
     try {
+       if (file.name.endsWith('.xlsx') || file.name.endsWith('xls')) {
+         const workbook = await MapImportExport._readSpreadsheet(file);
+         const json = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
+         return {
+          filename: file.name, 
+            data: {
+              data:json, 
+              meta:{
+                fields: json.length?Object.keys(json[0]):[]
+              }
+            }
+          };
+       } else {
         const text = await MapImportExport._readFileAsText(file);
         if (file.name.endsWith('.csv')) {
           // probably a csv file
@@ -197,6 +226,7 @@ export default class MapImportExport extends LitElement {
           }
         }
         return MapImportExport._parseJson(text, file.name);
+       }
     } catch(error) {
         return {error: error}
     }
