@@ -1391,20 +1391,20 @@ class WebMap extends LitElement {
     const hiddenVectorLayer = {
       "metadata": {
         "title": `${droppedFile.filename}`,
-        "isToolLayer": false
+        "isToolLayer": true
       },
       "id": hiddenVectorLayerId,
       "type": keyInfo.type,
       "minzoom": keyInfo.minzoom,
       "source": keyInfo.source,
       "paint": {},
-      filter: true
+      filter: false
     }
     if (hiddenVectorLayer.source.type === 'vector') {
       hiddenVectorLayer.source.id = hiddenVectorLayerId;
       hiddenVectorLayer.source.minzoom = keyInfo.minzoom;
       hiddenVectorLayer.source.maxzoom = 16;
-      hiddenVectorLayer.source["source-layer"] = keyInfo.sourceLayer;
+      hiddenVectorLayer["source-layer"] = keyInfo.sourceLayer;
     }
     
     const vectorKeyName = keyInfo.fkey;
@@ -1435,7 +1435,7 @@ class WebMap extends LitElement {
     const jsonKeyValues = new Set();
 
     const handleSourceData = e=>{
-      if (e.isSourceLoaded && e.source.id === hiddenVectorLayerId) {
+      if (e.isSourceLoaded && e.sourceId === hiddenVectorLayerId) {
         let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
         //const zoomLevel = this.map.getZoom();
         let jsonUpdated = false;
