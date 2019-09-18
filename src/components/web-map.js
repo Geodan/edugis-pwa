@@ -1314,63 +1314,105 @@ class WebMap extends LitElement {
     this.addLayer({detail: layer});
   }
   _loadCSV(droppedFile) {
-    // handle added csv (converted to json with papaparse)
+    /* handle added csv (converted to json with papaparse or XSLX)
+       1 - determine which vector data should be joined to the file data (get url, key and fkey)
+       2 - load the external vector data, do not visually display the features
+       3 - create an empty geojson layer with visible features (when added)
+       4 - scan the rendered invisible features (step 2) for fkey and 
+           copy the feature geometry with properties added from the file to the  geojson layer
+       5 - visually display the geojson layer
+    */
+    let csvKeyDataPairs = [
+      {
+        key: 'postcode', 
+        fkey: 'postcode',
+        type: 'circle', 
+        url: 'https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4',
+        sourceLayer: "postcode.postcode2019q1",
+        paint: {
+          "circle-radius": 5,
+          "circle-color": [
+            "match",
+            ["%", ["to-number", ["get", "pc4"]],10],
+            0, "red",
+            1, "green",
+            2, "aqua",
+            3, "orange",
+            4, "blue",
+            5, "yellow",
+            6, "purple",
+            7, "brown",
+            8, "olive",
+            9, "teal",
+            "gray"
+          ]
+        }
+      },
+      {
+        key: 'GemeentecodeGM', 
+        fkey: 'statcode',
+        type: 'fill', 
+        url: 'https://tiles.edugis.nl/v1/mvt/public.cbs_gemeente_2018_gegeneraliseerd/{z}/{x}/{y}?columns=statcode',
+        sourceLayer: 'public.cbs_gemeente_2018_gegeneraliseerd',
+        paint: {
+          "fill-color": 'red',
+          "fill-opacity": 0.8,
+          "fill-outline-color": 'white'
+        }
+      }
+    ];
+
+    let csvKeyName = droppedFile.data.meta.fields.find(fieldname=>csvKeyDataPairs.find(pair=>pair.key === fieldname)!==undefined);
+    if (!csvKeyName) {
+      csvKeyName = droppedFile.data.meta.fields.find(fieldname=>csvKeyDataPairs.find(pair=>pair.key.toLowerCase() === fieldname.toLowerCase()) !== undefined);
+    }
+    if (!csvKeyName) {
+      alert(`CSV file should have a column named: '${csvKeyDataPairs.map(pair=>pair.key).join("' or '")}'`)
+      return;
+    }
+    let keyInfo = csvKeyDataPairs.find(pair=>pair.key === csvKeyName);
+    if (!keyInfo) {
+      keyInfo = csvKeyDataPairs.find(pair=>pair.key.toLowerCase() === csvKeyName.toLowerCase());
+    }
 
     // json.json.data = json.json.data.filter(row=>row.hasOwnProperty('Postcode'));
     //const filter = ["match", ["get", "postcode"], Array.from(csvKeys), true, false];
-    const layerid = GeoJSON._uuidv4();
-    const layer = {
+    const hiddenVectorLayerId = GeoJSON._uuidv4();
+    const hiddenVectorLayer = {
       "metadata": {
         "title": `${droppedFile.filename}`,
-        "isToolLayer": true,
-        "key": "postcode"
+        "isToolLayer": true
       },
-      "id": layerid,
-      "type":"circle",
+      "id": hiddenVectorLayerId,
+      "type": keyInfo.type,
       "minzoom": 8,
       "source": {
-        "id": layerid,
+        "id": hiddenVectorLayerId,
         "type": "vector",
         "tiles": [
-          "https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
+          keyInfo.url
         ],
         "minzoom": 8,
         "maxzoom": 16
       },
-      "source-layer": "postcode.postcode2019q1",
-      "paint": {
-        "circle-radius": 1,
-        "circle-color": "white",
-        "circle-opacity": 0
-      },
+      "source-layer": keyInfo.sourceLayer,
+      "paint": {},
       filter: false
     }
-    if (!layer.metadata.key) {
-      alert(`layer.metadata.key not defined for CSV join layer`);
-      return;
-    }
-    //this.addLayer({detail: layer});
+    hiddenVectorLayer.paint[`${keyInfo.type}-opacity`] = 0; // draw transparent features
+    
+    const vectorKeyName = keyInfo.fkey;
+    const sourceLayer = hiddenVectorLayer["source-layer"];
 
-    const vectorKeyName = layer.metadata.key;
-    const sourceLayer = layer["source-layer"];
-
-    let csvKeyName = droppedFile.data.meta.fields.find(fieldname=>fieldname === vectorKeyName);
-    if (!csvKeyName) {
-      csvKeyName = droppedFile.data.meta.fields.find(fieldname=>fieldname.toLowerCase() === vectorKeyName.toLowerCase());
-    }
-    if (!csvKeyName) {
-      alert(`CSV file should have column named: '${vectorKeyName}'`)
-      return;
-    }
     if (vectorKeyName.toLowerCase() === 'postcode') {
       // remove possible spaces from csv postcode
       droppedFile.data.data.forEach(item=>item[csvKeyName]=item[csvKeyName].replace(' ', ''))
     }
-    const layer2id = GeoJSON._uuidv4();
-    const layer2 = {
+    const geocodedCSVLayerId = GeoJSON._uuidv4();
+    const geocodedCSVLayer = {
       "metadata": {"title": `${droppedFile.filename}`},
-      "id": layer2id,
-      "type":"circle",
+      "id": geocodedCSVLayerId,
+      "type": keyInfo.type,
       "minzoom": 8,
       "source": {
         "type": "geojson",
@@ -1379,63 +1421,46 @@ class WebMap extends LitElement {
           "features": []
         }
       },
-      "paint": {
-        "circle-radius": 5,
-        "circle-color": [
-          "match",
-          ["%", ["to-number", ["get", "pc4"]],10],
-          0, "red",
-          1, "green",
-          2, "aqua",
-          3, "orange",
-          4, "blue",
-          5, "yellow",
-          6, "purple",
-          7, "brown",
-          8, "olive",
-          9, "teal",
-          "gray"
-        ]
-      }
+      "paint": keyInfo.paint
     }
     
     const geocodedKeys = new Map();
     const jsonFeatures = [];
-    const csvKeys = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
+    const csvKeyValues = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
 
     const handleSourceData = e=>{
-      if (e.isSourceLoaded && e.source.id === layerid) {
-        let vectorFeatures = this.map.querySourceFeatures(layerid, {sourceLayer:sourceLayer});
+      if (e.isSourceLoaded && e.source.id === hiddenVectorLayerId) {
+        let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
         const zoomLevel = this.map.getZoom();
         let needsUpdate = false;
         for (let vectorFeature of vectorFeatures) {
-          const key = vectorFeature.properties[vectorKeyName];
-          if (csvKeys.has(key)) {
+          const keyValue = vectorFeature.properties[vectorKeyName];
+          if (csvKeyValues.has(keyValue)) {
             needsUpdate = true;
-            csvKeys.delete(key);
-            jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === key).map(row=>{
+            csvKeyValues.delete(keyValue);
+            jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === keyValue).map(row=>{
               return {
                 "type":"Feature", 
                 properties: Object.assign({}, vectorFeature.properties, row),
                 geometry:vectorFeature.geometry  
               }
             }));
-            geocodedKeys.set(key, zoomLevel);
-          } else if (geocodedKeys.has(key)) {
-            if (geocodedKeys.get(key) < zoomLevel) {
+            geocodedKeys.set(keyValue, zoomLevel);
+          } else if (geocodedKeys.has(keyValue)) {
+            if (geocodedKeys.get(keyValue) < zoomLevel) {
               // possibly more precise geometry available
               needsUpdate = true;
               for (let feature of jsonFeatures) {
-                if (feature[csvKeyName] === key) {
+                if (feature[csvKeyName] === keyValue) {
                   feature.geometry = vectorFeature.geometry;
                 }
               }
-              geocodedKeys.set(key, zoomLevel);
+              geocodedKeys.set(keyValue, zoomLevel);
             }
           }
         };
         if (needsUpdate) {
-          this.map.getSource(layer2id).setData({
+          this.map.getSource(geocodedCSVLayerId).setData({
             "type": "FeatureCollection",
             "features": jsonFeatures
           })
@@ -1443,8 +1468,8 @@ class WebMap extends LitElement {
       }
     }
     this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
-    this.addLayer({detail: layer});
-    this.addLayer({detail:layer2});
+    this.addLayer({detail: hiddenVectorLayer});
+    this.addLayer({detail: geocodedCSVLayer});
   }
 
   _processDroppedFile(droppedFile) {
