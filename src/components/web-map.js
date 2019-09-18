@@ -1327,8 +1327,14 @@ class WebMap extends LitElement {
         key: 'postcode', 
         fkey: 'postcode',
         type: 'circle', 
-        url: 'https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4',
+        source: {
+          "type": "vector",
+          "tiles": [
+            'https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4'
+          ]
+        },
         sourceLayer: "postcode.postcode2019q1",
+        minzoom: 8,
         paint: {
           "circle-radius": 5,
           "circle-color": [
@@ -1352,8 +1358,12 @@ class WebMap extends LitElement {
         key: 'GemeentecodeGM', 
         fkey: 'statcode',
         type: 'fill', 
-        url: 'https://tiles.edugis.nl/v1/mvt/public.cbs_gemeente_2018_gegeneraliseerd/{z}/{x}/{y}?columns=statcode',
-        sourceLayer: 'public.cbs_gemeente_2018_gegeneraliseerd',
+        source: {
+          "type": "geojson",
+          "data": 'https://tiles.edugis.nl/geojson/cbs_gemeente_2019_gegeneraliseerd.geojson'
+        },
+        sourceLayer: 'cbs_gemeente_2019_gegeneraliseerd',
+        minzoom: 5,
         paint: {
           "fill-color": 'red',
           "fill-opacity": 0.8,
@@ -1381,25 +1391,21 @@ class WebMap extends LitElement {
     const hiddenVectorLayer = {
       "metadata": {
         "title": `${droppedFile.filename}`,
-        "isToolLayer": true
+        "isToolLayer": false
       },
       "id": hiddenVectorLayerId,
       "type": keyInfo.type,
-      "minzoom": 8,
-      "source": {
-        "id": hiddenVectorLayerId,
-        "type": "vector",
-        "tiles": [
-          keyInfo.url
-        ],
-        "minzoom": 8,
-        "maxzoom": 16
-      },
-      "source-layer": keyInfo.sourceLayer,
+      "minzoom": keyInfo.minzoom,
+      "source": keyInfo.source,
       "paint": {},
-      filter: false
+      filter: true
     }
-    hiddenVectorLayer.paint[`${keyInfo.type}-opacity`] = 0; // draw transparent features
+    if (hiddenVectorLayer.source.type === 'vector') {
+      hiddenVectorLayer.source.id = hiddenVectorLayerId;
+      hiddenVectorLayer.source.minzoom = keyInfo.minzoom;
+      hiddenVectorLayer.source.maxzoom = 16;
+      hiddenVectorLayer.source["source-layer"] = keyInfo.sourceLayer;
+    }
     
     const vectorKeyName = keyInfo.fkey;
     const sourceLayer = hiddenVectorLayer["source-layer"];
@@ -1413,7 +1419,7 @@ class WebMap extends LitElement {
       "metadata": {"title": `${droppedFile.filename}`},
       "id": geocodedCSVLayerId,
       "type": keyInfo.type,
-      "minzoom": 8,
+      "minzoom": keyInfo.minzoom,
       "source": {
         "type": "geojson",
         "data": {
@@ -1424,48 +1430,74 @@ class WebMap extends LitElement {
       "paint": keyInfo.paint
     }
     
-    const geocodedKeys = new Map();
-    const jsonFeatures = [];
+    let jsonFeatures = [];
     const csvKeyValues = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
+    const jsonKeyValues = new Set();
 
     const handleSourceData = e=>{
       if (e.isSourceLoaded && e.source.id === hiddenVectorLayerId) {
         let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
-        const zoomLevel = this.map.getZoom();
-        let needsUpdate = false;
+        //const zoomLevel = this.map.getZoom();
+        let jsonUpdated = false;
         for (let vectorFeature of vectorFeatures) {
           const keyValue = vectorFeature.properties[vectorKeyName];
-          if (csvKeyValues.has(keyValue)) {
-            needsUpdate = true;
-            csvKeyValues.delete(keyValue);
-            jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === keyValue).map(row=>{
-              return {
-                "type":"Feature", 
-                properties: Object.assign({}, vectorFeature.properties, row),
-                geometry:vectorFeature.geometry  
-              }
-            }));
-            geocodedKeys.set(keyValue, zoomLevel);
-          } else if (geocodedKeys.has(keyValue)) {
-            if (geocodedKeys.get(keyValue) < zoomLevel) {
-              // possibly more precise geometry available
-              needsUpdate = true;
-              for (let feature of jsonFeatures) {
-                if (feature[csvKeyName] === keyValue) {
-                  feature.geometry = vectorFeature.geometry;
+          if (csvKeyValues.has(keyValue)) {            
+            //csvKeyValues.delete(keyValue);
+            if (!jsonKeyValues.has(keyValue)) {
+              jsonUpdated = true;
+              jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === keyValue).map(row=>{
+                return {
+                  "type":"Feature", 
+                  properties: Object.assign({}, vectorFeature.properties, row),
+                  geometry:vectorFeature.geometry,
+                  tiles: [vectorFeature.tile]
+                }
+              }));
+              jsonKeyValues.add(keyValue);
+            } else {
+              let feature = jsonFeatures.find(feature=>feature.properties[csvKeyName] === keyValue);
+              if (feature) {
+                let tile = feature.tiles.find(tile=>tile.x === vectorFeature.tile.x && tile.y === vectorFeature.tile.y && tile.z === vectorFeature.tile.z);
+                if (!tile) {
+                  // existing feature found on new tile
+                  let moreDetailedTile = feature.tiles.find(tile=>tile.z > vectorFeature.tile.z);
+                  if (!moreDetailedTile) {
+                    if (feature.geometry.type === 'Point') {
+                      feature.geometry.coordinates = vectorFeature.geometry.coordinates;
+                      jsonUpdated = true;
+                    }
+                  }
+                  feature.tiles.push(vectorFeature.tile);
+                  if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
+                    try {
+                      let bbox1 = turf.bbox(feature);
+                      let bbox2 = turf.bbox(vectorFeature);
+                      if (bbox1[0] !== bbox2[0] || bbox1[1] !== bbox2[1] || bbox1[2] !== bbox2[2] || bbox1[3] !== bbox2[3]) {
+                        let poly1 = turf.multiPolygon(feature.geometry.coordinates,{});
+                        let poly2 = turf.multiPolygon(vectorFeature.geometry.coordinates,{});
+                        try {
+                          feature.geometry = turf.union(poly1, poly2).geometry;
+                          jsonUpdated = true;
+                        } catch(err) {
+                          console.log(`keyValue: ${keyValue}, error: ${JSON.stringify(err)}`);
+                        }
+                      }
+                    } catch(err) {
+                      // ignore
+                    }
+                  }
                 }
               }
-              geocodedKeys.set(keyValue, zoomLevel);
             }
           }
-        };
-        if (needsUpdate) {
+        }
+        if (jsonUpdated) {
           this.map.getSource(geocodedCSVLayerId).setData({
             "type": "FeatureCollection",
             "features": jsonFeatures
           })
         }
-      }
+      };
     }
     this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
     this.addLayer({detail: hiddenVectorLayer});
