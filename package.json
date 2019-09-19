@@ -51,7 +51,7 @@
     "pixelmatch": "^4.0.2",
     "polyserve": "^0.27.0",
     "prpl-server": "^1.2.0",
-    "puppeteer": "^1.7.0",
+    "puppeteer": "^1.20.0",
     "wct-browser-legacy": "^1.0.2"
   }
 }
