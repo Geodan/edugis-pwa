@@ -19,12 +19,12 @@
                         "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
                         },
                         "source":{
-                            "type":"raster",
-                            "tileSize":256,
-                            "tiles":[
-                                "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                            ],
-                            "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                        "type":"raster",
+                        "tileSize":256,
+                        "tiles":[
+                            "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                        ],
+                        "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
                         }
                     }
                 },
@@ -584,7 +584,157 @@
             "sublayers": [
                 {
                     "type": "group",
-                    "title":"Buiten- en Voorschoolse opvang",
+                    "title":"Vrije tijd",
+                    "sublayers" : [
+                    {
+                    "title": "Speeltuinen",
+                    "layerInfo":{
+                        "id": "speeltuinen",
+                        "type": "circle",
+                        "source": {
+                            "type": "vector",
+                            "tiles": [
+                                "https://tiles.edugis.nl/v1/mvt/public.speeltuinen/{z}/{x}/{y}?columns=\"id\",name"
+                                ]
+                                },
+                        "source-layer": "public.speeltuinen",
+                        "paint": {
+                            "circle-radius": 4,
+                            "circle-color": "darkblue",
+                            "circle-stroke-color": "black",
+                            "circle-stroke-width": 1
+                            },
+                        "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+                    },{
+                    "title": "Dierentuinen en kinderboerderijen",
+                    "layerInfo":{
+                        "id": "dierentuinen",
+                        "type": "circle",
+                        "source": {
+                            "type": "vector",
+                            "tiles": [
+                              "https://tiles.edugis.nl/v1/mvt/public.dierentuinen/{z}/{x}/{y}?columns=\"id\",name"
+                            ]
+                          },
+                        "source-layer": "public.dierentuinen",
+                        "paint": {
+                            "circle-radius": 4,
+                            "circle-color": "#a6cee3",
+                            "circle-stroke-color": "black",
+                            "circle-stroke-width": 1
+                          },
+                          "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+               },{
+                    "title": "Bioscopen",
+                    "layerInfo":{
+                              "id": "bioscopen",
+                              "type": "circle",
+                              "source": {
+                                "type": "vector",
+                                "tiles": [
+                                  "https://tiles.edugis.nl/v1/mvt/public.bioscopen/{z}/{x}/{y}?columns=\"id\",name"
+                                ]
+                              },
+                              "source-layer": "public.bioscopen",
+                              "paint": {
+                                "circle-radius": 4,
+                                "circle-color": "#1f78b4",
+                            "circle-stroke-color": "black",
+                            "circle-stroke-width": 1
+                          },
+                          "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+               }]
+               },
+                {
+                    "type": "group",
+                    "title":"Toerisme",
+                    "sublayers" : [
+                        {
+                            "title": "Hotels",
+                            "layerInfo":{
+                                  "id": "hotels",
+                                  "type": "circle",
+                                  "source": {
+                                    "type": "vector",
+                                    "tiles": [
+                                      "https://tiles.edugis.nl/v1/mvt/public.hotels/{z}/{x}/{y}?columns=\"id\",name"
+                                    ]
+                                  },
+                                  "source-layer": "public.hotels",
+                                  "paint": {
+                                    "circle-radius": 4,
+                                    "circle-color": "#b2df8a",
+                                    "circle-stroke-color": "black",
+                                    "circle-stroke-width": 1
+                                    },
+                                "filter": [
+                                    "has",
+                                    "id"
+                                        ]
+                                }
+                        },{
+                            "title": "Jeugdherbergen",
+                            "layerInfo":{
+                                  "id": "jeugdherbergen",
+                                  "type": "circle",
+                                  "source": {
+                                    "type": "vector",
+                                    "tiles": [
+                                      "https://tiles.edugis.nl/v1/mvt/public.jeugdherbergen/{z}/{x}/{y}?columns=\"id\",name"
+                                    ]
+                                  },
+                                  "source-layer": "public.jeugdherbergen",
+                                  "paint": {
+                                    "circle-radius": 4,
+                                    "circle-color": "#33a02c",
+                                    "circle-stroke-color": "black",
+                                    "circle-stroke-width": 1
+                                    },
+                                "filter": [
+                                    "has",
+                                    "id"
+                                        ]
+                                }
+                        },{   
+                            "title": "Campings",
+                            "layerInfo":{
+                                  "id": "campings",
+                                  "type": "circle",
+                                  "source": {
+                                    "type": "vector",
+                                    "tiles": [
+                                      "https://tiles.edugis.nl/v1/mvt/public.campings/{z}/{x}/{y}?columns=\"id\",name"
+                                    ]
+                                  },
+                                  "source-layer": "public.campings",
+                                  "paint": {
+                                    "circle-radius": 4,
+                                    "circle-color": "#fb9a99",
+                                    "circle-stroke-color": "black",
+                                    "circle-stroke-width": 1
+                                    },
+                                "filter": [
+                                    "has",
+                                    "id"
+                                        ]
+                                }
+                        }
+                    ]
+                },{
+                    "type": "group",
+                    "title":" Buiten- en Voorschoolse opvang",
                     "sublayers" : [
                         {
                             "type":"getcapabilities",
@@ -644,8 +794,8 @@
                 },
                 {
                     "type": "group",
-                    "title": "Fietsroutes",
-                    
+                    "title": "Fietsen",
+                
                     "sublayers": [
                         {
                             "type":"wms",
@@ -663,24 +813,33 @@
                                     "tiles": ["https://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?layers=knooppunten,netwerken"]
                                 }
                             }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Bioscopen",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Bioscopen",
-                            "layerInfo":{
-                                "id":"bioscopen",
-                                "url":"https://kaart.edugis.nl/data/nederland/bioscopen.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
+                        },{
+                    "title": "Fietsstallingen",
+                    "layerInfo":{
+                              "id": "attrlayer",
+                              "type": "circle",
+                              "source": {
+                                "type": "vector",
+                                "tiles": [
+                                  "https://tiles.edugis.nl/v1/mvt/public.fietsstallingen/{z}/{x}/{y}?columns=\"id\",name"
+                                ]
+                              },
+                              "source-layer": "public.fietsstallingen",
+                              "paint": {
+                                "circle-radius": 4,
+                                "circle-color": "#1f78b4",
+                            "circle-stroke-color": "black",
+                            "circle-stroke-width": 1
+                          },
+                          "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+               }
                     ]
                 }
+
             ]
         },
         {
@@ -1276,7 +1435,58 @@
         {
             "type": "group",
             "title": "Water (hydrografie)",
-            "sublayers": [
+            "sublayers": [{
+                    "type": "group",
+                    "title": "Vitens",
+                    "sublayers": [
+                        {
+                            "title":"Productielocaties",
+                            "layerInfo":{
+                        "id": "productielocaties",
+                        "type": "circle",
+                        "source": {
+                            "type": "vector",
+                            "tiles": [
+                                "https://tiles.edugis.nl/v1/mvt/public.productielocatie_centrum/{z}/{x}/{y}?columns=\"id\",naam"
+                                ]
+                                },
+                        "source-layer": "public.productielocatie_centrum",
+                        "paint": {
+                            "circle-radius": 4,
+                            "circle-color": "darkblue",
+                            "circle-stroke-color": "black",
+                            "circle-stroke-width": 1
+                            },
+                        "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+                        },{
+                            "title":"Balansgebieden",
+                            "layerInfo":{
+                        "id": "balansgebieden",
+                        "type": "fill",
+                        "source": {
+                            "type": "vector",
+                            "tiles": [
+                                "https://tiles.edugis.nl/v1/mvt/public.balansgebieden/{z}/{x}/{y}?columns=\"id\",keyname"
+                                ]
+                                },
+                        "source-layer": "public.balansgebieden",
+                        "paint": {
+                            "fill-color": "#89ea27",
+                            "fill-outline-color": "black",
+                            "fill-opacity": 0.6
+  },
+                        "filter": [
+                            "has",
+                            "id"
+                            ]
+                    }
+                        }
+                    ]
+                },
                 {
                     "type": "group",
                     "title": "Rivieren",
@@ -1757,7 +1967,7 @@
             "type": "group",
             "title": "Topografie",
             "sublayers": [
-                {
+               {
                     "type":"getcapabilities",
                     "title":"Topografie",
                     "layerInfo":{
@@ -1774,6 +1984,22 @@
                         "deniedlayers": "topografie",
                         "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/base.map",
                         "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                    }
+                },
+                {
+                    "type": "wms",
+                    "title": "topografie: 1:25.000",
+                    "layerInfo": {
+                        "id": "top25raster",
+                        "type": "raster",
+                        "metadata": {
+                            "getFeatureInfoFormat":"application/json"
+                            },
+                        "source": {
+                            "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top25raster"]
+                        }
                     }
                 }
             ]
@@ -1886,18 +2112,15 @@
                     "layerInfo": {
                         "id": "zonpotentie",
                         "type": "raster",
-                        "minzoom": 8.5,
+                        "minzoom": 12,
                         "metadata": {
                             "getFeatureInfoFormat":"application/json"
                         },
                         "source": {
-                            "minzoom": 9,
+                            "minzoom": 12,
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://tiles.edugis.nl/mapproxy/rivmnea/wms?layers=Greenspread_20181101_v_zonnevelden"],
-                            "tiles2": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"],
-                            "tiles3": ["https://tiles.edugis.nl/mapproxy/rivmnea/wmts/Greenspread_20181101_v_zonnevelden/spherical_mercator/{z}/{x}/{y}.png"],
-                            "attribution":"RIVM"
+                            "tiles": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
                         }
                     }
                 },
