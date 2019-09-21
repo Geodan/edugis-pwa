@@ -15,6 +15,8 @@
     "node_modules/papaparse/papaparse.min.js",
     "node_modules/hopscotch/dist/js/hopscotch.min.js",
     "node_modules/hopscotch/dist/css/hopscotch.min.css",
+    "node_modules/hopscotch/dist/img/sprite-green.png",
+    "node_modules/xlsx/dist/xlsx.full.min.js",
     "push-manifest.json",
     "styles/openmaptiles/positron.json",
     "styles/openmaptiles/osmbright.json",
