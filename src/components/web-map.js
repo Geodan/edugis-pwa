@@ -1313,7 +1313,7 @@ class WebMap extends LitElement {
     }
     this.addLayer({detail: layer});
   }
-  _loadCSV(droppedFile) {
+  async _loadCSV(droppedFile) {
     /* handle added csv (converted to json with papaparse or XSLX)
        1 - determine which vector data should be joined to the file data (get url, key and fkey)
        2 - load the external vector data, do not visually display the features
@@ -1384,36 +1384,32 @@ class WebMap extends LitElement {
     if (!keyInfo) {
       keyInfo = csvKeyDataPairs.find(pair=>pair.key.toLowerCase() === csvKeyName.toLowerCase());
     }
-
-    // json.json.data = json.json.data.filter(row=>row.hasOwnProperty('Postcode'));
-    //const filter = ["match", ["get", "postcode"], Array.from(csvKeys), true, false];
-    const hiddenVectorLayerId = GeoJSON._uuidv4();
-    const hiddenVectorLayer = {
-      "metadata": {
-        "title": `${droppedFile.filename}`,
-        "isToolLayer": true
-      },
-      "id": hiddenVectorLayerId,
-      "type": keyInfo.type,
-      "minzoom": keyInfo.minzoom,
-      "source": keyInfo.source,
-      "paint": {},
-      filter: false
-    }
-    if (hiddenVectorLayer.source.type === 'vector') {
-      hiddenVectorLayer.source.id = hiddenVectorLayerId;
-      hiddenVectorLayer.source.minzoom = keyInfo.minzoom;
-      hiddenVectorLayer.source.maxzoom = 16;
-      hiddenVectorLayer["source-layer"] = keyInfo.sourceLayer;
-    }
-    
+    let mappedCSV = new Map(droppedFile.data.data.map(row=>[row[csvKeyName], row]));
     const vectorKeyName = keyInfo.fkey;
-    const sourceLayer = hiddenVectorLayer["source-layer"];
-
-    if (vectorKeyName.toLowerCase() === 'postcode') {
+    if (vectorKeyName === 'postcode') {
       // remove possible spaces from csv postcode
       droppedFile.data.data.forEach(item=>item[csvKeyName]=item[csvKeyName].replace(' ', ''))
     }
+    if (keyInfo.source.type === "geojson") {
+      if (typeof keyInfo.source.data === "string") {
+        // preload the data
+        let response = await fetch (keyInfo.source.data);    
+        if (response.ok) {
+          let json = await response.json();
+          keyInfo.source.data = json;
+        }
+      }
+      if (typeof keyInfo.source.data === 'object') {
+        // link the csv to the geojson
+        keyInfo.source.data.features = keyInfo.source.data.features
+          .filter(feature=>mappedCSV.has(feature.properties[vectorKeyName]))
+          .map(feature=>{
+            feature.properties = Object.assign({}, feature.properties, mappedCSV.get(feature.properties[vectorKeyName]));
+              return feature;
+          });
+      }
+    }
+
     const geocodedCSVLayerId = GeoJSON._uuidv4();
     const geocodedCSVLayer = {
       "metadata": {"title": `${droppedFile.filename}`},
@@ -1429,78 +1425,78 @@ class WebMap extends LitElement {
       },
       "paint": keyInfo.paint
     }
-    
-    let jsonFeatures = [];
-    const csvKeyValues = new Set(droppedFile.data.data.map(row=>row[csvKeyName]));
-    const jsonKeyValues = new Set();
 
-    const handleSourceData = e=>{
-      if (e.isSourceLoaded && e.sourceId === hiddenVectorLayerId) {
-        let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
-        //const zoomLevel = this.map.getZoom();
-        let jsonUpdated = false;
-        for (let vectorFeature of vectorFeatures) {
-          const keyValue = vectorFeature.properties[vectorKeyName];
-          if (csvKeyValues.has(keyValue)) {            
-            //csvKeyValues.delete(keyValue);
-            if (!jsonKeyValues.has(keyValue)) {
-              jsonUpdated = true;
-              jsonFeatures.push(...droppedFile.data.data.filter(row=>row[csvKeyName] === keyValue).map(row=>{
-                return {
-                  "type":"Feature", 
-                  properties: Object.assign({}, vectorFeature.properties, row),
-                  geometry:vectorFeature.geometry,
-                  tiles: [vectorFeature.tile]
-                }
-              }));
-              jsonKeyValues.add(keyValue);
-            } else {
-              let feature = jsonFeatures.find(feature=>feature.properties[csvKeyName] === keyValue);
-              if (feature) {
-                let tile = feature.tiles.find(tile=>tile.x === vectorFeature.tile.x && tile.y === vectorFeature.tile.y && tile.z === vectorFeature.tile.z);
-                if (!tile) {
-                  // existing feature found on new tile
-                  let moreDetailedTile = feature.tiles.find(tile=>tile.z > vectorFeature.tile.z);
-                  if (!moreDetailedTile) {
-                    if (feature.geometry.type === 'Point') {
-                      feature.geometry.coordinates = vectorFeature.geometry.coordinates;
-                      jsonUpdated = true;
-                    }
-                  }
-                  feature.tiles.push(vectorFeature.tile);
-                  if (feature.geometry.type === 'Polygon' || feature.geometry.type === 'MultiPolygon') {
-                    try {
-                      let bbox1 = turf.bbox(feature);
-                      let bbox2 = turf.bbox(vectorFeature);
-                      if (bbox1[0] !== bbox2[0] || bbox1[1] !== bbox2[1] || bbox1[2] !== bbox2[2] || bbox1[3] !== bbox2[3]) {
-                        let poly1 = turf.multiPolygon(feature.geometry.coordinates,{});
-                        let poly2 = turf.multiPolygon(vectorFeature.geometry.coordinates,{});
-                        try {
-                          feature.geometry = turf.union(poly1, poly2).geometry;
-                          jsonUpdated = true;
-                        } catch(err) {
-                          console.log(`keyValue: ${keyValue}, error: ${JSON.stringify(err)}`);
-                        }
-                      }
-                    } catch(err) {
-                      // ignore
-                    }
-                  }
+    if (keyInfo.source.type === "geojson" && typeof keyInfo.source.data === "object") {
+      geocodedCSVLayer.source.data = keyInfo.source.data;
+    } else {
+      const hiddenVectorLayerId = GeoJSON._uuidv4();
+      const hiddenVectorLayer = {
+        "metadata": {
+          "title": `${droppedFile.filename}`,
+          "isToolLayer": true
+        },
+        "id": hiddenVectorLayerId,
+        "type": keyInfo.type,
+        "minzoom": keyInfo.minzoom,
+        "source": keyInfo.source,
+        "paint": {},
+        filter: false
+      }
+      if (hiddenVectorLayer.source.type === 'vector') {
+        hiddenVectorLayer.source.id = hiddenVectorLayerId;
+        hiddenVectorLayer.source.minzoom = keyInfo.minzoom;
+        hiddenVectorLayer.source.maxzoom = 16;
+        hiddenVectorLayer["source-layer"] = keyInfo.sourceLayer;
+      }
+      
+      const sourceLayer = hiddenVectorLayer["source-layer"];
+
+          
+      let jsonFeatures = [];
+      const mappedJson = new Map();
+
+      const handleSourceData = e=>{
+        if (e.isSourceLoaded && e.sourceId === hiddenVectorLayerId) {
+          let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
+          let jsonUpdated = false;
+          for (let vectorFeature of vectorFeatures) {
+            const keyValue = vectorFeature.properties[vectorKeyName];
+            if (mappedCSV.has(keyValue)) {            
+              //csvKeyValues.delete(keyValue);
+              if (!mappedJson.has(keyValue)) {
+                jsonUpdated = true;
+                mappedJson.set(keyValue, {
+                  type: "Feature",
+                  properties: Object.assign({}, vectorFeature.properties, mappedCSV.get(keyValue)),
+                  geometry: vectorFeature.geometry,
+                  tile: vectorFeature.tile
+                })                
+              } else {
+                let feature = mappedJson.get(keyValue);
+                if (feature.tile.z < vectorFeature.tile.z) {
+                  // more detailed feature for this keyValue found
+                  jsonUpdated = true;
+                  mappedJson.set(keyValue, {
+                    type: "Feature",
+                    properties: feature.properties,
+                    geometry: vectorFeature.geometry,
+                    tile: vectorFeature.tile
+                  })
                 }
               }
             }
           }
-        }
-        if (jsonUpdated) {
-          this.map.getSource(geocodedCSVLayerId).setData({
-            "type": "FeatureCollection",
-            "features": jsonFeatures
-          })
-        }
-      };
+          if (jsonUpdated) {
+            this.map.getSource(geocodedCSVLayerId).setData({
+              "type": "FeatureCollection",
+              "features": Array.from(mappedJson.values())
+            })
+          }
+        };
+      }
+      this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
+      this.addLayer({detail: hiddenVectorLayer});
     }
-    this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
-    this.addLayer({detail: hiddenVectorLayer});
     this.addLayer({detail: geocodedCSVLayer});
   }
 
