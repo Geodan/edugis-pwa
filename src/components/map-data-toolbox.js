@@ -5,7 +5,7 @@ import './map-iconbutton';
 import {bufferIcon} from './my-icons';
 import { measureIcon} from '../gm/gm-iconset-svg';
 
-const dummyIcon = svg`<svg height="24" width="24" viewbox="0 0 24 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="16" class="normal">A</text></svg>`;
+//const dummyIcon = svg`<svg height="24" width="24" viewbox="0 0 24 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="16" class="normal">A</text></svg>`;
 
 
 /**
