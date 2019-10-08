@@ -1365,10 +1365,21 @@ class WebMap extends LitElement {
         sourceLayer: 'cbs_gemeente_2019_gegeneraliseerd',
         minzoom: 5,
         paint: {
-          "fill-color": 'red',
-          "fill-opacity": 0.8,
-          "fill-outline-color": 'white'
-        }
+            "fill-color": [
+              "step",
+              ["get", "Inwoners"],
+              "#fff7ec",
+              17290, "#fee8c8",
+              22795, "#fdd49e",
+              26587, "#fdbb84",
+              33025, "#fc8d59",
+              44058, "#ef6548",
+              67551, "#d7301f",
+              844947, "#990000",
+            ],
+            "fill-outline-color": "white",
+            "fill-opacity": 0.8
+          }
       }
     ];
 
