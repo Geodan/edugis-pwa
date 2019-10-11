@@ -11,6 +11,7 @@
             "sublayers": [
                 {
                     "title":"Openstreetmap",
+                    "checked": true,
                     "type":"reference",
                     "layerInfo":{
                         "id":"openstreetmap",
@@ -50,7 +51,6 @@
                 {
                     "type":"reference",
                     "title":"OSM Helder (stijl)",
-                    "checked": true,
                     "layerInfo":{
                       "id":"OsmBright",
                       "type":"style",
