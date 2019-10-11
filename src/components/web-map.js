@@ -1214,7 +1214,7 @@ class WebMap extends LitElement {
         } 
       }
       if (!config.map.style.glyphs) {
-        config.map.style.glyphs = `https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
+        config.map.style.glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
         //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
       }
       this.mapstyle = config.map.style;
