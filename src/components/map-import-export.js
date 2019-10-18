@@ -79,12 +79,71 @@ export default class MapImportExport extends LitElement {
     })
     return result;
   }
+  getDataCatalogItem(idOrTitle, layers) {
+    if (!Array.isArray(layers)) {
+      layers = [layers];
+    }
+    for (let i = 0; i < layers.length; i++) {
+      const layer = layers[i];
+      if (layer.id && layer.id === idOrTitle) {
+        return layer;
+      }
+      if (layer.title && layer.title === idOrTitle) {
+        return layer;
+      }
+      if (layer.sublayers) {
+        const subresult = this.getDataCatalogItem(idOrTitle, layer.sublayers);
+        if (subresult) {
+          return subresult;
+        }
+      }
+    }
+    return undefined;
+  }
   _saveFile(e) {
     const center = this.map.getCenter();
+    let datacatalog = this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : [ ...this.datacatalog];
+    datacatalog = datacatalog.filter(item=>item.id !== 'extralayers');
+    const layers = this.map.getStyle().layers;
+    const extraLayers = layers.filter(layer=>{
+      if (layer.metadata.reference || layer.metadata.isToolLayer) {
+        return false;
+      }
+      if (layer.id) {
+        return !this.getDataCatalogItem(layer.id, this.datacatalog);
+      } else if (layer.title) {
+        return !this.getDataCatalogItem(layer.title, this.datacatalog);
+      }
+      return false;
+    })
+    if (extraLayers.length) {
+      const extraLayersGroup = {
+          "type": "group",
+          "title": "Toegevoegde lagen",
+          "id": "extralayers",
+          "sublayers": []
+      };      
+      datacatalog.push(extraLayersGroup);
 
+      for (let extraLayer of extraLayers) {
+        if (extraLayer.type === 'line' || extraLayer.type === 'fill' || extraLayer.type === 'circle' || extraLayer.type === 'symbol') {
+          let source = extraLayer.source;
+          if (typeof source === 'string') {
+            source = this.map.getSource(source).serialize();
+            extraLayer.source = source;
+          }
+        }
+        extraLayersGroup.sublayers.push({
+          "type": "geojson",
+          "title": extraLayer.metadata.title,
+          "checked": true,
+          "layerInfo": extraLayer
+        })
+      }      
+    }
     const json = {
         map: { zoom: this.map.getZoom(),center: [center.lng, center.lat], pitch: this.map.getPitch(), bearing: this.map.getBearing()},
-        datacatalog: this.onlyselected? this._selectedLayersAndGroups(this.datacatalog) : this.datacatalog,
+        datacatalog: datacatalog,
         tools: this.toollist.reduce((result, tool)=>{
             result[tool.name] = {};
             if (tool.hasOwnProperty('opened')) {result[tool.name].opened = tool.opened};
@@ -117,27 +176,73 @@ export default class MapImportExport extends LitElement {
       reader.readAsText(inputFile);
     });
   };
+  static _readSpreadsheet(inputFile) {
+    const reader = new FileReader();
+    return new Promise((resolve, reject) => {
+      reader.onerror = () => {
+        reader.abort();
+        reject(new DOMException("Problem parsing input file."));
+      };  
+      reader.onload = (e) => {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, {type: 'array'});
+        resolve(workbook);
+      };
+      reader.readAsArrayBuffer(inputFile);
+    });
+  }
+
   static async _readFile(file)
   {
     try {
+       if (file.name.endsWith('.xlsx') || file.name.endsWith('xls')) {
+         const workbook = await MapImportExport._readSpreadsheet(file);
+         const json = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
+         return {
+          filename: file.name, 
+            data: {
+              data:json, 
+              meta:{
+                fields: json.length?Object.keys(json[0]):[]
+              }
+            }
+          };
+       } else {
         const text = await MapImportExport._readFileAsText(file);
-        return MapImportExport._processGeoJson(text, file.name);
+        if (file.name.endsWith('.csv')) {
+          // probably a csv file
+          if (window.Papa) {
+            const result = Papa.parse(text, {
+              header: true,
+              skipEmptyLines: true
+            });
+            if (result.data.length) {
+              return {filename: file.name, data: result}
+            } else {
+              return {error: 'invalid or empty csv'};
+            }
+          } else {
+            return {error: 'Cannot load csv, parser not available'};
+          }
+        }
+        return MapImportExport._parseJson(text, file.name);
+       }
     } catch(error) {
         return {error: error}
     }
   }
   _openFiles(e) {
     const file = this.shadowRoot.querySelector('#fileElem').files[0];
-    MapImportExport._readFile(file).then(json=>{
-        this.dispatchEvent(new CustomEvent('jsondata', {
-          detail: json
+    MapImportExport._readFile(file).then(droppedFile=>{
+        this.dispatchEvent(new CustomEvent('droppedfile', {
+          detail: droppedFile
         }))
     })
   }
-  static _processGeoJson(data, filename) {
+  static _parseJson(data, filename) {
     try {
       const json = JSON.parse(data);
-      return {filename: filename, geojson: json};
+      return {filename: filename, data: json};
     } catch(error) {
       return {error: 'invalid json'};
     }
@@ -164,9 +269,9 @@ export default class MapImportExport extends LitElement {
   }
   _handleDropZoneDrop(ev) {
     this.shadowRoot.querySelector('.dropzone').classList.remove('dragover');
-    MapImportExport.handleDrop(ev).then(json=>{
-      this.dispatchEvent(new CustomEvent('jsondata', {
-        detail: json
+    MapImportExport.handleDrop(ev).then(droppedFile=>{
+      this.dispatchEvent(new CustomEvent('droppedfile', {
+        detail: droppedFile
       }))
     })
   }

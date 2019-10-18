@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="22px" viewBox="0 0 24 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Stroke 588 + Stroke 589</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Lesmodule_5" transform="translate(-1571.000000, -45.000000)" stroke="#FFFFFF">
+            <g id="Group-3" transform="translate(1555.000000, 29.000000)">
+                <g id="Group-23-Copy">
+                    <g id="Group-4">
+                        <g id="Stroke-588-+-Stroke-589" transform="translate(17.000000, 17.000000)">
+                            <path d="M11,3.56125 C11,1.593405 16.148,0 22,0 L22,16.78875 C16.148,16.78875 11,18.382155 11,20.35 C11,18.382155 5.851,16.78875 0,16.78875 L0,0 C5.851,0 11,1.593405 11,3.56125 L11,3.56125 Z" id="Stroke-588"></path>
+                            <path d="M11,3.85 L11,20.35" id="Stroke-589"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

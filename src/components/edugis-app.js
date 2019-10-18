@@ -167,7 +167,7 @@ footer a:hover {
           </ul>
         </nav>
     </header>
-    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${EduGISkeys.mapbox}"></web-map>
+    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
     <footer className="App-footer">&copy;2019 <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }
@@ -176,10 +176,19 @@ footer a:hover {
     this.doHelpstart();
   }
   doHelpstart() {
-    if (this.helpstart) {
+    if (this.helpstart && window.sessionStorage.getItem('helpstart') !== 'shown') {
       setTimeout(()=>{
+          window.sessionStorage.setItem('helpstart', 'shown')
           var tour = {
               id: "hello-hopscotch",
+              i18n: {
+                nextBtn: "Volgende",
+                prevBtn: "Vorige",
+                doneBtn: "Klaar",
+                skipBtn: "Overslaan",
+                closeTooltip: "Sluiten",
+                stepNums : ["1/3", "2/3", "3/3"]
+              },
               steps: [
                   {
                       title: "Kaart",

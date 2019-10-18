@@ -153,12 +153,12 @@ class MapLegendPanel extends LitElement {
         );
     }
   }
-  circleColorLegend(colorInfo, strokeInfo, radiusInfo) {
+  circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo) {
     return colorInfo.items.map(color=>
       html`
         ${svg`
         <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
-          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${strokeInfo.items.length?'stroke-width:1;stroke:strokeInfo.items[0].value':''}" />
+          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${opacityInfo.items.length?`fill-opacity:${opacityInfo.items[0].value};`:''}${strokeInfo.items.length?`stroke-width:1;stroke:${strokeInfo.items[0].value}`:''}" />
         </svg> 
         `}
         ${color.label}<br>
@@ -171,21 +171,29 @@ class MapLegendPanel extends LitElement {
     if (paint && paint['circle-color']) {
       colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], this.maplayer.metadata.title);
     }
+    let opacityInfo = {propertyname: this.maplayer.metadata.title, items: []};
+    if (paint && paint['circle-opacity']) {
+      opacityInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-opacity'], this.maplayer.metadata.title);
+      if (opacityInfo.items.length > 1) {
+        // not supported
+        opacityInfo.items = [];
+      }
+    }
     let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [5]};
     if (paint && paint['circle-radius']) {
       radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], this.maplayer.metadata.title);
     }
     let strokeInfo = {propertyname: this.maplayer.metadata.title, items: []};
-    if (paint && paint['circle-stroke-color']) {
+    if (paint && paint['circle-stroke-color'] && paint['circle-stroke-width']) {
       strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], this.maplayer.metadata.title);
-      if (strokeInfo.value.length > 1) {
+      if (strokeInfo.items.length > 1) {
         // not supported
-        strokeInfo.value = [];
+        strokeInfo.items = [];
       }
     }
     
     return html`
-      ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo)}
+      ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo)}
       ${this.circleRadiusLegend(radiusInfo)}
     `
   }
@@ -206,36 +214,43 @@ class MapLegendPanel extends LitElement {
     let outlineColor = "gray";
     if (paint && paint['fill-outline-color']) {
       outlineColor = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-outline-color']);
-    } 
+    }
     // todo: get more complex outlinecolor if applicable
     if (typeof outlineColor !== 'string') {
       outlineColor = "gray";
+    }
+    let fillOpacity = 1;
+    if (paint && paint['fill-opacity']) {
+      fillOpacity = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-opacity']);
+    }
+    if (typeof fillOpacity !== 'number') {
+      fillOpacity = 1;
     }
     if (Array.isArray(paintFillColor) && paintFillColor.length) {
       switch(paintFillColor[0]) {
         case "step":
           // element[1] is ["get", "propertyname"] (?)
           result.propertyname = paintFillColor[1][1];
-          result.items.push({fillColor: paintFillColor[2], outlineColor: outlineColor, label: `< ${paintFillColor[3]}`});
+          result.items.push({fillColor: paintFillColor[2], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `< ${paintFillColor[3]}`});
           for (let i = 3; i < paintFillColor.length - 2; i+=2) {
             // get color
-            result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, label: `[${paintFillColor[i]} - ${paintFillColor[i+2]})`});
+            result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `[${paintFillColor[i]} - ${paintFillColor[i+2]})`});
           }
-          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor, label: `> ${paintFillColor[paintFillColor.length - 2]}`})
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor, fillOpacity: fillOpacity, label: `> ${paintFillColor[paintFillColor.length - 2]}`})
           break;
         case "match":
           // element[1] is ["get", "propertyname"] (?)
           result.propertyname = paintFillColor[1][1];
-          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor: outlineColor, label: ''});
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: ''});
           for (let i = 2; i < paintFillColor.length - 1; i+=2) {
-            result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, label: `${paintFillColor[i]}`});
+            result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `${paintFillColor[i]}`});
           }
       }
     } else if (paintFillColor === Object(paintFillColor)) {
       if (paintFillColor.hasOwnProperty('property')) {
         result.propertyname = paintFillColor.property;
         if (paintFillColor.stops) {
-          result.items = paintFillColor.stops.map(stop=>{return {fillColor:stop[1], outlineColor: outlineColor, label: stop[0]}});
+          result.items = paintFillColor.stops.map(stop=>{return {fillColor:stop[1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: stop[0]}});
         }
       }
     } else if (typeof paintFillColor === "string") {
@@ -247,7 +262,7 @@ class MapLegendPanel extends LitElement {
       ${result.items.map((item)=>{
         return svg`
         <svg width="30" height="15">
-          <rect width="30" height="15" style="fill:${item.fillColor};stroke-width:1;stroke:${item.outlineColor}"/>
+          <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:${fillOpacity};stroke-width:1;stroke:${item.outlineColor}"/>
         </svg>${html` ${item.label}<br>`}`;
       })}`;
   }

@@ -1,5 +1,17 @@
 // Checks if `list` looks like a `[x, y]`.
 
+class Feature {
+  constructor(typeName) {
+    this.type = "Feature";
+    this.properties = {};
+    this.geometry = {
+      "type": typeName,
+      "coordinates": []
+    }
+  }
+}
+
+
 export class GeoJSON {
   static _isXY(list) {
     return list.length >= 2 &&
@@ -15,7 +27,7 @@ export class GeoJSON {
   // Simplistic shallow clone that will work for a normal GeoJSON object.
   static _clone(obj) {
     if (null == obj || 'object' !== typeof obj) return obj;
-    var copy = obj.constructor();
+    var copy = {};
     for (var attr in obj) {
       if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
     }
@@ -69,7 +81,7 @@ export class GeoJSON {
     return crs;
   }
 
-  static _determineCrs(crs, projs) {
+  static _getProj(crs, projs) {
     if (typeof crs === 'string') {
       return projs[crs] || proj4.Proj(crs);
     }
@@ -91,14 +103,14 @@ export class GeoJSON {
     return [min[0], min[1], max[0], max[1]];
   }
 
-  static _reproject(geojson, from, to, projs) {
+  static _project(geojson, from, to, projs) {
     projs = projs || {};
     if (!from) {
       from = GeoJSON._detectCrs(geojson, projs);
     } else {
-      from = GeoJSON._determineCrs(from, projs);
+      from = GeoJSON._getProj(from, projs);
     }
-    to = GeoJSON._determineCrs(to, projs);
+    to = GeoJSON._getProj(to, projs);
     var transform = proj4(from, to).forward.bind(transform);
   
     var transformGeometryCoords = function(gj) {
@@ -130,7 +142,7 @@ export class GeoJSON {
   */
   
   static _toWgs84(geojson, from, projs) {
-    return GeoJSON._reproject(geojson, from, proj4.WGS84, projs);
+    return GeoJSON._project(geojson, from, proj4.WGS84, projs);
   }
   
   static convertTopoJsonLayer(layerInfo) {
@@ -144,13 +156,25 @@ export class GeoJSON {
     }).catch(reason=>console.log(reason));
   }
 
+  static loadGeoJsonToMemory(layerInfo) {
+    if (typeof layerInfo.source.data === "string") {
+      return fetch(layerInfo.source.data)
+        .then(data=>data.json())
+        .then(json=>{
+          layerInfo.metadata.originaldata = layerInfo.source.data;
+          layerInfo.source.data = json;
+          return layerInfo;
+        });     
+    }    
+  }
+
   static convertProjectedGeoJsonLayer(layerInfo) {
     const crs = layerInfo.metadata.crs;
     if (typeof layerInfo.data == 'object') {
       return new Promise((resolve, reject)=>{
         if (!layerInfo.metadata.originaldata) {
           layerInfo.metadata.originaldata = layerinfo.source.data;
-          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:8557"));
+          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:3857"));
         }
         resolve();
       })
@@ -171,14 +195,25 @@ export class GeoJSON {
   }
 
   // returns a point-layer, line-layer, fill-layer if point, line, polygon features exist
-  static createLayers(json) {
+  static createLayers(droppedFile) {
     const result = [];
-    const filename = json.filename.replace(/\.[^/.]+$/,"");
-    json = json.geojson;
-    if (json.features && json.features.length) {
-      const fillFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
-      const lineFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
-      const pointFeatures = json.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
+    const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
+    const geojson = droppedFile.data;
+    if (geojson.type === "Feature") {
+      // convert to FeatureCollection
+      geojson.type = "FeatureCollection";
+      geojson.features = [{
+        "type": "Feature",
+        "geometry": object.assign({}, geojson.geometry),
+        "properties": object.assign({}, geojson.properties)
+      }];
+      delete geojson.geometry;
+      delete geojson.properties;
+    }
+    if (geojson.features && geojson.features.length) {
+      const fillFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Polygon'||feature.geometry.type==='MultiPolygon'));
+      const lineFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
+      const pointFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
       if (fillFeatures.length) {
         result.push( 
         {
@@ -236,5 +271,8 @@ export class GeoJSON {
       }
     }
     return result;
+  }
+  static Feature(typeName) {
+    return new Feature(typeName);
   }
 }

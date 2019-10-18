@@ -12,7 +12,7 @@ class MapPanel extends LitElement {
   }
   constructor() {
       super();
-      this.active = false;      
+      this.active = false;
   }
   render() {
     if (!this.active) {

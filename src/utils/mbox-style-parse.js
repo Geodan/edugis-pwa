@@ -74,7 +74,7 @@ class MBStyleParser
     return result;
   }
   getZoomDependentPropertyInfo(zoom, property, defaultLabel) {
-    return this.getPropertyInfo(this.getZoomDependentValue(zoom, property, defaultLabel));
+    return this.getPropertyInfo(this.getZoomDependentValue(zoom, property), defaultLabel);
   }
   colorToHex(propertyValue) {
     if (typeof propertyValue !== "string") {

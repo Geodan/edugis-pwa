@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="272px" height="17px" viewBox="0 0 272 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Lesmodule_5" transform="translate(-1625.000000, -102.000000)">
+            <g id="Group-10" transform="translate(1626.000000, 103.000000)">
+                <path d="M187,7.5 L253,7.5" id="Line-8-Copy-4" stroke="#2E7DBA" stroke-linecap="square"></path>
+                <path d="M102,7.5 L168,7.5" id="Line-8-Copy-4" stroke="#2E7DBA" stroke-linecap="square"></path>
+                <g id="Group-9">
+                    <g id="Group-5"></g>
+                    <g id="Group-8" transform="translate(170.000000, 0.000000)"></g>
+                    <g id="Group-7" transform="translate(255.000000, 0.000000)"></g>
+                    <g id="Group-6" transform="translate(85.000000, 0.000000)"></g>
+                </g>
+                <circle id="Oval" stroke="#2E7DBA" fill="#2E7DBA" cx="7.5" cy="7.5" r="7.5"></circle>
+                <circle id="Oval" stroke="#2E7DBA" fill="#2E7DBA" cx="177.5" cy="7.5" r="7.5"></circle>
+                <circle id="Oval" stroke="#2E7DBA" fill="#FFFFFF" cx="262.5" cy="7.5" r="7.5"></circle>
+                <path d="M17,7.5 L83,7.5" id="Line-8-Copy-4" stroke="#2E7DBA" stroke-linecap="square"></path>
+                <circle id="Oval" stroke="#2E7DBA" fill="#2E7DBA" cx="92.5" cy="7.5" r="7.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

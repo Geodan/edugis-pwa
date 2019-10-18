@@ -2,7 +2,7 @@
   "entrypoint": "index.html",
   "shell": "src/components/edugis-app.js",
   "sources": [
-    "images/**/*"
+    "images/**/*", "course/**/*"
   ],
   "extraDependencies": [
     "manifest.json",
@@ -12,8 +12,11 @@
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/@turf/turf/turf.min.js",
     "node_modules/file-saver/dist/FileSaver.min.js",
+    "node_modules/papaparse/papaparse.min.js",
     "node_modules/hopscotch/dist/js/hopscotch.min.js",
     "node_modules/hopscotch/dist/css/hopscotch.min.css",
+    "node_modules/hopscotch/dist/img/sprite-green.png",
+    "node_modules/xlsx/dist/xlsx.full.min.js",
     "push-manifest.json",
     "styles/openmaptiles/positron.json",
     "styles/openmaptiles/osmbright.json",
@@ -58,7 +61,8 @@
     "maps/hitteeiland.json",
     "maps/layers.json",
     "maps/pdok.json",
-    "maps/zonnepanelen.json"
+    "maps/zonnepanelen.json",
+    "maps/datacatalog.json"
   ],
   "builds": [
     {

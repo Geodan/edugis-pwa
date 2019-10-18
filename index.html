@@ -78,8 +78,18 @@
     <!-- file-saver-->
     <script src="node_modules/file-saver/dist/FileSaver.min.js"></script>
 
+    <!-- csv parser -->
+    <script src="node_modules/papaparse/papaparse.min.js"></script>
+
+    <!-- xls spreadsheet parser -->
+    <script src="node_modules/xlsx/dist/xlsx.full.min.js"></script>
+
     <!-- wms-capabilities -->
     <script src="lib/wms-capabilities.min.js"></script>
+
+    <!-- chartjs -->
+    <!-- script src="node_modules/chartjs/chart.js"></script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     <script src="src/keys.js"></script>
     <script src="node_modules/proj4/dist/proj4.js"></script>
@@ -88,8 +98,7 @@
     <script src="lib/trafficlayer.js"></script>
 
     <!-- script src="src/openmaptiles-language.js"></script -->
-    <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <script>
       /*
       // Load and register pre-caching Service Worker
@@ -107,19 +116,7 @@
     </script>
 
     <!-- Add any global styles for body, document, etc. -->
-    <style>
-      @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0b.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        /* THe browser draws the text immediately in the fallback font if the font
-           isn't loaded, then swaps it with the webfont when it eventually loads
-           See: https://developers.google.com/web/updates/2016/02/font-display
-        */
-        font-display: auto;
-      }
+    <style>      
       html, body {
         box-sizing: border-box;
       }

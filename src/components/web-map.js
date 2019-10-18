@@ -31,15 +31,16 @@ import './map-pitch';
 import './map-selected-layers';
 import './map-draw';
 import './map-import-export';
-//import {render} from 'lit-html';
+import './map-data-toolbox';
+import './map-sheet-tool';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { importExportIcon, gpsFixedIcon, languageIcon, arrowLeftIcon, outlineInfoIcon } from './my-icons';
-import { measureIcon, informationIcon as gmInfoIcon, layermanagerIcon, drawIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
+import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon } from './my-icons';
+import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -185,6 +186,7 @@ class WebMap extends LitElement {
     super();
     this.map = null;
     this.pitch = 0;
+    this.bearing = 0;
     this.viewbox = undefined;
     // default property values
     this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
@@ -208,20 +210,22 @@ class WebMap extends LitElement {
     this.currentTool = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {name:"search", visible: true, position: "", order: 0, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, position: "", order: 1, info:"Kaartlagen", icon:layermanagerIcon},
-      {name:"measure", visible: true, position: "", order: 2, info:"Afstand en oppervlakte meten", icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 3, info: "Informatie uit de kaart halen", icon: gmInfoIcon},
-      {name:"maplanguage", visible: true, position: "", order: 4, info: "Kaarttaal", icon: languageIcon},
-      {name:"pitch", visible: true, position: "", order: 5, info: "Kaarthoek", icon: html`<b>3D</b>`},
-      {name:"geolocate", visible: true, position: "", order: 6, info: "Zoom naar mijn locatie", icon: gpsFixedIcon},
-      {name:"draw", visible: true, position: "", order: 7, info: "Tekenen", icon: drawIcon},
-      {name:"importexport", visible: true, position: "", order: 8, info: "Kaart opslaan / openen", icon: importExportIcon},
-      {name:"zoomlevel", visible: true, position: "bottom-left", order: 9, info: "Zoom-niveau"},
-      {name:"navigation", visible: true, position: "bottom-left", order: 10, info: "Zoom, Roteer"},
-      {name:"coordinates", visible: true, position: "bottom-center", order: 11},
-      {name:"scalebar", visible: true, position: "bottom-right", order: 12, info: "Schaalbalk"},
-      {name:"legend", visible: true, position: "opened", order: 13, info: "Legenda en kaartlagen"},
+      {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 102, info:"Afstand en oppervlakte meten", icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: infoIcon},
+      {name:"maplanguage", visible: true, position: "", order: 104, info: "Kaarttaal", icon: languageIcon},
+      {name:"pitch", visible: true, position: "", order: 105, info: "Kaarthoek", icon: threeDIcon},
+      {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsIcon},
+      {name:"draw", visible: true, position: "", order: 107, info: "Tekenen", icon: drawIcon},
+      {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: combineToolIcon},
+      {name:"sheetimport", visible: true, position: "", order: 110, info: "Tabel uploaden", icon: sheetIcon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
+      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
+      {name:"coordinates", visible: true, position: "bottom-center", order: 202},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: "Schaalbalk"},
+      {name:"legend", visible: true, position: "opened", order: 204, info: "Legenda en kaartlagen"},
     ];
   }
   updateSingleLayerVisibility(id, visible) {
@@ -249,21 +253,11 @@ class WebMap extends LitElement {
     const layer = this.map.getLayer(id);
     if (layer) {
       switch (layer.type) {
-        case 'raster':
-          this.map.setPaintProperty(id, 'raster-opacity', opacity);
-          break;
-        case 'fill':
-          this.map.setPaintProperty(id, 'fill-opacity', opacity);
-          break;
-        case 'line':
-          this.map.setPaintProperty(id, 'line-opacity', opacity);
-          break;
-        case 'symbol':
-          this.map.setPaintProperty(id, 'text-opacity', opacity);
-          break;
         case 'hillshade':
           this.map.setPaintProperty(id, 'hillshade-exaggeration', opacity);
           break;
+        default:
+          this.map.setPaintProperty(id, `${layer.type}-opacity`, opacity);
       }
     }
   }
@@ -479,7 +473,7 @@ class WebMap extends LitElement {
       url = document.baseURI + url;
     } 
     if (url.indexOf('mapbox:') === 0) {
-      url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${EduGISkeys.mapbox}`;
+      url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${APIkeys.mapbox}`;
     }
     fetch(url).then(data=>data.json()).then(style=>{
       this.applyStyle(style, styleId, styleTitle);
@@ -530,14 +524,17 @@ class WebMap extends LitElement {
     }
   }
   insertServiceKey(layerInfo) {
-    /* replace '{geodanmapskey}' by EduGISkeys.geodanmaps, '{freetilehostingkey}' by EduGISkeys.freetilehosting etc. */
-    for (let key in EduGISkeys) {
+    /* replace '{geodanmapskey}' by APIkeys.geodanmaps, '{freetilehostingkey}' by APIkeys.freetilehosting etc. */
+    for (let key in APIkeys) {
       const keyTemplate = `{${key}key}`;
       if (layerInfo.source.tiles) {
-        layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace(keyTemplate, EduGISkeys[key]));
+        layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace(keyTemplate, APIkeys[key]));
       }
       if (layerInfo.source.url) {
-        layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, EduGISkeys[key]);
+        layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, APIkeys[key]);
+      }
+      if (layerInfo.source.data && typeof layerInfo.source.data === "string") {
+        layerInfo.source.data = layerInfo.source.data.replace(keyTemplate, APIkeys[key]);
       }
     }
   }
@@ -622,7 +619,19 @@ class WebMap extends LitElement {
                 } 
                 if (layerInfo.metadata && layerInfo.metadata.crs && !layerInfo.metadata.originaldata) {
                   await GeoJSON.convertProjectedGeoJsonLayer(layerInfo);
-                }                
+                }
+                if (layerInfo.metadata && layerInfo.metadata.memorygeojson && !layerInfo.metadata.originaldata) {
+                  const spinner = this.shadowRoot.querySelector('map-spinner');
+                  let spinnerstarted = false;
+                  if (spinner && !spinner.getAttribute('visible')) {
+                    spinner.setAttribute('visible', "1");
+                    spinnerstarted = true;
+                  }
+                  await GeoJSON.loadGeoJsonToMemory(layerInfo);
+                  if (spinnerstarted) {
+                    spinner.setAttribute('visible', '0');
+                  }
+                }
               }              
               this.map.addLayer(layerInfo);
             }
@@ -764,7 +773,15 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
-          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @jsondata="${e=>this._processJson(e.detail)}"></map-import-export>
+          <map-import-export .active="${this.currentTool==='importexport'}" .map="${this.map}" .toollist="${this.toolList}" .datacatalog="${this.datacatalog}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-import-export>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='datatoolbox'}">
+          <div style="width:100%"></div>
+          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-data-toolbox>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='sheetimport'}">
+          <div style="width:100%"></div>
+          <map-sheet-tool .active="${this.currentTool==='sheetimport'}" .map="${this.map}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-sheet-tool>
         </map-panel>
       </div>
     </div>`
@@ -990,7 +1007,8 @@ class WebMap extends LitElement {
         style: this.mapstyle,
         center: [this.lon,this.lat],
         zoom: this.zoom,
-        pitch: this.pitch
+        pitch: this.pitch,
+        bearing: this.bearing
     });
     this.datagetter = {
       querySourceFeatures: this.map.querySourceFeatures.bind(this.map),
@@ -1160,14 +1178,14 @@ class WebMap extends LitElement {
     }
   }
   applyConfig(config) {
-    this.activeLayers = null;
     this.currentTool = '';
+    this.activeLayers = null;    
     if (config.keys) {
       for (let keyname in config.keys) {
-        EduGISkeys[keyname] = config.keys[keyname];
+        APIkeys[keyname] = config.keys[keyname];
       }
-      if (EduGISkeys.mapboxaccesstoken) {
-        this.accesstoken = EduGISkeys.mapboxaccesstoken;
+      if (APIkeys.mapboxaccesstoken) {
+        this.accesstoken = APIkeys.mapboxaccesstoken;
       }
     }
     if (config.map) {
@@ -1181,6 +1199,9 @@ class WebMap extends LitElement {
       if (config.map.hasOwnProperty('pitch')) {
         this.pitch = config.map.pitch;
       }
+      if (config.map.hasOwnProperty('bearing')) {
+        this.bearing = config.map.bearing;
+      }
       if (!config.map.style) {
         config.map.style = {
           "version": 8,
@@ -1193,8 +1214,8 @@ class WebMap extends LitElement {
         } 
       }
       if (!config.map.style.glyphs) {
-        config.map.style.glyphs = `https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
-        //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${EduGISkeys.freetilehosting}`;
+        config.map.style.glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
+        //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
       }
       this.mapstyle = config.map.style;
       this.mapstyleid = config.map.style.id;
@@ -1260,26 +1281,266 @@ class WebMap extends LitElement {
       this.initMap();
     }
   }
-  
-  _processJson(json) {
-    if (json.map && json.tools) {
-      this.applyConfig(json);
-      this.initMap();
-    } else if (json.geojson && json.geojson.features && json.geojson.features.length) {
-      const layers = GeoJSON.createLayers(json);
-      layers.forEach(layer=>this.addLayer({detail: layer}));
-    } else if (json.error) {
-      alert('Json error: ' + json.error);
-    } else if (json === false) {
-      alert('Dropped item not recognized as a file');
+  _loadCSVLatLon(droppedFile) {
+    const longitude = droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "longitude");
+    const latitude = droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "latitude");
+    const layer = {
+      "metadata": {
+        "title": droppedFile.filename
+      },
+      "id" : GeoJSON._uuidv4(),
+      "type": "circle",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": droppedFile.data.data.map(row=>{
+            return {
+              "type": "Feature",
+              "properties": row,
+              "geometry": {
+                "type":"Point",
+                "coordinates": [row[longitude], row[latitude]]
+              }
+            }
+          })
+        }
+      },
+      "paint": {
+        "circle-radius": 5,
+        "circle-color":  "red"
+      }
+    }
+    this.addLayer({detail: layer});
+  }
+  async _loadCSV(droppedFile) {
+    /* handle added csv (converted to json with papaparse or XSLX)
+       1 - determine which vector data should be joined to the file data (get url, key and fkey)
+       2 - load the external vector data, do not visually display the features
+       3 - create an empty geojson layer with visible features (when added)
+       4 - scan the rendered invisible features (step 2) for fkey and 
+           copy the feature geometry with properties added from the file to the  geojson layer
+       5 - visually display the geojson layer
+    */
+    let csvKeyDataPairs = [
+      {
+        key: 'postcode', 
+        fkey: 'postcode',
+        type: 'circle', 
+        source: {
+          "type": "vector",
+          "tiles": [
+            'https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4'
+          ]
+        },
+        sourceLayer: "postcode.postcode2019q1",
+        minzoom: 8,
+        paint: {
+          "circle-radius": 5,
+          "circle-color": [
+            "match",
+            ["%", ["to-number", ["get", "pc4"]],10],
+            0, "red",
+            1, "green",
+            2, "aqua",
+            3, "orange",
+            4, "blue",
+            5, "yellow",
+            6, "purple",
+            7, "brown",
+            8, "olive",
+            9, "teal",
+            "gray"
+          ]
+        }
+      },
+      {
+        key: 'GemeentecodeGM', 
+        fkey: 'statcode',
+        type: 'fill', 
+        source: {
+          "type": "geojson",
+          "data": 'https://tiles.edugis.nl/geojson/cbs_gemeente_2019_gegeneraliseerd.geojson'
+        },
+        sourceLayer: 'cbs_gemeente_2019_gegeneraliseerd',
+        minzoom: 5,
+        paint: {
+            "fill-color": [
+              "step",
+              ["get", "Inwoners"],
+              "#fff7ec",
+              17290, "#fee8c8",
+              22795, "#fdd49e",
+              26587, "#fdbb84",
+              33025, "#fc8d59",
+              44058, "#ef6548",
+              67551, "#d7301f",
+              844947, "#990000",
+            ],
+            "fill-outline-color": "white",
+            "fill-opacity": 0.8
+          }
+      }
+    ];
+
+    let csvKeyName = droppedFile.data.meta.fields.find(fieldname=>csvKeyDataPairs.find(pair=>pair.key === fieldname)!==undefined);
+    if (!csvKeyName) {
+      csvKeyName = droppedFile.data.meta.fields.find(fieldname=>csvKeyDataPairs.find(pair=>pair.key.toLowerCase() === fieldname.toLowerCase()) !== undefined);
+    }
+    if (!csvKeyName) {
+      alert(`CSV file should have a column named: '${csvKeyDataPairs.map(pair=>pair.key).join("' or '")}'`)
+      return;
+    }
+    let keyInfo = csvKeyDataPairs.find(pair=>pair.key === csvKeyName);
+    if (!keyInfo) {
+      keyInfo = csvKeyDataPairs.find(pair=>pair.key.toLowerCase() === csvKeyName.toLowerCase());
+    }
+    let mappedCSV = new Map(droppedFile.data.data.map(row=>[row[csvKeyName], row]));
+    const vectorKeyName = keyInfo.fkey;
+    if (vectorKeyName === 'postcode') {
+      // remove possible spaces from csv postcode
+      droppedFile.data.data.forEach(item=>item[csvKeyName]=item[csvKeyName].replace(' ', ''))
+    }
+    if (keyInfo.source.type === "geojson") {
+      if (typeof keyInfo.source.data === "string") {
+        // preload the data
+        let response = await fetch (keyInfo.source.data);    
+        if (response.ok) {
+          let json = await response.json();
+          keyInfo.source.data = json;
+        }
+      }
+      if (typeof keyInfo.source.data === 'object') {
+        // link the csv to the geojson
+        keyInfo.source.data.features = keyInfo.source.data.features
+          .filter(feature=>mappedCSV.has(feature.properties[vectorKeyName]))
+          .map(feature=>{
+            feature.properties = Object.assign({}, feature.properties, mappedCSV.get(feature.properties[vectorKeyName]));
+              return feature;
+          });
+      }
+    }
+
+    const geocodedCSVLayerId = GeoJSON._uuidv4();
+    const geocodedCSVLayer = {
+      "metadata": {"title": `${droppedFile.filename}`},
+      "id": geocodedCSVLayerId,
+      "type": keyInfo.type,
+      "minzoom": keyInfo.minzoom,
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": []
+        }
+      },
+      "paint": keyInfo.paint
+    }
+
+    if (keyInfo.source.type === "geojson" && typeof keyInfo.source.data === "object") {
+      geocodedCSVLayer.source.data = keyInfo.source.data;
     } else {
-      alert ('Valid json, but content not recognized');
+      const hiddenVectorLayerId = GeoJSON._uuidv4();
+      const hiddenVectorLayer = {
+        "metadata": {
+          "title": `${droppedFile.filename}`,
+          "isToolLayer": true
+        },
+        "id": hiddenVectorLayerId,
+        "type": keyInfo.type,
+        "minzoom": keyInfo.minzoom,
+        "source": keyInfo.source,
+        "paint": {},
+        filter: false
+      }
+      if (hiddenVectorLayer.source.type === 'vector') {
+        hiddenVectorLayer.source.id = hiddenVectorLayerId;
+        hiddenVectorLayer.source.minzoom = keyInfo.minzoom;
+        hiddenVectorLayer.source.maxzoom = 16;
+        hiddenVectorLayer["source-layer"] = keyInfo.sourceLayer;
+      }
+      
+      const sourceLayer = hiddenVectorLayer["source-layer"];
+
+          
+      let jsonFeatures = [];
+      const mappedJson = new Map();
+
+      const handleSourceData = e=>{
+        if (e.isSourceLoaded && e.sourceId === hiddenVectorLayerId) {
+          let vectorFeatures = this.map.querySourceFeatures(hiddenVectorLayerId, {sourceLayer:sourceLayer});
+          let jsonUpdated = false;
+          for (let vectorFeature of vectorFeatures) {
+            const keyValue = vectorFeature.properties[vectorKeyName];
+            if (mappedCSV.has(keyValue)) {            
+              //csvKeyValues.delete(keyValue);
+              if (!mappedJson.has(keyValue)) {
+                jsonUpdated = true;
+                mappedJson.set(keyValue, {
+                  type: "Feature",
+                  properties: Object.assign({}, vectorFeature.properties, mappedCSV.get(keyValue)),
+                  geometry: vectorFeature.geometry,
+                  tile: vectorFeature.tile
+                })                
+              } else {
+                let feature = mappedJson.get(keyValue);
+                if (feature.tile.z < vectorFeature.tile.z) {
+                  // more detailed feature for this keyValue found
+                  jsonUpdated = true;
+                  mappedJson.set(keyValue, {
+                    type: "Feature",
+                    properties: feature.properties,
+                    geometry: vectorFeature.geometry,
+                    tile: vectorFeature.tile
+                  })
+                }
+              }
+            }
+          }
+          if (jsonUpdated) {
+            this.map.getSource(geocodedCSVLayerId).setData({
+              "type": "FeatureCollection",
+              "features": Array.from(mappedJson.values())
+            })
+          }
+        };
+      }
+      this.map.on('sourcedata', handleSourceData); /* todo: remove handler when layer is removed */
+      this.addLayer({detail: hiddenVectorLayer});
+    }
+    this.addLayer({detail: geocodedCSVLayer});
+  }
+
+  _processDroppedFile(droppedFile) {
+    if (droppedFile === false) {
+      alert('Dropped item not recognized as a file');
+    } else if (droppedFile.error) {
+      alert('Json error: ' + droppedFile.error);
+    } else if (droppedFile.data.map && droppedFile.data.tools) {
+      this.applyConfig(droppedFile.data);
+      this.initMap();
+    } else if (droppedFile.data.type && (droppedFile.data.type === "Feature" || droppedFile.data.type === "FeatureCollection")) {
+      const layers = GeoJSON.createLayers(droppedFile);
+      layers.forEach(layer=>this.addLayer({detail: layer}));
+    } else if (droppedFile.data && droppedFile.data.data) {
+      if (droppedFile.data.data.length) {
+        if (droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "longitude") && droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "latitude")) {
+          this._loadCSVLatLon(droppedFile);
+        } else {
+          this._loadCSV(droppedFile);
+        }
+      } else {
+        alert ('CSV file is corrupt or empty')
+      }
+    } else {
+      alert ('Valid data, but content not recognized');
     }
   }
 
   handleDrop(ev) {
-    MapImportExport.handleDrop(ev).then(json=>{
-     this._processJson(json);
+    this.currentTool = '';
+    MapImportExport.handleDrop(ev).then(droppedFile=>{
+     this._processDroppedFile(droppedFile);
     })
   };
 
@@ -1652,10 +1913,9 @@ class WebMap extends LitElement {
   }
   getStreetViewImage(lngLat)
   {
-    const url = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lngLat.lat},${lngLat.lng}&key=${EduGISkeys.google}`;
+    const url = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lngLat.lat},${lngLat.lng}&key=${APIkeys.google}`;
     return fetch(url).then(response=>response.json()).then(json=>{
-      console.log(json);
-      const imageUrl = `https://maps.googleapis.com/maps/api/streetview?size=600x300&pano=${json.pano_id}&key=${EduGISkeys.google}`;
+      const imageUrl = `https://maps.googleapis.com/maps/api/streetview?size=600x300&pano=${json.pano_id}&key=${APIkeys.google}`;
       return imageUrl;
     })
   }
@@ -1729,7 +1989,7 @@ class WebMap extends LitElement {
         }
       }
       if (this.streetViewOn) {
-        const streetViewInfo = {"type":"feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
+        const streetViewInfo = {"type":"Feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
         featureInfo.push(streetViewInfo);
         this.getStreetViewImage(e.lngLat).then(imageurl=>{
           streetViewInfo.properties.image = imageurl;

@@ -234,26 +234,6 @@
                   "attribution": "met office"
                 }
               }
-            },
-            {
-              "title": "KNMI neerslag",
-              "type": "wms",
-              "layerInfo": {
-                "id": "eumetsatknmi",
-                "type": "raster",
-                "metadata": {
-                  "timeinterval": 900000,
-                  "source": "https://geoservices.knmi.nl/adaguc_portal/ => MSGCPP OGC realtime service => Precipitation rate"
-                },
-                "source": {
-                  "type": "raster",
-                  "tileSize": 1024,
-                  "tiles": [
-                    "https://msgcpp-ogc-realtime.knmi.nl/msgrt.cgi?LAYERS=lwe_precipitation_rate&STYLES=precip%2Fnearest&time={time}"
-                  ],
-                  "attribution": "EUMETSAT/KNMI"
-                }
-              }
             }
           ]
         },
@@ -462,6 +442,22 @@
                     "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"
                   ],
                   "attribution": "&copy; GeodanMaps"
+                }
+              }
+            },
+            {
+              "title": "NASA Satelliet true color",
+              "type": "wmts",
+              "layerInfo": { 
+                "id": "nasasatellitetruecolor",
+                "type": "raster",
+                "source" : {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://map1.vis.earthdata.nasa.gov/wmts-webmerc/wmts.cgi?layer=MODIS_Terra_CorrectedReflectance_TrueColor&style=default&tilematrixset=GoogleMapsCompatible_Level9&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fjpeg&TileMatrix={z}&TileCol={x}&TileRow={y}&TIME=2019-05-26"
+                  ],
+                  "attribution": "Nasa"
                 }
               }
             }
@@ -739,6 +735,27 @@
                     2000,
                     9
                   ]
+                }
+              }
+            },
+            {
+              "type":"geojson",
+              "title":"ISOdistance Geodan Amsterdam",
+              "layerInfo":{
+                "id":"GMIsochroone",
+                "metadata": {
+                  "memorygeojson": true
+                },
+                "type":"fill",
+                "source":{
+                  "type":"geojson",
+                  "data":"https://services.geodan.nl/routing/v2/isochrone/fiets_18kmu?x=4.9130490&y=52.3423083&direction=from&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&steps=1&overlap=false&output=polygon&calculationMode=distance&precision=0.98&servicekey={geodanmapskey}",
+                  "attribution":"GeodanMaps"
+                },
+                "paint":{
+                  "fill-color": "red",
+                  "fill-outline-color": "gray",
+                  "fill-opacity":["interpolate", ["linear"], ["get","isochroneEnd"],0,1,20,0]
                 }
               }
             }
@@ -1209,11 +1226,12 @@
               "layerInfo": {
                 "id": "nlpostcode",
                 "type": "circle",
+                "minzoom": 8,
                 "source": {
                   "id": "nlpostcode",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
+                    "https://tiles.edugis.nl/v1/mvt/postcode.postcode2019q1/{z}/{x}/{y}?columns=postcode,substring(postcode+from+1+for+4)+as+pc4"
                   ],
                   "minzoom": 8,
                   "maxzoom": 16
@@ -1249,7 +1267,7 @@
                   "id": "nlpopulatiegemgeb",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/fct_populatie_201901.populatie_pc2/{z}/{x}/{y}?geom_column=geomgbw&columns=bu_inw_totaal"
+                    "https://tiles.edugis.nl/v1/mvt/fct_populatie_201901.populatie_pc2/{z}/{x}/{y}?geom_column=geomgbw&columns=bu_inw_totaal"
                   ],
                   "minzoom": 5,
                   "maxzoom": 13
@@ -1272,7 +1290,7 @@
                   "id": "francedepartement",
                   "type": "vector",
                   "tiles": [
-                    "https://anneb.geodan.nl/v1/mvt/france.departement/{z}/{x}/{y}"
+                    "https://tiles.edugis.nl/v1/mvt/france.departement/{z}/{x}/{y}"
                   ],
                   "minzoom": 4,
                   "maxzoom": 16
@@ -1282,6 +1300,68 @@
                   "fill-color": "gray",
                   "fill-opacity": 0.6,
                   "fill-outline-color": "black"
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Transport",
+              "layerInfo": {
+                "id": "openmaptilestransport",
+                "type": "line",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/openmaptiles/data/v3/{z}/{x}/{y}.pbf?key=test"
+                  ]
+                },
+                "source-layer" : "transportation",
+                "filter": [
+                  "all",
+                  [
+                    "==",
+                    "$type",
+                    "LineString"
+                  ]
+                ],
+                "layout": {
+                  "line-join": "round"
+                },
+                "paint": {
+                  "line-color": "#000000",
+                  "line-width": 1
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Adressen",
+              "layerInfo": {
+                "id": "openmaptilesaddress",
+                "type": "circle",
+                "minzoom": 14,
+                "source": {
+                  "minzoom": 14,
+                  "maxzoom": 14,
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/openmaptiles/data/v3/{z}/{x}/{y}.pbf"
+                  ]
+                },
+                "source-layer" : "housenumber",
+                "filter": [
+                  "all",
+                  [
+                    "==",
+                    "$type",
+                    "Point"
+                  ]
+                ],
+                "paint": {
+                  "circle-color": "yellow",
+                  "circle-radius": 3,
+                  "circle-stroke-color": "gray",
+                  "circle-stroke-width": 1
                 }
               }
             }
@@ -1717,62 +1797,69 @@
     },
     "search": {
       "visible": 1,
-      "order": 1
+      "order": 101
     },
     "datacatalog": {
       "visible": 1,
-      "order": 2
-    },
-    "measure": {
-      "visible": 1,
-      "order": 4
+      "order": 102
     },
     "info": {
       "visible": 1,
-      "order": 3
+      "order": 103
+    },
+    "measure": {
+      "visible": 1,
+      "order": 104
     },
     "maplanguage": {
       "visible": 1,
-      "order": 5
+      "order": 105
     },
     "pitch": {
       "visible": 1,
-      "order": 6
+      "order": 106
     },
     "geolocate": {
       "visible": 1,
-      "order": 7
+      "order": 107
     },
     "draw": {
       "visible": 1,
-      "order": 8
+      "order": 108
     },
     "importexport": {
       "visible": 1,
-      "order": 9
+      "order": 109
+    },
+    "datatoolbox": {
+      "visible": 1,
+      "order": 110
     },
     "legend": {
       "visible": 1,
       "position": "top-right",
-      "opened": 1
+      "opened": 1,
+      "order": 200
     },
     "zoomlevel": {
       "visible": 1,
       "position": "bottom-left",
-      "order": 0
+      "order": 201
     },
     "navigation": {
-      "visible": 1,
+      "visible": 201,
       "position": "bottom-left",
-      "order": 1
+      "order": 202
     },
     "coordinates": {
       "visible": 1,
-      "position": "bottom-center"
+      "position": "bottom-center",
+      "order": 203
     },
     "scalebar": {
       "visible": 1,
-      "position": "bottom-right"
+      "position": "bottom-right",
+      "order": 204
     },
     "currenttool": null
   },

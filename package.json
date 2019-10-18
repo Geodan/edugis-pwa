@@ -29,13 +29,16 @@
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "file-saver": "^2.0.0",
     "hopscotch": "^0.3.1",
-    "lit-element": "^2.0.1",
+    "jsts": "^2.0.3",
+    "lit-element": "^2.2.1",
     "mapbox-gl": "^0.51.0",
+    "papaparse": "^4.6.3",
     "proj4": "^2.5.0",
     "pwa-helpers": "^0.8.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "xlsx": "^0.15.1"
   },
   "devDependencies": {
     "axe-core": "^3.0.0",
@@ -48,7 +51,7 @@
     "pixelmatch": "^4.0.2",
     "polyserve": "^0.27.0",
     "prpl-server": "^1.2.0",
-    "puppeteer": "^1.7.0",
+    "puppeteer": "^1.20.0",
     "wct-browser-legacy": "^1.0.2"
   }
 }
