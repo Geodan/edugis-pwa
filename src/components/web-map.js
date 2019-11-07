@@ -28,7 +28,9 @@ import './map-info-formatted';
 import './map-panel';
 import './map-geolocation';
 import './map-pitch';
-import './map-selected-layers';
+//import './map-selected-layers';
+import './map/layer/map-layer-container.js';
+import './map/layer/map-layer-set.js';
 import './map-draw';
 import './map-import-export';
 import './map-data-toolbox';
@@ -798,12 +800,25 @@ class WebMap extends LitElement {
     if (!legend || !legend.visible) {
       return html``;
     }
+    let thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
+    let backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background').reverse();
     return html`
     <div id="legend-container-container" class="${legend.position==='opened'?'':'collapsed'}">
       <div id="button-hide-legend" @click="${e=>this.toggleLegend(e)}" class="${legend.position==='opened'?'':'collapsed'}">
         <span class="offset"></span><i>${arrowLeftIcon}</i>
       </div>
-      <map-selected-layers 
+      <map-layer-container 
+        @removelayer="${(e) => this.removeLayer(e)}"
+        @movelayer="${e=>this.moveLayer(e)}" >
+      <span slot="title">Geselecteerde kaartlagen</span>
+        <map-layer-set id="layersthematic" userreorder open .layerlist="${thematicLayers}" nolayer="Geen thematische kaartlagen geselecteerd">
+            <span>Thematische lagen</span>
+        </map-layer-set>
+        <map-layer-set id="layersbackground" .layerlist="${backgroundLayers}" .nolayer = "Geen achtergrondlagen beschikbaar">
+            <span>Achtergrondlagen</span>
+        </map-layer-set>
+      </map-layer-container>
+      <mmap-selected-layers 
         .layerlist="${this.layerlist}"
         .zoom="${this.zoom}"
         .datagetter="${this.datagetter}"
@@ -812,7 +827,7 @@ class WebMap extends LitElement {
         @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
         @removelayer="${(e) => this.removeLayer(e)}">
 
-      </map-selected-layers>
+      </mmap-selected-layers>
       <mmap-legend-container .layerlist="${this.layerlist}" 
         .visible="${this.haslegend}" 
         .active="${true}" 

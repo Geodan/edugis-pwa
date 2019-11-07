@@ -7,8 +7,6 @@ import {LitElement, html, svg} from 'lit-element';
 import '../utils/mbox-style-parse.js';
 import mbStyleParser from '../utils/mbox-style-parse.js';
 
-
-
 /**
 * @polymer
 * @extends HTMLElement
@@ -179,7 +177,7 @@ class MapLegendPanel extends LitElement {
         opacityInfo.items = [];
       }
     }
-    let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [5]};
+    let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [{value:5}]};
     if (paint && paint['circle-radius']) {
       radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], this.maplayer.metadata.title);
     }
@@ -294,6 +292,9 @@ class MapLegendPanel extends LitElement {
 
     return html`
       <style>
+        :host {
+          display: inline-block;
+        }
         .legendcontainer {
           text-align: left;
           padding-left: 5px;

@@ -14,6 +14,9 @@ export default
               "layerInfo":{
                 "id":"pdokluchtfoto",
                 "type":"raster",
+                "metadata": {
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2018.png",
+                },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
