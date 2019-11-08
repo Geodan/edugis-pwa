@@ -99,7 +99,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
         return html`
         <div class="mlcontainer">
             <div class="mltitle${this.itemcontainer?' draghandle':''}">
-                <base-checkbox checked title="toggle layer visibility"></base-checkbox>
+                <base-checkbox checked title="toggle layer visibility" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
                 <span @click="${()=>this._toggleArrow()}">${this.layer.metadata?this.layer.metadata.title?this.layer.metadata.title:this.layer.id:this.layer.id}</span>
                 <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}">
             </div>
@@ -144,6 +144,16 @@ class MapLayer extends GestureEventListeners(LitElement) {
                 this.open = false;
             }, 600);
         }
+    }
+    _toggleVisibility(e) {
+      this.dispatchEvent(new CustomEvent('updatevisibility', {
+        detail: {
+          layerid: this.layer.metadata.sublayers?this.layer.metadata.sublayers.map(layer=>layer.id):this.layer.id,
+          visible: e.target.checked
+        },
+        bubbles: true,
+        composed: true
+      }));
     }
     _scrollUp() {
         if (this.scrollingUp) {
@@ -273,16 +283,17 @@ class MapLayer extends GestureEventListeners(LitElement) {
                 if (this.curHovering.style['border-top'].length) {
                     beforeFirst = true;
                 }
-                this.dispatchEvent(new CustomEvent('movelayer',
-                {
-                    detail: {
-                        layer: this.id, 
-                        beforeLayer: this.curHovering.id, 
-                        beforeFirst: beforeFirst
-                    },
-                    bubbles: true,
-                    composed: true
-                }));
+                if (this.id !== this.curHovering.id) {
+
+                  this.dispatchEvent(new CustomEvent('movelayer',
+                  {
+                      detail: {
+                          layer: this.id, 
+                          beforeLayer: this.curHovering.id, 
+                          beforeFirst: beforeFirst
+                      }
+                  }));
+                }
                 this.curHovering.style['border-top'] = '';
                 this.curHovering.style['border-bottom'] = '';
                 this.curHovering = null;

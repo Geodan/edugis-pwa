@@ -117,6 +117,7 @@ class BaseCheckbox extends LitElement {
         `
     }
     _handleChange(event) {
+        this.checked = event.target.checked;
         this.dispatchEvent(new CustomEvent('change', {
             bubbles: true,
             composed: true

@@ -14,7 +14,8 @@ class MapLayerInfo extends LitElement {
             layer: {type: Object},
             open: {type: Boolean},
             moreInfo: {type: Boolean},
-            showLayerConfig: {type: Boolean}
+            showLayerConfig: {type: Boolean},
+            transparency: {type: Number}
         }
     }
     static get styles() {
@@ -86,20 +87,22 @@ class MapLayerInfo extends LitElement {
         this.open = false;
         this.moreInfo = false;
         this.showLayerConfig = false;
+        this.transparency = 0;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
             this.moreInfo = false;
             this.showLayerConfig = false;
+            this.transparency = this.layer.metadata.transparency?this.layer.metadata.transparency:0;
         }
         return true;
     }
     render() {
         return html`
         <div id="licontainer">
-            <div id="litransparency"><span class="bold">Transparantie:</span> 0%
+            <div id="litransparency"><span class="bold">Transparantie:</span> ${Math.round(this.transparency)}%
                 <div class="lislidercontainer">
-                    <base-slider></base-slider>
+                    <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
                 </div>
             </div>
             <div id="lilegend">
@@ -121,7 +124,7 @@ class MapLayerInfo extends LitElement {
             let legendPanel = this.shadowRoot.querySelector('map-legend-panel');
             let fader = this.shadowRoot.querySelector('.fade');
             let lishowmore = this.shadowRoot.querySelector('#lishowmore');
-            if (legendPanel.offsetHeight < 200) {
+            if (legendPanel.offsetHeight < 220) {
                 fader.style.display = 'none';
                 lishowmore.style.display = 'none';
             } else {
@@ -165,6 +168,18 @@ class MapLayerInfo extends LitElement {
         this.dispatchEvent(new CustomEvent('removelayer', {
             detail: {
                 layerid: this.layer.id
+            },
+            bubbles: true,
+            composed: true
+        }))
+    }
+    _updateTransparency(event) {
+        this.transparency = event.target.value;
+        this.layer.metadata.transparency = this.transparency;
+        this.dispatchEvent(new CustomEvent('updateopacity', {
+            detail: {
+                layerid: this.layer.metadata && this.layer.metadata.sublayers?this.layer.metadata.sublayers.map(layer=>layer.id):this.layer.id,
+                opacity: 1 - (Math.round(this.transparency) / 100)
             },
             bubbles: true,
             composed: true

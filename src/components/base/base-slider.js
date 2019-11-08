@@ -10,10 +10,11 @@ import {mdcslidercss} from '../../../lib/mdc.slider.css.js';
 class BaseSlider extends LitElement {
   static get properties() { 
     return { 
-      active: Boolean,
-      value: Number,
-      minvalue: Number,
-      maxvalue: Number
+      active: {type: Boolean},
+      value: {type: Number},
+      minvalue: {type: Number},
+      maxvalue: {type: Number},
+      id: {type: String}
     }; 
   }
   constructor() {
@@ -21,9 +22,15 @@ class BaseSlider extends LitElement {
       this.active = true;
       this.minvalue = 0;
       this.maxvalue = 100;
-      this.value = this.minvalue;
+      this.value = 0;
+      this.id= "none";
   }
   shouldUpdate(changedProps) {
+      if (changedProps.has('value')) {
+        if (this.slider) {
+          this.slider.value = this.value;
+        }
+      }
       return this.active;
   }
   render() {
@@ -51,12 +58,18 @@ class BaseSlider extends LitElement {
   firstUpdated() {
     this.slider = new MDCSlider(this.shadowRoot.querySelector('.mdc-slider'));
   }
+  connectedCallback() {
+    super.connectedCallback();
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+  }
   change(e) {
     const newValue = e.detail.value;
     if (Math.round(newValue) != Math.round(this.value)) {
       this.value = newValue;
       this.dispatchEvent(
-        new CustomEvent('slidervaluechange', 
+        new CustomEvent('change', 
             {
                 detail: {
                     value: Math.round(this.value)

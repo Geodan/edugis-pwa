@@ -800,8 +800,6 @@ class WebMap extends LitElement {
     if (!legend || !legend.visible) {
       return html``;
     }
-    let thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
-    let backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background').reverse();
     return html`
     <div id="legend-container-container" class="${legend.position==='opened'?'':'collapsed'}">
       <div id="button-hide-legend" @click="${e=>this.toggleLegend(e)}" class="${legend.position==='opened'?'':'collapsed'}">
@@ -809,12 +807,19 @@ class WebMap extends LitElement {
       </div>
       <map-layer-container 
         @removelayer="${(e) => this.removeLayer(e)}"
-        @movelayer="${e=>this.moveLayer(e)}" >
+        @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
+        @movelayer="${e=>this.moveLayer(e)}" 
+        @updateopacity="${e => this.updateLayerOpacity(e)}"
+        >
       <span slot="title">Geselecteerde kaartlagen</span>
-        <map-layer-set id="layersthematic" userreorder open .layerlist="${thematicLayers}" nolayer="Geen thematische kaartlagen geselecteerd">
+        <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
+          .zoom="${this.zoom}"
+          nolayer="Geen thematische kaartlagen geselecteerd">
             <span>Thematische lagen</span>
         </map-layer-set>
-        <map-layer-set id="layersbackground" .layerlist="${backgroundLayers}" .nolayer = "Geen achtergrondlagen beschikbaar">
+        <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
+          .zoom="${this.zoom}"
+          .nolayer = "Geen achtergrondlagen beschikbaar">
             <span>Achtergrondlagen</span>
         </map-layer-set>
       </map-layer-container>
@@ -1629,6 +1634,11 @@ class WebMap extends LitElement {
       if (this.map) {
         this.loadConfig(this.configurl);
       }
+    }
+
+    if (changedProperties.has("layerlist")) {
+      this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
+      this.backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background').reverse();
     }
 
     return true;

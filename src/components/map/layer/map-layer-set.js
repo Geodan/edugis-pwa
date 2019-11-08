@@ -45,7 +45,7 @@ class MapLayerSet extends LitElement {
     }
     constructor() {
         super();
-        this.layerlist = [];
+        this.layerlist = this.groupedLayerList = [];
         this.nolayer = null;
         this.userreorder = false;
         this.open = false;
@@ -55,6 +55,27 @@ class MapLayerSet extends LitElement {
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layerlist')) {
+            this.groupedLayerList = this.layerlist.reduce((result, layer)=>{
+                if (layer.metadata && layer.metadata.styleid) {
+                    if (result.previd !== layer.metadata.styleid) {
+                        // new style layer
+                        result.group.push({
+                            id: layer.metadata.styleid, 
+                            type: "style",
+                            metadata: {
+                                title: layer.metadata.styletitle,
+                                sublayers: [layer]
+                            }
+                        });
+                        result.previd = layer.metadata.styleid;
+                    } else {
+                        result.group[result.group.length - 1].metadata.sublayers.push(layer);
+                    }
+                } else {
+                    result.group.push(layer);
+                }
+                return result;
+            }, {group: [], previd: ""}).group;
             this._updateContainers();
         }
         return true;
@@ -88,11 +109,11 @@ class MapLayerSet extends LitElement {
         }
     }
     _renderLayerList() {
-        if (this.layerlist.length == 0) {
+        if (this.groupedLayerList.length == 0) {
             return html`<map-layer .nolayer="${this.nolayer}"></map-layer>`;
         }
-        return this.layerlist.map(layer=>{
-            return html`<map-layer .layer="${layer}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}"></map-layer>`
+        return this.groupedLayerList.map(layer=>{
+            return html`<map-layer .layer="${layer}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
         });
     }
     _openChange(event) {
@@ -115,6 +136,22 @@ class MapLayerSet extends LitElement {
                 setContainer.style.height = null;
                 setContainer.style.overflow = null;
             }, 600);
+        }
+    }
+    _moveLayer(event) {
+        /* add detail.layers to event, the bubble up */
+        let sourceLayer = this.groupedLayerList.find(layer=>layer.id === event.detail.layer);
+        let targetLayer = this.groupedLayerList.find(layer=>layer.id == event.detail.beforeLayer);
+        if (sourceLayer && targetLayer) {
+            event.detail.layers = sourceLayer.metadata.sublayers ? sourceLayer.metadata.sublayers.map(layer=>layer.id): [sourceLayer.id];
+            if (targetLayer.metadata.sublayers) {
+                event.detail.beforeLayer = targetLayer.metadata.sublayers[targetLayer.metadata.sublayers.length - 1].id;
+            }
+            this.dispatchEvent(new CustomEvent('movelayer', {
+                detail: event.detail,
+                bubbles: true,
+                composed: true
+            }))
         }
     }
 }
