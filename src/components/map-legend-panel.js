@@ -14,14 +14,26 @@ import mbStyleParser from '../utils/mbox-style-parse.js';
 class MapLegendPanel extends LitElement {
   static get properties() { 
     return { 
-      legendurl: String,
-      zoom: Number,
-      maplayer: Object,
-      updatecount: Number
+      legendurl: {type: String},
+      zoom: {type: Number},
+      maplayer: {type: Object},
+      transparency: {type: Number},
+      updatecount: { type: Number}
     }; 
   }
   constructor() {
       super();
+      this.transparency = 0;
+  }
+  shouldUpdate(changedProperties) {
+    if (changedProperties.has('maplayer')) {
+      if (this.maplayer && this.maplayer.metadata && this.hasOwnProperty('transparency')) {
+        this.transparency = this.maplayer.metadata.transparency;
+      } else {
+        this.transparency = 0;
+      }
+    }
+    return true;
   }
   rasterLegend()
   {
@@ -285,11 +297,7 @@ class MapLegendPanel extends LitElement {
           legendContent = html`legend not available for type ${this.maplayer.type}</div>`;
       }
     }
-    let legendopacity;
-    if (this.maplayer.metadata.hasOwnProperty("opacity")) {
-      legendopacity = `opacity: ${this.maplayer.metadata.opacity / 100.0};`
-    }
-
+    
     return html`
       <style>
         :host {
@@ -305,7 +313,7 @@ class MapLegendPanel extends LitElement {
           max-width: calc(100% - 3px);
         }
       </style>
-      <div class="legendcontainer" style="${legendopacity?legendopacity:''}">${legendContent}</div>`;
+      <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
   }
 }
 

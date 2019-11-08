@@ -6,7 +6,6 @@ import "./map-layer-info.js";
 import {GestureEventListeners} from '../../../../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import * as Gestures from '../../../../node_modules/@polymer/polymer/lib/utils/gestures.js';
 
-
 /**
 * @polymer
 * @extends HTMLElement
@@ -18,46 +17,53 @@ class MapLayer extends GestureEventListeners(LitElement) {
             nolayer: {type: String},
             itemcontainer: {type: Object},
             itemscroller: {type: Object},
-            open: {type: Boolean}
+            open: {type: Boolean},
+            visible: {type: Boolean},
+            subtitle: {type: String},
+            zoom: {type: Number}
         }
     }
     static get styles() {
         return css`
             :host {
-                display: block;
-                margin-bottom: 10px;
+              display: block;
+              margin-bottom: 10px;
             }
             .mlcontainer {
-                position: relative;
-                border-radius: 5px;
-                box-shadow: 1px 1px 4px 0 rgba(66,66,66,0.34);
-                padding: 10px;
+              position: relative;
+              border-radius: 5px;
+              box-shadow: 1px 1px 4px 0 rgba(66,66,66,0.34);
+              padding: 10px;
             }
             base-arrow {
-                position: absolute;
-                right: 10px;
-                top: 13px;
+              position: absolute;
+              right: 10px;
+              top: 13px;
             }
             base-checkbox { 
-                position: relative;
-                top: 3px;
+              position: relative;
+              top: 3px;
             }
             .mltitle {
-                padding-right: 10px;
+              padding-right: 10px;
+            }
+            .mlsubtitle {              
+              padding-left: 24px;
+              font-style: italic;
             }
             .draghandle {
-                cursor: move;
-                user-select: none;
-                background-color: rgba(255,255,255,0.5);
+              cursor: move;
+              user-select: none;
+              background-color: rgba(255,255,255,0.5);
             }
             #layerinfo {
-                position: relative;
-                transition: height .5s ease-in-out;
+              position: relative;
+              transition: height .5s ease-in-out;
             }
             .closed {
-                height: 0;
-                padding: 0;
-                overflow: hidden;
+              height: 0;
+              padding: 0;
+              overflow: hidden;
             }
         `
     }
@@ -66,8 +72,11 @@ class MapLayer extends GestureEventListeners(LitElement) {
         this.layer = "";
         this.nolayer = "no layers defined";
         this.open = false;
+        this.visible = true;
+        this.subtitle = "";
         this.itemcontainer = null;
         this.itemscroller = null;
+        this.zoom = 0;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -76,9 +85,22 @@ class MapLayer extends GestureEventListeners(LitElement) {
             } else {
                 this.id = '__undefined_layer_'
             }
-            if (this.layer && this.layer.metadata && this.layer.metadata.hasOwnProperty('maplayeropen')) {
-                this.open = this.layer.metadata.maplayeropen;
+            if (this.layer && this.layer.metadata) {
+              this.open = this.layer.metadata.hasOwnProperty('maplayeropen')?this.layer.metadata.maplayeropen: false;
+              this.visible = this.layer.metadata.hasOwnProperty('visible')?this.layer.metadata.visible: true;
             }
+        }
+        this._checkZoomRange();
+        if (!this.visible) {
+          this.subtitle = "Zichtbaarheid uitgeschakeld";
+        } else if (this.outofrange){
+          if (this.zoom < this.minzoom) {
+            this.subtitle = "Zoom verder in";
+          } else {
+            this.subtitle = "Zoom verder uit";
+          }
+        } else {
+          this.subtitle = "";
         }
         return true;
     }
@@ -98,17 +120,51 @@ class MapLayer extends GestureEventListeners(LitElement) {
         return html`
         <div class="mlcontainer">
             <div class="mltitle${this.itemcontainer?' draghandle':''}">
-                <base-checkbox checked title="toggle layer visibility" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
+                <base-checkbox ?checked="${this.visible}" title="toggle layer visibility" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
                 <span @click="${()=>this._toggleArrow()}">${this.layer.metadata?this.layer.metadata.title?this.layer.metadata.title:this.layer.id:this.layer.id}</span>
                 <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}">
             </div>
+            <div class="mlsubtitle">${this.subtitle}</div>
             <div id="layerinfo" class="${this.open?'':'closed'}">${this._renderLayerInfo()}</div>
         </div>
         `
     }
     firstUpdated(){
-        let mltitle = this.shadowRoot.querySelector('.mltitle');
-        Gestures.addListener(mltitle, 'track', (e)=>this._trackHandler(e));
+        Gestures.addListener(this.shadowRoot.querySelector('.mltitle'), 'track', (e)=>this._trackHandler(e));
+    }
+    _checkZoomRange()
+    {
+      if (this.layer) {        
+        if (this.layer.metadata && this.layer.metadata.sublayers && this.layer.metadata.sublayers.length) {
+          this.minzoom = this.layer.metadata.sublayers.reduce((result, layer)=>{
+            if (layer.hasOwnProperty('minzoom')) {
+              if (layer.minzoom < result) {
+                result = layer.minzoom;
+              }
+            } else {
+              result = 0;
+            }
+            return result;
+          }, 100);
+          this.maxzoom = this.layer.metadata.sublayers.reduce((result, layer)=>{
+            if (layer.hasOwnProperty('maxzoom')) {
+              if (layer.maxzoom > result) {
+                result = layer.maxzoom;
+              }
+            } else {
+              result = 100;
+            }
+            return result;
+          }, 0);
+          this.outofrange = this.zoom < this.minzoom || this.zoom > this.maxzoom;
+        } else {
+          this.minzoom = this.layer.minzoom ? this.layer.minzoom : 0;
+          this.maxzoom = this.layer.maxzoom ? this.layer.maxzoom : 24;
+          this.outofrange = this.zoom < this.minzoom || this.zoom > this.maxzoom;
+        }
+      } else {
+        this.outofrange = false;
+      }
     }
     _toggleArrow() {
         let arrow = this.shadowRoot.querySelector('base-arrow');
@@ -118,7 +174,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
         }
     }
     _renderLayerInfo() {
-        return html`<map-layer-info .layer="${this.layer}" ?open="${this.open}"></map-layer-info>`
+        return html`<map-layer-info .layer="${this.layer}" ?open="${this.open}" ?layervisible="${this.visible && !this.outofrange}"></map-layer-info>`
     }
     _openChange() {
         const infoContainer = this.shadowRoot.querySelector('#layerinfo');
@@ -145,10 +201,12 @@ class MapLayer extends GestureEventListeners(LitElement) {
         }
     }
     _toggleVisibility(e) {
+      this.visible = e.target.checked;
+      this.layer.metadata.visible = this.visible;
       this.dispatchEvent(new CustomEvent('updatevisibility', {
         detail: {
           layerid: this.layer.metadata.sublayers?this.layer.metadata.sublayers.map(layer=>layer.id):this.layer.id,
-          visible: e.target.checked
+          visible: this.visible
         },
         bubbles: true,
         composed: true

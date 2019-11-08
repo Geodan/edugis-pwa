@@ -14,7 +14,8 @@ class MapLayerSet extends LitElement {
             nolayer: {type: String}, 
             open: {type: Boolean},
             userreorder: {type: Boolean},
-            itemscroller: {type: Object}
+            itemscroller: {type: Object},
+            zoom: {type: Number}
         }
     }
     static get styles() {
@@ -50,7 +51,7 @@ class MapLayerSet extends LitElement {
         this.nolayer = null;
         this.userreorder = false;
         this.open = false;
-
+        this.zoom = 0;
         this.itemcontainer = null;
         this.itemscroller = null;
     }
@@ -114,7 +115,7 @@ class MapLayerSet extends LitElement {
             return html`<map-layer .nolayer="${this.nolayer}"></map-layer>`;
         }
         return this.groupedLayerList.map(layer=>{
-            return html`<map-layer .layer="${layer}" .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
+            return html`<map-layer .layer="${layer}" .zoom=${this.zoom} .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
         });
     }
     _openChange(event) {

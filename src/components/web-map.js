@@ -258,6 +258,9 @@ class WebMap extends LitElement {
         case 'hillshade':
           this.map.setPaintProperty(id, 'hillshade-exaggeration', opacity);
           break;
+        case 'symbol':
+            this.map.setPaintProperty(id, 'text-opacity', opacity);
+          break;
         default:
           this.map.setPaintProperty(id, `${layer.type}-opacity`, opacity);
       }

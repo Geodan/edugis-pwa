@@ -56,7 +56,9 @@ class BaseSlider extends LitElement {
       </div>`
   }
   firstUpdated() {
-    this.slider = new MDCSlider(this.shadowRoot.querySelector('.mdc-slider'));
+    requestAnimationFrame(()=>{
+      this.slider = new MDCSlider(this.shadowRoot.querySelector('.mdc-slider'));
+    })
   }
   connectedCallback() {
     super.connectedCallback();

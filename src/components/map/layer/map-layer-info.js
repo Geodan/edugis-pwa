@@ -13,6 +13,7 @@ class MapLayerInfo extends LitElement {
         return {
             layer: {type: Object},
             open: {type: Boolean},
+            layervisible: {type: Boolean},
             moreInfo: {type: Boolean},
             showLayerConfig: {type: Boolean},
             transparency: {type: Number}
@@ -44,7 +45,7 @@ class MapLayerInfo extends LitElement {
             .lislidercontainer {
                 margin-top: -10px;
                 height: 40px;
-                width: 200px;
+                width: 180px;
                 margin-left: 7px;
                 --mdc-theme-primary: #ccc;
                 --mdc-theme-secondary: #555;
@@ -100,6 +101,14 @@ class MapLayerInfo extends LitElement {
     render() {
         return html`
         <div id="licontainer">
+            ${this._renderVisibleLayerInfo()}
+            <div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> Verwijderen</div>
+        </div>
+        `
+    }
+    _renderVisibleLayerInfo() {
+        if (this.layervisible) {
+            return html`
             <div id="litransparency"><span class="bold">Transparantie:</span> ${Math.round(this.transparency)}%
                 <div class="lislidercontainer">
                     <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
@@ -108,30 +117,33 @@ class MapLayerInfo extends LitElement {
             <div id="lilegend">
                 <div id="lilegendtitle" class="bold">Legenda:</div>
                 <div id="moreinfo" class="shortened">
-                    <map-legend-panel .maplayer="${this.layer}"></map-legend-panel>
+                    <map-legend-panel .maplayer="${this.layer}" transparency="${this.transparency}"></map-legend-panel>
                 </div>
                 <div class="fade"></div>
                 <div id="lishowmore" @click="${()=>this._toggleShowMore()}">Toon meer...</div>
             </div>
             ${this._renderShowInfo()}
             ${this._renderSettings()}
-            <div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> Verwijderen</div>
-        </div>
-        `
+            `
+        }
+        return ``;
     }
     updated() {
-        setTimeout(()=>{
-            let legendPanel = this.shadowRoot.querySelector('map-legend-panel');
-            let fader = this.shadowRoot.querySelector('.fade');
-            let lishowmore = this.shadowRoot.querySelector('#lishowmore');
-            if (legendPanel.offsetHeight < 220) {
-                fader.style.display = 'none';
-                lishowmore.style.display = 'none';
-            } else {
-                fader.style.display = null;
-                lishowmore.style.display = null;
-            }
-        }, 1000);
+        requestAnimationFrame(()=>{
+                let legendPanel = this.shadowRoot.querySelector('map-legend-panel');            
+                let fader = this.shadowRoot.querySelector('.fade');
+                let lishowmore = this.shadowRoot.querySelector('#lishowmore');
+                if (legendPanel && fader && lishowmore) {
+                    if (legendPanel.offsetHeight < 220) {
+                        fader.style.display = 'none';
+                        lishowmore.style.display = 'none';
+                    } else {
+                        fader.style.display = null;
+                        lishowmore.style.display = null;
+                    }
+                }
+            }   
+        )
     }
     _renderShowInfo() {
         if (this.layer.metadata && this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
