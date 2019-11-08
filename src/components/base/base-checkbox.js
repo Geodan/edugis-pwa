@@ -62,10 +62,10 @@ class BaseCheckbox extends LitElement {
             }
             
             /* When the checkbox is checked, add a blue background */
-            .bccontainer input:checked ~ .checkmark {
+            .bccontainer.checked .checkmark {
               background-color: #2196F3;
             }
-            .bccontainer input:disabled ~ .checkmark {
+            .bccontainer.disabled .checkmark {
                 background-color: lightgray;
                 cursor: auto;
             }
@@ -80,9 +80,9 @@ class BaseCheckbox extends LitElement {
               display: none;
             }
             /* Show the checkmark when checked */
-            .bccontainer input:checked ~ .checkmark:after {
-              display: block;
-            }
+            .bccontainer.checked .checkmark:after {
+                display: block;
+            }            
             /* Style the checkmark/indicator */
             .bccontainer .checkmark:after {
               left: 7px;
@@ -110,7 +110,7 @@ class BaseCheckbox extends LitElement {
     }
     render() {
         return html`
-        <label class="bccontainer${this.disabled?' disabled':''}${this.small?' small':''}"><slot></slot>
+        <label class="bccontainer${this.disabled?' disabled':''}${this.small?' small':''}${this.checked?' checked':''}"><slot></slot>
             <input type="checkbox" ?checked="${this.checked}" ?disabled="${this.disabled}" ?value="${this.value}" @change="${(e)=>this._handleChange(e)}">
             <span class="checkmark"></span>
         </label>
