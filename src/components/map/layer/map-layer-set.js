@@ -13,7 +13,8 @@ class MapLayerSet extends LitElement {
             layerlist: {type: Array},
             nolayer: {type: String}, 
             open: {type: Boolean},
-            userreorder: {type: Boolean}
+            userreorder: {type: Boolean},
+            itemscroller: {type: Object}
         }
     }
     static get styles() {
@@ -99,13 +100,13 @@ class MapLayerSet extends LitElement {
     _updateContainers() {
         if (this.userreorder && this.layerlist.length > 1) {
             this.itemcontainer = this.shadowRoot.querySelector('#set');
-            this.itemscroller = this.itemcontainer;
+            this.itemscroller = this.parentElement && this.parentElement.itemscroller ? this.parentElement.itemscroller: null;
             this.shadowRoot.querySelectorAll('map-layer').forEach(mapLayer=>{
                 mapLayer.itemcontainer = this.itemcontainer;
                 mapLayer.itemscroller = this.itemscroller;
             })
         } else {
-            this.itemscroller = this.itemcontainer = null;
+            this.itemcontainer = null;
         }
     }
     _renderLayerList() {

@@ -24,8 +24,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
     static get styles() {
         return css`
             :host {
-                display: inline-block;
-                width: 100%;
+                display: block;
                 margin-bottom: 10px;
             }
             .mlcontainer {
@@ -109,7 +108,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
     }
     firstUpdated(){
         let mltitle = this.shadowRoot.querySelector('.mltitle');
-        Gestures.addListener(mltitle, 'track', (e)=>this._trackHandler(e))
+        Gestures.addListener(mltitle, 'track', (e)=>this._trackHandler(e));
     }
     _toggleArrow() {
         let arrow = this.shadowRoot.querySelector('base-arrow');
@@ -224,7 +223,9 @@ class MapLayer extends GestureEventListeners(LitElement) {
             }
             break;
           case 'track':
-            //let top = this.startOffsetTop + event.detail.dy;
+            if (!this.container) {
+              return; // why receiving track state after end state?
+            }
             let top = event.detail.dy;
             if (this.startOffsetTop + top < 0) {
                 top = -this.startOffsetTop;

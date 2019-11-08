@@ -7,14 +7,15 @@ import {html, css, LitElement} from 'lit-element';
 class MapLayerContainer extends LitElement {
     static get properties() {
         return {
-            checked: {type: Boolean}
+            checked: {type: Boolean},
+            itemscroller: {type: Object}
         }
     }
     static get styles() {
         return css`
             :host {
                 display: inline-block;
-                width: 400px;
+                
             }
             .border {
                 background-color: rgba(250,250,250,.87);
@@ -49,6 +50,7 @@ class MapLayerContainer extends LitElement {
     constructor() {
         super();
         this.checked = false;
+        this.itemscroller = null;
     }
     render() {
         return html`
@@ -59,6 +61,9 @@ class MapLayerContainer extends LitElement {
             </div>
         </div>
         `
+    }
+    firstUpdated() {
+        this.itemscroller = this.shadowRoot.querySelector('#mlccontainer');
     }
 
 }
