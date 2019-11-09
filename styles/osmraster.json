@@ -18,7 +18,8 @@
       "id" : "openstreetmap",
       "type" : "raster",
       "metadata" : {
-        "legendurl" : "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+        "legendurl" : "https://mapserver.edugis.nl/legends/wereld/osm_logo.png",
+        "abstract":"voor meer informatie zie https://openstreetmap.org"
       },
       "source" : "osmraster"
     }

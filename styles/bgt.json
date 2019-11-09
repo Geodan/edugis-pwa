@@ -4,27 +4,33 @@
   "sources": {
     "gebouwen": {
         "type": "vector",
-        "tiles":["https://saturnus.geodan.nl/mvt/bgtpand/{z}/{x}/{y}.mvt"]
+        "tiles":["https://saturnus.geodan.nl/mvt/bgtpand/{z}/{x}/{y}.mvt"],
+        "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     },
     "bgtwegdeel": {
       "type": "vector",
-      "tiles":["https://saturnus.geodan.nl/mvt/bgtwegdeel/{z}/{x}/{y}.mvt"]
+      "tiles":["https://saturnus.geodan.nl/mvt/bgtwegdeel/{z}/{x}/{y}.mvt"],
+      "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     },
     "bgtwaterdeel": {
       "type": "vector",
-      "tiles":["https://saturnus.geodan.nl/mvt/bgtwaterdeel/{z}/{x}/{y}.mvt"]
+      "tiles":["https://saturnus.geodan.nl/mvt/bgtwaterdeel/{z}/{x}/{y}.mvt"],
+      "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     },
     "bgtbegroeidterreindeel": {
       "type": "vector",
-      "tiles":["https://saturnus.geodan.nl/mvt/bgtbegroeidterreindeel/{z}/{x}/{y}.mvt"]
+      "tiles":["https://saturnus.geodan.nl/mvt/bgtbegroeidterreindeel/{z}/{x}/{y}.mvt"],
+      "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     },
     "bgtonbegroeidterreindeel": {
       "type": "vector",
-      "tiles":["https://saturnus.geodan.nl/mvt/bgtonbegroeidterreindeel/{z}/{x}/{y}.mvt"]
+      "tiles":["https://saturnus.geodan.nl/mvt/bgtonbegroeidterreindeel/{z}/{x}/{y}.mvt"],
+      "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     },
     "bgtondersteunendwegdeel": {
       "type": "vector",
-      "tiles":["https://saturnus.geodan.nl/mvt/bgtondersteunendwegdeel/{z}/{x}/{y}.mvt"]
+      "tiles":["https://saturnus.geodan.nl/mvt/bgtondersteunendwegdeel/{z}/{x}/{y}.mvt"],
+      "bounds": [3.20009, 50.7167, 7.27283, 53.5571]
     }
   },
   "layers": [

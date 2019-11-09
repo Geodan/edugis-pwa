@@ -20,6 +20,7 @@ class BaseButtonRadio extends LitElement {
             }
             .radiobutton {
                 display: inline-flex;
+                align-items: stretch;
                 margin: 2px;
                 border-radius: 5px;
                 border: 1px solid #2E7DBA;

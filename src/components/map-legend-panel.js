@@ -35,26 +35,26 @@ class MapLegendPanel extends LitElement {
     }
     return true;
   }
-  rasterLegend()
+  rasterLegend(maplayer)
   {
-    if (this.maplayer.metadata && this.maplayer.metadata.legendurl) {
-      return html`<img src="${this.maplayer.metadata.legendurl}">`;
+    if (maplayer.metadata && maplayer.metadata.legendurl) {
+      return html`<img src="${maplayer.metadata.legendurl}">`;
     }
   }
-  lineLegend() {
+  lineLegend(maplayer) {
     const widthResult = {propertyname: "", items: []};
     const colorResult = {propertyname: "", items: []};
     let lineColor = "gray";
     let lineWidth = 1;
-      
-    if (this.maplayer._paint) {
-      if (this.maplayer._paint._values) {
-        const values = this.maplayer._paint._values;
+    let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;  
+    if (maplayer._paint) {
+      if (maplayer._paint._values) {
+        const values = maplayer._paint._values;
         if (values["line-color"]) {
           if (values["line-color"].value.kind === "constant") {
             const rgba = values["line-color"].value.value;
             lineColor = `rgba(${rgba.r * 255},${rgba.g * 255},${rgba.b * 255},${rgba.a})`;
-            colorResult.items.push({lineColor: lineColor, width: 2, label: ''});
+            colorResult.items.push({lineColor: lineColor, width: 2, label: layerTitle});
           } else if (values["line-color"].value.kind === "source") {
             colorResult.items = values["line-color"].value._styleExpression.expression.outputs
               .map(output=>`rgba(${output.value.r * 255}, ${output.value.g * 255}, ${output.value.b * 255}, ${output.value.a})`)
@@ -64,7 +64,11 @@ class MapLegendPanel extends LitElement {
         if (values["line-width"]) {
           if (values["line-width"].value.kind === "constant") {
             const lineWidth = values['line-width'].value.value;
-            widthResult.items.push({lineWidth: lineWidth, lineColor: colorResult.items.length == 1 ? colorResult.items[0].lineColor: colorResult.items[Math.floor(colorResult.items.length/2)].lineColor, label: ''});
+            widthResult.items.push({
+              lineWidth: lineWidth, 
+              lineColor: colorResult.items.length == 1 ? colorResult.items[0].lineColor: colorResult.items[Math.floor(colorResult.items.length/2)].lineColor, 
+              label: layerTitle
+            });
           } else {
             if (values["line-width"].value.kind === "source") {
               widthResult.items = values["line-width"].value._styleExpression.expression.outputs
@@ -114,7 +118,7 @@ class MapLegendPanel extends LitElement {
           })}</div>`
       }
     } else {
-      const paint = this.maplayer.paint;
+      const paint = maplayer.paint;
       if (paint && paint['line-color']) {
         lineColor = paint['line-color'];
       }
@@ -175,27 +179,27 @@ class MapLegendPanel extends LitElement {
         `
       );
   }
-  circleLegend() {
-    const paint = this.maplayer.metadata.paint ? this.maplayer.metadata.paint : this.maplayer.paint;
-    let colorInfo = {propertyname: this.maplayer.metadata.title, items: ['white'] };
+  circleLegend(maplayer) {
+    const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
+    let colorInfo = {propertyname: maplayer.metadata.title, items: ['white'] };
     if (paint && paint['circle-color']) {
-      colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], this.maplayer.metadata.title);
+      colorInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-color'], maplayer.metadata.title);
     }
-    let opacityInfo = {propertyname: this.maplayer.metadata.title, items: []};
+    let opacityInfo = {propertyname: maplayer.metadata.title, items: []};
     if (paint && paint['circle-opacity']) {
-      opacityInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-opacity'], this.maplayer.metadata.title);
+      opacityInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-opacity'], maplayer.metadata.title);
       if (opacityInfo.items.length > 1) {
         // not supported
         opacityInfo.items = [];
       }
     }
-    let radiusInfo = {propertyname: this.maplayer.metadata.title, items: [{value:5}]};
+    let radiusInfo = {propertyname: maplayer.metadata.title, items: [{value:5}]};
     if (paint && paint['circle-radius']) {
-      radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], this.maplayer.metadata.title);
+      radiusInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-radius'], maplayer.metadata.title);
     }
-    let strokeInfo = {propertyname: this.maplayer.metadata.title, items: []};
+    let strokeInfo = {propertyname: maplayer.metadata.title, items: []};
     if (paint && paint['circle-stroke-color'] && paint['circle-stroke-width']) {
-      strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], this.maplayer.metadata.title);
+      strokeInfo = mbStyleParser.getZoomDependentPropertyInfo(this.zoom, paint['circle-stroke-color'], maplayer.metadata.title);
       if (strokeInfo.items.length > 1) {
         // not supported
         strokeInfo.items = [];
@@ -208,15 +212,15 @@ class MapLegendPanel extends LitElement {
     `
   }
   
-  fillLegend()
+  fillLegend(maplayer)
   {
     // legend should have one or more items
     // single item if:
     // legend value is string OR legend value is zoom dependent string
     // convert to array of {propertyname, [{fillColor, outlineColor, label}]}
-    
-    const result = {propertyname: "", items: []};
-    const paint = this.maplayer.metadata.paint ? this.maplayer.metadata.paint : this.maplayer.paint;
+    let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
+    const result = {propertyname: layerTitle, items: []};
+    const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
     let paintFillColor = "white";
     if (paint && paint['fill-color']) {
       paintFillColor = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-color']);
@@ -265,7 +269,7 @@ class MapLegendPanel extends LitElement {
       }
     } else if (typeof paintFillColor === "string") {
       result.propertyname = '';
-      result.items.push({fillColor: paintFillColor, outlineColor: outlineColor, label: this.maplayer.metadata.title});
+      result.items.push({fillColor: paintFillColor, outlineColor: outlineColor, label: layerTitle});
     }
     
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
@@ -276,28 +280,52 @@ class MapLegendPanel extends LitElement {
         </svg>${html` ${item.label}<br>`}`;
       })}`;
   }
+  backgroundLegend(maplayer) {
+    let bgColor = maplayer.paint["background-color"];
+    let bgOpacity = maplayer.paint["background-opacity"]?maplayer.paint["background-opacity"]:1;
+    return svg`
+        <svg width="30" height="15">
+          <rect width="30" height="15" style="fill:${bgColor};fill-opacity:${bgOpacity};stroke-width:1;stroke:black"/>
+        </svg>${html` kaartachtergrond<br>`}`;
+  }
+  getLegendContent(maplayer) {
+    let legendContent = html`legenda niet beschikbaar`;
+    switch(maplayer.type) {
+      case 'raster':
+        legendContent = this.rasterLegend(maplayer);
+        break;
+      case 'fill':
+        legendContent = this.fillLegend(maplayer);
+        break;
+      case 'line':
+        legendContent = this.lineLegend(maplayer);
+        break;
+      case 'circle':
+        legendContent = this.circleLegend(maplayer);
+        break;
+      case 'style':
+        if (maplayer.metadata && maplayer.metadata.sublayers && maplayer.metadata.sublayers.length) {
+          legendContent = maplayer.metadata.sublayers.map(sublayer=>this.getLegendContent(sublayer));
+        }
+        break;
+      case 'symbol':
+        legendContent = '';
+        break;
+      case 'background':
+        legendContent = this.backgroundLegend(maplayer);
+        break;
+      default:
+        legendContent = html`<div>legend not available for type ${maplayer.type}</div>`;
+    }
+    return legendContent;
+  }
+
   render()
   {
-    let legendContent = html`legenda niet beschikbaar`;
+    let legendContent;
     if (this.maplayer && this.maplayer.type) {
-      switch(this.maplayer.type) {
-        case 'raster':
-          legendContent = this.rasterLegend();
-          break;
-        case 'fill':
-          legendContent = this.fillLegend();
-          break;
-        case 'line':
-          legendContent = this.lineLegend();
-          break;
-        case 'circle':
-          legendContent = this.circleLegend();
-          break;
-        default:
-          legendContent = html`legend not available for type ${this.maplayer.type}</div>`;
-      }
-    }
-    
+      legendContent = this.getLegendContent(this.maplayer);
+    } 
     return html`
       <style>
         :host {

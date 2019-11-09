@@ -16,7 +16,9 @@ class MapLayerInfo extends LitElement {
             layervisible: {type: Boolean},
             moreInfo: {type: Boolean},
             showLayerConfig: {type: Boolean},
-            transparency: {type: Number}
+            transparency: {type: Number},
+            showmore: {type: Boolean},
+            showingmore: {type: Boolean}
         }
     }
     static get styles() {
@@ -63,7 +65,7 @@ class MapLayerInfo extends LitElement {
                 position: relative;
             }
             #moreinfo {
-                max-height: 1500px;
+                max-height: 3000px;
                 overflow: hidden;
                 transition: max-height .8s ease-in-out;
             }
@@ -89,6 +91,8 @@ class MapLayerInfo extends LitElement {
         this.moreInfo = false;
         this.showLayerConfig = false;
         this.transparency = 0;
+        this.showmore = false;
+        this.showingmore = false;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -106,6 +110,15 @@ class MapLayerInfo extends LitElement {
         </div>
         `
     }
+    _renderShowMore() {
+        if (this.showmore) {
+            return html`
+                <div class="fade${this.showingmore?' hide':''}"></div>
+                <div id="lishowmore" @click="${()=>this._toggleShowMore()}">Toon ${this.showingmore?'minder':'meer'}...</div>
+            `
+        }
+        return '';
+    }
     _renderVisibleLayerInfo() {
         if (this.layervisible) {
             return html`
@@ -119,8 +132,7 @@ class MapLayerInfo extends LitElement {
                 <div id="moreinfo" class="shortened">
                     <map-legend-panel .maplayer="${this.layer}" transparency="${this.transparency}"></map-legend-panel>
                 </div>
-                <div class="fade"></div>
-                <div id="lishowmore" @click="${()=>this._toggleShowMore()}">Toon meer...</div>
+                ${this._renderShowMore()}
             </div>
             ${this._renderShowInfo()}
             ${this._renderSettings()}
@@ -131,18 +143,10 @@ class MapLayerInfo extends LitElement {
     updated() {
         requestAnimationFrame(()=>{
                 let legendPanel = this.shadowRoot.querySelector('map-legend-panel');            
-                let fader = this.shadowRoot.querySelector('.fade');
-                let lishowmore = this.shadowRoot.querySelector('#lishowmore');
-                if (legendPanel && fader && lishowmore) {
-                    if (legendPanel.offsetHeight < 220) {
-                        fader.style.display = 'none';
-                        lishowmore.style.display = 'none';
-                    } else {
-                        fader.style.display = null;
-                        lishowmore.style.display = null;
-                    }
+                if (legendPanel) {
+                    this.showmore = legendPanel.offsetHeight > 220;
                 }
-            }   
+            }
         )
     }
     _renderShowInfo() {
@@ -164,16 +168,11 @@ class MapLayerInfo extends LitElement {
     }
     _toggleShowMore() {
         let moreInfo = this.shadowRoot.querySelector('#moreinfo');
-        let lishowmore = this.shadowRoot.querySelector('#lishowmore');
-        let fader = this.shadowRoot.querySelector('.fade');
-        if (moreInfo.classList.contains("shortened")) {
+        this.showingmore = !this.showingmore;
+        if (this.showingmore) {
             moreInfo.classList.remove("shortened");
-            lishowmore.innerHTML = "Toon minder..."
-            fader.classList.add('hide');
         } else {
             moreInfo.classList.add("shortened");
-            lishowmore.innerHTML = "Toon meer...";
-            fader.classList.remove('hide');
         }
     }
     _removeLayer() {

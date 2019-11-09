@@ -40,6 +40,7 @@ class BaseButton extends LitElement {
             button[isradio] {
                 margin: 0;
                 border-radius: 0;
+                height: 100%;
             }
             button[small] {
                 padding: 4px 8px;

@@ -78,6 +78,7 @@ class MapLayerSet extends LitElement {
                 }
                 return result;
             }, {group: [], previd: ""}).group;
+            this._setGroupLayerProperties();
             this._updateContainers();
         }
         return true;
@@ -110,12 +111,53 @@ class MapLayerSet extends LitElement {
             this.itemcontainer = null;
         }
     }
+    _setGroupLayerProperties() {
+        // set minzoom, maxzoom, boundspos for grouped layers
+        this.groupedLayerList.forEach(layer=>{
+            if (layer.metadata && layer.metadata.sublayers && layer.metadata.sublayers.length) {
+                // this is a group layer
+                layer.minzoom = layer.metadata.sublayers.reduce((result, sublayer)=>{
+                    if (sublayer.hasOwnProperty('minzoom')) {
+                      if (sublayer.minzoom < result) {
+                        result = sublayer.minzoom;
+                      }
+                    } else {
+                      result = 0;
+                    }
+                    return result;
+                  }, 100);
+                layer.maxzoom = layer.metadata.sublayers.reduce((result, sublayer)=>{
+                    if (sublayer.hasOwnProperty('maxzoom')) {
+                      if (sublayer.maxzoom > result) {
+                        result = sublayer.maxzoom;
+                      }
+                    } else {
+                      result = 100;
+                    }
+                    return result;
+                  }, 0);
+                layer.metadata.boundspos = layer.metadata.sublayers.reduce((result, sublayer)=>{
+                    if (result !== "") {
+                        result = sublayer.metadata.boundspos;
+                    }
+                    return result;
+                }, null);
+                layer.metadata.abstract = layer.metadata.sublayers.reduce((result, sublayer)=>{
+                    if (sublayer.metadata.abstract) {
+                        result += sublayer.metadata.abstract + '\n';
+                    }
+                    return result;
+                },"")
+            }
+        })
+    }
     _renderLayerList() {
         if (this.groupedLayerList.length == 0) {
             return html`<map-layer .nolayer="${this.nolayer}"></map-layer>`;
         }
         return this.groupedLayerList.map(layer=>{
-            return html`<map-layer .layer="${layer}" .zoom=${this.zoom} .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
+            let boundspos = layer.metadata && layer.metadata.boundspos ? layer.metadata.boundspos : "";
+            return html`<map-layer .layer="${layer}" .boundspos="${boundspos}" .zoom=${this.zoom} .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
         });
     }
     _openChange(event) {

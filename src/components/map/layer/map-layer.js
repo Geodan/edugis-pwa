@@ -5,6 +5,7 @@ import "../../base/base-checkbox.js";
 import "./map-layer-info.js";
 import {GestureEventListeners} from '../../../../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import * as Gestures from '../../../../node_modules/@polymer/polymer/lib/utils/gestures.js';
+import {arrowForwardIcon} from './map-layer-icons.js';
 
 /**
 * @polymer
@@ -20,7 +21,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
             open: {type: Boolean},
             visible: {type: Boolean},
             subtitle: {type: String},
-            zoom: {type: Number}
+            zoom: {type: Number},
+            boundspos: {type: String}
         }
     }
     static get styles() {
@@ -65,6 +67,35 @@ class MapLayer extends GestureEventListeners(LitElement) {
               padding: 0;
               overflow: hidden;
             }
+            .direction {
+              display: inline-flex;
+              align-self: center;
+            }
+            .direction svg {
+              height: 1em;
+              width: 1em;
+            }
+            .SE {
+              transform: rotate(45deg);
+            }
+            .S {
+              transform: rotate(90deg);
+            }
+            .SW {
+              transform: rotate(135deg);
+            }
+            .W {
+              transform: rotate(180deg);
+            }
+            .NW {
+              transform: rotate(225deg);
+            }
+            .N {
+              transform: rotate(270deg);
+            }
+            .NE {
+              transform: rotate(315deg);
+            }
         `
     }
     constructor() {
@@ -77,6 +108,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
         this.itemcontainer = null;
         this.itemscroller = null;
         this.zoom = 0;
+        this.boundspos = "";
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -90,9 +122,12 @@ class MapLayer extends GestureEventListeners(LitElement) {
               this.visible = this.layer.metadata.hasOwnProperty('visible')?this.layer.metadata.visible: true;
             }
         }
+        this.boundspos = this.layer.metadata && this.layer.metadata.boundspos?this.layer.metadata.boundspos:"";
         this._checkZoomRange();
         if (!this.visible) {
           this.subtitle = "Zichtbaarheid uitgeschakeld";
+        } else if (this.boundspos && this.boundspos != "") {
+          this.subtitle = html`Kaartlaag buiten kaartbeeld <span class="direction ${this.boundspos}">${arrowForwardIcon}</span>`
         } else if (this.outofrange){
           if (this.zoom < this.minzoom) {
             this.subtitle = "Zoom verder in";
@@ -135,33 +170,9 @@ class MapLayer extends GestureEventListeners(LitElement) {
     _checkZoomRange()
     {
       if (this.layer) {        
-        if (this.layer.metadata && this.layer.metadata.sublayers && this.layer.metadata.sublayers.length) {
-          this.minzoom = this.layer.metadata.sublayers.reduce((result, layer)=>{
-            if (layer.hasOwnProperty('minzoom')) {
-              if (layer.minzoom < result) {
-                result = layer.minzoom;
-              }
-            } else {
-              result = 0;
-            }
-            return result;
-          }, 100);
-          this.maxzoom = this.layer.metadata.sublayers.reduce((result, layer)=>{
-            if (layer.hasOwnProperty('maxzoom')) {
-              if (layer.maxzoom > result) {
-                result = layer.maxzoom;
-              }
-            } else {
-              result = 100;
-            }
-            return result;
-          }, 0);
-          this.outofrange = this.zoom < this.minzoom || this.zoom > this.maxzoom;
-        } else {
           this.minzoom = this.layer.minzoom ? this.layer.minzoom : 0;
           this.maxzoom = this.layer.maxzoom ? this.layer.maxzoom : 24;
           this.outofrange = this.zoom < this.minzoom || this.zoom > this.maxzoom;
-        }
       } else {
         this.outofrange = false;
       }

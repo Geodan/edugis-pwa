@@ -21,6 +21,7 @@ class MapLayerContainer extends LitElement {
                 background-color: rgba(250,250,250,.87);
                 padding: 10px;
                 box-sizing: border-box;
+                max-width: 325px;
             }
             #mlccontainer {
                 background-color: white;

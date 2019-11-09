@@ -92,7 +92,8 @@ function layerToNode(Layer, Request, scaleHintType) {
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
-          "legendurl": legendurl
+          "legendurl": legendurl,
+          "abstract": Layer.Abstract ? Layer.Abstract : ""
       },
       "source" : {
           "type": "raster",
