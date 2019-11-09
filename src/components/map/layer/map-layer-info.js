@@ -17,8 +17,8 @@ class MapLayerInfo extends LitElement {
             moreInfo: {type: Boolean},
             showLayerConfig: {type: Boolean},
             transparency: {type: Number},
-            showmore: {type: Boolean},
-            showingmore: {type: Boolean}
+            legendclipper: {type: Boolean},
+            legendclipped: {type: Boolean}
         }
     }
     static get styles() {
@@ -64,12 +64,12 @@ class MapLayerInfo extends LitElement {
                 margin-top: -100px;
                 position: relative;
             }
-            #moreinfo {
+            #legend {
                 max-height: 3000px;
                 overflow: hidden;
                 transition: max-height .8s ease-in-out;
             }
-            #moreinfo.shortened {
+            #legend.clipped {
                 max-height: 200px;
             }
             .iconbutton {
@@ -91,14 +91,17 @@ class MapLayerInfo extends LitElement {
         this.moreInfo = false;
         this.showLayerConfig = false;
         this.transparency = 0;
-        this.showmore = false;
-        this.showingmore = false;
+        this.legendclipper = true;
+        this.legendclipped = true;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
             this.moreInfo = false;
             this.showLayerConfig = false;
-            this.transparency = this.layer.metadata.transparency?this.layer.metadata.transparency:0;
+            if (this.layer && this.layer.metadata) {
+                this.transparency = this.layer.metadata.transparency?this.layer.metadata.transparency:0;
+                this.legendclipped = true;
+            }
         }
         return true;
     }
@@ -110,15 +113,6 @@ class MapLayerInfo extends LitElement {
         </div>
         `
     }
-    _renderShowMore() {
-        if (this.showmore) {
-            return html`
-                <div class="fade${this.showingmore?' hide':''}"></div>
-                <div id="lishowmore" @click="${()=>this._toggleShowMore()}">Toon ${this.showingmore?'minder':'meer'}...</div>
-            `
-        }
-        return '';
-    }
     _renderVisibleLayerInfo() {
         if (this.layervisible) {
             return html`
@@ -129,10 +123,10 @@ class MapLayerInfo extends LitElement {
             </div>
             <div id="lilegend">
                 <div id="lilegendtitle" class="bold">Legenda:</div>
-                <div id="moreinfo" class="shortened">
-                    <map-legend-panel .maplayer="${this.layer}" transparency="${this.transparency}"></map-legend-panel>
+                <div id="legend" class="${this.legendclipped?' clipped':''}">
+                    <map-legend-panel @load="${()=>this.requestUpdate()}" .maplayer="${this.layer}" transparency="${this.transparency}"></map-legend-panel>
                 </div>
-                ${this._renderShowMore()}
+                ${this._renderLegendClipper()}
             </div>
             ${this._renderShowInfo()}
             ${this._renderSettings()}
@@ -140,14 +134,33 @@ class MapLayerInfo extends LitElement {
         }
         return ``;
     }
+    _renderLegendClipper() {
+        if (this.legendclipper) {
+            return html`
+                <div class="fade${this.legendclipped?'':' hide'}"></div>
+                <div id="lishowmore" @click="${()=>this._togglelegendclipped()}">Toon ${this.legendclipped?'meer':'minder'}...</div>
+            `
+        }
+        return '';
+    }
     updated() {
         requestAnimationFrame(()=>{
+        //setTimeout(()=>{
                 let legendPanel = this.shadowRoot.querySelector('map-legend-panel');            
                 if (legendPanel) {
-                    this.showmore = legendPanel.offsetHeight > 220;
+                    this.legendclipper = legendPanel.offsetHeight > 220;
+                    if (!this.legendclipper) {
+                        this.legendclipped = false;
+                    } else {
+                        this.legendclipped = this.layer.metadata.hasOwnProperty('legendclipped')?this.layer.metadata.legendclipped:true;
+                    }
                 }
-            }
+            }//,1000
         )
+    }
+    _togglelegendclipped() {
+        this.legendclipped = !this.legendclipped;
+        this.layer.metadata.legendclipped = this.legendclipped;        
     }
     _renderShowInfo() {
         if (this.layer.metadata && this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
@@ -165,15 +178,6 @@ class MapLayerInfo extends LitElement {
             `
         }
         return '';
-    }
-    _toggleShowMore() {
-        let moreInfo = this.shadowRoot.querySelector('#moreinfo');
-        this.showingmore = !this.showingmore;
-        if (this.showingmore) {
-            moreInfo.classList.remove("shortened");
-        } else {
-            moreInfo.classList.add("shortened");
-        }
     }
     _removeLayer() {
         this.dispatchEvent(new CustomEvent('removelayer', {

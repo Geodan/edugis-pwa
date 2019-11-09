@@ -35,10 +35,13 @@ class MapLegendPanel extends LitElement {
     }
     return true;
   }
+  _legendReady() {
+    this.dispatchEvent(new CustomEvent('load', {}));
+  }
   rasterLegend(maplayer)
   {
     if (maplayer.metadata && maplayer.metadata.legendurl) {
-      return html`<img src="${maplayer.metadata.legendurl}">`;
+      return html`<img @load="${()=>this._legendReady()}" src="${maplayer.metadata.legendurl}">`;
     }
   }
   lineLegend(maplayer) {
