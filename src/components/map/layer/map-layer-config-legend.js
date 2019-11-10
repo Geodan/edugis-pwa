@@ -79,11 +79,11 @@ class ClassificationSettings extends LitElement {
                     <option value="5" ?selected="${this.classCount===5}">5</option>
                     <option value="6" ?selected="${this.classCount===6}">6</option>
                     <option value="7" ?selected="${this.classCount===7}">7</option>
-                    <option value="8" ?selected="${this.classCount===7}">8</option>
-                    <option value="9" ?selected="${this.classCount===7}">9</option>
-                    <option value="10" ?selected="${this.classCount===7}">10</option>
-                    <option value="11" ?selected="${this.classCount===7}">11</option>
-                    <option value="12" ?selected="${this.classCount===7}">12</option>
+                    <option value="8" ?selected="${this.classCount===8}">8</option>
+                    <option value="9" ?selected="${this.classCount===9}">9</option>
+                    <option value="10" ?selected="${this.classCount===10}">10</option>
+                    <option value="11" ?selected="${this.classCount===11}">11</option>
+                    <option value="12" ?selected="${this.classCount===12}">12</option>
                 </base-select></p>
                 <p>Classification methods:<br>
                 <base-button-radio id="classtype" small>
