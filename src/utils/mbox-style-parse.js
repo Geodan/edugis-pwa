@@ -154,17 +154,33 @@ class MBStyleParser
     }
     return result;
   }
-  paintStyleToLegendItems(paintStyle, legendType, zoom)
+  styleStringToItems(styleString, paintPropertyName, layerTitle) {
+    let result;
+    if (typeof styleString === "string") {
+      let paint = {};
+      paint[paintPropertyName] = this.colorToHex(styleString);
+      result = {legendTitle: layerTitle, items:[{paint: paint, label: layerTitle}]}
+    }
+    return result;
+  }
+  paintStyleToLegendItems(paintStyle, legendType, zoom, layerTitle)
   {
     // convert mapbox paint style to legend lines
     // return {legendTitle: title, legendType: "line|fill|circle", legendItems: [{paintProperties:{}, label}]}
-    let result = {legendTitle: '', legendType: legendType, legendItems: []};
+    if (!layerTitle) {
+      layerTitle = "";
+    }
+    let result = {legendTitle: layerTitle, legendType: legendType, legendItems: []};
     switch (legendType) {
       case "fill":
         let legend = this.styleArrayToItems(paintStyle, "fill-color");
         if (!legend) {
           // object ?
           legend = this.styleObjectToItems(paintStyle, "fill-color");
+        }
+        if (!legend) {
+          // string?
+          legend = this.styleStringToItems(paintStyle, "fill-color", layerTitle);
         }
         if (legend) {
           result = legend;

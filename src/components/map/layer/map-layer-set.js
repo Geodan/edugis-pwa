@@ -15,7 +15,8 @@ class MapLayerSet extends LitElement {
             open: {type: Boolean},
             userreorder: {type: Boolean},
             itemscroller: {type: Object},
-            zoom: {type: Number}
+            zoom: {type: Number},
+            datagetter: {type: Object}
         }
     }
     static get styles() {
@@ -54,6 +55,7 @@ class MapLayerSet extends LitElement {
         this.zoom = 0;
         this.itemcontainer = null;
         this.itemscroller = null;
+        this.datagetter = null;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layerlist')) {
@@ -157,7 +159,15 @@ class MapLayerSet extends LitElement {
         }
         return this.groupedLayerList.map(layer=>{
             let boundspos = layer.metadata && layer.metadata.boundspos ? layer.metadata.boundspos : "";
-            return html`<map-layer .layer="${layer}" .boundspos="${boundspos}" .zoom=${this.zoom} .itemcontainer="${this.itemcontainer}" .itemscroller="${this.itemscroller}" @movelayer="${(e)=>this._moveLayer(e)}"></map-layer>`
+            return html`<map-layer 
+                .layer="${layer}" 
+                .boundspos="${boundspos}" 
+                .zoom=${this.zoom} 
+                .itemcontainer="${this.itemcontainer}" 
+                .itemscroller="${this.itemscroller}" 
+                .datagetter="${this.datagetter}"
+                @movelayer="${(e)=>this._moveLayer(e)}">
+            </map-layer>`
         });
     }
     _openChange(event) {

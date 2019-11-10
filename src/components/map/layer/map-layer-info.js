@@ -18,7 +18,9 @@ class MapLayerInfo extends LitElement {
             showLayerConfig: {type: Boolean},
             transparency: {type: Number},
             legendclipper: {type: Boolean},
-            legendclipped: {type: Boolean}
+            legendclipped: {type: Boolean},
+            zoom: {type:Number},
+            datagetter: {type: Object}
         }
     }
     static get styles() {
@@ -93,6 +95,8 @@ class MapLayerInfo extends LitElement {
         this.transparency = 0;
         this.legendclipper = true;
         this.legendclipped = true;
+        this.zoom = 0;
+        this.datagetter = null;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -170,11 +174,20 @@ class MapLayerInfo extends LitElement {
             `
          }
     }
+    _renderLayerConfig() {
+        if (this.showLayerConfig) {
+            return html`
+            <map-layer-config .layer="${this.layer}" .zoom=${this.zoom} .datagetter="${this.datagetter}"></map-layer-config>
+            `
+        } else {
+            return '';
+        }
+    }
     _renderSettings(){
         if (this.layer.type === 'fill' || this.layer.type === 'line' || this.layer.type === 'circle') {
             return html`
                 <div class="iconbutton" @click="${()=>this.showLayerConfig=!this.showLayerConfig}"><span class="icon">${iconCog}</span> Instellingen</div>
-                <map-layer-config class="${this.showLayerConfig?'':"hide"}" .layer="${this.layer}"></map-layer-config>
+                ${this._renderLayerConfig()}
             `
         }
         return '';

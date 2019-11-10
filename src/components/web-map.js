@@ -817,6 +817,7 @@ class WebMap extends LitElement {
       <span slot="title">Geselecteerde kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
           .zoom="${this.zoom}"
+          .datagetter="${this.datagetter}"
           nolayer="Geen thematische kaartlagen geselecteerd">
             <span>Thematische lagen</span>
         </map-layer-set>
