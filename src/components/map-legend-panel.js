@@ -45,11 +45,11 @@ class MapLegendPanel extends LitElement {
     }
   }
   lineLegend(maplayer) {
-    const widthResult = {propertyname: "", items: []};
-    const colorResult = {propertyname: "", items: []};
+    let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
+    const widthResult = {propertyname: layerTitle, items: []};
+    const colorResult = {propertyname: layerTitle, items: []};
     let lineColor = "gray";
     let lineWidth = 1;
-    let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;  
     if (maplayer._paint) {
       if (maplayer._paint._values) {
         const values = maplayer._paint._values;
@@ -107,14 +107,17 @@ class MapLegendPanel extends LitElement {
         }
         if (colorResult.items.length > 1) {
           return html`
-          <div>${colorResult.items.map(color=>{
+          <div>${colorResult.propertyname?html` ${colorResult.propertyname}<br>`:''}
+          ${colorResult.items.map(color=>{
             return svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color.lineColor};stroke-width:${color.width};" />
             </svg>${html` ${color.label}<br>`}`
           })}</div>`
         }
         return html`
-          <div>${widthResult.items.map(width=>{
+          <div>
+          ${widthResult.propertyname?html` ${widthResult.propertyname}<br>`:''}
+          ${widthResult.items.map(width=>{
             return svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${width.lineColor};stroke-width:${width.lineWidth};" />
             </svg>${html` ${width.label}<br>`}`
@@ -153,10 +156,10 @@ class MapLegendPanel extends LitElement {
       lineColor = [lineColor];
     }
     return svg`${lineColor.map((color, index)=>{
-      return svg`<svg width="30" height="15">
-      <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color};stroke-width:${lineWidth};" />
-      </svg>`;
-    })}`
+        return svg`<svg width="30" height="15">
+        <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color};stroke-width:${lineWidth};" />
+        </svg>`;
+      })}`
   }
 
   circleRadiusLegend(radiusInfo) {
