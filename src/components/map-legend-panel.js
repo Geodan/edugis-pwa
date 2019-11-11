@@ -250,7 +250,7 @@ class MapLegendPanel extends LitElement {
       switch(paintFillColor[0]) {
         case "step":
           // element[1] is ["get", "propertyname"] (?)
-          result.propertyname = paintFillColor[1][1];
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
           result.items.push({fillColor: paintFillColor[2], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `< ${paintFillColor[3]}`});
           for (let i = 3; i < paintFillColor.length - 2; i+=2) {
             // get color
@@ -260,11 +260,19 @@ class MapLegendPanel extends LitElement {
           break;
         case "match":
           // element[1] is ["get", "propertyname"] (?)
-          result.propertyname = paintFillColor[1][1];
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
           result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: ''});
           for (let i = 2; i < paintFillColor.length - 1; i+=2) {
             result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `${paintFillColor[i]}`});
           }
+          break;
+        case "case":
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: ''});
+          for (let i = 1; i < paintFillColor.length - 1; i+=2) {
+            result.items.push({fillColor: paintFillColor[i+1], outlineColor: outlineColor, fillOpacity: fillOpacity, label: `${paintFillColor[i][2]}`});
+          }
+          break;
       }
     } else if (paintFillColor === Object(paintFillColor)) {
       if (paintFillColor.hasOwnProperty('property')) {

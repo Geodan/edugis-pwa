@@ -98,7 +98,7 @@ class MBStyleParser
       }
       return paint.reduce((result, item)=>{
         if (!result) {
-          let search = this._searchPaintForProperty(item);
+          let search = this.searchPaintForProperty(item);
           if (search) {
             result = search;
           }
@@ -126,7 +126,7 @@ class MBStyleParser
             }
           }
         }
-        let search = this._searchPaintForProperty(paint);
+        let search = this.searchPaintForProperty(paint);
         if (search) {
           return search;
         }
