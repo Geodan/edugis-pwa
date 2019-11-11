@@ -155,11 +155,12 @@ class MapLayer extends GestureEventListeners(LitElement) {
                     </div>
                 </div>        
             `
-        } 
-        if (this.layer && this.layer.metadata) {
-            this.layer.metadata.maplayeropen = this.open;
         }
-        
+        if (!this.layer.metadata) {
+          // layer not yet initialised
+          return html ``;
+        }
+        this.layer.metadata.maplayeropen = this.open;
         return html`
         <div class="mlcontainer">
             <div class="mltitle${this.itemcontainer?' draghandle':''}${this.outzoomrange || this.layer.metadata.layervisible === false || this.boundspos !== ""?' lightgray':''}">
@@ -173,7 +174,10 @@ class MapLayer extends GestureEventListeners(LitElement) {
         `
     }
     firstUpdated(){
-        Gestures.addListener(this.shadowRoot.querySelector('.mltitle'), 'track', (e)=>this._trackHandler(e));
+        let mltitle = this.shadowRoot.querySelector('.mltitle');
+        if (mltitle) {
+          Gestures.addListener(mltitle, 'track', (e)=>this._trackHandler(e));
+        }
     }
     _checkZoomRange()
     {
