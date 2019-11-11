@@ -112,36 +112,38 @@ class MapLayerConfig extends LitElement {
         let legendInfo = mbStyleParser.paintStyleToLegendItems(paintStyle, this.layer.type, this.zoom, this.layerTitle);
         return legendInfo;
     }
+    _updateMapProperty(paintProperty) {
+      let clonedProperty = Object.assign({}, paintProperty);
+      clonedProperty.layerid = this.layer.id;
+      this.dispatchEvent(new CustomEvent('changepaintproperty', {
+        detail: clonedProperty,
+        bubbles: true,
+        composed: true,
+      }));
+    }
     _handleChange(event) {
       let legendConfig = event.detail;
       let stats = this._getDataProperties();
       let classInfo = classify(stats, legendConfig.classCount, legendConfig.classType, legendConfig.colors);
       let paintLegend = createPaint(this.layer.type, stats, classInfo, legendConfig);
       let paintProperty = {};
+      let displayOutlines = legendConfig.outlines;
+      switch (this.layer.type) {
+        case 'fill':
+          this._updateMapProperty({'fill-outline-color': displayOutlines? 'white':null});
+          this._updateMapProperty({'fill-color': 'yellow'}); // fix for mapbox-gl update bug?
+          break;
+        case 'line':
+          break;
+        case 'circle':
+          this._updateMapProperty({'circle-stroke-width': displayOutlines? 1:0});
+          this._updateMapProperty({'circle-stroke-color': displayOutlines? 'white':null});
+          break;
+      }
+      // update colors
       paintProperty[`${this.layer.type}-color`] = paintLegend;
       this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
-      /*
-      if (mapboxPaint) {
-        let displayOutlines = legendConfig.outlines;
-        switch (layerType) {
-            case 'fill':
-                map.setPaintProperty('attrlayer', 'fill-outline-color', displayOutlines? 'white':null);
-                map.setPaintProperty('attrlayer', 'fill-color', 'yellow'); // fix for mapbox-gl update bug?
-                break;
-            case 'line':
-                break;
-            case 'circle':
-                map.setPaintProperty('attrlayer', 'circle-stroke-width', displayOutlines? 1:0);
-                map.setPaintProperty('attrlayer', 'circle-stroke-color', displayOutlines? 'white':null);
-                break;
-        }
-      }*/
-      paintProperty.layerid = this.layer.id;
-      this.dispatchEvent(new CustomEvent('changepaintproperty', {
-        detail: paintProperty,
-        bubbles: true,
-        composed: true,
-      }));
+      this._updateMapProperty(paintProperty);
     }
     _sortFunction(a, b) {
       if (typeof a === "number") {
