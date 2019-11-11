@@ -59,6 +59,14 @@ class MBStyleParser
           for (let i = 2; i < paintProperty.length - 1; i+=2) {
             result.items.push({value: paintProperty[i+1], label: `${paintProperty[i]}`});
           }
+          break;
+        case "case":
+            result.propertyname = typeof paintProperty[1][1] === "string"? paintProperty[1][1]:"expressie";
+            result.items.push({value: paintProperty[paintProperty.length - 1], label: ''});
+            for (let i = 2; i < paintProperty.length - 1; i+=2) {
+              result.items.push({value: paintProperty[i+1], label: `${paintProperty[i]}`});
+            }
+        break;
       }
     } else if (paintProperty === Object(paintProperty)) {
       if (paintProperty.hasOwnProperty('property')) {
@@ -83,16 +91,59 @@ class MBStyleParser
     const color = tinycolor(propertyValue);
     return color.toHexString();
   }
+  searchPaintForProperty(paint) {
+    if (Array.isArray(paint)) {
+      if (paint.length === 2 && paint[0] === "get") {
+        return paint[1];
+      }
+      return paint.reduce((result, item)=>{
+        if (!result) {
+          let search = this._searchPaintForProperty(item);
+          if (search) {
+            result = search;
+          }
+        }
+        return result;
+      }, false);
+    }
+    return false;
+  }
+  getLayerStylePropertyName(paint) {
+      if (paint.property) {
+        return paint.property;
+      }
+      if (Array.isArray(paint)) {
+        if (paint[0] === "step" || paint[0] === "match") {
+          if (paint[1][0] === "get") {
+            return paint[1][1];
+          }
+        }
+        if (paint[0] === "case") {
+          let condition = paint[1];
+          for (let item of condition) {
+            if (item.length === 2 && item[0] === "get") {
+              return item[1];
+            }
+          }
+        }
+        let search = this._searchPaintForProperty(paint);
+        if (search) {
+          return search;
+        }
+      }
+      return undefined;
+  }
   styleArrayToItems(styleArray, paintPropertyName)
   {
     // convert mapbox paint style array to legend with items
     let result;
     if (Array.isArray(styleArray) && styleArray.length) {
+      let attributeName = this.getLayerStylePropertyName(styleArray);
       switch (styleArray[0]) {
         case "step":
           {
             // element[1] is ["get", "propertyname"]
-            result = {legendTitle: styleArray[1][1], items: [], type: "seq"};
+            result = {legendTitle: attributeName, items: [], type: "seq", attribute: attributeName};
             if (typeof styleArray[3] === "string") {
               result.type = "qual"
             }
@@ -110,9 +161,10 @@ class MBStyleParser
           }
           break;
         case "match":
+        case "case":
           {
             // element[1] is ["get", "propertyname"] (?)
-            result = {legendTitle: styleArray[1][1], items: [], type: "seq"};
+            result = {legendTitle: attributeName, items: [], type: "seq", attribute: attributeName};
             if (typeof styleArray[2] === "string") {
               result.type = "qual";
             }
@@ -139,7 +191,7 @@ class MBStyleParser
     let result;
     if (styleObject === Object(styleObject)) {
       if (styleObject.hasOwnProperty('property')) {
-        result = {legendTitle: styleObject.property, items: [], type: "seq"};
+        result = {legendTitle: styleObject.property, items: [], type: "seq", attribute: styleObject.property};
         if (typeof styleObject.stops[0][0] === "string") {
           result.type = "qual";
         }
@@ -159,7 +211,7 @@ class MBStyleParser
     if (typeof styleString === "string") {
       let paint = {};
       paint[paintPropertyName] = this.colorToHex(styleString);
-      result = {legendTitle: layerTitle, items:[{paint: paint, label: layerTitle}]}
+      result = {legendTitle: layerTitle, items:[{paint: paint, label: layerTitle}], attribute: layerTitle}
     }
     return result;
   }

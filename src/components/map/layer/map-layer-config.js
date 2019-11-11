@@ -1,7 +1,6 @@
 import {html, css, LitElement} from 'lit-element';
 import './map-layer-config-legend.js';
 import mbStyleParser from '../../../utils/mbox-style-parse.js';
-import colorbrewer from '../../../lib/colorbrewer.js';
 import classify from '../../../lib/classify.js';
 
 // create a map layer definition from the legend and apply it to the map attribute layer
@@ -12,7 +11,7 @@ import classify from '../../../lib/classify.js';
  * @param {object} classInfo 
  * @param {object} legendConfig 
  */
-function updateMap(layerType, stats, classInfo, legendConfig) {
+function createPaint(layerType, stats, classInfo, legendConfig) {
   let mapboxPaint;
   switch(classInfo.classType) {
       case 'mostfrequent':
@@ -61,26 +60,7 @@ function updateMap(layerType, stats, classInfo, legendConfig) {
           }
           break;
   }
-  if (mapboxPaint) {
-      let displayOutlines = legendConfig.outlines;
-      switch (layerType) {
-          case 'fill':
-              map.setPaintProperty('attrlayer', 'fill-outline-color', displayOutlines? 'white':null);
-              map.setPaintProperty('attrlayer', 'fill-color', 'yellow'); // fix for mapbox-gl update bug?
-              break;
-          case 'line':
-              break;
-          case 'circle':
-              map.setPaintProperty('attrlayer', 'circle-stroke-width', displayOutlines? 1:0);
-              map.setPaintProperty('attrlayer', 'circle-stroke-color', displayOutlines? 'white':null);
-              break;
-      }
-
-      let colorprop = `${layerType}-color`;
-      map.setPaintProperty('attrlayer', colorprop, mapboxPaint);
-
-      updateLayerJsonDisplay();
-  }
+  return mapboxPaint;
 }
 
 
@@ -128,16 +108,40 @@ class MapLayerConfig extends LitElement {
     }
     _getLegendInfoFromLayer() {
         let paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
-        let paintStyle = paint["fill-color"];
-        let legendInfo = mbStyleParser.paintStyleToLegendItems(paintStyle, 'fill', this.zoom, this.layerTitle);
-        console.log(legendInfo);
-        let dataProperties = this._getDataProperties();
-        console.log(dataProperties);
+        let paintStyle = paint[`${this.layer.type}-color`];
+        let legendInfo = mbStyleParser.paintStyleToLegendItems(paintStyle, this.layer.type, this.zoom, this.layerTitle);
         return legendInfo;
     }
     _handleChange(event) {
-      let legendConfig = event.details;
+      let legendConfig = event.detail;
+      let stats = this._getDataProperties();
       let classInfo = classify(stats, legendConfig.classCount, legendConfig.classType, legendConfig.colors);
+      let paintLegend = createPaint(this.layer.type, stats, classInfo, legendConfig);
+      let paintProperty = {};
+      paintProperty[`${this.layer.type}-color`] = paintLegend;
+      this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
+      /*
+      if (mapboxPaint) {
+        let displayOutlines = legendConfig.outlines;
+        switch (layerType) {
+            case 'fill':
+                map.setPaintProperty('attrlayer', 'fill-outline-color', displayOutlines? 'white':null);
+                map.setPaintProperty('attrlayer', 'fill-color', 'yellow'); // fix for mapbox-gl update bug?
+                break;
+            case 'line':
+                break;
+            case 'circle':
+                map.setPaintProperty('attrlayer', 'circle-stroke-width', displayOutlines? 1:0);
+                map.setPaintProperty('attrlayer', 'circle-stroke-color', displayOutlines? 'white':null);
+                break;
+        }
+      }*/
+      paintProperty.layerid = this.layer.id;
+      this.dispatchEvent(new CustomEvent('changepaintproperty', {
+        detail: paintProperty,
+        bubbles: true,
+        composed: true,
+      }));
     }
     _sortFunction(a, b) {
       if (typeof a === "number") {
@@ -210,7 +214,7 @@ class MapLayerConfig extends LitElement {
       return percentiles;
     }
     _getDataProperties() {
-        let stylePropertyName = this._getLayerStylePropertyName();
+        let stylePropertyName = this.legendInfo.attribute;//this._getLayerStylePropertyName();
         let data;
         if (this.datagetter && this.datagetter.getSource) {
           const source = this.datagetter.getSource(this.layer.source);
@@ -248,60 +252,7 @@ class MapLayerConfig extends LitElement {
         }
         return stats;
     }
-    _searchPaintForProperty(paint) {
-      if (Array.isArray(paint)) {
-        if (paint.length === 2 && paint[0] === "get") {
-          return paint[1];
-        }
-        return paint.reduce((result, item)=>{
-          if (!result) {
-            let search = this._searchPaintForProperty(item);
-            if (search) {
-              result = search;
-            }
-          }
-          return result;
-        }, false);
-      }
-      return false;
-    }
-    _getLayerStylePropertyName() {
-        let paint;
-        switch (this.layer.type) {
-          case 'fill':
-            paint = this.layer.paint['fill-color'];
-            break;
-          case 'line':
-            paint = this.layer.paint['line-color'];
-            break;
-          case 'circle':
-            paint = this.layer.paint['circle-color'];
-            break;
-        }
-        if (paint.property) {
-          return paint.property;
-        }
-        if (Array.isArray(paint)) {
-          if (paint[0] === "step" || paint[0] === "match") {
-            if (paint[1][0] === "get") {
-              return paint[1][1];
-            }
-          }
-          if (paint[0] === "case") {
-            let condition = paint[1];
-            for (item of condition) {
-              if (item.length === 2 && item[0] === "get") {
-                return item[1];
-              }
-            }
-          }
-          let search = this._searchPaintForProperty(paint);
-          if (search) {
-            return search;
-          }
-        }
-        return undefined;
-    }
+    
     _getMinMax(data, property) {
         const maxstr = 'zzzzzzzz';
         const result = {

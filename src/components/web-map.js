@@ -813,6 +813,7 @@ class WebMap extends LitElement {
         @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
         @movelayer="${e=>this.moveLayer(e)}" 
         @updateopacity="${e => this.updateLayerOpacity(e)}"
+        @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         >
       <span slot="title">Geselecteerde kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
