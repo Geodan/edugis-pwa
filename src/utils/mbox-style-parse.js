@@ -222,26 +222,21 @@ class MBStyleParser
     if (!layerTitle) {
       layerTitle = "";
     }
-    let result = {legendTitle: layerTitle, legendType: legendType, legendItems: []};
-    switch (legendType) {
-      case "fill":
-        let legend = this.styleArrayToItems(paintStyle, "fill-color");
-        if (!legend) {
-          // object ?
-          legend = this.styleObjectToItems(paintStyle, "fill-color");
-        }
-        if (!legend) {
-          // string?
-          legend = this.styleStringToItems(paintStyle, "fill-color", layerTitle);
-        }
-        if (legend) {
-          result = legend;
-        }
-        break;
-      case "line":
-        break;
-      case "circle":
-        break;
+    let result = {legendTitle: layerTitle, legendType: legendType, items: []};
+
+    let propertyname = `${legendType}-color`;
+
+    let legend = this.styleArrayToItems(paintStyle, propertyname);
+    if (!legend) {
+      // object ?
+      legend = this.styleObjectToItems(paintStyle, propertyname);
+    }
+    if (!legend) {
+      // string?
+      legend = this.styleStringToItems(paintStyle, propertyname, layerTitle);
+    }
+    if (legend) {
+      result = legend;
     }
     return result;
   }

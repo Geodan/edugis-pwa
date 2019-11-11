@@ -13,6 +13,9 @@ import classify from '../../../lib/classify.js';
  */
 function createPaint(layerType, stats, classInfo, legendConfig) {
   let mapboxPaint;
+  if (classInfo.classCount == 1) {
+    return classInfo.classes[0].paint;
+  }
   switch(classInfo.classType) {
       case 'mostfrequent':
           mapboxPaint = ["case"];

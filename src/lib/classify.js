@@ -136,6 +136,11 @@ export function classify(stats, classCount, classType, paintValues) {
     if (paintValues.length < classCount) {
         classCount = paintValues.length;
     }
+    if (stats.datarowcount == 0) {
+        // only geometries
+        let paint = Array.isArray(paintValues) && paintValues.length? paintValues[0]: '#000';
+        return {classes:[{from: '', to: '', label:stats.column, paint: paint}], classCount: 1, classType: classType}
+    }
     switch(classType) {
         case 'mostfrequent':
             let classValues = stats.values.filter(value=>value.value !== null);
