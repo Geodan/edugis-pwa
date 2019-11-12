@@ -23,7 +23,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
             subtitle: {type: String},
             zoom: {type: Number},
             boundspos: {type: String},
-            datagetter: {type: Object}
+            datagetter: {type: Object},
+            updatelegend: {type: Number}
         }
     }
     static get styles() {
@@ -116,6 +117,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
         this.zoom = 0;
         this.boundspos = "";
         this.datagetter = null;
+        this.updatelegend = 0;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -202,6 +204,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
           ?open="${this.open}" 
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
+          .updatelegend="${this.updatelegend}"
           ?layervisible="${this.visible && !this.outzoomrange}"></map-layer-info>`
     }
     _openChange() {

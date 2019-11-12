@@ -16,7 +16,8 @@ class MapLayerSet extends LitElement {
             userreorder: {type: Boolean},
             itemscroller: {type: Object},
             zoom: {type: Number},
-            datagetter: {type: Object}
+            datagetter: {type: Object},
+            updatelegend: {type: Number}
         }
     }
     static get styles() {
@@ -56,6 +57,7 @@ class MapLayerSet extends LitElement {
         this.itemcontainer = null;
         this.itemscroller = null;
         this.datagetter = null;
+        this.updatelegend = 0;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layerlist')) {
@@ -164,7 +166,8 @@ class MapLayerSet extends LitElement {
                 .boundspos="${boundspos}" 
                 .zoom=${this.zoom} 
                 .itemcontainer="${this.itemcontainer}" 
-                .itemscroller="${this.itemscroller}" 
+                .itemscroller="${this.itemscroller}"
+                .updatelegend="${this.updatelegend}"
                 .datagetter="${this.datagetter}"
                 @movelayer="${(e)=>this._moveLayer(e)}">
             </map-layer>`

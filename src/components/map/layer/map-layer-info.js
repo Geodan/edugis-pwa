@@ -20,7 +20,8 @@ class MapLayerInfo extends LitElement {
             legendclipper: {type: Boolean},
             legendclipped: {type: Boolean},
             zoom: {type:Number},
-            datagetter: {type: Object}
+            datagetter: {type: Object},
+            updatelegend: {type: Number}
         }
     }
     static get styles() {
@@ -97,6 +98,7 @@ class MapLayerInfo extends LitElement {
         this.legendclipped = true;
         this.zoom = 0;
         this.datagetter = null;
+        this.updatelegend = 0;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
@@ -128,7 +130,11 @@ class MapLayerInfo extends LitElement {
             <div id="lilegend">
                 <div id="lilegendtitle" class="bold">Legenda:</div>
                 <div id="legend" class="${this.legendclipped?' clipped':''}">
-                    <map-legend-panel @load="${()=>this.requestUpdate()}" .maplayer="${this.layer}" transparency="${this.transparency}"></map-legend-panel>
+                    <map-legend-panel 
+                        @load="${()=>this.requestUpdate()}" 
+                        .maplayer="${this.layer}"
+                        transparency="${this.transparency}"
+                        .updatelegend="${this.updatelegend}"></map-legend-panel>
                 </div>
                 ${this._renderLegendClipper()}
             </div>

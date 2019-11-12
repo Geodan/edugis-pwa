@@ -18,12 +18,13 @@ class MapLegendPanel extends LitElement {
       zoom: {type: Number},
       maplayer: {type: Object},
       transparency: {type: Number},
-      updatecount: { type: Number}
+      updatelegend: { type: Number}
     }; 
   }
   constructor() {
       super();
       this.transparency = 0;
+      this.updatelegend = 0;
   }
   shouldUpdate(changedProperties) {
     if (changedProperties.has('maplayer')) {

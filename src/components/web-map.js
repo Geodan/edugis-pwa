@@ -181,7 +181,8 @@ class WebMap extends LitElement {
       accesstoken: String,
       lastClickPoint: Object,
       currentTool: String,
-      configurl: String
+      configurl: String,
+      updatelegend: Number
     }; 
   }
   constructor() {
@@ -209,6 +210,7 @@ class WebMap extends LitElement {
     this.haslegend = false;
     this.accesstoken = undefined;
     this.lastClickPoint = undefined;
+    this.updatelegend = 0;
     this.currentTool = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
@@ -297,6 +299,7 @@ class WebMap extends LitElement {
         this.updateSingleLayerPaintProperty(e.detail.layerid, e.detail);
       }
     }
+    this.updatelegend++;
   }
   removeSourceIfOrphaned(source) {
     const otherSourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
@@ -819,6 +822,7 @@ class WebMap extends LitElement {
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
+          .updatelegend="${this.updatelegend}"
           nolayer="Geen thematische kaartlagen geselecteerd">
             <span>Thematische lagen</span>
         </map-layer-set>
