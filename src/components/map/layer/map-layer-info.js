@@ -134,6 +134,7 @@ class MapLayerInfo extends LitElement {
                         @load="${()=>this.requestUpdate()}" 
                         .maplayer="${this.layer}"
                         transparency="${this.transparency}"
+                        .zoom="${this.zoom}"
                         .updatelegend="${this.updatelegend}"></map-legend-panel>
                 </div>
                 ${this._renderLegendClipper()}
