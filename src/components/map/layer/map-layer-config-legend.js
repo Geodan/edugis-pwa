@@ -19,9 +19,9 @@ class ClassificationSettings extends LitElement {
             outlines: {type: Boolean},
             hideNulls: {type: Boolean},
             selectedColorScheme: {type: Number},
-            noNulls: {type: Boolean, attribute: 'nonulls'},
-            noEqual: {type: Boolean, attribute: 'noequal'},
-            noMostFrequent: {type: Boolean, attribute: 'nomostfrequent'}
+            noNulls: {type: Boolean},
+            noEqual: {type: Boolean},
+            noMostFrequent: {type: Boolean}
         }
     }
     constructor() {
@@ -100,9 +100,9 @@ class ClassificationSettings extends LitElement {
                     <base-button value="div" ?checked="${this.colorSchemeType=='div'}">uiteenlopend</base-button>
                     <base-button value="qual" ?checked="${this.colorSchemeType=='qual'}">categorie&euml;n</base-button>
                 </base-button-radio><br>
-                <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">reverse color order</label>
-                <input type="checkbox" name="displayoutlines" id="displayoutlines" ?checked="${this.outlines}"><label for="displayoutlines">visual outlines</label><br>
-                <input type="checkbox" id="hidenulls" name="hidenulls" ?checked="${this.hideNulls}" ?disabled="${this.noNulls}"><label for="hidenulls">Hide no-data</label>
+                <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">kleuren omkeren</label><br>
+                <input type="checkbox" name="displayoutlines" id="displayoutlines" ?checked="${this.outlines}"><label for="displayoutlines">omlijnen</label><br>
+                <input type="checkbox" id="hidenulls" name="hidenulls" ?checked="${this.hideNulls}" ?disabled="${this.noNulls}"><label for="hidenulls">Verberg geen gegevens</label>
                 <div id="colorschemes">${this._renderColorSchemes()}</div>
                 </p>
             </div>

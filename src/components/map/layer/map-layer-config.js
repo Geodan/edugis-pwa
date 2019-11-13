@@ -25,7 +25,9 @@ function createPaint(layerType, stats, classInfo, legendConfig) {
                   mapboxPaint.push(classItem.paint);
               }
           })
+          mapboxPaint.push(['!=', ["get", stats.column], null]);
           mapboxPaint.push(classInfo.classes[classInfo.classCount - 1].paint);
+          mapboxPaint.push('#000000');
           break;
       case 'quantile':
           mapboxPaint = ["case"]
@@ -112,7 +114,7 @@ class MapLayerConfig extends LitElement {
                   colorSchemeType: 'qual',
                   noNulls: false,
                   noEqual: decodedLegend.type === 'qual',
-                  noMostFrequent: false
+                  noMostFrequent: this.stats.allvaluesunique
                 };
               }
             }
@@ -131,8 +133,8 @@ class MapLayerConfig extends LitElement {
           .outlines="${this.legendConfig.outlines}"
           .reversed="${this.legendConfig.reversed}"
           .colorSchemeType="${this.legendConfig.colorSchemeType}"
-          .noEqual="${false}",
-          .noMostFrequent="${false}",
+          .noEqual="${this.legendConfig.noEqual}",
+          .noMostFrequent="${this.legendConfig.noMostFrequent}",
           @change="${(e)=>this._handleChange(e)}"
         ></map-layer-config-legend>
         `
