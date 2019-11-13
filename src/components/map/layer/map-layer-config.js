@@ -253,12 +253,13 @@ class MapLayerConfig extends LitElement {
     _getTypeName(item) {
       let type = typeof item;
       if (type == 'object') {
-        if (data[i][keys[j]] === null) {
+        if (item === null) {
           type = 'null'
-        } else if (Array.isArray(data[i][keys[j]])){
+        } else if (Array.isArray(item)){
           type = 'array'
         }
       }
+      return type;
     }
     _getDataProperties(attribute) {
       let data;
@@ -280,12 +281,12 @@ class MapLayerConfig extends LitElement {
         for (let j = 0; j < keys.length; j++) {
           if (attributes.has(keys[j])) {
             if (attributes.get(keys[j]) === 'null') {
-              if (data[i][keys[j]] !== null) {
-                attributes.set(keys[j], this._getTypeName(data[i][keys[j]]));
+              if (data[i].properties[keys[j]] !== null) {
+                attributes.set(keys[j], this._getTypeName(data[i].properties[keys[j]]));
               }
             }
           } else {
-            attributes.set(keys[j], this._getTypeName(data[i][keys[j]]));
+            attributes.set(keys[j], this._getTypeName(data[i].properties[keys[j]]));
           }
         }
       }
@@ -297,7 +298,7 @@ class MapLayerConfig extends LitElement {
         let datarowcount = percentiles.reduce((result, percentile)=>result + percentile.count, 0);
         let stats = {
           allvaluesunique: false,
-          attributes: Array.from(attributes.entries),
+          attributes: Array.from(attributes.entries()),
           column: attribute,
           datarowcount: datarowcount,
           datatype: percentiles.length ? typeof percentiles[0].from : 'null',

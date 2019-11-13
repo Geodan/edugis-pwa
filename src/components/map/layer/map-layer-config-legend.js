@@ -74,7 +74,7 @@ class ClassificationSettings extends LitElement {
         return html`
             <div id="legendformcontainer" @change="${(e)=>this._changed(e)}">
                 <p><label>aantal klassen:</label><br>
-                <base-select id="classcount" name="classcount">
+                <base-select id="classcount" name="classcount" value="${this.classCount}">
                     <option value="1" ?selected="${this.classCount===1}">1</option>
                     <option value="2" ?selected="${this.classCount===2}">2</option>
                     <option value="3" ?selected="${this.classCount===3}">3</option>
@@ -144,7 +144,10 @@ class ClassificationSettings extends LitElement {
         if (event) {
             event.stopPropagation();
         }
-        this.classCount = this.shadowRoot.querySelector('#classcount').value;
+        let checkedClassCount = this.shadowRoot.querySelector('#classcount').value;
+        if (checkedClassCount !== '') {
+            this.classList = checkedClassCount;
+        }
         this.classType = this.shadowRoot.querySelector('#classtype').value;
         this.reverseColors = this.shadowRoot.querySelector('input[name="colorsreversed"]').checked;
         this.colorSchemeType = this.shadowRoot.querySelector('#colorscheme').value;
