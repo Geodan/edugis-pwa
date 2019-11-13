@@ -112,7 +112,7 @@ class MapLayerConfig extends LitElement {
                   outlines: true,
                   reversed: false,
                   colorSchemeType: 'qual',
-                  noNulls: false,
+                  noNulls: this.stats.nullrowcount == 0,
                   noEqual: decodedLegend.type === 'qual',
                   noMostFrequent: this.stats.allvaluesunique
                 };
@@ -131,9 +131,10 @@ class MapLayerConfig extends LitElement {
           .classType="${this.legendConfig.classType}"
           .hideNulls="${this.legendConfig.hideNulls}"
           .outlines="${this.legendConfig.outlines}"
-          .reversed="${this.legendConfig.reversed}"
+          .reverseColors="${this.legendConfig.reverseColors}"
           .colorSchemeType="${this.legendConfig.colorSchemeType}"
           .noEqual="${this.legendConfig.noEqual}",
+          .noNulls="${this.legendConfig.noNulls}"
           .noMostFrequent="${this.legendConfig.noMostFrequent}",
           @change="${(e)=>this._handleChange(e)}"
         ></map-layer-config-legend>

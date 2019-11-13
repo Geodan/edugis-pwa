@@ -102,7 +102,9 @@ class ClassificationSettings extends LitElement {
                 </base-button-radio><br>
                 <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">kleuren omkeren</label><br>
                 <input type="checkbox" name="displayoutlines" id="displayoutlines" ?checked="${this.outlines}"><label for="displayoutlines">omlijnen</label><br>
+                ${this.noNulls?'':html`
                 <input type="checkbox" id="hidenulls" name="hidenulls" ?checked="${this.hideNulls}" ?disabled="${this.noNulls}"><label for="hidenulls">Verberg geen gegevens</label>
+                `}
                 <div id="colorschemes">${this._renderColorSchemes()}</div>
                 </p>
             </div>
@@ -133,10 +135,13 @@ class ClassificationSettings extends LitElement {
         return {
             classCount: this.classCount,
             classType: this.classType,
-            reversed: this.reverseColors,
+            reverseColors: this.reverseColors,
             colorSchemeType: this.colorSchemeType,
             outlines: this.outlines,
             hideNulls: this.hideNulls,
+            noNulls: this.noNulls,
+            noEqual: this.noEqual,
+            noMostFrequent: this.noMostFrequent,
             colors: this.colorSchemes[this.selectedColorScheme].colors.slice() //clone
         }
     }
@@ -152,7 +157,7 @@ class ClassificationSettings extends LitElement {
         this.reverseColors = this.shadowRoot.querySelector('input[name="colorsreversed"]').checked;
         this.colorSchemeType = this.shadowRoot.querySelector('#colorscheme').value;
         this.outlines = this.shadowRoot.querySelector('input[name="displayoutlines"]').checked;
-        this.hideNulls = this.shadowRoot.querySelector('input[name="hidenulls"]').checked;
+        this.hideNulls = this.noNulls? false: this.shadowRoot.querySelector('input[name="hidenulls"]').checked;
         this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
             this.selectedColorScheme = this.colorSchemes.length - 1;
