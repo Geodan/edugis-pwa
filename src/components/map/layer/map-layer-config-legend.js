@@ -96,9 +96,9 @@ class ClassificationSettings extends LitElement {
                 </base-button-radio></p>
                 <p>Color schemes:<br>
                 <base-button-radio id='colorscheme' small>
-                    <base-button value="seq">opvolgend</base-button>
-                    <base-button value="div">uit elkaar</base-button>
-                    <base-button value="qual" checked>categorie&euml;n</base-button>
+                    <base-button value="seq" ?checked="${this.colorSchemeType=='seq'}">opvolgend</base-button>
+                    <base-button value="div" ?checked="${this.colorSchemeType=='div'}">uit elkaar</base-button>
+                    <base-button value="qual" ?checked="${this.colorSchemeType=='qual'}">categorie&euml;n</base-button>
                 </base-button-radio><br>
                 <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">reverse color order</label>
                 <input type="checkbox" name="displayoutlines" id="displayoutlines" ?checked="${this.outlines}"><label for="displayoutlines">visual outlines</label><br>
@@ -134,7 +134,7 @@ class ClassificationSettings extends LitElement {
             classCount: this.classCount,
             classType: this.classType,
             reversed: this.reverseColors,
-            schemeType: this.colorSchemeType,
+            colorSchemeType: this.colorSchemeType,
             outlines: this.outlines,
             hideNulls: this.hideNulls,
             colors: this.colorSchemes[this.selectedColorScheme].colors.slice() //clone
@@ -146,7 +146,7 @@ class ClassificationSettings extends LitElement {
         }
         let checkedClassCount = this.shadowRoot.querySelector('#classcount').value;
         if (checkedClassCount !== '') {
-            this.classList = checkedClassCount;
+            this.classCount = checkedClassCount;
         }
         this.classType = this.shadowRoot.querySelector('#classtype').value;
         this.reverseColors = this.shadowRoot.querySelector('input[name="colorsreversed"]').checked;

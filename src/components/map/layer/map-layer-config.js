@@ -233,7 +233,13 @@ class MapLayerConfig extends LitElement {
           valueCount ++;
         }
       }
-      return buckets.filter(bucket=>bucket.count > 0).sort((a,b)=>b.count-a.count);
+      return buckets.filter(bucket=>bucket.count > 0)
+        .map(bucket=>{
+            if (bucket.value===undefined) {
+              bucket.value = null;
+            }
+            return bucket;
+        }).sort((a,b)=>b.count-a.count);
     }
     _getPercentiles(sortedData) {
       let data = sortedData.filter(item=>item!==null && item!==undefined);
