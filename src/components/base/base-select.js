@@ -78,23 +78,23 @@ class BaseSelect extends LitElement {
     }
     constructor() {
         super();
-        this.slottedItems = null;
+        this.slottedItems = [];
         this.value = null;
     }
+    renderContainer() {
+
+    }
     render() {
-        if (!this.slottedItems) {
-            return html`<div class="hidden"><slot></slot></div>`
-        }
-        return html`
-        <div class="bscontainer">
-            <select @change="${()=>this._selectChanged()}">
-            ${this.slottedItems.map(item=>html`<option value="${item.value?item.value:item.textContent}" ?selected="${item.selected}">${item.textContent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>`)}
-            </select>
-            <span class="arrow"></span>
-        </div>
+        return html`<div class="hidden" @slotchange="${(e)=>this._updateSlotted()}"><slot></slot></div>
+            <div class="bscontainer">
+                <select @change="${()=>this._selectChanged()}">
+                    ${this.slottedItems.map(item=>html`<option value="${item.value?item.value:item.textContent}" ?selected="${item.selected}">${item.textContent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>`)}
+                </select>
+                <span class="arrow"></span>
+            </div>
         `
     }
-    firstUpdated() {
+    _updateSlotted() {
         this.slottedItems = this.shadowRoot.querySelector('slot').assignedNodes().filter(node=>node.tagName === 'OPTION');
         let index = this.slottedItems.findIndex(item=>item.selected);
         if (index > -1) {
@@ -102,6 +102,9 @@ class BaseSelect extends LitElement {
         } else {
             this.value = "";
         }
+    }
+    firstUpdated() {
+        //this._updateSlotted();
     }
     _selectChanged() {
         this.value = this.shadowRoot.querySelector('select').value;

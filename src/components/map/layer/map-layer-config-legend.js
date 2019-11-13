@@ -75,29 +75,29 @@ class ClassificationSettings extends LitElement {
             <div id="legendformcontainer" @change="${(e)=>this._changed(e)}">
                 <p><label>aantal klassen:</label><br>
                 <base-select id="classcount" name="classcount" value="${this.classCount}">
-                    <option value="1" ?selected="${this.classCount===1}">1</option>
-                    <option value="2" ?selected="${this.classCount===2}">2</option>
-                    <option value="3" ?selected="${this.classCount===3}">3</option>
-                    <option value="4" ?selected="${this.classCount===4}">4</option>
-                    <option value="5" ?selected="${this.classCount===5}">5</option>
-                    <option value="6" ?selected="${this.classCount===6}">6</option>
-                    <option value="7" ?selected="${this.classCount===7}">7</option>
-                    <option value="8" ?selected="${this.classCount===8}">8</option>
-                    <option value="9" ?selected="${this.classCount===9}">9</option>
-                    <option value="10" ?selected="${this.classCount===10}">10</option>
-                    <option value="11" ?selected="${this.classCount===11}">11</option>
-                    <option value="12" ?selected="${this.classCount===12}">12</option>
+                    <option value="1" ?selected="${this.classCount==1}">1</option>
+                    <option value="2" ?selected="${this.classCount==2}">2</option>
+                    <option value="3" ?selected="${this.classCount==3}">3</option>
+                    <option value="4" ?selected="${this.classCount==4}">4</option>
+                    <option value="5" ?selected="${this.classCount==5}">5</option>
+                    <option value="6" ?selected="${this.classCount==6}">6</option>
+                    <option value="7" ?selected="${this.classCount==7}">7</option>
+                    <option value="8" ?selected="${this.classCount==8}">8</option>
+                    <option value="9" ?selected="${this.classCount==9}">9</option>
+                    <option value="10" ?selected="${this.classCount==10}">10</option>
+                    <option value="11" ?selected="${this.classCount==11}">11</option>
+                    <option value="12" ?selected="${this.classCount==12}">12</option>
                 </base-select></p>
-                <p class="${this.classCount < 2?'hidden':''}">Classification methods:<br>
+                <p class="${this.classCount < 2?'hidden':''}">Verdeling van dataklassen:<br>
                 <base-button-radio id="classtype" small>
                     <base-button value="interval" ?disabled="${this.noEqual}" ?checked="${this.classType == 'interval'}">gelijke intervallen</base-button>
                     <base-button value="quantile" ?checked="${this.classType == 'quantile' || !this.classType}">kwantiel</base-button>
                     <base-button value="mostfrequent" ?disabled="${this.noMostFrequent}" ?checked="${this.classType == 'mostfrequent'}">meest voorkomend</base-button>
                 </base-button-radio></p>
-                <p>Color schemes:<br>
+                <p>Kleurenschema:<br>
                 <base-button-radio id='colorscheme' small>
                     <base-button value="seq" ?checked="${this.colorSchemeType=='seq'}">opvolgend</base-button>
-                    <base-button value="div" ?checked="${this.colorSchemeType=='div'}">uit elkaar</base-button>
+                    <base-button value="div" ?checked="${this.colorSchemeType=='div'}">uiteenlopend</base-button>
                     <base-button value="qual" ?checked="${this.colorSchemeType=='qual'}">categorie&euml;n</base-button>
                 </base-button-radio><br>
                 <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">reverse color order</label>
