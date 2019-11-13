@@ -85,6 +85,20 @@ class MapLegendPanel extends LitElement {
           item.width = widthResult.items.length == 1 ? widthResult.items[0].lineWidth : widthResult.items[Math.floor(widthResult.items.length / 2)].lineWidth;
           return item;
         });
+        if (colorResult.items.length == 1) {
+          // only one legend item in layer
+          if (colorResult.items[0].label === '') {
+            colorResult.items[0].label = colorResult.propertyname;
+          }
+          colorResult.propertyname = null;
+        }
+        if (widthResult.items.length == 1) {
+          // only one legend item in layer
+          if (widthResult.items[0].label === '') {
+            widthResult.items[0].label = widthResult.propertyname;
+          }
+          widthResult.propertyname = null;
+        }
         if (colorResult.items.length > 1 && widthResult.items.length > 1) {
           return html`
           <style>
@@ -286,7 +300,13 @@ class MapLegendPanel extends LitElement {
       result.propertyname = '';
       result.items.push({fillColor: paintFillColor, outlineColor: outlineColor, label: layerTitle});
     }
-    
+    if (result.items.length == 1) {
+      // only one legend item in layer
+      if (result.items[0].label === '') {
+        result.items[0].label = result.propertyname;
+      }
+      result.propertyname = null;
+    }
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
       ${result.items.map((item)=>{
         return svg`
