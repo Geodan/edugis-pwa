@@ -100,10 +100,12 @@ class MapLayerConfig extends LitElement {
               if (this.layer.metadata.legendConfig) {
                 this.legendConfig = this.layer.metadata.legendConfig;
                 this.stats = this.layer.metadata.stats;
+                this.layerFilter = this.layer.metadata.layerFilter;
               } else {
                 let paintPropertyName = `${this.layer.type}-color`;
                 let decodedLegend = this._getLegendInfoFromLayer();
                 this.stats = this._getDataProperties(decodedLegend.attribute);
+                this.layerFilter = this.datagetter ? this.datagetter.getFilter(this.layer.id) : null;
                 this.legendConfig = {
                   classCount: decodedLegend.items.length,
                   classType: decodedLegend.type === 'qual'? 'mostfrequent': 'qualitative',
@@ -182,6 +184,7 @@ class MapLayerConfig extends LitElement {
       this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
       this.layer.metadata.legendConfig = this.legendConfig;
       this.layer.metadata.stats = this.stats;
+      this.layer.metadata.layerFilter = this.layerFilter;
     }
     _sortFunction(a, b) {
       if (typeof a === "number") {

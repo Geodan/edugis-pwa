@@ -1040,8 +1040,9 @@ class WebMap extends LitElement {
         bearing: this.bearing
     });
     this.datagetter = {
-      querySourceFeatures: this.map.querySourceFeatures.bind(this.map),
-      getSource: (sourcename) => this.map.getSource(sourcename)
+      querySourceFeatures: (source, options) => this.map.querySourceFeatures(source, options),
+      getSource: (sourcename) => this.map.getSource(sourcename),
+      getFilter: (layerid) => this.map.getFilter(layerid)
     };
     const controlTools = this.toolList.filter(tool=>tool.position !== "").sort((a,b)=>a.order-b.order);
     controlTools.forEach(tool=>{
