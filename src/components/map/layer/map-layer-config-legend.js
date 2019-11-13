@@ -65,6 +65,9 @@ class ClassificationSettings extends LitElement {
             stroke: #333;
             stroke-width: 0.5;
         }
+        .hidden {
+            display: none;
+        }
         `
     }
     render() {
@@ -85,11 +88,11 @@ class ClassificationSettings extends LitElement {
                     <option value="11" ?selected="${this.classCount===11}">11</option>
                     <option value="12" ?selected="${this.classCount===12}">12</option>
                 </base-select></p>
-                <p>Classification methods:<br>
+                <p class="${this.classCount < 2?'hidden':''}">Classification methods:<br>
                 <base-button-radio id="classtype" small>
-                    <base-button value="interval">gelijke intervallen</base-button>
-                    <base-button value="quantile" checked>kwantiel</base-button>
-                    <base-button value="mostfrequent">meest voorkomend</base-button>
+                    <base-button value="interval" ?disabled="${this.noEqual}" ?checked="${this.classType == 'interval'}">gelijke intervallen</base-button>
+                    <base-button value="quantile" ?checked="${this.classType == 'quantile' || !this.classType}">kwantiel</base-button>
+                    <base-button value="mostfrequent" ?disabled="${this.noMostFrequent}" ?checked="${this.classType == 'mostfrequent'}">meest voorkomend</base-button>
                 </base-button-radio></p>
                 <p>Color schemes:<br>
                 <base-button-radio id='colorscheme' small>
@@ -142,10 +145,8 @@ class ClassificationSettings extends LitElement {
             event.stopPropagation();
         }
         this.classCount = this.shadowRoot.querySelector('#classcount').value;
-        //this.classType = this.shadowRoot.querySelector('input[name="classtype"]:checked').value;
         this.classType = this.shadowRoot.querySelector('#classtype').value;
         this.reverseColors = this.shadowRoot.querySelector('input[name="colorsreversed"]').checked;
-        //this.colorSchemeType = this.shadowRoot.querySelector('input[name="colorscheme"]:checked').value;
         this.colorSchemeType = this.shadowRoot.querySelector('#colorscheme').value;
         this.outlines = this.shadowRoot.querySelector('input[name="displayoutlines"]').checked;
         this.hideNulls = this.shadowRoot.querySelector('input[name="hidenulls"]').checked;

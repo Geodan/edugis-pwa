@@ -93,18 +93,46 @@ class MapLayerConfig extends LitElement {
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
-            this.layerTitle = this.layer.metadata && this.layer.metadata.title? this.layer.metadata.title:this.layer.id;
-            this.legendInfo = this._getLegendInfoFromLayer();            
+            if (this.layer.metadata) {
+              this.layerTitle = this.layer.metadata.title? this.layer.metadata.title:this.layer.id;
+              if (this.layer.metadata.legendConfig) {
+                this.legendConfig = this.layer.metadata.legendConfig;
+                this.stats = this.layer.metadata.stats;
+              } else {
+                let paintPropertyName = `${this.layer.type}-color`;
+                let decodedLegend = this._getLegendInfoFromLayer();
+                this.stats = this._getDataProperties(decodedLegend.attribute);
+                this.legendConfig = {
+                  classCount: decodedLegend.items.length,
+                  classType: decodedLegend.type === 'qual'? 'mostfrequent': 'qualitative',
+                  colors: decodedLegend.items.map(item=>item.paint[paintPropertyName]),
+                  hideNulls: false,
+                  outlines: true,
+                  reversed: false,
+                  colorSchemeType: 'qual',
+                  noNulls: false,
+                  noEqual: decodedLegend.type === 'qual',
+                  noMostFrequent: false
+                };
+              }
+            }
         }
         return true;
     }
     render() {
-        let classCount = this.legendInfo.items.length; 
-        let classType = this.legendInfo.type;
+        if (!this.legendConfig) {
+          return html``;
+        }
         return html`
         <map-layer-config-legend 
-          .classCount="${classCount}"
-          .classType="${classType}"
+          .classCount="${this.legendConfig.classCount}"
+          .classType="${this.legendConfig.classType}"
+          .hideNulls="${this.legendConfig.hideNulls}"
+          .outlines="${this.legendConfig.outlines}"
+          .reversed="${this.legendConfig.reversed}"
+          .colorSchemeType="${this.legendConfig.colorSchemeType}"
+          .noEqual="${false}",
+          .noMostFrequent="${false}",
           @change="${(e)=>this._handleChange(e)}"
         ></map-layer-config-legend>
         `
@@ -113,6 +141,7 @@ class MapLayerConfig extends LitElement {
         let paint = this.layer.metadata.paint ? this.layer.metadata.paint : this.layer.paint;
         let paintStyle = paint[`${this.layer.type}-color`];
         let legendInfo = mbStyleParser.paintStyleToLegendItems(paintStyle, this.layer.type, this.zoom, this.layerTitle);
+        console.log(legendInfo);
         return legendInfo;
     }
     _updateMapProperty(paintProperty) {
@@ -125,12 +154,11 @@ class MapLayerConfig extends LitElement {
       }));
     }
     _handleChange(event) {
-      let legendConfig = event.detail;
-      let stats = this._getDataProperties();
-      let classInfo = classify(stats, legendConfig.classCount, legendConfig.classType, legendConfig.colors);
-      let paintLegend = createPaint(this.layer.type, stats, classInfo, legendConfig);
-      let paintProperty = {};
-      let displayOutlines = legendConfig.outlines;
+      this.legendConfig = event.detail;
+      let classInfo = classify(this.stats, this.legendConfig.classCount, this.legendConfig.classType, this.legendConfig.colors);
+      console.log(classInfo);
+      let paintLegend = createPaint(this.layer.type, this.stats, classInfo, this.legendConfig);
+      let displayOutlines = this.legendConfig.outlines;
       switch (this.layer.type) {
         case 'fill':
           this._updateMapProperty({'fill-outline-color': displayOutlines? 'white':null});
@@ -144,9 +172,13 @@ class MapLayerConfig extends LitElement {
           break;
       }
       // update colors
+      let paintProperty = {};
       paintProperty[`${this.layer.type}-color`] = paintLegend;
-      this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
       this._updateMapProperty(paintProperty);
+      // store legend information in metadata
+      this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
+      this.layer.metadata.legendConfig = this.legendConfig;
+      this.layer.metadata.stats = this.stats;
     }
     _sortFunction(a, b) {
       if (typeof a === "number") {
@@ -218,35 +250,55 @@ class MapLayerConfig extends LitElement {
       }
       return percentiles;
     }
-    _getDataProperties() {
-        let stylePropertyName = this.legendInfo.attribute;//this._getLayerStylePropertyName();
-        let data;
-        if (this.datagetter && this.datagetter.getSource) {
-          const source = this.datagetter.getSource(this.layer.source);
-          if (source.type === 'geojson') {
-            data = source.serialize().data.features;
+    _getTypeName(item) {
+      let type = typeof item;
+      if (type == 'object') {
+        if (data[i][keys[j]] === null) {
+          type = 'null'
+        } else if (Array.isArray(data[i][keys[j]])){
+          type = 'array'
+        }
+      }
+    }
+    _getDataProperties(attribute) {
+      let data;
+      if (this.datagetter && this.datagetter.getSource) {
+        const source = this.datagetter.getSource(this.layer.source);
+        if (source.type === 'geojson') {
+          data = source.serialize().data.features;
+        }
+      }
+      if (!data) {
+        if (this.datagetter && this.datagetter.querySourceFeatures) {
+          data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
+        }
+      }
+      let scanLength = data.length > 400? 400: data.length;
+      let attributes = new Map();
+      for (let i = 0; i < scanLength; i++) {
+        let keys = Object.keys(data[i].properties);
+        for (let j = 0; j < keys.length; j++) {
+          if (attributes.has(keys[j])) {
+            if (attributes.get(keys[j]) === 'null') {
+              if (data[i][keys[j]] !== null) {
+                attributes.set(keys[j], this._getTypeName(data[i][keys[j]]));
+              }
+            }
+          } else {
+            attributes.set(keys[j], this._getTypeName(data[i][keys[j]]));
           }
         }
-        if (!data) {
-          if (this.datagetter && this.datagetter.querySourceFeatures) {
-            data = this.datagetter.querySourceFeatures(this.layer.source, {sourceLayer: this.layer["source-layer"]});
-          }
-        }
-        if (!stylePropertyName && data && data.length) {
-          const properties = data[0].properties;
-          const keys = Object.keys(properties);
-          if (keys.length) {
-            stylePropertyName = keys[0]; // todo: create property chooser
-          }
-        }
-        //const minmax = this._getMinMax(data, stylePropertyName);
-        //return {property: stylePropertyName, minmax: minmax, values: data.map(item=>item.properties[stylePropertyName])}
-        let sortedData = data.map(item=>item.properties[stylePropertyName]).sort(this._sortFunction);
+      }
+      if (!attribute) {
+        attribute = Array.from(attributes.keys())[0];
+      }
+        let sortedData = data.map(item=>item.properties[attribute]).sort(this._sortFunction);
         let percentiles = this._getPercentiles(sortedData);
         let datarowcount = percentiles.reduce((result, percentile)=>result + percentile.count, 0);
         let stats = {
           allvaluesunique: false,
-          column: stylePropertyName,
+          attributes: Array.from(attributes.entries),
+          column: attribute,
           datarowcount: datarowcount,
           datatype: percentiles.length ? typeof percentiles[0].from : 'null',
           nullrowcount: sortedData.length - datarowcount,

@@ -224,6 +224,7 @@ export function classify(stats, classCount, classType, paintValues) {
             break;
         default: 
             resultClasses.push({from:'', to:'', label: `unsupported classType: ${classType}`, paint: paintValues[0]});
+            console.warn(`classify: unsupported classType: '${classType}'`)
     }
     return {classes:resultClasses, classCount: resultClasses.length, classType: classType}
 }
