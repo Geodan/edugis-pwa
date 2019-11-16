@@ -301,6 +301,11 @@ class WebMap extends LitElement {
     }
     this.updatelegend++;
   }
+  updateLayerFilter(e) {
+    if (this.map){
+      this.map.setFilter(e.detail.layerid, e.detail.filter);
+    }
+  }
   removeSourceIfOrphaned(source) {
     const otherSourceLayers = this.map.getStyle().layers.filter(layer=>layer.source===source);
     if (otherSourceLayers.length === 0) {
@@ -817,6 +822,7 @@ class WebMap extends LitElement {
         @movelayer="${e=>this.moveLayer(e)}" 
         @updateopacity="${e => this.updateLayerOpacity(e)}"
         @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
+        @changefilter="${e=>this.updateLayerFilter(e)}"
         >
       <span slot="title">Geselecteerde kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 

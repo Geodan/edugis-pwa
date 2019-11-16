@@ -4,6 +4,7 @@ import {getColorSchemes} from '../../../lib/colorbrewer.js';
 import '../../base/base-select.js';
 import '../../base/base-button.js';
 import '../../base/base-button-radio.js';
+import '../../base/base-checkbox.js';
 
 /**
 * @polymer
@@ -99,11 +100,11 @@ class ClassificationSettings extends LitElement {
                     <base-button value="seq" ?checked="${this.colorSchemeType=='seq'}">opvolgend</base-button>
                     <base-button value="div" ?checked="${this.colorSchemeType=='div'}">uiteenlopend</base-button>
                     <base-button value="qual" ?checked="${this.colorSchemeType=='qual'}">categorie&euml;n</base-button>
-                </base-button-radio><br>
-                <input type="checkbox" name="colorsreversed" id="colorsreversed" ?checked="${this.reverseColors}"><label for="colorsreversed">kleuren omkeren</label><br>
-                <input type="checkbox" name="displayoutlines" id="displayoutlines" ?checked="${this.outlines}"><label for="displayoutlines">omlijnen</label><br>
+                </base-button-radio><br><br>
+                <base-checkbox small id="colorsreversed" ?checked="${this.reverseColors}">kleuren omkeren</base-checkbox><br>
+                <base-checkbox small id="displayoutlines" ?checked="${this.outlines}">omlijnen</base-checkbox><br>
                 ${this.noNulls?'':html`
-                <input type="checkbox" id="hidenulls" name="hidenulls" ?checked="${this.hideNulls}" ?disabled="${this.noNulls}"><label for="hidenulls">Verberg geen gegevens</label>
+                <base-checkbox small id="hidenulls" ?checked="${this.hideNulls}" ?disabled="${this.noNulls}">Verberg geen gegevens</base-checkbox>
                 `}
                 <div id="colorschemes">${this._renderColorSchemes()}</div>
                 </p>
@@ -154,10 +155,10 @@ class ClassificationSettings extends LitElement {
             this.classCount = checkedClassCount;
         }
         this.classType = this.shadowRoot.querySelector('#classtype').value;
-        this.reverseColors = this.shadowRoot.querySelector('input[name="colorsreversed"]').checked;
+        this.reverseColors = this.shadowRoot.querySelector('#colorsreversed').checked;
         this.colorSchemeType = this.shadowRoot.querySelector('#colorscheme').value;
-        this.outlines = this.shadowRoot.querySelector('input[name="displayoutlines"]').checked;
-        this.hideNulls = this.noNulls? false: this.shadowRoot.querySelector('input[name="hidenulls"]').checked;
+        this.outlines = this.shadowRoot.querySelector('#displayoutlines').checked;
+        this.hideNulls = this.noNulls? false: this.shadowRoot.querySelector('#hidenulls').checked;
         this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
             this.selectedColorScheme = this.colorSchemes.length - 1;
