@@ -109,7 +109,7 @@ class MapLayerConfig extends LitElement {
                 this.layer.metadata.initialFilter = this.initialFilter;
                 this.legendConfig = {
                   classCount: decodedLegend.items.length,
-                  classType: decodedLegend.type === 'qual'? 'mostfrequent': 'qualitative',
+                  classType: decodedLegend.classType,
                   colors: decodedLegend.items.map(item=>item.paint[paintPropertyName]),
                   hideNulls: false,
                   outlines: true,
@@ -162,14 +162,22 @@ class MapLayerConfig extends LitElement {
     }
     _handleChange(event) {
       let newLegendConfig = event.detail;
-      let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
-      console.log(classInfo);
-      let paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
+      let paintLegend;
+      if (newLegendConfig.classCount != this.legendConfig.classCount || (newLegendConfig.classType && (newLegendConfig.classType !== this.legendConfig.classType))) {
+        if (!newLegendConfig.classType) {
+          newLegendConfig.classType = 'quantile';
+        }
+        let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
+        paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
+        console.log(classInfo);
+      } else {
+
+      }
       let displayOutlines = newLegendConfig.outlines;
       switch (this.layer.type) {
         case 'fill':
           this._updateMapProperty({'fill-outline-color': displayOutlines? 'white':null});
-          this._updateMapProperty({'fill-color': 'yellow'}); // fix for mapbox-gl update bug?
+          //this._updateMapProperty({'fill-color': 'yellow'}); // fix for mapbox-gl update-outline-color bug?
           break;
         case 'line':
           break;
@@ -178,17 +186,20 @@ class MapLayerConfig extends LitElement {
           this._updateMapProperty({'circle-stroke-color': displayOutlines? 'white':null});
           break;
       }
-      // update colors
-      let paintProperty = {};
-      paintProperty[`${this.layer.type}-color`] = paintLegend;
-      this._updateMapProperty(paintProperty);
+      if (paintLegend) {
+        // update colors
+        let paintProperty = {};
+        paintProperty[`${this.layer.type}-color`] = paintLegend;
+        this._updateMapProperty(paintProperty);
+        // update metadata
+        this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
+      }
       if (this.legendConfig.hideNulls !== newLegendConfig.hideNulls) {
         // filter changed
         this._updateNullFilter(newLegendConfig.hideNulls);
       }
       // store legend information in metadata
       this.legendConfig = newLegendConfig;
-      this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
       this.layer.metadata.legendConfig = newLegendConfig;
       this.layer.metadata.stats = this.stats;
       

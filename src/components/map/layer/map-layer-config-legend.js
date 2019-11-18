@@ -29,7 +29,7 @@ class ClassificationSettings extends LitElement {
     constructor() {
         super();
         this.classCount = 1;
-        this.classType = 'quantile';
+        this.classType = null;
         this.colorSchemeType = 'qual';
         this.reverseColors = false;
         this.outlines = true;
@@ -94,7 +94,7 @@ class ClassificationSettings extends LitElement {
                 <p class="${this.classCount < 2?'hidden':''}">Verdeling van dataklassen:<br>
                 <base-button-radio id="classtype" small>
                     <base-button value="interval" ?disabled="${this.noEqual}" ?checked="${this.classType == 'interval'}">gelijke intervallen</base-button>
-                    <base-button value="quantile" ?checked="${this.classType == 'quantile' || !this.classType}">kwantiel</base-button>
+                    <base-button value="quantile" ?checked="${this.classType == 'quantile'}">kwantiel</base-button>
                     <base-button value="mostfrequent" ?disabled="${this.noMostFrequent}" ?checked="${this.classType == 'mostfrequent'}">meest voorkomend</base-button>
                 </base-button-radio></p>
                 <p>Kleurenschema:<br>
