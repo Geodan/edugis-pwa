@@ -222,7 +222,7 @@ class MBStyleParser
     if (!layerTitle) {
       layerTitle = "";
     }
-    let result = {legendTitle: layerTitle, legendType: legendType, items: []};
+    let result = {legendTitle: layerTitle, legendType: legendType, items: [], classType: 'unknown', classCount: 0};
 
     let propertyname = `${legendType}-color`;
 
@@ -236,6 +236,13 @@ class MBStyleParser
       legend = this.styleStringToItems(paintStyle, propertyname, layerTitle);
     }
     if (legend) {
+      legend.itemCount = legend.items.length;
+      legend.classType = undefined;
+      legend.items = legend.items.map(item=>{
+        item.from = undefined;
+        item.to = undefined;
+        return item;
+      })
       result = legend;
     }
     return result;

@@ -21,7 +21,8 @@ class ClassificationSettings extends LitElement {
             selectedColorScheme: {type: Number},
             noNulls: {type: Boolean},
             noEqual: {type: Boolean},
-            noMostFrequent: {type: Boolean}
+            noMostFrequent: {type: Boolean},
+            inputColors: {type: Array}
         }
     }
     constructor() {
@@ -36,6 +37,7 @@ class ClassificationSettings extends LitElement {
         this.noNulls = false;
         this.noEqual = false;
         this.noMostFrequent = false;
+        this.inputColors = [];
     }
     static get styles() {
         return css`
@@ -113,6 +115,7 @@ class ClassificationSettings extends LitElement {
     _renderColorSchemes() {
         if (!this.colorSchemes) {
             this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
+            this._addInputColors();
         }
         let classCount = this.colorSchemes[0].colors.length;
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
@@ -159,6 +162,8 @@ class ClassificationSettings extends LitElement {
         this.outlines = this.shadowRoot.querySelector('input[name="displayoutlines"]').checked;
         this.hideNulls = this.noNulls? false: this.shadowRoot.querySelector('input[name="hidenulls"]').checked;
         this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
+        this._addInputColors();
+        
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
             this.selectedColorScheme = this.colorSchemes.length - 1;
         }
@@ -167,6 +172,14 @@ class ClassificationSettings extends LitElement {
             bubbles: true,
             composed: true
         }))
+    }
+    _addInputColors() {
+        if (this.inputColors && this.inputColors.length >= this.classCount) {
+            this.colorSchemes.unshift({colors:this.inputColors.slice(0,this.colorSchemes[0].colors.length), name: 'sourced', copy: 'bad', print: 'bad', screen: 'bad'});
+            if (this.reverseColors) {
+                this.colorSchemes[0].colors.reverse();
+            }
+        }
     }
 }
 

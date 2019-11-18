@@ -138,6 +138,7 @@ class MapLayerConfig extends LitElement {
           .noEqual="${this.legendConfig.noEqual}",
           .noNulls="${this.legendConfig.noNulls}"
           .noMostFrequent="${this.legendConfig.noMostFrequent}",
+          .inputColors="${this.legendConfig.colors.slice(0)}",
           @change="${(e)=>this._handleChange(e)}"
         ></map-layer-config-legend>
         `
