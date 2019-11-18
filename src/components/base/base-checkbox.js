@@ -50,7 +50,7 @@ class BaseCheckbox extends LitElement {
                 height: 20px;
                 width: 20px;
                 border-radius: 4px;
-                border: 1px solid #E3E2E3;
+                border: 1px solid lightgray
             }
             .small .checkmark {
                 height: 15px;

@@ -100,12 +100,13 @@ class MapLayerConfig extends LitElement {
               if (this.layer.metadata.legendConfig) {
                 this.legendConfig = this.layer.metadata.legendConfig;
                 this.stats = this.layer.metadata.stats;
-                this.layerFilter = this.layer.metadata.layerFilter;
+                this.initialFilter = this.layer.metadata.initialFilter;
               } else {
                 let paintPropertyName = `${this.layer.type}-color`;
                 let decodedLegend = this._getLegendInfoFromLayer();
                 this.stats = this._getDataProperties(decodedLegend.attribute);
-                this.layerFilter = this.datagetter ? this.datagetter.getFilter(this.layer.id) : null;
+                this.initialFilter = this.datagetter ? this.datagetter.getFilter(this.layer.id) : null;
+                this.layer.metadata.initialFilter = this.initialFilter;
                 this.legendConfig = {
                   classCount: decodedLegend.items.length,
                   classType: decodedLegend.type === 'qual'? 'mostfrequent': 'qualitative',
@@ -114,7 +115,7 @@ class MapLayerConfig extends LitElement {
                   outlines: true,
                   reversed: false,
                   colorSchemeType: 'qual',
-                  noNulls: this.stats.nullrowcount == 0,
+                  noNulls: this.stats.nullrowcount == 0 || this.stats.datarowcount == 0,
                   noEqual: decodedLegend.type === 'qual',
                   noMostFrequent: this.stats.allvaluesunique
                 };
@@ -160,11 +161,11 @@ class MapLayerConfig extends LitElement {
       }));
     }
     _handleChange(event) {
-      this.legendConfig = event.detail;
-      let classInfo = classify(this.stats, this.legendConfig.classCount, this.legendConfig.classType, this.legendConfig.colors);
+      let newLegendConfig = event.detail;
+      let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
       console.log(classInfo);
-      let paintLegend = createPaint(this.layer.type, this.stats, classInfo, this.legendConfig);
-      let displayOutlines = this.legendConfig.outlines;
+      let paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
+      let displayOutlines = newLegendConfig.outlines;
       switch (this.layer.type) {
         case 'fill':
           this._updateMapProperty({'fill-outline-color': displayOutlines? 'white':null});
@@ -181,11 +182,34 @@ class MapLayerConfig extends LitElement {
       let paintProperty = {};
       paintProperty[`${this.layer.type}-color`] = paintLegend;
       this._updateMapProperty(paintProperty);
+      if (this.legendConfig.hideNulls !== newLegendConfig.hideNulls) {
+        // filter changed
+        this._updateNullFilter(newLegendConfig.hideNulls);
+      }
       // store legend information in metadata
+      this.legendConfig = newLegendConfig;
       this.layer.metadata.paint = Object.assign({}, this.layer.paint, this.layer.metadata.paint, paintProperty);
-      this.layer.metadata.legendConfig = this.legendConfig;
+      this.layer.metadata.legendConfig = newLegendConfig;
       this.layer.metadata.stats = this.stats;
-      this.layer.metadata.layerFilter = this.layerFilter;
+      
+    }
+    _updateNullFilter(hideNulls) {
+      let filter;
+      if (hideNulls) {
+        // add filter to hide null values
+        filter = ["!=", ["get", this.stats.column], null];
+        if (this.initialFilter) {
+          filter = ["all", filter, this.initialFilter]
+        }
+      } else {
+        // restore original filter
+        filter = this.initialFilter;
+      }
+      this.dispatchEvent(new CustomEvent('changefilter', {
+        detail: {layerid: this.layer.id, filter: filter},
+        bubbles: true,
+        composed: true
+      }))
     }
     _sortFunction(a, b) {
       if (typeof a === "number") {
