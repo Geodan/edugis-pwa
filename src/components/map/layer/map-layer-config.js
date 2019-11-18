@@ -163,21 +163,15 @@ class MapLayerConfig extends LitElement {
     _handleChange(event) {
       let newLegendConfig = event.detail;
       let paintLegend;
-      if (newLegendConfig.classCount != this.legendConfig.classCount || (newLegendConfig.classType && (newLegendConfig.classType !== this.legendConfig.classType))) {
-        if (!newLegendConfig.classType) {
-          newLegendConfig.classType = 'quantile';
-        }
-        let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
-        paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
-        console.log(classInfo);
-      } else {
-
-      }
+      
+      let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
+      paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
+      console.log(classInfo);
       let displayOutlines = newLegendConfig.outlines;
       switch (this.layer.type) {
         case 'fill':
           this._updateMapProperty({'fill-outline-color': displayOutlines? 'white':null});
-          //this._updateMapProperty({'fill-color': 'yellow'}); // fix for mapbox-gl update-outline-color bug?
+          this._updateMapProperty({'fill-color': 'yellow'}); // fix for mapbox-gl update-outline-color bug?
           break;
         case 'line':
           break;
@@ -357,51 +351,7 @@ class MapLayerConfig extends LitElement {
           values: this._getMostFrequentValues(sortedData)
         }
         return stats;
-    }
-    
-    _getMinMax(data, property) {
-        const maxstr = 'zzzzzzzz';
-        const result = {
-          type: "undefined",
-          min: Number.MAX_VALUE,
-          max: Number.MIN_VALUE,
-          minstr: maxstr,
-          maxstr: '',
-          undefinedcount: 0
-        };
-        if (data.length) {
-          data.forEach(element=>{
-            const value = element.properties[property];
-            switch (typeof value) {
-              case 'undefined':
-                result.undefinedcount++;
-              case 'number':
-                if (value < result.min) {
-                  result.min = value;
-                }
-                if (value > result.max) {
-                  result.max = value;
-                }
-                break;
-              case 'string':
-                if (value < result.minstr) {
-                  result.minstr = value;
-                }
-                if (value > result.maxstr) {
-                  result.maxstr = value;
-                }
-                break;
-            }
-          });
-        }
-        if (result.minstr === maxstr) {
-          result.minstr = '';
-        }
-        if (result.min > result.max) {
-          result.min = result.max = 0;
-        }
-        return result;
-    }
+    }    
 }
 
 window.customElements.define('map-layer-config', MapLayerConfig);

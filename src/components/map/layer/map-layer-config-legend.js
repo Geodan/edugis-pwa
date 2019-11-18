@@ -94,7 +94,7 @@ class ClassificationSettings extends LitElement {
                 <p class="${this.classCount < 2?'hidden':''}">Verdeling van dataklassen:<br>
                 <base-button-radio id="classtype" small>
                     <base-button value="interval" ?disabled="${this.noEqual}" ?checked="${this.classType == 'interval'}">gelijke intervallen</base-button>
-                    <base-button value="quantile" ?checked="${this.classType == 'quantile'}">kwantiel</base-button>
+                    <base-button value="quantile" ?checked="${this.classType == 'quantile' || !this.classType}">kwantiel</base-button>
                     <base-button value="mostfrequent" ?disabled="${this.noMostFrequent}" ?checked="${this.classType == 'mostfrequent'}">meest voorkomend</base-button>
                 </base-button-radio></p>
                 <p>Kleurenschema:<br>
@@ -116,7 +116,7 @@ class ClassificationSettings extends LitElement {
     _renderColorSchemes() {
         if (!this.colorSchemes) {
             this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
-            this._addInputColors();
+            //this._addInputColors();
         }
         let classCount = this.colorSchemes[0].colors.length;
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
@@ -163,7 +163,7 @@ class ClassificationSettings extends LitElement {
         this.outlines = this.shadowRoot.querySelector('#displayoutlines').checked;
         this.hideNulls = this.noNulls? false: this.shadowRoot.querySelector('#hidenulls').checked;
         this.colorSchemes = getColorSchemes(this.classCount, this.colorSchemeType, this.reverseColors);
-        this._addInputColors();
+        //this._addInputColors();
         
         if (this.selectedColorScheme > this.colorSchemes.length - 1) {
             this.selectedColorScheme = this.colorSchemes.length - 1;
@@ -174,14 +174,14 @@ class ClassificationSettings extends LitElement {
             composed: true
         }))
     }
-    _addInputColors() {
+    /* _addInputColors() {
         if (this.inputColors && this.inputColors.length >= this.classCount) {
             this.colorSchemes.unshift({colors:this.inputColors.slice(0,this.colorSchemes[0].colors.length), name: 'sourced', copy: 'bad', print: 'bad', screen: 'bad'});
             if (this.reverseColors) {
                 this.colorSchemes[0].colors.reverse();
             }
         }
-    }
+    }*/
 }
 
 window.customElements.define('map-layer-config-legend', ClassificationSettings);
