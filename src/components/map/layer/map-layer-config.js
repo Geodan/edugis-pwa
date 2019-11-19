@@ -165,8 +165,8 @@ class MapLayerConfig extends LitElement {
       let paintLegend;
       
       let classInfo = classify(this.stats, newLegendConfig.classCount, newLegendConfig.classType, newLegendConfig.colors);
+      this.layer.metadata.classInfo = classInfo;
       paintLegend = createPaint(this.layer.type, this.stats, classInfo, newLegendConfig);
-      console.log(classInfo);
       let displayOutlines = newLegendConfig.outlines;
       switch (this.layer.type) {
         case 'fill':
@@ -196,7 +196,6 @@ class MapLayerConfig extends LitElement {
       this.legendConfig = newLegendConfig;
       this.layer.metadata.legendConfig = newLegendConfig;
       this.layer.metadata.stats = this.stats;
-      
     }
     _updateNullFilter(hideNulls) {
       let filter;

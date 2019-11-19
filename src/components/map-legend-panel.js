@@ -28,7 +28,7 @@ class MapLegendPanel extends LitElement {
   }
   shouldUpdate(changedProperties) {
     if (changedProperties.has('maplayer')) {
-      if (this.maplayer && this.maplayer.metadata && this.hasOwnProperty('transparency')) {
+      if (this.maplayer && this.maplayer.metadata && this.maplayer.hasOwnProperty('transparency')) {
         this.transparency = this.maplayer.metadata.transparency;
       } else {
         this.transparency = 0;
@@ -323,8 +323,39 @@ class MapLegendPanel extends LitElement {
           <rect width="30" height="15" style="fill:${bgColor};fill-opacity:${bgOpacity};stroke-width:1;stroke:black"/>
         </svg>${html` kaartachtergrond<br>`}`;
   }
+  getUserLegend(maplayer) {
+    let classInfo = maplayer.metadata.classInfo;
+    switch(maplayer.type) {
+      case 'fill':
+          return classInfo.classes.map((item,index)=>{
+            return svg`
+              <svg width="30" height="15">
+                <rect id="${maplayer.id} ${index}" width="30" height="15" style="fill:${item.paint};fill-opacity:1;stroke-width:1;stroke:#cccccc"/>
+              </svg>${html` ${item.label}<br>`}`;
+          })
+        break;
+      case 'line':
+        break;
+      case 'circle':
+          let radius = 5;
+          return classInfo.classes.map((item,index)=>{
+            return svg`
+              <svg width="${radius*2+2}" height="${radius*2+2}">
+                <circle id="${maplayer.id} ${index}" cx="${radius+1}" cy="${radius+1}" r="${radius}" style="fill:${item.paint};fill-opacity:1;stroke-width:1;stroke:white}" />
+              </svg> 
+            ${item.label}<br>
+            `
+          })          
+        break;
+      default: 
+        return `unsupported user layer: ${maplayer.type}`
+    }
+  }
   getLegendContent(maplayer) {
     let legendContent = html`legenda niet beschikbaar`;
+    if (maplayer.metadata && maplayer.metadata.classInfo) {
+      return this.getUserLegend(maplayer)
+    }
     switch(maplayer.type) {
       case 'raster':
         legendContent = this.rasterLegend(maplayer);
@@ -375,8 +406,48 @@ class MapLegendPanel extends LitElement {
         .legendcontainer img {
           max-width: calc(100% - 3px);
         }
+        .hidden {
+          display: none;
+        }
       </style>
-      <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
+      <input @change="${e=>this._updateUserColor(e)}" type="color" id="colorinput" tabindex=-1 class="hidden">
+      <div @click="${e=>this._handleLegendClick(e)}" class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
+  }
+  _handleLegendClick(event) {
+    if (event.target.id) {
+      //let layer=event.target.id.split(' ')[0];
+      this.classesIndex=parseInt(event.target.id.split(' ')[1]);
+      let colorInput = this.shadowRoot.querySelector('#colorinput');
+      colorInput.value = this.maplayer.metadata.classInfo.classes[this.classesIndex];
+      colorInput.click();
+    }
+    console.log(event.target);
+  }
+  _updateUserColor(event) {
+    //let colorInput = this.shadowRoot.querySelector('#colorinput');
+    let color = event.target.value;
+    this.maplayer.metadata.classInfo.classes[this.classesIndex].paint = color;
+    console.log('updating color');
+    this._updatePaintProperty(color);
+  }
+  _updatePaintProperty(color)
+  {
+    //console.log(e.currentTarget.value);
+    let paintColor = this.maplayer.metadata.paint[`${this.maplayer.type}-color`];
+    if (Array.isArray(paintColor)) {
+      paintColor[(this.classesIndex + 1)*2] = color;
+    } else {
+      paintColor = color;
+    }
+    let property = {};
+    property[`${this.maplayer.type}-color`] = paintColor;
+    property.layerid = this.maplayer.id;
+    this.dispatchEvent(new CustomEvent('changepaintproperty', {
+      detail: property,
+      bubbles: true,
+      composed: true,
+    }));
+    this.updatecount++;
   }
 }
 
