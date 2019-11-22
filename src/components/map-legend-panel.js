@@ -233,6 +233,68 @@ class MapLegendPanel extends LitElement {
     `
   }
   
+  filleExtrusionLegend(maplayer) {
+    let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
+    const result = {propertyname: layerTitle, items: []};
+    const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
+    let paintFillColor;
+    if (paint && paint['fill-extrusion-color']) {
+      paintFillColor = mbStyleParser.getZoomDependentValue(this.zoom, paint['fill-extrusion-color']);
+    }
+    if (Array.isArray(paintFillColor) && paintFillColor.length) {
+      switch(paintFillColor[0]) {
+        case "step":
+          // element[1] is ["get", "propertyname"] (?)
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
+          result.items.push({fillColor: paintFillColor[2], label: `< ${paintFillColor[3]}`});
+          for (let i = 3; i < paintFillColor.length - 2; i+=2) {
+            // get color
+            result.items.push({fillColor: paintFillColor[i+1], label: `[${paintFillColor[i]} - ${paintFillColor[i+2]})`});
+          }
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], label: `> ${paintFillColor[paintFillColor.length - 2]}`})
+          break;
+        case "match":
+          // element[1] is ["get", "propertyname"] (?)
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], label: ''});
+          for (let i = 2; i < paintFillColor.length - 1; i+=2) {
+            result.items.push({fillColor: paintFillColor[i+1], label: `${paintFillColor[i]}`});
+          }
+          break;
+        case "case":
+          result.propertyname = mbStyleParser.searchPaintForProperty(paintFillColor);
+          result.items.push({fillColor: paintFillColor[paintFillColor.length - 1], label: ''});
+          for (let i = 1; i < paintFillColor.length - 1; i+=2) {
+            result.items.push({fillColor: paintFillColor[i+1], label: `${paintFillColor[i][2]}`});
+          }
+          break;
+      }
+    } else if (paintFillColor === Object(paintFillColor)) {
+      if (paintFillColor.hasOwnProperty('property')) {
+        result.propertyname = paintFillColor.property;
+        if (paintFillColor.stops) {
+          result.items = paintFillColor.stops.map(stop=>{return {fillColor:stop[1], label: stop[0]}});
+        }
+      }
+    } else if (typeof paintFillColor === "string") {
+      result.propertyname = '';
+      result.items.push({fillColor: paintFillColor, label: layerTitle});
+    }
+    if (result.items.length == 1) {
+      // only one legend item in layer
+      if (result.items[0].label === '') {
+        result.items[0].label = result.propertyname;
+      }
+      result.propertyname = null;
+    }
+    return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
+      ${result.items.map((item)=>{
+        return svg`
+        <svg width="30" height="15">
+          <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:1;stroke-width:1;stroke:#cccccc"/>
+        </svg>${html` ${item.label}<br>`}`;
+      })}`;
+  }
   fillLegend(maplayer)
   {
     // legend should have one or more items
@@ -362,6 +424,9 @@ class MapLegendPanel extends LitElement {
         break;
       case 'fill':
         legendContent = this.fillLegend(maplayer);
+        break;
+      case 'fill-extrusion':
+        legendContent = this.filleExtrusionLegend(maplayer);
         break;
       case 'line':
         legendContent = this.lineLegend(maplayer);
