@@ -989,6 +989,116 @@ export default
             },
             {
               "type":"vectortile",
+              "title":"Geotop 3D",
+              "layerInfo": {
+              "id":"geotop3D",
+              "type":"fill-extrusion",
+              "source":{
+                "id":"geotop3d",
+                "type":"vector",
+                "tiles":[
+                  "https://tiles.edugis.nl/data/public.merwede_geotop2d/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,lithoklass,lithoclass,diepte_ond&include_nulls=0"
+                ],
+                "minzoom":13,
+                "maxzoom":18,
+                "bounds": [5.09372605041148,52.0568791491654,5.12316584903853,52.088450941008]
+              },
+              "source-layer":"public.merwede_geotop2d",
+              "minzoom":13,
+              "maxzoom":24,
+              "paint":{
+                "fill-extrusion-color":[
+                  "match",
+                  [
+                    "get",
+                    "lithoclass"
+                  ],
+                  "0",
+                  "#c1c3c6",
+                  "1",
+                  "#985045",
+                  "2",
+                  "#189f48",
+                  "3",
+                  "#b6d169",
+                  "4",
+                  "#000000",
+                  "5",
+                  "#fff000",
+                  "6",
+                  "#ffdc00",
+                  "7",
+                  "#ffc800",
+                  "8",
+                  "#ffb400",
+                  "11",
+                  "#0088ff",
+                  "#000000"
+                ],
+                "fill-extrusion-height":["number", ["+",0.501,["+",50,["get","diepte_ond"]]]],
+                "fill-extrusion-base":["number", ["+",50,["get","diepte_ond"]]],
+                "fill-extrusion-opacity":0.95
+              },
+              //filter: ["any",["==",["get","diepte_ond"],-5],["==",["get","diepte_ond"],-25]]
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaal boringen",
+              "layerInfo": {
+                "id":"merwedekanaal_boringen2d",
+                "type": "fill-extrusion",
+                "source":{
+                  "id":"geotop3d",
+                  "type":"vector",
+                  "tiles":[
+                    "https://tiles.edugis.nl/data/public.merwede_boringen2d/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,jaar,diepte_bov,diepte_ond,dieptetotaal,laagdikte,lithclass,lithoklass,toelichtin&include_nulls=0"
+                  ],
+                  "minzoom":13,
+                  "maxzoom":18,
+                  "bounds":[5.09684149570033,52.0584800896675,5.12050753619579,52.0885720273277]
+                },
+                "source-layer":"public.merwede_boringen2d",
+                "minzoom":13,
+                "maxzoom":24,
+                "paint":{
+                  "fill-extrusion-color":[
+                    "match",
+                    [
+                      "get",
+                      "lithclass"
+                    ],
+                    0,
+                    "#c1c3c6",
+                    1,
+                    "#985045",
+                    2,
+                    "#189f48",
+                    3,
+                    "#b6d169",
+                    4,
+                    "#000000",
+                    5,
+                    "#fff000",
+                    6,
+                    "#ffdc00",
+                    7,
+                    "#ffc800",
+                    8,
+                    "#ffb400",
+                    11,
+                    "#0088ff",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height":["number", ["+",["get","laagdikte"],["-",["get","diepte_ond"],["get","dieptetotaal"]]]],
+                  "fill-extrusion-base":["number", ["-",["get","diepte_ond"],["get","dieptetotaal"]]],
+                  "fill-extrusion-opacity":0.95
+                },
+                
+              }
+            },
+            {
+              "type":"vectortile",
               "title":"BGT vector (stijl)",
               "layerInfo":{
                 "id":"bgtvector",
