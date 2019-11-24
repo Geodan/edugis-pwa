@@ -517,7 +517,7 @@ class WebMap extends LitElement {
       /* update layerlist */
       this.layerlist = [...this.layerlist.filter(layer=>layer.reference==false || layer.background)];
       /* set callback for map.setStyle() */
-      this.map.once('styledata', ()=>{
+      this.map.once('style.load', ()=>{
         /* add reference metadata to new layers set by setStyle() */
         this.setReferenceLayers(styleId, styleTitle);
         /* restore old non-reference layers */
@@ -1081,7 +1081,7 @@ class WebMap extends LitElement {
 
     this.map.on('load', ()=>{
         if (this.activeLayers) {
-          this.map.once('styledata', ()=>{
+          this.map.once('style.load', ()=>{
             /* add reference metadata to new layers set by setStyle() */
             this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
             this.resetLayerList();

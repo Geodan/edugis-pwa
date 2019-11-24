@@ -205,7 +205,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
-          ?layervisible="${this.visible && !this.outzoomrange}"></map-layer-info>`
+          ?layervisible="${this.visible && !this.outzoomrange && this.boundspos==""}"></map-layer-info>`
     }
     _openChange() {
         const infoContainer = this.shadowRoot.querySelector('#layerinfo');
