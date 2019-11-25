@@ -23,7 +23,8 @@ export default
                   "tiles":[
                     "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&styles=default&layers=Actueel_ortho25&transparent=true"
                   ],
-                  "attribution":"PDOK"
+                  "attribution":"PDOK",
+                  "bounds" : [2.75,50.50, 7.5, 53.6]
                 }
               }
             },
