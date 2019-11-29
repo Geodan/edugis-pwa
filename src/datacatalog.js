@@ -523,6 +523,25 @@ export default
             },
             {
               "type":"geojson",
+              "title":"Merwedekanaalzone Utrecht",
+              "layerInfo":{
+                "id":"merwedekanaalzone",
+                "type":"fill",
+                "minzoom": 11,
+                "source":{
+                  "type":"geojson",
+                  "data":"https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
+                  "attribution":"EduGIS"
+                },
+                "paint":{
+                  "fill-color":"#f4b68d",
+                  "fill-opacity":0.6,
+                  "fill-outline-color":"#c93300"
+                }
+              }
+            },
+            {
+              "type":"geojson",
               "title":"Fietstocht Bert en Joep (punten)",
               "layerInfo":{
                 "id":"fietstochtpunten",
@@ -888,6 +907,9 @@ export default
               "layerInfo":{
                 "id":"gebouwkenmerken",
                 "type":"fill",
+                "source-layer":"gebouwkenmerken",
+                "minzoom":13,
+                "maxzoom":24,
                 "source":{
                   "id":"gebouwkenmerken",
                   "type":"vector",
@@ -895,11 +917,8 @@ export default
                     "https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"
                   ],
                   "minzoom":13,
-                  "maxzoom":18
+                  "maxzoom":16
                 },
-                "source-layer":"gebouwkenmerken",
-                "minzoom":13,
-                "maxzoom":24,
                 "layout":{
                   "visibility":"visible"
                 },
@@ -940,6 +959,9 @@ export default
               "layerInfo":{
                 "id":"building3D",
                 "type":"fill-extrusion",
+                "source-layer":"gebouwkenmerken",
+                "minzoom":13,
+                "maxzoom":22,
                 "source":{
                   "id":"gebouwkenmerken2",
                   "type":"vector",
@@ -947,11 +969,8 @@ export default
                     "https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"
                   ],
                   "minzoom":13,
-                  "maxzoom":18
+                  "maxzoom":16
                 },
-                "source-layer":"gebouwkenmerken",
-                "minzoom":13,
-                "maxzoom":24,
                 "paint":{
                   "fill-extrusion-color":[
                     "match",
@@ -1093,6 +1112,119 @@ export default
                   "fill-extrusion-opacity":0.95
                 },
                 
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaal Rotliegend en Zechstein",
+              "layerInfo": {
+                "id": "mwrotliegendrects",
+                "type": "fill-extrusion",
+                "minzoom":13,
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_rotliegend_zechstein_rects/mvt/{z}/{x}/{y}?geom_column=geom&columns=depth,thickness,name&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.08784358436661,
+                    52.0557495536792,
+                    5.13233550768549,
+                    52.0831686374319
+                  ],
+                  "maxzoom":18
+                },
+                "source-layer": "public.merwede_rotliegend_zechstein_rects",
+                "paint": {
+                  "fill-extrusion-color": ["match", ["get","name"], "rotliegend", "red", "zechstein", "white", "black"],
+                  "fill-extrusion-height":["-", 2758.23, ["-",["get","depth"],["get","thickness"]]],
+                  "fill-extrusion-base":["-", 2758.23, ["get","depth"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Stedin kabels",
+              "layerInfo": {
+                "id": "stedinkabels",
+                "type": "line",
+                "minzoom": 12,
+                "source": {
+                  "type": "vector",
+                  "maxzoom": 18,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.stedin_kabels/mvt/{z}/{x}/{y}?geom_column=geom&columns=ktype&include_nulls=0"
+                  ],
+                  "bounds": [
+                    3.84642655585107,
+                    51.6596158426275,
+                    5.62588476605256,
+                    52.2886886861338
+                  ]
+                },
+                "source-layer": "public.stedin_kabels",
+                "paint": {
+                  "line-color": [
+                    "match",
+                    ["get","ktype"],
+                    "laag","#4daf4a",
+                    "midden","#377eb8",
+                    "hoog","#e41a1c",
+                    "#000000"
+                  ],
+                  "line-width": [
+                    "match",
+                    ["get", "ktype"],
+                    "laag", 1,
+                    "midden",2,
+                    "hoog", 3,
+                    1
+                  ]
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Stedin stations",
+              "layerInfo": {
+                "id": "stedinstations",
+                "type": "circle",
+                "minzoom": 12,
+                "source": {
+                  "type": "vector",
+                  "maxzoom": 18,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.stedin_stations/mvt/{z}/{x}/{y}?geom_column=geom&columns=stype&include_nulls=0"
+                  ],
+                  "bounds": [
+                    3.84642655585107,
+                    51.6596158426275,
+                    5.62588476605256,
+                    52.2886886861338
+                  ]
+                },
+                "source-layer": "public.stedin_stations",
+                "paint": {
+                  "circle-color": [
+                    "match",
+                    ["get","stype"],
+                    "laag","#4daf4a",
+                    "midden","#377eb8",
+                    "hoog","#e41a1c",
+                    "#000000"
+                  ],
+                  "circle-radius": [
+                    "match",
+                    ["get", "stype"],
+                    "laag", 5,
+                    "midden",5,
+                    "hoog", 8,
+                    1
+                  ],
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1
+                }
               }
             },
             {
