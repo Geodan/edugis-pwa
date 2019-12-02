@@ -109,11 +109,8 @@ class MapLayerTree extends LitElement {
     e.stopPropagation();
     //this.updates++;
   }
-  toggleCheck(id) {
-    this.toggleNodeInList(this.nodelist, id, false);
-  }
   isRadioNode(node) {
-    if (node.type === "radio") {
+    if (node.type === "radio" || node.type === "reference") {
       return true;
     }
     if (node.sublayers && node.sublayers.length && node.sublayers[0].type === "reference") {
@@ -142,10 +139,15 @@ class MapLayerTree extends LitElement {
     })
   }
   handleClick(e, node) {
+    if (node.checked && this.isRadioNode(node)) {
+      // should not toggle radio by clicking checked radio
+      e.stopPropagation();
+      return; 
+    }
     const input = e.currentTarget.querySelector("div");        
     if (input) {
       const id = input.getAttribute("id");
-      this.toggleCheck(id);
+      this.toggleNodeInList(this.nodelist, id, false);
       e.stopPropagation();
     }
   }
