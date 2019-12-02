@@ -62,7 +62,10 @@ class MapLegendPanel extends LitElement {
           } else if (values["line-color"].value.kind === "source") {
             colorResult.items = values["line-color"].value._styleExpression.expression.outputs
               .map(output=>`rgba(${output.value.r * 255}, ${output.value.g * 255}, ${output.value.b * 255}, ${output.value.a})`)
-              .map((color, index)=>{return {lineColor:color, width: 2, label: values["line-color"].value._styleExpression.expression.labels[index]}})
+              .map((color, index)=>{
+                let expression = values["line-color"].value._styleExpression.expression;
+                return {lineColor:color, width: 2, label: expression.labels?expression.labels[index]:expression.cases?Object.keys(expression.cases)[index]:'unknown'}
+              })
           }
         }
         if (values["line-width"]) {
@@ -77,7 +80,14 @@ class MapLegendPanel extends LitElement {
             if (values["line-width"].value.kind === "source") {
               widthResult.items = values["line-width"].value._styleExpression.expression.outputs
               .map(output=>output.value)
-              .map((width, index)=>{return {lineWidth:width, lineColor: colorResult.items.length == 1 ? colorResult.items[0].lineColor: colorResult.items[Math.floor(colorResult.items.length / 2)].lineColor, label: values["line-width"].value._styleExpression.expression.labels[index]}})
+              .map((width, index)=>{                
+                let expression = values["line-width"].value._styleExpression.expression;
+                return {
+                    lineWidth:width, 
+                    lineColor: colorResult.items.length == 1 ? colorResult.items[0].lineColor: colorResult.items[Math.floor(colorResult.items.length / 2)].lineColor, 
+                    label: expression.labels? expression.labels[index] : expression.cases?Object.keys(expression.cases)[index]: 'unknown'
+                  }
+              })
             }
           }
         }
