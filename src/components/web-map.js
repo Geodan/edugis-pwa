@@ -501,14 +501,42 @@ class WebMap extends LitElement {
       }
     });
   }
-  addStyle(layerInfo) {
-    const styleId = layerInfo.id;
-    const styleTitle = layerInfo.metadata.title ? layerInfo.metadata.title : styleId ? styleId : "style title not defined";
-    if (layerInfo.metadata && layerInfo.metadata.reference) {
+  handleStyleLoaded(styleId, styleTitle) {
+    console.log('handleStyleLoaded');
+    /* add reference metadata to new layers set by setStyle() */
+    this.setReferenceLayers(styleId, styleTitle);
+    /* restore old non-reference layers */
+    this.restoreNoneReferenceLayers();
+
+    /* allow new styles to be set */
+    setTimeout(()=>{
+        this.resetLayerList();
+        this.styleLoading = false;
+        this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
+    }, 1000);
+  }
+  addStyle(styleInfo) {
+    const styleId = styleInfo.id;
+    const styleTitle = styleInfo.metadata.title ? styleInfo.metadata.title : styleId ? styleId : "style title not defined";
+    if (styleInfo.metadata && styleInfo.metadata.reference) {
       if (this.styleLoading) {
-        return;
+        let currentRefLayer = this.map.getStyle().layers.find(layer=>layer.metadata && layer.metadata.reference);
+        if (currentRefLayer && currentRefLayer.metadata.styleid !== styleId) {
+          return;
+        }
+        // this style already set
+        this.styleLoading = false;
+        console.log('force handleStyleLoaded');
+        this.handleStyleLoaded(styleId, styleTitle);
       }
       this.styleLoading = true;
+      let timeOutHander = setTimeout(()=>{
+        if (this.styleLoading) {
+          console.log('timeout, fire artificial style.load event');
+          this.map.style.fire('style.load');
+        }
+      }, 3000)
+      console.log(`style loading ${styleInfo.id}`);
       /* replace reference style */
       /* remove old reference layers */
       this.removeReferenceLayers(); 
@@ -518,22 +546,16 @@ class WebMap extends LitElement {
       this.layerlist = [...this.layerlist.filter(layer=>layer.reference==false || layer.background)];
       /* set callback for map.setStyle() */
       this.map.once('style.load', ()=>{
-        /* add reference metadata to new layers set by setStyle() */
-        this.setReferenceLayers(styleId, styleTitle);
-        /* restore old non-reference layers */
-        this.restoreNoneReferenceLayers();
-        
-        /* allow new styles to be set */
-        setTimeout(()=>{
-          this.resetLayerList();          
-          this.styleLoading = false;
-          this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
-        }, 1000);
+        clearTimeout(timeOutHander);
+        console.log(`style.load event, assuming ${styleId}`);
+        if (this.styleLoading) {
+          this.handleStyleLoaded(styleId, styleTitle);
+        }
       });
-      this.map.setStyle(layerInfo.source);
+      this.map.setStyle(styleInfo.source);
     } else {
       /* add style to existing layers */
-      this.loadStyle(layerInfo.source, styleId, styleTitle);
+      this.loadStyle(styleInfo.source, styleId, styleTitle);
     }
   }
   insertServiceKey(layerInfo) {
@@ -645,7 +667,7 @@ class WebMap extends LitElement {
                     spinner.setAttribute('visible', '0');
                   }
                 }
-              }              
+              }
               this.map.addLayer(layerInfo);
             }
           }
@@ -1078,18 +1100,23 @@ class WebMap extends LitElement {
     this.map.on('click', (e)=>this.mapClick(e));
     this.map.on('render', e=>this.mapHasRendered());
     this.map.on('zoomend', e=>this.mapHasZoomed());
+    this.map.on('style.load', ()=>{
+      if (!this.styleLoadCounter) {
+        this.styleLoadCounter = 1;
+      } else {
+        this.styleLoadCounter++;
+      }
+      console.log(`style.load ${this.styleLoadCounter}`);
+    });
+    /* this.map.on('styledata', (mapDataEvent)=>{
+      console.log(`styledata mapDataEvent {type: '${mapDataEvent.type}, dataType: '${mapDataEvent.dataType}'}`)
+    })*/
 
     this.map.on('load', ()=>{
+        this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
+        this.resetLayerList();
         if (this.activeLayers) {
-          this.map.once('style.load', ()=>{
-            /* add reference metadata to new layers set by setStyle() */
-            this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
-            this.resetLayerList();
-          });
           this.addActiveLayers();
-        } else {
-          this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
-          this.resetLayerList();
         }
         this.disableRightMouseDragRotate();
     });
