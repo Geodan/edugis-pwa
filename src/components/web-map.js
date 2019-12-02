@@ -502,7 +502,6 @@ class WebMap extends LitElement {
     });
   }
   handleStyleLoaded(styleId, styleTitle) {
-    console.log('handleStyleLoaded');
     /* add reference metadata to new layers set by setStyle() */
     this.setReferenceLayers(styleId, styleTitle);
     /* restore old non-reference layers */
@@ -520,14 +519,7 @@ class WebMap extends LitElement {
     const styleTitle = styleInfo.metadata.title ? styleInfo.metadata.title : styleId ? styleId : "style title not defined";
     if (styleInfo.metadata && styleInfo.metadata.reference) {
       if (this.styleLoading) {
-        let currentRefLayer = this.map.getStyle().layers.find(layer=>layer.metadata && layer.metadata.reference);
-        if (currentRefLayer && currentRefLayer.metadata.styleid !== styleId) {
-          return;
-        }
-        // this style already set
-        this.styleLoading = false;
-        console.log('force handleStyleLoaded');
-        this.handleStyleLoaded(styleId, styleTitle);
+        return;
       }
       this.styleLoading = true;
       let timeOutHander = setTimeout(()=>{
@@ -536,7 +528,6 @@ class WebMap extends LitElement {
           this.map.style.fire('style.load');
         }
       }, 3000)
-      console.log(`style loading ${styleInfo.id}`);
       /* replace reference style */
       /* remove old reference layers */
       this.removeReferenceLayers(); 
@@ -547,7 +538,6 @@ class WebMap extends LitElement {
       /* set callback for map.setStyle() */
       this.map.once('style.load', ()=>{
         clearTimeout(timeOutHander);
-        console.log(`style.load event, assuming ${styleId}`);
         if (this.styleLoading) {
           this.handleStyleLoaded(styleId, styleTitle);
         }
@@ -1100,18 +1090,6 @@ class WebMap extends LitElement {
     this.map.on('click', (e)=>this.mapClick(e));
     this.map.on('render', e=>this.mapHasRendered());
     this.map.on('zoomend', e=>this.mapHasZoomed());
-    this.map.on('style.load', ()=>{
-      if (!this.styleLoadCounter) {
-        this.styleLoadCounter = 1;
-      } else {
-        this.styleLoadCounter++;
-      }
-      console.log(`style.load ${this.styleLoadCounter}`);
-    });
-    /* this.map.on('styledata', (mapDataEvent)=>{
-      console.log(`styledata mapDataEvent {type: '${mapDataEvent.type}, dataType: '${mapDataEvent.dataType}'}`)
-    })*/
-
     this.map.on('load', ()=>{
         this.setReferenceLayers(this.mapstyleid, this.mapstyletitle);
         this.resetLayerList();
