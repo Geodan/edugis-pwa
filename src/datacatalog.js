@@ -286,6 +286,21 @@ export default
               ]
             },
             {
+              "type": "group",
+              "title": "Geodata Prov. Utrecht",
+              "sublayers": [
+                {
+                  "type": "getcapabilities",
+                  "title": "utrechtwater",
+                  "layerInfo": {
+                    "id": "utrechtcapswater",
+                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/wms?request=GetCapabilities&service=WMS&version=1.3.0&"
+                  }
+                }
+              ]
+              
+            },
+            {
               "type":"getcapabilities",
               "title":"blaeucaps",
               "layerInfo":{
@@ -1221,6 +1236,117 @@ export default
                     "midden",5,
                     "hoog", 8,
                     1
+                  ],
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaalzone Luchtkwaliteit",
+              "layerInfo": {
+                "id": "merwedeluchtkwaliteit",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.exportgebied_1_result__mt2018_j2017_rpgw/mvt/{z}/{x}/{y}?geom_column=geom&columns=pm10_od,conc_no2,conc_pm10,conc_pm25,conc_ec,naam&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.06965462540419,
+                    52.0644080919209,
+                    5.13481086896617,
+                    52.0892443545224
+                  ]
+                },
+                "source-layer": "public.exportgebied_1_result__mt2018_j2017_rpgw",
+                "paint": {
+                  "circle-radius": 5,
+                  "circle-color": [
+                    "case",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      7.737
+                    ],
+                    "#fff7ec",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      7.905
+                    ],
+                    "#fee8c8",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.064
+                    ],
+                    "#fdd49e",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.258
+                    ],
+                    "#fdbb84",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.389
+                    ],
+                    "#fc8d59",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.551
+                    ],
+                    "#ef6548",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.761
+                    ],
+                    "#d7301f",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      9.146
+                    ],
+                    "#b30000",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      11.146
+                    ],
+                    "#7f0000",
+                    "#7f0000"
                   ],
                   "circle-stroke-color": "white",
                   "circle-stroke-width": 1
