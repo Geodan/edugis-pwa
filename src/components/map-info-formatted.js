@@ -16,6 +16,7 @@ class MapInfoFormatted extends LitElement {
   constructor() {
       super();
       this.info = [];
+      this.filteredInfo = [];
       this.active = false;
       this.streetViewOn = false;
   }
@@ -36,6 +37,7 @@ class MapInfoFormatted extends LitElement {
     if (!this.active) {
       return html``;
     }
+    let layerSet = new Set();
     return html`
       <style>
         .header {
@@ -90,7 +92,17 @@ class MapInfoFormatted extends LitElement {
       </div>
       </div>
       ${this.info.length == 0? 'Klik op een element in de kaart voor informatie over dat element':''}
-      ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true).map(feature=>
+      ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true)
+        .filter(feature=>{ // filter muliple features from same layer
+          if (feature.layer && feature.layer.id) {
+            if (layerSet.has(feature.layer.id)) {
+              return false;
+            }
+            layerSet.add(feature.layer.id);
+          }
+          return true;
+        })
+        .map(feature=>
         html`
           <div>
             <div class="layer">${feature.layer.metadata?feature.layer.metadata.title?feature.layer.metadata.title:feature.layer.id:feature.layer.id}</div>
