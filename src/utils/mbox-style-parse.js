@@ -61,10 +61,10 @@ class MBStyleParser
           }
           break;
         case "case":
-            result.propertyname = typeof paintProperty[1][1] === "string"? paintProperty[1][1]:"expressie";
+            result.propertyname = this.getLayerStylePropertyName(paintProperty);
             result.items.push({value: paintProperty[paintProperty.length - 1], label: ''});
-            for (let i = 2; i < paintProperty.length - 1; i+=2) {
-              result.items.push({value: paintProperty[i+1], label: `${paintProperty[i]}`});
+            for (let i = 1; i < paintProperty.length - 1; i+=2) {
+              result.items.push({value: paintProperty[i+1], label: `${this.getLabelFromExpression(paintProperty[i])}`});
             }
         break;
       }
@@ -107,6 +107,25 @@ class MBStyleParser
       }, false);
     }
     return false;
+  }
+  getLabelFromExpression(expression) {
+    if (typeof expression === "string") {
+      return expression;
+    }
+    let label = '';
+    if (Array.isArray(expression)) {
+      if (expression.length == 3) {
+        if (typeof expression[2] === "string" || typeof expression[2] === "number" || typeof expression[2] === "boolean") {
+          label = expression[2]
+        } else if (typeof expression[1] === "string" || typeof expression[1] === "number" || typeof expression[1] === "boolean") {
+          label = expression[1];
+        }
+        if (typeof expression[0] === "string" && expression[0] !== "==") {
+          label = expression[0] + ' ' + label;
+        }
+      }
+    }
+    return label;
   }
   getLayerStylePropertyName(paint) {
       if (paint.property) {

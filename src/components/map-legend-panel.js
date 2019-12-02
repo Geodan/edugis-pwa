@@ -117,6 +117,7 @@ class MapLegendPanel extends LitElement {
               justify-content: space-between;
             }
           </style> 
+          ${colorResult.propertyname?html` ${colorResult.propertyname}<br>`:''}
           <div class="twocolumn">
           <div>${colorResult.items.map(color=>{
             return svg`<svg width="30" height="15">
@@ -199,7 +200,8 @@ class MapLegendPanel extends LitElement {
     }
   }
   circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo) {
-    return colorInfo.items.map(color=>
+    return html`${colorInfo.propertyname?html` ${colorInfo.propertyname}<br>`:''}
+      ${colorInfo.items.map(color=>
       html`
         ${svg`
         <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
@@ -208,7 +210,7 @@ class MapLegendPanel extends LitElement {
         `}
         ${color.label}<br>
         `
-      );
+      )}`;
   }
   circleLegend(maplayer) {
     const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
