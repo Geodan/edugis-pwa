@@ -603,20 +603,6 @@
                 }
               },
               "id": "Merwedekanaalzone_Luchtkwaliteit_vectortile_id"
-            },
-            {
-              "type": "vectortile",
-              "title": "BGT vector (stijl)",
-              "layerInfo": {
-                "id": "bgtvector",
-                "type": "style",
-                "source": "styles/bgt.json",
-                "metadata": {
-                  "reference": false,
-                  "title": "BGT vector (stijl)"
-                }
-              },
-              "id": "BGT_vector (stijl)_vectortile_id"
             }
           ],
           "id": "Vector_Tile_group_id",
