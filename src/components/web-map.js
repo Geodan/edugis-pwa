@@ -1282,10 +1282,10 @@ class WebMap extends LitElement {
             }
           }
           if (toolName === 'toolbar' || toolName === 'legend') {
-            if (confTool.opened) {
-              mapTool.position = "opened";
+            if (confTool.position) { // 'collapsed' or 'opened'
+              mapTool.position = confTool.position;
             } else {
-              mapTool.position = "collapsed";
+              mapTool.position = "opened";
             }
           }
         }

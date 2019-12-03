@@ -1,0 +1,1032 @@
+{
+  "map": {
+    "zoom": 13.5,
+    "center": [
+      5.0986444581453725,
+      52.07363553348202
+    ],
+    "pitch": 0,
+    "bearing": 0
+  },
+  "datacatalog": [
+    {
+      "type": "group",
+      "title": "Thematische lagen",
+      "sublayers": [
+        {
+          "type": "group",
+          "title": "Merwedekanaalzone Utrecht",
+          "sublayers": [
+            {
+              "type": "group",
+              "title": "Grondwater Prov. Utrecht",
+              "sublayers": [
+                {
+                  "type": "getcapabilities",
+                  "title": "utrechtwater",
+                  "layerInfo": {
+                    "id": "utrechtcapswater",
+                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/wms?request=GetCapabilities&service=WMS&version=1.3.0&"
+                  }
+                }
+              ]
+              
+            },
+            {
+              "type": "geojson",
+              "title": "Merwedekanaalzone Utrecht",
+              "layerInfo": {
+                "id": "merwedekanaalzone",
+                "type": "fill",
+                "minzoom": 11,
+                "source": {
+                  "type": "geojson",
+                  "data": "https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
+                  "attribution": "EduGIS"
+                },
+                "paint": {
+                  "fill-color": "#f4b68d",
+                  "fill-opacity": 0.6,
+                  "fill-outline-color": "#c93300"
+                },
+                "metadata": {
+                  "title": "Merwedekanaalzone Utrecht",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaalzone_Utrecht_geojson_id",
+              "checked": true
+            },
+            {
+              "type": "vectortile",
+              "title": "NL buildings 3D",
+              "layerInfo": {
+                "id": "building3D",
+                "type": "fill-extrusion",
+                "source-layer": "gebouwkenmerken",
+                "minzoom": 13,
+                "maxzoom": 22,
+                "source": {
+                  "id": "gebouwkenmerken2",
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 16
+                },
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "pandtype"
+                    ],
+                    "kantoorpand",
+                    "rgba(255, 0, 121, 1)",
+                    "tussenwoning",
+                    "blue",
+                    "winkelgebouw",
+                    "rgba(83, 16, 162, 1)",
+                    "appartement midden",
+                    "rgba(146, 95, 48, 1)",
+                    "appartement laag",
+                    "rgba(146, 140, 48, 1)",
+                    "appartement hoog",
+                    "rgba(113, 107, 76, 1)",
+                    "schoolgebouw",
+                    "rgba(50, 165, 81, 1)",
+                    "gemengd gebouw",
+                    "rgba(88, 75, 84, 1)",
+                    "bijeenkomstgebouw",
+                    "rgba(40, 128, 35, 1)",
+                    "rgba(44, 127, 184, 1)"
+                  ],
+                  "fill-extrusion-height": {
+                    "property": "hoogte",
+                    "type": "identity"
+                  },
+                  "fill-extrusion-base": 0,
+                  "fill-extrusion-opacity": 0.8
+                },
+                "metadata": {
+                  "title": "NL buildings 3D",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "NL_buildings 3D_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekaanaal Geotop 3D",
+              "layerInfo": {
+                "id": "geotop3D",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede voor de Merwedekanaalzone gemaakt.",
+                  "title": "Merwedekaanaal Geotop 3D",
+                  "reference": false,
+                  "userlayer": true
+                },
+                "source": {
+                  "id": "geotop3d",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_geotop2d/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,lithoklass,lithoclass,diepte_ond&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwede_geotop2d",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "lithoklass"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige Klei",
+                    "#b6d169",
+                    "Fijn Zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof Zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": [
+                    "number",
+                    [
+                      "+",
+                      0.501,
+                      [
+                        "+",
+                        50,
+                        [
+                          "get",
+                          "diepte_ond"
+                        ]
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "number",
+                    [
+                      "+",
+                      50,
+                      [
+                        "get",
+                        "diepte_ond"
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaal_Geotop 3D_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaal boringen",
+              "layerInfo": {
+                "id": "merwedekanaal_boringen2d",
+                "type": "fill-extrusion",
+                "source": {
+                  "id": "geotop3d",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_boringen2d/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,jaar,diepte_bov,diepte_ond,dieptetotaal,laagdikte,lithclass,lithoklass,toelichtin&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09684149570033,
+                    52.0584800896675,
+                    5.12050753619579,
+                    52.0885720273277
+                  ]
+                },
+                "source-layer": "public.merwede_boringen2d",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "lithoklass"
+                    ],
+                    "Onbekend",
+                    "#ffffff",
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige klei",
+                    "#b6d169",
+                    "Fijn zand",
+                    "#fff000",
+                    "Matige grof zand",
+                    "#ffdc00",
+                    "Grof zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": [
+                    "number",
+                    [
+                      "+",
+                      [
+                        "get",
+                        "laagdikte"
+                      ],
+                      [
+                        "-",
+                        [
+                          "get",
+                          "diepte_ond"
+                        ],
+                        [
+                          "get",
+                          "dieptetotaal"
+                        ]
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "number",
+                    [
+                      "-",
+                      [
+                        "get",
+                        "diepte_ond"
+                      ],
+                      [
+                        "get",
+                        "dieptetotaal"
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                },
+                "metadata": {
+                  "title": "Merwedekanaal boringen",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaal_boringen_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaal Rotliegend en Zechstein",
+              "layerInfo": {
+                "id": "mwrotliegendrects",
+                "type": "fill-extrusion",
+                "minzoom": 13,
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_rotliegend_zechstein_rects/mvt/{z}/{x}/{y}?geom_column=geom&columns=depth,thickness,name&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.08784358436661,
+                    52.0557495536792,
+                    5.13233550768549,
+                    52.0831686374319
+                  ],
+                  "maxzoom": 18
+                },
+                "source-layer": "public.merwede_rotliegend_zechstein_rects",
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "name"
+                    ],
+                    "rotliegend",
+                    "red",
+                    "zechstein",
+                    "white",
+                    "black"
+                  ],
+                  "fill-extrusion-height": [
+                    "-",
+                    2758.23,
+                    [
+                      "-",
+                      [
+                        "get",
+                        "depth"
+                      ],
+                      [
+                        "get",
+                        "thickness"
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "-",
+                    2758.23,
+                    [
+                      "get",
+                      "depth"
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                },
+                "metadata": {
+                  "title": "Merwedekanaal Rotliegend en Zechstein",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaal_Rotliegend en Zechstein_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Stedin kabels",
+              "layerInfo": {
+                "id": "stedinkabels",
+                "type": "line",
+                "minzoom": 12,
+                "source": {
+                  "type": "vector",
+                  "maxzoom": 18,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.stedin_kabels/mvt/{z}/{x}/{y}?geom_column=geom&columns=ktype&include_nulls=0"
+                  ],
+                  "bounds": [
+                    3.84642655585107,
+                    51.6596158426275,
+                    5.62588476605256,
+                    52.2886886861338
+                  ]
+                },
+                "source-layer": "public.stedin_kabels",
+                "paint": {
+                  "line-color": [
+                    "match",
+                    [
+                      "get",
+                      "ktype"
+                    ],
+                    "laag",
+                    "#4daf4a",
+                    "midden",
+                    "#377eb8",
+                    "hoog",
+                    "#e41a1c",
+                    "#000000"
+                  ],
+                  "line-width": [
+                    "match",
+                    [
+                      "get",
+                      "ktype"
+                    ],
+                    "laag",
+                    1,
+                    "midden",
+                    2,
+                    "hoog",
+                    3,
+                    1
+                  ]
+                },
+                "metadata": {
+                  "title": "Stedin kabels",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Stedin_kabels_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Stedin stations",
+              "layerInfo": {
+                "id": "stedinstations",
+                "type": "circle",
+                "minzoom": 12,
+                "source": {
+                  "type": "vector",
+                  "maxzoom": 18,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.stedin_stations/mvt/{z}/{x}/{y}?geom_column=geom&columns=stype&include_nulls=0"
+                  ],
+                  "bounds": [
+                    3.84642655585107,
+                    51.6596158426275,
+                    5.62588476605256,
+                    52.2886886861338
+                  ]
+                },
+                "source-layer": "public.stedin_stations",
+                "paint": {
+                  "circle-color": [
+                    "match",
+                    [
+                      "get",
+                      "stype"
+                    ],
+                    "laag",
+                    "#4daf4a",
+                    "midden",
+                    "#377eb8",
+                    "hoog",
+                    "#e41a1c",
+                    "#000000"
+                  ],
+                  "circle-radius": [
+                    "match",
+                    [
+                      "get",
+                      "stype"
+                    ],
+                    "laag",
+                    5,
+                    "midden",
+                    5,
+                    "hoog",
+                    8,
+                    1
+                  ],
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1
+                },
+                "metadata": {
+                  "title": "Stedin stations",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Stedin_stations_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaalzone Luchtkwaliteit",
+              "layerInfo": {
+                "id": "merwedeluchtkwaliteit",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.exportgebied_1_result__mt2018_j2017_rpgw/mvt/{z}/{x}/{y}?geom_column=geom&columns=pm10_od,conc_no2,conc_pm10,conc_pm25,conc_ec,naam&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.06965462540419,
+                    52.0644080919209,
+                    5.13481086896617,
+                    52.0892443545224
+                  ]
+                },
+                "source-layer": "public.exportgebied_1_result__mt2018_j2017_rpgw",
+                "paint": {
+                  "circle-radius": 5,
+                  "circle-color": [
+                    "case",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      7.737
+                    ],
+                    "#fff7ec",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      7.905
+                    ],
+                    "#fee8c8",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.064
+                    ],
+                    "#fdd49e",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.258
+                    ],
+                    "#fdbb84",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.389
+                    ],
+                    "#fc8d59",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.551
+                    ],
+                    "#ef6548",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      8.761
+                    ],
+                    "#d7301f",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      9.146
+                    ],
+                    "#b30000",
+                    [
+                      "<=",
+                      [
+                        "get",
+                        "pm10_od"
+                      ],
+                      11.146
+                    ],
+                    "#7f0000",
+                    "#7f0000"
+                  ],
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1
+                },
+                "metadata": {
+                  "title": "Merwedekanaalzone Luchtkwaliteit",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaalzone_Luchtkwaliteit_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "BGT vector (stijl)",
+              "layerInfo": {
+                "id": "bgtvector",
+                "type": "style",
+                "source": "styles/bgt.json",
+                "metadata": {
+                  "reference": false,
+                  "title": "BGT vector (stijl)"
+                }
+              },
+              "id": "BGT_vector (stijl)_vectortile_id"
+            }
+          ],
+          "id": "Vector_Tile_group_id",
+          "checked": false,
+          "opened": true
+        }
+      ],
+      "id": "Thematische_lagen_group_id",
+      "checked": false,
+      "opened": true
+    },
+    {
+      "type":"group",
+      "title":"Achtergrondlagen",
+      "sublayers":[
+        {
+          "type":"reference",
+          "title":"Klokantech Basic (stijl)",
+          "layerInfo":{
+            "id":"klokantechbasic",
+            "type":"style",
+            "source":"styles/openmaptiles/klokantech-basic.json",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"OSM Bright (stijl)",
+          "checked":true,
+          "layerInfo":{
+            "id":"OsmBright",
+            "type":"style",
+            "source":"styles/openmaptiles/osmbright.json",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Positron (stijl)",
+          "layerInfo":{
+            "id":"Positron",
+            "type":"style",
+            "source":"styles/openmaptiles/positron.json",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Dark Matter (stijl)",
+          "layerInfo":{
+            "id":"DarkMatter",
+            "type":"style",
+            "source":"styles/openmaptiles/dark-matter.json",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"MapBox Streets v8 (stijl)",
+          "layerInfo":{
+            "id":"streets-v8",
+            "type":"style",
+            "source":"mapbox://styles/mapbox/streets-v8",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"MapBox Streets v9 (stijl)",
+          "layerInfo":{
+            "id":"streets-v9",
+            "type":"style",
+            "source":"mapbox://styles/mapbox/streets-v9",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Openstreetmap (stijl)",
+          "layerInfo":{
+            "id":"OsmRaster",
+            "type":"style",
+            "source":"styles/osmraster.json",
+            "metadata":{
+              "reference":true
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Alleen grenzen",
+          "layerInfo":{
+            "id":"Boundaries",
+            "type":"style",
+            "source":{
+              "version":8,
+              "name":"Grenzen",
+              "sources":{
+                "openmaptileboundaries":{
+                  "type":"vector",
+                  "url":"https://saturnus.geodan.nl/openmaptiles/data/v3.json?key={key}"
+                }
+              },
+              "layers":[
+                {
+                  "id":"boundary_state",
+                  "type":"line",
+                  "metadata":{
+                    "mapbox:group":"a14c9607bc7954ba1df7205bf660433f"
+                  },
+                  "source":"openmaptileboundaries",
+                  "source-layer":"boundary",
+                  "filter":[
+                    "==",
+                    "admin_level",
+                    2
+                  ],
+                  "layout":{
+                    "line-cap":"round",
+                    "line-join":"round",
+                    "visibility":"visible"
+                  },
+                  "paint":{
+                    "line-color":"rgb(230, 204, 207)",
+                    "line-width":{
+                      "base":1.1,
+                      "stops":[
+                        [
+                          3,
+                          1
+                        ],
+                        [
+                          22,
+                          20
+                        ]
+                      ]
+                    },
+                    "line-blur":{
+                      "base":1,
+                      "stops":[
+                        [
+                          0,
+                          0.4
+                        ],
+                        [
+                          22,
+                          4
+                        ]
+                      ]
+                    },
+                    "line-opacity":1
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Streets (Geodan Maps)",
+          "id":"gmstreets",
+          "layerInfo":{
+            "id":"gmstreets",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":[
+                "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"
+              ],
+              "attribution":"&copy; <a href=\"https://www.geodan.nl\" target=\"_BLANK\">Geodan</a> | <a href=\"https://carto.com\" target=\"_BLANK\">&copy; CARTO</a> | <a href=\"https://opendatacommons.org/licenses/odbl/1.0/\" target=\"_BLANK\">&copy; OpenStreetMap contributors</a>",
+              "maxzoom":19
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"ESRI World Map topo",
+          "layerInfo":{
+            "id":"worldmaptopo",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":[
+                "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+              ],
+              "attribution":"&copy; ESRI",
+              "maxzoom":18
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"ESRI Natural World Map",
+          "layerInfo":{
+            "id":"natgeoworldmap",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":[
+                "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"
+              ],
+              "attribution":"&copy; ESRI",
+              "maxzoom":11
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Toner",
+          "layerInfo":{
+            "id":"stamentoner",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "scheme": "tms",
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":17
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Watercolor",
+          "layerInfo":{
+            "id":"stamenwatercolor",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "scheme": "tms",
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":17
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Stamen Terrain",
+          "layerInfo":{
+            "id":"stamenterrain",
+            "metadata":{
+              "reference":true
+            },
+            "type":"raster",
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "scheme": "tms",
+              "tiles":[
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom":16
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Microsoft BING Kaart",
+          "layerInfo":{
+            "id":"bingmaproad",
+            "metadata":{
+              "reference":true,
+              "bing":true
+            },
+            "type":"raster",
+            "source":{
+              "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom":19
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Microsoft BING Hybride",
+          "layerInfo":{
+            "id":"bingmaphybrid",
+            "metadata":{
+              "reference":true,
+              "bing":true
+            },
+            "type":"raster",
+            "source":{
+              "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom":18
+            }
+          }
+        },
+        {
+          "type":"reference",
+          "title":"Microsoft BING Luchtfoto",
+          "layerInfo":{
+            "id":"bingmapaerial",
+            "metadata":{
+              "reference":true,
+              "bing":true
+            },
+            "type":"raster",
+            "source":{
+              "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom":18
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tools": {
+    "toolbar": {
+      "visible": true,
+      "order": 0,
+      "position": "opened"
+    },
+    "search": {
+      "visible": true,
+      "position": "",
+      "order": 100
+    },
+    "datacatalog": {
+      "visible": true,
+      "position": "",
+      "order": 101
+    },
+    "measure": {
+      "visible": true,
+      "position": "",
+      "order": 102
+    },
+    "info": {
+      "visible": true,
+      "position": "",
+      "order": 103
+    },
+    "maplanguage": {
+      "visible": true,
+      "position": "",
+      "order": 104
+    },
+    "pitch": {
+      "visible": true,
+      "position": "",
+      "order": 105
+    },
+    "geolocate": {
+      "visible": true,
+      "position": "",
+      "order": 106
+    },
+    "zoomlevel": {
+      "visible": true,
+      "position": "bottom-left",
+      "order": 200
+    },
+    "navigation": {
+      "visible": true,
+      "position": "bottom-left",
+      "order": 201
+    },
+    "coordinates": {
+      "visible": true,
+      "position": "true",
+      "order": 202
+    },
+    "scalebar": {
+      "visible": true,
+      "position": "bottom-right",
+      "order": 203
+    },
+    "legend": {
+      "visible": true,
+      "position": "opened",
+      "order": 204
+    }
+  },
+  "keys": {}
+}
