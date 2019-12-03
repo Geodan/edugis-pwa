@@ -54,7 +54,7 @@ class MBStyleParser
           break;
         case "match":
           // element[1] is ["get", "propertyname"] (?)
-          result.propertyname = typeof paintProperty[1][1] === "string"? paintProperty[1][1]:"expressie";
+          result.propertyname = this.getLayerStylePropertyName(paintProperty);
           result.items.push({value: paintProperty[paintProperty.length - 1], label: ''});
           for (let i = 2; i < paintProperty.length - 1; i+=2) {
             result.items.push({value: paintProperty[i+1], label: `${paintProperty[i]}`});

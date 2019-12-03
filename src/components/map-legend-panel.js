@@ -201,16 +201,18 @@ class MapLegendPanel extends LitElement {
   }
   circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo) {
     return html`${colorInfo.propertyname?html` ${colorInfo.propertyname}<br>`:''}
-      ${colorInfo.items.map(color=>
-      html`
-        ${svg`
-        <svg width="${radiusInfo.items[0].value*2+2}" height="${radiusInfo.items[0].value*2+2}">
-          <circle cx="${radiusInfo.items[0].value+1}" cy="${radiusInfo.items[0].value+1}" r="${radiusInfo.items[0].value}" style="fill:${color.value};${opacityInfo.items.length?`fill-opacity:${opacityInfo.items[0].value};`:''}${strokeInfo.items.length?`stroke-width:1;stroke:${strokeInfo.items[0].value}`:''}" />
-        </svg> 
-        `}
+      ${colorInfo.items.map((color,index)=>{
+        let radiusIndex = radiusInfo.items.length === colorInfo.items.length? index : 0;
+        return html`
+          ${svg`
+            <svg width="${radiusInfo.items[radiusIndex].value*2+2}" height="${radiusInfo.items[radiusIndex].value*2+2}">
+            <circle cx="${radiusInfo.items[radiusIndex].value+1}" cy="${radiusInfo.items[radiusIndex].value+1}" r="${radiusInfo.items[radiusIndex].value}" style="fill:${color.value};${opacityInfo.items.length?`fill-opacity:${opacityInfo.items[0].value};`:''}${strokeInfo.items.length?`stroke-width:1;stroke:${strokeInfo.items[0].value}`:''}" />
+            </svg> 
+          `}
         ${color.label}<br>
         `
-      )}`;
+      })}`
+      ;
   }
   circleLegend(maplayer) {
     const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
@@ -239,10 +241,15 @@ class MapLegendPanel extends LitElement {
       }
     }
     
-    return html`
+    if (radiusInfo.items.length !== colorInfo.items.length) {
+      return html`
       ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo)}
       ${this.circleRadiusLegend(radiusInfo)}
     `
+    } else {
+      return this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo);
+    }
+    
   }
   
   filleExtrusionLegend(maplayer) {
