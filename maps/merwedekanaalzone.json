@@ -705,6 +705,34 @@
                       "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
                   }
               }
+            },
+            {
+              "id": "archeologie",
+              "title": "Romeinse weg",
+              "type": "line",
+              "layerInfo": {
+                "id": "romeinselimes",
+                "type": "line",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.romeinselimes/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,klasse2&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.03777240514106,
+                    52.0530410380353,
+                    5.14660749182106,
+                    52.0802670393832
+                  ]
+                },
+                "source-layer": "public.romeinselimes",
+                "paint": {
+                  "line-color": "#7570b3",
+                  "line-width": ["interpolate", ["linear"], ["zoom"],
+                    13, 3, 22, 20
+                  ]
+                }
+              }
             }
           ],
           "id": "Vector_Tile_group_id",
