@@ -268,7 +268,7 @@ class MapDraw extends LitElement {
   }
   _removeDrawFromMap()
   {
-    if (this.map) {
+    if (this.map && this.map.draw) {
       this.draw.changeMode(this.drawMode = 'simple_select');
       this.map.off('draw.create', this.featuresCreated);
       this.map.off('draw.selectionchange', this.featuresSelected);

@@ -1145,12 +1145,18 @@ class WebMap extends LitElement {
               while (!this.map.loaded()) {
                 await timeout(50);  
               }
+              while (this.styleLoading) {
+                await timeout(50);
+              }
             }
           }
         }
       } else {
         await this.addLayer({detail: layerInfo});
         while (!this.map.loaded()) {
+          await timeout(50);
+        }
+        while (this.styleLoading) {
           await timeout(50);
         }
       }
