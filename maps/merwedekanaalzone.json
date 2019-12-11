@@ -26,7 +26,8 @@
                   "title": "utrechtwater",
                   "layerInfo": {
                     "id": "utrechtcapswater",
-                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/wms?request=GetCapabilities&service=WMS&version=1.3.0&"
+                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/wms?request=GetCapabilities&service=WMS&version=1.3.0&",
+                    "allowedlayers": ["Grondwater_model_GLG_HYDRO", "Grondwater_model_GHG_HYDRO","Grondwater_model_KWEL_HYDRO"]
                   }
                 }
               ]
@@ -40,7 +41,9 @@
                   "title": "utrechtgrondwatersysteem",
                   "layerInfo": {
                     "id": "utrechtgrondwatersysteem",
-                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_Grondwatersysteembenadering/wms?request=GetCapabilities&version=1.3.0&service=WMS&"
+                    "url": "https://services.geodata-utrecht.nl/geoserver/w01_2_Grondwatersysteembenadering/wms?request=GetCapabilities&version=1.3.0&service=WMS&",
+                    "allowedlayers": ["w01_2_Grondwatersysteembenadering:Grondwatersysteembenadering_Dikte_deklaag",
+                    "w01_2_Grondwatersysteembenadering:Grondwatersysteembenadering_Grondwaterstroomlijnenkaart"]
                   }
                 }
               ]
@@ -312,6 +315,96 @@
                 }
               },
               "id": "Merwedekanaal_boringen_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekanaal boringen (2)",
+              "layerInfo": {
+                "id": "merwedekanaal_boringen",
+                "type": "fill-extrusion",
+                "source": {
+                  "id": "geotop3d",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_boringen/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,jaar,diepte_bov,diepte_ond,dieptetotaal,laagdikte,lithclass,lithoklass,toelichtin&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09684149570033,
+                    52.0584800896675,
+                    5.12050753619579,
+                    52.0885720273277
+                  ]
+                },
+                "source-layer": "public.merwede_boringen",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "lithoklass"
+                    ],
+                    "Onbekend",
+                    "#ffffff",
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige klei",
+                    "#b6d169",
+                    "Fijn zand",
+                    "#fff000",
+                    "Matige grof zand",
+                    "#ffdc00",
+                    "Grof zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": [
+                    "number",
+                    [
+                      "+",
+                      [
+                        "get",
+                        "laagdikte"
+                      ],
+                      [
+                        "-",
+                        [
+                          "get",
+                          "diepte_ond"
+                        ],
+                        -140
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "number",
+                    [
+                      "-",
+                      [
+                        "get",
+                        "diepte_ond"
+                      ],
+                      -140
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                },
+                "metadata": {
+                  "title": "Merwedekanaal boringen (gelijk)",
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaal_boringen2_vectortile_id"
             },
             {
               "type": "vectortile",
