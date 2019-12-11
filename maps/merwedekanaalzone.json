@@ -402,6 +402,7 @@
                   "title": "Merwedekanaal boringen (gelijk)",
                   "reference": false,
                   "userlayer": true,
+                  "abstract": "Deze kaartlaag toont informatie over grondboringen. De laag moet met de 3D-view worden bekeken (3D tool en/of CTRL-toets + muis). De bovenkant van de boring is het maaiveld (het aardoppervlak). Je kunt aan het dikkere deel van de boring zien hoe diep er is geboord. Het dunne deel wijst de plek aan waar er is geboord.",
                   "attributes": {
                     "deniedattributes": ["toelichtin", "lithclass"],
                     "translations": [
@@ -1212,7 +1213,7 @@
       "order": 103
     },
     "maplanguage": {
-      "visible": true,
+      "visible": false,
       "position": "",
       "order": 104
     },
