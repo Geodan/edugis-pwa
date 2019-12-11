@@ -185,6 +185,24 @@ function capabilitiesToCatalogNodes(xml, deniedlayers, allowedlayers, scaleHintT
     return result;
 }
 
+function removeEmptyGroups(nodes) {
+  let result = [];
+  if (nodes.length == 0) {
+    return result;
+  }
+  for (let node of nodes) {
+    if (node.type === "group") {
+      node.sublayers = removeEmptyGroups(node.sublayers);
+      if (node.sublayers.length > 0) {
+        result.push(node);
+      }
+    } else {
+      result.push(node);
+    }
+  }
+  return result;
+}
+
 export function getCapabilitiesNodes(node) {
     const url = wmsUrl(node.url, 'getcapabilities');
     const scaleHintType = node.scalehinttype === 'paper' ? 'paper' : 'resolution';
@@ -197,7 +215,8 @@ export function getCapabilitiesNodes(node) {
           if (contentType.startsWith('application/vnd.ogc.wms_xml') || contentType.startsWith('text/xml') || contentType.startsWith('application/xml')) {
             // caps 1.1.1 or caps 1.3.0
             return response.text().then(xml=>{
-              const nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers, scaleHintType);
+              let nodes = capabilitiesToCatalogNodes(xml, node.deniedlayers, node.allowedlayers, scaleHintType);
+              nodes = removeEmptyGroups(nodes);
               if (nodes.length == 0) {
                 nodes.push({"title": `${nodeId}: 0 layers or failed`});
               }
