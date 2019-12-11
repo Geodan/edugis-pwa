@@ -106,20 +106,56 @@ class MapInfoFormatted extends LitElement {
         html`
           <div>
             <div class="layer">${feature.layer.metadata?feature.layer.metadata.title?feature.layer.metadata.title:feature.layer.id:feature.layer.id}</div>
-            ${Object.keys(feature.properties).length?
-              Object.keys(feature.properties).map(key=>
-              html`<div class="attributename">${key}</div>
-                  <div class="attributevalue">${typeof feature.properties[key] === 'object' && feature.properties[key] !== null?
-                        JSON.stringify(feature.properties[key])
-                      :typeof feature.properties[key] === 'string' && feature.properties[key].startsWith('https://maps.googleapis.com')?
-                          html`<img src="${feature.properties[key]}">`
-                        :feature.properties[key]}</div>`
-              )
-            : html`<div class="attributevalue">geen info beschikbaar op deze locatie</div>`}
+            ${this.renderAttributes(feature)}
           </div>`
       )}
       </div>
     `;
+  }
+  renderAttributes(feature) {
+    if (feature.properties.length === 0) {
+      return html`<div class="attributevalue">geen info beschikbaar op deze locatie</div>`
+    }
+    let result = [];
+    Object.keys(feature.properties).forEach(key=>{
+      let translatedKey = key;
+      let value = feature.properties[key];  
+      if (feature.layer && feature.layer.metadata && feature.layer.metadata.attributes) {
+        let attributes = feature.layer.metadata.attributes
+        if (attributes.deniedattributes) {
+          if (attributes.deniedattributes.indexOf(key) > -1) {
+            return;
+          }
+        }
+        if (attributes.allowedattributes) {
+          if (attributes.allowedattributes.indexOf(key) === -1) {
+            return;
+          }
+        }
+        if (attributes.translations) {
+          for (let translation of attributes.translations) {
+            if (translation.name === key) {
+              if (translation.translation) {
+                translatedKey = translation.translation;
+              }
+              if (translation.unit && translation.unit !== "") {
+                value += translation.unit;
+              }
+            }
+          }
+        }
+      }
+      result.push(this.renderAttribute(translatedKey, value));
+    })
+    return result;
+  }
+  renderAttribute(key, value) {
+    return html`<div class="attributename">${key}</div>
+    <div class="attributevalue">${typeof value === 'object' && value !== null?
+          JSON.stringify(value)
+        :typeof value === 'string' && value.startsWith('https://maps.googleapis.com')?
+            html`<img src="${value}">`
+          :value}</div>`
   }
 }
 customElements.define('map-info-formatted', MapInfoFormatted);

@@ -141,7 +141,7 @@
                 "id": "geotop3D",
                 "type": "fill-extrusion",
                 "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede voor de Merwedekanaalzone gemaakt.",
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede ('hekdiagram') voor de Merwedekanaalzone gemaakt.",
                   "title": "Merwedekaanaal Geotop 3D",
                   "reference": false,
                   "userlayer": true
@@ -318,7 +318,7 @@
             },
             {
               "type": "vectortile",
-              "title": "Merwedekanaal boringen (2)",
+              "title": "Merwedekanaal boringen (gelijk)",
               "layerInfo": {
                 "id": "merwedekanaal_boringen",
                 "type": "fill-extrusion",
@@ -401,7 +401,16 @@
                 "metadata": {
                   "title": "Merwedekanaal boringen (gelijk)",
                   "reference": false,
-                  "userlayer": true
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["toelichtin", "lithclass"],
+                    "translations": [
+                      {"name": "jaar", "translation": "jaar van boring", "unit": ""},
+                      {"name": "diepte_bov", "translation": "diepte bovenkant", "unit": "m"},
+                      {"name": "diepte_ond", "translation": "diepte onderkant", "unit": "m"},
+                      {"name": "lithoklass", "translation": "laagtype", "unit": ""}
+                    ]
+                  }
                 }
               },
               "id": "Merwedekanaal_boringen2_vectortile_id"
@@ -599,6 +608,12 @@
               "layerInfo": {
                   "id": "funderingsdiepteutrecht",
                   "type": "fill",
+                  "metadata": {
+                    "attributes": {
+                      "translations": [{"name": "mindepth", "translation": "vanaf diepte", "unit": "m"},
+                      {"name": "maxdepth", "translation": "tot diepte", "unit": "m"}]
+                    }
+                  },
                   "source": {
                     "type": "vector",
                     "tiles": [
@@ -616,7 +631,7 @@
                     "fill-color": [
                       "case",
                       [
-                        "<",
+                        "<=",
                         [
                           "get",
                           "mindepth"
@@ -630,7 +645,7 @@
                           "get",
                           "mindepth"
                         ],
-                        0.5
+                        1.5
                       ],
                       "#fed98e",
                       [
@@ -639,11 +654,11 @@
                           "get",
                           "mindepth"
                         ],
-                        1.5
+                        3.0
                       ],
                       "#fe9929",
                       [
-                        "<",
+                        "<=",
                         [
                           "get",
                           "mindepth"
@@ -660,7 +675,7 @@
                         10
                       ],
                       "#993404",
-                      "#993404"
+                      "#000000"
                     ],
                     "fill-opacity": 0.8
                   }

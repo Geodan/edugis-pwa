@@ -242,11 +242,14 @@ class MapLegendPanel extends LitElement {
     }
     
     if (radiusInfo.items.length !== colorInfo.items.length) {
+      radiusInfo = this.translateResult(maplayer, radiusInfo);
+      colorInfo = this.translateResult(maplayer, colorInfo);
       return html`
       ${this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo)}
       ${this.circleRadiusLegend(radiusInfo)}
     `
     } else {
+      colorInfo = this.translateResult(maplayer, colorInfo);
       return this.circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo);
     }
     
@@ -254,7 +257,7 @@ class MapLegendPanel extends LitElement {
   
   filleExtrusionLegend(maplayer) {
     let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
-    const result = {propertyname: layerTitle, items: []};
+    let result = {propertyname: layerTitle, items: []};
     const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
     let paintFillColor;
     if (paint && paint['fill-extrusion-color']) {
@@ -306,6 +309,7 @@ class MapLegendPanel extends LitElement {
       }
       result.propertyname = null;
     }
+    result = this.translateResult(maplayer, result);
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
       ${result.items.map((item)=>{
         return svg`
@@ -321,7 +325,7 @@ class MapLegendPanel extends LitElement {
     // legend value is string OR legend value is zoom dependent string
     // convert to array of {propertyname, [{fillColor, outlineColor, label}]}
     let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
-    const result = {propertyname: layerTitle, items: []};
+    let result = {propertyname: layerTitle, items: []};
     const paint = maplayer.metadata.paint ? maplayer.metadata.paint : maplayer.paint;
     let paintFillColor = "white";
     if (paint && paint['fill-color']) {
@@ -388,6 +392,7 @@ class MapLegendPanel extends LitElement {
       }
       result.propertyname = null;
     }
+    result = this.translateResult(maplayer, result);
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
       ${result.items.map((item)=>{
         return svg`
@@ -395,6 +400,26 @@ class MapLegendPanel extends LitElement {
           <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:${fillOpacity};stroke-width:1;stroke:${item.outlineColor}"/>
         </svg>${html` ${item.label}<br>`}`;
       })}`;
+  }
+  translateResult(maplayer, result) {
+    if (maplayer.metadata && maplayer.metadata.attributes && maplayer.metadata.attributes.translations) {
+      let attributes = maplayer.metadata.attributes;
+      for (let translation of attributes.translations) {
+        if (translation.name === result.propertyname) {
+          if (translation.translation) {
+            result.propertyname = translation.translation;
+          }
+          if (translation.unit && translation.unit !== "") {
+            for (let item of result.items) {
+              if (item.label && item.label !== "") {
+                item.label += translation.unit;
+              }
+            }
+          }
+        }
+      }
+    }
+    return result;
   }
   backgroundLegend(maplayer) {
     let bgColor = maplayer.paint["background-color"];

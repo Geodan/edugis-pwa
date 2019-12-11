@@ -2055,7 +2055,6 @@ class WebMap extends LitElement {
         this.featureInfo = featureInfo.reverse();
       }
     }
-    
   }
 }
 customElements.define('web-map', WebMap);
