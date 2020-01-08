@@ -44,7 +44,7 @@
             },
             {
               "type": "wms",
-              "title": "Grondwaterstand winter (hoog)",
+              "title": "Grondwaterstand winter",
               "layerInfo": {
                 "id": "utrechtgrondwaterwinter",
                 "type": "raster",
@@ -64,7 +64,7 @@
             },
             {
               "type": "wms",
-              "title": "Grondwaterstand zomer (laag)",
+              "title": "Grondwaterstand zomer",
               "layerInfo": {
                 "id": "utrechtgrondwaterzomer",
                 "type": "raster",
@@ -227,6 +227,166 @@
                 }
               },
               "id": "Merwedekaanaal_Geotop 3D_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekaanaal Geotop 10x10",
+              "layerInfo": {
+                "id": "geotop3D10x10",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt.",
+                  "title": "Merwedekaanaal Geotop 3D 10x10",
+                  "reference": false,
+                  "userlayer": true
+                },
+                "source": {
+                  "id": "geotop3d10x10",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedegeotopcells2d10x10/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,lithoklass,lithoclass,bottom,height&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedegeotopcells2d10x10",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "lithoklass"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige Klei",
+                    "#b6d169",
+                    "Fijn Zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof Zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": [
+                    "number",
+                    [
+                      "+",
+                      50,
+                      [
+                        "+",
+                        [ "get", "height"],
+                        [ "get", "bottom"]
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "number",
+                    [
+                      "+",
+                      50,
+                      [ "get", "bottom"]
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaal_Geotop_cells_10x10"
+            },
+            {
+              "type": "vectortile",
+              "title": "Merwedekaanaal Geotop 20x20",
+              "layerInfo": {
+                "id": "geotop3D20x20",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede van 20x20 meter voor de Merwedekanaalzone gemaakt.",
+                  "title": "Merwedekaanaal Geotop 3D 20x20",
+                  "reference": false,
+                  "userlayer": true
+                },
+                "source": {
+                  "id": "geotop3d20x20",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedegeotopcells2d20x20/mvt/{z}/{x}/{y}?geom_column=geom&columns=bro_id,lithoklass,lithoclass,bottom,height&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedegeotopcells2d20x20",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "lithoklass"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige Klei",
+                    "#b6d169",
+                    "Fijn Zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof Zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": [
+                    "number",
+                    [
+                      "+",
+                      50,
+                      [
+                        "+",
+                        [ "get", "height"],
+                        [ "get", "bottom"]
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "number",
+                    [
+                      "+",
+                      50,
+                      [ "get", "bottom"]
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaal_Geotop_cells_20x20"
             },
             {
               "type": "vectortile",
@@ -532,7 +692,7 @@
                   "metadata": {
                     "abstract": "Deze kaart laat zien hoe diep je minimaal moet heien als je er gaat bouwen. Hoe diep je moet heien wordt ook wel de funderingsdiepte genoemd. Hoe dieper de minimale funderingsdiepte, hoe duurder het wordt en hoe meer werk het oplevert.",
                     "attributes": {
-                      "translations": [{"name": "mindepth", "translation": "vanaf diepte", "unit": "m"},
+                      "translations": [{"name": "mindepth", "translation": "Minimale diepte", "unit": "m"},
                       {"name": "maxdepth", "translation": "tot diepte", "unit": "m"}]
                     }
                   },
@@ -777,13 +937,13 @@
             },
             {
               "id": "archeologie",
-              "title": "Romeinse weg",
+              "title": "Romeinse Limesweg",
               "type": "line",
               "layerInfo": {
                 "id": "romeinselimes",
                 "type": "line",
                 "metadata": {
-                  "abstract": "De blauwe lijn op de kaart laat de ligging van de Romeinse limesweg zien. De Limes is de voormalige noordgrens van het Romeinse Rijk en heeft een hoge archeologische waarde. De Limes is bovengronds vrijwel nergens zichtbaar. De archeologische resten liggen verborgen in de bodem"
+                  "abstract": "De blauwe lijn op de kaart laat de ligging van de Romeinse Limesweg zien. De Limes is de voormalige noordgrens van het Romeinse Rijk en heeft een hoge archeologische waarde. De Limes is bovengronds vrijwel nergens zichtbaar. De archeologische resten liggen verborgen in de bodem"
                 },
                 "source": {
                   "type": "vector",
