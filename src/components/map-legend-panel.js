@@ -91,6 +91,7 @@ class MapLegendPanel extends LitElement {
             }
           }
         }
+        const hideLegend = (maplayer.metadata && maplayer.metadata.hidelegend)?maplayer.metadata.hidelegend:"";
         colorResult.items = colorResult.items.map(item=>{
           item.width = widthResult.items.length == 1 ? widthResult.items[0].lineWidth : widthResult.items[Math.floor(widthResult.items.length / 2)].lineWidth;
           return item;
@@ -109,7 +110,7 @@ class MapLegendPanel extends LitElement {
           }
           widthResult.propertyname = null;
         }
-        if (colorResult.items.length > 1 && widthResult.items.length > 1) {
+        if (colorResult.items.length > 1 && widthResult.items.length > 1 && hideLegend == "") {
           return html`
           <style>
             .twocolumn {
@@ -131,7 +132,7 @@ class MapLegendPanel extends LitElement {
           })}</div>
           </div>`
         }
-        if (colorResult.items.length > 1) {
+        if (colorResult.items.length > 1 && hideLegend !== "color") {
           return html`
           <div>${colorResult.propertyname?html` ${colorResult.propertyname}<br>`:''}
           ${colorResult.items.map(color=>{
@@ -139,6 +140,9 @@ class MapLegendPanel extends LitElement {
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color.lineColor};stroke-width:${color.width};" />
             </svg>${html` ${color.label}<br>`}`
           })}</div>`
+        }
+        if (hideLegend === "size") {
+          return html``;
         }
         return html`
           <div>
@@ -181,6 +185,9 @@ class MapLegendPanel extends LitElement {
     if (!Array.isArray(lineColor)) {
       lineColor = [lineColor];
     }
+    if (hideLegend === "color") {
+      return html``;
+    }
     return svg`${lineColor.map((color, index)=>{
         return svg`<svg width="30" height="15">
         <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color};stroke-width:${lineWidth};" />
@@ -201,7 +208,7 @@ class MapLegendPanel extends LitElement {
   }
   circleColorLegend(colorInfo, strokeInfo, radiusInfo, opacityInfo) {
     return html`${colorInfo.propertyname?html` ${colorInfo.propertyname}<br>`:''}
-      ${colorInfo.items.map((color,index)=>{
+      ${colorInfo.items.filter(item=>(item.label && item.label.trim() !== "")).map((color,index)=>{
         let radiusIndex = radiusInfo.items.length === colorInfo.items.length? index : 0;
         return html`
           ${svg`
@@ -311,7 +318,7 @@ class MapLegendPanel extends LitElement {
     }
     result = this.translateResult(maplayer, result);
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
-      ${result.items.map((item)=>{
+      ${result.items.filter(item=>(item.label && item.label.trim() !== "")).map((item)=>{
         return svg`
         <svg width="30" height="15">
           <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:1;stroke-width:1;stroke:#cccccc"/>
@@ -394,7 +401,7 @@ class MapLegendPanel extends LitElement {
     }
     result = this.translateResult(maplayer, result);
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
-      ${result.items.map((item)=>{
+      ${result.items.filter(item=>(item.label && item.label.trim() !== "")).map((item)=>{
         return svg`
         <svg width="30" height="15">
           <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:${fillOpacity};stroke-width:1;stroke:${item.outlineColor}"/>

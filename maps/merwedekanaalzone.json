@@ -125,7 +125,9 @@
                     "rgba(88, 75, 84, 1)",
                     "bijeenkomstgebouw",
                     "rgba(40, 128, 35, 1)",
-                    "rgba(44, 127, 184, 1)"
+                    "overig",
+                    "rgba(44, 127, 184, 1)",
+                    "black"
                   ],
                   "fill-extrusion-height": {
                     "property": "hoogte",
@@ -549,6 +551,7 @@
                 },
                 "metadata": {
                   "title": "Merwedekanaal Rotliegend en Zechstein",
+                  "abstract": "Deze kaartlaag toont 2 gesteentelagen uit de diepe ondergrond: het poreuse gesteente uit de Rotliegend periode en het zout uit de latere (hogergelegen) Zechstein periode. Voor de visualisatie zijn de lagen ongeveer 2800 meter hoger weergegeven dan waar ze zich in werkelijkheid bevinden zodat de lagen boven de grond afgebeeld worden. Op 2700 meter is de temperatuur gemiddeld ongeveer 70°C, op 1600 meter diepte ongeveer 40°C",
                   "reference": false,
                   "userlayer": true
                 }
@@ -613,7 +616,8 @@
                   "userlayer": true,
                   "attributes": {
                     "translations": [{"name": "ktype", "translation": "spanning"}]
-                  }
+                  },
+                  "hidelegend": "size"
                 }
               },
               "id": "Stedin_kabels_vectortile_id"
