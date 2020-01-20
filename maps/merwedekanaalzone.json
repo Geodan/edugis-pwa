@@ -127,7 +127,7 @@
                     "rgba(40, 128, 35, 1)",
                     "overig",
                     "rgba(44, 127, 184, 1)",
-                    "black"
+                    "rgba(44, 127, 184, 1)"
                   ],
                   "fill-extrusion-height": {
                     "property": "hoogte",
