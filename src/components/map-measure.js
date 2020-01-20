@@ -9,7 +9,7 @@ import { measureIcon } from '../gm/gm-iconset-svg';
   distance as turfDistance, 
   length as turfLength, 
   lineString as turfLineString,
-  polygon as turfPolygon} from '../../node_modules/@turf/turf/turf.es';
+  polygon as turfPolygon} from '@turf/turf/turf.es';
 */
 
 // get geographic coordinates along line A to B

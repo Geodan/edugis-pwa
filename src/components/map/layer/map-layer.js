@@ -3,8 +3,8 @@ import {html, css, LitElement} from 'lit-element';
 import "../../base/base-arrow.js";
 import "../../base/base-checkbox.js";
 import "./map-layer-info.js";
-import {GestureEventListeners} from '../../../../node_modules/@polymer/polymer/lib/mixins/gesture-event-listeners.js';
-import * as Gestures from '../../../../node_modules/@polymer/polymer/lib/utils/gestures.js';
+import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
+import * as Gestures from '@polymer/polymer/lib/utils/gestures.js';
 import {arrowForwardIcon} from './map-layer-icons.js';
 
 /**

@@ -1,7 +1,7 @@
 import {LitElement, html, svg, css} from 'lit-element';
 import {GeoJSON} from '../utils/geojson';
-import GeoJSONParser from '../../node_modules/jsts/org/locationtech/jts/io/GeoJSONParser';
-import DistanceOp from '../../node_modules/jsts/org/locationtech/jts/operation/distance/DistanceOp';
+import GeoJSONParser from 'jsts/org/locationtech/jts/io/GeoJSONParser';
+import DistanceOp from 'jsts/org/locationtech/jts/operation/distance/DistanceOp';
 import {customSelectCss} from './custom-select-css.js';
 import './wc-button';
 
