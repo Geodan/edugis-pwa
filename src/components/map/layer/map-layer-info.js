@@ -3,7 +3,7 @@ import '../../base/base-slider.js';
 import '../../map-legend-panel.js';
 import './map-layer-config.js';
 import {iconInformationCircle, iconCog, iconDelete} from "./map-layer-icons.js";
-import Picker from '../../colorpicker/picker.js';
+//import Picker from '../../colorpicker/picker.js';
 
 /**
 * @polymer
@@ -86,6 +86,7 @@ class MapLayerInfo extends LitElement {
             .hide {
                 display: none;
             }
+            /*
             .picker_wrapper.no_alpha .picker_alpha {display:none}
     .picker_wrapper.no_editor .picker_editor{position:absolute;z-index:-1;opacity:0}
     .picker_wrapper.no_cancel .picker_cancel{display:none}
@@ -133,6 +134,7 @@ class MapLayerInfo extends LitElement {
     .popup.popup_left .picker_arrow{top:0;right:0;-webkit-transform:scale(-1, 1);transform:scale(-1, 1)}
     .popup.popup_right{top:0;left:100%}
     .popup.popup_right .picker_arrow{top:0;left:0}
+    */
         `
     }
     constructor() {
@@ -220,8 +222,8 @@ class MapLayerInfo extends LitElement {
     }
     _buttonClick(event) {
         let button = this.shadowRoot.querySelector('#licontainer');
-        let picker = new Picker({parent:document.body, popup:'top'});
-        picker.openHandler();
+        //let picker = new Picker({parent:document.body, popup:'top'});
+        //picker.openHandler();
     }
     _togglelegendclipped() {
         this.legendclipped = !this.legendclipped;
