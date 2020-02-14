@@ -8,7 +8,7 @@
       {
         "type":"vectortile",
         "title":"EduGIS nuts_m03_2006 fill",
-        "checked": 2,
+        "checked": 0,
         "layerInfo":{
           "id":"EduGIS_nuts_m03_2006_fill",
           "type":"fill",
@@ -117,7 +117,110 @@
             ]
           }
         }
-      }, {
+      },
+      {
+        "type":"vectortile",
+        "title":"NUTS3 Population Density",
+        "checked": 2,
+        "layerInfo":
+        {
+          "id": "attrlayer",
+          "type": "fill",
+          "source": {
+            "type": "vector",
+            "tiles": [
+              "https://tiles.edugis.nl/data/public.2017_nuts_demoinfo/mvt/{z}/{x}/{y}?geom_column=geom&columns=refactored_2017&include_nulls=0"
+            ],
+            "bounds": [
+              -63.15119,
+              -21.38885,
+              55.83578,
+              71.18416
+            ]
+          },
+          "source-layer": "public.2017_nuts_demoinfo",
+          "paint": {
+            "fill-color": [
+              "case",
+              [
+                "<",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                39.7
+              ],
+              "#fff7ec",
+              [
+                "<",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                63.7
+              ],
+              "#fee8c8",
+              [
+                "<",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                93.3
+              ],
+              "#fdd49e",
+              [
+                "<",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                130.4
+              ],
+              "#fdbb84",
+              [
+                "<=",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                200.7
+              ],
+              "#fc8d59",
+              [
+                "<=",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                344.6
+              ],
+              "#ef6548",
+              [
+                "<=",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                925.3
+              ],
+              "#d7301f",
+              [
+                "<=",
+                [
+                  "get",
+                  "refactored_2017"
+                ],
+                21026.7
+              ],
+              "#990000",
+              "#990000"
+            ],
+            "fill-opacity": 0.8
+          }
+        }
+      },
+      {
         "type": "group",
         "title": "Achtergrondlagen",
         "sublayers":[
