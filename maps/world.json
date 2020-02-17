@@ -19,15 +19,17 @@
                         "minzoom": 0,
                         "maxzoom": 22.5,
                         "metadata": {
-                        "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/landcover/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=cbsbevolking2017&query_layers=cbsbevolking2017"
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/landcover/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=landcover&query_layers=landcover",
+                          "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                          "legendurl": "https://tiles.edugis.nl/mapproxy/landcover/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=landcover&format=image/png"
                         },
                         "source": {
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://tiles.edugis.nl/mapproxy/landcover/wmts/landcoover/spherical_mercator/{z}/{x}/{y}.png"
+                                "https://tiles.edugis.nl/mapproxy/landcover/wmts/landcover/spherical_mercator/{z}/{x}/{y}.png"
                         ],
-                        "attribution": "&copy; Geodan, CBS"
+                        "attribution": "&copy; <a href=\"https://github.com/globalmaps/gm_lc_v3\" target=\"copyright\">GLCNMO Version 3</a>"
                         }
                     }
                 }
