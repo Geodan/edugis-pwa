@@ -1939,7 +1939,11 @@ class WebMap extends LitElement {
     const leftbottom = {x: clickedPointMercator.x - 1.5 * wmtsResolution, y: clickedPointMercator.y - 1.5 * wmtsResolution};
     const righttop = {x: clickedPointMercator.x + 1.5 * wmtsResolution, y: clickedPointMercator.y + 1.5 * wmtsResolution};
     // getFeatureinfo url for center pixel of 3x3 pixel area
-    const params = `&width=3&height=3&x=1&y=1&crs=EPSG:3857&srs=EPSG:3857&info_format=${featureInfoFormat}&bbox=`;
+    let srs = 'EPSG:3857';
+    if (featureInfoUrl.toLowerCase().indexOf('srs=epsg:900913') > -1) {
+      srs = 'EPSG:900913';
+    }
+    const params = `&width=3&height=3&x=1&y=1&crs=${srs}&srs=${srs}&info_format=${featureInfoFormat}&bbox=`;
     let url=featureInfoUrl+params+(leftbottom.x)+","+(leftbottom.y)+","+(righttop.x)+","+(righttop.y);
     if (metadata.featureinfoproxy) {
       url = metadata.featureinfoproxy + encodeURIComponent(url);
