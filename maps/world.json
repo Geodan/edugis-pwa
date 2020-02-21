@@ -12,7 +12,6 @@
                 {
                     "title": "Landcover",
                     "type": "wmts",
-                    "checked": 2,
                     "layerInfo": {
                         "id": "worldlandcover",
                         "type": "raster",
@@ -27,13 +26,291 @@
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://tiles.edugis.nl/mapproxy/landcover/wmts/landcover/spherical_mercator/{z}/{x}/{y}.png"
+                                "https://tiles.edugis.nl/mapproxy/landcover/wmts/landcover/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.png"
                         ],
                         "attribution": "&copy; <a href=\"https://github.com/globalmaps/gm_lc_v3\" target=\"copyright\">GLCNMO Version 3</a>"
                         }
                     }
+                },
+                {
+                  "type": "raster",
+                  "title": "Bevolking 2015",
+                  "layerInfo": {
+                    "id": "bevolking2015",
+                    "type": "raster",
+                    "minzoom": 0,
+                    "maxzoom": 22.5,
+                    "metadata": {
+                      "getFeatureInfoUrl": "https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&request=GetFeatureInfo&styles=&layers=Bevolkingsdichtheid_2015&query_layers=Bevolkingsdichtheid_2015&srs=EPSG:900913",
+                      "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                      "legendurl": "http://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&service=WMS&request=GetLegendGraphic&layer=Bevolkingsdichtheid_2015&format=image/png&STYLE=default"
+                    },
+                    "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                            "https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                            "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                            "https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                            "https://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}"
+                    ],
+                    "attribution": "to do"
+                    }
+                  }
+                },
+                {
+                  "type": "vector",
+                  "title": "Cities and towns",
+                  "layerInfo": {
+                    "id": "citiesandtowns",
+                    "type": "circle",
+                    "metadata": {
+
+                    },
+                    "source": {
+                      "id": "citiesandtowns",
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_populated_places/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl,timezone,pop_min,pop_max&include_nulls=0"
+                      ]
+                    },
+                    "source-layer": "public.ne_10m_populated_places",
+                    "paint": {
+                      "circle-radius": ["*",0.01,["sqrt", ["get","pop_max"]]],
+                      "circle-color": "red",
+                      "circle-stroke-color": "white",
+                      "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
+                  "title": "Countries",
+                  "id": "countryborders",
+                  "layerInfo": {
+                    "id": "countryborders",
+                    "type": "fill",
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                      ],
+                      "bounds": [
+                        -180,
+                        -89,
+                        180,
+                        83.6341006530001
+                      ]
+                    },
+                    "source-layer": "public.ne_10m_admin_0_countries",
+                    "paint": {
+                      "fill-color": "rgba(0,0,0,0)",
+                      "fill-outline-color": "black"
+                    }
+                  }
+                },
+                {
+                  "title": "States and provinces",
+                  "id": "districtborders",
+                  "layerInfo": {
+                    "id": "districtborders",
+                    "type": "fill",
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                      ],
+                      "bounds": [
+                        -180,
+                        -89,
+                        180,
+                        83.6341006530001
+                      ]
+                    },
+                    "source-layer": "public.ne_10m_admin_1_states_provinces",
+                    "paint": {
+                      "fill-color": "rgba(0,0,0,0)",
+                      "fill-outline-color": "gray"
+                    }
+                  }
+                },
+                {
+                  "type":"rasterdem",
+                  "title":"Nextzen hillshading",
+                  "layerInfo":{
+                    "id":"mapzenhillshading",
+                    "type":"hillshade",
+                    "metadata": {
+                      "opacity": 20
+                    },
+                    "source":{
+                      "id":"mapzenhillshading",
+                      "type":"raster-dem",
+                      "tileSize":256,
+                      "encoding":"terrarium",
+                      "tiles":[
+                        "https://t1.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                        "https://t2.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                        "https://t3.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png",
+                        "https://t4.edugis.nl/mapproxy/nextzenelevation/wmts/nextzenelevation/webmercator/{z}/{x}/{y}.png"
+                      ],
+                      "attribution":"NextZen"
+                    },
+                    "paint":{
+                      "hillshade-exaggeration":0.20
+                    }
+                  }
                 }
             ]
+        },
+        {
+          "type": "group",
+          "title": "Economie",
+          "sublayers": [
+            {
+              "title": "Economic development",
+              "id": "countryecononmicdevelopment",
+              "layerInfo": {
+                "id": "countrydevelopments",
+                "type": "fill",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=economy&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_0_countries",
+                "paint": {
+                  "fill-color": [
+                    "case",
+                    ["==", ["get","economy"],"1. Developed region: G7"],"#7f2704",
+                    ["==",["get","economy"],"2. Developed region: nonG7"],"#a63603",
+                    ["==",["get","economy"],"3. Emerging region: BRIC"],"#d94801",
+                    ["==",["get","economy"],"4. Emerging region: MIKT"],"#f16913",
+                    ["==",["get","economy"],"5. Emerging region: G20"],"#fd8d3c",
+                    ["==",["get","economy"],"6. Developing region"],"#fdae6b",
+                    ["==",["get","economy"],"7. Least developed region"],"#fdd0a2",
+                    "#fdd0a2"
+                  ],
+                  "fill-outline-color": "white",
+                  "fill-opacity": 0.8
+                }
+              }
+            }
+          ]
+        },{
+          "type": "group",
+          "title": "OpenWeatherMap",
+          "id": "OpenWeatherMapID",
+          "sublayers": [
+            {
+              "title": "Neerslag",
+              "type": "openweathermappreciptation_new",
+              "layerInfo": {
+                "id": "openweathermapprecipitation_new",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "",
+                  "timeinterval": 300000
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                  ],
+                  "attribution": "OpenWeather"
+                }
+              }
+            },
+            {
+              "title": "Bewolking",
+              "type": "openweathermclouds_new",
+              "layerInfo": {
+                "id": "openweathermapcloudes_new",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "",
+                  "timeinterval": 300000
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                  ],
+                  "attribution": "OpenWeather"
+                }
+              }
+            },
+            {
+              "title": "Luchtdruk",
+              "type": "openweathermpressure_new",
+              "layerInfo": {
+                "id": "openweathermappressure_new",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "",
+                  "timeinterval": 300000
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                  ],
+                  "attribution": "OpenWeather"
+                }
+              }
+            },
+            {
+              "title": "Windsnelheid",
+              "type": "openweathermwind_new",
+              "layerInfo": {
+                "id": "openweathermapwind_new",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "",
+                  "timeinterval": 300000
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                  ],
+                  "attribution": "OpenWeather"
+                }
+              }
+            },
+            {
+              "title": "Temperatuur",
+              "type": "openweathermtemperature_new",
+              "layerInfo": {
+                "id": "openweathermaptemperature_new",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "",
+                  "timeinterval": 300000
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                  ],
+                  "attribution": "OpenWeather"
+                }
+              }
+            }
+          ],
+          "checked": false,
+          "opened": false
         },
         {
             "type": "group",
