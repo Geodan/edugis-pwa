@@ -33,8 +33,76 @@
                     }
                 },
                 {
+                  "title": "Bevolking",
+                  "id": "countrypopest",
+                  "layerInfo": {
+                    "id": "countrypopest",
+                    "type": "circle",
+                    "metadata": {
+                      "attributes": {
+                        "translations": [
+                          {"name": "name", "translation": "naam", "unit": ""},
+                          {"name": "pop_est", "translation": "bevolking", "unit": " inw"}
+                        ]
+                      }
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_est&include_nulls=0"
+                      ],
+                      "bounds": [
+                        -180,
+                        -89,
+                        180,
+                        83.6341006530001
+                      ]
+                    },
+                    "source-layer": "public.ne_10m_admin_0_countries",
+                    "paint": {
+                      "circle-radius": ["*",0.002,["sqrt", ["get","pop_est"]]],
+                      "circle-color": "#a63603",
+                      "circle-stroke-color": "white",
+                      "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "vector",
+                  "title": "Stedelijke bevolking",
+                  "layerInfo": {
+                    "id": "citiesandtowns2",
+                    "type": "circle",
+                    "metadata": {
+                      "attributes": {
+                        "translations": [
+                          {"name": "name", "translation": "naam", "unit": ""},
+                          {"name": "name_nl", "translation": "Nederlandse naam", "unit": ""},
+                          {"name": "timezone", "translation": "tijdzone", "unit": ""},
+                          {"name": "pop_min", "translation": "stedelijke bevolking (minimaal)", "unit": " inw"},
+                          {"name": "pop_max", "translation": "stedelijke bevolking (maximaal)", "unit": " inw"}
+                        ]
+                      }
+                    },
+                    "source": {
+                      "id": "citiesandtowns2",
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_populated_places/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl,timezone,pop_min,pop_max&include_nulls=0"
+                      ]
+                    },
+                    "source-layer": "public.ne_10m_populated_places",
+                    "paint": {
+                      "circle-radius": ["*",0.002,["sqrt", ["get","pop_max"]]],
+                      "circle-color": "red",
+                      "circle-stroke-color": "white",
+                      "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
                   "type": "raster",
-                  "title": "Bevolking 2015",
+                  "title": "Bevolkingsdichtheid 2015",
                   "layerInfo": {
                     "id": "bevolking2015",
                     "type": "raster",
@@ -65,7 +133,15 @@
                     "id": "citiesandtowns",
                     "type": "circle",
                     "metadata": {
-
+                      "attributes": {
+                        "translations": [
+                          {"name": "name", "translation": "naam", "unit": ""},
+                          {"name": "name_nl", "translation": "Nederlandse naam", "unit": ""},
+                            {"name": "timezone", "translation": "tijdzone", "unit": ""},
+                          {"name": "pop_min", "translation": "stedelijke bevolking (minimaal)", "unit": " inw"},
+                          {"name": "pop_max", "translation": "stedelijke bevolking (maximaal)", "unit": " inw"}
+                        ]
+                      }
                     },
                     "source": {
                       "id": "citiesandtowns",
@@ -172,10 +248,20 @@
               "layerInfo": {
                 "id": "countrydevelopments",
                 "type": "fill",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam", "unit": ""},
+                      {"name": "gdp_md_est", "translation": "BBP", "unit": " miljoen $"},
+                      {"name": "gdp_p_cap", "translation": "BBP per inw", "unit": " $"},
+                      {"name": "economy", "translation": "Economische categorie", "unit": ""}
+                    ]
+                  }
+                },
                 "source": {
                   "type": "vector",
                   "tiles": [
-                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=economy&include_nulls=0"
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,economy&include_nulls=0"
                   ],
                   "bounds": [
                     -180,
@@ -199,6 +285,90 @@
                   ],
                   "fill-outline-color": "white",
                   "fill-opacity": 0.8
+                }
+              }
+            },
+            {
+              "title": "Bruto Binnenlands Product per inwoner",
+              "id": "countrygdpcap",
+              "layerInfo": {
+                "id": "countrygdpcap",
+                "type": "fill",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam", "unit": ""},
+                      {"name": "gdp_md_est", "translation": "BBP", "unit": " miljoen $"},
+                      {"name": "gdp_p_cap", "translation": "BBP per inw", "unit": " $"},
+                      {"name": "economy", "translation": "Economische categorie", "unit": ""}
+                    ]
+                  }
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,gdp_md_est,gdp_p_cap,economy&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_0_countries",
+                "paint": {
+                  "fill-color": [
+                    "case",
+                    ["<",["get","gdp_p_cap"],2000],"#f7fcfd",
+                    ["<",["get","gdp_p_cap"],4000],"#e0ecf4",
+                    ["<",["get","gdp_p_cap"],8500],"#bfd3e6",
+                    ["<",["get","gdp_p_cap"],14000],"#9ebcda",
+                    ["<",["get","gdp_p_cap"],20000],"#8c96c6",
+                    ["<",["get","gdp_p_cap"],30000],"#8c6bb1",
+                    ["<",["get","gdp_p_cap"],45000],"#88419d",
+                    ["<=",["get","gdp_p_cap"],250351],"#6e016b",
+                    "#6e016b"
+                  ],
+                  "fill-outline-color": "white",
+                  "fill-opacity": 0.8
+                }
+              }
+            },
+            {
+              "title": "Bruto Binnenlands Product",
+              "id": "countryegdp",
+              "layerInfo": {
+                "id": "countrygdp",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam", "unit": ""},
+                      {"name": "gdp_md_est", "translation": "BBP", "unit": " miljoen $"},
+                      {"name": "gdp_p_cap", "translation": "BBP per inw", "unit": " $"},
+                      {"name": "economy", "translation": "Economische categorie", "unit": ""}
+                    ]
+                  }
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,gdp_md_est,gdp_p_cap,economy&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_0_countries",
+                "paint": {
+                  "circle-radius": ["*",0.01,["sqrt", ["get","gdp_md_est"]]],
+                  "circle-color": "#6e016b",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1
                 }
               }
             }
