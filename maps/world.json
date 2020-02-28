@@ -33,7 +33,7 @@
                     }
                 },
                 {
-                  "title": "Bevolking",
+                  "title": "Bevolking per land",
                   "id": "countrypopest",
                   "layerInfo": {
                     "id": "countrypopest",
@@ -64,6 +64,69 @@
                       "circle-color": "#a63603",
                       "circle-stroke-color": "white",
                       "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "vector",
+                  "title": "Bevolkingsdichtheid 2020",
+                  "layerInfo": {
+                    "id": "populationdensity",
+                    "type": "fill",
+                    "metadata": {
+                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                      ],
+                      "bounds": [-180,-89,180,83.6341006530001],
+                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                    },
+                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                    "paint": {
+                      "fill-color": [
+                        "case",
+                        ["==",["get","pop_dens"],  0],"#ffffff",
+                        ["<",["get","pop_dens"],  10],"#fff7ec",
+                        ["<",["get","pop_dens"],  26],"#fee8c8",
+                        ["<",["get","pop_dens"],  48],"#fdd49e",
+                        ["<",["get","pop_dens"],  72],"#fdbb84",
+                        ["<=",["get","pop_dens"], 107],"#fc8d59",
+                        ["<",["get","pop_dens"], 174],"#ef6548",
+                        ["<",["get","pop_dens"], 309],"#d7301f",
+                        ["<=",["get","pop_dens"], 759],"#b30000",
+                        ["<=",["get","pop_dens"],600104],"#7f0000",
+                        "#7f0000"
+                      ],
+                      "fill-opacity": 0.8
+                    }
+                  }
+                },
+                {
+                  "type": "vector",
+                  "title": "Bevolking 2020 per landsdeel",
+                  "layerInfo": {
+                    "id": "populationsum",
+                    "type": "circle",
+                    "metadata": {
+                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                      ],
+                      "bounds": [-180,-89,180,83.6341006530001],
+                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                    },
+                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                    "paint": {
+                      "circle-color": "#d7301f",
+                      "circle-stroke-color": "rgba(255,255,255,0.6)",
+                      "circle-stroke-width": 0.5,
+                      "circle-radius": ["+", 1, ["*",0.002,["sqrt", ["get","pop_sum"]]]]
                     }
                   }
                 },
@@ -156,6 +219,77 @@
                       "circle-color": "red",
                       "circle-stroke-color": "white",
                       "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
+                  "title": "Tijdzones",
+                  "id": "timezones",
+                  "layerInfo": {
+                    "id": "timezones",
+                    "type": "style",
+                    "source": {
+                      "version": 8,
+                      "name": "timezones",
+                      "sources": {
+                        "timezones": {
+                            "type": "vector",
+                            "tiles": [
+                              "https://tiles.edugis.nl/data/public.ne_10m_time_zones/mvt/{z}/{x}/{y}?geom_column=geom&columns=tz_name1st,zone&include_nulls=0"
+                            ],
+                          "bounds": [
+                            -180,
+                            -89.5,
+                            180,
+                            89.5
+                          ],
+                          "attribution": "Natural Earth"
+                        }
+                      },
+                      "layers": [
+                        { 
+                          "id": "timezonesfill",
+                          "type": "fill",
+                          "source": "timezones",
+                          "source-layer": "public.ne_10m_time_zones",
+                          "paint": {
+                            "fill-color": [
+                              "case",
+                              ["<=",["get","zone"],-11],"#40004b",
+                              ["<",[ "get","zone"], -8],"#762a83",
+                              ["<=",["get","zone"], -4],"#9970ab",
+                              ["<=",["get","zone"], -2],"#c2a5cf",
+                              ["<=",["get","zone"],  1],"#e7d4e8",
+                              ["<=",["get","zone"], 3.5],"#f7f7f7",
+                              ["<=",["get","zone"],   5],"#d9f0d3",
+                              ["<=",["get","zone"],   6],"#a6dba0",
+                              ["<=",["get","zone"],8.75],"#5aae61",
+                              ["<=",["get","zone"],10.5],"#1b7837",
+                              ["<=",["get","zone"],  14],"#00441b",
+                              "#00441b"
+                            ],
+                            "fill-outline-color": "white",
+                            "fill-opacity": 0.4
+                          }
+                        },
+                        {
+                          "id": "timezonesline",
+                          "type": "line",
+                          "source": "timezones",
+                          "source-layer": "public.ne_10m_time_zones",
+                          "paint": {
+                            "line-color": "white",
+                            "line-opacity": 0.8,
+                            "line-width": [
+                                "interpolate", ["linear"],
+                                ["zoom"],
+                                0, 1, 
+                                10, 10,
+                                24, 10
+                            ]
+                          }
+                        }
+                      ]
                     }
                   }
                 },

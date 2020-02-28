@@ -142,78 +142,14 @@
           "paint": {
             "fill-color": [
               "case",
-              [
-                "<",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                39.7
-              ],
-              "#fff7ec",
-              [
-                "<",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                63.7
-              ],
-              "#fee8c8",
-              [
-                "<",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                93.3
-              ],
-              "#fdd49e",
-              [
-                "<",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                130.4
-              ],
-              "#fdbb84",
-              [
-                "<=",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                200.7
-              ],
-              "#fc8d59",
-              [
-                "<=",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                344.6
-              ],
-              "#ef6548",
-              [
-                "<=",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                925.3
-              ],
-              "#d7301f",
-              [
-                "<=",
-                [
-                  "get",
-                  "refactored_2017"
-                ],
-                21026.7
-              ],
-              "#990000",
+              ["<",["get","refactored_2017"],  39.7],"#fff7ec",
+              ["<",["get","refactored_2017"],  63.7],"#fee8c8",
+              ["<",["get","refactored_2017"],  93.3],"#fdd49e",
+              ["<",["get","refactored_2017"], 130.4],"#fdbb84",
+              ["<=",["get","refactored_2017"], 200.7],"#fc8d59",
+              ["<=",["get","refactored_2017"], 344.6],"#ef6548",
+              ["<=",["get","refactored_2017"], 925.3],"#d7301f",
+              ["<=",["get","refactored_2017"],1026.7],"#990000",
               "#990000"
             ],
             "fill-opacity": 0.8
