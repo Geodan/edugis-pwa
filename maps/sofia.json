@@ -102,7 +102,6 @@
                   "title": "Natura2000 Protected Areas",
                   "id": "natura2000protarea",
                   "layerInfo": {
-                
                     "id": "natura2000protarea",
                     "type": "fill",
                     "source": {
@@ -122,6 +121,118 @@
                       "fill-color": "#4daf4a",
                       "fill-opacity": 0.8
                     }
+                  }
+                },
+                {
+                  "type":"vectortile",
+                  "title":"NUTS3 Population Density",
+                  "layerInfo":
+                  {
+                    "id": "nuts3populationdensity",
+                    "type": "fill",
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.2017_nuts_demoinfo/mvt/{z}/{x}/{y}?geom_column=geom&columns=refactored_2017&include_nulls=0"
+                      ],
+                      "bounds": [
+                        -63.15119,
+                        -21.38885,
+                        55.83578,
+                        71.18416
+                      ]
+                    },
+                    "source-layer": "public.2017_nuts_demoinfo",
+                    "paint": {
+                      "fill-color": [
+                        "case",
+                        ["<",["get","refactored_2017"],  39.7],"#fff7ec",
+                        ["<",["get","refactored_2017"],  63.7],"#fee8c8",
+                        ["<",["get","refactored_2017"],  93.3],"#fdd49e",
+                        ["<",["get","refactored_2017"], 130.4],"#fdbb84",
+                        ["<=",["get","refactored_2017"], 200.7],"#fc8d59",
+                        ["<=",["get","refactored_2017"], 344.6],"#ef6548",
+                        ["<=",["get","refactored_2017"], 925.3],"#d7301f",
+                        ["<=",["get","refactored_2017"],1026.7],"#990000",
+                        "#990000"
+                      ],
+                      "fill-opacity": 0.8
+                    }
+                  }
+                },
+                {
+                  "title": "Greenhouse gas emissions 2017",
+                  "layerInfo": {
+                    "id": "greenhousegasemissions",
+                    "type": "circle",
+                    "metadata": {
+                        "abstract": "Greenhouse gas emissions per country in 2017 according to Eurostat.",
+                        "attributes": {
+                          "translations": [
+                            {"name": "ghgastotal2017", "translation": "totaal broeikasgas 2017", "unit": " miljoen ton"},
+                            {"name": "gaspcap2017", "translation": "broeikasgas per inwoner 2017", "unit": " ton"},
+                            {"name": "pop2017", "translation": "inwoners 2017", "unit": " inw"}
+                          ]
+                        }
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.nuts1_population_greenhouse/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=nuts_name,pop2017,gaspcap2017,ghgastotal2017&include_nulls=0"
+                      ],
+                      "bounds": [-18.8304532714824,35.0114654452188,33.7929470049688,65.6377106112579],
+                      "attribution": "Eurostat"
+                    },
+                    "source-layer": "public.nuts1_population_greenhouse",
+                    "paint": {
+                      "circle-radius": ["*",1.5,["sqrt",["get","ghgastotal2017"]]],
+                      "circle-color": "darkgreen",
+                      "circle-stroke-color": "white",
+                      "circle-stroke-width": 1
+                    }
+                  }
+                },
+                {
+                   "title": "Greenhouse gas per capita 2017",
+                   "layerInfo": {
+                    "id": "nuts1greenhousepercapita",
+                    "type": "fill",
+                    "metadata": {
+                      "abstract": "Greenhouse gas emissions in tons per capita per country in 2017 according to Eurostat.",
+                      "attributes": {
+                        "translations": [
+                          {"name": "ghgastotal2017", "translation": "totaal broeikasgas 2017", "unit": " miljoen ton"},
+                          {"name": "gaspcap2017", "translation": "broeikasgas per inwoner 2017", "unit": " ton"},
+                          {"name": "pop2017", "translation": "inwoners 2017", "unit": " inw"}
+                        ]
+                      }
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.nuts1_population_greenhouse/mvt/{z}/{x}/{y}?geom_column=geom&columns=nuts_name,pop2017,gaspcap2017,ghgastotal2017&include_nulls=0"
+                      ],
+                      "bounds": [-63.151187181183,-21.3888445302784,55.8357836144142,71.1841608994796]
+                    },
+                    "source-layer": "public.nuts1_population_greenhouse",
+                    "paint": {
+                      "fill-color": [
+                        "case",
+                        ["<=",["get","gaspcap2017"], 5],"#f7fcf5",
+                        ["<=",["get","gaspcap2017"], 6],"#e5f5e0",
+                        ["<=",["get","gaspcap2017"], 7],"#c7e9c0",
+                        ["<=",["get","gaspcap2017"], 8],"#a1d99b",
+                        ["<=",["get","gaspcap2017"], 9],"#74c476",
+                        ["<=",["get","gaspcap2017"],10],"#41ab5d",
+                        ["<=",["get","gaspcap2017"],11],"#238b45",
+                        ["<=",["get","gaspcap2017"],12],"#006d2c",
+                        ["<=",["get","gaspcap2017"],20],"#00441b",
+                        "#00441b"
+                      ],
+                      "fill-outline-color": "white",
+                      "fill-opacity": 0.8
+                    },
+                    "filter": ["has", "gaspcap2017"]
                   }
                 },
                 {
