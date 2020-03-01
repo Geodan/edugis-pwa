@@ -106,6 +106,44 @@
                 },
                 {
                   "type": "vector",
+                  "title": "Bevolking 2020 (3D weergave)",
+                  "layerInfo": {
+                    "id": "population3d",
+                    "type": "fill-extrusion",
+                    "metadata": {
+                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                    },
+                    "source": {
+                      "type": "vector",
+                      "tiles": [
+                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                      ],
+                      "bounds": [-180,-89,180,83.6341006530001],
+                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                    },
+                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                    "paint": {
+                      "fill-extrusion-color": [
+                        "case",
+                        ["==",["get","pop_dens"],  0],"#ffffff",
+                        ["<",["get","pop_dens"],  10],"#fff7ec",
+                        ["<",["get","pop_dens"],  26],"#fee8c8",
+                        ["<",["get","pop_dens"],  48],"#fdd49e",
+                        ["<",["get","pop_dens"],  72],"#fdbb84",
+                        ["<=",["get","pop_dens"], 107],"#fc8d59",
+                        ["<",["get","pop_dens"], 174],"#ef6548",
+                        ["<",["get","pop_dens"], 309],"#d7301f",
+                        ["<=",["get","pop_dens"], 759],"#b30000",
+                        ["<=",["get","pop_dens"],600104],"#7f0000",
+                        "#7f0000"
+                      ],
+                      "fill-extrusion-height": ["*", 10, ["get", "pop_dens"]],
+                      "fill-extrusion-opacity": 0.8
+                    }
+                  }
+                },
+                {
+                  "type": "vector",
                   "title": "Bevolking 2020 per landsdeel",
                   "layerInfo": {
                     "id": "populationsum",
@@ -200,7 +238,7 @@
                         "translations": [
                           {"name": "name", "translation": "naam", "unit": ""},
                           {"name": "name_nl", "translation": "Nederlandse naam", "unit": ""},
-                            {"name": "timezone", "translation": "tijdzone", "unit": ""},
+                          {"name": "timezone", "translation": "tijdzone", "unit": ""},
                           {"name": "pop_min", "translation": "stedelijke bevolking (minimaal)", "unit": " inw"},
                           {"name": "pop_max", "translation": "stedelijke bevolking (maximaal)", "unit": " inw"}
                         ]
@@ -287,6 +325,134 @@
                                 10, 10,
                                 24, 10
                             ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "title": "Geografische lijnen",
+                  "layerInfo": {
+                    "id": "geographiclines",
+                    "type": "style",
+                    "source": {
+                      "version": 8,
+                      "name": "geographiclines",
+                      "sources": {
+                        "geographiclines": {
+                            "type": "vector",
+                            "tiles": [
+                              "https://tiles.edugis.nl/data/public.ne_10m_geographic_lines/mvt/{z}/{x}/{y}?geom_column=geom&columns=name_nl&include_nulls=0"
+                            ],
+                          "bounds": [
+                            -180,
+                            -89.5,
+                            180,
+                            66.5499852412027
+                          ],
+                          "attribution": "Natural Earth"
+                        }
+                      },
+                      "layers":[
+                        {
+                          "id": "evenaar",
+                          "type": "line",
+                          "source": "geographiclines",
+                          "source-layer": "public.ne_10m_geographic_lines",
+                          "paint": {
+                            "line-color": "black",
+                            "line-width": 4,
+                            "line-dasharray": [1]
+                          },
+                          "filter": ["==",["get", "name_nl"], "evenaar"]
+                        },
+                        {
+                          "id": "keerkringen",
+                          "type": "line",
+                          "source": "geographiclines",
+                          "source-layer": "public.ne_10m_geographic_lines",
+                          "metadata": {
+                            "attributes": {
+                              "translations": [
+                                {"name": "name_nl", "translation": "naam"}
+                              ]
+                            }
+                          },
+                          "paint": {
+                            "line-color": "black",
+                            "line-width": 1,
+                            "line-dasharray": [4,4]
+                          },
+                          "filter": ["any",["==", ["get", "name_nl"], "Kreeftskeerkring"],["==",["get", "name_nl"],"Steenbokskeerkring"]]
+                        },
+                        {
+                          "id": "poolcirkels",
+                          "type": "line",
+                          "metadata": {
+                            "attributes": {
+                              "translations": [
+                                {"name": "name_nl", "translation": "naam"}
+                              ]
+                            }
+                          },
+                          "source": "geographiclines",
+                          "source-layer": "public.ne_10m_geographic_lines",
+                          "paint": {
+                            "line-color": "black",
+                            "line-width": 1,
+                            "line-dasharray": [2,2]
+                          },
+                          "filter": ["any",["==", ["get", "name_nl"], "Noordpoolcirkel"],["==",["get", "name_nl"],"Zuidpoolcirkel"]]
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "title": "Meren en rivieren",
+                  "layerInfo": {
+                    "id": "lakesandrivers",
+                    "type": "style",
+                    "source": {
+                      "version": 8,
+                      "name": "rivers",
+                      "sources": {
+                        "rivers": {
+                          "type": "vector",
+                          "tiles": [
+                              "https://tiles.edugis.nl/data/public.ne_10m_rivers_lake_centerlines/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                            ],
+                          "bounds": [-180,-89.5,180,66.5499852412027],
+                          "attribution": "Natural Earth"
+                        },
+                        "lakes" : {
+                          "type": "vector",
+                          "tiles": [
+                              "https://tiles.edugis.nl/data/public.ne_10m_lakes/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                            ],
+                          "bounds": [-180,-89.5,180,66.5499852412027],
+                          "attribution": "Natural Earth"
+                        }
+                      },
+                      "layers":[
+                        {
+                          "id": "rivieren",
+                          "type": "line",
+                          "source": "rivers",
+                          "source-layer": "public.ne_10m_rivers_lake_centerlines",
+                          "paint": {
+                            "line-color": "#bdd6ef",
+                            "line-width": 1
+                          }
+                        },
+                        {
+                          "id": "meren",
+                          "type": "fill",
+                          "source": "lakes",
+                          "source-layer": "public.ne_10m_lakes",
+                          "paint": {
+                            "fill-color": "#bed7f0"
                           }
                         }
                       ]
