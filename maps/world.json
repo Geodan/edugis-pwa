@@ -595,6 +595,7 @@
                 "id": "countrygdpcap",
                 "type": "fill",
                 "metadata": {
+                  "abstract": "Bruto nationaal product (gdp_md_est) volgens Natural Earth, 2013 - 2016, in koopkrachtpariteit met $",
                   "attributes": {
                     "translations": [
                       {"name": "name", "translation": "naam", "unit": ""},
