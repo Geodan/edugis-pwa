@@ -1104,10 +1104,10 @@
                     "translations": [{"name": "klasse", "unit": "dB"}]
                   }
                 },
-                "minzoom": 13,
+                "minzoom": 9,
                 "source": {
                   "type": "vector",
-                  "minzoom": 13,
+                  "minzoom": 9,
                   "tiles": [
                     "https://tiles.edugis.nl/data/public.contouren_lden_weg_2011_simplified/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,ondergrens,bovengrens&include_nulls=0"
                   ],
@@ -1145,9 +1145,9 @@
                       "translations": [{"name": "klasse", "unit": "dB"}]
                     }
                   },
-                  "minzoom": 13,
+                  "minzoom": 9,
                   "source": {
-                    "minzoom": 13,
+                    "minzoom": 9,
                     "type": "vector",
                     "tiles": [
                       "https://tiles.edugis.nl/data/public.contouren_lden_rail_2011/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,hoog,laag&include_nulls=0"
