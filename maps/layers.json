@@ -1007,6 +1007,239 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Wonen (2018)",
+                            "sublayers": [
+                                {
+                                    "title": "gem. waarde per buurt (gebouwen)",
+                                    "layerInfo": {
+                                        "id":"b889406e-4656-43d6-81ad-a358f74a26d4",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per buurt 2018 volgens CBS, weergave gebouwde omgeving",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"},
+                                                    {"name": "a_inw", "translation": "aantal inwoners", "unit": " inwoners"},
+                                                    {"name": "a_hh", "translation": "aantal huishoudens", "unit": " huishoudens"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.buurt_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom_gbw&columns=g_woz,buurt,a_inw,a_hh,wijk,gemeente&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.buurt_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],1836],"#662506",
+                                            "#662506"],
+                                            "fill-opacity":0.8
+                                        },
+                                        "filter": ["has","g_woz"]
+                                    }
+                                },
+                                {
+                                    "title": "gem. woningwaarde per buurt",
+                                    "layerInfo": {
+                                        "id":"buurtvlak",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per buurt 2018 volgens CBS",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.buurt_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom&columns=g_woz,buurt,a_inw,a_hh,wijk,gemeente&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.buurt_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],1836],"#662506",
+                                            "#662506"],
+                                        "fill-opacity":0.8
+                                        },
+                                        "filter": ["has","g_woz"]
+                                    }
+                                },
+                                {
+                                    "title": "gem. waarde per wijk (gebouwen)",
+                                    "layerInfo": {
+                                        "id":"b889406e-4656-43d6-81ad-wijk",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per wijk 2018 volgens CBS, weergave gebouwde omgeving",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"},
+                                                    {"name": "a_inw", "translation": "aantal inwoners", "unit": " inwoners"},
+                                                    {"name": "a_hh", "translation": "aantal huishoudens", "unit": " huishoudens"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.wijk_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom_gbw&columns=g_woz,wijk,a_inw,a_hh,gemeente&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.wijk_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],1269],"#662506",
+                                            "#662506"],
+                                            "fill-opacity":0.8
+                                        },
+                                        "filter": ["has","g_woz"]
+                                    }
+                                },
+                                {
+                                    "title": "gem. woningwaarde per wijk",
+                                    "layerInfo": {
+                                        "id":"wozwijkvlak",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per wijk 2018 volgens CBS",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"},
+                                                    {"name": "a_inw", "translation": "aantal inwoners", "unit": " inwoners"},
+                                                    {"name": "a_hh", "translation": "aantal huishoudens", "unit": " huishoudens"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.wijk_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom&columns=g_woz,wijk,a_inw,a_hh,gemeente&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.wijk_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],1269],"#662506",
+                                            "#662506"],
+                                        "fill-opacity":0.8
+                                        },
+                                        "filter": ["has","g_woz"]
+                                    }
+                                },
+                                {
+                                    "title": "gem. waarde per gemeente (gebouwen)",
+                                    "layerInfo": {
+                                        "id":"b889406e-4656-43d6-81ad-gemeente",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per gemeente 2018 volgens CBS, weergave gebouwde omgeving",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"},
+                                                    {"name": "a_inw", "translation": "aantal inwoners", "unit": " inwoners"},
+                                                    {"name": "a_hh", "translation": "aantal huishoudens", "unit": " huishoudens"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.gemeente_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom_gbw&columns=g_woz,gemeente,a_inw,a_hh&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.gemeente_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],637],"#662506",
+                                            "#662506"],
+                                            "fill-opacity":0.8
+                                        },
+                                        "filter": ["has","g_woz"]
+                                    }
+                                },
+                                {
+                                    "title": "gem. woningwaarde per gemeente",
+                                    "layerInfo": {
+                                        "id":"wozgemeentevlak",
+                                        "type":"fill",
+                                        "metadata": {
+                                            "attribution": "Geodan en CBS",
+                                            "abstract": "Gemiddelde WOZ waarde per gemeente 2018 volgens CBS",
+                                            "attributes": {
+                                                "translations": [
+                                                    {"name": "g_woz", "translation": "gemiddelde woz waarde", "unit": " x 1000 euro"},
+                                                    {"name": "a_inw", "translation": "aantal inwoners", "unit": " inwoners"},
+                                                    {"name": "a_hh", "translation": "aantal huishoudens", "unit": " huishoudens"}
+                                                ]
+                                            }
+                                        },
+                                        "source":{
+                                            "type":"vector",
+                                            "tiles":["https://tiles.edugis.nl/data/fct_gebied_201909.gemeente_2018_wonen/mvt/{z}/{x}/{y}?geom_column=geom&columns=g_woz,gemeente,a_inw,a_hh&include_nulls=0"],
+                                            "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375]},
+                                        "source-layer":"fct_gebied_201909.gemeente_2018_wonen",
+                                        "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!", ["has","g_woz"]], "lightgray",
+                                            ["<",["get","g_woz"],149],"#ffffe5",
+                                            ["<",["get","g_woz"],178],"#fff7bc",
+                                            ["<",["get","g_woz"],203],"#fee391",
+                                            ["<=",["get","g_woz"],225],"#fec44f",
+                                            ["<",["get","g_woz"],250],"#fe9929",
+                                            ["<",["get","g_woz"],279],"#ec7014",
+                                            ["<",["get","g_woz"],317],"#cc4c02",
+                                            ["<",["get","g_woz"],377],"#993404",
+                                            ["<=",["get","g_woz"],1269],"#662506",
+                                            "#662506"],
+                                        "fill-opacity":0.8
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ]
                 },
