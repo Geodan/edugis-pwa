@@ -31,6 +31,13 @@ class MapInfoFormatted extends LitElement {
     );
   }
   shouldUpdate(changedProps) {
+    if (changedProps.has('active')) {
+      this.dispatchEvent(new CustomEvent("infomode", {
+        detail: this.active,
+        bubbles: true,
+        composed: true
+      }))
+    }
     return this.active;
   }
   render() {
@@ -150,12 +157,17 @@ class MapInfoFormatted extends LitElement {
     return result;
   }
   renderAttribute(key, value) {
+    let isImage = (typeof value === 'string') && 
+      (value.startsWith('https://maps.googleapis.com') || 
+        (
+          (value.startsWith('https://') || value.startsWith('https://')) && 
+          (value.endsWith('.png') || value.endsWith('.jpg')  || value.endsWith('.gif') || value.endsWith('.svg'))
+        )
+      );
     return html`<div class="attributename">${key}</div>
     <div class="attributevalue">${typeof value === 'object' && value !== null?
           JSON.stringify(value)
-        :typeof value === 'string' && value.startsWith('https://maps.googleapis.com')?
-            html`<img src="${value}">`
-          :value}</div>`
+        :isImage?html`<img src="${value}" width="95%">`:value}</div>`
   }
 }
 customElements.define('map-info-formatted', MapInfoFormatted);
