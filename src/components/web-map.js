@@ -782,7 +782,7 @@ class WebMap extends LitElement {
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
         </map-panel>
         <map-panel .active="${this.currentTool==='info'}">
-          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}" @togglestreetview="${e=>this.toggleStreetView(e)}"></map-info-formatted>
+          <map-info-formatted .info="${this.featureInfo}" .active="${this.currentTool==='info'}" @togglestreetview="${e=>this.toggleStreetView(e)}" @infomode="${e=>this.updateInfoMode(e)}"></map-info-formatted>
         </map-panel>
         <map-panel .active="${this.currentTool==='maplanguage'}">
           <map-language .active="${this.currentTool==='maplanguage'}" language="autodetect" @languagechanged="${e=>this.setLanguage(e)}"></map-language>
@@ -1966,6 +1966,11 @@ class WebMap extends LitElement {
   }
   toggleStreetView(e) {
     this.streetViewOn = e.detail.streetview;
+  }
+  updateInfoMode(e) {
+    if (this.map) {
+      this.map.getCanvas().style.cursor = (e.detail) ? 'crosshair' : 'pointer';
+    }
   }
   getStreetViewImage(lngLat)
   {
