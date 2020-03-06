@@ -18,550 +18,23 @@
           "title": "Merwedekanaalzone Utrecht",
           "sublayers": [
             {
-              "type": "geojson",
-              "title": "Merwedekanaalzone Utrecht",
-              "layerInfo": {
-                "id": "merwedekanaalzone",
-                "type": "fill",
-                "minzoom": 11,
-                "source": {
-                  "type": "geojson",
-                  "data": "https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
-                  "attribution": "EduGIS"
-                },
-                "paint": {
-                  "fill-color": "#f4b68d",
-                  "fill-opacity": 0.6,
-                  "fill-outline-color": "#c93300"
-                },
-                "metadata": {
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "translations": [
-                      {"name": "name", "translation": "naam"},
-                      {"name": "area", "translation": "oppervlak", "unit": " m²"}
-                    ],
-                    "deniedattributes": ["perimeter"]
-                  }
-                }
-              },
-              "id": "Merwedekanaalzone_Utrecht_geojson_id"
-            },
-            {
-              "title": "Merwedekanaalzone ligging ",
-              "layerInfo": {
-                "id": "liggingskaart",
-                "type": "raster",
-                "minzoom": 10,
-                "maxzoom": 13.55,
-                "metadata": {
-                  "abstract": "Bron: Marco Broekman en OKRA"
-                },
-                "source": {
-                  "type": "image",
-                  "url": "https://map.edugis.nl/images/liggingmerwedekanaalzone.png",
-                  "coordinates": [
-                    [5.0575141513247228,52.1079883885934976],
-                    [5.1584176703362834,52.1079883885934976],
-                    [5.1584176703362834,52.0452129716954488],
-                    [5.0575141513247228,52.0452129716954488]
-                  ]
-                }
-              }
-            },
-            {
               "type": "wms",
-              "title": "Grondwaterstand winter",
+              "title": "Bodemdaling (gemiddeld)",
               "layerInfo": {
-                "id": "utrechtgrondwaterwinter",
-                "type": "raster",
-                "source": {
+                  "id": "bodemdaling",
                   "type": "raster",
-                  "tileSize": 512,
-                  "tiles": [
-                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GHG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=512&height=512"
-                  ],
-                  "attribution": "Provincie Utrecht"
-                },
-                "metadata": {
-                  "abstract": "Gemiddelde hoogste grondwaterstand in meter t.o.v. maaiveld in de winter",
-                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GHG_HYDRO&FORMAT=image%2Fpng&STYLE="
-                }
-              }
-            },
-            {
-              "type": "wms",
-              "title": "Grondwaterstand zomer",
-              "layerInfo": {
-                "id": "utrechtgrondwaterzomer",
-                "type": "raster",
-                "source": {
-                  "type": "raster",
-                  "tileSize": 512,
-                  "tiles": [
-                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GLG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&styles=&BBOX={bbox-epsg-3857}&width=512&height=512"
-                  ],
-                  "attribution": "Provincie Utrecht"
-                },
-                "metadata": {
-                  "abstract": "Gemiddelde laaggste grondwaterstand in meter t.o.v. maaiveld in de zomer",
-                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GLG_HYDRO&FORMAT=image%2Fpng&STYLE="
-                }
-              }
-            },
-            {
-              "type": "vectortile",
-              "title": "Gebouwen 3D",
-              "layerInfo": {
-                "id": "building3D",
-                "type": "fill-extrusion",
-                "source-layer": "gebouwkenmerken",
-                "minzoom": 13,
-                "maxzoom": 22,
-                "source": {
-                  "id": "gebouwkenmerken2",
-                  "type": "vector",
-                  "tiles": [
-                    "https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 16
-                },
-                "paint": {
-                  "fill-extrusion-color": [
-                    "match",
-                    [
-                      "get",
-                      "pandtype"
-                    ],
-                    "kantoorpand",
-                    "rgba(255, 0, 121, 1)",
-                    "tussenwoning",
-                    "blue",
-                    "winkelgebouw",
-                    "rgba(83, 16, 162, 1)",
-                    "appartement midden",
-                    "rgba(146, 95, 48, 1)",
-                    "appartement laag",
-                    "rgba(146, 140, 48, 1)",
-                    "appartement hoog",
-                    "rgba(113, 107, 76, 1)",
-                    "schoolgebouw",
-                    "rgba(50, 165, 81, 1)",
-                    "gemengd gebouw",
-                    "rgba(88, 75, 84, 1)",
-                    "bijeenkomstgebouw",
-                    "rgba(40, 128, 35, 1)",
-                    "overig",
-                    "rgba(44, 127, 184, 1)",
-                    "rgba(44, 127, 184, 1)"
-                  ],
-                  "fill-extrusion-height": {
-                    "property": "hoogte",
-                    "type": "identity"
+                  "metadata": {
+                      "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                      "abstract": "Gemiddelde bodemdaling in mm per jaar. Gridcellen van 2x2 km."
                   },
-                  "fill-extrusion-base": 0,
-                  "fill-extrusion-opacity": 0.8
-                },
-                "metadata": {
-                  "reference": false,
-                  "userlayer": true
-                }
-              },
-              "id": "NL_buildings 3D_vectortile_id"
-            },
-            {
-              "type": "vectortile",
-              "title": "Lithoklasse hekdiagram",
-              "layerInfo": {
-                "id": "merwedekzgeotoplithoklasse",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elke cel een verticale kruisvormige uitsnede (hekdiagram) voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "deniedattributes": ["lithostrat", "lithoklasse"],
-                    "translations": [
-                      {"name": "diepte", "unit": " m"},
-                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
-                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
-                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
-                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
-                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
-                    ]
+                  "maxzoom": 16,
+                  "source": {
+                      "maxzoom": 14,
+                      "type": "raster",
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
                   }
-                },
-                "source": {
-                  "id": "merwedekzgeotop",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcross&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                    "match",
-                    [
-                      "get",
-                      "naam"
-                    ],
-                    "Antropogeen",
-                    "#c1c3c6",
-                    "Veen",
-                    "#985045",
-                    "Klei",
-                    "#189f48",
-                    "Zandige klei",
-                    "#b6d169",
-                    "Fijn zand",
-                    "#fff000",
-                    "Matig grof zand",
-                    "#ffdc00",
-                    "Grof zand",
-                    "#ffc800",
-                    "Grind",
-                    "#ffb400",
-                    "#000000"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
-              },
-              "id": "Merwedekaanaalzone_Geotop"
-            },{
-              "type": "vectortile",
-              "title": "Kans op veen",
-              "id": "Merwedekaanaalzone_GeotopKansVeen",
-              "layerInfo": {
-                "id": "merwedekzgeotopkansveen",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op veen berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
-                  "reference": false,
-                  "userlayer": true
-                },
-                "source": {
-                  "id": "merwedekzgeotopkansveen",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_r1&columns=base,diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                      "case",
-                      ["<",["get","kans_veen"],0.166],"#ffffd4",
-                      ["<",["get","kans_veen"],0.333],"#fee391",
-                      ["<",["get","kans_veen"],  0.5],"#fec44f",
-                      ["<",["get","kans_veen"],0.666],"#fe9929",
-                      ["<",["get","kans_veen"],0.833],"#d95f0e",
-                      ["<=",["get","kans_veen"],  1.0],"#993404",
-                      "#FF0000"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
               }
-            },{
-              "type": "vectortile",
-              "title": "Kans op klei",
-              "id": "Merwedekaanaalzone_GeotopKansKlei",
-              "layerInfo": {
-                "id": "merwedekzgeotopkansklei",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op klei berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "deniedattributes": ["lithostrat", "lithoklasse"],
-                    "translations": [
-                      {"name": "diepte", "unit": " m"},
-                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
-                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
-                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
-                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
-                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
-                    ]
-                  }
-                },
-                "source": {
-                  "id": "merwedekzgeotopkansklei",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_l1&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                    "case",
-                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.01],"#ededed",
-                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.333],"#c7e9c0",
-                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.5],"#a1d99b",
-                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.666],"#74c476",
-                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.833],"#31a354",
-                    ["<=",["get","kans_klei"],1],"#006d2c",
-                    "#000000"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
-              }
-            },{
-              "type": "vectortile",
-              "title": "Kans op zand",
-              "id": "Merwedekaanaalzone_GeotopKansZand",
-              "layerInfo": {
-                "id": "merwedekzgeotopkanszand",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op zand (fijn + matig grof + grof) berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "deniedattributes": ["lithostrat", "lithoklasse"],
-                    "translations": [
-                      {"name": "diepte", "unit": " m"},
-                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
-                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
-                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
-                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
-                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
-                    ]
-                  }
-                },
-                "source": {
-                  "id": "merwedekzgeotopkanszand",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_r2&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                    "case",
-                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.01],"#ffffff",
-                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.333],"#fef0cc",
-                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.5],"#fce199",
-                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.666],"#fbd266",
-                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.833],"#f9c333",
-                    ["<=",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],1.0],"#f8b400",
-                    "#f8b400"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
-              }
-            },
-            {
-              "type": "vectortile",
-              "title": "Lithoklasse (cel centrum en hoeken)",
-              "layerInfo": {
-                "id": "geotopcellcorners",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede van 20x20 meter voor de Merwedekanaalzone gemaakt.",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "deniedattributes": ["lithostrat", "lithoklasse"],
-                    "translations": [
-                      {"name": "diepte", "unit": " m"},
-                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
-                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
-                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
-                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
-                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
-                    ]
-                  }
-                },
-                "source": {
-                  "id": "geotop3d20x20",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcorner&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                    "match",
-                    [
-                      "get",
-                      "naam"
-                    ],
-                    "Antropogeen",
-                    "#c1c3c6",
-                    "Veen",
-                    "#985045",
-                    "Klei",
-                    "#189f48",
-                    "Zandige klei",
-                    "#b6d169",
-                    "Fijn zand",
-                    "#fff000",
-                    "Matig grof zand",
-                    "#ffdc00",
-                    "Grof zand",
-                    "#ffc800",
-                    "Grind",
-                    "#ffb400",
-                    "#000000"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
-              },
-              "id": "Merwedekaanaal_Geotop_cells_corners"
-            },
-            {
-              "type": "vectortile",
-              "title": "Lithoklasse",
-              "layerInfo": {
-                "id": "geotopcellcenter",
-                "type": "fill-extrusion",
-                "metadata": {
-                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "deniedattributes": ["lithostrat", "lithoklasse"],
-                    "translations": [
-                      {"name": "diepte", "unit": " m"},
-                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
-                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
-                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
-                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
-                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
-                    ]
-                  }
-                },
-                "source": {
-                  "id": "geotop3d20x20",
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
-                  ],
-                  "minzoom": 13,
-                  "maxzoom": 18,
-                  "bounds": [
-                    5.09372605041148,
-                    52.0568791491654,
-                    5.12316584903853,
-                    52.088450941008
-                  ]
-                },
-                "source-layer": "public.merwedekzgeotop",
-                "minzoom": 13,
-                "maxzoom": 24,
-                "paint": {
-                  "fill-extrusion-vertical-gradient": false,
-                  "fill-extrusion-color": [
-                    "match",
-                    [
-                      "get",
-                      "naam"
-                    ],
-                    "Antropogeen",
-                    "#c1c3c6",
-                    "Veen",
-                    "#985045",
-                    "Klei",
-                    "#189f48",
-                    "Zandige klei",
-                    "#b6d169",
-                    "Fijn zand",
-                    "#fff000",
-                    "Matig grof zand",
-                    "#ffdc00",
-                    "Grof zand",
-                    "#ffc800",
-                    "Grind",
-                    "#ffb400",
-                    "#000000"
-                  ],
-                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
-                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
-                  "fill-extrusion-opacity": 0.95
-                }
-              },
-              "id": "Merwedekaanaal_Geotop_cells_center"
             },
             {
               "type": "vectortile",
@@ -661,79 +134,6 @@
                 }
               },
               "id": "Merwedekanaal_boringen2_vectortile_id"
-            },
-            {
-              "type": "vectortile",
-              "title": "Rotliegend en Zechstein",
-              "layerInfo": {
-                "id": "mwrotliegendrects",
-                "type": "fill-extrusion",
-                "minzoom": 13,
-                "source": {
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.merwede_rotliegend_zechstein_rects/mvt/{z}/{x}/{y}?geom_column=geom&columns=depth,thickness,name&include_nulls=0"
-                  ],
-                  "bounds": [
-                    5.08784358436661,
-                    52.0557495536792,
-                    5.13233550768549,
-                    52.0831686374319
-                  ],
-                  "maxzoom": 18
-                },
-                "source-layer": "public.merwede_rotliegend_zechstein_rects",
-                "paint": {
-                  "fill-extrusion-color": [
-                    "match",
-                    [
-                      "get",
-                      "name"
-                    ],
-                    "rotliegend",
-                    "red",
-                    "zechstein",
-                    "white",
-                    "other",
-                    "lightgray",
-                    "black"
-                  ],
-                  "fill-extrusion-height": [
-                    "-",
-                    2758.23,
-                    [
-                      "-",
-                      [
-                        "get",
-                        "depth"
-                      ],
-                      [
-                        "get",
-                        "thickness"
-                      ]
-                    ]
-                  ],
-                  "fill-extrusion-base": [
-                    "-",
-                    2758.23,
-                    [
-                      "get",
-                      "depth"
-                    ]
-                  ],
-                  "fill-extrusion-opacity": 0.95
-                },
-                "metadata": {
-                  "abstract": "Deze kaartlaag toont 2 gesteentelagen uit de diepe ondergrond: het poreuse gesteente uit de Rotliegend periode en het zout uit de latere (hogergelegen) Zechstein periode. Voor de visualisatie zijn de lagen ongeveer 2800 meter hoger weergegeven dan waar ze zich in werkelijkheid bevinden zodat de lagen boven de grond afgebeeld worden. Op 2700 meter is de temperatuur gemiddeld ongeveer 70°C, op 1600 meter diepte ongeveer 40°C",
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "translations": [{"name": "name", "translation": "naam"}, {"name": "depth", "translation": "diepte", "unit":"m"},
-                      {"name": "thickness", "translation": "laagdikte", "unit": "m"}]
-                  }
-                }
-              },
-              "id": "Merwedekanaal_Rotliegend en Zechstein_vectortile_id"
             },
             {
               "type": "vectortile",
@@ -940,7 +340,742 @@
                     ],
                     "fill-opacity": 0.8
                   }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Gebouwen 3D",
+              "layerInfo": {
+                "id": "building3D",
+                "type": "fill-extrusion",
+                "source-layer": "gebouwkenmerken",
+                "minzoom": 13,
+                "maxzoom": 22,
+                "source": {
+                  "id": "gebouwkenmerken2",
+                  "type": "vector",
+                  "tiles": [
+                    "https://saturnus.geodan.nl/mvt/gebouwkenmerken/{z}/{x}/{y}.mvt"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 16
+                },
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "pandtype"
+                    ],
+                    "kantoorpand",
+                    "rgba(255, 0, 121, 1)",
+                    "tussenwoning",
+                    "blue",
+                    "winkelgebouw",
+                    "rgba(83, 16, 162, 1)",
+                    "appartement midden",
+                    "rgba(146, 95, 48, 1)",
+                    "appartement laag",
+                    "rgba(146, 140, 48, 1)",
+                    "appartement hoog",
+                    "rgba(113, 107, 76, 1)",
+                    "schoolgebouw",
+                    "rgba(50, 165, 81, 1)",
+                    "gemengd gebouw",
+                    "rgba(88, 75, 84, 1)",
+                    "bijeenkomstgebouw",
+                    "rgba(40, 128, 35, 1)",
+                    "overig",
+                    "rgba(44, 127, 184, 1)",
+                    "rgba(44, 127, 184, 1)"
+                  ],
+                  "fill-extrusion-height": {
+                    "property": "hoogte",
+                    "type": "identity"
+                  },
+                  "fill-extrusion-base": 0,
+                  "fill-extrusion-opacity": 0.8
+                },
+                "metadata": {
+                  "reference": false,
+                  "userlayer": true
                 }
+              },
+              "id": "NL_buildings 3D_vectortile_id"
+            },
+            {
+              "type": "vectortile",
+              "title": "Geluidscontouren trein",
+              "layerInfo": {
+                  "id": "contouren_lden_rail_2011_hoog",
+                  "type": "fill",
+                  "metadata": {
+                    "attributes": {
+                      "translations": [{"name": "klasse", "unit": "dB"}]
+                    }
+                  },
+                  "minzoom": 9,
+                  "source": {
+                    "minzoom": 9,
+                    "type": "vector",
+                    "tiles": [
+                      "https://tiles.edugis.nl/data/public.contouren_lden_rail_2011/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,hoog,laag&include_nulls=0"
+                    ],
+                    "bounds": [
+                      4.96438609376722,
+                      52.0217299401223,
+                      5.16652938526689,
+                      52.1389110641195
+                    ]
+                  },
+                  "source-layer": "public.contouren_lden_rail_2011",
+                  "paint": {
+                    "fill-color": [
+                      "match",
+                      ["get", "klasse"],
+                      "55-59", "#fef0d9",
+                      "60-64", "#fdcc8a",
+                      "65-69", "#fc8d59",
+                      "70-74", "#e34a33",
+                      "75-99", "#b30000",
+                      "#ffffff"
+                    ],
+                    "fill-opacity": 0.8
+                  }
+                }
+            },
+            {
+              "type": "vectortile",
+              "title": "Geluidscontouren weg",
+              "layerInfo": {
+                "id": "geluidscontourenweg",
+                "type": "fill",
+                "metadata": {
+                  "attributes": {
+                    "translations": [{"name": "klasse", "unit": "dB"}]
+                  }
+                },
+                "minzoom": 9,
+                "source": {
+                  "type": "vector",
+                  "minzoom": 9,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.contouren_lden_weg_2011_simplified/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,ondergrens,bovengrens&include_nulls=0"
+                  ],
+                  "bounds": [
+                    4.97009598201309,
+                    52.0262819845058,
+                    5.19515497047264,
+                    52.1421761543093
+                  ]
+                },
+                "source-layer": "public.contouren_lden_weg_2011_simplified",
+                "paint": {
+                  "fill-color": [
+                    "match",
+                    ["get", "klasse"],
+                    "55-59", "#fef0d9",
+                    "60-64", "#fdcc8a",
+                    "65-69", "#fc8d59",
+                    "70-74", "#e34a33",
+                    "75-99", "#b30000",
+                    "#ffffff"
+                  ],
+                  "fill-opacity": 0.8
+                }
+              }
+            },
+            {
+              "type": "wms",
+              "title": "Grondwaterstand winter",
+              "layerInfo": {
+                "id": "utrechtgrondwaterwinter",
+                "type": "raster",
+                "source": {
+                  "type": "raster",
+                  "tileSize": 512,
+                  "tiles": [
+                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GHG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=512&height=512"
+                  ],
+                  "attribution": "Provincie Utrecht"
+                },
+                "metadata": {
+                  "abstract": "Gemiddelde hoogste grondwaterstand in meter t.o.v. maaiveld in de winter",
+                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GHG_HYDRO&FORMAT=image%2Fpng&STYLE="
+                }
+              }
+            },
+            {
+              "type": "wms",
+              "title": "Grondwaterstand zomer",
+              "layerInfo": {
+                "id": "utrechtgrondwaterzomer",
+                "type": "raster",
+                "source": {
+                  "type": "raster",
+                  "tileSize": 512,
+                  "tiles": [
+                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GLG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&styles=&BBOX={bbox-epsg-3857}&width=512&height=512"
+                  ],
+                  "attribution": "Provincie Utrecht"
+                },
+                "metadata": {
+                  "abstract": "Gemiddelde laaggste grondwaterstand in meter t.o.v. maaiveld in de zomer",
+                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GLG_HYDRO&FORMAT=image%2Fpng&STYLE="
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Kans op klei",
+              "id": "Merwedekaanaalzone_GeotopKansKlei",
+              "layerInfo": {
+                "id": "merwedekzgeotopkansklei",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op klei berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "merwedekzgeotopkansklei",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_l1&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                    "case",
+                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.01],"#ededed",
+                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.333],"#c7e9c0",
+                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.5],"#a1d99b",
+                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.666],"#74c476",
+                    ["<",["+",["get","kans_kleiig_zand"],["get","kans_klei"]],0.833],"#31a354",
+                    ["<=",["get","kans_klei"],1],"#006d2c",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Kans op veen",
+              "id": "Merwedekaanaalzone_GeotopKansVeen",
+              "layerInfo": {
+                "id": "merwedekzgeotopkansveen",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op veen berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
+                  "reference": false,
+                  "userlayer": true
+                },
+                "source": {
+                  "id": "merwedekzgeotopkansveen",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_r1&columns=base,diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                      "case",
+                      ["<",["get","kans_veen"],0.166],"#ffffd4",
+                      ["<",["get","kans_veen"],0.333],"#fee391",
+                      ["<",["get","kans_veen"],  0.5],"#fec44f",
+                      ["<",["get","kans_veen"],0.666],"#fe9929",
+                      ["<",["get","kans_veen"],0.833],"#d95f0e",
+                      ["<=",["get","kans_veen"],  1.0],"#993404",
+                      "#FF0000"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Kans op zand",
+              "id": "Merwedekaanaalzone_GeotopKansZand",
+              "layerInfo": {
+                "id": "merwedekzgeotopkanszand",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op zand (fijn + matig grof + grof) berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "merwedekzgeotopkanszand",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10_r2&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind,id&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                    "case",
+                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.01],"#ffffff",
+                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.333],"#fef0cc",
+                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.5],"#fce199",
+                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.666],"#fbd266",
+                    ["<",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],0.833],"#f9c333",
+                    ["<=",["+",["get","kans_zand_fijn"],["get","kans_zand_matig_grof"],["get","kans_zand_grof"]],1.0],"#f8b400",
+                    "#f8b400"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, ["get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, ["get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Lithoklasse",
+              "layerInfo": {
+                "id": "geotopcellcenter",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "geotop3d20x20",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcell10&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "naam"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige klei",
+                    "#b6d169",
+                    "Fijn zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaal_Geotop_cells_center"
+            },
+            {
+              "type": "vectortile",
+              "title": "Lithoklasse (cel centrum en hoeken)",
+              "layerInfo": {
+                "id": "geotopcellcorners",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De hier 3D weergegeven bovenkant is ondiep en de onderkant is 50 meter diep. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is daarvan een verticale uitsnede van 20x20 meter voor de Merwedekanaalzone gemaakt.",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "geotop3d20x20",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcorner&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "naam"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige klei",
+                    "#b6d169",
+                    "Fijn zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaal_Geotop_cells_corners"
+            },
+            {
+              "type": "vectortile",
+              "title": "Lithoklasse hekdiagram",
+              "layerInfo": {
+                "id": "merwedekzgeotoplithoklasse",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de meest waarschijnlijke lithoklasse berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elke cel een verticale kruisvormige uitsnede (hekdiagram) voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "merwedekzgeotop",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwedekzgeotop/mvt/{z}/{x}/{y}?geom_column=geomcross&columns=diepte,naam,lithoklasse,lithostrat,kans_veen,kans_klei,kans_kleiig_zand,kans_zand_fijn,kans_zand_matig_grof,kans_zand_grof,kans_grind&include_nulls=0"
+                  ],
+                  "minzoom": 13,
+                  "maxzoom": 18,
+                  "bounds": [
+                    5.09372605041148,
+                    52.0568791491654,
+                    5.12316584903853,
+                    52.088450941008
+                  ]
+                },
+                "source-layer": "public.merwedekzgeotop",
+                "minzoom": 13,
+                "maxzoom": 24,
+                "paint": {
+                  "fill-extrusion-vertical-gradient": false,
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "naam"
+                    ],
+                    "Antropogeen",
+                    "#c1c3c6",
+                    "Veen",
+                    "#985045",
+                    "Klei",
+                    "#189f48",
+                    "Zandige klei",
+                    "#b6d169",
+                    "Fijn zand",
+                    "#fff000",
+                    "Matig grof zand",
+                    "#ffdc00",
+                    "Grof zand",
+                    "#ffc800",
+                    "Grind",
+                    "#ffb400",
+                    "#000000"
+                  ],
+                  "fill-extrusion-height": ["+", 50.25, [ "get", "diepte"]],
+                  "fill-extrusion-base": ["+", 49.75, [ "get", "diepte"]],
+                  "fill-extrusion-opacity": 0.95
+                }
+              },
+              "id": "Merwedekaanaalzone_Geotop"
+            },
+            {
+              "type": "geojson",
+              "title": "Merwedekanaalzone deelgebieden",
+              "layerInfo": {
+                "id": "merwedekanaalzone",
+                "type": "fill",
+                "minzoom": 11,
+                "source": {
+                  "type": "geojson",
+                  "data": "https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
+                  "attribution": "EduGIS"
+                },
+                "paint": {
+                  "fill-color": "#f4b68d",
+                  "fill-opacity": 0.6,
+                  "fill-outline-color": "#c93300"
+                },
+                "metadata": {
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam"},
+                      {"name": "area", "translation": "oppervlak", "unit": " m²"}
+                    ],
+                    "deniedattributes": ["perimeter"]
+                  }
+                }
+              },
+              "id": "Merwedekanaalzone_Utrecht_geojson_id"
+            },
+            {
+              "title": "Merwedekanaalzone ligging ",
+              "layerInfo": {
+                "id": "liggingskaart",
+                "type": "raster",
+                "minzoom": 10,
+                "maxzoom": 13.55,
+                "metadata": {
+                  "abstract": "Bron: Marco Broekman en OKRA"
+                },
+                "source": {
+                  "type": "image",
+                  "url": "https://map.edugis.nl/images/liggingmerwedekanaalzone.png",
+                  "coordinates": [
+                    [5.0575141513247228,52.1079883885934976],
+                    [5.1584176703362834,52.1079883885934976],
+                    [5.1584176703362834,52.0452129716954488],
+                    [5.0575141513247228,52.0452129716954488]
+                  ]
+                }
+              }
+            },
+            {
+              "id": "archeologie",
+              "title": "Romeinse Limesweg",
+              "type": "line",
+              "layerInfo": {
+                "id": "romeinselimes",
+                "type": "line",
+                "metadata": {
+                  "abstract": "De blauwe lijn op de kaart laat de ligging van de Romeinse Limesweg zien. De Limes is de voormalige noordgrens van het Romeinse Rijk en heeft een hoge archeologische waarde. De Limes is bovengronds vrijwel nergens zichtbaar. De archeologische resten liggen verborgen in de bodem"
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.romeinselimes/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,klasse2&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.03777240514106,
+                    52.0530410380353,
+                    5.14660749182106,
+                    52.0802670393832
+                  ]
+                },
+                "source-layer": "public.romeinselimes",
+                "paint": {
+                  "line-color": "#7570b3",
+                  "line-width": ["interpolate", ["linear"], ["zoom"],
+                    13, 3, 22, 20
+                  ]
+                }
+              }
+            },
+            {
+              "type": "vectortile",
+              "title": "Rotliegend en Zechstein",
+              "layerInfo": {
+                "id": "mwrotliegendrects",
+                "type": "fill-extrusion",
+                "minzoom": 13,
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.merwede_rotliegend_zechstein_rects/mvt/{z}/{x}/{y}?geom_column=geom&columns=depth,thickness,name&include_nulls=0"
+                  ],
+                  "bounds": [
+                    5.08784358436661,
+                    52.0557495536792,
+                    5.13233550768549,
+                    52.0831686374319
+                  ],
+                  "maxzoom": 18
+                },
+                "source-layer": "public.merwede_rotliegend_zechstein_rects",
+                "paint": {
+                  "fill-extrusion-color": [
+                    "match",
+                    [
+                      "get",
+                      "name"
+                    ],
+                    "rotliegend",
+                    "red",
+                    "zechstein",
+                    "white",
+                    "other",
+                    "lightgray",
+                    "black"
+                  ],
+                  "fill-extrusion-height": [
+                    "-",
+                    2758.23,
+                    [
+                      "-",
+                      [
+                        "get",
+                        "depth"
+                      ],
+                      [
+                        "get",
+                        "thickness"
+                      ]
+                    ]
+                  ],
+                  "fill-extrusion-base": [
+                    "-",
+                    2758.23,
+                    [
+                      "get",
+                      "depth"
+                    ]
+                  ],
+                  "fill-extrusion-opacity": 0.95
+                },
+                "metadata": {
+                  "abstract": "Deze kaartlaag toont 2 gesteentelagen uit de diepe ondergrond: het poreuse gesteente uit de Rotliegend periode en het zout uit de latere (hogergelegen) Zechstein periode. Voor de visualisatie zijn de lagen ongeveer 2800 meter hoger weergegeven dan waar ze zich in werkelijkheid bevinden zodat de lagen boven de grond afgebeeld worden. Op 2700 meter is de temperatuur gemiddeld ongeveer 70°C, op 1600 meter diepte ongeveer 40°C",
+                  "reference": false,
+                  "userlayer": true,
+                  "attributes": {
+                    "translations": [{"name": "name", "translation": "naam"}, {"name": "depth", "translation": "diepte", "unit":"m"},
+                      {"name": "thickness", "translation": "laagdikte", "unit": "m"}]
+                  }
+                }
+              },
+              "id": "Merwedekanaal_Rotliegend en Zechstein_vectortile_id"
             },
             {
               "type": "vectortile",
@@ -1010,138 +1145,6 @@
                   ],
                   "circle-stroke-color": "white",
                   "circle-stroke-width": 1
-                }
-              }
-            },
-            {
-              "type": "vectortile",
-              "title": "Geluidscontouren weg",
-              "layerInfo": {
-                "id": "geluidscontourenweg",
-                "type": "fill",
-                "metadata": {
-                  "attributes": {
-                    "translations": [{"name": "klasse", "unit": "dB"}]
-                  }
-                },
-                "minzoom": 9,
-                "source": {
-                  "type": "vector",
-                  "minzoom": 9,
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.contouren_lden_weg_2011_simplified/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,ondergrens,bovengrens&include_nulls=0"
-                  ],
-                  "bounds": [
-                    4.97009598201309,
-                    52.0262819845058,
-                    5.19515497047264,
-                    52.1421761543093
-                  ]
-                },
-                "source-layer": "public.contouren_lden_weg_2011_simplified",
-                "paint": {
-                  "fill-color": [
-                    "match",
-                    ["get", "klasse"],
-                    "55-59", "#fef0d9",
-                    "60-64", "#fdcc8a",
-                    "65-69", "#fc8d59",
-                    "70-74", "#e34a33",
-                    "75-99", "#b30000",
-                    "#ffffff"
-                  ],
-                  "fill-opacity": 0.8
-                }
-              }
-            },
-            {
-              "type": "vectortile",
-              "title": "Geluidscontouren trein",
-              "layerInfo": {
-                  "id": "contouren_lden_rail_2011_hoog",
-                  "type": "fill",
-                  "metadata": {
-                    "attributes": {
-                      "translations": [{"name": "klasse", "unit": "dB"}]
-                    }
-                  },
-                  "minzoom": 9,
-                  "source": {
-                    "minzoom": 9,
-                    "type": "vector",
-                    "tiles": [
-                      "https://tiles.edugis.nl/data/public.contouren_lden_rail_2011/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,hoog,laag&include_nulls=0"
-                    ],
-                    "bounds": [
-                      4.96438609376722,
-                      52.0217299401223,
-                      5.16652938526689,
-                      52.1389110641195
-                    ]
-                  },
-                  "source-layer": "public.contouren_lden_rail_2011",
-                  "paint": {
-                    "fill-color": [
-                      "match",
-                      ["get", "klasse"],
-                      "55-59", "#fef0d9",
-                      "60-64", "#fdcc8a",
-                      "65-69", "#fc8d59",
-                      "70-74", "#e34a33",
-                      "75-99", "#b30000",
-                      "#ffffff"
-                    ],
-                    "fill-opacity": 0.8
-                  }
-                }
-            },
-            {
-              "type": "wms",
-              "title": "Bodemdaling (gemiddeld)",
-              "layerInfo": {
-                  "id": "bodemdaling",
-                  "type": "raster",
-                  "metadata": {
-                      "getFeatureInfoFormat":"application/vnd.ogc.gml",
-                      "abstract": "Gemiddelde bodemdaling in mm per jaar. Gridcellen van 2x2 km."
-                  },
-                  "maxzoom": 16,
-                  "source": {
-                      "maxzoom": 14,
-                      "type": "raster",
-                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                      "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
-                  }
-              }
-            },
-            {
-              "id": "archeologie",
-              "title": "Romeinse Limesweg",
-              "type": "line",
-              "layerInfo": {
-                "id": "romeinselimes",
-                "type": "line",
-                "metadata": {
-                  "abstract": "De blauwe lijn op de kaart laat de ligging van de Romeinse Limesweg zien. De Limes is de voormalige noordgrens van het Romeinse Rijk en heeft een hoge archeologische waarde. De Limes is bovengronds vrijwel nergens zichtbaar. De archeologische resten liggen verborgen in de bodem"
-                },
-                "source": {
-                  "type": "vector",
-                  "tiles": [
-                    "https://tiles.edugis.nl/data/public.romeinselimes/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,klasse2&include_nulls=0"
-                  ],
-                  "bounds": [
-                    5.03777240514106,
-                    52.0530410380353,
-                    5.14660749182106,
-                    52.0802670393832
-                  ]
-                },
-                "source-layer": "public.romeinselimes",
-                "paint": {
-                  "line-color": "#7570b3",
-                  "line-width": ["interpolate", ["linear"], ["zoom"],
-                    13, 3, 22, 20
-                  ]
                 }
               }
             }
