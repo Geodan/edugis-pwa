@@ -37,10 +37,39 @@
                 "metadata": {
                   "title": "Merwedekanaalzone Utrecht",
                   "reference": false,
-                  "userlayer": true
+                  "userlayer": true,
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam"},
+                      {"name": "area", "translation": "oppervlak", "unit": " m²"}
+                    ],
+                    "deniedattributes": ["perimeter"]
+                  }
                 }
               },
               "id": "Merwedekanaalzone_Utrecht_geojson_id"
+            },
+            {
+              "title": "Ligging Merwedekanaalzone",
+              "layerInfo": {
+                "id": "liggingskaart",
+                "type": "raster",
+                "minzoom": 10,
+                "maxzoom": 13.55,
+                "metadata": {
+                  "abstract": "Bron: Marco Broekman en OKRA"
+                },
+                "source": {
+                  "type": "image",
+                  "url": "https://map.edugis.nl/images/liggingmerwedekanaalzone.png",
+                  "coordinates": [
+                    [5.0575141513247228,52.1079883885934976],
+                    [5.1584176703362834,52.1079883885934976],
+                    [5.1584176703362834,52.0452129716954488],
+                    [5.0575141513247228,52.0452129716954488]
+                  ]
+                }
+              }
             },
             {
               "type": "wms",
