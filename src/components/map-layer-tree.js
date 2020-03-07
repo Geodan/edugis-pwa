@@ -157,7 +157,7 @@ class MapLayerTree extends LitElement {
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
             <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div> ${node.title}
-            <span class="arrow-down"></span>
+            <span class="arrow-down${node.opened?' opened':''}"></span>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
           if (opened && node.type === 'getcapabilities') {
