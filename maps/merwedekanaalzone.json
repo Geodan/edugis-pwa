@@ -1150,12 +1150,10 @@
             }
           ],
           "id": "Vector_Tile_group_id",
-          "checked": false,
           "opened": true
         }
       ],
       "id": "Thematische_lagen_group_id",
-      "checked": false,
       "opened": true
     },
     {
