@@ -405,6 +405,43 @@
             },
             {
               "type": "vectortile",
+              "title": "Geluidscontouren totaal",
+              "layerInfo": {
+                "id": "geluidscontourentotaal",
+                "type": "fill",
+                "metadata": {
+                  "abstract": "Geluidscontouren 2016, gezamenlijke geluidsbelasting uit wegverkeer, treinverkeer, luchtvaart, industrie en windmolens volgens RIVM. Geluid van natuurlijke bronnen zoals de branding op het strand (40 tot 65 dB) is niet meegenomen. Meer informatie https://www.atlasleefomgeving.nl/meer-weten/geluid",
+                  "attributes": {
+                    "translations": [{"name": "klasse", "unit": ""}]
+                  }
+                },
+                "minzoom": 11,
+                "source": {
+                  "type": "vector",
+                  "minzoom": 11,
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.geluidscontouren/mvt/{z}/{x}/{y}?geom_column=geom&columns=klasse,geluid&include_nulls=0"
+                  ],
+                  "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                  "attribution": "RIVM"
+                },
+                "source-layer": "public.geluidscontouren",
+                "paint": {
+                  "fill-color":[
+                    "case",["==",["get","geluid"],"45-50 dB"],"#fef0d9",
+                    ["==",["get","geluid"],"50-55 dB"],"#fdd49e",
+                    ["==",["get","geluid"],"55-60 dB"],"#fdbb84",
+                    ["==",["get","geluid"],"60-65 dB"],"#fc8d59",
+                    ["==",["get","geluid"],"65-70 dB"],"#ef6548",
+                    ["==",["get","geluid"],"70-75 dB"],"#d7301f",
+                    ["==",["get","geluid"],"> 75 dB"],"#990000",
+                    "#990000"],
+                  "fill-opacity":0.8
+                }
+              }
+            },
+            {
+              "type": "vectortile",
               "title": "Geluidscontouren trein",
               "layerInfo": {
                   "id": "contouren_lden_rail_2011_hoog",

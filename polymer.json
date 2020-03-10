@@ -63,7 +63,8 @@
     "maps/pdok.json",
     "maps/zonnepanelen.json",
     "maps/datacatalog.json",
-    "maps/merwedekanaalzone.json"
+    "maps/merwedekanaalzone.json",
+    "maps/world.json"
   ],
   "builds": [
     {
