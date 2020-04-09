@@ -532,13 +532,22 @@
                   "type": "raster",
                   "tileSize": 512,
                   "tiles": [
-                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GHG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=512&height=512"
+                    "https://tiles.edugis.nl/mapproxy/utrechtprovgrondwater/wms?layers=Grondwater_model_GHG_HYDRO"
+                  ],
+                  "bounds": [
+                    4.773,
+                    51.926,
+                    5.636, 
+                    52.256
                   ],
                   "attribution": "Provincie Utrecht"
                 },
                 "metadata": {
                   "abstract": "Gemiddelde hoogste grondwaterstand in meter t.o.v. maaiveld in de winter",
-                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GHG_HYDRO&FORMAT=image%2Fpng&STYLE="
+                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GHG_HYDRO&FORMAT=image%2Fpng&STYLE=",
+                  "attributes": {
+                    "translations": [{"name": "GRAY_INDEX", "translation": "diepte", "unit": " m"}]
+                  }
                 }
               }
             },
@@ -552,13 +561,22 @@
                   "type": "raster",
                   "tileSize": 512,
                   "tiles": [
-                    "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?SERVICE=WMS&service=WMS&version=1.1.1&request=GetMap&layers=Grondwater_model_GLG_HYDRO&SRS=EPSG:3857&transparent=true&format=image/png&styles=&BBOX={bbox-epsg-3857}&width=512&height=512"
+                    "https://tiles.edugis.nl/mapproxy/utrechtprovgrondwater/wms?layers=Grondwater_model_GLG_HYDRO"
+                  ],
+                  "bounds": [
+                    4.773,
+                    51.926,
+                    5.636, 
+                    52.256
                   ],
                   "attribution": "Provincie Utrecht"
                 },
                 "metadata": {
                   "abstract": "Gemiddelde laaggste grondwaterstand in meter t.o.v. maaiveld in de zomer",
-                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GLG_HYDRO&FORMAT=image%2Fpng&STYLE="
+                  "legendurl": "https://services.geodata-utrecht.nl/geoserver/w01_2_grondwater/ows?transparent=true&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=Grondwater_model_GLG_HYDRO&FORMAT=image%2Fpng&STYLE=",
+                  "attributes": {
+                    "translations": [{"name": "GRAY_INDEX", "translation": "diepte", "unit": " m"}]
+                  }
                 }
               }
             },
