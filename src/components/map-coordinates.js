@@ -33,10 +33,10 @@ class MapCoordinates extends LitElement {
   }
   copyCoords(e) {
     const copy = this.shadowRoot.querySelector('#copied');
-    copy.innerHTML = `${this.clickpoint[0].toFixed(this.factor)} ${this.clickpoint[1].toFixed(this.factor)}`;
+    copy.innerHTML = `${this.clickpoint[0].toFixed(this.factor)},${this.clickpoint[1].toFixed(this.factor)}`;
     window.getSelection().removeAllRanges();
     const range = document.createRange();
-    range.selectNode(copy);
+    range.selectNodeContents(copy);
     window.getSelection().addRange(range);
     document.execCommand("copy");
     window.getSelection().removeAllRanges();
