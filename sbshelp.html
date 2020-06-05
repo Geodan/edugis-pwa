@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesmodule</title>
+    <style>
+        html,body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+    <body>
+        <h1>EduGIS tekst naast kaart</h1>
+        <p>Gebruik deze pagina voor het tonen van tekst naast de kaart.</p>
+
+        <p>De breedte van de tekst kan met de muis worden aangepast door de balk links van deze tekst naar links of rechts te slepen.</p>
+
+        <p>Je kunt de inhoud van dit tekstvenster instellen door de URL van de tekst toe te voegen met parameter <br>?teksturl= </b></p>
+        
+        <h2>Voorbeeld</h2>
+        <p>
+            Stel dat je de tekst van website Nu.nl naast de kaart wilt zetten. De URL van Nu.nl is</p><b>https://nu.nl</b><p>
+            
+            Als je deze URL achter sbs.html plakt, dan wordt de link naar sbs.html dus:</p>
+
+            <p><a href="sbs.html?teksturl=https://nu.nl" target="_blank">https://kaart.edugis.nl/v2/sbs<b>?teksturl=</b>https://nu.nl</a>
+
+            <p>Klik op bovenstaande link om te zien hoe dat er uit ziet (de pagina wordt geopend in een nieuwe tab).</p>
+
+        <h2>Vensters updaten</h2>
+
+        Vanuit de tekst kun je de verschillende vensters updaten d.m.v. links. Een web-link bestaat uit een "URL" en soms ook een "target". 
+        <ul>
+            <li>link <b>zonder</b> target: de inhoud van dit tekstvenster wordt vervangen door tekst uit url</li>
+            <li>link met target "<b>kaart</b>": de inhoud van het kaartvenster wordt vervangen door de url</li>
+            <li>link met target "<b>_PARENT</b>": de hele pagina wordt vervangen door de url (kaartvenster &eacute;n tekstvenster)</li>
+            <li>link met target "<b>_blank</b>": de url wordt geopend in een nieuwe browser tab</li>
+        </ul>
+
+        <p>Gebruik voor de links altijd https, niet http, klik <a href="sbshelp2.html">hier</a> voor meer uitleg.</p>
+
+        <b>Voorbeelden</b>
+        <ul>
+            <li><a href="sbshelp2.html">volgende pagina</a>, geen target</li>
+            <li><a href="https://www.nu.nl" target="kaart">nu.nl</a>, target="kaart"</li>
+            <li><a href="index.html#configurl=maps/merwedekanaalzone.json" target="kaart">Merwedekanaal</a>, target="kaart"</li>
+            <li><a href="index.html#configurl=maps/layers.json" target="kaart">EduGIS Nederland</a>, target="kaart"</li>
+            <li><a href="https://www.edugis.nl" target="_PARENT">exit</a>, target="_PARENT"</li>
+        </ul>
+        <p>
+        Je kunt ook de inhoud van het <i>initi&euml;le</i> kaartvenster instellen door parameter <b>kaarturl=</b> achter sbs.html te plakken. 
+        Vaak zijn echter de URLs van kaarten wat complexer dan standaard URLs en bevatten speciale tekens zoals ? &amp = of #. Zo'n URL moet dan eerst ge-encodeerd worden. 
+        Dit kan online via bijvoorbeeld <a href="https://www.urlencoder.org/" target="blank">https://www.urlencoder.org</a></p>
+
+        <p>
+        De URL van de merwedekanaalzone:<br>
+        https://kaart.edugis.nl/v2/#configurl=maps/merwedekanaalzone.json<br>
+        wordt na encoderen:<br>
+        https%3A%2F%2Fkaart.edugis.nl%2Fv2%2F%23configurl%3Dmaps%2Fmerwedekanaalzone.json</p>
+
+        <p>
+        Voer deze ge-encodeerde URL in bij de sbs.html achter parameter kaarturl=:</p>
+
+        <p>
+        <a href="https://kaart.edugis.nl/v2/sbs.html?kaarturl=https%3A%2F%2Fkaart.edugis.nl%2Fv2%2F%23configurl%3Dmaps%2Fmerwedekanaalzone.json" target="blank">https://kaart.edugis.nl/v2/sbs.html?kaarturl=https%3A%2F%2Fkaart.edugis.nl%2Fv2%2F%23configurl%3Dmaps%2Fmerwedekanaalzone.json</a>
+        </p>
+        <p>Klik op bovenstaande link om te zien hoe dat er uit ziet (de pagina wordt geopend in een nieuwe tab).</p>
+
+        <p>In sommige gevallen is het wenselijk om de <i>initi&euml;le</i> breedte van het tekstvenster te kunnen instellen. Dit kan met parameter 'tekstwidth='. 
+        De breedte wordt aangeduid in pixels. Maak het tekstveld niet te breed, want vooral op kleinere schermen blijft er dan erg weinig ruimte over voor de kaart.</p>
+
+        <a href="sbs.html?tekstwidth=500&teksturl=https://www.edugis.nl/wp-content/uploads/2020/05/Dieper-leren-met-geo-ict-mei-2020.pdf&kaarturl=https%3A%2F%2Fkaart.edugis.nl%2Fv2%2F%23configurl%3Dmaps%2Fmerwedekanaalzone.json" target="blank">Dit is een voorbeeldlink</a> in een nieuw tabblad waarbij alle drie de parameters ('tekstwidth', 'teksturl' en 'kaarturl') worden gebruikt.
+    </body>
+</html>

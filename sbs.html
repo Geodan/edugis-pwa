@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesmodule</title>
+    <style>
+        body,html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        container {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        #lestekst {
+            width: 375px;
+        }
+        #kaart {
+            flex-grow: 1;
+        }
+        #dragbar {
+            width: 5px;
+            height: 100%;
+            background-color: lightgray;
+            cursor: ew-resize;
+        }
+        iframe {
+            border: none;
+        }
+        .ignoreevents {
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        function startDragging(event) {
+            event.preventDefault();
+            const hostSelector = event.target.getAttribute("target");
+            if (!hostSelector) return;
+            const host = document.querySelector(hostSelector);
+            if (!host) return;
+
+            document.querySelectorAll('iframe').forEach(iframe=>iframe.classList.add('ignoreevents'));
+
+            const startHostWidth = host.offsetWidth;
+            const xOffset = event.pageX;
+
+            const mouseDragHandler = (moveEvent) => {
+                moveEvent.preventDefault();
+                const primaryButtonPressed = moveEvent.buttons === 1;
+                if (!primaryButtonPressed) {
+                    document.body.removeEventListener("pointermove", mouseDragHandler);
+                    document.querySelectorAll('iframe').forEach(iframe=>iframe.classList.remove('ignoreevents'));
+                    return;
+                }
+                host.style.width = startHostWidth + (xOffset - moveEvent.pageX) + "px";
+            };
+            document.body.addEventListener("pointermove", mouseDragHandler);
+        }
+        function init () {
+            document.querySelector('#dragbar').addEventListener('mousedown', startDragging);
+            let params = new URLSearchParams(window.location.search);
+            let tekstwidth = params.get('tekstwidth');
+            if (tekstwidth) {
+                let width = parseInt(tekstwidth);
+                if (!isNaN(width) && width > 0) {
+                    document.querySelector('#lestekst').style.width=`${width}px`;
+                }
+            }
+            let teksturl = params.get('teksturl');
+            if (!teksturl && teksturl !== '') {
+                teksturl = "sbshelp.html"
+            }
+            document.querySelector('#lestekst').src = teksturl;
+            let kaarturl = params.get('kaarturl');
+            if (!(kaarturl && kaarturl !== '')) {
+                kaarturl = "index.html#configurl=maps/layers.json"
+            }
+            document.querySelector('#kaart').src = kaarturl;
+        }
+        window.addEventListener('load', init)
+    </script>
+</head>
+    <body>
+        <container>
+            <iframe src="about:blank" id="kaart" name="kaart"></iframe>
+            <div id="dragbar" target="#lestekst"></div>
+            <iframe src="about:blank" scrolling="auto" name="lestekst" id="lestekst"></iframe>
+        </container>
+    </body>
+</html>
