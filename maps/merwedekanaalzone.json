@@ -879,6 +879,25 @@
               }
             },
             {
+              "type": "wms",
+              "title": "Nederland 2000",
+              "layerInfo": {
+                  "id": "nederland2000",
+                  "type":"raster",
+                  "minzoom":7,
+                  "maxzoom":22,
+                  "source":{
+                      "type":"raster",
+                      "tileSize":512,
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles":[
+                          "https://tiles.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/lus.map&service=WMS&version=1.1.1&request=GetMap&layers=NED_2000"
+                      ],
+                      "attribution":"VU Spinlab"
+                  }
+              }
+            },
+            {
               "id": "archeologie",
               "title": "Romeinse Limesweg",
               "type": "line",
@@ -907,6 +926,44 @@
                     13, 3, 22, 20
                   ]
                 }
+              }
+            },
+            {
+              "type": "wms",
+              "title": "Panden - energielabel",
+              "layerInfo": {
+                  "id": "pandennergielabel",
+                  "type":"raster",
+                  "minzoom":13,
+                  "maxzoom":22,
+                  "source":{
+                      "type":"raster",
+                      "tileSize":512,
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles":[
+                          "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
+                      ],
+                      "attribution":"Pico, Kadaster"
+                  }
+              }
+            },
+            {
+              "type": "wms",
+              "title": "Potentiële locaties voor zonnepanelen op gebouwen",
+              "layerInfo": {
+                  "id": "potloczonnenpaneel",
+                  "type":"raster",
+                  "minzoom":13,
+                  "maxzoom":22,
+                  "source":{
+                      "type":"raster",
+                      "tileSize":512,
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles":[
+                          "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data%2Feduqgis%2Ffiles%2Fzonlocaties.qgs&layers=Potenti%C3%ABle%20locaties%20voor%20zonnepanelen%20op%20gebouwen"
+                      ],
+                      "attribution":"Pico, Kadaster"
+                  }
               }
             },
             {
