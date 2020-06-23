@@ -25,7 +25,12 @@
                   "type": "raster",
                   "metadata": {
                       "getFeatureInfoFormat":"application/vnd.ogc.gml",
-                      "abstract": "Gemiddelde bodemdaling in mm per jaar. Gridcellen van 2x2 km."
+                      "abstract": "Gemiddelde bodemdaling in mm per jaar. Gridcellen van 2x2 km.",
+                      "attributes": {
+                        "allowedattributes": ["pnt_linear"],
+                        "translations": [
+                          {"name": "pnt_linear", "translation": "snelheid", "unit": " m / jaar"}]
+                      }
                   },
                   "maxzoom": 16,
                   "source": {
