@@ -19,7 +19,7 @@
           "sublayers": [
             {
               "type": "wms",
-              "title": "Bodemdaling (gemiddeld)",
+              "title": "Bodembeweging (gemiddeld)",
               "layerInfo": {
                   "id": "bodemdaling",
                   "type": "raster",
@@ -410,7 +410,7 @@
             },
             {
               "type": "vectortile",
-              "title": "Geluidscontouren totaal",
+              "title": "Geluidsoverlast totaal",
               "layerInfo": {
                 "id": "geluidscontourentotaal",
                 "type": "fill",
@@ -447,7 +447,7 @@
             },
             {
               "type": "vectortile",
-              "title": "Geluidscontouren trein",
+              "title": "Geluidsoverlast trein",
               "layerInfo": {
                   "id": "contouren_lden_rail_2011_hoog",
                   "type": "fill",
@@ -488,7 +488,7 @@
             },
             {
               "type": "vectortile",
-              "title": "Geluidscontouren weg",
+              "title": "Geluidsoverlast weg",
               "layerInfo": {
                 "id": "geluidscontourenweg",
                 "type": "fill",
@@ -602,7 +602,7 @@
                       {"name": "diepte", "unit": " m"},
                       {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
                       {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
-                      {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans klei/kleiig zand", "unit": " kans"},
                       {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
                       {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
                       {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
@@ -656,7 +656,20 @@
                 "metadata": {
                   "abstract": "GeoTop bevat landsdekkende ondergrondgegevens tot 50 meter diepte. De gegevens zijn berekend met een rekenmodel met informatie verkregen uit boringen. Voor elke halve meter diepte is de totale kans op veen berekend. De GeoTop gridcellen zijn 100 bij 100 meter. In deze weergave is van elk cel-middelpunt een verticale uitsnede van 10x10 meter voor de Merwedekanaalzone gemaakt. Voor de weergave is de ondergrond 50 meter omhooggetrokken. De bovenkant komt dus overeen met het aardoppervlak en de onderkant toont de ondergrond op 50 meter diepte.",
                   "reference": false,
-                  "userlayer": true
+                  "userlayer": true,
+                  "attributes": {
+                    "deniedattributes": ["lithostrat", "lithoklasse"],
+                    "translations": [
+                      {"name": "diepte", "unit": " m"},
+                      {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
+                      {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
+                      {"name": "kans_kleiig_zand", "translation": "kans klei/kleiig zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
+                      {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
+                      {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
+                    ]
+                  }
                 },
                 "source": {
                   "id": "merwedekzgeotopkansveen",
@@ -712,7 +725,7 @@
                       {"name": "kans_veen", "translation": "kans op veen", "unit": " kans"},
                       {"name": "kans_klei", "translation": "kans op klei", "unit": " kans"},
                       {"name": "kans_kleiig_zand", "translation": "kans op kleiig zand", "unit": " kans"},
-                      {"name": "kans_zand_fijn", "translation": "kans op fijn zand", "unit": " kans"},
+                      {"name": "kans_zand_fijn", "translation": "kans zand (fijn/matig/grof)", "unit": " kans"},
                       {"name": "kans_zand_matig_grof", "translation": "kans op matig grof zand", "unit": " kans"},
                       {"name": "kans_zand_grof", "translation": "kans op grof zand", "unit": " kans"},
                       {"name": "kans_grind", "translation": "kans op grind", "unit": " kans"}
@@ -958,14 +971,14 @@
               "layerInfo": {
                   "id": "potloczonnenpaneel",
                   "type":"raster",
-                  "minzoom":13,
+                  "minzoom":13.5,
                   "maxzoom":22,
                   "source":{
                       "type":"raster",
                       "tileSize":512,
                       "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                       "tiles":[
-                          "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data%2Feduqgis%2Ffiles%2Fzonlocaties.qgs&layers=Potenti%C3%ABle%20locaties%20voor%20zonnepanelen%20op%20gebouwen"
+                          "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/pv_output_2018.qgs&LAYERS=pv_output_2018"
                       ],
                       "attribution":"Pico, Kadaster"
                   }
