@@ -832,6 +832,29 @@
             },
             {
               "type": "geojson",
+              "title": "Merwedekanaal",
+              "layerInfo": {
+                "id": "merwedekanaal",
+                "type": "line",
+                "minzoom": 6.5,
+                "source": {
+                  "type": "geojson",
+                  "data": "https://tiles.edugis.nl/geojson/merwedekanaal.json",
+                  "attribution": "EduGIS"
+                },
+                "paint": {
+                  "line-color": "#408abf",
+                  "line-width": 5
+                },
+                "metadata": {
+                  "reference": false,
+                  "userlayer": true
+                }
+              },
+              "id": "Merwedekanaal_geojson_id"
+            },
+            {
+              "type": "geojson",
               "title": "Merwedekanaalzone deelgebieden",
               "layerInfo": {
                 "id": "merwedekanaalzone",
