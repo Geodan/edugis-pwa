@@ -1002,16 +1002,16 @@
                       "translations": [
                         {"name": "dak_pv", "translation": "mogelijke zonneenergie dak totaal", "unit": " kWh/jaar"},
                         {"name": "dak_opp", "translation": "totaal dakoppervlak", "unit":" m²"},
-                        {"name": "dak_opp_schuinnoord", "tranlation": "oppervlakte schuin dak noord", "unit":" m²"},
-                        {"name": "dak_opp_schuinoost", "tranlation": "oppervlakte schuin dak oost", "unit":" m²"},
-                        {"name": "dak_opp_schuinwest", "tranlation": "oppervlakte schuin dak west", "unit":" m²"},
-                        {"name": "dak_opp_schuinzuid", "tranlation": "oppervlakte schuin dak zuid", "unit":" m²"},
-                        {"name": "dak_opp_plat", "tranlation": "oppervlakte plat dak", "unit":" m²"},
-                        {"name": "dak_pv_schuinnoord", "tranlation": "zonneenergie schuin dak noord", "unit":" kWh/jaar"},
-                        {"name": "dak_pv_schuinoost", "tranlation": "zonneenergie schuin dak oost", "unit":" kWh/jaar"},
-                        {"name": "dak_pv_schuinwest", "tranlation": "zonneenergie schuin dak west", "unit":" kWh/jaar"},
-                        {"name": "dak_pv_schuinzuid", "tranlation": "zonneenergie schuin dak zuid", "unit":" kWh/jaar"},
-                        {"name": "dak_pv_plat", "tranlation": "zonneenergie plat dak", "unit":" kWh/jaar"}
+                        {"name": "dak_opp_schuinnoord", "translation": "oppervlakte schuin dak noord", "unit":" m²"},
+                        {"name": "dak_opp_schuinoost", "translation": "oppervlakte schuin dak oost", "unit":" m²"},
+                        {"name": "dak_opp_schuinwest", "translation": "oppervlakte schuin dak west", "unit":" m²"},
+                        {"name": "dak_opp_schuinzuid", "translation": "oppervlakte schuin dak zuid", "unit":" m²"},
+                        {"name": "dak_opp_plat", "translation": "oppervlakte plat dak", "unit":" m²"},
+                        {"name": "dak_pv_schuinnoord", "translation": "zonneenergie schuin dak noord", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinoost", "translation": "zonneenergie schuin dak oost", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinwest", "translation": "zonneenergie schuin dak west", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinzuid", "translation": "zonneenergie schuin dak zuid", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_plat", "translation": "zonneenergie plat dak", "unit":" kWh/jaar"}
                         ]
                     }
                   }
