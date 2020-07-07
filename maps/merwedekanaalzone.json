@@ -981,16 +981,39 @@
               "layerInfo": {
                   "id": "potloczonnenpaneel",
                   "type":"raster",
-                  "minzoom":13,
+                  "minzoom":13.5,
                   "maxzoom":22,
                   "source":{
                       "type":"raster",
                       "tileSize":512,
                       "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                       "tiles":[
-                          "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data%2Feduqgis%2Ffiles%2Fzonlocaties.qgs&layers=Potenti%C3%ABle%20locaties%20voor%20zonnepanelen%20op%20gebouwen"
+                          "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/pv_output_2018.qgs&SERVICE=WMS&buffer=5&VERSION=1.1.1&STYLES=,&SRS=EPSG:3857&EXCEPTIONS=application/vnd.ogc.se_xml&LAYERS=pv_output_2018"                          
                       ],
                       "attribution":"Pico, Kadaster"
+                  },
+                  "metadata": {
+                    "abstract": "Mogelijke hoeveelheid opwekbare zonneenergie per dak per jaar. Er is rekening gehouden met de grootte van het dak, waarbij ook is gekeken naar het verschil in platte daken en schuine daken en naar welk richting de schuine dakvlakken staan",
+                    "reference": false,
+                    "userlayer": true,
+                    "attributes": {
+                      "allowedattributes": ["dak_pv","dak_opp","dak_opp_schuinnoord", "dak_opp_schuinoost", "dak_opp_schuinwest", "dak_opp_schuinzuid", "dak_opp_plat", 
+                        "dak_pv_schuinnoord", "dak_pv_schuinoost", "dak_pv_schuinwest", "dak_pv_schuinzuid", "dak_pv_plat"],
+                      "translations": [
+                        {"name": "dak_pv", "translation": "mogelijke zonneenergie dak totaal", "unit": " kWh/jaar"},
+                        {"name": "dak_opp", "translation": "totaal dakoppervlak", "unit":" m²"},
+                        {"name": "dak_opp_schuinnoord", "tranlation": "oppervlakte schuin dak noord", "unit":" m²"},
+                        {"name": "dak_opp_schuinoost", "tranlation": "oppervlakte schuin dak oost", "unit":" m²"},
+                        {"name": "dak_opp_schuinwest", "tranlation": "oppervlakte schuin dak west", "unit":" m²"},
+                        {"name": "dak_opp_schuinzuid", "tranlation": "oppervlakte schuin dak zuid", "unit":" m²"},
+                        {"name": "dak_opp_plat", "tranlation": "oppervlakte plat dak", "unit":" m²"},
+                        {"name": "dak_pv_schuinnoord", "tranlation": "zonneenergie schuin dak noord", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinoost", "tranlation": "zonneenergie schuin dak oost", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinwest", "tranlation": "zonneenergie schuin dak west", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_schuinzuid", "tranlation": "zonneenergie schuin dak zuid", "unit":" kWh/jaar"},
+                        {"name": "dak_pv_plat", "tranlation": "zonneenergie plat dak", "unit":" kWh/jaar"}
+                        ]
+                    }
                   }
               }
             },
