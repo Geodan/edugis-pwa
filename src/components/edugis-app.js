@@ -205,7 +205,7 @@ footer a:hover {
                   {
                       title: "Legenda",
                       content: "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden",
-                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-selected-layers'),
+                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
                       placement: "left"
                   }
               ]
