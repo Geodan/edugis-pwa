@@ -157,11 +157,12 @@ class MapInfoFormatted extends LitElement {
     return result;
   }
   renderAttribute(key, value) {
-    let isImage = (typeof value === 'string') && 
-      (value.startsWith('https://maps.googleapis.com') || 
+    let lowCaseValue = typeof value === 'string'? value.toLowerCase() : '';
+    let isImage = (
+      lowCaseValue.startsWith('https://maps.googleapis.com') || 
         (
-          (value.startsWith('https://') || value.startsWith('https://')) && 
-          (value.endsWith('.png') || value.endsWith('.jpg')  || value.endsWith('.gif') || value.endsWith('.svg'))
+          (lowCaseValue.startsWith('https://') || lowCaseValue.startsWith('https://')) && 
+          (lowCaseValue.toLowerCase().endsWith('.png') || lowCaseValue.endsWith('.jpg')  || lowCaseValue.endsWith('.gif') || lowCaseValue.endsWith('.svg'))
         )
       );
     return html`<div class="attributename">${key}</div>
