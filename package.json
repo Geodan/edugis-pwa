@@ -32,7 +32,7 @@
     "jsts": "^2.0.3",
     "lit-element": "^2.2.1",
     "mapbox-gl": "^0.51.0",
-    "papaparse": "^4.6.3",
+    "papaparse": "^5.2.0",
     "proj4": "^2.5.0",
     "pwa-helpers": "^0.8.2",
     "redux": "^4.0.0",
