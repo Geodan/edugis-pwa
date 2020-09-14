@@ -190,6 +190,7 @@ class MapLayerTree extends LitElement {
         border-bottom: 1px solid lightgray;
         cursor: pointer;
         line-height: 2.5em;
+        position: relative;
       }
       li ul {
         cursor: default;
@@ -198,11 +199,11 @@ class MapLayerTree extends LitElement {
         border-bottom: none;
       }
       .arrow-down {
+        position: absolute;
         border-style: solid;
         border-width: 1px 1px 0 0;
         content: '';
         height: 8px;
-        float: right;
         margin-right: 10px;
         left: auto;
         -ms-transform: rotate(45deg);
@@ -211,6 +212,7 @@ class MapLayerTree extends LitElement {
         margin-top: 6px;
         vertical-align: top;
         width: 8px;
+        right: 0px;
         border-color: #555;
         transition: transform .5s ease-in-out;
       }
