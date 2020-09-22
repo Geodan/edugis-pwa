@@ -395,6 +395,95 @@
                             }
                         },
                         {
+                          "type": "group",
+                          "title": "Kadastrale percelen (2020)",
+                          "sublayers": [
+                            {
+                              "title": "Kadastrale secties",
+                              "layerInfo": {
+                                "id":"a831eaf7-eb01-4271-b79d-95c2008d6498",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,sectie&include_nulls=0"],
+                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                                    "maxzoom": 17
+                                },
+                                "source-layer":"percelen.gt_gemeenteperceelsectie",
+                                "paint":{
+                                    "fill-color":"rgba(0,0,0,0)",
+                                    "fill-opacity":1,
+                                    "fill-outline-color": "green"
+                                }
+                              }
+                            },
+                            {
+                              "title": "Kadastrale secties (labels)",
+                              "layerInfo": {
+                                "id":"brk2020sectielabels",
+                                "type":"symbol",
+                                "minzoom": 12,
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gemeentenaam,sectie&include_nulls=0"],
+                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                                    "maxzoom": 17
+                                },
+                                "source-layer":"percelen.gt_gemeenteperceelsectie",
+                                "paint":{
+                                    "text-color":"green"
+                                },
+                                "layout":{
+                                  "text-field": ["concat", ["get","gemeentenaam"],"-",["get","sectie"]]
+                                }
+                              }
+                            },
+                            {
+                              "title": "Percelen",
+                              "layerInfo": {
+                                "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
+                                "type":"fill",
+                                "minzoom": 14.5,
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
+                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                                    "maxzoom": 17
+                                },
+                                "source-layer":"percelen.perceel",
+                                "paint":{
+                                  "fill-color":"rgba(0,0,0,0)",
+                                  "fill-opacity":1,
+                                  "fill-outline-color": "darkred"
+                                }
+                              }
+                            },
+                            {
+                              "title": "Percelen (labels)",
+                              "layerInfo": {
+                                "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
+                                "type":"symbol",
+                                "minzoom": 15,
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
+                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                                    "maxzoom": 17
+                                },                                    
+                                "source-layer":"percelen.perceel",
+                                "paint":{
+                                  "text-color":"black"
+                                },
+                                "layout":{
+                                    "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
+                                    "text-rotate": ["get","perceelnummerrotatie"],
+                                    "text-size": 10
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
                             "type":"getcapabilities",
                             "title":"coropgebieden",
                             "layerInfo":{
@@ -461,14 +550,14 @@
                                 "title": "Kadastralekaart",
                                 "type": "raster",
                                 "metadata": {
-                                    "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wms?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
+                                    "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
                                 },
                                 "source":{
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type":"raster",
                                     "tileSize":512,
                                     "tiles":[
-                                        "https://geodata.nationaalgeoregister.nl/kadastralekaartv3/wms?LAYERS=kadastralekaart"
+                                        "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?LAYERS=kadastralekaart"
                                     ],
                                     "attribution":"PDOK, Kadaster"
                                 }
@@ -2241,6 +2330,114 @@
             "type": "group",
             "title": "Energietransitie",
             "sublayers": [
+                {
+                  "type": "group",
+                  "title": "Netwerken elektriciteit",
+                  "sublayers":[
+                    {
+                      "title": "Netwerkbeheerders elektriciteit",
+                      "layerInfo": {
+                        "id":"647fb00c-bd19-46ad-b9fc-044e5ac178e3",
+                        "type":"fill",
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/fct_infra_2019.elektra_gebieden/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder&include_nulls=0"],
+                            "bounds":[3.35837818948806,50.7503674928055,7.22749837402484,53.5550145030117]},
+                        "source-layer":"fct_infra_2019.elektra_gebieden",
+                        "paint":{
+                        "fill-color":[
+                            "case",["==",["get","beheerder"],"liander"],"#8dd3c7",
+                            ["==",["get","beheerder"],"enexis"],"#ffffb3",
+                            ["==",["get","beheerder"],"model"],"#bebada",
+                            ["==",["get","beheerder"],"enduris"],"#fb8072",
+                            ["==",["get","beheerder"],"stedin"],"#80b1d3",
+                            "#80b1d3"],
+                        "fill-outline-color":"white",
+                        "fill-opacity":0.8}
+                      }
+                    },
+                    {
+                      "title": "Kabels netbeheerders",
+                      "layerInfo":{
+                        "id":"e5a09a35-e608-41ee-af38-e8daa3840ee0",
+                        "type":"line",
+                        "metadata": {
+                          "abstract": "Electriciteitskabels 2019. 'aansluiting extra' is berekend."
+                        },
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/fct_infra_2019.elektra_kabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder,net,lengte&include_nulls=0"],
+                            "bounds":[3.25742485745802,50.7376603630598,7.23920304144212,53.4855872187456]},
+                        "source-layer":"fct_infra_2019.elektra_kabel",
+                        "minzoom": 11,
+                        "paint":{
+                          "line-color":[
+                            "case",["==",["get","net"],"aansluiting extra"],"#9ab0c7",
+                              ["==",["get","net"],"aansluiting"],"#7792ae",
+                              ["==",["get","net"],"laagspanning"],"#5e39cd",
+                              ["==",["get","net"],"middenspanning"],"#2d5a93",
+                              ["==",["get","net"],"hoogspanning"],"#0d346e",
+                              "#ff7f00"],
+                          "line-width":["case",["==",["get","net"],"aansluiting extra"],2,
+                            ["==",["get","net"],"aansluiting"],2,
+                            ["==",["get","net"],"laagspanning"],2,
+                            ["==",["get","net"],"middenspanning"],3,
+                            ["==",["get","net"],"hoogspanning"],5,
+                            1]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Aansluitingen en transformators",
+                      "layerInfo": {
+                        "id":"f745e662-5386-4707-abf8-00723c7c530f",
+                        "type":"circle",
+                        "minzoom": 11,
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/fct_infra_2019.elektra_punt/mvt/{z}/{x}/{y}?geom_column=geom&columns=net,asset,beheerder&include_nulls=0"],
+                            "bounds":[3.36176456887925,50.7545808243458,7.22231615548479,53.4968922540473]},
+                        "source-layer":"fct_infra_2019.elektra_punt",
+                        "paint":{
+                        "circle-radius":5,"circle-color":[
+                            "case",["==",["get","net"],"t-ls"],"#e41a1c",
+                            ["==",["get","net"],"t-ms"],"#377eb8",
+                            ["==",["get","net"],"as-flat"],"#4daf4a",
+                            ["==",["get","net"],"as-gbw"],"#984ea3",
+                            "#ff7f00"],
+                        "circle-stroke-color":"white","circle-stroke-width":1}
+                      }
+                    },
+                    {
+                      "title": "Hoogspanningsnet",
+                      "layerInfo": {
+                        "id":"0e720a48-435b-4dee-91b9-df3d23309aa0",
+                        "type":"line",
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/hoogspanningsnet_2018.kabels/mvt/{z}/{x}/{y}?geom_column=geom&columns=kv_type,name,tunnel&include_nulls=0"],
+                            "bounds":[-23.773666091304,36.5052925838687,17.5618254789102,66.2963401152265]},
+                        "source-layer":"hoogspanningsnet_2018.kabels",
+                        "paint":{
+                        "line-color":[
+                            "case",["<",["get","kv_type"],60],"#fef0d9",
+                            ["<",["get","kv_type"],110],"#fdcc8a",
+                            ["<",["get","kv_type"],150],"#fc8d59",
+                            ["<",["get","kv_type"],225],"#e34a33",
+                            ["<=",["get","kv_type"],450],"#b30000",
+                            "#b30000"],
+                        "line-width":[
+                          "case",["<",["get","kv_type"],60],1,
+                          ["<",["get","kv_type"],110],2,
+                          ["<",["get","kv_type"],150],3,
+                          ["<",["get","kv_type"],225],4,
+                          ["<=",["get","kv_type"],450],5,
+                          3]
+                        }
+                      }
+                    }
+                  ]
+                },
                 {
                     "type": "wms",
                     "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",

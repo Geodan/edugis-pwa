@@ -60,8 +60,12 @@ class MapLegendPanel extends LitElement {
             lineColor = `rgba(${rgba.r * 255},${rgba.g * 255},${rgba.b * 255},${rgba.a})`;
             colorResult.items.push({lineColor: lineColor, width: 2, label: layerTitle});
           } else if (values["line-color"].value.kind === "source") {
-            colorResult.items = values["line-color"].value._styleExpression.expression.outputs
-              .map(output=>`rgba(${output.value.r * 255}, ${output.value.g * 255}, ${output.value.b * 255}, ${output.value.a})`)
+            let outputs = values["line-color"].value._styleExpression.expression.outputs ? 
+                              values["line-color"].value._styleExpression.expression.outputs : 
+                                values["line-color"].value._styleExpression.expression.possibleOutputs ?
+                                values["line-color"].value._styleExpression.expression.possibleOutputs() :
+                                  [];
+            colorResult.items = outputs.map(output=>`rgba(${output.r * 255}, ${output.g * 255}, ${output.b * 255}, ${output.a})`)
               .map((color, index)=>{
                 let expression = values["line-color"].value._styleExpression.expression;
                 return {lineColor:color, width: 2, label: expression.labels?expression.labels[index]:expression.cases?Object.keys(expression.cases)[index]:'unknown'}
@@ -78,8 +82,12 @@ class MapLegendPanel extends LitElement {
             });
           } else {
             if (values["line-width"].value.kind === "source") {
-              widthResult.items = values["line-width"].value._styleExpression.expression.outputs
-              .map(output=>output.value)
+              let outputs = values["line-width"].value._styleExpression.expression.outputs ? 
+                              values["line-width"].value._styleExpression.expression.outputs : 
+                                values["line-width"].value._styleExpression.expression.possibleOutputs ?
+                                values["line-width"].value._styleExpression.expression.possibleOutputs() :
+                                  [];
+              widthResult.items = outputs.map(output=>output.value)
               .map((width, index)=>{                
                 let expression = values["line-width"].value._styleExpression.expression;
                 return {
