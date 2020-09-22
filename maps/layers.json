@@ -2297,16 +2297,39 @@
                         "url": "https://kaart.edugis.nl/data/nederland/topografie.xml",
                         "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                     }
+                },{
+                  "type": "wms",
+                  "title": "topografie: 1:250.000",
+                  "layerInfo": {
+                      "id": "top250raster",
+                      "type": "raster",
+                      "minzoom": 9.5,
+                      "metadata": {
+                          "getFeatureInfoFormat":"application/json"
+                          },
+                      "source": {
+                          "type": "raster",
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top250raster"]
+                      }
+                  }
                 },
                 {
-                    "type":"getcapabilities",
-                    "title":"Topografie250",
-                    "layerInfo":{
-                        "id":"topografie250",
-                        "deniedlayers": "topografie",
-                        "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/base.map",
-                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                    }
+                  "type": "wms",
+                  "title": "topografie: 1:50.000",
+                  "layerInfo": {
+                      "id": "top50raster",
+                      "type": "raster",
+                      "minzoom": 11.5,
+                      "metadata": {
+                          "getFeatureInfoFormat":"application/json"
+                          },
+                      "source": {
+                          "type": "raster",
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top50raster"]
+                      }
+                  }
                 },
                 {
                     "type": "wms",
@@ -2314,6 +2337,7 @@
                     "layerInfo": {
                         "id": "top25raster",
                         "type": "raster",
+                        "minzoom": 12.5,
                         "metadata": {
                             "getFeatureInfoFormat":"application/json"
                             },
