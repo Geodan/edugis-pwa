@@ -345,6 +345,95 @@
                     ]
                 },
                 {
+                  "type": "group",
+                  "title": "Kadastrale percelen (2020)",
+                  "sublayers": [
+                    {
+                      "title": "Kadastrale secties",
+                      "layerInfo": {
+                        "id":"a831eaf7-eb01-4271-b79d-95c2008d6498",
+                        "type":"fill",
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,sectie&include_nulls=0"],
+                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                            "maxzoom": 17
+                        },
+                        "source-layer":"percelen.gt_gemeenteperceelsectie",
+                        "paint":{
+                            "fill-color":"rgba(0,0,0,0)",
+                            "fill-opacity":1,
+                            "fill-outline-color": "green"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Kadastrale secties (labels)",
+                      "layerInfo": {
+                        "id":"brk2020sectielabels",
+                        "type":"symbol",
+                        "minzoom": 12,
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gemeentenaam,sectie&include_nulls=0"],
+                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                            "maxzoom": 17
+                        },
+                        "source-layer":"percelen.gt_gemeenteperceelsectie",
+                        "paint":{
+                            "text-color":"green"
+                        },
+                        "layout":{
+                          "text-field": ["concat", ["get","gemeentenaam"],"-",["get","sectie"]]
+                        }
+                      }
+                    },
+                    {
+                      "title": "Percelen",
+                      "layerInfo": {
+                        "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
+                        "type":"fill",
+                        "minzoom": 14.5,
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
+                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                            "maxzoom": 17
+                        },
+                        "source-layer":"percelen.perceel",
+                        "paint":{
+                          "fill-color":"rgba(0,0,0,0)",
+                          "fill-opacity":1,
+                          "fill-outline-color": "darkred"
+                        }
+                      }
+                    },
+                    {
+                      "title": "Percelen (labels)",
+                      "layerInfo": {
+                        "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
+                        "type":"symbol",
+                        "minzoom": 15,
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
+                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                            "maxzoom": 17
+                        },                                    
+                        "source-layer":"percelen.perceel",
+                        "paint":{
+                          "text-color":"black"
+                        },
+                        "layout":{
+                            "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
+                            "text-rotate": ["get","perceelnummerrotatie"],
+                            "text-size": 10
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
                     "type": "group",
                     "title": "Overige indelingen",
                     "sublayers": [
@@ -358,20 +447,20 @@
                             }
                         },
                         {
-                            "type": "wms",
-                            "title": "Waterschappen",
-                            "layerInfo": {
-                                "id": "waterschappen",
+                          "type": "wms",
+                          "title": "Waterschappen",
+                          "layerInfo": {
+                            "id": "waterschappen",
+                            "type": "raster",
+                            "metadata": {
+                                "getFeatureInfoFormat":"application/json"
+                            },
+                            "source": {
+                                "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "type": "raster",
-                                "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
-                                },
-                                "source": {
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type": "raster",
-                                    "tiles": ["https://geodata.nationaalgeoregister.nl/wsaeenhedeninspire/wms?layers=waterschapsgrens"]
-                                }
+                                "tiles": ["https://geodata.nationaalgeoregister.nl/hwh/eenheden/wms/v1_0?layers=AU.AdministrativeUnit"]
                             }
+                          }
                         },
                         {
                             "type": "wms",
@@ -394,95 +483,7 @@
                                 }
                             }
                         },
-                        {
-                          "type": "group",
-                          "title": "Kadastrale percelen (2020)",
-                          "sublayers": [
-                            {
-                              "title": "Kadastrale secties",
-                              "layerInfo": {
-                                "id":"a831eaf7-eb01-4271-b79d-95c2008d6498",
-                                "type":"fill",
-                                "source":{
-                                    "type":"vector",
-                                    "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,sectie&include_nulls=0"],
-                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                                    "maxzoom": 17
-                                },
-                                "source-layer":"percelen.gt_gemeenteperceelsectie",
-                                "paint":{
-                                    "fill-color":"rgba(0,0,0,0)",
-                                    "fill-opacity":1,
-                                    "fill-outline-color": "green"
-                                }
-                              }
-                            },
-                            {
-                              "title": "Kadastrale secties (labels)",
-                              "layerInfo": {
-                                "id":"brk2020sectielabels",
-                                "type":"symbol",
-                                "minzoom": 12,
-                                "source":{
-                                    "type":"vector",
-                                    "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gemeentenaam,sectie&include_nulls=0"],
-                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                                    "maxzoom": 17
-                                },
-                                "source-layer":"percelen.gt_gemeenteperceelsectie",
-                                "paint":{
-                                    "text-color":"green"
-                                },
-                                "layout":{
-                                  "text-field": ["concat", ["get","gemeentenaam"],"-",["get","sectie"]]
-                                }
-                              }
-                            },
-                            {
-                              "title": "Percelen",
-                              "layerInfo": {
-                                "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
-                                "type":"fill",
-                                "minzoom": 14.5,
-                                "source":{
-                                    "type":"vector",
-                                    "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
-                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                                    "maxzoom": 17
-                                },
-                                "source-layer":"percelen.perceel",
-                                "paint":{
-                                  "fill-color":"rgba(0,0,0,0)",
-                                  "fill-opacity":1,
-                                  "fill-outline-color": "darkred"
-                                }
-                              }
-                            },
-                            {
-                              "title": "Percelen (labels)",
-                              "layerInfo": {
-                                "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
-                                "type":"symbol",
-                                "minzoom": 15,
-                                "source":{
-                                    "type":"vector",
-                                    "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
-                                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                                    "maxzoom": 17
-                                },                                    
-                                "source-layer":"percelen.perceel",
-                                "paint":{
-                                  "text-color":"black"
-                                },
-                                "layout":{
-                                    "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
-                                    "text-rotate": ["get","perceelnummerrotatie"],
-                                    "text-size": 10
-                                }
-                              }
-                            }
-                          ]
-                        },
+                        
                         {
                             "type":"getcapabilities",
                             "title":"coropgebieden",
