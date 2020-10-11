@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import './map-iconbutton';
 import {openfileIcon, downloadIcon} from './my-icons';
-
+import {toGeoJSON} from '../lib//togeojson'
 
 /**
 * @polymer
@@ -209,6 +209,20 @@ export default class MapImportExport extends LitElement {
           };
        } else {
         const text = await MapImportExport._readFileAsText(file);
+        if (file.name.endsWith('.gpx') || file.name.endsWith('.kml')) {
+          try {
+            let result;
+            let xmlDoc = new DOMParser().parseFromString(text, "text/xml");
+            if (file.name.endsWith('.gpx')) {
+              result = toGeoJSON.gpx(xmlDoc);
+            } else {
+              result = toGeoJSON.kml(xmlDoc);
+            }
+            return {filename: file.name, data: result}
+          } catch(error) {
+            return {error:error.message}
+          }
+        }
         if (file.name.endsWith('.csv')) {
           // probably a csv file
           if (window.Papa) {
