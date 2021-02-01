@@ -935,6 +935,9 @@
                           "https://tiles.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/lus.map&service=WMS&version=1.1.1&request=GetMap&layers=NED_2000"
                       ],
                       "attribution":"VU Spinlab"
+                  },
+                  "metadata": {
+                    "legendurl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/lus.map&REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=NED_2000&FORMAT=image%2Fpng&STYLE="
                   }
               }
             },
