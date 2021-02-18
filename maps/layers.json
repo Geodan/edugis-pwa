@@ -1589,26 +1589,31 @@
                     "type": "group",
                     "title": "Hoogte",
                     "sublayers": [
-                        {
-                            "type": "wms",
-                            "title": "Hoogte (AHN)",
-                            "layerInfo": {
-                                "id": "hoogteahn",
-                                "type": "raster",
-                                "metadata": {
-                                    "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
-                                    "getFeatureInfoUrl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/hoogte.map&layers=hoogte",
-                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
-                                },
-                                "source": {
-                                    "type": "raster",
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes",
-                                         "https://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/hoogte.map&layers=hoogtes"]
+                      {
+                        "type": "wms",
+                        "title": "Hoogte (AHN3)",
+                        "layerInfo": {
+                            "id": "hoogteahn3_5",
+                            "type": "raster",
+                            "metadata": {
+                                "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
+                                "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/ahn3/service=?WMS&layers=ahn3_05m_dsm",
+                                "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                "attributes": {
+                                  "translations": [
+                                    {"name": "GRAY_INDEX", "translation": "hoogte", "unit": " m"}
+                                  ]
                                 }
+                            },
+                            "source": {
+                                "type": "raster",
+                                "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                                "tiles": ["https://tiles.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
+                                    "https://t2.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
+                                    "https://t3.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
+                                    "https://t4.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true"]
                             }
+                          }
                         },
                         {
                             "type":"getcapabilities",
@@ -2596,6 +2601,28 @@
                             "tiles": ["https://tiles.edugis.nl/mapproxy/picolabels/wms?layers=rvoLabel2017"]
                         }
                     }
+                },
+                {
+                  "title": "Pico dakdelen 2018",
+                  "type": "wms",
+                  "layerInfo": {
+                    "id": "dakdelen_2018",
+                    "type": "raster",
+                    "minzoom": 16.5,
+                    "metadata": {
+                      "legendurl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=false&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&",
+                      "getFeatureInfoUrl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&query_layers=dakdelen2&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES="
+                    },
+                    "source": {
+                      "type": "raster",
+                      "minzoom": 16.5,
+                      "tileSize": 512,
+                      "tiles": [
+                        "https://tiles.edugis.nl/mapproxy/picodakdelen/wms?LAYERS=dakdelen2"
+                      ],
+                      "attribution": "Pico"
+                    }
+                  }
                 },
                 {
                     "type": "wms",
