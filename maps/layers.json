@@ -270,20 +270,20 @@
                     }
                 },
                 {
-                    "title":"PDOK luchtfoto's 2018 (WMTS)",
+                    "title":"PDOK luchtfoto's 2019 (WMTS)",
                     "type":"reference",
                     "layerInfo":{
-                      "id":"pdokluchtfotowmts2018",
+                      "id":"pdokluchtfotowmts2019",
                       "type":"raster",
                       "metadata":{
-                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2018.png",
+                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2019.png",
                         "reference": true
                       },
                       "source":{
                         "type":"raster",
                         "tileSize":256,
                         "tiles":[
-                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2018_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2019_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
@@ -2611,7 +2611,17 @@
                     "minzoom": 16.5,
                     "metadata": {
                       "legendurl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&transparent=false&LAYERS=dakdelen2&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&STYLES=&",
-                      "getFeatureInfoUrl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&query_layers=dakdelen2&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES="
+                      "getFeatureInfoUrl": "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/dakdelen2.qgs&query_layers=dakdelen2&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES=",
+                      "attributes": {
+                        "deniedattributes": ["id", "pc4code", "wnpcode", "gemcode", "gemeente", "provcode", "provincie", "buurtcode", "buurtnr", "gebw_type"],
+                        "translations": [
+                          {"name": "aspect", "translation": "richting", "unit": " °"},
+                          {"name": "slope", "translation": "hellingshoek", "unit": " °"},
+                          {"name": "elevation", "translation": "hoogte", "unit": " m"},
+                          {"name": "area", "translation": "opp dakvlak", "unit": " m²"},
+                          {"name": "oppvlakte", "translation": "opp gebouw", "unit": " m²"}
+                        ]
+                      }
                     },
                     "source": {
                       "type": "raster",
@@ -4562,7 +4572,7 @@
                 },
                 {
                     "type": "group",
-                    "title": "Tijdreis Luchtfoto's 2006 - 2018",
+                    "title": "Tijdreis Luchtfoto's 2006 - 2019",
                     "sublayers": [
                         {
                             "title": "2006",
@@ -4579,7 +4589,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2006/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4600,7 +4610,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2007/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4621,7 +4631,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2008/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4642,7 +4652,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2009/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4663,7 +4673,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2010/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4684,7 +4694,7 @@
                                 "tiles":[
                                     "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2011/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                                 }
@@ -4705,7 +4715,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2012/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4726,7 +4736,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2013/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4747,7 +4757,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2014/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4768,7 +4778,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2015/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4789,7 +4799,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2016/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4810,7 +4820,7 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2017/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
@@ -4831,12 +4841,35 @@
                                 "tiles":[
                                   "https://t1.edugis.nl/mapproxy/tijdreisfoto/wmts/tijdreisfoto_2018/GLOBAL_WEBMERCATOR/{z}/{x}/{y}.jpeg"
                                 ],
-                                "maxzoom": 22,
+                                "maxzoom": 18,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                 "attribution":"&copy; <a href=\"https://topotijdreis.nl\" target=\"copyright\">Kadaster Topotijdreis.nl</a>"
                               }
                             }
-                          }
+                          },
+                          {
+                            "title":"2019",
+                            "id": "pdokluchtfoto_2019_voortijdreis",
+                            "layerInfo":{
+                              "id":"pdokluchtfotowmts2019_2",
+                              "type":"raster",
+                              "metadata":{
+                                "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2019.png",
+                                "reference": true
+                              },
+                              "source":{
+                                "type":"raster",
+                                "tileSize":256,
+                                "tiles":[
+                                  "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2019_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                                ],
+                                "attribution":"PDOK",
+                                "minzoom": 5,
+                                "maxzoom": 18,
+                                "bounds" : [2.75,50.50, 7.5, 53.6]
+                              }
+                            }
+                        }
                     ]
                 },
                 {
