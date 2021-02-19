@@ -1603,7 +1603,8 @@
                                   "translations": [
                                     {"name": "GRAY_INDEX", "translation": "hoogte", "unit": " m"}
                                   ]
-                                }
+                                },
+                                "abstract": "Het Actueel Hoogtebestand Nederland (AHN) is de digitale hoogtekaart voor heel Nederland. Het bevat gedetailleerde en precieze hoogtegegevens met gemiddeld acht hoogtemetingen per vierkante meter. AHN is een samenwerking van de provincies, Rijksoverheid en de waterschappen. Deze kaartlaag heeft een resolutie van een halve meter horizontaal en 5cm verticaal. De hoogtegegevens zijn ingewonnen tussen 2014 en 2019."
                             },
                             "source": {
                                 "type": "raster",
@@ -2603,7 +2604,7 @@
                     }
                 },
                 {
-                  "title": "Pico dakdelen 2018",
+                  "title": "Dakvlakken",
                   "type": "wms",
                   "layerInfo": {
                     "id": "dakdelen_2018",
@@ -2621,7 +2622,8 @@
                           {"name": "area", "translation": "opp dakvlak", "unit": " m²"},
                           {"name": "oppvlakte", "translation": "opp gebouw", "unit": " m²"}
                         ]
-                      }
+                      },
+                      "abstract":"De dakdelen of dakvlakken van gebouwen zijn berekend op basis van het Actueel Hoogtebestand Nederland (AHN3) waarvan de gegevens zijn ingewonnen tussen 2014 en 2019. Van elk dakvlak zijn de richting (noord is 0 graden), hellingshoek (plat is 0 graden) en hoogte berekend. De dakvlakken kunnen ondermeer worden gebruikt voor het berekenen van hoeveelheid en opbrengst van eventueel te plaatsen zonnepannelen op het dak. De gegevens zijn berekend voor PICO i.v.m. de energietransitie."
                     },
                     "source": {
                       "type": "raster",
