@@ -247,7 +247,7 @@
                         }
                     }
                 },{
-                    "title":"PDOK luchtfoto's 2016 (WMTS)",
+                    "title":"PDOK luchtfoto's (2016)",
                     "type":"reference",
                     "layerInfo":{
                       "id":"pdokluchtfotowmts2016",
@@ -260,7 +260,7 @@
                         "type":"raster",
                         "tileSize":256,
                         "tiles":[
-                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                          "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
@@ -270,20 +270,20 @@
                     }
                 },
                 {
-                    "title":"PDOK luchtfoto's 2019 (WMTS)",
+                    "title":"PDOK luchtfoto's (Actueel)",
                     "type":"reference",
                     "layerInfo":{
-                      "id":"pdokluchtfotowmts2019",
+                      "id":"pdokluchtfotowmtsactueel",
                       "type":"raster",
                       "metadata":{
-                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2019.png",
+                        "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png",
                         "reference": true
                       },
                       "source":{
                         "type":"raster",
                         "tileSize":256,
                         "tiles":[
-                          "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2019_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                          "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
@@ -361,9 +361,9 @@
                         },
                         "source-layer":"percelen.gt_gemeenteperceelsectie",
                         "paint":{
-                            "fill-color":"rgba(0,0,0,0)",
-                            "fill-opacity":1,
-                            "fill-outline-color": "green"
+                          "fill-color":"rgba(0,0,0,0)",
+                          "fill-opacity":1,
+                          "fill-outline-color": "green"
                         }
                       }
                     },
@@ -4574,7 +4574,7 @@
                 },
                 {
                     "type": "group",
-                    "title": "Tijdreis Luchtfoto's 2006 - 2019",
+                    "title": "Luchtfoto's 2006 - 2020",
                     "sublayers": [
                         {
                             "title": "2006",
@@ -4863,7 +4863,7 @@
                                 "type":"raster",
                                 "tileSize":256,
                                 "tiles":[
-                                  "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2019_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                                  "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2019_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                                 ],
                                 "attribution":"PDOK",
                                 "minzoom": 5,
@@ -4871,7 +4871,30 @@
                                 "bounds" : [2.75,50.50, 7.5, 53.6]
                               }
                             }
-                        }
+                        },
+                        {
+                          "title":"2020",
+                          "id": "pdokluchtfoto_2020_voortijdreis",
+                          "layerInfo":{
+                            "id":"pdokluchtfotowmts2020_2",
+                            "type":"raster",
+                            "metadata":{
+                              "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2020.png",
+                              "reference": true
+                            },
+                            "source":{
+                              "type":"raster",
+                              "tileSize":256,
+                              "tiles":[
+                                "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2020_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                              ],
+                              "attribution":"PDOK",
+                              "minzoom": 5,
+                              "maxzoom": 18,
+                              "bounds" : [2.75,50.50, 7.5, 53.6]
+                            }
+                          }
+                      }
                     ]
                 },
                 {
