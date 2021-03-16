@@ -1650,13 +1650,31 @@
                     "title": "Grondsoorten",
                     "sublayers": [
                         {
-                            "type":"getcapabilities",
-                            "title":"grondsoorten",
-                            "layerInfo":{
-                                "id":"grondsoorten",
-                                "url":"https://kaart.edugis.nl/data/nederland/bodem.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
+                          "type": "vector",
+                          "title": "grondsoorten",
+                          "layerInfo": {
+                            "id":"ce2739d0-8f8f-4c41-862a-6349b3a4ddca",
+                            "type":"fill",
+                            "source":{
+                                "type":"vector",
+                                "tiles":["https://tiles.edugis.nl/data/edugis.grondsoortenkaart/mvt/{z}/{x}/{y}?geom_column=geom&columns=grondsoortnaam&include_nulls=0"],
+                                "bounds":[3.35857082748342,50.7505785435136,7.22776217823428,53.5535903945444]},
+                            "source-layer":"edugis.grondsoortenkaart",
+                            "paint":{
+                            "fill-color":[
+                                "case",["==",["get","grondsoortnaam"],"zware zavel"],"rgb(147,173,46)",
+                                ["==",["get","grondsoortnaam"],"lichte zavel"],"rgb(162,255,161)",
+                                ["==",["get","grondsoortnaam"],"zand"],"rgb(242,198,93)",
+                                ["==",["get","grondsoortnaam"],"lichte klei"],"rgb(60,106,0)",
+                                ["==",["get","grondsoortnaam"],"veen"],"rgb(223,123,187)",
+                                ["==",["get","grondsoortnaam"],"bebouwd"],"rgb(211,209,212)",
+                                ["==",["get","grondsoortnaam"],"zware klei"],"rgb(11,126,129)",
+                                ["==",["get","grondsoortnaam"],"leem"],"rgb(250,0,0)",
+                                "#000000"],
+                            "fill-opacity":0.8,
+                            "fill-outline-color": ["interpolate-lab", ["linear"], ["zoom"], 7, "rgba(255,255,255,0)", 20, "rgba(0,0,0,1)"]
+                              }
+                          }
                         }
                     ]
                 },
