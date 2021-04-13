@@ -230,7 +230,7 @@ class WebMap extends LitElement {
       {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
       {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: "Schaalbalk"},
-      {name:"legend", visible: true, position: "opened", order: 204, info: "Legenda en kaartlagen"},
+      {name:"legend", visible: true, position: "opened", opened: 1, order: 204, info: "Legenda en kaartlagen"},
     ];
     this.exporttool = false;
   }
@@ -834,8 +834,8 @@ class WebMap extends LitElement {
       return html``;
     }
     return html`
-    <div id="legend-container-container" class="${legend.position==='opened'?'':'collapsed'}">
-      <div id="button-hide-legend" @click="${e=>this.toggleLegend(e)}" class="${legend.position==='opened'?'':'collapsed'}">
+    <div id="legend-container-container">
+      <div id="button-hide-legend" @click="${e=>this.toggleLegend(e)}">
         <span class="offset"></span><i>${arrowLeftIcon}</i>
       </div>
       <map-layer-container 
