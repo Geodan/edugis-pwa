@@ -150,6 +150,11 @@ export default class MapImportExport extends LitElement {
             if (tool.hasOwnProperty('visible')) {result[tool.name].visible = tool.visible};
             if (tool.hasOwnProperty('position')) {result[tool.name].position = tool.position};
             if (tool.hasOwnProperty('order')) {result[tool.name].order = tool.order};
+            if (tool.name === 'importexport' && tool.visible && tool.order === 99999) {
+              // do not save override
+              result[tool.name].visible = false;
+              result[tool.name].order = 100;
+            }
             return result;},{}),
         keys: {}
     }

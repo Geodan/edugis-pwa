@@ -49,6 +49,7 @@ class EduGISApp extends (LitElement) {
     super();
     this.configUrl = getHashParameters().configurl;
     this.helpstart = getHashParameters().helpstart;
+    this.exporttool = getHashParameters().exporttool;
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
@@ -167,8 +168,8 @@ footer a:hover {
           </ul>
         </nav>
     </header>
-    <web-map .configurl="${this.configUrl}" navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
-    <footer className="App-footer">&copy;2020 <a href="about.html" target="about">EduGIS</a></footer>
+    <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
+    <footer className="App-footer">&copy;2021 <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }
   firstUpdated() {
@@ -221,6 +222,9 @@ footer a:hover {
       this.configUrl = result.configurl;
     } else {
       this.configUrl = "";
+    }
+    if (result.hasOwnProperty('exporttool')) {
+      this.exporttool = result.exporttool;
     }
     if (result.hasOwnProperty('helpstart')) {
       this.helpstart = result.helpstart;

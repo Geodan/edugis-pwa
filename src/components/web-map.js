@@ -182,7 +182,8 @@ class WebMap extends LitElement {
       lastClickPoint: Object,
       currentTool: String,
       configurl: String,
-      updatelegend: Number
+      updatelegend: Number,
+      exporttool: Boolean
     }; 
   }
   constructor() {
@@ -231,6 +232,7 @@ class WebMap extends LitElement {
       {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: "Schaalbalk"},
       {name:"legend", visible: true, position: "opened", order: 204, info: "Legenda en kaartlagen"},
     ];
+    this.exporttool = false;
   }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
@@ -754,6 +756,14 @@ class WebMap extends LitElement {
     }
     const showLanguageTool = this.checkMapIsLanguageSwitcherCapable();
     const tools = this.toolList.filter(tool=>tool.visible && tool.icon && (tool.name!=='maplanguage' || showLanguageTool));
+    if (this.exporttool && this.exporttool !== "0" && this.exporttool.toString().toLowerCase() !== "false") {
+      if (!tools.find(tool=>tool.name === 'importexport')) {
+        let overrideTool = this.toolList.find(tool=>tool.name === 'importexport');
+        overrideTool.order = 99999;
+        overrideTool.visible = 1;
+        tools.push(overrideTool)
+      }
+    }
     if (tools.length == 0) {
       return '';
     }
