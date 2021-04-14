@@ -1416,7 +1416,7 @@
                                 "type":"fill",
                                 "source":{
                                     "type":"vector",
-                                    "tiles":["http://tiles.edugis.nl:8090/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_woningen&include_nulls=0"],
+                                    "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_woningen&include_nulls=0"],
                                     "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
                                 "source-layer":"public.cbs_vk100_2020",
                                 "paint":{
@@ -2152,7 +2152,7 @@
                             "type":"fill",
                             "source":{
                                 "type":"vector",
-                                "tiles":["http://tiles.edugis.nl:8090/data/public.landschap_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                "tiles":["https://tiles.edugis.nl/data/public.landschap_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                 "bounds":[3.35823892305048,50.7499127235754,7.23040469324804,53.5536468751346],
                                 "maxzoom": 12
                             },
@@ -2229,7 +2229,7 @@
                                     "type":"fill",
                                     "source":{
                                         "type":"vector",
-                                        "tiles":["http://tiles.edugis.nl:8090/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                         "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
                                     },
                                     "source-layer":"public.nationalelandschappen",
@@ -2249,7 +2249,7 @@
                                     "type":"fill",
                                     "source":{
                                         "type":"vector",
-                                        "tiles":["http://tiles.edugis.nl:8090/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                         "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
                                     },
                                     "source-layer":"public.nationalelandschappen",
@@ -3347,7 +3347,7 @@
                             "minzoom": 12,
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["http://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
+                            "tiles": ["https://geodata.rivm.nl/geoserver/nea/wms?layers=Greenspread_20181101_v_zonnevelden"]
                         }
                     }
                 },
