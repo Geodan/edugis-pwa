@@ -1698,13 +1698,314 @@
                     "title": "Landschappen",
                     "sublayers": [
                         {
-                            "type":"getcapabilities",
-                            "title":"landschappen",
-                            "layerInfo":{
-                                "id":"landschappen",
-                                "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/landschappen.map",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                          "type": "vector",
+                          "title": "Landschappen",
+                          "layerInfo": {
+                            "id":"40397019-eb38-45f4-b734-57759601ba6e",
+                            "type":"fill",
+                            "source":{
+                                "type":"vector",
+                                "tiles":["http://tiles.edugis.nl:8090/data/public.landschap_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                "bounds":[3.35823892305048,50.7499127235754,7.23040469324804,53.5536468751346],
+                                "maxzoom": 12
+                            },
+                            "source-layer":"public.landschap_geo",
+                            "paint":{
+                            "fill-color":[
+                                "match",["get","naam"],
+                                "Droogmakerijen","#c06448",
+                                "Heuvelland","#a80000",
+                                "Kustzone","#ffff00",
+                                "Laagveengebied","#ffccff",
+                                "Rivierengebied","#bae5f2",
+                                "Veenkoloniën","#c29ed7",
+                                "Verstedelijkt gebied","#e1e1e1",
+                                "Zandgebied","#ffd37f",
+                                "Zeekleigebied","#66cc99",
+                                "#000000"
+                              ],
+                              "fill-opacity":1}
+                        }
+                        },
+                        {
+                          "type": "vector",
+                          "title": "Deellandschappen",
+                          "layerInfo":  {
+                            "id":"d29427a4-e88d-4673-b6c1-28b1dbe4988c",
+                            "type":"fill",
+                            "source":{
+                                "type":"vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.deellandschap_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                "bounds":[3.35823892378111,50.7499127235773,7.23040469398028,53.5536468751385],
+                                "maxzoom": 13
+                            },
+                            "source-layer":"public.deellandschap_geo",
+                            "paint":{
+                            "fill-color":[
+                                "match",["get","naam"],
+                                "Heuvelland", "#f7b467",
+                                "Oostelijk zandgebied", "#e3c654",
+                                "Noordelijk zandgebied", "#fef48a",
+                                "Midden-Nederlands zandgebied", "#fefac2",
+                                "Zuidelijk zandgebied", "#dae439",
+                                "Noord- en Midden-Nederlandse veenkoloniën", "#770081",
+                                "De Peel", "#93419d",
+                                "Midden-Nederlands rivierengebied","#00a1e8",
+                                "Maasvallei", "#004da8",
+                                "Noordelijk zeekleigebied", "#a06632",
+                                "Zuidwestelijk zeekleigebied", "#974749",
+                                "Noordelijke laagveengebieden", "#d400db",
+                                "Midden-Nederlandse laagveengebieden", "#fa7ffc",
+                                "Droogmakerijen 16e-19e eeuw", "#92ae2f",
+                                "Zuiderzeepolders", "#668200",
+                                "Waddeneilanden", "#fea300",
+                                "Hollandse kustzone", "#febe00",
+                                "Kustzone van Zuidwest-Nederland", "#fee300",
+                                "Verstedelijkt gebied","#828282",
+                                "#000000"],
+                            "fill-opacity":1}
+                          }
+                        },
+                        {
+                          "type": "group",
+                          "title": "Nationale landschappen",
+                          "sublayers":[
+                            {
+                              "type": "group",
+                              "title": "Waterlinies",
+                              "sublayers": [
+                                {
+                                  "type":"vector",
+                                  "title": "Nieuwe Hollandse Waterlinie",
+                                  "layerInfo": {
+                                    "id":"a62270b6-563d-4c15-80c8-61e21",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["http://tiles.edugis.nl:8090/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
+                                    },
+                                    "source-layer":"public.nationalelandschappen",
+                                    "paint":{
+                                    "fill-color": "#5f98c6",
+                                    "fill-outline-color":"white",
+                                    "fill-opacity":0.8
+                                    },
+                                    "filter": ["==",["get","naam"],"Nieuwe Hollandse Waterlinie"]
+                                  }
+                                },
+                                {
+                                  "type":"vector",
+                                  "title": "Stelling van Amsterdam",
+                                  "layerInfo": {
+                                    "id":"a62270b6-563d-4c15-80c8-61e218490b9d",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["http://tiles.edugis.nl:8090/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
+                                    },
+                                    "source-layer":"public.nationalelandschappen",
+                                    "paint":{
+                                    "fill-color": "#e41a1c",
+                                    "fill-outline-color":"white",
+                                    "fill-opacity":0.8
+                                    },
+                                    "filter": ["==",["get","naam"],"Stelling van Amsterdam"]
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "type": "vector",
+                              "title": "Groene Hart",
+                              "layerInfo": {
+                                "id":"960-b233-4913-975d-2d6a290b1a15",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                    "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
+                                    "maxzoom": 21
+                                },
+                                "source-layer":"public.nationalelandschappen",
+                                "paint":{
+                                "fill-color":"#b2df8a",
+                                "fill-outline-color":"white",
+                                "fill-opacity":1
+                                },
+                                "filter": ["==", ["get","naam"],"Groene Hart"]
+                              }
+                            },
+                            {
+                              "type":"vector",
+                              "title": "Overige ntl landschappen",
+                              "layerInfo": {
+                                "id":"7c209960-b233-4913-975d-2d6a290b1a15",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                    "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
+                                    "maxzoom": 21
+                                },
+                                "source-layer":"public.nationalelandschappen",
+                                "paint":{
+                                "fill-color":[
+                                    "match", ["get","naam"],
+                                    "Noardlike Fryske Wâlden"," #e41a1c",
+                                    "Drentsche Aa","#bc80bd",
+                                    "Rivierengebied", "#80b1d3",
+                                    "Zuidwest Fryslân", "#bebada",
+                                    "Laag Holland", "#ffed6f",
+                                    "Graafschap", "#d73027",
+                                    "Winterswijk", "#1a9850",
+                                    "Hoeksche Waard", "#d73027",
+                                    "Arkemheen-Eemland","#a6cee3",
+                                    "Gelderse Poort","#1f78b4",
+                                    "Groene Hart","#b2df8a",
+                                    "Het Groene Woud","#33a02c",
+                                    "IJsseldelta","#fb9a99",
+                                    "Middag-Humsterland","#e31a1c",
+                                    "Nieuwe Hollandse Waterlinie","#fdbf6f",
+                                    "Noordoost-Twente","#ff7f00",
+                                    "Stelling van Amsterdam","#cab2d6",
+                                    "Veluwe","#6a3d9a",
+                                    "Zuid Limburg","#ffff99",
+                                    "Zuidwest Zeeland","#b15928",
+                                    "#000000"],
+                                "fill-outline-color":"white",
+                                "fill-opacity":1
+                                },
+                                "filter": ["match", ["get","naam"],
+                                  "Stelling van Amsterdam", false,
+                                  "Nieuwe Hollandse Waterlinie", false,
+                                  true
+                                ]
+                              }
+                            },
+                            {
+                              "type": "group",
+                              "title": "Maskers Ntl Landschappen",
+                              "sublayers": [
+                                {
+                                  "type": "vector",
+                                  "title": "Groene Hart",
+                                  "id":"dbc8e5-20a5-4c17-b87d-d50c91970bd0",
+                                  "layerInfo": {
+                                    "id":"dbc8e5-20a5-4c17-b87d-d50c91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["!=", ["get","naam"], "Groene Hart"]
+                                  }
+                                },
+                                {
+                                  "type": "vector",
+                                  "title": "IJsseldelta",
+                                  "id":"b87d-d50c91970bd0",
+                                  "layerInfo": {
+                                    "id":"b87d-d50c91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["!=", ["get","naam"], "IJsseldelta"]
+                                  }
+                                },
+                                {
+                                  "type": "vector",
+                                  "title": "Laag Holland",
+                                  "id":"4c17-b87d-d50c91970bd0",
+                                  "layerInfo": {
+                                    "id":"4c17-b87d-d50c91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["!=", ["get","naam"], "Laag Holland"]
+                                  }
+                                },
+                                {
+                                  "type": "vector",
+                                  "title": "Rivierengebied",
+                                  "id":"91970bd0",
+                                  "layerInfo": {
+                                    "id":"91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["!=", ["get","naam"], "Rivierengebied"]
+                                  }
+                                },
+                                {
+                                  "type": "vector",
+                                  "title": "Veluwe",
+                                  "id":"50c91970bd0",
+                                  "layerInfo": {
+                                    "id":"50c91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["!=", ["get","naam"], "Veluwe"]
+                                  }
+                                },
+                                {
+                                  "type": "vector",
+                                  "title": "Overig",
+                                  "id":"d50c91970bd0",
+                                  "layerInfo": {
+                                    "id":"d50c91970bd0",
+                                    "type":"fill",
+                                    "source":{
+                                        "type":"vector",
+                                        "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                    "source-layer":"public.ntllandschappenmasker",
+                                    "paint":{
+                                      "fill-color": "#828282",
+                                      "fill-opacity": 0.6
+                                    },
+                                    "filter": ["match", ["get","naam"], "Veluwe", true, "Rivierengebied", true, "Laag Holland", true, 
+                                      "IJsseldelta", true, "Groene Hart", true, "masker nationale landschappen", true, false]
+                                  }
+                                }
+                              ]
                             }
+                          ]
                         },
                         {
                             "type": "wms",
