@@ -1010,6 +1010,78 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                          "type": "group",
+                          "title": "CBS vierkanten 2020",
+                          "id": "CBS vierkanten 2020 inwoners",
+                          "sublayers": [
+                            {
+                              "type": "other",
+                              "title": "Aantal inwoners",
+                              "layerInfo": {
+                                "id": "cbsvierkant100m aantal inwoners_fill",
+                                "type": "fill",
+                                "metadata": {
+                                  "legendMap": [
+                                    {
+                                      "property": "aantal_inwoners",
+                                      "mapping": [
+                                        {
+                                          "description": "5 tot 10",
+                                          "literal": "4.000001,9.0"
+                                        },
+                                        {
+                                          "description": "10 tot 20",
+                                          "literal": "19.0,9.000001"
+                                        },
+                                        {
+                                          "description": "20 tot 50",
+                                          "literal": "19.000001,49.0"
+                                        },
+                                        {
+                                          "description": "50 tot 100",
+                                          "literal": "49.000001,99.0"
+                                        },
+                                        {
+                                          "description": "100 tot 150",
+                                          "literal": "149.0,99.000001"
+                                        },
+                                        {
+                                          "description": "150 tot 250",
+                                          "literal": "149.000001,249.0"
+                                        },
+                                        {
+                                          "description": "250 of meer",
+                                          "literal": "100000.0,249.000001"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "source": {
+                                  "type": "vector",
+                                  "tiles": [
+                                    "https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_inwoners,aantal_mannen,aantal_vrouwen"
+                                  ]
+                                },
+                                "source-layer": "public.cbs_vk100_2020",
+                                "paint": {
+                                  "fill-color": [
+                                    "case",
+                                    ["<=",["get","aantal_inwoners"], 9],"#4575B5",
+                                    ["<=",["get","aantal_inwoners"], 19],"#849EBA",
+                                    ["<=",["get","aantal_inwoners"], 49],"#C0CCBE",
+                                    ["<=",["get","aantal_inwoners"], 99],"#FFFFBF",
+                                    ["<=",["get","aantal_inwoners"], 149],"#FAB984",
+                                    ["<=",["get","aantal_inwoners"], 249],"#ED7551",
+                                    ["<=",["get","aantal_inwoners"], 100000],"#D62F27",
+                                    "rgba(80,80,80,0.2)"
+                                  ]
+                                }
+                              }
+                            }
+                          ]
                         }
                     ]
                 },
@@ -1330,6 +1402,381 @@
                                     }
                                 }
                             ]
+                        },
+                        {
+                          "type": "group",
+                          "title": "CBS vierkanten (2020)",
+                          "id": "CBS vierkanten woningen",
+                          "sublayers": [
+                            {
+                              "type": "vector",
+                              "title": "Aantal woningen",
+                              "layerInfo": {
+                                "id":"4d349763-71d2-4eca-b8b1-e7d430be6203",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["http://tiles.edugis.nl:8090/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_woningen&include_nulls=0"],
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                "source-layer":"public.cbs_vk100_2020",
+                                "paint":{
+                                "fill-color":[
+                                    "case",
+                                    ["<",["get","aantal_woningen"],5],"#fee5d9",
+                                    ["<",["get","aantal_woningen"],10],"#fcbba1",
+                                    ["<",["get","aantal_woningen"],15],"#fc9272",
+                                    ["<",["get","aantal_woningen"],20],"#fb6a4a",
+                                    ["<",["get","aantal_woningen"],25],"#ef3b2c",
+                                    ["<",["get","aantal_woningen"],35],"#cb181d",
+                                    ["<=",["get","aantal_woningen"],860],"#99000d",
+                                    "#99000d"],"fill-opacity":0.8}
+                              }
+                            },
+                            {
+                              "type":"vector",
+                              "title": "Percentage koopwoningen",
+                              "layerInfo": {
+                                "id":"bdbb6a82-0ea6-400c-9b1d-4d629a830ac6",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=percentage_koopwoningen,percentage_huurwoningen&include_nulls=0"],
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                "source-layer":"public.cbs_vk100_2020",
+                                "paint":{
+                                  "fill-color": [
+                                    "case",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        0
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        19
+                                      ]
+                                    ],
+                                    "#4575B5",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        19.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        29
+                                      ]
+                                    ],
+                                    "#849EBA",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        29.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        39
+                                      ]
+                                    ],
+                                    "#C0CCBE",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        39.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        49
+                                      ]
+                                    ],
+                                    "#FFFFBF",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        49.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        59
+                                      ]
+                                    ],
+                                    "#FAB984",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        59.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        89
+                                      ]
+                                    ],
+                                    "#ED7551",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        89.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_koopwoningen"
+                                        ],
+                                        100
+                                      ]
+                                    ],
+                                    "#D62F27",
+                                    "rgba(80,80,80,0.2)"
+                                  ]
+                                }
+                            }
+                            },
+                            {
+                              "type":"vector",
+                              "title":"Percentage huurwoningen",
+                              "layerInfo":{
+                                "id":"ae57b525-9168-40dd-9ac3-24e484fe6b49",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=percentage_koopwoningen,percentage_huurwoningen&include_nulls=0"],
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                "source-layer":"public.cbs_vk100_2020",
+                                "paint":{
+                                  "fill-color": [
+                                    "case",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        0
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        19
+                                      ]
+                                    ],
+                                    "#4575B5",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        19.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        29
+                                      ]
+                                    ],
+                                    "#849EBA",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        29.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        39
+                                      ]
+                                    ],
+                                    "#C0CCBE",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        39.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        49
+                                      ]
+                                    ],
+                                    "#FFFFBF",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        49.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        59
+                                      ]
+                                    ],
+                                    "#FAB984",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        59.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        89
+                                      ]
+                                    ],
+                                    "#ED7551",
+                                    [
+                                      "all",
+                                      [
+                                        ">=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        89.000001
+                                      ],
+                                      [
+                                        "<=",
+                                        [
+                                          "get",
+                                          "percentage_huurwoningen"
+                                        ],
+                                        100
+                                      ]
+                                    ],
+                                    "#D62F27",
+                                    "rgba(80,80,80,0.2)"
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "vector",
+                              "title": "Gemiddelde WOZ-waarde woningen",
+                              "layerInfo": {
+                                "id":"d561bd6e-f891-4c63-87ec-5f79676bda25",
+                                "type":"fill",
+                                "source":{
+                                    "type":"vector",
+                                    "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemiddelde_woz_waarde_woning&include_nulls=0"],
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                "source-layer":"public.cbs_vk100_2020",
+                                "paint":{
+                                "fill-color":[
+                                    "case",["<",["get","gemiddelde_woz_waarde_woning"],0],"rgba(80,80,80,0.2)",
+                                      ["<",["get","gemiddelde_woz_waarde_woning"],111],"#66bd63",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],122],"#a6d96a",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],176],"#d9ef8b",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],217],"#ffffbf",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],257],"#fee08b",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],305],"#fdae61",
+                                        ["<",["get","gemiddelde_woz_waarde_woning"],384],"#f46d43",
+                                        ["<=",["get","gemiddelde_woz_waarde_woning"],4479],"#d73027",
+                                        "#d73027"]
+                                }
+                              }
+                            }
+                          ]
                         }
                     ]
                 },
