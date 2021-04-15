@@ -2056,7 +2056,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "RCE CultGIS"
                                   },
                                   "source-layer":"public.nationalelandschappen",
@@ -2081,7 +2081,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "RCE CultGIS"
                                   },
                                   "source-layer":"public.nationalelandschappen",
@@ -2108,7 +2108,7 @@
                                   "type":"vector",
                                   "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                   "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                  "maxzoom": 21,
+                                  "maxzoom": 15,
                                   "attribution": "RCE CultGIS"
                               },
                               "source-layer":"public.nationalelandschappen",
@@ -2133,7 +2133,7 @@
                                   "type":"vector",
                                   "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                   "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                  "maxzoom": 21,
+                                  "maxzoom": 15,
                                   "attribution": "RCE CultGIS"
                               },
                               "source-layer":"public.nationalelandschappen",
@@ -2189,7 +2189,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2214,7 +2214,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2239,7 +2239,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                     },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2264,7 +2264,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2289,7 +2289,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2314,7 +2314,7 @@
                                       "type":"vector",
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
-                                      "maxzoom": 21,
+                                      "maxzoom": 15,
                                       "attribution": "EduGIS"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
@@ -2331,13 +2331,42 @@
                         ]
                       },
                       {
+                        "type": "vector",
+                        "title": "Natura 2000 gebieden",
+                        "layerInfo": {
+                          "id":"9ace22e1-4be8-4981-b376-77e05cf70c06",
+                          "type":"fill",
+                          "metadata": {
+                            "abstract": "Natura 2000 gebieden eind 2019, volgens de European Environment Agency. Gebiedsgrenzen zijn vereenvoudigd en dus niet nauwkeurig.",
+                            "attributes": {
+                              "translations": [
+                                {"name": "sitecode", "translation": "code", "unit": ""},
+                                {"name": "sitename", "translation": "naam", "unit": ""},
+                                {"name": "ms", "translation": "landcode", "unit": ""}
+                              ]
+                            }
+                          },
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.natura2000eu2019_simplified/mvt/{z}/{x}/{y}?geom_column=geom&columns=sitename,ms,sitecode&include_nulls=0"],
+                              "bounds":[-32.3680568531556,27.5876750883995,34.1015267622833,70.0258634430731],
+                              "maxzoom": 15,
+                              "attribution": "EEA"
+                          },
+                          "source-layer":"public.natura2000eu2019_simplified",
+                          "paint":{
+                          "fill-color": "#4daf4a",
+                          "fill-opacity":0.8}
+                        }
+                      },
+                      {
                             "type":"getcapabilities",
                             "title":"specialestatus",
                             "layerInfo":{
                                 "id":"specialestatus",
                                 "url":"https://kaart.edugis.nl/data/nederland/gebieden_speciale_status.xml",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"],
-                                "deniedlayers": "nationale_landschappen" 
+                                "deniedlayers": "nationale_landschappen,natura2000" 
                             }
                         }
                     ]
