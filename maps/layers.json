@@ -1023,38 +1023,23 @@
                                 "id": "cbsvierkant100m aantal inwoners_fill",
                                 "type": "fill",
                                 "metadata": {
+                                  "abstract": "Aantal inwoners per 100 x 100 meter vak volgens CBS (jaar 2020)",
+                                  "attributes": {
+                                      "translations": [
+                                          {"name": "aantal_inwoners", "translation": "aantal inwoners", "unit": ""}
+                                      ]
+                                  },
                                   "legendMap": [
                                     {
                                       "property": "aantal_inwoners",
                                       "mapping": [
-                                        {
-                                          "description": "5 tot 10",
-                                          "literal": "4.000001,9.0"
-                                        },
-                                        {
-                                          "description": "10 tot 20",
-                                          "literal": "19.0,9.000001"
-                                        },
-                                        {
-                                          "description": "20 tot 50",
-                                          "literal": "19.000001,49.0"
-                                        },
-                                        {
-                                          "description": "50 tot 100",
-                                          "literal": "49.000001,99.0"
-                                        },
-                                        {
-                                          "description": "100 tot 150",
-                                          "literal": "149.0,99.000001"
-                                        },
-                                        {
-                                          "description": "150 tot 250",
-                                          "literal": "149.000001,249.0"
-                                        },
-                                        {
-                                          "description": "250 of meer",
-                                          "literal": "100000.0,249.000001"
-                                        }
+                                        {"description": "5 tot 10","literal": "4.000001,9.0"},
+                                        {"description": "10 tot 20","literal": "19.0,9.000001"},
+                                        {"description": "20 tot 50","literal": "19.000001,49.0"},
+                                        {"description": "50 tot 100","literal": "49.000001,99.0"},
+                                        {"description": "100 tot 150","literal": "149.0,99.000001"},
+                                        {"description": "150 tot 250","literal": "149.000001,249.0"},
+                                        {"description": "250 of meer","literal": "100000.0,249.000001"}
                                       ]
                                     }
                                   ]
@@ -1063,7 +1048,8 @@
                                   "type": "vector",
                                   "tiles": [
                                     "https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_inwoners,aantal_mannen,aantal_vrouwen"
-                                  ]
+                                  ],
+                                  "attribution": "CBS"
                                 },
                                 "source-layer": "public.cbs_vk100_2020",
                                 "paint": {
@@ -1414,10 +1400,20 @@
                               "layerInfo": {
                                 "id":"4d349763-71d2-4eca-b8b1-e7d430be6203",
                                 "type":"fill",
+                                "metadata":{
+                                  "abstract": "Totaal aantal woningen per 100 x 100 meter vak volgens CBS (jaar 2020). Vakken met minder dan 5 woningen zijn weggelaten ondermeer om privacy-redenen",
+                                  "attributes": {
+                                      "translations": [
+                                          {"name": "aantal_woningen", "translation": "aantal woningen"}
+                                      ]
+                                  }
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=aantal_woningen&include_nulls=0"],
-                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022],
+                                    "attribution": "CBS"
+                                },
                                 "source-layer":"public.cbs_vk100_2020",
                                 "paint":{
                                 "fill-color":[
@@ -1438,21 +1434,32 @@
                               "layerInfo": {
                                 "id":"bdbb6a82-0ea6-400c-9b1d-4d629a830ac6",
                                 "type":"fill",
+                                "metadata":{
+                                  "abstract": "Percentage koopwoningen per 100 x 100 meter vak volgens CBS (jaar 2020)",
+                                  "attributes": {
+                                      "translations": [
+                                          {"name": "percentage_koopwoningen", "translation": "percentage koopwoningen", "unit": "%"},
+                                          {"name": "percentage_huurwoningen", "translation": "percentage huurwoningen", "unit": "%"}
+                                      ]
+                                  }
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=percentage_koopwoningen,percentage_huurwoningen&include_nulls=0"],
-                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022],
+                                    "attribution": "CBS"
+                                },
                                 "source-layer":"public.cbs_vk100_2020",
                                 "paint":{
                                   "fill-color": [
                                         "case",
-                                        ["<=", ["get","percentage_koopwoningen", 20]],"#4575B5",
-                                        ["<=", ["get","percentage_koopwoningen", 30]],"#849EBA",
-                                        ["<=", ["get","percentage_koopwoningen", 40]],"#C0CCBE",
-                                        ["<=", ["get","percentage_koopwoningen", 50]],"#FFFFBF",
-                                        ["<=", ["get","percentage_koopwoningen", 60]],"#FAB984",
-                                        ["<=", ["get","percentage_koopwoningen", 90]],"#ED7551",
-                                        ["<=", ["get","percentage_koopwoningen", 100]],"#D62F27",                                        
+                                        ["<=", ["get","percentage_koopwoningen"], 20],"#4575B5",
+                                        ["<=", ["get","percentage_koopwoningen"], 30],"#849EBA",
+                                        ["<=", ["get","percentage_koopwoningen"], 40],"#C0CCBE",
+                                        ["<=", ["get","percentage_koopwoningen"], 50],"#FFFFBF",
+                                        ["<=", ["get","percentage_koopwoningen"], 60],"#FAB984",
+                                        ["<=", ["get","percentage_koopwoningen"], 90],"#ED7551",
+                                        ["<=", ["get","percentage_koopwoningen"], 100],"#D62F27",                                        
                                         "rgba(80,80,80,0.2)"
                                   ]
                                 }
@@ -1464,21 +1471,32 @@
                               "layerInfo":{
                                 "id":"ae57b525-9168-40dd-9ac3-24e484fe6b49",
                                 "type":"fill",
+                                "metadata":{
+                                  "abstract": "Percentage huurwoningen per 100 x 100 meter vak volgens CBS (jaar 2020)",
+                                  "attributes": {
+                                      "translations": [
+                                          {"name": "percentage_huurwoningen", "translation": "percentage huurwoningen", "unit": "%"},
+                                          {"name": "percentage_koopwoningen", "translation": "percentage koopwoningen", "unit": "%"}
+                                      ]
+                                  }
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=percentage_koopwoningen,percentage_huurwoningen&include_nulls=0"],
-                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022],
+                                    "attribution": "CBS"
+                                },
                                 "source-layer":"public.cbs_vk100_2020",
                                 "paint":{
                                   "fill-color": [
                                     "case",
-                                    ["<=", ["get","percentage_huurwoningen", 20]],"#4575B5",
-                                    ["<=", ["get","percentage_huurwoningen", 30]],"#849EBA",
-                                    ["<=", ["get","percentage_huurwoningen", 40]],"#C0CCBE",
-                                    ["<=", ["get","percentage_huurwoningen", 50]],"#FFFFBF",
-                                    ["<=", ["get","percentage_huurwoningen", 60]],"#FAB984",
-                                    ["<=", ["get","percentage_huurwoningen", 90]],"#ED7551",
-                                    ["<=", ["get","percentage_huurwoningen", 100]],"#D62F27",                                        
+                                    ["<=", ["get","percentage_huurwoningen"], 20],"#4575B5",
+                                    ["<=", ["get","percentage_huurwoningen"], 30],"#849EBA",
+                                    ["<=", ["get","percentage_huurwoningen"], 40],"#C0CCBE",
+                                    ["<=", ["get","percentage_huurwoningen"], 50],"#FFFFBF",
+                                    ["<=", ["get","percentage_huurwoningen"], 60],"#FAB984",
+                                    ["<=", ["get","percentage_huurwoningen"], 90],"#ED7551",
+                                    ["<=", ["get","percentage_huurwoningen"], 100],"#D62F27",                                        
                                     "rgba(80,80,80,0.2)"
                                   ]
                                 }
@@ -1490,10 +1508,20 @@
                               "layerInfo": {
                                 "id":"d561bd6e-f891-4c63-87ec-5f79676bda25",
                                 "type":"fill",
+                                "metadata":{
+                                  "abstract": "Gemiddelde WOZ waarde per 100 x 100 meter vak 2020 volgens CBS",
+                                  "attributes": {
+                                      "translations": [
+                                          {"name": "gemiddelde_woz_waarde_woning", "translation": "gemiddelde woz waarde woning", "unit": " x 1000 euro"}
+                                      ]
+                                  }
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.cbs_vk100_2020/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemiddelde_woz_waarde_woning&include_nulls=0"],
-                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022]},
+                                    "bounds":[3.36317152307889,50.7562607257626,7.21977038450963,53.4872765412022],
+                                    "attribution": "CBS"
+                                },
                                 "source-layer":"public.cbs_vk100_2020",
                                 "paint":{
                                 "fill-color":[
@@ -1961,10 +1989,15 @@
                                   "layerInfo": {
                                     "id":"a62270b6-563d-4c15-80c8-61e21",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Nationaal Cultuurlandschap volgens Rijksdienst van het Cultureel Erfgoed (RCE)"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
+                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
+                                        "maxzoom": 21,
+                                        "attribution": "RCE CultGIS"
                                     },
                                     "source-layer":"public.nationalelandschappen",
                                     "paint":{
@@ -1978,13 +2011,18 @@
                                 {
                                   "type":"vector",
                                   "title": "Stelling van Amsterdam",
+                                  "metadata": {
+                                    "abstract": "Nationaal Cultuurlandschap volgens Rijksdienst van het Cultureel Erfgoed (RCE)"
+                                  },
                                   "layerInfo": {
                                     "id":"a62270b6-563d-4c15-80c8-61e218490b9d",
                                     "type":"fill",
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104]
+                                        "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
+                                        "maxzoom": 21,
+                                        "attribution": "RCE CultGIS"
                                     },
                                     "source-layer":"public.nationalelandschappen",
                                     "paint":{
@@ -2000,14 +2038,21 @@
                             {
                               "type": "vector",
                               "title": "Groene Hart",
+                              "metadata": {
+                                "abstract": "Nationaal Cultuurlandschap volgens Rijksdienst van het Cultureel Erfgoed (RCE)"
+                              },
                               "layerInfo": {
                                 "id":"960-b233-4913-975d-2d6a290b1a15",
                                 "type":"fill",
+                                "metadata": {
+
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                     "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                    "maxzoom": 21
+                                    "maxzoom": 21,
+                                    "attribution": "RCE CultGIS"
                                 },
                                 "source-layer":"public.nationalelandschappen",
                                 "paint":{
@@ -2024,11 +2069,15 @@
                               "layerInfo": {
                                 "id":"7c209960-b233-4913-975d-2d6a290b1a15",
                                 "type":"fill",
+                                "metadata": {
+                                  "abstract": "Nationaal Cultuurlandschap volgens Rijksdienst van het Cultureel Erfgoed (RCE)"
+                                },
                                 "source":{
                                     "type":"vector",
                                     "tiles":["https://tiles.edugis.nl/data/public.nationalelandschappen/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                     "bounds":[3.35852336424683,50.7511254727566,7.07311318881646,53.3222598786104],
-                                    "maxzoom": 21
+                                    "maxzoom": 21,
+                                    "attribution": "RCE CultGIS"
                                 },
                                 "source-layer":"public.nationalelandschappen",
                                 "paint":{
@@ -2076,10 +2125,16 @@
                                   "layerInfo": {
                                     "id":"dbc8e5-20a5-4c17-b87d-d50c91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                    },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
@@ -2095,10 +2150,16 @@
                                   "layerInfo": {
                                     "id":"b87d-d50c91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                    },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
@@ -2114,10 +2175,16 @@
                                   "layerInfo": {
                                     "id":"4c17-b87d-d50c91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                      },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
@@ -2133,10 +2200,16 @@
                                   "layerInfo": {
                                     "id":"91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                    },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
@@ -2152,10 +2225,16 @@
                                   "layerInfo": {
                                     "id":"50c91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                    },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
@@ -2171,10 +2250,16 @@
                                   "layerInfo": {
                                     "id":"d50c91970bd0",
                                     "type":"fill",
+                                    "metadata": {
+                                      "abstract": "Masker voor het uitlichten van Nationale Cultuurlandschappen"
+                                    },
                                     "source":{
                                         "type":"vector",
                                         "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099]},
+                                        "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
+                                        "maxzoom": 21,
+                                        "attribution": "EduGIS"
+                                    },
                                     "source-layer":"public.ntllandschappenmasker",
                                     "paint":{
                                       "fill-color": "#828282",
