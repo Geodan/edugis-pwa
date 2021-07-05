@@ -505,6 +505,52 @@
                     "title": "Panden e.d.",
                     "sublayers": [
                         {
+                          "type": "vector",
+                          "title": "panden - 3D hoogte",
+                          "layerInfo": {
+                            "id": "building3D",
+                            "type": "fill-extrusion",
+                            "metadata": {
+                              "attributes": {
+                                "translations": [
+                                    {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
+                                    {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
+                                ]
+                              },
+                              "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
+                            },
+                            "source": {
+                              "type": "vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
+                              "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
+                              "minzoom": 13,
+                              "maxzoom": 18,
+                              "attribution": "Kadaster"
+                            },
+                            "source-layer": "public.bag13_lod1213_2d_levering",
+                            "minzoom": 13,
+                            "maxzoom": 24,
+                            "paint": {
+                              "fill-extrusion-color": ["case",
+                              ["==", ["get","bouwjaar"], null], "#cccccc",
+                              ["<",["get","bouwjaar"],1006],"#cccccc",
+                              ["<",["get","bouwjaar"],1700],"#7f0000",
+                              ["<",["get","bouwjaar"],1800],"#b30000",
+                              ["<",["get","bouwjaar"],1900],"#d7301f",
+                              ["<",["get","bouwjaar"],1930],"#ef6548",
+                              ["<",["get","bouwjaar"],1960],"#fc8d59",
+                              ["<",["get","bouwjaar"],1975],"#fdbb84",
+                              ["<",["get","bouwjaar"],1990],"#fdd49e",
+                              ["<",["get","bouwjaar"],2000],"#fee8c8",
+                              ["<=",["get","bouwjaar"],2025],"#fff7ec",
+                              "#cccccc"],
+                              "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
+                              "fill-extrusion-base": 0,
+                              "fill-extrusion-opacity": 0.95
+                            }
+                          }
+                        },
+                        {
                             "type": "wms",
                             "title": "panden - bouwjaar",
                             "layerInfo": {
@@ -1822,6 +1868,31 @@
                                     "https://t2.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
                                     "https://t3.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
                                     "https://t4.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true"]
+                            }
+                          }
+                        },
+                        {
+                          "type": "rasterdem",
+                          "title": "AHN schaduwering",
+                          "layerInfo": {
+                            "id": "ahnhillshading",
+                            "type": "hillshade",
+                            "source": {
+                              "id": "ahnhillshading",
+                              "type": "raster-dem",
+                              "tileSize": 512,
+                              "tiles": [
+                                "https://tiles.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t1.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t2.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t3.edugis.nl/wcsahn/{z}/{x}/{y}"
+                              ],
+                              "maxzoom": 20,
+                              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                              "attribution": "AHN"
+                            },
+                            "paint": {
+                              "hillshade-exaggeration": 1
                             }
                           }
                         },
@@ -5539,6 +5610,17 @@
                             }
                         }
                     ]
+                },
+                {
+                  "type": "group",
+                  "title": "test",
+                  "sublayers": [
+                    {
+                      "type": "layer",
+                      "title": "reference",
+                      "layerInfo": "./layers/geomorfologischekaart.json"
+                    }
+                  ]
                 }
             ]
         }
