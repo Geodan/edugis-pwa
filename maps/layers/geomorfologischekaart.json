@@ -2,7 +2,7 @@
     "id": "Geomorfologischekaart2019_fill",
     "type": "fill",
     "metadata": {
-      "abstract": "Geomorfologische kaart. Deze laag geeft per vlak informatie over reliëf, genese en ouderdom in de vorm van een beschrijvende code die bestaat uit een cijfer, gevolgd door een letter en daarna weer een cijfer. Zie ook https://legendageomorfologie.wur.nl/",
+      "abstract": "Geomorfologische kaart. Deze laag geeft per vlak informatie over reliëf, genese en ouderdom in de vorm van een beschrijvende code die bestaat uit een cijfer, gevolgd door een letter en daarna weer een cijfer. Zie ook https://legendageomorfologie.wur.nl/ of gebruik de i-tool voor het opvragen van meer informatie uit de kaart.",
       "attributes": {
         "translations": [
           {"name": "landformsubgroup_code", "translation": "subgroepcode", "unit": ""},
