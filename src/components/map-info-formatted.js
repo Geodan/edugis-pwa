@@ -145,6 +145,12 @@ class MapInfoFormatted extends LitElement {
               if (translation.translation) {
                 translatedKey = translation.translation;
               }
+              if (translation.decimals && !isNaN(parseInt(translation.decimals))) {
+                if (typeof value == "number") {
+                  let factor = Math.pow(10, parseInt(translation.decimals));
+                  value = parseInt(Math.round(value * factor)) / factor;
+                }
+              }
               if (translation.unit && translation.unit !== "") {
                 value += translation.unit;
               }
