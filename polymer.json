@@ -64,7 +64,8 @@
     "maps/zonnepanelen.json",
     "maps/datacatalog.json",
     "maps/merwedekanaalzone.json",
-    "maps/world.json"
+    "maps/world.json",
+    "maps/layers/geomorfologischekaart.json"
   ],
   "builds": [
     {
