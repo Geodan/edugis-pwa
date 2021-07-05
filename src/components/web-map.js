@@ -1308,6 +1308,35 @@ class WebMap extends LitElement {
       }
     }
   }
+  async resolveLayerReferences(parentUrl, layerArray) {
+    for (let layer of layerArray) {
+      if (layer.type === "group") {
+        await this.resolveLayerReferences(parentUrl, layer.sublayers);
+      } else {
+        if (typeof layer.layerInfo === 'string') {
+          try {
+            let url = layer.layerInfo;
+            if (!url.match(/^https?:\/\//i)) {
+              let slashPos = parentUrl.lastIndexOf('/');
+              if (slashPos >= 0) {
+                url = parentUrl.substr(0, slashPos + 1) + url;
+              }
+            }
+            let response = await fetch(url);
+            if (response.status >= 200 && response.status < 300) {
+              layer.layerInfo = await response.json();
+            }
+          } catch (err) {
+            layer.title = `Error ${err.message} (${layer.layerInfo})`;
+            layer.layerInfo = {
+              id: GeoJSON._uuidv4(),
+              title: `Error ${err.message} (${layer.layerInfo})`
+            }
+          }
+        }
+      }
+    }
+  }
   loadConfig(configurl) {
     if (configurl && configurl !== '') {
       fetch(configurl).then(response=>{
@@ -1316,8 +1345,11 @@ class WebMap extends LitElement {
         }
         throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
       }).then(config=>{
-        this.applyConfig(config);
-        this.initMap();
+        this.resolveLayerReferences(configurl, config.datacatalog).then(()=>
+          {
+            this.applyConfig(config);
+            this.initMap();
+        })
       }).catch(error=>{
         alert(`Error loading config:\n${configurl}\n${error}`);
       });
