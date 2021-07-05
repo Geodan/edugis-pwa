@@ -1,13 +1,24 @@
 {
-    "id": "Geomorfpologischekaart2019_fill",
+    "id": "Geomorfologischekaart2019_fill",
     "type": "fill",
-    "metadata": {},
+    "metadata": {
+      "abstract": "Geomorfologische kaart. Deze laag geeft per vlak informatie over reliëf, genese en ouderdom in de vorm van een beschrijvende code die bestaat uit een cijfer, gevolgd door een letter en daarna weer een cijfer. Zie ook https://legendageomorfologie.wur.nl/",
+      "attributes": {
+        "translations": [
+          {"name": "landformsubgroup_code", "translation": "subgroepcode", "unit": ""},
+          {"name": "landformsubgroup_description", "translation": "subgroep omschrijving", "unit": ""},
+          {"name": "genese_code", "translation": "genese code", "unit": ""},
+          {"name": "relief_code", "translation": "reliëf code", "unit": ""}
+        ]
+      }
+    },
     "source": {
       "type": "vector",
       "tiles": [
-        "https://tiles.edugis.nl/data/public.view_geomorphological_area/mvt/{z}/{x}/{y}?geom_column=geom&columns=landformsubgroup_code,landformsubgroup_description&include_nulls=0"
+        "https://tiles.edugis.nl/data/public.view_geomorphological_area/mvt/{z}/{x}/{y}?geom_column=geom&columns=landformsubgroup_code,landformsubgroup_description,genese_code,relief_code&include_nulls=0"
       ],
-      "bounds":[3.357818522828,50.7505366974423,7.22838605902588,53.558432214331]
+      "bounds":[3.357818522828,50.7505366974423,7.22838605902588,53.558432214331],
+      "attribution": "<a href=\"https://www.wur.nl/nl/show/Geomorfologische-kaart-schaal-1-50.000.htm\" target=\"_blank\">WUR</a>"
     },
     "source-layer": "public.view_geomorphological_area",
     "paint": {

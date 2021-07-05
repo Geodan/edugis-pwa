@@ -1960,7 +1960,7 @@
                 },
                 {
                     "type": "group",
-                    "title": "Geologie",
+                    "title": "Geologie en Geomorfologie",
                     "sublayers": [
                         {
                             "type":"getcapabilities",
@@ -1970,6 +1970,11 @@
                                 "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/geologie.map",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
+                        },
+                        {
+                          "type": "layer",
+                          "title": "Geomorfologische kaart",
+                          "layerInfo": "./layers/geomorfologischekaart.json"
                         }
                     ]
                 },
@@ -5610,17 +5615,6 @@
                             }
                         }
                     ]
-                },
-                {
-                  "type": "group",
-                  "title": "test",
-                  "sublayers": [
-                    {
-                      "type": "layer",
-                      "title": "reference",
-                      "layerInfo": "./layers/geomorfologischekaart.json"
-                    }
-                  ]
                 }
             ]
         }
