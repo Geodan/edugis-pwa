@@ -1882,10 +1882,7 @@
                               "type": "raster-dem",
                               "tileSize": 512,
                               "tiles": [
-                                "https://tiles.edugis.nl/wcsahn/{z}/{x}/{y}",
-                                "https://t1.edugis.nl/wcsahn/{z}/{x}/{y}",
-                                "https://t2.edugis.nl/wcsahn/{z}/{x}/{y}",
-                                "https://t3.edugis.nl/wcsahn/{z}/{x}/{y}"
+                                "http://localhost:3110/tile/{z}/{x}/{y}"
                               ],
                               "maxzoom": 20,
                               "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
@@ -3076,7 +3073,7 @@
                       }
                     },
                     {
-                      "title": "Kabels netbeheerders",
+                      "title": "Elektriciteitskabels",
                       "layerInfo":{
                         "id":"e5a09a35-e608-41ee-af38-e8daa3840ee0",
                         "type":"line",
