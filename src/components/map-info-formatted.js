@@ -10,7 +10,8 @@ class MapInfoFormatted extends LitElement {
     return { 
       active: Boolean,
       streetViewOn: Boolean,
-      info: Array
+      info: Array,
+      maxFeaturesPerLayer: Number
     }; 
   }
   constructor() {
@@ -19,6 +20,7 @@ class MapInfoFormatted extends LitElement {
       this.filteredInfo = [];
       this.active = false;
       this.streetViewOn = false;
+      this.maxFeaturesPerLayer = 1;
   }
   toggleStreetView(e)
   {
@@ -44,7 +46,7 @@ class MapInfoFormatted extends LitElement {
     if (!this.active) {
       return html``;
     }
-    let layerSet = new Set();
+    let layerMap = new Map();
     return html`
       <style>
         .header {
@@ -102,10 +104,15 @@ class MapInfoFormatted extends LitElement {
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true)
         .filter(feature=>{ // filter muliple features from same layer
           if (feature.layer && feature.layer.id) {
-            if (layerSet.has(feature.layer.id)) {
+            if (layerMap.has(feature.layer.id)) {
+              let featureCount = layerMap.get(feature.layer.id)
+              if (featureCount < this.maxFeaturesPerLayer) {
+                layerMap.set(feature.layer.id, featureCount + 1);
+                return true;
+              }
               return false;
             }
-            layerSet.add(feature.layer.id);
+            layerMap.set(feature.layer.id, 1);
           }
           return true;
         })
@@ -124,28 +131,22 @@ class MapInfoFormatted extends LitElement {
       return html`<div class="attributevalue">geen info beschikbaar op deze locatie</div>`
     }
     let result = [];
-    Object.keys(feature.properties).forEach(key=>{
-      let translatedKey = key;
-      let value = feature.properties[key];  
-      if (feature.layer && feature.layer.metadata && feature.layer.metadata.attributes) {
-        let attributes = feature.layer.metadata.attributes
-        if (attributes.deniedattributes) {
-          if (attributes.deniedattributes.indexOf(key) > -1) {
-            return;
-          }
-        }
-        if (attributes.allowedattributes) {
-          if (attributes.allowedattributes.indexOf(key) === -1) {
-            return;
-          }
-        }
-        if (attributes.translations) {
-          for (let translation of attributes.translations) {
-            if (translation.name === key) {
-              if (translation.translation) {
-                translatedKey = translation.translation;
-              }
-              if (translation.decimals && !isNaN(parseInt(translation.decimals))) {
+    
+    if (feature.layer && feature.layer.metadata && feature.layer.metadata.attributes) {
+      let attributes = feature.layer.metadata.attributes;
+      // add attributes/properties with translations
+      if (attributes.translations) {
+        for (let translation of attributes.translations) {
+          if (translation.name) {
+            if (attributes.deniedattributes && attributes.deniedattributes.indexOf(translation.name) > -1) {
+              continue; // skip deniedattribute
+            }
+            if (attributes.allowedattributes && attributes.allowedattributes.indexOf(translation.name) === -1) {
+              continue; // skip attribute not in allowedattributes
+            }
+            if (feature.properties[translation.name]) {
+              let value = feature.properties[translation.name];
+              if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
                 if (typeof value == "number") {
                   let factor = Math.pow(10, parseInt(translation.decimals));
                   value = parseInt(Math.round(value * factor)) / factor;
@@ -154,12 +155,30 @@ class MapInfoFormatted extends LitElement {
               if (translation.unit && translation.unit !== "") {
                 value += translation.unit;
               }
+              let translatedKey = translation.translation ? translation.translation: translation.name;
+              result.push(this.renderAttribute(translatedKey, value));
             }
           }
         }
       }
-      result.push(this.renderAttribute(translatedKey, value));
-    })
+      // now add attributes/properties without translations
+      for (let key in feature.properties) {
+        if (attributes.deniedattributes && attributes.deniedattributes.indexOf(key) > -1) {
+          continue; // skip deniedattribute
+        }
+        if (attributes.allowedattributes && attributes.allowedattributes.indexOf(key) === -1) {
+          continue; // skip attribute not in allowedattributes
+        }
+        if (attributes.translations && attributes.translations.findIndex(translation=>translation.name === key) > -1) {
+          continue; // skip translated attributes
+        }
+        result.push(this.renderAttribute(key, feature.properties[key]));
+      }
+    } else {
+      for (let key in feature.properties) {
+        result.push(this.renderAttribute(key, feature.properties[key]));
+      }
+    }
     return result;
   }
   renderAttribute(key, value) {
