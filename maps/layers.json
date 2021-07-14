@@ -2086,6 +2086,47 @@
                                 "url":"https://kaart.edugis.nl/data/nederland/cbs_bodemgebruik.xml",
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
+                        },
+                        {
+                          "type": "vectortile",
+                          "title": "Gewaspercelen 2020",
+                          "layerInfo":{
+                            "id":"8a9ed789-7fbf-487f-94fe-b410f7097f5c",
+                            "type":"fill",
+                            "minzoom": 9,
+                            "metadata": {
+                              "abstract": "BRP Gewaspercelen bestaat uit de locatie van landbouwpercelen met daaraan gekoppeld het geteelde gewas. De omgrenzingen van de landbouwpercelen zijn gebaseerd op het Agrarisch Areaal Nederland (AAN). De gebruiker van het perceel dient jaarlijks zijn actuele gewaspercelen in te tekenen en aan te geven welk gewas wordt geteeld op het betreffende perceel.",
+                              "attributes": {
+                                "translations": [
+                                  {"name": "gws_gewas", "translation": "gewas"}
+                                ]
+                              }
+                            },
+                            "source":{
+                                "type":"vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.brp_gewaspercelen/mvt/{z}/{x}/{y}?geom_column=geom&columns=cat_gewascategorie,gws_gewas&include_nulls=0"],
+                                "bounds":[3.35968319050413,50.7504183297393,7.22437988337675,53.4970302784049]},
+                            "source-layer":"public.brp_gewaspercelen",
+                            "paint":{
+                            "fill-color":[
+                                "case",
+                                ["==",["get","cat_gewascategorie"],"Grasland"],"#a3ff73",
+                                ["==",["get","cat_gewascategorie"],"Natuurterrein"],"#38a800",
+                                ["==",["get","cat_gewascategorie"],"Braakland"],"#d4c39f",
+                                ["==",["get","gws_gewas"],"Maïs, snij-"],"#662506",
+                                ["==",["get","gws_gewas"],"Tarwe, winter-"],"#993404",
+                                ["==",["get","gws_gewas"],"Aardappelen, consumptie"],"#cc4c02",
+                                ["==",["get","gws_gewas"],"Bieten, suiker-"],"#ec7014",
+                                ["==",["get","gws_gewas"],"Gerst, zomer-"],"#fe9929",
+                                ["==",["get","gws_gewas"],"Aardappelen, zetmeel "],"#fec44f",
+                                ["==",["get","gws_gewas"],"Tarwe, zomer-"],"#fee391",
+                                ["==",["get","cat_gewascategorie"],"Bouwland"],"#ffffbe",
+                                ["==",["get","cat_gewascategorie"],"Overige"],"#b2b2b2",
+                                "#ffed6f"],
+                                "fill-outline-color":"white",
+                                "fill-opacity":0.8
+                            }
+                          }
                         }
                     ]
                 },
