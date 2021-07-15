@@ -1882,7 +1882,10 @@
                               "type": "raster-dem",
                               "tileSize": 512,
                               "tiles": [
-                                "http://localhost:3110/tile/{z}/{x}/{y}"
+                                "https://tiles.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t1.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t2.edugis.nl/wcsahn/{z}/{x}/{y}",
+                                "https://t3.edugis.nl/wcsahn/{z}/{x}/{y}"
                               ],
                               "maxzoom": 20,
                               "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
