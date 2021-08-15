@@ -477,6 +477,9 @@ class MapLegendPanel extends LitElement {
     if (maplayer.metadata && maplayer.metadata.classInfo) {
       return this.getUserLegend(maplayer)
     }
+    if (maplayer.metadata && maplayer.metadata.legendurl) {
+      return this.rasterLegend(maplayer);
+    }
     switch(maplayer.type) {
       case 'raster':
         legendContent = this.rasterLegend(maplayer);
