@@ -12,7 +12,7 @@
   [    
       {
         "type": "group",
-        "title": "BRO Zeeland",
+        "title": "BRO Zuidwest Nederland",
         "sublayers": [
           {
             "type": "vectortile",
@@ -153,7 +153,7 @@
           },
           {
             "type": "wms",
-            "title": "Freshem",
+            "title": "Zoutwaterdiepte",
             "layerInfo": {
               "id": "freshem",
               "type": "raster",
@@ -189,6 +189,35 @@
               "metadata": {
                 
               }
+            }
+          },
+          {
+            "type": "raster",
+            "title": "Chloridegehalte oppervlaktewater (zout)",
+            "layerInfo": {
+                "id": "2dchloride_surfacewater_gL",
+                "type": "raster",
+                "minzoom": 1,
+                "metadata": {
+                    "abstract": "Chloridegehalte van het oppervlaktewater. Deze kaart geeft de hoeveelheid chloride (zout) die is opgelost in het oppervlaktewater. Natuurlijk zout water bevat behalve NatriumChloride (keukenzout) ook andere zouten zoals MagnesiumChloride, KaliumChloride en CalciumChloride. In deze kaart worden de verschillende zouten samengevoegd en wordt alleen het Chloridegehalte gegeven. Vermenigvuldig het chloridegehalte met 1,81 voor het berekenen van het totale zoutgehalte. In de hoogste categorie van de legenda staat >1500, dit moet >15000 (> 15 gram/liter) zijn. ",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wms/?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=2dchloride_surfacewater_gL&FORMAT=image%2Fpng&STYLE=",
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wms/?REQUEST=GetFeatureInfo&service=WMS&VERSION=1.1.1&LAYERS=2dchloride_surfacewater_gL&QUERY_LAYERS=2dchloride_surfacewater_gL",
+                    "getFeatureInfoFormat2":"application/vnd.ogc.gml",
+                    "getFeatureInfoFormat":"application/json",
+                    "attributes": {
+                      "translations": [
+                        {
+                          "name":"GRAY_INDEX", "translation": "chloridegehalte", "unit": " gram/liter", "decimals": 3
+                        }
+                      ]
+                    }
+                },
+                "source": {
+                    "type": "raster",
+                    "tileSize":256,
+                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                    "tiles": ["https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wmts/2dchloride_surfacewater_gL/spherical_mercator/{z}/{x}/{y}.png"]
+                }
             }
           },
           {
