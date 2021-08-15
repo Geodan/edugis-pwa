@@ -846,7 +846,7 @@ class WebMap extends LitElement {
         @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         @changefilter="${e=>this.updateLayerFilter(e)}"
         >
-      <span slot="title">Geselecteerde kaartlagen</span>
+      <span slot="title">Gekozen kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
@@ -2101,7 +2101,7 @@ class WebMap extends LitElement {
         });
       }
       if (featureInfo.length == 0) {
-        this.featureInfo = [{layer:{metadata:{title:'Geselecteerde kaartlagen'}},properties:[]}];
+        this.featureInfo = [{layer:{metadata:{title:'Gekozen kaartlagen'}},properties:[]}];
       } else {
         this.featureInfo = featureInfo.reverse();
       }
