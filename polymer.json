@@ -65,6 +65,8 @@
     "maps/datacatalog.json",
     "maps/merwedekanaalzone.json",
     "maps/world.json",
+    "maps/zuidwestnl.json",
+    "maps/nl2100.json",
     "maps/layers/geomorfologischekaart.json"
   ],
   "builds": [
