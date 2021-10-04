@@ -12,16 +12,16 @@
   [    
       {
         "type": "group",
-        "title": "BRO Zuidwest Nederland",
+        "title": "Zuidwest Nederland",
         "sublayers": [
           {
             "type": "vectortile",
-            "title": "Zeeuwse wateren",
+            "title": "Wateren van de Delta",
             "layerInfo": {
-              "id": "merwedekanaal_boringen",
+              "id": "deltawerkenwateren",
               "type": "fill",
               "source": {
-                "id": "deltawerkenzeelandwateren",
+                "id": "deltawerkenwateren",
                 "type": "vector",
                 "tiles": [
                   "https://tiles.edugis.nl/data/public.deltawerkenzeelandwateren/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
@@ -45,7 +45,7 @@
               "metadata": {
                 "reference": false,
                 "userlayer": true,
-                "abstract": "Wateren van Zeeland",
+                "abstract": "Wateren van de Zeeuwse en Zuid Hollandse Delta",
                 "attributes": {
                   "translations": [
                     {"name": "name", "translation": "Naam", "unit": ""}
@@ -53,11 +53,11 @@
                 }
               }
             },
-            "id": "Brozeelandwateren"
+            "id": "Deltawateren"
           },
           {
             "type": "vectortile",
-            "title": "Zeeland kanalen",
+            "title": "Delta kanalen",
             "layerInfo": {
               "id":"3721d0fa-acf7-4757-8761-04907e842d5e",
               "type":"line",
@@ -74,7 +74,7 @@
           },
           {
             "type": "vectortile",
-            "title": "Zeeland Waterkeringen",
+            "title": "Delta Waterkeringen",
             "layerInfo": 
               {
                 "id":"542ea354-473f-4d3a-8c2e-58f557ca0d78",
@@ -132,77 +132,16 @@
             }
           },
           {
-            "type": "wms",
-            "title": "Zoutgehalte",
-            "layerInfo": {
-              "id": "zougehalte",
-              "type": "raster",
-              "source":{
-                "bounds": [3.67, 51.57, 4.139, 51.764],
-                "type":"raster",
-                "tileSize":512,
-                "tiles":[
-                    "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=data/eduqgis/files/zeelandchloride.qgs&transparent=true&LAYERS=chloride_grensvlak&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
-                ],
-                "attribution":"Provincie Zeeland"
-              },
-              "metadata": {
-                "getFeatureInfoUrl":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=data/eduqgis/files/zeelandchloride.qgs&transparent=true&LAYERS=chloride_grensvlak&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&STYLES=&SRS=EPSG%3A3857"
-              }
-            }
-          },
-          {
-            "type": "wms",
-            "title": "Zoutwaterdiepte",
-            "layerInfo": {
-              "id": "freshem",
-              "type": "raster",
-              "source":{
-                "bounds": [3.287, 51.182, 4.470, 51.753],
-                "type":"raster",
-                "tileSize":256,
-                "tiles":[
-                  "https://tiles.edugis.nl/mapproxy/freshem/service?layers=freshem_grensvlak&format=image/png&srs=EPSG:3857&transparent=true&bbox={bbox-epsg-3857}"
-                ],
-                "attribution":"Provincie Zeeland"
-              },
-              "metadata": {
-                
-              }
-            }
-          },
-          {
-            "type": "wms",
-            "title": "Freshem vlieglijnen",
-            "layerInfo": {
-              "id": "freshemvlieglijnen",
-              "type": "raster",
-              "source":{
-                "bounds": [3.287, 51.182, 4.470, 51.753],
-                "type":"raster",
-                "tileSize":256,
-                "tiles":[
-                  "https://tiles.edugis.nl/mapproxy/freshem/service?layers=freshem_vlieglijnen&format=image/png&srs=EPSG:3857&transparent=true&bbox={bbox-epsg-3857}"
-                ],
-                "attribution":"Provincie Zeeland"
-              },
-              "metadata": {
-                
-              }
-            }
-          },
-          {
             "type": "raster",
-            "title": "Chloridegehalte oppervlaktewater (zout)",
+            "title": "Zoutgehalte oppervlaktewater (chloride)",
             "layerInfo": {
                 "id": "2dchloride_surfacewater_gL",
                 "type": "raster",
                 "minzoom": 1,
                 "metadata": {
-                    "abstract": "Chloridegehalte van het oppervlaktewater. Deze kaart geeft de hoeveelheid chloride (zout) die is opgelost in het oppervlaktewater. Natuurlijk zout water bevat behalve NatriumChloride (keukenzout) ook andere zouten zoals MagnesiumChloride, KaliumChloride en CalciumChloride. In deze kaart worden de verschillende zouten samengevoegd en wordt alleen het Chloridegehalte gegeven. Vermenigvuldig het chloridegehalte met 1,81 voor het berekenen van het totale zoutgehalte. In de hoogste categorie van de legenda staat >1500, dit moet >15000 (> 15 gram/liter) zijn. ",
-                    "legendurl": "https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wms/?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=2dchloride_surfacewater_gL&FORMAT=image%2Fpng&STYLE=",
+                    "abstract": "Chloridegehalte van het oppervlaktewater. Deze kaart geeft de hoeveelheid chloride (maat voor zout) die is opgelost in het oppervlaktewater. Natuurlijk zout water bevat behalve NatriumChloride (keukenzout) ook andere zouten zoals MagnesiumChloride, KaliumChloride en CalciumChloride. In deze kaart worden de verschillende zouten samengevoegd en wordt alleen het Chloridegehalte gegeven. Vermenigvuldig het chloridegehalte met 1,81 voor het berekenen van het totale zoutgehalte. Water met minder dan 1 gram chloride per liter wordt 'zoet' genoemd, 'brak' water heeft tussen 1 gram en 3 gram chloride per liter, 'zout' water heeft meer dan 3 gram per liter, zeewater heeft ongeveer 18 gram chloride per liter",
+                    "legendurl": "https://map.edugis.nl/legends2/legendchloride.png",
                     "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wms/?REQUEST=GetFeatureInfo&service=WMS&VERSION=1.1.1&LAYERS=2dchloride_surfacewater_gL&QUERY_LAYERS=2dchloride_surfacewater_gL",
-                    "getFeatureInfoFormat2":"application/vnd.ogc.gml",
                     "getFeatureInfoFormat":"application/json",
                     "attributes": {
                       "translations": [
@@ -216,8 +155,60 @@
                     "type": "raster",
                     "tileSize":256,
                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                    "tiles": ["https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wmts/2dchloride_surfacewater_gL/spherical_mercator/{z}/{x}/{y}.png"]
+                    "tiles": ["https://tiles.edugis.nl/mapproxy/deltares_zoutwater/wmts/2dchloride_surfacewater_gL/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution": "Deltares"
                 }
+            }
+          },
+          {
+            "type": "wms",
+            "title": "Diepte zoet- brakwatergrens (Freshem)",
+            "layerInfo": {
+              "id": "freshem",
+              "type": "raster",
+              "source":{
+                "bounds": [3.287, 51.182, 4.470, 51.753],
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/freshem2/service?layers=freshem_grensvlak_midden&format=image/png&srs=EPSG:3857&transparent=true&bbox={bbox-epsg-3857}"
+                ],
+                "attribution":"Provincie Zeeland"
+              },
+              "metadata": {
+                "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/freshem2/wms/?REQUEST=GetFeatureInfo&service=WMS&VERSION=1.1.1&LAYERS=freshem_grensvlak_midden&QUERY_LAYERS=freshem_grensvlak_midden",
+                "getFeatureInfoFormat":"application/json",
+                "attributes": {
+                  "translations": [
+                    {"name": "GRAY_INDEX", "translation": "diepte zoet-brakwatergrens", "unit": " m", "decimals": 2}
+                  ]
+                },
+                "abstract": "Deze kaartlaag toont de diepte waar het zoete grondwater overgaat in brak grondwater (water met meer dan 1 gram chloride per liter). Water met minder dan 1 gram zout per liter wordt 'zoet' genoemd, 'brak' water heeft tussen 1 gram en 3 gram chloride per liter, 'zout' water heeft meer dan 3 gram per liter, zeewater heeft ongeveer 18 gram chloride per liter. De diepte van de grensvlakken is niet helemaal zeker. Deze kaartlaag toont de gemiddelde waarschijnlijkheid (freshem:grensvlak_midden). Zie ook https://www.zeeland.nl/water/zoet-water/zoet-zoutverdeling-zeeuwse-ondergrond . Klik met de i-tool op een locatie om de diepte van het grensvlak op een bepaalde locatie op te vragen. Bron: provincie Zeeland"
+              }
+            }
+          },
+          {
+            "type": "layer",
+            "title": "Water transportleidingen",
+            "layerInfo": {
+              "id":"48788afd-03d6-4abd-bbad-863319b7eaf7",
+              "metadata": {
+                "attributes": {
+                  "translations": [
+                    {"name": "omschrijvi", "translation": "omschrijving"}
+                  ]
+                }
+              },
+              "type":"line",
+              "source":{
+                  "type":"vector",
+                  "tiles":["https://tiles.edugis.nl/data/public.watertransportleidingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=label,omschrijvi&include_nulls=0"],
+                  "bounds":[3.70184948802245,51.2886821864954,6.91508732670662,53.4436846442707]},
+              "source-layer":"public.watertransportleidingen",
+              "paint":{
+                "line-color":"#8da0cb",
+                "line-width":3
+              }
             }
           },
           {
@@ -277,7 +268,54 @@
                   }
                 }
             ]
-          }
+          },
+          {
+            "type": "group",
+            "title": "Grondsoorten, Geologie en Geomorfologie",
+            "sublayers": [
+                {
+                    "type":"getcapabilities",
+                    "title":"geologie",
+                    "layerInfo":{
+                        "id":"geologie",
+                        "url":"https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/geologie.map",
+                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                    }
+                },
+                {
+                  "type": "layer",
+                  "title": "Geomorfologische kaart",
+                  "layerInfo": "./layers/geomorfologischekaart.json"
+                },
+                {
+                  "type": "vector",
+                  "title": "grondsoorten",
+                  "layerInfo": {
+                    "id":"ce2739d0-8f8f-4c41-862a-6349b3a4ddca",
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://tiles.edugis.nl/data/edugis.grondsoortenkaart/mvt/{z}/{x}/{y}?geom_column=geom&columns=grondsoortnaam&include_nulls=0"],
+                        "bounds":[3.35857082748342,50.7505785435136,7.22776217823428,53.5535903945444]},
+                    "source-layer":"edugis.grondsoortenkaart",
+                    "paint":{
+                    "fill-color":[
+                        "case",["==",["get","grondsoortnaam"],"zware zavel"],"rgb(147,173,46)",
+                        ["==",["get","grondsoortnaam"],"lichte zavel"],"rgb(162,255,161)",
+                        ["==",["get","grondsoortnaam"],"zand"],"rgb(242,198,93)",
+                        ["==",["get","grondsoortnaam"],"lichte klei"],"rgb(60,106,0)",
+                        ["==",["get","grondsoortnaam"],"veen"],"rgb(223,123,187)",
+                        ["==",["get","grondsoortnaam"],"bebouwd"],"rgb(211,209,212)",
+                        ["==",["get","grondsoortnaam"],"zware klei"],"rgb(11,126,129)",
+                        ["==",["get","grondsoortnaam"],"leem"],"rgb(250,0,0)",
+                        "#000000"],
+                    "fill-opacity":0.8,
+                    "fill-outline-color": ["interpolate-lab", ["linear"], ["zoom"], 7, "rgba(255,255,255,0)", 20, "rgba(0,0,0,1)"]
+                      }
+                  }
+                }
+            ]
+          }    
         ]
       },
       {
@@ -323,42 +361,6 @@
           },
           {
             "type":"reference",
-            "title":"Dark Matter (stijl)",
-            "layerInfo":{
-              "id":"DarkMatter",
-              "type":"style",
-              "source":"styles/openmaptiles/dark-matter.json",
-              "metadata":{
-                "reference":true
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"MapBox Streets v8 (stijl)",
-            "layerInfo":{
-              "id":"streets-v8",
-              "type":"style",
-              "source":"mapbox://styles/mapbox/streets-v8",
-              "metadata":{
-                "reference":true
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"MapBox Streets v9 (stijl)",
-            "layerInfo":{
-              "id":"streets-v9",
-              "type":"style",
-              "source":"mapbox://styles/mapbox/streets-v9",
-              "metadata":{
-                "reference":true
-              }
-            }
-          },
-          {
-            "type":"reference",
             "title":"Openstreetmap (stijl)",
             "layerInfo":{
               "id":"OsmRaster",
@@ -368,216 +370,7 @@
                 "reference":true
               }
             }
-          },
-          {
-            "type":"reference",
-            "title":"Alleen grenzen",
-            "layerInfo":{
-              "id":"Boundaries",
-              "type":"style",
-              "source":{
-                "version":8,
-                "name":"Grenzen",
-                "sources":{
-                  "openmaptileboundaries":{
-                    "type":"vector",
-                    "url":"https://saturnus.geodan.nl/openmaptiles/data/v3.json?key={key}"
-                  }
-                },
-                "layers":[
-                  {
-                    "id":"boundary_state",
-                    "type":"line",
-                    "metadata":{
-                      "mapbox:group":"a14c9607bc7954ba1df7205bf660433f"
-                    },
-                    "source":"openmaptileboundaries",
-                    "source-layer":"boundary",
-                    "filter":[
-                      "==",
-                      "admin_level",
-                      2
-                    ],
-                    "layout":{
-                      "line-cap":"round",
-                      "line-join":"round",
-                      "visibility":"visible"
-                    },
-                    "paint":{
-                      "line-color":"rgb(230, 204, 207)",
-                      "line-width":{
-                        "base":1.1,
-                        "stops":[
-                          [
-                            3,
-                            1
-                          ],
-                          [
-                            22,
-                            20
-                          ]
-                        ]
-                      },
-                      "line-blur":{
-                        "base":1,
-                        "stops":[
-                          [
-                            0,
-                            0.4
-                          ],
-                          [
-                            22,
-                            4
-                          ]
-                        ]
-                      },
-                      "line-opacity":1
-                    }
-                  }
-                ]
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"Streets (Geodan Maps)",
-            "id":"gmstreets",
-            "layerInfo":{
-              "id":"gmstreets",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "tiles":[
-                  "https://services.geodan.nl/data/geodan/gws/world/streets/wmts/streets/EPSG%3A3857/{z}/{x}/{y}.png?servicekey={geodanmapskey}"
-                ],
-                "attribution":"&copy; <a href=\"https://www.geodan.nl\" target=\"_BLANK\">Geodan</a> | <a href=\"https://carto.com\" target=\"_BLANK\">&copy; CARTO</a> | <a href=\"https://opendatacommons.org/licenses/odbl/1.0/\" target=\"_BLANK\">&copy; OpenStreetMap contributors</a>",
-                "maxzoom":19
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"ESRI World Map topo",
-            "layerInfo":{
-              "id":"worldmaptopo",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "tiles":[
-                  "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-                ],
-                "attribution":"&copy; ESRI",
-                "maxzoom":18
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"ESRI Natural World Map",
-            "layerInfo":{
-              "id":"natgeoworldmap",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "tiles":[
-                  "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"
-                ],
-                "attribution":"&copy; ESRI",
-                "maxzoom":11
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"Stamen Toner",
-            "layerInfo":{
-              "id":"stamentoner",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "scheme": "tms",
-                "tiles":[
-                  "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
-                ],
-                "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                "maxzoom":17
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"Stamen Watercolor",
-            "layerInfo":{
-              "id":"stamenwatercolor",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "scheme": "tms",
-                "tiles":[
-                  "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
-                ],
-                "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                "maxzoom":17
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"Stamen Terrain",
-            "layerInfo":{
-              "id":"stamenterrain",
-              "metadata":{
-                "reference":true
-              },
-              "type":"raster",
-              "source":{
-                "type":"raster",
-                "tileSize":256,
-                "scheme": "tms",
-                "tiles":[
-                  "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
-                ],
-                "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                "maxzoom":16
-              }
-            }
-          },
-          {
-            "type":"reference",
-            "title":"Microsoft BING Kaart",
-            "layerInfo":{
-              "id":"bingmaproad",
-              "metadata":{
-                "reference":true,
-                "bing":true
-              },
-              "type":"raster",
-              "source":{
-                "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                "maxzoom":19
-              }
-            }
-          },
+          },          
           {
             "type":"reference",
             "title":"Microsoft BING Hybride",
