@@ -801,7 +801,7 @@ class WebMap extends LitElement {
         <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
         </map-panel>        
         <map-panel .active="${this.currentTool==='pitch'}">
-          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"><map-pitch>
+          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"></map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-draw>
@@ -856,7 +856,7 @@ class WebMap extends LitElement {
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
           .zoom="${this.zoom}"
-          .nolayer = "Geen achtergrondlagen beschikbaar">
+          nolayer = "Geen achtergrondlagen beschikbaar">
             <span>Achtergrondlagen</span>
         </map-layer-set>
       </map-layer-container>
