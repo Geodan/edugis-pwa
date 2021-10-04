@@ -35,7 +35,7 @@ class IconButton extends LitElement {
           cursor: pointer; /* Mouse pointer on hover */
         }
         .button:hover {
-          background-color: gray;
+          background-color: #87D1FF;
           fill: white;
           color: white;
         }
@@ -45,7 +45,7 @@ class IconButton extends LitElement {
           fill: rgb(160,160,160);
         }
         .button.active:hover {
-          background-color: #5897c8;
+          background-color: #286CA0;
           fill: white;
           color: white;
         }
