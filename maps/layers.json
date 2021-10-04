@@ -3288,12 +3288,22 @@
                     }
                 },
                 {
-                    "type":"getcapabilities",
-                    "title":"Energietransitie",
-                    "layerInfo":{
-                        "id":"energietransitie",
-                        "deniedlayers": "zonlocaties",
-                        "url": "https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/zonlocaties.qgs"
+                    "title": "Potentiële locaties voor zonnepanelen op gebouwen",
+                    "id": "potzonlocaties",
+                    "layerInfo": {
+                      "id": "potzonlocaties2",
+                      "type":"raster",
+                      "minzoom": 4,
+                      "metadata": {
+                        "legendurl": "https://map.edugis.nl/legends2/legendzonatlas.png"
+                      },
+                      "source": {
+                        "minzoom": 4,
+                        "type": "raster",
+                        "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                        "tileSize": 512,
+                        "tiles": ["https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/zonlocaties.qgs&layers=Potenti%C3%ABle%20locaties%20voor%20zonnepanelen%20op%20gebouwen&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"]
+                      }
                     }
                 },
                 {
