@@ -1810,21 +1810,6 @@
                         },
                         {
                             "type": "wms",
-                            "title": "Magnitude van de laatste 100 aardbevingen in Nederland",
-                            "layerInfo": {
-                                "id": "magnitudeaardbeving",
-                                "type": "raster",
-                                "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
-                                },
-                                "source": {
-                                    "type": "raster",
-                                    "tiles": ["https://geoservices.knmi.nl/cgi-bin/inspire/aardbevingen_nederland.cgi?layers=magnitude"]
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
                             "title": "Olie- en gasvelden",
                             "layerInfo": {
                                 "id": "oliegasvelden",
@@ -5677,13 +5662,13 @@
         "datacatalog" : {"visible": 1, "order" : 2},
         "measure" : {"visible": 1, "order": 3},
         "info" : {"visible" : 1, "order": 4},
-        "maplanguage" : {"visible" : 1, "order": 5},
+        "maplanguage" : {"visible" : 0, "order": 5},
         "pitch" : {"visible" : 1, "order": 6},
-        "geolocate" : {"visible" : 1, "order": 7},
-        "draw" : {"visible" : 1, "order": 8},
+        "draw" : {"visible" : 1, "order": 7},
+        "geolocate" : {"visible" : 1, "order": 8},
         "importexport": {"visible": 0, "order": 9},
-        "datatoolbox": {"visible": 1, "order": 10},
-        "sheetimport": {"visible": 1, "order": 11},
+        "datatoolbox": {"visible": 0, "order": 10},
+        "sheetimport": {"visible": 0, "order": 11},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
         "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
