@@ -17,7 +17,6 @@ import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
 import './map-coordinates.js';
-import './button-expandable.js';
 import './map-legend-container.js';
 import './map-measure';
 import './map-language';
