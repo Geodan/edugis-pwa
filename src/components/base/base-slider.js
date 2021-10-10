@@ -78,7 +78,10 @@ class BaseSlider extends LitElement {
                 }
             }
         )
-    );
+      );
+    } else if (newValue === 0) {
+      // maybe slider not yet fully laid out at end of animation?
+      this.slider.layout();
     }
   }
 }
