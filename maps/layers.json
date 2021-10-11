@@ -5659,7 +5659,7 @@
     "tools" : {
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 1},
-        "datacatalog" : {"visible": 1, "order" : 2},
+        "datacatalog" : {"visible": 1, "search": 1, "order" : 2},
         "measure" : {"visible": 1, "order": 3},
         "info" : {"visible" : 1, "order": 4},
         "maplanguage" : {"visible" : 0, "order": 5},

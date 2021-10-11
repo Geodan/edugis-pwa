@@ -215,7 +215,7 @@ class WebMap extends LitElement {
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
+      {name:"datacatalog", visible: true, search: false, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
       {name:"measure", visible: true, position: "", order: 102, info:"Afstand en oppervlakte meten", icon: measureIcon},
       {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: infoIcon},
       {name:"maplanguage", visible: true, position: "", order: 104, info: "Kaarttaal", icon: languageIcon},
@@ -785,7 +785,7 @@ class WebMap extends LitElement {
           <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
         </map-panel>
         <map-panel .active="${this.currentTool==="datacatalog"}">
-          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" .search="${tools.find(t=>t.name==="datacatalog").search}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
         </map-panel>
         <map-panel .active="${this.currentTool==='measure'}">
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
@@ -1286,9 +1286,6 @@ class WebMap extends LitElement {
       this.toolList.forEach(tool=>tool.visible=(tool.name==='toolbar'));
       for (let toolName in config.tools) {
         const confTool = config.tools[toolName];
-        /* if (toolName === 'currenttool' && confTool) {
-          this.currentTool = confTool;
-        }*/
         const mapTool = this.toolList.find(tool=>tool.name === toolName);
         if (mapTool) {
           for (let prop in mapTool) {

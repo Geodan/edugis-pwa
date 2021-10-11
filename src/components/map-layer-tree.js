@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
-
+import {searchIcon} from '../gm/gm-iconset-svg';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -267,8 +267,52 @@ class MapLayerTree extends LitElement {
         overflow: auto;
         box-sizing: border-box;
       }
+      .search {
+        display: flex;
+        flex-direction: row;
+        min-width: 100%;
+        width: 12em;
+        border: 1px solid #E3E2E3;
+      }
+      .search:hover {
+        border: 1px solid #21a2ac;
+      }
+      .search input {
+        flex-grow:1;
+        border: none;
+        height: 36px;
+      }
+      .search input:focus-visible {
+        outline: none;
+      }
+      .searchicon {
+        flex-grow:0;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        margin: 6px 4px;
+        color: gray;
+      }
+      .clear {
+        flex-grow: 0;
+        cursor: pointer;
+        margin: 6px 4px;
+        color: #9E9E9E;
+        width: 1em;
+        text-align: center;
+        font-size: 1.25em;
+        font-weight: 500;
+        line-height: 1;
+      }
+      .clear.hidden {
+        display: none;
+      }
+      .clear::before {
+        content: 'x';
+      }
     </style>
     <div class="title">${this.headertext}</div>
+    ${this.search?html`<div class="search"><div class="searchicon">${searchIcon}</div><input type="text" placeholder="zoek een kaartlaag..." /><div class="clear ${this.clearbtnvisible?"":"hidden"}"></div></div>`:html``}
     <div class="wrapper">
       <div>
         ${this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')}

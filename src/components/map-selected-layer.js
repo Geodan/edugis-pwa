@@ -421,7 +421,7 @@ class MapSelectedLayer extends LitElement {
       <div class="trashbincontainer">
           <div class="label">Laag verwijderen</div>
           <div class="trashbinicon" @click="${e=>this.removeLayer(e)}" title="kaartlaag verwijderen">${trashBinCircleIcon}</div>
-          <div class="trashtext">De laag kan weer toegevoegd worden via menu <i>Kaartlaag toevoegen</i></div>
+          <div class="trashtext">De laag kan weer toegevoegd worden via menu <i>Kaartlagen toevoegen</i></div>
         </div>
         ${this.layerFeaturesVisible()?html`
         <div class="transparencycontainer">
@@ -778,7 +778,7 @@ class MapSelectedLayer extends LitElement {
             ${this.legendEditorStyle()}
             <div class="legendeditcontainer">
               <div class="title">Laag aanpassen</div>
-              <input id="linecolor" type="color" value="${lineColor}" @input="${e=>this.updatePaintProperty(e, {"line-color": e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
+              <input id="linecolor" type="color" value="${lineColor.color}" @input="${e=>this.updatePaintProperty(e, {"line-color": e.currentTarget.value})}"> <label for="linecolor">lijnkleur</label>
               <div class="linewidthlabel">
                 Lijndikte: ${lineWidth.items[0].value}
                 </div>
@@ -804,7 +804,7 @@ class MapSelectedLayer extends LitElement {
               ${this.legendEditorStyle()}
               <div class="legendeditcontainer">
                 <div class="title">Laag aanpassen</div>
-                <input id="circlecolor" type="color" value="${circleColor}" @input="${e=>this.updatePaintProperty(e, {"circle-color": e.currentTarget.value})}"> <label for="linecolor">cirkelkleur</label>
+                <input id="circlecolor" type="color" value="${circleColor.color}" @input="${e=>this.updatePaintProperty(e, {"circle-color": e.currentTarget.value})}"> <label for="linecolor">cirkelkleur</label>
                 <div class="linewidthlabel">
                   Straal: ${circleRadius.items[0].value}
                   </div>

@@ -9,13 +9,15 @@ class MapDataCatalog extends LitElement {
   static get properties() { 
     return { 
       datacatalog: Object,
-      maplayers: Array
+      maplayers: Array,
+      search: Boolean
     }; 
   }
   constructor() {
     super();
     this.datacatalog = null;
     this.maplayers = [];
+    this.search = true;
   }
   setListIds(list) {
     list.forEach(item=>{
@@ -46,12 +48,12 @@ class MapDataCatalog extends LitElement {
             {
                 detail: {layerid: e.detail.layerInfo.id}
             })
-      );
+        );
       }
     }
   }
   render() {
-    return html`<map-layer-tree headertext="Kaartlagen toevoegen" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="Kaartlagen toevoegen" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}" .search="${this.search}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;
