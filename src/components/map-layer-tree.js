@@ -18,7 +18,10 @@ class MapLayerTree extends LitElement {
       nodelist: Array,
       maplayers: Array,
       updates: Number,
-      headertext: String
+      headertext: String,
+      clearbtnvisible: Boolean,
+      searchActive: Boolean,
+      searchString: String
     }; 
   }
   constructor() {
@@ -27,6 +30,9 @@ class MapLayerTree extends LitElement {
       this.updates = 0;
       this.headertext = "headertext";
       this.maplayers = [];
+      this.clearbtnvisible = false;
+      this.searchActive = false;
+      this.searchString = "";
   }
   updateChecked(nodeList, layerids)
   {
@@ -312,12 +318,56 @@ class MapLayerTree extends LitElement {
       }
     </style>
     <div class="title">${this.headertext}</div>
-    ${this.search?html`<div class="search"><div class="searchicon">${searchIcon}</div><input type="text" placeholder="zoek een kaartlaag..." /><div class="clear ${this.clearbtnvisible?"":"hidden"}"></div></div>`:html``}
+    ${this.search?html`<div class="search"><div class="searchicon">${searchIcon}</div><input id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
-        ${this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')}
+        ${this.searchActive?
+          this.renderSearch():
+          this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')
+        }
       </div>
     </div>`;
+  }
+  searchNodeSet(searchString, nodeList, path) {
+    let searchResult = [];
+    for (let node of nodeList) {
+      if (node.sublayers) {
+        searchResult = searchResult.concat(this.searchNodeSet(searchString, node.sublayers, path.concat([node.title])));
+      }
+      if (node.layerInfo) {
+        if ((node.title && node.title.toLowerCase().indexOf(searchString) > -1) 
+          || (node.layerInfo.metadata
+            && node.layerInfo.metadata.abstract
+            && node.layerInfo.metadata.abstract.toLowerCase().indexOf(searchString) > -1)
+          || (node.layerInfo.source 
+            && node.layerInfo.source.attribution
+            && node.layerInfo.source.attribution.toLowerCase().indexOf(searchString) > -1)
+          || (path.length && path.join().toLowerCase().indexOf(searchString) > -1)) {
+          searchResult.push({id:node.id, title: node.title, path: path.join('=>')});
+        }
+      }
+    }
+    return searchResult;
+  }
+  renderSearch() {
+    let searchString = this.searchString.toLowerCase();
+    return html`
+      <div class="title">zoekresultaat</div>
+      <div>${this.searchNodeSet(searchString, this.nodelist, []).map(node=>html`<div title="${node.path}">${node.title}</div>`)}</div>
+    `
+  }
+  input(e) {
+    this.searchString = e.target.value;
+    this.clearbtnvisible = this.searchString.length > 0;
+    this.searchActive = (this.searchString.length > 2);
+  }
+  handleClearButton(e) {
+    let inputElement = this.shadowRoot.querySelector('#searchinput')
+    inputElement.value = "";
+    inputElement.focus();
+    this.searchActive = false;
+    this.clearbtnvisible = false;
+    this.searchString = "";
   }
 }
 customElements.define('map-layer-tree', MapLayerTree);
