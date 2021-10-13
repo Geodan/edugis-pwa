@@ -157,6 +157,17 @@ class MapLayerTree extends LitElement {
       e.stopPropagation();
     }
   }
+  renderLayerItem(nodeList, node, opened, radio, groupname) {
+    if (opened && node.type === 'getcapabilities') {
+      this.replaceNode(nodeList, node.id);
+    }
+    if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
+      return html`<li><img src="${document.baseURI}/images/spinner.gif"> Loading...</li>`;
+    }
+    return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}" title="${node.path?node.path:''}">
+    <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
+    <span class="label">${node.title}</span></li>`;
+  }
   renderTree(nodeList, opened, radio, groupname) {
     return html`
       <ul class="${opened?'open':''}">${nodeList.map(node=>{
@@ -166,16 +177,9 @@ class MapLayerTree extends LitElement {
             <span class="arrow-down${node.opened?' opened':''}"></span>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
-          if (opened && node.type === 'getcapabilities') {
-              this.replaceNode(nodeList, node.id);
-          }
-          if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
-            return html`<li><img src="${document.baseURI}/images/spinner.gif"> Loading...</li>`;
-          }
-          return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}">
-            <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
-            <span class="label">${node.title}</span>
-          </li>`;
+          delete node.path;
+          delete node.nodeList;
+          return this.renderLayerItem(nodeList, node, opened, radio, groupname);
         }
     })}</ul>`;
   }
@@ -268,7 +272,7 @@ class MapLayerTree extends LitElement {
       .wrapper {
         width: 100%;
         padding-right: 5%;
-        height: calc(100% - 30px);
+        height: calc(100% - 40px);
         font-size: 12px;
         overflow: auto;
         box-sizing: border-box;
@@ -321,8 +325,9 @@ class MapLayerTree extends LitElement {
     ${this.search?html`<div class="search"><div class="searchicon">${searchIcon}</div><input id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
-        ${this.searchActive?
-          this.renderSearch():
+        ${this.searchActive ?
+          this.renderSearch()
+            :
           this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')
         }
       </div>
@@ -343,7 +348,9 @@ class MapLayerTree extends LitElement {
             && node.layerInfo.source.attribution
             && node.layerInfo.source.attribution.toLowerCase().indexOf(searchString) > -1)
           || (path.length && path.join().toLowerCase().indexOf(searchString) > -1)) {
-          searchResult.push({id:node.id, title: node.title, path: path.join('=>')});
+          node.nodeList = nodeList;
+          node.path = path.join('=>');
+          searchResult.push(node);
         }
       }
     }
@@ -353,7 +360,9 @@ class MapLayerTree extends LitElement {
     let searchString = this.searchString.toLowerCase();
     return html`
       <div class="title">zoekresultaat</div>
-      <div>${this.searchNodeSet(searchString, this.nodelist, []).map(node=>html`<div title="${node.path}">${node.title}</div>`)}</div>
+      <ul class="open">
+        ${this.searchNodeSet(searchString, this.nodelist, []).map(node=>this.renderLayerItem(node.nodeList, node, true, false, ""))}
+      </ul>
     `
   }
   input(e) {
