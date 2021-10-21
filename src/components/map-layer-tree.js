@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
-import {searchIcon} from '../gm/gm-iconset-svg';
+import {filterIcon} from './my-icons';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -302,6 +302,7 @@ class MapLayerTree extends LitElement {
         height: 20px;
         margin: 6px 4px;
         color: gray;
+        fill: rgb(51,51,51);
       }
       .clear {
         flex-grow: 0;
@@ -322,7 +323,7 @@ class MapLayerTree extends LitElement {
       }
     </style>
     <div class="title">${this.headertext}</div>
-    ${this.search?html`<div class="search"><div class="searchicon">${searchIcon}</div><input id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
+    ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
         ${this.searchActive ?
