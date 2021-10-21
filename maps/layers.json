@@ -2508,24 +2508,27 @@
                         },{
                             "title":"Balansgebieden",
                             "layerInfo":{
-                        "id": "balansgebieden",
-                        "type": "fill",
-                        "source": {
-                            "type": "vector",
-                            "tiles": [
-                                "https://tiles.edugis.nl/v1/mvt/public.balansgebieden/{z}/{x}/{y}?columns=\"id\",keyname"
-                                ]
-                                },
-                        "source-layer": "public.balansgebieden",
-                        "paint": {
-                            "fill-color": "#89ea27",
-                            "fill-outline-color": "black",
-                            "fill-opacity": 0.6
-  },
-                        "filter": [
-                            "has",
-                            "id"
-                            ]
+                              "id": "balansgebieden",
+                              "metadata": {
+                                "abstract": "Vitens balansgebieden. Om zo min mogelijk energie te gebruiken voor het transport van water van de                                waterfabrieken naar de huizen is het gebied van Vitens verdeeld in zogenaamde                                 balansgebieden. In een balansgebied zorgen 1 of meerdere waterfabrieken samen voor voldoende water voor de inwoners en bedrijven in dat gebied."
+                              },
+                              "type": "fill",
+                              "source": {
+                                  "type": "vector",
+                                  "tiles": [
+                                      "https://tiles.edugis.nl/v1/mvt/public.balansgebieden/{z}/{x}/{y}?columns=\"id\",keyname"
+                                      ]
+                                      },
+                              "source-layer": "public.balansgebieden",
+                              "paint": {
+                                  "fill-color": "#89ea27",
+                                  "fill-outline-color": "black",
+                                  "fill-opacity": 0.6
+        },
+                              "filter": [
+                                  "has",
+                                  "id"
+                                  ]
                     }
                         }
                     ]
