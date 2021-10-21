@@ -163,7 +163,7 @@ footer a:hover {
       <img src="${document.baseURI}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">        
           <ul>
-            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">help</a></li>
+            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">Hoe werkt EduGIS?</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
