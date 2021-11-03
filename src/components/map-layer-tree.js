@@ -21,7 +21,8 @@ class MapLayerTree extends LitElement {
       headertext: String,
       clearbtnvisible: Boolean,
       searchActive: Boolean,
-      searchString: String
+      searchString: String,
+      search: Boolean
     }; 
   }
   constructor() {
@@ -33,6 +34,7 @@ class MapLayerTree extends LitElement {
       this.clearbtnvisible = false;
       this.searchActive = false;
       this.searchString = "";
+      this.search = false;
   }
   updateChecked(nodeList, layerids)
   {

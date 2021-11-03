@@ -17,7 +17,7 @@ class MapDataCatalog extends LitElement {
     super();
     this.datacatalog = null;
     this.maplayers = [];
-    this.search = true;
+    this.search = false;
   }
   setListIds(list) {
     list.forEach(item=>{
