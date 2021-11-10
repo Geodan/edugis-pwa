@@ -42,7 +42,7 @@
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png"
+                                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png"
                             ],
                             "attribution": "© CC-BY Kadaster"
                         }
@@ -58,7 +58,7 @@
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartgrijs/EPSG:3857/{z}/{x}/{y}.png"
+                                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/EPSG:3857/{z}/{x}/{y}.png"
                             ],
                             "attribution": "© CC-BY Kadaster"
                         }
@@ -74,7 +74,7 @@
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartpastel/EPSG:3857/{z}/{x}/{y}.png"
+                                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/pastel/EPSG:3857/{z}/{x}/{y}.png"
                             ],
                             "attribution": "© CC-BY Kadaster"
                         }
@@ -90,7 +90,7 @@
                             "type": "raster",
                             "tileSize": 256,
                             "tiles": [
-                                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaartwater/EPSG:3857/{z}/{x}/{y}.png"
+                                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/water/EPSG:3857/{z}/{x}/{y}.png"
                             ],
                             "attribution": "© CC-BY Kadaster"
                         }
