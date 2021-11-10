@@ -37,6 +37,9 @@
                     "type": "reference",
                     "layerInfo": {
                         "id": "BRT_achtergrondkaart [tms]_id",
+                        "metadata": {
+                            "legendurl": "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/legend.png"
+                        },
                         "type": "raster",
                         "source": {
                             "type": "raster",
@@ -53,6 +56,9 @@
                     "title": "BRT achtergrondkaart Grijs [tms]",
                     "layerInfo": {
                         "id": "BRT_achtergrondkaart Grijs [tms]_id",
+                        "metadata": {
+                            "legendurl": "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/grijs/legend.png"
+                        },
                         "type": "raster",
                         "source": {
                             "type": "raster",
@@ -69,6 +75,9 @@
                     "title": "BRT achtergrondkaart Pastel [tms]",
                     "layerInfo": {
                         "id": "BRT_achtergrondkaart Pastel [tms]_id",
+                        "metadata": {
+                            "legendurl": "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/pastel/legend.png"
+                        },
                         "type": "raster",
                         "source": {
                             "type": "raster",
@@ -85,6 +94,9 @@
                     "title": "BRT achtergrondkaart Water [tms]",
                     "layerInfo": {
                         "id": "BRT_achtergrondkaart Water [tms]_id",
+                        "metadata": {
+                            "legendurl": "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/water/legend.png"
+                        },
                         "type": "raster",
                         "source": {
                             "type": "raster",
@@ -2117,7 +2129,7 @@
     "tools" : {
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 0},
-        "datacatalog" : {"visible": 1, "order" : 1},
+        "datacatalog" : {"visible": 1, "order" : 1, "search": true},
         "measure" : {"visible": 1, "order": 2},
         "info" : {"visible" : 1, "order": 3},
         "maplanguage" : {"visible" : 0, "order": 4},
