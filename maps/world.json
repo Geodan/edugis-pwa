@@ -10,7 +10,7 @@
             "title": "Wereldwijd",
             "sublayers": [
                 {
-                    "title": "Landcover",
+                    "title": "Landbedekking",
                     "type": "wmts",
                     "layerInfo": {
                         "id": "worldlandcover",
@@ -20,6 +20,7 @@
                         "metadata": {
                           "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/landcover/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=landcover&query_layers=landcover",
                           "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                          "abstract": "Landbedekkingskaart. Deze kaart geeft aan warmee het land wordt bedekt zoals bijvoorbeeld verschillende soorten vegetatie, zand, steen of ijs.",
                           "legendurl": "https://tiles.edugis.nl/mapproxy/landcover/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=landcover&format=image/png"
                         },
                         "source": {
@@ -31,6 +32,58 @@
                         "attribution": "&copy; <a href=\"https://github.com/globalmaps/gm_lc_v3\" target=\"copyright\">GLCNMO Version 3</a>"
                         }
                     }
+                },
+                {
+                  "title": "Klimaat Köppen",
+                  "id": "klimaat",
+                  "layerInfo": {
+                    "id":"87d600cf-cff3-4aac-92ed-da6d2d2ce2c8",
+                    "type":"fill",
+                    "metadata":{
+                      "abstract": "Klimaatkaart volgens Köppen Geiger. Gebruik de i-tool en voor uitgebreidere informatie per klimaatgebied. De klassificatie bestaat uit 3 letters. De eerste letter staat voor het type klimaat. A: Tropisch, B: Droog, C: Gematigd, D: Landklimaat, E: Poolklimaat. De klassificatie wordt verder uitgelegd op wikipedia: https://nl.wikipedia.org/wiki/Klimaatclassificatie_van_K%C3%B6ppen"
+                    },
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://tiles.edugis.nl/data/public.climate_2007_koppen_geiger/mvt/{z}/{x}/{y}?geom_column=geom&columns=klassificatie,klimaat,neerslagverdeling,temperatuurverschil&include_nulls=0"],
+                        "bounds":[-180,-89.5,180,83.6]},
+                    "source-layer":"public.climate_2007_koppen_geiger",
+                    "paint":{
+                      "fill-color":[
+                          "match",["get","klassificatie"],
+                          "Af","#1300FC",
+                          "Am","#0E73FC",
+                          "Aw","#3AAAFC",
+                          "BWh","#FD0000",
+                          "BWk","#FE9594",
+                          "BSh","#FE9594",
+                          "BSk","#FDDA62",
+                          "Csa","#FCFE04",
+                          "Csb","#CECC08",
+                          "Cwa","#94FE97",
+                          "Cwb","#5FC765",
+                          "Cwc","#369633",
+                          "Cfa","#C5FE4B",
+                          "Cfb","#63FD32",
+                          "Cfc","#35C600",
+                          "Dsa","#FC00FB",
+                          "Dsb","#C900C4",
+                          "Dsc","#983396",
+                          "Dsd","#8E5D92",
+                          "Dwa","#A5AFFF",
+                          "Dwb","#4A78E3",
+                          "Dwc","#484EB4",
+                          "Dwd","#30008A",
+                          "Dfa","#00FCFD",
+                          "Dfb","#3DC6FA",
+                          "Dfc","#007E7E",
+                          "Dfd","#004660",
+                          "ET","#AEB0AD",
+                          "EH","#AEB0AD",
+                          "EF","#686967",
+                          "#000000"],
+                      "fill-opacity":1
+                    }
+                  }
                 },
                 {
                   "title": "Bevolking per land",
