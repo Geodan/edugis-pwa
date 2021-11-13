@@ -82,6 +82,8 @@ class MapLayerInfo extends LitElement {
             }
             .moreinfo {
                 padding-left: 20px;
+                max-width: 200px;
+                overflow: auto;
             }
             .hide {
                 display: none;
@@ -229,11 +231,34 @@ class MapLayerInfo extends LitElement {
         this.legendclipped = !this.legendclipped;
         this.layer.metadata.legendclipped = this.legendclipped;        
     }
+    _renderLinks(text) {
+        let result = '';
+        let matches = text.matchAll(/https?:\/\/[^,;\s)]*/g);
+        let prevpos = 0;
+        let parts = [];
+        for (let match of matches) {
+            if (match.index > prevpos) {
+                parts.push([match.input.substr(prevpos, match.index), match[0]]);
+            } else {
+                nonlinks.push(['', match[0]]);
+            }
+            prevpos = match.index + match[0].length;
+        }
+        if (parts.length) {
+            if (prevpos !== text.length) {
+                parts.push([text.substr(prevpos, text.length), '']);
+            }
+            return parts.map(part=>html`${part[0]}${part[1] !== ''?html`<a href="${part[1]}" target="_blank">${part[1]}</a>`:''}`)
+        } else {
+            return html`${text}`
+        }
+        return result;
+    }
     _renderShowInfo() {
         if (this.layer.metadata && this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
             return html`
                 <div class="iconbutton" @click="${()=>this.moreInfo=!this.moreInfo}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
-                <div class="moreinfo${this.moreInfo?'':' hide'}">${this.layer.metadata.abstract}</div>
+                <div class="moreinfo${this.moreInfo?'':' hide'}">${this._renderLinks(this.layer.metadata.abstract)}</div>
             `
          }
     }
