@@ -1985,7 +1985,8 @@ class WebMap extends LitElement {
               "wind-speed": json.wind.speed,
               "wind-deg": json.wind.deg,
               "weather-description": json.weather[0].description,
-              "weather-icon": json.weather[0].icon
+              "weather-icon": json.weather[0].icon, 
+              "location-local-date-time": new Date(json.dt * 1000 + json.timezone * 1000 + new Date().getTimezoneOffset() * 60 * 1000).toLocaleString(navigator.language, {weekday: "short", day:"numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"})
             }
           }
         ]
