@@ -14,14 +14,47 @@ import tinycolor from "../../lib/tinycolor.js";
 
 class MBStyleParser
 {
+  interpolate(type, zoom, bottom, top) {
+    const bottomzoom = bottom[0];
+    const bottomvalue = bottom[1];
+    const topzoom = top[0];
+    const topvalue = top[1];
+    if (typeof bottomzoom !== 'number' || typeof bottomvalue !== 'number' || typeof topzoom !== 'number' || typeof topvalue !== 'number') {
+      return 10;
+    }
+    if (topzoom <= bottomzoom) {
+      return 10;
+    }
+    let result = bottomvalue;
+    switch(type[0]) {
+      case 'linear':
+        result = bottomvalue + ((zoom - bottomzoom)/(topzoom - bottomzoom)) * (topvalue - bottomvalue)
+        break;
+      case 'exponential':
+        result = bottomvalue + (topvalue - bottomvalue) * (Math.pow(type[1], zoom - bottomzoom))/(Math.pow(type[1], topzoom - bottomzoom));
+        break;
+      case 'cubic-bezier':
+        // TBI
+        break;
+      default:
+        console.warn(`unknown interpolation: ${type[0]}`);
+    }
+    return result;
+  }
   getZoomDependentValue(zoom, value) {
     let result = value;
     if (Array.isArray(value) && value.length > 4 && value[0] === "interpolate" && Array.isArray(value[2]) && value[2][0] === "zoom") {      
       for (let i = 3; i < value.length - 1; i+=2) {
         result = value[i+1];
-        if (zoom < value[i]) {
+        if (zoom <= value[i]) {
+          if (i > 3) {          
+            result = this.interpolate(value[1], zoom, [value[i - 2], value[i - 1]], [value[i], value[i+1]]);
+          }
           break;
         } 
+      }
+      if (result > 30) {
+        result = 30; // limit legend to 30px circle size
       }
     } else if (value === Object(value)) {
       if (value.stops && !value.hasOwnProperty('property')) {

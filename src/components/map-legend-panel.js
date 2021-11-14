@@ -218,6 +218,9 @@ class MapLegendPanel extends LitElement {
     return html`${colorInfo.propertyname?html` ${colorInfo.propertyname}<br>`:''}
       ${colorInfo.items.filter(item=>(item.label && item.label.trim() !== "")).map((color,index)=>{
         let radiusIndex = radiusInfo.items.length === colorInfo.items.length? index : 0;
+        if (radiusInfo.items.length === 0) {
+          return html`items: 0?`;
+        }
         return html`
           ${svg`
             <svg width="${radiusInfo.items[radiusIndex].value*2+2}" height="${radiusInfo.items[radiusIndex].value*2+2}">

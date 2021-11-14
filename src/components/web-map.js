@@ -553,14 +553,16 @@ class WebMap extends LitElement {
     /* replace '{geodanmapskey}' by APIkeys.geodanmaps, '{freetilehostingkey}' by APIkeys.freetilehosting etc. */
     for (let key in APIkeys) {
       const keyTemplate = `{${key}key}`;
-      if (layerInfo.source.tiles) {
-        layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace(keyTemplate, APIkeys[key]));
-      }
-      if (layerInfo.source.url) {
-        layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, APIkeys[key]);
-      }
-      if (layerInfo.source.data && typeof layerInfo.source.data === "string") {
-        layerInfo.source.data = layerInfo.source.data.replace(keyTemplate, APIkeys[key]);
+      if (layerInfo.source) {
+        if (layerInfo.source.tiles) {
+          layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace(keyTemplate, APIkeys[key]));
+        }
+        if (layerInfo.source.url) {
+          layerInfo.source.url = layerInfo.source.url.replace(keyTemplate, APIkeys[key]);
+        }
+        if (layerInfo.source.data && typeof layerInfo.source.data === "string") {
+          layerInfo.source.data = layerInfo.source.data.replace(keyTemplate, APIkeys[key]);
+        }
       }
     }
   }
@@ -571,11 +573,13 @@ class WebMap extends LitElement {
       interval = layerInfo.metadata.timeinterval;
     }
     const now = encodeURIComponent(new Date(Math.floor((Date.now() - (2 * interval)) / interval) * interval).toISOString());
-    if (layerInfo.source.tiles) {
-      layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace('{time}', now));
-    }
-    if (layerInfo.source.url) {
-      layerInfo.source.url = layerInfo.source.url.replace('{time}', now);
+    if (layerInfo.source) {
+      if (layerInfo.source.tiles) {
+        layerInfo.source.tiles = layerInfo.source.tiles.map(tileurl=>tileurl.replace('{time}', now));
+      }
+      if (layerInfo.source.url) {
+        layerInfo.source.url = layerInfo.source.url.replace('{time}', now);
+      }
     }
   }
   async addLayer(e) {
