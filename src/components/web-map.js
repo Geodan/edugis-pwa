@@ -1964,11 +1964,48 @@ class WebMap extends LitElement {
           }
         })
       }
+    } else if (json.hasOwnProperty("coord")) {
+      // openweather API json
+      let geoJson = {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coords": [json.coord.lon, json.coord.lat]},
+            "properties": {
+              "feels_like": json.main.feels_like,
+              "humidity": json.main.humidity,
+              "pressure": json.main.pressure,
+              "temp": json.main.temp,
+              "temp_max": json.main.temp_max,
+              "temp_min": json.main.temp_min,
+              "name": json.name,
+              "timezone": json.timezone,
+              "visibility": json.visibility,
+              "wind-speed": json.wind.speed,
+              "wind-deg": json.wind.deg,
+              "weather-description": json.weather[0].description,
+              "weather-icon": json.weather[0].icon
+            }
+          }
+        ]
+      };
+      if (json.rain && json.rain["1h"]) {
+        geoJson.features[0].properties.rain = json.rain["1h"];
+      }
+      return geoJson;
     }
     return json;
   }
   queryWMSFeatures(lngLat, metadata) {
     const featureInfoUrl = metadata.getFeatureInfoUrl;
+    if (featureInfoUrl.startsWith('https://api.openweathermap.org')) {
+      let url = featureInfoUrl.replace('{openweathermapkey}', APIkeys.openweathermap).replace('{longitude}', lngLat.lng).replace('{latitude}',lngLat.lat);
+      return fetch(url)
+      .then(response=>{        
+          return response.json().then(json=>this.jsonToGeoJSON(json));
+      });
+    }
     const featureInfoFormat = metadata.getFeatureInfoFormat ? metadata.getFeatureInfoFormat : 'text/xml';
     const wmtsResolution = (2 * 20037508.342789244) / (256 * Math.pow(2, (Math.round(this.zoom+1))));
     // get webmercator coordinates for clicked point
