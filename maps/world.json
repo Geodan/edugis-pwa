@@ -114,7 +114,11 @@
                     },
                     "source-layer": "public.ne_10m_admin_0_countries",
                     "paint": {
-                      "circle-radius": ["*",0.002,["sqrt", ["get","pop_est"]]],
+                      "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
+                        0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_est"]]]],
+                        6, ["*",0.016,["sqrt", ["get","pop_est"]]],
+                        14, ["*",0.016,["sqrt", ["get","pop_est"]]]
+                      ],
                       "circle-color": "#a63603",
                       "circle-stroke-color": "white",
                       "circle-stroke-width": 1,
@@ -219,8 +223,15 @@
                       "circle-color": "#d7301f",
                       "circle-stroke-color": "rgba(255,255,255,0.6)",
                       "circle-stroke-width": 0.5,
-                      "circle-radius": ["+", 1, ["*",0.002,["sqrt", ["get","pop_sum"]]]],
+                      "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
+                        0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_sum"]]]],
+                        6, ["*",0.016,["sqrt", ["get","pop_sum"]]],
+                        14, ["*",0.016,["sqrt", ["get","pop_sum"]]]
+                      ],
                       "circle-pitch-alignment": "map"
+                    },
+                    "layout": {
+                      "circle-sort-key": ["-", ["get", "pop_sum"]]
                     }
                   }
                 },
