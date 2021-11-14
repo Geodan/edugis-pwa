@@ -1994,12 +1994,40 @@ class WebMap extends LitElement {
             }
           }
         ]
-      };
+      }
       if (json.rain && json.rain["1h"]) {
         geoJson.features[0].properties.rain = json.rain["1h"];
       }
       return geoJson;
-    }
+    } else if (json.hasOwnProperty("current")) {
+      // openWeather onecall API
+      let geoJson = {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coords": [json.lon, json.lat]},
+            "properties": {
+              "feels_like": json.current.feels_like,
+              "humidity": json.current.humidity,
+              "pressure": json.current.pressure,
+              "sunrise": new Date(json.current.sunrise * 1000 + json.timezone_offset * 1000 + new Date().getTimezoneOffset() * 60 * 1000).toLocaleString(navigator.language, {weekday: "short", day:"numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}),
+              "sunset": new Date(json.current.sunset * 1000 + json.timezone_offset * 1000 + new Date().getTimezoneOffset() * 60 * 1000).toLocaleString(navigator.language, {weekday: "short", day:"numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"}),
+              "temp": json.current.temp,
+              "timezone": json.timezone,
+              "timezone_offset": json.timezone_offset,
+              "visibility": json.current.visibility,
+              "wind-speed": json.current.wind_speed,
+              "wind-deg": json.current.wind_deg,
+              "weather-description": json.current.weather[0].description,
+              "weather-icon": json.current.weather[0].icon, 
+              "location-local-date-time": new Date(json.current.dt * 1000 + json.timezone_offset * 1000 + new Date().getTimezoneOffset() * 60 * 1000).toLocaleString(navigator.language, {weekday: "short", day:"numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric"})
+            }
+          }
+        ]
+      }
+      return geoJson;
+    };
     return json;
   }
   queryWMSFeatures(lngLat, metadata) {
