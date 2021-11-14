@@ -11,6 +11,7 @@
             "sublayers": [
                 {
                     "title": "Landbedekking",
+                    "id": "worldlandcover",
                     "type": "wmts",
                     "layerInfo": {
                         "id": "worldlandcover",
@@ -739,14 +740,32 @@
                 "id": "openweathermapprecipitation_new",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "",
-                  "timeinterval": 300000
+                  "legendurl":"https://openweathermap.org/img/a/PR.png",
+                  "timeinterval": 300000,
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "deniedattributes": ["weather-icon"],
+                  "attributes": {
+                    "translations": [
+                      {"name": "temp", "translation": "temperatuur", "unit": " °C"},
+                      {"name": "humidity", "translation": "luchtvochtigheid", "unit": " %"},
+                      {"name": "feels_like", "translation": "gevoelstemperatuur", "unit": " °C"},
+                      {"name": "temp_max", "translation": "maximum temperatuur", "unit": " °C"},
+                      {"name": "temp_min", "translation": "minimum temperatuur", "unit": " °C"},
+                      {"name": "name", "translation": "locatie"},
+                      {"name": "wind-speed", "translation": "wind", "unit": " meter/seconde"},
+                      {"name": "wind-deg", "translation": "windrichting tov N", "unit": " °"},
+                      {"name": "visibility", "translation": "zicht", "unit": " meter"},
+                      {"name": "pressure", "translation": "luchtdruk", "unit": " hPa"},
+                      {"name": "weather-description", "translation": "weer"},
+                      {"name": "rain", "translation": "neerslag", "unit": " mm/uur"}
+                    ]
+                  }
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                    "https://tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
                   "attribution": "OpenWeather"
                 }
@@ -759,14 +778,32 @@
                 "id": "openweathermapcloudes_new",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "",
-                  "timeinterval": 300000
+                  "legendurl": "https://openweathermap.org/img/a/NT.png",
+                  "timeinterval": 300000,
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "deniedattributes": ["weather-icon"],
+                  "attributes": {
+                    "translations": [
+                      {"name": "temp", "translation": "temperatuur", "unit": " °C"},
+                      {"name": "humidity", "translation": "luchtvochtigheid", "unit": " %"},
+                      {"name": "feels_like", "translation": "gevoelstemperatuur", "unit": " °C"},
+                      {"name": "temp_max", "translation": "maximum temperatuur", "unit": " °C"},
+                      {"name": "temp_min", "translation": "minimum temperatuur", "unit": " °C"},
+                      {"name": "name", "translation": "locatie"},
+                      {"name": "wind-speed", "translation": "wind", "unit": " meter/seconde"},
+                      {"name": "wind-deg", "translation": "windrichting tov N", "unit": " °"},
+                      {"name": "visibility", "translation": "zicht", "unit": " meter"},
+                      {"name": "pressure", "translation": "luchtdruk", "unit": " hPa"},
+                      {"name": "weather-description", "translation": "weer"},
+                      {"name": "rain", "translation": "neerslag", "unit": " mm/uur"}
+                    ]
+                  }
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                    "https://tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
                   "attribution": "OpenWeather"
                 }
@@ -779,14 +816,32 @@
                 "id": "openweathermappressure_new",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "",
-                  "timeinterval": 300000
+                  "legendurl": "https://openweathermap.org/img/a/PN.png",
+                  "timeinterval": 300000,
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "deniedattributes": ["weather-icon"],
+                  "attributes": {
+                    "translations": [
+                      {"name": "temp", "translation": "temperatuur", "unit": " °C"},
+                      {"name": "humidity", "translation": "luchtvochtigheid", "unit": " %"},
+                      {"name": "feels_like", "translation": "gevoelstemperatuur", "unit": " °C"},
+                      {"name": "temp_max", "translation": "maximum temperatuur", "unit": " °C"},
+                      {"name": "temp_min", "translation": "minimum temperatuur", "unit": " °C"},
+                      {"name": "name", "translation": "locatie"},
+                      {"name": "wind-speed", "translation": "wind", "unit": " meter/seconde"},
+                      {"name": "wind-deg", "translation": "windrichting tov N", "unit": " °"},
+                      {"name": "visibility", "translation": "zicht", "unit": " meter"},
+                      {"name": "pressure", "translation": "luchtdruk", "unit": " hPa"},
+                      {"name": "weather-description", "translation": "weer"},
+                      {"name": "rain", "translation": "neerslag", "unit": " mm/uur"}
+                    ]
+                  }
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                    "https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
                   "attribution": "OpenWeather"
                 }
@@ -800,13 +855,31 @@
                 "type": "raster",
                 "metadata": {
                   "legendurl": "",
-                  "timeinterval": 300000
+                  "timeinterval": 300000,
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "deniedattributes": ["weather-icon"],
+                  "attributes": {
+                    "translations": [
+                      {"name": "temp", "translation": "temperatuur", "unit": " °C"},
+                      {"name": "humidity", "translation": "luchtvochtigheid", "unit": " %"},
+                      {"name": "feels_like", "translation": "gevoelstemperatuur", "unit": " °C"},
+                      {"name": "temp_max", "translation": "maximum temperatuur", "unit": " °C"},
+                      {"name": "temp_min", "translation": "minimum temperatuur", "unit": " °C"},
+                      {"name": "name", "translation": "locatie"},
+                      {"name": "wind-speed", "translation": "wind", "unit": " meter/seconde"},
+                      {"name": "wind-deg", "translation": "windrichting tov N", "unit": " °"},
+                      {"name": "visibility", "translation": "zicht", "unit": " meter"},
+                      {"name": "pressure", "translation": "luchtdruk", "unit": " hPa"},
+                      {"name": "weather-description", "translation": "weer"},
+                      {"name": "rain", "translation": "neerslag", "unit": " mm/uur"}
+                    ]
+                  }
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                    "https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
                   "attribution": "OpenWeather"
                 }
@@ -819,14 +892,32 @@
                 "id": "openweathermaptemperature_new",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "",
+                  "legendurl": "https://openweathermap.org/img/a/TT.png",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "deniedattributes": ["weather-icon"],
+                  "attributes": {
+                    "translations": [
+                      {"name": "temp", "translation": "temperatuur", "unit": " °C"},
+                      {"name": "humidity", "translation": "luchtvochtigheid", "unit": " %"},
+                      {"name": "feels_like", "translation": "gevoelstemperatuur", "unit": " °C"},
+                      {"name": "temp_max", "translation": "maximum temperatuur", "unit": " °C"},
+                      {"name": "temp_min", "translation": "minimum temperatuur", "unit": " °C"},
+                      {"name": "name", "translation": "locatie"},
+                      {"name": "wind-speed", "translation": "wind", "unit": " meter/seconde"},
+                      {"name": "wind-deg", "translation": "windrichting tov N", "unit": " °"},
+                      {"name": "visibility", "translation": "zicht", "unit": " meter"},
+                      {"name": "pressure", "translation": "luchtdruk", "unit": " hPa"},
+                      {"name": "weather-description", "translation": "weer"},
+                      {"name": "rain", "translation": "neerslag", "unit": " mm/uur"}
+                    ]
+                  },
                   "timeinterval": 300000
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid={openweathermapkey}"
+                    "https://tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid={openweathermapkey}"
                   ],
                   "attribution": "OpenWeather"
                 }
@@ -1046,7 +1137,7 @@
     "tools" : {
         "toolbar": {"opened" : 1},
         "search" : {"visible": 1, "order" : 1},
-        "datacatalog" : {"visible": 1, "order" : 2},
+        "datacatalog" : {"visible": 1, "order" : 2, "search": true},
         "measure" : {"visible": 1, "order": 3},
         "info" : {"visible" : 1, "order": 4},
         "maplanguage" : {"visible" : 1, "order": 5},
