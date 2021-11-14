@@ -117,7 +117,8 @@
                       "circle-radius": ["*",0.002,["sqrt", ["get","pop_est"]]],
                       "circle-color": "#a63603",
                       "circle-stroke-color": "white",
-                      "circle-stroke-width": 1
+                      "circle-stroke-width": 1,
+                      "circle-pitch-alignment": "map"
                     }
                   }
                 },
@@ -218,7 +219,8 @@
                       "circle-color": "#d7301f",
                       "circle-stroke-color": "rgba(255,255,255,0.6)",
                       "circle-stroke-width": 0.5,
-                      "circle-radius": ["+", 1, ["*",0.002,["sqrt", ["get","pop_sum"]]]]
+                      "circle-radius": ["+", 1, ["*",0.002,["sqrt", ["get","pop_sum"]]]],
+                      "circle-pitch-alignment": "map"
                     }
                   }
                 },
@@ -251,7 +253,8 @@
                       "circle-radius": ["*",0.002,["sqrt", ["get","pop_max"]]],
                       "circle-color": "red",
                       "circle-stroke-color": "white",
-                      "circle-stroke-width": 1
+                      "circle-stroke-width": 1,
+                      "circle-pitch-alignment": "map"
                     }
                   }
                 },
@@ -310,7 +313,8 @@
                       "circle-radius": ["*",0.01,["sqrt", ["get","pop_max"]]],
                       "circle-color": "red",
                       "circle-stroke-color": "white",
-                      "circle-stroke-width": 1
+                      "circle-stroke-width": 1,
+                      "circle-pitch-alignment": "map"
                     }
                   }
                 },
@@ -723,7 +727,8 @@
                   "circle-radius": ["*",0.01,["sqrt", ["get","gdp_md_est"]]],
                   "circle-color": "#6e016b",
                   "circle-stroke-color": "white",
-                  "circle-stroke-width": 1
+                  "circle-stroke-width": 1,
+                  "circle-pitch-alignment": "map"
                 }
               }
             }
