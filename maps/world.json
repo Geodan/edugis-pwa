@@ -463,7 +463,7 @@
                         "rivers": {
                           "type": "vector",
                           "tiles": [
-                              "https://tiles.edugis.nl/data/public.ne_10m_rivers_lake_centerlines/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                              "https://tiles.edugis.nl/data/public.ne_10m_rivers_lake_centerlines/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl&include_nulls=0"
                             ],
                           "bounds": [-180,-89.5,180,66.5499852412027],
                           "attribution": "Natural Earth"
@@ -471,7 +471,7 @@
                         "lakes" : {
                           "type": "vector",
                           "tiles": [
-                              "https://tiles.edugis.nl/data/public.ne_10m_lakes/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                              "https://tiles.edugis.nl/data/public.ne_10m_lakes/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl&include_nulls=0"
                             ],
                           "bounds": [-180,-89.5,180,66.5499852412027],
                           "attribution": "Natural Earth"
@@ -481,11 +481,26 @@
                         {
                           "id": "rivieren",
                           "type": "line",
+                          "metadata": {
+                            "attributes": {
+                              "translations": [
+                                {"name": "name_nl", "translation": "nederlandse naam"},
+                                {"name": "name", "translation": "naam"}
+                              ]
+                            }
+                          },
                           "source": "rivers",
                           "source-layer": "public.ne_10m_rivers_lake_centerlines",
                           "paint": {
                             "line-color": "#bdd6ef",
-                            "line-width": 1
+                            "line-width": [
+                              "step", ["zoom"],
+                              1,
+                              0, 1,
+                              5, 2,
+                              6, 4,
+                              7, 8
+                            ]
                           }
                         },
                         {
@@ -734,7 +749,7 @@
                 "metadata": {
                   "legendurl":"https://openweathermap.org/img/a/PR.png",
                   "timeinterval": 300000,
-                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/onecall?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
                   "deniedattributes": ["weather-icon"],
                   "attributes": {
                     "translations": [
@@ -759,7 +774,7 @@
                   "tiles": [
                     "https://tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
-                  "attribution": "OpenWeather"
+                  "attribution": "<a href=\"https://openweathermap.org\" target=\"_blank\">OpenWeatherMap</a>"
                 }
               }
             },
@@ -772,7 +787,7 @@
                 "metadata": {
                   "legendurl": "https://openweathermap.org/img/a/NT.png",
                   "timeinterval": 300000,
-                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/onecall?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
                   "deniedattributes": ["weather-icon"],
                   "attributes": {
                     "translations": [
@@ -797,7 +812,7 @@
                   "tiles": [
                     "https://tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
-                  "attribution": "OpenWeather"
+                  "attribution": "<a href=\"https://openweathermap.org\" target=\"_blank\">OpenWeatherMap</a>"
                 }
               }
             },
@@ -810,7 +825,7 @@
                 "metadata": {
                   "legendurl": "https://openweathermap.org/img/a/PN.png",
                   "timeinterval": 300000,
-                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/onecall?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
                   "deniedattributes": ["weather-icon"],
                   "attributes": {
                     "translations": [
@@ -835,7 +850,7 @@
                   "tiles": [
                     "https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
-                  "attribution": "OpenWeather"
+                  "attribution": "<a href=\"https://openweathermap.org\" target=\"_blank\">OpenWeatherMap</a>"
                 }
               }
             },
@@ -848,7 +863,7 @@
                 "metadata": {
                   "legendurl": "",
                   "timeinterval": 300000,
-                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/onecall?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
                   "deniedattributes": ["weather-icon"],
                   "attributes": {
                     "translations": [
@@ -873,7 +888,7 @@
                   "tiles": [
                     "https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid={openweathermapkey}&opacity=1"
                   ],
-                  "attribution": "OpenWeather"
+                  "attribution": "<a href=\"https://openweathermap.org\" target=\"_blank\">OpenWeatherMap</a>"
                 }
               }
             },
@@ -885,7 +900,7 @@
                 "type": "raster",
                 "metadata": {
                   "legendurl": "https://openweathermap.org/img/a/TT.png",
-                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/weather?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
+                  "getFeatureInfoUrl": "https://api.openweathermap.org/data/2.5/onecall?appid={openweathermapkey}&lat={latitude}&lon={longitude}&lang=nl&units=metric",
                   "deniedattributes": ["weather-icon"],
                   "attributes": {
                     "translations": [
@@ -911,7 +926,7 @@
                   "tiles": [
                     "https://tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid={openweathermapkey}"
                   ],
-                  "attribution": "OpenWeather"
+                  "attribution": "<a href=\"https://openweathermap.org\" target=\"_blank\">OpenWeatherMap</a>"
                 }
               }
             }
