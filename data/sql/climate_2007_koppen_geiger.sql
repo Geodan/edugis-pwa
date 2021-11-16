@@ -45,8 +45,25 @@ create index climate_2007_koppen_geiger_geomidx on climate_2007_koppen_geiger us
 update climate_2007_koppen_geiger set klassificatie='Dfd', temperatuurverschil='erg koude winter' where st_intersects(geom,st_setsrid(st_makepoint(117.2,66.7),4326));
 -- remove south pole point, cannot be projected on mercator (point => line)
 update climate_2007_koppen_geiger set geom=st_multi(st_intersection(geom, st_makeenvelope(-180,0,180,-89.5,4326))) where st_ymin(geom) = -90 ;
--- add missing mountain areas
+-- add missing mountain areas Himalaya
 insert into climate_2007_koppen_geiger (geom, klassificatie, klimaat, neerslagverdeling)
 with mountains as
 (select st_difference(st_makeenvelope(78.4,29.8,105.1,39.3,4326), st_union(geom)) geom from other_climate_2007_koppen_geiger ockg where st_intersects(geom,st_makeenvelope(78.4,29.8,105.1,39.3,4326)))
  select geom, 'EH' as klassificatie, 'Poolklimaat' as klimaat, 'Hooggebergte' as neerslagverdeling from mountains;
+-- Alps
+insert into climate_2007_koppen_geiger (geom, klassificatie, klimaat, neerslagverdeling)
+with mountains as
+(select st_difference(st_makeenvelope(4.9,44.49,11.55,48.23,4326), st_union(geom)) geom 
+ from other_climate_2007_koppen_geiger ockg where st_intersects(geom,st_makeenvelope(4.9,44.49,11.55,48.23,4326)))
+   select geom, 'EH' as klassificatie, 'Poolklimaat' as klimaat, 'Hooggebergte' as neerslagverdeling from mountains;
+insert into climate_2007_koppen_geiger (geom, klassificatie, klimaat, neerslagverdeling)
+with mountains as
+(select st_difference(st_makeenvelope(12.22,46.54,13.79,47.68,4326), st_union(geom)) geom 
+ from other_climate_2007_koppen_geiger ockg where st_intersects(geom,st_makeenvelope(12.22,46.54,13.79,47.68,4326)))
+   select geom, 'EH' as klassificatie, 'Poolklimaat' as klimaat, 'Hooggebergte' as neerslagverdeling from mountains;
+-- Pyrenees
+insert into climate_2007_koppen_geiger (geom, klassificatie, klimaat, neerslagverdeling)
+with mountains as
+(select st_difference(st_makeenvelope(-1.27,41.85,1.56,44.04,4326), st_union(geom)) geom 
+ from other_climate_2007_koppen_geiger ockg where st_intersects(geom,st_makeenvelope(-1.27,41.85,1.56,44.04,4326)))
+   select geom, 'EH' as klassificatie, 'Poolklimaat' as klimaat, 'Hooggebergte' as neerslagverdeling from mountains;
