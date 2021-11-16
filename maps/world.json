@@ -592,6 +592,47 @@
                       "hillshade-exaggeration":0.20
                     }
                   }
+                },
+                {
+                  "title": "Neerslag",
+                  "layerInfo": {
+                    "id":"a9e03848-335e-45e7-90a4-589da57f0915",
+                    "type":"fill",
+                    "metadata": {
+                      "attributes":{
+                        "translations":[
+                          {"name":"annualprecipitation", "translation":"gemiddelde neerslag", "unit": " mm/jaar"}
+                        ]
+                      }
+                    },
+                    "source":{
+                        "type":"vector",
+                        "tiles":["http://tiles.edugis.nl:8090/data/public.worldprecipitation/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation&include_nulls=0"],
+                        "bounds":[-180,-89.9583333333333,180,83.6666666666667],
+                        "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                    },
+                    "source-layer":"public.worldprecipitation",
+                    "paint":{
+                    "fill-color":["match", ["get","annualprecipitation"],
+                        10, "#ffffcc",
+                        35,"#EDF0C4",
+                        85,"#DBE1BD",
+                        150,"#C9D3B6",
+                        220,"#B7C4AF",
+                        300,"#A6B6A7",
+                        400,"#94A7A0",
+                        500,"#829999",
+                        600,"#708A92",
+                        800,"#5E7B8B",
+                        1250,"#4D6D83",
+                        2000,"#3B5E7C",
+                        3000,"#295075",
+                        4000,"#17416E",
+                        6000,"#063367",
+                        "#fff"
+                      ]
+                    }
+                  }
                 }
             ]
         },
