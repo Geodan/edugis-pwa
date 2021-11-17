@@ -601,17 +601,21 @@
                     "metadata": {
                       "attributes":{
                         "translations":[
-                          {"name":"annualprecipitation", "translation":"gemiddelde neerslag", "unit": " mm/jaar"}
+                          {"name": "mean", "translation": "gemiddelde neerslag", "unit": " mm/jaar", "decimals": 0},
+                          {"name": "min", "translation": "van", "unit": " mm/jaar", "decimals": 0},
+                          {"name": "max", "translation": "tot", "unit": " mm/jaar", "decimals": 0},
+                          {"name":"annualprecipitation", "translation":"klasse", "unit": " mm/jaar"}
                         ]
                       }
                     },
                     "source":{
                         "type":"vector",
-                        "tiles":["http://tiles.edugis.nl:8090/data/public.worldprecipitation/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation&include_nulls=0"],
+                        "tiles":["https://tiles.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0",
+                                 "https://t1.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0"],
                         "bounds":[-180,-89.9583333333333,180,83.6666666666667],
                         "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
                     },
-                    "source-layer":"public.worldprecipitation",
+                    "source-layer":"public.wc_1_2_5m_bio_12_vec",
                     "paint":{
                     "fill-color":["match", ["get","annualprecipitation"],
                         10, "#ffffcc",
