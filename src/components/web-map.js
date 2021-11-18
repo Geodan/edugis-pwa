@@ -17,7 +17,6 @@ import '../../lib/openmaptiles-language.js';
 import './map-data-catalog.js';
 import './map-spinner.js';
 import './map-coordinates.js';
-import './map-legend-container.js';
 import './map-measure';
 import './map-language';
 import './map-search';
@@ -863,25 +862,6 @@ class WebMap extends LitElement {
             <span>Achtergrondlagen</span>
         </map-layer-set>
       </map-layer-container>
-      <mmap-selected-layers 
-        .layerlist="${this.layerlist}"
-        .zoom="${this.zoom}"
-        .datagetter="${this.datagetter}"
-        @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
-        @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
-        @updateopacity="${(e)=>this.updateLayerOpacity(e)}"
-        @removelayer="${(e) => this.removeLayer(e)}">
-
-      </mmap-selected-layers>
-      <mmap-legend-container .layerlist="${this.layerlist}" 
-        .visible="${this.haslegend}" 
-        .active="${true}" 
-        .zoom="${this.zoom}" 
-        @movelayer="${e=>this.moveLayer(e)}" 
-        @updatevisibility="${(e) => this.updateLayerVisibility(e)}" 
-        @updateopacity="${(e)=>this.updateLayerOpacity(e)}" 
-        @removelayer="${(e) => this.removeLayer(e)}">
-      </mmap-legend-container>
     </div>`;
   }
   render() {
