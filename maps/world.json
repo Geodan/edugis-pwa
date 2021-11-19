@@ -383,9 +383,19 @@
               "layerInfo": {
                 "id":"b48d1c09-7dc7-4d1d-b44b-f777400c4472",
                 "type":"fill",
+                "metadata": {
+                  "attributes":{
+                    "translations":[
+                      {"name": "mean", "translation": "gemiddelde neerslag", "unit": " mm/januari", "decimals": 0},
+                      {"name": "min", "translation": "van", "unit": " mm/januari", "decimals": 0},
+                      {"name": "max", "translation": "tot", "unit": " mm/januari", "decimals": 0},
+                      {"name":"averageprecjan", "translation":"neerslag klasse", "unit": " mm/januari"}
+                    ]
+                  }
+                },
                 "source":{
                     "type":"vector",
-                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjan&include_nulls=0"],
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjan,mean,min,max&include_nulls=0"],
                     "bounds":[-180,-89.5,180,83.6666666666667]},
                 "source-layer":"public.wc2_1_5m_prec_01_vec",
                 "paint":{
@@ -416,9 +426,19 @@
               "layerInfo": {
                 "id":"448d1c09-8000-4d1d-b44b-f777400c4476",
                 "type":"fill",
+                "metadata": {
+                  "attributes":{
+                    "translations":[
+                      {"name": "mean", "translation": "gemiddelde neerslag", "unit": " mm/juli", "decimals": 0},
+                      {"name": "min", "translation": "van", "unit": " mm/juli", "decimals": 0},
+                      {"name": "max", "translation": "tot", "unit": " mm/juli", "decimals": 0},
+                      {"name":"averageprecjul", "translation":"neerslag klasse", "unit": " mm/juli"}
+                    ]
+                  }
+                },
                 "source":{
                     "type":"vector",
-                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjul&include_nulls=0"],
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjul,mean,min,max&include_nulls=0"],
                     "bounds":[-180,-89.5,180,83.6666666666667]},
                 "source-layer":"public.wc2_1_5m_prec_07_vec",
                 "paint":{
