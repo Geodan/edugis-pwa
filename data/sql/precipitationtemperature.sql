@@ -63,7 +63,7 @@ create table wc2_1_5m_tavg_07_vec as
  with unionedrast as
  (select st_union(rast) rast from wc2_1_5m_tavg_07),
  newrast as
-  (select st_reclass(rast, 1,'[-70--50)[-50- -40):-45,[-40- -35):-37,[-35- -30):-32,[-30- -25):-27,[-25- -20):-22,[-20- -15):-17,[-15- -10):-12,[-10- -5):-7,[-5-0):-2,[0-5):3,[5-10):8,[10-15):13,[15-20):18,[20-25):23,[25-30):28,[30-35):33,[35-40):38,[40-45):43,[45-50):48','16BSI', st_bandnodatavalue(rast)) rast
+  (select st_reclass(rast, 1,'[-70--50):-60,[-50- -40):-45,[-40- -35):-37,[-35- -30):-32,[-30- -25):-27,[-25- -20):-22,[-20- -15):-17,[-15- -10):-12,[-10- -5):-7,[-5-0):-2,[0-5):3,[5-10):8,[10-15):13,[15-20):18,[20-25):23,[25-30):28,[30-35):33,[35-40):38,[40-45):43,[45-50):48','16BSI', st_bandnodatavalue(rast)) rast
     from unionedrast w),
 vectorval as
   (select (st_dumpaspolygons(rast,1,true)) polygons from newrast),
@@ -75,8 +75,59 @@ stats as
     --  and st_intersects(vector.geom, st_makeenvelope(28.3327,36.8953,35.5,42.3,4326)) 
         group by vector.geom,vector.averagetempjul
     )
-select geom, averagetempjul, (stats).mean, (stats).stddev,(stats).min, (stats).max from stats;
+select geom, averagetempjul, (stats).mean, (stats).stddev,(stats).min, (stats).max from stats; --6min47sec
 
-update wc2_1_5m_tavg_07_vec set geom=st_collectionextract(st_intersection(geom, st_makeenvelope(-180,0,180,-89.5,4326)),3) where st_ymin(geom) = -90 ;
+update wc2_1_5m_tavg_07_vec set geom=(
+    with polies as
+    (select (st_dump(st_collectionextract(st_intersection(geom, st_makeenvelope(-180,0,180,-89.5,4326)),3))).geom geom)
+      select geom from polies order by st_area(geom) desc limit 1)
+  where st_ymin(geom) = -90;
 create index wc2_1_5m_tavg_07_vecgeomidx on wc2_1_5m_tavg_07_vec using gist(geom);
 
+
+
+-- JANUARY world average precipitation
+drop table if exists wc2_1_5m_prec_01_vec;
+create table wc2_1_5m_prec_01_vec as
+ with unionedrast as
+ (select st_union(rast) rast from wc2_1_5m_prec_01),
+ newrast as
+  (select st_reclass(rast, 1,'[0-2):1,[2-4):3,[4-9):7,[9-15):12,[15-22):16,[22-28):24,[28-33):30,[33-45):39,[45-57):51,[57-83):70,[83-125):100,[125-208):165,[208-291):245,[291-375):340,[375-2000]:500','16BUI', st_bandnodatavalue(rast)) rast
+    from unionedrast w),
+vectorval as
+  (select (st_dumpaspolygons(rast,1,true)) polygons from newrast),
+vector as
+  (select (polygons).geom geom, (polygons).val averageprecjan from vectorval),
+stats as
+(select vector.geom, vector.averageprecjan, st_summarystats(st_clip(st_union(r.rast),vector.geom, true)) stats 
+      from vector, wc2_1_5m_prec_01 r where st_intersects(vector.geom, r.rast) 
+    --  and st_intersects(vector.geom, st_makeenvelope(28.3327,36.8953,35.5,42.3,4326)) 
+        group by vector.geom,vector.averageprecjan
+    )
+select geom, averageprecjan, (stats).mean, (stats).stddev,(stats).min, (stats).max from stats;
+
+update wc2_1_5m_prec_01_vec set geom=st_collectionextract(st_intersection(geom, st_makeenvelope(-180,0,180,-89.5,4326)),3) where st_ymin(geom) = -90 ;
+create index wc2_1_5m_prec_01_vecgeomidx on wc2_1_5m_prec_01_vec using gist(geom);
+
+-- JULY world average precipitation
+drop table if exists wc2_1_5m_prec_07_vec;
+create table wc2_1_5m_prec_07_vec as
+ with unionedrast as
+ (select st_union(rast) rast from wc2_1_5m_prec_07),
+ newrast as
+  (select st_reclass(rast, 1,'[0-2):1,[2-4):3,[4-9):7,[9-15):12,[15-22):16,[22-28):24,[28-33):30,[33-45):39,[45-57):51,[57-83):70,[83-125):100,[125-208):165,[208-291):245,[291-375):340,[375-2000]:500','16BUI', st_bandnodatavalue(rast)) rast
+    from unionedrast w),
+vectorval as
+  (select (st_dumpaspolygons(rast,1,true)) polygons from newrast),
+vector as
+  (select (polygons).geom geom, (polygons).val averageprecjul from vectorval),
+stats as
+(select vector.geom, vector.averageprecjul, st_summarystats(st_clip(st_union(r.rast),vector.geom, true)) stats 
+      from vector, wc2_1_5m_prec_07 r where st_intersects(vector.geom, r.rast) 
+    --  and st_intersects(vector.geom, st_makeenvelope(28.3327,36.8953,35.5,42.3,4326)) 
+        group by vector.geom,vector.averageprecjul
+    )
+select geom, averageprecjul, (stats).mean, (stats).stddev,(stats).min, (stats).max from stats; --7min31sec
+
+update wc2_1_5m_prec_07_vec set geom=st_collectionextract(st_intersection(geom, st_makeenvelope(-180,0,180,-89.5,4326)),3) where st_ymin(geom) = -90 ;
+create index wc2_1_5m_prec_07_vecgeomidx on wc2_1_5m_tavg_07_vec using gist(geom);

@@ -379,13 +379,80 @@
               }
             },
             {
+              "title": "Neerslag januari gemiddeld",
+              "layerInfo": {
+                "id":"b48d1c09-7dc7-4d1d-b44b-f777400c4472",
+                "type":"fill",
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjan&include_nulls=0"],
+                    "bounds":[-180,-89.5,180,83.6666666666667]},
+                "source-layer":"public.wc2_1_5m_prec_01_vec",
+                "paint":{
+                "fill-color":[
+                    "match",["get","averageprecjan"],
+                    1, "#ffffcc",
+                    3,"#EDF0C4",
+                    7,"#DBE1BD",
+                    12,"#C9D3B6",
+                    16,"#B7C4AF",
+                    24,"#A6B6A7",
+                    30,"#94A7A0",
+                    39,"#829999",
+                    51,"#708A92",
+                    70,"#5E7B8B",
+                    100,"#4D6D83",
+                    165,"#3B5E7C",
+                    245,"#295075",
+                    340,"#17416E",
+                    500,"#063367",
+                    "#fff"   
+                  ]
+                }
+              }
+            },
+            {
+              "title": "Neerslag juli gemiddeld",
+              "layerInfo": {
+                "id":"448d1c09-8000-4d1d-b44b-f777400c4476",
+                "type":"fill",
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjul&include_nulls=0"],
+                    "bounds":[-180,-89.5,180,83.6666666666667]},
+                "source-layer":"public.wc2_1_5m_prec_07_vec",
+                "paint":{
+                "fill-color":[
+                    "match",["get","averageprecjul"],
+                    1, "#ffffcc",
+                    3,"#EDF0C4",
+                    7,"#DBE1BD",
+                    12,"#C9D3B6",
+                    16,"#B7C4AF",
+                    24,"#A6B6A7",
+                    30,"#94A7A0",
+                    39,"#829999",
+                    51,"#708A92",
+                    70,"#5E7B8B",
+                    100,"#4D6D83",
+                    165,"#3B5E7C",
+                    245,"#295075",
+                    340,"#17416E",
+                    500,"#063367",
+                    "#fff"   
+                  ]
+                }
+              }
+            },
+            {
               "title": "Temperatuur gemiddeld in januari",
               "layerInfo": {
+                "id":"c9473b4b-e1b4-4f15-918a-a7f1cedf03dc",
                 "type":"fill",
                 "metadata": {
                   "attributes":{
                     "translations":[
-                      {"name": "mean", "translation": "gemiddelde januari temperatuur", "unit": " °C", "decimals": 0},
+                      {"name": "mean", "translation": "gemiddelde januari temperatuur", "unit": " °C", "decimals": 1},
                       {"name": "min", "translation": "van", "unit": " °C", "decimals": 0},
                       {"name": "max", "translation": "tot", "unit": " °C", "decimals": 0},
                       {"name":"averagetempjan", "translation":"klasse", "unit": " °C"}
@@ -401,23 +468,27 @@
                 },
                 "source-layer":"public.wc2_1_5m_tavg_01_vec",
                 "paint":{
-                "fill-color":["match", ["get","averagetempjan"],
-                    10, "#ffffcc",
-                    35,"#EDF0C4",
-                    85,"#DBE1BD",
-                    150,"#C9D3B6",
-                    220,"#B7C4AF",
-                    300,"#A6B6A7",
-                    400,"#94A7A0",
-                    500,"#829999",
-                    600,"#708A92",
-                    800,"#5E7B8B",
-                    1250,"#4D6D83",
-                    2000,"#3B5E7C",
-                    3000,"#295075",
-                    4000,"#17416E",
-                    6000,"#063367",
-                    "#fff"
+                  "fill-color":["match", ["get","averagetempjan"],
+                    -60, "#081d58",
+                    -45,"#3f007d",
+                    -37,"#54278f",
+                    -32,"#6a51a3",
+                    -27,"#807dba",
+                    -22,"#9e9ac8",
+                    -17,"#bcbddc",
+                    -12,"#dadaeb",
+                    -7,"#efedf5",
+                    -2,"#fcfbfd",
+                    3,"#fee8c8",
+                    8,"#fdd49e",
+                    13,"#fdbb84",
+                    18,"#fc8d59",
+                    23,"#ef6548",
+                    28,"#d7301f",
+                    33,"#a11616",
+                    38,"#7f0000",
+                    43,"#7a0177",
+                    "#000"
                   ]
                 }
               }
@@ -425,7 +496,50 @@
             {
               "title": "Temperatuur gemiddeld in juli",
               "layerInfo": {
-
+                "id": "9b687f17-c174-4436-a706-3b4ead044845",
+                "type":"fill",
+                "metadata": {
+                  "attributes":{
+                    "translations":[
+                      {"name": "mean", "translation": "gemiddelde juli temperatuur", "unit": " °C", "decimals": 1},
+                      {"name": "min", "translation": "van", "unit": " °C", "decimals": 0},
+                      {"name": "max", "translation": "tot", "unit": " °C", "decimals": 0},
+                      {"name":"averagetempjul", "translation":"klasse", "unit": " °C"}
+                    ]
+                  }
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_tavg_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averagetempjul,mean,min,max&include_nulls=0",
+                             "https://t1.edugis.nl/data/public.wc2_1_5m_tavg_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averagetempjul,mean,min,max&include_nulls=0"],
+                    "bounds":[-180,-89.9583333333333,180,83.6666666666667],
+                    "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                },
+                "source-layer":"public.wc2_1_5m_tavg_07_vec",
+                "paint":{
+                  "fill-color":["match", ["get","averagetempjul"],
+                    -60, "#081d58",
+                    -45,"#3f007d",
+                    -37,"#54278f",
+                    -32,"#6a51a3",
+                    -27,"#807dba",
+                    -22,"#9e9ac8",
+                    -17,"#bcbddc",
+                    -12,"#dadaeb",
+                    -7,"#efedf5",
+                    -2,"#fcfbfd",
+                    3,"#fee8c8",
+                    8,"#fdd49e",
+                    13,"#fdbb84",
+                    18,"#fc8d59",
+                    23,"#ef6548",
+                    28,"#d7301f",
+                    33,"#a11616",
+                    38,"#7f0000",
+                    43,"#7a0177",
+                    "#000"
+                  ]
+                }
               }
             }
           ]
