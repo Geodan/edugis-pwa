@@ -35,274 +35,6 @@
                     }
                 },
                 {
-                  "title": "Klimaat Köppen",
-                  "id": "klimaat",
-                  "layerInfo": {
-                    "id":"87d600cf-cff3-4aac-92ed-da6d2d2ce2c8",
-                    "type":"fill",
-                    "metadata":{
-                      "abstract": "Klimaatkaart volgens Köppen Geiger. Gebruik de i-tool en voor uitgebreidere informatie per klimaatgebied. De klassificatie bestaat uit 3 letters. De eerste letter staat voor het type klimaat. A: Tropisch, B: Droog, C: Gematigd, D: Landklimaat, E: Poolklimaat. De klassificatie wordt verder uitgelegd op wikipedia: https://nl.wikipedia.org/wiki/Klimaatclassificatie_van_K%C3%B6ppen"
-                    },
-                    "source":{
-                        "type":"vector",
-                        "tiles":["https://tiles.edugis.nl/data/public.climate_2007_koppen_geiger/mvt/{z}/{x}/{y}?geom_column=geom&columns=klassificatie,klimaat,neerslagverdeling,temperatuurverschil&include_nulls=0"],
-                        "bounds":[-180,-89.5,180,83.6]},
-                    "source-layer":"public.climate_2007_koppen_geiger",
-                    "paint":{
-                      "fill-color":[
-                          "match",["get","klassificatie"],
-                          "Af","#1300FC",
-                          "Am","#0E73FC",
-                          "Aw","#3AAAFC",
-                          "BWh","#FD0000",
-                          "BWk","#FE9594",
-                          "BSh","#FE9594",
-                          "BSk","#FDDA62",
-                          "Csa","#FCFE04",
-                          "Csb","#CECC08",
-                          "Cwa","#94FE97",
-                          "Cwb","#5FC765",
-                          "Cwc","#369633",
-                          "Cfa","#C5FE4B",
-                          "Cfb","#63FD32",
-                          "Cfc","#35C600",
-                          "Dsa","#FC00FB",
-                          "Dsb","#C900C4",
-                          "Dsc","#983396",
-                          "Dsd","#8E5D92",
-                          "Dwa","#A5AFFF",
-                          "Dwb","#4A78E3",
-                          "Dwc","#484EB4",
-                          "Dwd","#30008A",
-                          "Dfa","#00FCFD",
-                          "Dfb","#3DC6FA",
-                          "Dfc","#007E7E",
-                          "Dfd","#004660",
-                          "ET","#AEB0AD",
-                          "EH","#AEB0AD",
-                          "EF","#686967",
-                          "#000000"],
-                      "fill-opacity":1
-                    }
-                  }
-                },
-                {
-                  "title": "Bevolking per land",
-                  "id": "countrypopest",
-                  "layerInfo": {
-                    "id": "countrypopest",
-                    "type": "circle",
-                    "metadata": {
-                      "attributes": {
-                        "translations": [
-                          {"name": "name", "translation": "naam", "unit": ""},
-                          {"name": "pop_est", "translation": "bevolking", "unit": " inw"}
-                        ]
-                      }
-                    },
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_est&include_nulls=0"
-                      ],
-                      "bounds": [
-                        -180,
-                        -89,
-                        180,
-                        83.6341006530001
-                      ]
-                    },
-                    "source-layer": "public.ne_10m_admin_0_countries",
-                    "paint": {
-                      "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
-                        0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_est"]]]],
-                        6, ["*",0.016,["sqrt", ["get","pop_est"]]],
-                        14, ["*",0.016,["sqrt", ["get","pop_est"]]]
-                      ],
-                      "circle-color": "#a63603",
-                      "circle-stroke-color": "white",
-                      "circle-stroke-width": 1,
-                      "circle-pitch-alignment": "map"
-                    }
-                  }
-                },
-                {
-                  "type": "vector",
-                  "title": "Bevolkingsdichtheid 2020",
-                  "layerInfo": {
-                    "id": "populationdensity",
-                    "type": "fill",
-                    "metadata": {
-                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
-                    },
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
-                      ],
-                      "bounds": [-180,-89,180,83.6341006530001],
-                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
-                    },
-                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
-                    "paint": {
-                      "fill-color": [
-                        "case",
-                        ["==",["get","pop_dens"],  0],"#ffffff",
-                        ["<",["get","pop_dens"],  10],"#fff7ec",
-                        ["<",["get","pop_dens"],  26],"#fee8c8",
-                        ["<",["get","pop_dens"],  48],"#fdd49e",
-                        ["<",["get","pop_dens"],  72],"#fdbb84",
-                        ["<=",["get","pop_dens"], 107],"#fc8d59",
-                        ["<",["get","pop_dens"], 174],"#ef6548",
-                        ["<",["get","pop_dens"], 309],"#d7301f",
-                        ["<=",["get","pop_dens"], 759],"#b30000",
-                        ["<=",["get","pop_dens"],600104],"#7f0000",
-                        "#7f0000"
-                      ],
-                      "fill-opacity": 0.8
-                    }
-                  }
-                },
-                {
-                  "type": "vector",
-                  "title": "Bevolking 2020 (3D weergave)",
-                  "layerInfo": {
-                    "id": "population3d",
-                    "type": "fill-extrusion",
-                    "metadata": {
-                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
-                    },
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
-                      ],
-                      "bounds": [-180,-89,180,83.6341006530001],
-                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
-                    },
-                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
-                    "paint": {
-                      "fill-extrusion-color": [
-                        "case",
-                        ["==",["get","pop_dens"],  0],"#ffffff",
-                        ["<",["get","pop_dens"],  10],"#fff7ec",
-                        ["<",["get","pop_dens"],  26],"#fee8c8",
-                        ["<",["get","pop_dens"],  48],"#fdd49e",
-                        ["<",["get","pop_dens"],  72],"#fdbb84",
-                        ["<=",["get","pop_dens"], 107],"#fc8d59",
-                        ["<",["get","pop_dens"], 174],"#ef6548",
-                        ["<",["get","pop_dens"], 309],"#d7301f",
-                        ["<=",["get","pop_dens"], 759],"#b30000",
-                        ["<=",["get","pop_dens"],600104],"#7f0000",
-                        "#7f0000"
-                      ],
-                      "fill-extrusion-height": ["*", 10, ["get", "pop_dens"]],
-                      "fill-extrusion-opacity": 0.8
-                    }
-                  }
-                },
-                {
-                  "type": "vector",
-                  "title": "Bevolking 2020 per landsdeel",
-                  "layerInfo": {
-                    "id": "populationsum",
-                    "type": "circle",
-                    "metadata": {
-                      "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
-                    },
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
-                      ],
-                      "bounds": [-180,-89,180,83.6341006530001],
-                      "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
-                    },
-                    "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
-                    "paint": {
-                      "circle-color": "#d7301f",
-                      "circle-stroke-color": "rgba(255,255,255,0.6)",
-                      "circle-stroke-width": 0.5,
-                      "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
-                        0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_sum"]]]],
-                        6, ["*",0.016,["sqrt", ["get","pop_sum"]]],
-                        14, ["*",0.016,["sqrt", ["get","pop_sum"]]]
-                      ],
-                      "circle-pitch-alignment": "map"
-                    },
-                    "layout": {
-                      "circle-sort-key": ["-", ["get", "pop_sum"]]
-                    }
-                  }
-                },
-                {
-                  "type": "vector",
-                  "title": "Stedelijke bevolking",
-                  "layerInfo": {
-                    "id": "citiesandtowns2",
-                    "type": "circle",
-                    "metadata": {
-                      "attributes": {
-                        "translations": [
-                          {"name": "name", "translation": "naam", "unit": ""},
-                          {"name": "name_nl", "translation": "Nederlandse naam", "unit": ""},
-                          {"name": "timezone", "translation": "tijdzone", "unit": ""},
-                          {"name": "pop_min", "translation": "stedelijke bevolking (minimaal)", "unit": " inw"},
-                          {"name": "pop_max", "translation": "stedelijke bevolking (maximaal)", "unit": " inw"}
-                        ]
-                      }
-                    },
-                    "source": {
-                      "id": "citiesandtowns2",
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_populated_places/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl,timezone,pop_min,pop_max&include_nulls=0"
-                      ]
-                    },
-                    "source-layer": "public.ne_10m_populated_places",
-                    "paint": {
-                      "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
-                        0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_max"]]]],
-                        6, ["*",0.016,["sqrt", ["get","pop_max"]]],
-                        14, ["*",0.016,["sqrt", ["get","pop_max"]]]
-                      ],
-                      "circle-color": "red",
-                      "circle-stroke-color": "white",
-                      "circle-stroke-width": 1,
-                      "circle-pitch-alignment": "map"
-                    },
-                    "layout": {
-                      "circle-sort-key": ["-", ["get", "pop_max"]]
-                    }
-                  }
-                },
-                {
-                  "type": "raster",
-                  "title": "Bevolkingsdichtheid 2015",
-                  "layerInfo": {
-                    "id": "bevolking2015",
-                    "type": "raster",
-                    "minzoom": 0,
-                    "maxzoom": 22.5,
-                    "metadata": {
-                      "getFeatureInfoUrl": "https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&request=GetFeatureInfo&styles=&layers=Bevolkingsdichtheid_2015&query_layers=Bevolkingsdichtheid_2015&srs=EPSG:900913",
-                      "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                      "legendurl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&service=WMS&request=GetLegendGraphic&layer=Bevolkingsdichtheid_2015&format=image/png&STYLE=default"
-                    },
-                    "source": {
-                        "type": "raster",
-                        "tileSize": 256,
-                        "tiles": [
-                            "https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
-                            "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
-                            "https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
-                            "https://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}"
-                    ],
-                    "attribution": "to do"
-                    }
-                  }
-                },
-                {
                   "title": "Tijdzones",
                   "id": "timezones",
                   "layerInfo": {
@@ -517,56 +249,6 @@
                   }
                 },
                 {
-                  "title": "Landen",
-                  "id": "countryborders",
-                  "layerInfo": {
-                    "id": "countryborders",
-                    "type": "fill",
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
-                      ],
-                      "bounds": [
-                        -180,
-                        -89,
-                        180,
-                        83.6341006530001
-                      ]
-                    },
-                    "source-layer": "public.ne_10m_admin_0_countries",
-                    "paint": {
-                      "fill-color": "rgba(0,0,0,0)",
-                      "fill-outline-color": "black"
-                    }
-                  }
-                },
-                {
-                  "title": "Staten en provincies",
-                  "id": "districtborders",
-                  "layerInfo": {
-                    "id": "districtborders",
-                    "type": "fill",
-                    "source": {
-                      "type": "vector",
-                      "tiles": [
-                        "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
-                      ],
-                      "bounds": [
-                        -180,
-                        -89,
-                        180,
-                        83.6341006530001
-                      ]
-                    },
-                    "source-layer": "public.ne_10m_admin_1_states_provinces",
-                    "paint": {
-                      "fill-color": "rgba(0,0,0,0)",
-                      "fill-outline-color": "gray"
-                    }
-                  }
-                },
-                {
                   "type":"rasterdem",
                   "title":"Hoogteschaduw",
                   "layerInfo":{
@@ -592,53 +274,476 @@
                       "hillshade-exaggeration":0.20
                     }
                   }
-                },
-                {
-                  "title": "Neerslag",
-                  "layerInfo": {
-                    "id":"a9e03848-335e-45e7-90a4-589da57f0915",
-                    "type":"fill",
-                    "metadata": {
-                      "attributes":{
-                        "translations":[
-                          {"name": "mean", "translation": "gemiddelde neerslag", "unit": " mm/jaar", "decimals": 0},
-                          {"name": "min", "translation": "van", "unit": " mm/jaar", "decimals": 0},
-                          {"name": "max", "translation": "tot", "unit": " mm/jaar", "decimals": 0},
-                          {"name":"annualprecipitation", "translation":"klasse", "unit": " mm/jaar"}
-                        ]
-                      }
-                    },
-                    "source":{
-                        "type":"vector",
-                        "tiles":["https://tiles.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0",
-                                 "https://t1.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0"],
-                        "bounds":[-180,-89.9583333333333,180,83.6666666666667],
-                        "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
-                    },
-                    "source-layer":"public.wc_1_2_5m_bio_12_vec",
-                    "paint":{
-                    "fill-color":["match", ["get","annualprecipitation"],
-                        10, "#ffffcc",
-                        35,"#EDF0C4",
-                        85,"#DBE1BD",
-                        150,"#C9D3B6",
-                        220,"#B7C4AF",
-                        300,"#A6B6A7",
-                        400,"#94A7A0",
-                        500,"#829999",
-                        600,"#708A92",
-                        800,"#5E7B8B",
-                        1250,"#4D6D83",
-                        2000,"#3B5E7C",
-                        3000,"#295075",
-                        4000,"#17416E",
-                        6000,"#063367",
-                        "#fff"
-                      ]
-                    }
-                  }
                 }
             ]
+        },
+        {
+          "type": "group",
+          "title": "Klimaat",
+          "sublayers": [
+            {
+              "title": "Klimaat Köppen",
+              "id": "klimaat",
+              "layerInfo": {
+                "id":"87d600cf-cff3-4aac-92ed-da6d2d2ce2c8",
+                "type":"fill",
+                "metadata":{
+                  "abstract": "Klimaatkaart volgens Köppen Geiger. Gebruik de i-tool en voor uitgebreidere informatie per klimaatgebied. De klassificatie bestaat uit 3 letters. De eerste letter staat voor het type klimaat. A: Tropisch, B: Droog, C: Gematigd, D: Landklimaat, E: Poolklimaat. De klassificatie wordt verder uitgelegd op wikipedia: https://nl.wikipedia.org/wiki/Klimaatclassificatie_van_K%C3%B6ppen"
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.climate_2007_koppen_geiger/mvt/{z}/{x}/{y}?geom_column=geom&columns=klassificatie,klimaat,neerslagverdeling,temperatuurverschil&include_nulls=0"],
+                    "bounds":[-180,-89.5,180,83.6]},
+                "source-layer":"public.climate_2007_koppen_geiger",
+                "paint":{
+                  "fill-color":[
+                      "match",["get","klassificatie"],
+                      "Af","#1300FC",
+                      "Am","#0E73FC",
+                      "Aw","#3AAAFC",
+                      "BWh","#FD0000",
+                      "BWk","#FE9594",
+                      "BSh","#FE9594",
+                      "BSk","#FDDA62",
+                      "Csa","#FCFE04",
+                      "Csb","#CECC08",
+                      "Cwa","#94FE97",
+                      "Cwb","#5FC765",
+                      "Cwc","#369633",
+                      "Cfa","#C5FE4B",
+                      "Cfb","#63FD32",
+                      "Cfc","#35C600",
+                      "Dsa","#FC00FB",
+                      "Dsb","#C900C4",
+                      "Dsc","#983396",
+                      "Dsd","#8E5D92",
+                      "Dwa","#A5AFFF",
+                      "Dwb","#4A78E3",
+                      "Dwc","#484EB4",
+                      "Dwd","#30008A",
+                      "Dfa","#00FCFD",
+                      "Dfb","#3DC6FA",
+                      "Dfc","#007E7E",
+                      "Dfd","#004660",
+                      "ET","#AEB0AD",
+                      "EH","#AEB0AD",
+                      "EF","#686967",
+                      "#000000"],
+                  "fill-opacity":1
+                }
+              }
+            },
+            {
+              "title": "Neerslag jaarlijks gemiddeld",
+              "layerInfo": {
+                "id":"a9e03848-335e-45e7-90a4-589da57f0915",
+                "type":"fill",
+                "metadata": {
+                  "attributes":{
+                    "translations":[
+                      {"name": "mean", "translation": "gemiddelde neerslag", "unit": " mm/jaar", "decimals": 0},
+                      {"name": "min", "translation": "van", "unit": " mm/jaar", "decimals": 0},
+                      {"name": "max", "translation": "tot", "unit": " mm/jaar", "decimals": 0},
+                      {"name":"annualprecipitation", "translation":"klasse", "unit": " mm/jaar"}
+                    ]
+                  }
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0",
+                             "https://t1.edugis.nl/data/public.wc_1_2_5m_bio_12_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=annualprecipitation,mean,min,max&include_nulls=0"],
+                    "bounds":[-180,-89.9583333333333,180,83.6666666666667],
+                    "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                },
+                "source-layer":"public.wc_1_2_5m_bio_12_vec",
+                "paint":{
+                "fill-color":["match", ["get","annualprecipitation"],
+                    10, "#ffffcc",
+                    35,"#EDF0C4",
+                    85,"#DBE1BD",
+                    150,"#C9D3B6",
+                    220,"#B7C4AF",
+                    300,"#A6B6A7",
+                    400,"#94A7A0",
+                    500,"#829999",
+                    600,"#708A92",
+                    800,"#5E7B8B",
+                    1250,"#4D6D83",
+                    2000,"#3B5E7C",
+                    3000,"#295075",
+                    4000,"#17416E",
+                    6000,"#063367",
+                    "#fff"
+                  ]
+                }
+              }
+            },
+            {
+              "title": "Temperatuur gemiddeld in januari",
+              "layerInfo": {
+                "type":"fill",
+                "metadata": {
+                  "attributes":{
+                    "translations":[
+                      {"name": "mean", "translation": "gemiddelde januari temperatuur", "unit": " °C", "decimals": 0},
+                      {"name": "min", "translation": "van", "unit": " °C", "decimals": 0},
+                      {"name": "max", "translation": "tot", "unit": " °C", "decimals": 0},
+                      {"name":"averagetempjan", "translation":"klasse", "unit": " °C"}
+                    ]
+                  }
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_tavg_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averagetempjan,mean,min,max&include_nulls=0",
+                             "https://t1.edugis.nl/data/public.wc2_1_5m_tavg_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averagetempjan,mean,min,max&include_nulls=0"],
+                    "bounds":[-180,-89.9583333333333,180,83.6666666666667],
+                    "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                },
+                "source-layer":"public.wc2_1_5m_tavg_01_vec",
+                "paint":{
+                "fill-color":["match", ["get","averagetempjan"],
+                    10, "#ffffcc",
+                    35,"#EDF0C4",
+                    85,"#DBE1BD",
+                    150,"#C9D3B6",
+                    220,"#B7C4AF",
+                    300,"#A6B6A7",
+                    400,"#94A7A0",
+                    500,"#829999",
+                    600,"#708A92",
+                    800,"#5E7B8B",
+                    1250,"#4D6D83",
+                    2000,"#3B5E7C",
+                    3000,"#295075",
+                    4000,"#17416E",
+                    6000,"#063367",
+                    "#fff"
+                  ]
+                }
+              }
+            },
+            {
+              "title": "Temperatuur gemiddeld in juli",
+              "layerInfo": {
+
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "title": "Politiek",
+          "sublayers": [
+            {
+              "title": "Landen",
+              "id": "countryborders",
+              "layerInfo": {
+                "id": "countryborders",
+                "type": "fill",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_0_countries",
+                "paint": {
+                  "fill-color": "rgba(0,0,0,0)",
+                  "fill-outline-color": "black"
+                }
+              }
+            },
+            {
+              "title": "Staten en provincies",
+              "id": "districtborders",
+              "layerInfo": {
+                "id": "districtborders",
+                "type": "fill",
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_1_states_provinces",
+                "paint": {
+                  "fill-color": "rgba(0,0,0,0)",
+                  "fill-outline-color": "gray"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "title": "Bevolking",
+          "sublayers": [
+            {
+              "title": "Bevolking per land",
+              "id": "countrypopest",
+              "layerInfo": {
+                "id": "countrypopest",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam", "unit": ""},
+                      {"name": "pop_est", "translation": "bevolking", "unit": " inw"}
+                    ]
+                  }
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_est&include_nulls=0"
+                  ],
+                  "bounds": [
+                    -180,
+                    -89,
+                    180,
+                    83.6341006530001
+                  ]
+                },
+                "source-layer": "public.ne_10m_admin_0_countries",
+                "paint": {
+                  "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
+                    0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_est"]]]],
+                    6, ["*",0.016,["sqrt", ["get","pop_est"]]],
+                    14, ["*",0.016,["sqrt", ["get","pop_est"]]]
+                  ],
+                  "circle-color": "#a63603",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1,
+                  "circle-pitch-alignment": "map"
+                }
+              }
+            },
+            {
+              "type": "vector",
+              "title": "Bevolkingsdichtheid 2020",
+              "layerInfo": {
+                "id": "populationdensity",
+                "type": "fill",
+                "metadata": {
+                  "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                  ],
+                  "bounds": [-180,-89,180,83.6341006530001],
+                  "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                },
+                "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                "paint": {
+                  "fill-color": [
+                    "case",
+                    ["==",["get","pop_dens"],  0],"#ffffff",
+                    ["<",["get","pop_dens"],  10],"#fff7ec",
+                    ["<",["get","pop_dens"],  26],"#fee8c8",
+                    ["<",["get","pop_dens"],  48],"#fdd49e",
+                    ["<",["get","pop_dens"],  72],"#fdbb84",
+                    ["<=",["get","pop_dens"], 107],"#fc8d59",
+                    ["<",["get","pop_dens"], 174],"#ef6548",
+                    ["<",["get","pop_dens"], 309],"#d7301f",
+                    ["<=",["get","pop_dens"], 759],"#b30000",
+                    ["<=",["get","pop_dens"],600104],"#7f0000",
+                    "#7f0000"
+                  ],
+                  "fill-opacity": 0.8
+                }
+              }
+            },
+            {
+              "type": "vector",
+              "title": "Bevolkingsdichtheid 2020",
+              "layerInfo": {
+                "id": "populationdensity",
+                "type": "fill",
+                "metadata": {
+                  "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                  ],
+                  "bounds": [-180,-89,180,83.6341006530001],
+                  "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                },
+                "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                "paint": {
+                  "fill-color": [
+                    "case",
+                    ["==",["get","pop_dens"],  0],"#ffffff",
+                    ["<",["get","pop_dens"],  10],"#fff7ec",
+                    ["<",["get","pop_dens"],  26],"#fee8c8",
+                    ["<",["get","pop_dens"],  48],"#fdd49e",
+                    ["<",["get","pop_dens"],  72],"#fdbb84",
+                    ["<=",["get","pop_dens"], 107],"#fc8d59",
+                    ["<",["get","pop_dens"], 174],"#ef6548",
+                    ["<",["get","pop_dens"], 309],"#d7301f",
+                    ["<=",["get","pop_dens"], 759],"#b30000",
+                    ["<=",["get","pop_dens"],600104],"#7f0000",
+                    "#7f0000"
+                  ],
+                  "fill-opacity": 0.8
+                }
+              }
+            },
+            {
+              "type": "vector",
+              "title": "Bevolking 2020 (3D weergave)",
+              "layerInfo": {
+                "id": "population3d",
+                "type": "fill-extrusion",
+                "metadata": {
+                  "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                  ],
+                  "bounds": [-180,-89,180,83.6341006530001],
+                  "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                },
+                "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                "paint": {
+                  "fill-extrusion-color": [
+                    "case",
+                    ["==",["get","pop_dens"],  0],"#ffffff",
+                    ["<",["get","pop_dens"],  10],"#fff7ec",
+                    ["<",["get","pop_dens"],  26],"#fee8c8",
+                    ["<",["get","pop_dens"],  48],"#fdd49e",
+                    ["<",["get","pop_dens"],  72],"#fdbb84",
+                    ["<=",["get","pop_dens"], 107],"#fc8d59",
+                    ["<",["get","pop_dens"], 174],"#ef6548",
+                    ["<",["get","pop_dens"], 309],"#d7301f",
+                    ["<=",["get","pop_dens"], 759],"#b30000",
+                    ["<=",["get","pop_dens"],600104],"#7f0000",
+                    "#7f0000"
+                  ],
+                  "fill-extrusion-height": ["*", 10, ["get", "pop_dens"]],
+                  "fill-extrusion-opacity": 0.8
+                }
+              }
+            },
+            {
+              "type": "vector",
+              "title": "Bevolking 2020 per landsdeel",
+              "layerInfo": {
+                "id": "populationsum",
+                "type": "circle",
+                "metadata": {
+                  "abstract": "Bevolking 2020 per Natural Earth admin level 1 (landsdeel). Bevolking berekend uit 1km WorldPop mosaic grid 2020"
+                },
+                "source": {
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_1_states_provinces_lakes_pop/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=name,pop_sum,pop_dens,admin,type,type_en&include_nulls=0"
+                  ],
+                  "bounds": [-180,-89,180,83.6341006530001],
+                  "attribution": "<a href=\"https://www.worldpop.org/\">WorldPop</a>"
+                },
+                "source-layer": "public.ne_10m_admin_1_states_provinces_lakes_pop",
+                "paint": {
+                  "circle-color": "#d7301f",
+                  "circle-stroke-color": "rgba(255,255,255,0.6)",
+                  "circle-stroke-width": 0.5,
+                  "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
+                    0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_sum"]]]],
+                    6, ["*",0.016,["sqrt", ["get","pop_sum"]]],
+                    14, ["*",0.016,["sqrt", ["get","pop_sum"]]]
+                  ],
+                  "circle-pitch-alignment": "map"
+                },
+                "layout": {
+                  "circle-sort-key": ["-", ["get", "pop_sum"]]
+                }
+              }
+            },
+            {
+              "type": "vector",
+              "title": "Stedelijke bevolking",
+              "layerInfo": {
+                "id": "citiesandtowns2",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name", "translation": "naam", "unit": ""},
+                      {"name": "name_nl", "translation": "Nederlandse naam", "unit": ""},
+                      {"name": "timezone", "translation": "tijdzone", "unit": ""},
+                      {"name": "pop_min", "translation": "stedelijke bevolking (minimaal)", "unit": " inw"},
+                      {"name": "pop_max", "translation": "stedelijke bevolking (maximaal)", "unit": " inw"}
+                    ]
+                  }
+                },
+                "source": {
+                  "id": "citiesandtowns2",
+                  "type": "vector",
+                  "tiles": [
+                    "https://tiles.edugis.nl/data/public.ne_10m_populated_places/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,name_nl,timezone,pop_min,pop_max&include_nulls=0"
+                  ]
+                },
+                "source-layer": "public.ne_10m_populated_places",
+                "paint": {
+                  "circle-radius":["interpolate", ["exponential", 2], ["zoom"], 
+                    0, ["+", 1, ["*",0.00025,["sqrt", ["get","pop_max"]]]],
+                    6, ["*",0.016,["sqrt", ["get","pop_max"]]],
+                    14, ["*",0.016,["sqrt", ["get","pop_max"]]]
+                  ],
+                  "circle-color": "red",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1,
+                  "circle-pitch-alignment": "map"
+                },
+                "layout": {
+                  "circle-sort-key": ["-", ["get", "pop_max"]]
+                }
+              }
+            },
+            {
+              "type": "raster",
+              "title": "Bevolkingsdichtheid 2015",
+              "layerInfo": {
+                "id": "bevolking2015",
+                "type": "raster",
+                "minzoom": 0,
+                "maxzoom": 22.5,
+                "metadata": {
+                  "getFeatureInfoUrl": "https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&request=GetFeatureInfo&styles=&layers=Bevolkingsdichtheid_2015&query_layers=Bevolkingsdichtheid_2015&srs=EPSG:900913",
+                  "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                  "legendurl": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/population.map&version=1.1.1&service=WMS&request=GetLegendGraphic&layer=Bevolkingsdichtheid_2015&format=image/png&STYLE=default"
+                },
+                "source": {
+                    "type": "raster",
+                    "tileSize": 256,
+                    "tiles": [
+                        "https://t1.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                        "https://t2.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                        "https://t3.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}",
+                        "https://t4.edugis.nl/tiles/tilecache.py?map=maps/edugis/cache/population.map&LAYERS=Bevolkingsdichtheid_2015&TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&STYLES=&SRS=EPSG%3A900913&WIDTH=256&HEIGHT=256&request=GetMap&service=WMS&bbox={bbox-epsg-3857}"
+                ],
+                "attribution": "to do"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "group",
