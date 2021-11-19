@@ -396,7 +396,9 @@
                 "source":{
                     "type":"vector",
                     "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_01_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjan,mean,min,max&include_nulls=0"],
-                    "bounds":[-180,-89.5,180,83.6666666666667]},
+                    "bounds":[-180,-89.5,180,83.6666666666667],
+                    "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                  },
                 "source-layer":"public.wc2_1_5m_prec_01_vec",
                 "paint":{
                 "fill-color":[
@@ -439,7 +441,9 @@
                 "source":{
                     "type":"vector",
                     "tiles":["https://tiles.edugis.nl/data/public.wc2_1_5m_prec_07_vec/mvt/{z}/{x}/{y}?geom_column=geom&columns=averageprecjul,mean,min,max&include_nulls=0"],
-                    "bounds":[-180,-89.5,180,83.6666666666667]},
+                    "bounds":[-180,-89.5,180,83.6666666666667],
+                    "attribution": "<a href=\"https://www.worldclim.org/data/worldclim21.html\" target=\"blank\">WorldClim.org</a>"
+                },
                 "source-layer":"public.wc2_1_5m_prec_07_vec",
                 "paint":{
                 "fill-color":[
