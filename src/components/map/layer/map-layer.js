@@ -15,10 +15,11 @@ class MapLayer extends GestureEventListeners(LitElement) {
     static get properties() {
         return {
             layer: {type: Object},
+            first: {type: Boolean},
             nolayer: {type: String},
             itemcontainer: {type: Object},
             itemscroller: {type: Object},
-            open: {type: Boolean},
+            open: {type: String},
             visible: {type: Boolean},
             subtitle: {type: String},
             zoom: {type: Number},
@@ -108,6 +109,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
     constructor() {
         super();
         this.layer = "";
+        this.first = false;
         this.nolayer = "no layers defined";
         this.open = false;
         this.visible = true;
@@ -127,7 +129,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
                 this.id = '__undefined_layer_'
             }
             if (this.layer && this.layer.metadata) {
-              this.open = this.layer.metadata.hasOwnProperty('maplayeropen')?this.layer.metadata.maplayeropen: false;
+              this.open = this.layer.metadata.hasOwnProperty('maplayeropen')?this.layer.metadata.maplayeropen: this.first;
               this.visible = this.layer.metadata.hasOwnProperty('visible')?this.layer.metadata.visible: true;
             }
         }
@@ -162,13 +164,12 @@ class MapLayer extends GestureEventListeners(LitElement) {
           // layer not yet initialised
           return html ``;
         }
-        this.layer.metadata.maplayeropen = this.open;
         return html`
         <div class="mlcontainer">
             <div class="mltitle${this.itemcontainer?' draghandle':''}${this.outzoomrange || this.layer.metadata.layervisible === false || this.boundspos !== ""?' lightgray':''}">
                 <base-checkbox ?disabled="${this.outzoomrange || this.boundspos!==''}" ?checked="${this.visible}" title="toggle layer visibility" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
                 <span @click="${()=>this._toggleArrow()}">${this.layer.metadata?this.layer.metadata.title?this.layer.metadata.title:this.layer.id:this.layer.id}</span>
-                <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}">
+                <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}"></base-arrow>
             </div>
             <div class="mlsubtitle">${this.subtitle}</div>
             <div id="layerinfo" class="${this.open?'':'closed'}">${this._renderLayerInfo()}</div>
@@ -216,7 +217,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
             setTimeout(()=>{
                 infoContainer.classList.remove('closed');
                 infoContainer.style.height = null;
-                this.open = true;
+                this.open = this.layer.metadata.maplayeropen = true;
             }, 600);
         } else {
             // close layerinfo
@@ -227,7 +228,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
                 infoContainer.classList.add('closed');
                 infoContainer.style.height = null;
                 infoContainer.style.overflow = null;
-                this.open = false;
+                this.open = this.layer.metadata.maplayeropen = false;
             }, 600);
         }
     }

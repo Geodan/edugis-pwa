@@ -159,9 +159,10 @@ class MapLayerSet extends LitElement {
         if (this.groupedLayerList.length == 0) {
             return html`<map-layer .nolayer="${this.nolayer}"></map-layer>`;
         }
-        return this.groupedLayerList.map(layer=>{
+        return this.groupedLayerList.map((layer,index)=>{
             let boundspos = layer.metadata && layer.metadata.boundspos ? layer.metadata.boundspos : "";
             return html`<map-layer 
+                .first="${index == 0}"
                 .layer="${layer}" 
                 .boundspos="${boundspos}" 
                 .zoom=${this.zoom} 
