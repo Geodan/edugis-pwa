@@ -262,6 +262,7 @@ class WebMap extends LitElement {
           break;
         case 'symbol':
             this.map.setPaintProperty(id, 'text-opacity', opacity);
+            this.map.setPaintProperty(id, 'icon-opacity', opacity);
           break;
         default:
           this.map.setPaintProperty(id, `${layer.type}-opacity`, opacity);
