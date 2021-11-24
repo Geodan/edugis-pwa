@@ -88,7 +88,6 @@ class MapLayerInfo extends LitElement {
             .hide {
                 display: none;
             }
-            
         `
     }
     constructor() {

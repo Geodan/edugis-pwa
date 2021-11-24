@@ -19,7 +19,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
             nolayer: {type: String},
             itemcontainer: {type: Object},
             itemscroller: {type: Object},
-            open: {type: String},
+            open: {type: Boolean},
             visible: {type: Boolean},
             subtitle: {type: String},
             zoom: {type: Number},
