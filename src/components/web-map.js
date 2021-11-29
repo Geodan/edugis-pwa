@@ -827,7 +827,7 @@ class WebMap extends LitElement {
   renderCoordinates(){
     const tool = this.toolList.find(tool=>tool.name==='coordinates');
     if (tool && tool.visible) {
-      return html`<map-coordinates visible="true" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>` 
+      return html`<map-coordinates .visible="${true}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>` 
     }
     return '';
   }

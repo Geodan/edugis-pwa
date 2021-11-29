@@ -8,7 +8,7 @@ class IconButton extends LitElement {
     return { 
       active: {type: Boolean},
       disabled: {type: Boolean},
-      icon: {type: String},
+      icon: {attribute: false},
       info: {type: String}
     }; 
   }
