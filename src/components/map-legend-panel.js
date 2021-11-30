@@ -6,6 +6,7 @@
 import {LitElement, html, svg} from 'lit-element';
 import '../utils/mbox-style-parse.js';
 import mbStyleParser from '../utils/mbox-style-parse.js';
+import './color-picker';
 
 /**
 * @polymer
@@ -144,9 +145,10 @@ class MapLegendPanel extends LitElement {
           return html`
           <div>${colorResult.propertyname?html` ${colorResult.propertyname}<br>`:''}
           ${colorResult.items.map(color=>{
-            return svg`<svg width="30" height="15">
+            const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color.lineColor};stroke-width:${color.width};" />
-            </svg>${html` ${color.label}<br>`}`
+            </svg>${html` ${color.label}`}`;
+            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} @change="${this._updateUserColor}">${legendItem}</color-picker>`
           })}</div>`
         }
         if (hideLegend === "size") {
@@ -156,9 +158,10 @@ class MapLegendPanel extends LitElement {
           <div>
           ${widthResult.propertyname?html` ${widthResult.propertyname}<br>`:''}
           ${widthResult.items.map(width=>{
-            return svg`<svg width="30" height="15">
+            const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${width.lineColor};stroke-width:${width.lineWidth};" />
-            </svg>${html` ${width.label}<br>`}`
+            </svg>${html` ${width.label}`}`;
+            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} @change="${this._updateUserColor}">${legendItem}</color-picker>`
           })}</div>`
       }
     } else {
@@ -541,37 +544,32 @@ class MapLegendPanel extends LitElement {
         }
       </style>
       <input @change="${e=>this._updateUserColor(e)}" type="color" id="colorinput" tabindex=-1 class="hidden">
-      <div @click="${e=>this._handleLegendClick(e)}" class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
-  }
-  _handleLegendClick(event) {
-    if (event.target.id) {
-      //let layer=event.target.id.split(' ')[0];
-      this.classesIndex=parseInt(event.target.id.split(' ')[1]);
-      let colorInput = this.shadowRoot.querySelector('#colorinput');
-      colorInput.value = this.maplayer.metadata.classInfo.classes[this.classesIndex];
-      colorInput.click();
-    }
-    console.log(event.target);
+      <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
   }
   _updateUserColor(event) {
     //let colorInput = this.shadowRoot.querySelector('#colorinput');
-    let color = event.target.value;
-    this.maplayer.metadata.classInfo.classes[this.classesIndex].paint = color;
-    console.log('updating color');
-    this._updatePaintProperty(color);
+    const color = event.target.value;
+    const layerid = event.detail.layerid;
+
+    //this.maplayer.metadata.classInfo.classes[this.classesIndex].paint = color;
+    //console.log('updating color');
+    this._updatePaintProperty(layerid, color);
   }
-  _updatePaintProperty(color)
+  _updatePaintProperty(layerid, color)
   {
     //console.log(e.currentTarget.value);
-    let paintColor = this.maplayer.metadata.paint[`${this.maplayer.type}-color`];
+    const activeLayer = this.maplayer.id === layerid ? this.maplayer : this.maplayer.metadata.sublayers.find(({id})=>id === layerid);
+    let paintColor = activeLayer.metadata.paint ? 
+      activeLayer.metadata.paint[`${activeLayer.type}-color`] : 
+        activeLayer.paint[`${activeLayer.type}-color`];
     if (Array.isArray(paintColor)) {
       paintColor[(this.classesIndex + 1)*2] = color;
     } else {
       paintColor = color;
     }
     let property = {};
-    property[`${this.maplayer.type}-color`] = paintColor;
-    property.layerid = this.maplayer.id;
+    property[`${activeLayer.type}-color`] = paintColor;
+    property.layerid = activeLayer.id;
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
       detail: property,
       bubbles: true,
