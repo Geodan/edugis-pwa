@@ -1,0 +1,387 @@
+{
+    "map": {
+      "zoom": 6.5,
+      "center": [5.375, 52.168],
+      "pitch" : 0
+  },
+    "datacatalog" : [
+      {
+        "type": "group",
+        "title": "Basislagen",
+        "sublayers":[
+          {
+            "title": "Beweegbare bruggen",
+            "layerInfo": {
+              "id": "KEA_Beweegbare_bruggen",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Beweegbare_bruggen&query_layers=Beweegbare_bruggen",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Beweegbare_bruggen&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Beweegbare_bruggen/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Zwemwaterlocaties",
+            "layerInfo": {
+              "id": "KEA_Zwemwaterlocaties",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Zwemwaterlocaties&query_layers=Zwemwaterlocaties",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Zwemwaterlocaties&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Zwemwaterlocaties/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Tunnels",
+            "layerInfo": {
+              "id": "KEA_Tunnels",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tunnels&query_layers=Tunnels",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tunnels&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Tunnels/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Filter_bebouwde_kom",
+            "layerInfo": {
+              "id": "KEA_Filter_bebouwde_kom",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Filter_bebouwde_kom&query_layers=Filter_bebouwde_kom",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Filter_bebouwde_kom&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Filter_bebouwde_kom/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Boom_per_buurt",
+            "layerInfo": {
+              "id": "KEA_Boom_per_buurt",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Boom_per_buurt&query_layers=Boom_per_buurt",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Boom_per_buurt&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Boom_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Groen_per_buurt",
+            "layerInfo": {
+              "id": "KEA_Groen_per_buurt",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_per_buurt&query_layers=Groen_per_buurt",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_per_buurt&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Grijs_per_buurt",
+            "layerInfo": {
+              "id": "KEA_Grijs_per_buurt",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Grijs_per_buurt&query_layers=Grijs_per_buurt",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Grijs_per_buurt&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Grijs_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Water_per_buurt",
+            "layerInfo": {
+              "id": "KEA_Water_per_buurt",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Water_per_buurt&query_layers=Water_per_buurt",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Water_per_buurt&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Water_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Groen_binnen_openbare_ruimte",
+            "layerInfo": {
+              "id": "KEA_Groen_binnen_openbare_ruimte",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_openbare_ruimte&query_layers=Groen_binnen_openbare_ruimte",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_openbare_ruimte&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_binnen_openbare_ruimte/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Groen_binnen_niet_openbare_ruimte",
+            "layerInfo": {
+              "id": "KEA_Groen_binnen_niet_openbare_ruimte",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_niet_openbare_ruimte&query_layers=Groen_binnen_niet_openbare_ruimte",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_niet_openbare_ruimte&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_binnen_niet_openbare_ruimte/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Wijktypologie",
+            "layerInfo": {
+              "id": "KEA_Wijktypologie",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Wijktypologie&query_layers=Wijktypologie",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Wijktypologie&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Wijktypologie/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Landbouwgebieden",
+            "layerInfo": {
+              "id": "KEA_Landbouwgebieden",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Landbouwgebieden&query_layers=Landbouwgebieden",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Landbouwgebieden&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Landbouwgebieden/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+            "layerInfo": {
+              "id": "KEA_Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          },
+          {
+            "title": "Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+            "layerInfo": {
+              "id": "KEA_Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+              "type":"raster",
+              "minzoom":2.5,
+              "maxzoom":16.5,
+              "metadata":{
+                "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+                "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&format=image%2Fpng"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse/spherical_mercator/{z}/{x}/{y}.png"
+                ],
+                "attribution":"KEA"
+              }
+            }
+          }
+           
+        ]
+      },
+      {
+        "type": "group",
+        "title": "Achtergrondlagen",
+        "sublayers":[
+          {
+            "type":"reference",
+            "title":"OSM Bright (stijl)",
+            "checked": 1,
+            "layerInfo":{
+              "id":"OsmBright",
+              "type":"style",
+              "source":"styles/openmaptiles/osmbright.json",
+              "metadata":{
+                "reference":true
+              }
+            }
+          },{
+            "title":"Openstreetmap",
+            "type":"reference",            
+            "layerInfo":{
+              "id":"openstreetmap",
+              "type":"raster",
+              "metadata":{
+                "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                ],
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+              }
+            }
+          },
+          {
+            "title":"Openstreetmap Gray",
+            "type":"reference",
+            "checked": 0,
+            "layerInfo":{
+              "id":"openstreetmapgray",
+              "type":"raster",
+              "metadata":{
+                "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+              },
+              "source":{
+                "type":"raster",
+                "tileSize":256,
+                "tiles":[
+                  "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                ],
+                "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "tools" : {
+        "toolbar": {"opened" : 1},
+        "search" : {"visible": 1, "order" : 0},
+        "datacatalog" : {"visible": 1, "order" : 1},
+        "measure" : {"visible": 1, "order": 2},
+        "info" : {"visible" : 1, "order": 3},
+        "maplanguage" : {"visible" : 0, "order": 4},
+        "pitch" : {"visible" : 1, "order": 5},
+        "geolocate" : {"visible" : 1, "order": 6},
+        "draw" : {"visible" : 0, "order": 7},
+        "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
+        "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
+        "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
+        "coordinates" : {"visible" : 1, "position" : "bottom-center"},
+        "scalebar": {"visible" : 1, "position" : "bottom-right"},
+        "currenttool": null
+    },
+    "keys" : {
+        "mapboxaccesstoken" : null
+    }
+}
