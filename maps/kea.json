@@ -74,7 +74,7 @@
           }
         },
         {
-          "title": "Filter_bebouwde_kom",
+          "title":"Filter bebouwde kom",
           "layerInfo": {
             "id": "KEA_Filter_bebouwde_kom",
             "type": "raster",
@@ -96,7 +96,7 @@
           }
         },
         {
-          "title": "Boom_per_buurt",
+          "title":"Boom per buurt",
           "layerInfo": {
             "id": "KEA_Boom_per_buurt",
             "type": "raster",
@@ -118,7 +118,7 @@
           }
         },
         {
-          "title": "Groen_per_buurt",
+          "title":"Groen per buurt",
           "layerInfo": {
             "id": "KEA_Groen_per_buurt",
             "type": "raster",
@@ -140,7 +140,7 @@
           }
         },
         {
-          "title": "Grijs_per_buurt",
+          "title":"Grijs per buurt",
           "layerInfo": {
             "id": "KEA_Grijs_per_buurt",
             "type": "raster",
@@ -162,7 +162,7 @@
           }
         },
         {
-          "title": "Water_per_buurt",
+          "title":"Water per buurt",
           "layerInfo": {
             "id": "KEA_Water_per_buurt",
             "type": "raster",
@@ -184,7 +184,7 @@
           }
         },
         {
-          "title": "Groen_binnen_openbare_ruimte",
+          "title":"Groen binnen openbare ruimte",
           "layerInfo": {
             "id": "KEA_Groen_binnen_openbare_ruimte",
             "type": "raster",
@@ -206,7 +206,7 @@
           }
         },
         {
-          "title": "Groen_binnen_niet_openbare_ruimte",
+          "title":"Groen binnen niet openbare ruimte",
           "layerInfo": {
             "id": "KEA_Groen_binnen_niet_openbare_ruimte",
             "type": "raster",
@@ -272,7 +272,7 @@
           }
         },
         {
-          "title": "Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+          "title":"Basiskaart Natuurlijk Systeem Nederland Hoofdklasse",
           "layerInfo": {
             "id": "KEA_Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
             "type": "raster",
@@ -294,7 +294,7 @@
           }
         },
         {
-          "title": "Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+          "title":"Basiskaart Natuurlijk Systeem Nederland Subklasse",
           "layerInfo": {
             "id": "KEA_Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
             "type": "raster",
@@ -325,7 +325,7 @@
           "type": "group",
           "title": "Klimaatverandering",
           "sublayers": [{
-              "title": "Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_2050_Hoog",
+              "title":"Potentieel maximaal neerslagtekort (eens per 10 jaar) 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_2050_Hoog",
                 "type": "raster",
@@ -346,7 +346,7 @@
               }
             },
             {
-              "title": "Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_Huidig",
+              "title":"Potentieel maximaal neerslagtekort (eens per 10 jaar) Huidig",
               "layerInfo": {
                 "id": "KEA_Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_Huidig",
                 "type": "raster",
@@ -367,7 +367,7 @@
               }
             },
             {
-              "title": "Potentieel_maximaal_neerslagtekort_(gemiddeld)_2050_Hoog",
+              "title":"Potentieel maximaal neerslagtekort (gemiddeld) 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Potentieel_maximaal_neerslagtekort_(gemiddeld)_2050_Hoog",
                 "type": "raster",
@@ -388,7 +388,7 @@
               }
             },
             {
-              "title": "Potentieel_maximaal_neerslagtekort_(gemiddeld)_Huidig",
+              "title":"Potentieel maximaal neerslagtekort (gemiddeld) Huidig",
               "layerInfo": {
                 "id": "KEA_Potentieel_maximaal_neerslagtekort_(gemiddeld)_Huidig",
                 "type": "raster",
@@ -409,7 +409,7 @@
               }
             },
             {
-              "title": "Neerslag_zomerkwartaal_2050_Hoog",
+              "title":"Neerslag zomerkwartaal 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Neerslag_zomerkwartaal_2050_Hoog",
                 "type": "raster",
@@ -430,7 +430,7 @@
               }
             },
             {
-              "title": "Neerslag_zomerkwartaal_Huidig",
+              "title":"Neerslag zomerkwartaal Huidig",
               "layerInfo": {
                 "id": "KEA_Neerslag_zomerkwartaal_Huidig",
                 "type": "raster",
@@ -451,7 +451,7 @@
               }
             },
             {
-              "title": "Jaarlijkse_referentieverdamping_2050_Hoog",
+              "title":"Jaarlijkse referentieverdamping 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Jaarlijkse_referentieverdamping_2050_Hoog",
                 "type": "raster",
@@ -472,7 +472,7 @@
               }
             },
             {
-              "title": "Jaarlijkse_referentieverdamping_Huidig",
+              "title":"Jaarlijkse referentieverdamping Huidig",
               "layerInfo": {
                 "id": "KEA_Jaarlijkse_referentieverdamping_Huidig",
                 "type": "raster",
@@ -495,10 +495,10 @@
           ]
         },
         {
-          "title": "Fysieke_gevolgen",
+          "title":"Fysieke gevolgen",
           "type": "group",
           "sublayers": [{
-              "title": "Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog",
+              "title":"Tekort oppervlaktewater extreem droog jaar 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog",
                 "type": "raster",
@@ -519,7 +519,7 @@
               }
             },
             {
-              "title": "Tekort_oppervlaktewater_extreem_droog_jaar_Huidig",
+              "title":"Tekort oppervlaktewater extreem droog jaar Huidig",
               "layerInfo": {
                 "id": "KEA_Tekort_oppervlaktewater_extreem_droog_jaar_Huidig",
                 "type": "raster",
@@ -540,7 +540,7 @@
               }
             },
             {
-              "title": "Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog",
+              "title":"Tekort oppervlaktewater gemiddeld jaar 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog",
                 "type": "raster",
@@ -561,7 +561,7 @@
               }
             },
             {
-              "title": "Tekort_oppervlaktewater_gemiddeld_jaar_Huidig",
+              "title":"Tekort oppervlaktewater gemiddeld jaar Huidig",
               "layerInfo": {
                 "id": "KEA_Tekort_oppervlaktewater_gemiddeld_jaar_Huidig",
                 "type": "raster",
@@ -582,7 +582,7 @@
               }
             },
             {
-              "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog",
+              "title":"Laagste grondwaterstand - extreem droge zomer 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog",
                 "type": "raster",
@@ -603,7 +603,7 @@
               }
             },
             {
-              "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag",
+              "title":"Laagste grondwaterstand - extreem droge zomer 2050 Laag",
               "layerInfo": {
                 "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag",
                 "type": "raster",
@@ -624,7 +624,7 @@
               }
             },
             {
-              "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig",
+              "title":"Laagste grondwaterstand - extreem droge zomer Huidig",
               "layerInfo": {
                 "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig",
                 "type": "raster",
@@ -645,7 +645,7 @@
               }
             },
             {
-              "title": "Gemiddelde_Laagste_Grondwaterstand_2050_Hoog",
+              "title":"Gemiddelde Laagste Grondwaterstand 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_2050_Hoog",
                 "type": "raster",
@@ -666,7 +666,7 @@
               }
             },
             {
-              "title": "Gemiddelde_Laagste_Grondwaterstand_2050_Laag",
+              "title":"Gemiddelde Laagste Grondwaterstand 2050 Laag",
               "layerInfo": {
                 "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_2050_Laag",
                 "type": "raster",
@@ -687,7 +687,7 @@
               }
             },
             {
-              "title": "Gemiddelde_Laagste_Grondwaterstand_Huidig",
+              "title":"Gemiddelde Laagste Grondwaterstand Huidig",
               "layerInfo": {
                 "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_Huidig",
                 "type": "raster",
@@ -708,7 +708,7 @@
               }
             },
             {
-              "title": "Natuurbrandgevoeligheid_2050_Hoog",
+              "title":"Natuurbrandgevoeligheid 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Natuurbrandgevoeligheid_2050_Hoog",
                 "type": "raster",
@@ -729,7 +729,7 @@
               }
             },
             {
-              "title": "Natuurbrandgevoeligheid_Huidig",
+              "title":"Natuurbrandgevoeligheid Huidig",
               "layerInfo": {
                 "id": "KEA_Natuurbrandgevoeligheid_Huidig",
                 "type": "raster",
@@ -750,7 +750,7 @@
               }
             },
             {
-              "title": "Bodemdaling_2020_2100_Hoog",
+              "title":"Bodemdaling 2020 2100 Hoog",
               "layerInfo": {
                 "id": "KEA_Bodemdaling_2020_2100_Hoog",
                 "type": "raster",
@@ -771,7 +771,7 @@
               }
             },
             {
-              "title": "Bodemdaling_2020_2100_Laag",
+              "title":"Bodemdaling 2020 2100 Laag",
               "layerInfo": {
                 "id": "KEA_Bodemdaling_2020_2100_Laag",
                 "type": "raster",
@@ -792,7 +792,7 @@
               }
             },
             {
-              "title": "Bodemdaling_2020_2050_Hoog",
+              "title":"Bodemdaling 2020 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Bodemdaling_2020_2050_Hoog",
                 "type": "raster",
@@ -813,7 +813,7 @@
               }
             },
             {
-              "title": "Bodemdaling_2020_2050_Laag",
+              "title":"Bodemdaling 2020 2050 Laag",
               "layerInfo": {
                 "id": "KEA_Bodemdaling_2020_2050_Laag",
                 "type": "raster",
@@ -834,7 +834,7 @@
               }
             },
             {
-              "title": "Bodemdaling_door_ophoging_2020_2050",
+              "title":"Bodemdaling door ophoging 2020 2050",
               "layerInfo": {
                 "id": "KEA_Bodemdaling_door_ophoging_2020_2050",
                 "type": "raster",
@@ -855,7 +855,7 @@
               }
             },
             {
-              "title": "Signaalkaart_bodemdaling_okt16-okt18",
+              "title":"Signaalkaart bodemdaling okt16-okt18",
               "layerInfo": {
                 "id": "KEA_Signaalkaart_bodemdaling_okt16-okt18",
                 "type": "raster",
@@ -876,7 +876,7 @@
               }
             },
             {
-              "title": "Signaalkaart_bodemdaling_mei15-mei18",
+              "title":"Signaalkaart bodemdaling mei15-mei18",
               "layerInfo": {
                 "id": "KEA_Signaalkaart_bodemdaling_mei15-mei18",
                 "type": "raster",
@@ -901,7 +901,7 @@
         {
           "title": "Impact",
           "sublayers": [{
-              "title": "Risico_Paalrot_2050_Hoog",
+              "title":"Risico Paalrot 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Risico_Paalrot_2050_Hoog",
                 "type": "raster",
@@ -922,7 +922,7 @@
               }
             },
             {
-              "title": "Risico_Paalrot_2050_Laag",
+              "title":"Risico Paalrot 2050 Laag",
               "layerInfo": {
                 "id": "KEA_Risico_Paalrot_2050_Laag",
                 "type": "raster",
@@ -943,7 +943,7 @@
               }
             },
             {
-              "title": "Risico_Paalrot_Huidig",
+              "title":"Risico Paalrot Huidig",
               "layerInfo": {
                 "id": "KEA_Risico_Paalrot_Huidig",
                 "type": "raster",
@@ -964,7 +964,7 @@
               }
             },
             {
-              "title": "Risico_Verschilzetting_2050_Hoog",
+              "title":"Risico Verschilzetting 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Risico_Verschilzetting_2050_Hoog",
                 "type": "raster",
@@ -985,7 +985,7 @@
               }
             },
             {
-              "title": "Risico_Verschilzetting_2050_Laag",
+              "title":"Risico Verschilzetting 2050 Laag",
               "layerInfo": {
                 "id": "KEA_Risico_Verschilzetting_2050_Laag",
                 "type": "raster",
@@ -1006,7 +1006,7 @@
               }
             },
             {
-              "title": "Risico_droogtestress_2050_Hoog",
+              "title":"Risico droogtestress 2050 Hoog",
               "layerInfo": {
                 "id": "KEA_Risico_droogtestress_2050_Hoog",
                 "type": "raster",
@@ -1027,7 +1027,7 @@
               }
             },
             {
-              "title": "Risico_droogtestress_Huidig",
+              "title":"Risico droogtestress Huidig",
               "layerInfo": {
                 "id": "KEA_Risico_droogtestress_Huidig",
                 "type": "raster",
@@ -1048,7 +1048,7 @@
               }
             },
             {
-              "title": "Droogtegevoeligheid_grondwaterafhankelijke_natuur",
+              "title":"Droogtegevoeligheid grondwaterafhankelijke natuur",
               "layerInfo": {
                 "id": "KEA_Droogtegevoeligheid_grondwaterafhankelijke_natuur",
                 "type": "raster",
@@ -1078,7 +1078,7 @@
         "title": "Klimaatverandering",
         "type": "group",
         "sublayers": [{
-            "title": "Aantal_tropische_dagen_max_gte_30C_2050_Hoog",
+            "title":"Aantal tropische dagen max gte 30C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Aantal_tropische_dagen_max_gte_30C_2050_Hoog",
               "type": "raster",
@@ -1096,7 +1096,7 @@
             }
           },
           {
-            "title": "Aantal_tropische_dagen_max_gte_30C_2050_Laag",
+            "title":"Aantal tropische dagen max gte 30C 2050 Laag",
             "layerInfo": {
               "id": "KEA_Aantal_tropische_dagen_max_gte_30C_2050_Laag",
               "type": "raster",
@@ -1114,7 +1114,7 @@
             }
           },
           {
-            "title": "Aantal_tropische_dagen_max_gte_30C_Huidig",
+            "title":"Aantal tropische dagen max gte 30C Huidig",
             "layerInfo": {
               "id": "KEA_Aantal_tropische_dagen_max_gte_30C_Huidig",
               "type": "raster",
@@ -1132,7 +1132,7 @@
             }
           },
           {
-            "title": "Aantal_zomerse_dagen_max_gte_25C_2050_Hoog",
+            "title":"Aantal zomerse dagen max gte 25C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_2050_Hoog",
               "type": "raster",
@@ -1150,7 +1150,7 @@
             }
           },
           {
-            "title": "Aantal_zomerse_dagen_max_gte_25C_2050_Laag",
+            "title":"Aantal zomerse dagen max gte 25C 2050 Laag",
             "layerInfo": {
               "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_2050_Laag",
               "type": "raster",
@@ -1168,7 +1168,7 @@
             }
           },
           {
-            "title": "Aantal_zomerse_dagen_max_gte_25C_Huidig",
+            "title":"Aantal zomerse dagen max gte 25C Huidig",
             "layerInfo": {
               "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_Huidig",
               "type": "raster",
@@ -1186,7 +1186,7 @@
             }
           },
           {
-            "title": "Aantal_warme_dagen_max_gte_20C_2050_Hoog",
+            "title":"Aantal warme dagen max gte 20C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Aantal_warme_dagen_max_gte_20C_2050_Hoog",
               "type": "raster",
@@ -1204,7 +1204,7 @@
             }
           },
           {
-            "title": "Aantal_warme_dagen_max_gte_20C_2050_Laag",
+            "title":"Aantal warme dagen max gte 20C 2050 Laag",
             "layerInfo": {
               "id": "KEA_Aantal_warme_dagen_max_gte_20C_2050_Laag",
               "type": "raster",
@@ -1222,7 +1222,7 @@
             }
           },
           {
-            "title": "Aantal_warme_dagen_max_gte_20C_Huidig",
+            "title":"Aantal warme dagen max gte 20C Huidig",
             "layerInfo": {
               "id": "KEA_Aantal_warme_dagen_max_gte_20C_Huidig",
               "type": "raster",
@@ -1240,7 +1240,7 @@
             }
           },
           {
-            "title": "Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog",
+            "title":"Langste reeks opvolgende zomerse dagen max gte 25C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog",
               "type": "raster",
@@ -1258,7 +1258,7 @@
             }
           },
           {
-            "title": "Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig",
+            "title":"Langste reeks opvolgende zomerse dagen max gte 25C Huidig",
             "layerInfo": {
               "id": "KEA_Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig",
               "type": "raster",
@@ -1276,7 +1276,7 @@
             }
           },
           {
-            "title": "Aantal_vorstdagen_min_0C_2050_Hoog",
+            "title":"Aantal vorstdagen min 0C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Aantal_vorstdagen_min_0C_2050_Hoog",
               "type": "raster",
@@ -1294,7 +1294,7 @@
             }
           },
           {
-            "title": "Aantal_vorstdagen_min_0C_2050_Laag",
+            "title":"Aantal vorstdagen min 0C 2050 Laag",
             "layerInfo": {
               "id": "KEA_Aantal_vorstdagen_min_0C_2050_Laag",
               "type": "raster",
@@ -1312,7 +1312,7 @@
             }
           },
           {
-            "title": "Aantal_vorstdagen_min_0C_Huidig",
+            "title":"Aantal vorstdagen min 0C Huidig",
             "layerInfo": {
               "id": "KEA_Aantal_vorstdagen_min_0C_Huidig",
               "type": "raster",
@@ -1330,7 +1330,7 @@
             }
           },
           {
-            "title": "Aantal_ijsdagen_max_0C_2050_Hoog",
+            "title":"Aantal ijsdagen max 0C 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Aantal_ijsdagen_max_0C_2050_Hoog",
               "type": "raster",
@@ -1348,7 +1348,7 @@
             }
           },
           {
-            "title": "Aantal_ijsdagen_max_0C_2050_Laag",
+            "title":"Aantal ijsdagen max 0C 2050 Laag",
             "layerInfo": {
               "id": "KEA_Aantal_ijsdagen_max_0C_2050_Laag",
               "type": "raster",
@@ -1366,7 +1366,7 @@
             }
           },
           {
-            "title": "Aantal_ijsdagen_max_0C_Huidig",
+            "title":"Aantal ijsdagen max 0C Huidig",
             "layerInfo": {
               "id": "KEA_Aantal_ijsdagen_max_0C_Huidig",
               "type": "raster",
@@ -1388,7 +1388,7 @@
         "title": "Fysieke gevolgen",
         "type": "group",
         "sublayers": [{
-            "title": "Stedelijk_hitte_eiland_effect",
+            "title":"Stedelijk hitte eiland effect",
             "layerInfo": {
               "id": "KEA_Stedelijk_hitte_eiland_effect",
               "type": "raster",
@@ -1406,7 +1406,7 @@
             }
           },
           {
-            "title": "Risico_opwarming_oppervlaktewater_2050_Hoog",
+            "title":"Risico opwarming oppervlaktewater 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Risico_opwarming_oppervlaktewater_2050_Hoog",
               "type": "raster",
@@ -1424,7 +1424,7 @@
             }
           },
           {
-            "title": "Risico_opwarming_oppervlaktewater_Huidig",
+            "title":"Risico opwarming oppervlaktewater Huidig",
             "layerInfo": {
               "id": "KEA_Risico_opwarming_oppervlaktewater_Huidig",
               "type": "raster",
@@ -1446,7 +1446,7 @@
         "title": "Impact",
         "type": "group",
         "sublayers": [{
-            "title": "Hittekaart_gevoelstemperatuur_2050_Hoog",
+            "title":"Hittekaart gevoelstemperatuur 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Hittekaart_gevoelstemperatuur_2050_Hoog",
               "type": "raster",
@@ -1464,7 +1464,7 @@
             }
           },
           {
-            "title": "Hittekaart_gevoelstemperatuur_Huidig",
+            "title":"Hittekaart gevoelstemperatuur Huidig",
             "layerInfo": {
               "id": "KEA_Hittekaart_gevoelstemperatuur_Huidig",
               "type": "raster",
@@ -1482,7 +1482,7 @@
             }
           },
           {
-            "title": "Hittestress_door_warme_nachten_2050_Hoog",
+            "title":"Hittestress door warme nachten 2050 Hoog",
             "layerInfo": {
               "id": "KEA_Hittestress_door_warme_nachten_2050_Hoog",
               "type": "raster",
@@ -1500,7 +1500,7 @@
             }
           },
           {
-            "title": "Hittestress_door_warme_nachten_Huidig",
+            "title":"Hittestress door warme nachten Huidig",
             "layerInfo": {
               "id": "KEA_Hittestress_door_warme_nachten_Huidig",
               "type": "raster",
@@ -1518,7 +1518,7 @@
             }
           },
           {
-            "title": "Ernstig_eenzame_75_plussers",
+            "title":"Ernstig eenzame 75 plussers",
             "layerInfo": {
               "id": "KEA_Ernstig_eenzame_75_plussers",
               "type": "raster",
@@ -1536,7 +1536,7 @@
             }
           },
           {
-            "title": "Percentage_ouderen_65_plus",
+            "title":"Percentage ouderen 65 plus",
             "layerInfo": {
               "id": "KEA_Percentage_ouderen_65_plus",
               "type": "raster",
@@ -1565,7 +1565,7 @@
           "type":"group",
           "sublayers":[
             {
-              "title":"Stijging_waterstanden_2050_Hoog",
+              "title":"Stijging waterstanden 2050 Hoog",
               "layerInfo": {
                 "id":"KEA_Stijging_waterstanden_2050_Hoog",
                 "type":"raster",
@@ -1589,7 +1589,7 @@
           "type":"group",
           "sublayers":[
             {
-              "title":"Overstromingsdiepte_grote_kans",
+              "title":"Overstromingsdiepte grote kans",
               "layerInfo": {
                 "id":"KEA_Overstromingsdiepte_grote_kans",
                 "type":"raster",
@@ -1607,7 +1607,7 @@
               }
             },
             {
-              "title":"Overstromingsdiepte_middelgrote_kans",
+              "title":"Overstromingsdiepte middelgrote kans",
               "layerInfo": {
                 "id":"KEA_Overstromingsdiepte_middelgrote_kans",
                 "type":"raster",
@@ -1625,7 +1625,7 @@
               }
             },
             {
-              "title":"Overstromingsdiepte_kleine_kans",
+              "title":"Overstromingsdiepte kleine kans",
               "layerInfo": {
                 "id":"KEA_Overstromingsdiepte_kleine_kans",
                 "type":"raster",
@@ -1643,7 +1643,7 @@
               }
             },
             {
-              "title":"Overstromingsdiepte_bijzonder_kleine_kans",
+              "title":"Overstromingsdiepte bijzonder kleine kans",
               "layerInfo": {
                 "id":"KEA_Overstromingsdiepte_bijzonder_kleine_kans",
                 "type":"raster",
@@ -1661,7 +1661,7 @@
               }
             },
             {
-              "title":"Plaatsgebonden_Overstromingskans_0cm_2050_Hoog",
+              "title":"Plaatsgebonden Overstromingskans 0cm 2050 Hoog",
               "layerInfo": {
                 "id":"KEA_Plaatsgebonden_Overstromingskans_0cm_2050_Hoog",
                 "type":"raster",
@@ -1679,7 +1679,7 @@
               }
             },
             {
-              "title":"Plaatsgebonden_Overstromingskans_20cm_2050_Hoog",
+              "title":"Plaatsgebonden Overstromingskans 20cm 2050 Hoog",
               "layerInfo": {
                 "id":"KEA_Plaatsgebonden_Overstromingskans_20cm_2050_Hoog",
                 "type":"raster",
@@ -1697,7 +1697,7 @@
               }
             },
             {
-              "title":"Plaatsgebonden_Overstromingskans_50cm_2050_Hoog",
+              "title":"Plaatsgebonden Overstromingskans 50cm 2050 Hoog",
               "layerInfo": {
                 "id":"KEA_Plaatsgebonden_Overstromingskans_50cm_2050_Hoog",
                 "type":"raster",
@@ -1715,7 +1715,7 @@
               }
             },
             {
-              "title":"Plaatsgebonden_Overstromingskans_200cm_2050_Hoog",
+              "title":"Plaatsgebonden Overstromingskans 200cm 2050 Hoog",
               "layerInfo": {
                 "id":"KEA_Plaatsgebonden_Overstromingskans_200cm_2050_Hoog",
                 "type":"raster",
@@ -1739,7 +1739,7 @@
           "type":"group",
           "sublayers":[
             {
-              "title":"Kansenkaart_Gevolgbeperking",
+              "title":"Kansenkaart Gevolgbeperking",
               "layerInfo": {
                 "id":"KEA_Kansenkaart_Gevolgbeperking",
                 "type":"raster",
@@ -1765,7 +1765,7 @@
       "type": "group",
       "sublayers": [
         {
-          "title":"Dagen_met_meer_dan_25_mm_2050_Hoog",
+          "title":"Dagen met meer dan 25 mm 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_25_mm_2050_Hoog",
             "type":"raster",
@@ -1783,7 +1783,7 @@
           }
         },
         {
-          "title":"Dagen_met_meer_dan_25_mm_2050_Laag",
+          "title":"Dagen met meer dan 25 mm 2050 Laag",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_25_mm_2050_Laag",
             "type":"raster",
@@ -1801,7 +1801,7 @@
           }
         },
         {
-          "title":"Dagen_met_meer_dan_25_mm_Huidig",
+          "title":"Dagen met meer dan 25 mm Huidig",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_25_mm_Huidig",
             "type":"raster",
@@ -1819,7 +1819,7 @@
           }
         },
         {
-          "title":"Dagen_met_meer_dan_15_mm_2050_Hoog",
+          "title":"Dagen met meer dan 15 mm 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_15_mm_2050_Hoog",
             "type":"raster",
@@ -1837,7 +1837,7 @@
           }
         },
         {
-          "title":"Dagen_met_meer_dan_15_mm_2050_Laag",
+          "title":"Dagen met meer dan 15 mm 2050 Laag",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_15_mm_2050_Laag",
             "type":"raster",
@@ -1855,7 +1855,7 @@
           }
         },
         {
-          "title":"Dagen_met_meer_dan_15_mm_Huidig",
+          "title":"Dagen met meer dan 15 mm Huidig",
           "layerInfo":{
             "id": "KEA_Dagen_met_meer_dan_15_mm_Huidig",
             "type":"raster",
@@ -1873,7 +1873,7 @@
           }
         },
         {
-          "title":"Neerslag_winterkwartaal_2050_Hoog",
+          "title":"Neerslag winterkwartaal 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Neerslag_winterkwartaal_2050_Hoog",
             "type":"raster",
@@ -1891,7 +1891,7 @@
           }
         },
         {
-          "title":"Neerslag_winterkwartaal_Huidig",
+          "title":"Neerslag winterkwartaal Huidig",
           "layerInfo":{
             "id": "KEA_Neerslag_winterkwartaal_Huidig",
             "type":"raster",
@@ -1909,7 +1909,7 @@
           }
         },
         {
-          "title":"Jaarlijkse_neerslag_2050_Hoog",
+          "title":"Jaarlijkse neerslag 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Jaarlijkse_neerslag_2050_Hoog",
             "type":"raster",
@@ -1927,7 +1927,7 @@
           }
         },
         {
-          "title":"Jaarlijkse_neerslag_Huidig",
+          "title":"Jaarlijkse neerslag Huidig",
           "layerInfo":{
             "id": "KEA_Jaarlijkse_neerslag_Huidig",
             "type":"raster",
@@ -1945,7 +1945,7 @@
           }
         },
         {
-          "title":"Ontwikkeling_kans_grondwateroverlast_2050_Hoog",
+          "title":"Ontwikkeling kans grondwateroverlast 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Ontwikkeling_kans_grondwateroverlast_2050_Hoog",
             "type":"raster",
@@ -1963,7 +1963,7 @@
           }
         },
         {
-          "title":"Risico_zuurstofstress_2050_Hoog",
+          "title":"Risico zuurstofstress 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Risico_zuurstofstress_2050_Hoog",
             "type":"raster",
@@ -1981,7 +1981,7 @@
           }
         },
         {
-          "title":"Risico_zuurstofstress_Huidig",
+          "title":"Risico zuurstofstress Huidig",
           "layerInfo":{
             "id": "KEA_Risico_zuurstofstress_Huidig",
             "type":"raster",
@@ -1999,7 +1999,7 @@
           }
         },
         {
-          "title":"Kwel_en_infiltratie_2050_Hoog",
+          "title":"Kwel en infiltratie 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Kwel_en_infiltratie_2050_Hoog",
             "type":"raster",
@@ -2017,7 +2017,7 @@
           }
         },
         {
-          "title":"Kwel_en_infiltratie_Huidig",
+          "title":"Kwel en infiltratie Huidig",
           "layerInfo":{
             "id": "KEA_Kwel_en_infiltratie_Huidig",
             "type":"raster",
@@ -2035,7 +2035,7 @@
           }
         },
         {
-          "title":"Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog",
+          "title":"Gemiddelde Hoogste Grondwaterstand 2050 Hoog",
           "layerInfo":{
             "id": "KEA_Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog",
             "type":"raster",
@@ -2053,7 +2053,7 @@
           }
         },
         {
-          "title":"Gemiddelde_Hoogste_Grondwaterstand_Huidig",
+          "title":"Gemiddelde Hoogste Grondwaterstand Huidig",
           "layerInfo":{
             "id": "KEA_Gemiddelde_Hoogste_Grondwaterstand_Huidig",
             "type":"raster",
@@ -2071,7 +2071,7 @@
           }
         },
         {
-          "title":"Gevoeligheid_watererosie",
+          "title":"Gevoeligheid watererosie",
           "layerInfo":{
             "id": "KEA_Gevoeligheid_watererosie",
             "type":"raster",
@@ -2089,7 +2089,7 @@
           }
         },
         {
-          "title":"Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
+          "title":"Waterdiepte bij intense neerslag - 1-1000 jaar",
           "layerInfo":{
             "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
             "type":"raster",
@@ -2107,7 +2107,7 @@
           }
         },
         {
-          "title":"Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
+          "title":"Waterdiepte bij intense neerslag - 1-100 jaar",
           "layerInfo":{
             "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
             "type":"raster",
@@ -2125,7 +2125,7 @@
           }
         },
         {
-          "title":"Risico_op_ondergrondverdichting",
+          "title":"Risico op ondergrondverdichting",
           "layerInfo":{
             "id": "KEA_Risico_op_ondergrondverdichting",
             "type":"raster",
@@ -2143,7 +2143,7 @@
           }
         },
         {
-          "title":"Potentie_infiltratie_stedelijk",
+          "title":"Potentie infiltratie stedelijk",
           "layerInfo":{
             "id": "KEA_Potentie_infiltratie_stedelijk",
             "type":"raster",
