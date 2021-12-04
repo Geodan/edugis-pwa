@@ -1761,6 +1761,408 @@
       ]
     },
     {
+      "title": "Wateroverlast",
+      "type": "group",
+      "sublayers": [
+        {
+          "title":"Dagen_met_meer_dan_25_mm_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_25_mm_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_25_mm_Huidig&query_layers=Dagen_met_meer_dan_25_mm_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_25_mm_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_25_mm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Dagen_met_meer_dan_25_mm_2050_Laag",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_25_mm_2050_Laag",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_25_mm_2050_Laag&query_layers=Dagen_met_meer_dan_25_mm_2050_Laag",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_25_mm_2050_Laag&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_25_mm_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Dagen_met_meer_dan_25_mm_Huidig",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_25_mm_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_25_mm_Huidig&query_layers=Dagen_met_meer_dan_25_mm_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_25_mm_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_25_mm_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Dagen_met_meer_dan_15_mm_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_15_mm_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_15_mm_2050_Hoog&query_layers=Dagen_met_meer_dan_15_mm_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_15_mm_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_15_mm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Dagen_met_meer_dan_15_mm_2050_Laag",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_15_mm_2050_Laag",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_15_mm_2050_Laag&query_layers=Dagen_met_meer_dan_15_mm_2050_Laag",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_15_mm_2050_Laag&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_15_mm_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Dagen_met_meer_dan_15_mm_Huidig",
+          "layerInfo":{
+            "id": "KEA_Dagen_met_meer_dan_15_mm_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Dagen_met_meer_dan_15_mm_Huidig&query_layers=Dagen_met_meer_dan_15_mm_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Dagen_met_meer_dan_15_mm_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Dagen_met_meer_dan_15_mm_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Neerslag_winterkwartaal_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Neerslag_winterkwartaal_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Neerslag_winterkwartaal_2050_Hoog&query_layers=Neerslag_winterkwartaal_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Neerslag_winterkwartaal_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Neerslag_winterkwartaal_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Neerslag_winterkwartaal_Huidig",
+          "layerInfo":{
+            "id": "KEA_Neerslag_winterkwartaal_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Neerslag_winterkwartaal_Huidig&query_layers=Neerslag_winterkwartaal_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Neerslag_winterkwartaal_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Neerslag_winterkwartaal_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Jaarlijkse_neerslag_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Jaarlijkse_neerslag_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Jaarlijkse_neerslag_2050_Hoog&query_layers=Jaarlijkse_neerslag_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Jaarlijkse_neerslag_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Jaarlijkse_neerslag_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Jaarlijkse_neerslag_Huidig",
+          "layerInfo":{
+            "id": "KEA_Jaarlijkse_neerslag_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Jaarlijkse_neerslag_Huidig&query_layers=Jaarlijkse_neerslag_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Jaarlijkse_neerslag_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Jaarlijkse_neerslag_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Ontwikkeling_kans_grondwateroverlast_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Ontwikkeling_kans_grondwateroverlast_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Ontwikkeling_kans_grondwateroverlast_2050_Hoog&query_layers=Ontwikkeling_kans_grondwateroverlast_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Ontwikkeling_kans_grondwateroverlast_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Ontwikkeling_kans_grondwateroverlast_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Risico_zuurstofstress_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Risico_zuurstofstress_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_zuurstofstress_2050_Hoog&query_layers=Risico_zuurstofstress_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Risico_zuurstofstress_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Risico_zuurstofstress_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Risico_zuurstofstress_Huidig",
+          "layerInfo":{
+            "id": "KEA_Risico_zuurstofstress_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_zuurstofstress_Huidig&query_layers=Risico_zuurstofstress_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Risico_zuurstofstress_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Risico_zuurstofstress_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Kwel_en_infiltratie_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Kwel_en_infiltratie_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Kwel_en_infiltratie_2050_Hoog&query_layers=Kwel_en_infiltratie_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Kwel_en_infiltratie_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Kwel_en_infiltratie_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Kwel_en_infiltratie_Huidig",
+          "layerInfo":{
+            "id": "KEA_Kwel_en_infiltratie_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Kwel_en_infiltratie_Huidig&query_layers=Kwel_en_infiltratie_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Kwel_en_infiltratie_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Kwel_en_infiltratie_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog",
+          "layerInfo":{
+            "id": "KEA_Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog&query_layers=Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Gemiddelde_Hoogste_Grondwaterstand_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Gemiddelde_Hoogste_Grondwaterstand_Huidig",
+          "layerInfo":{
+            "id": "KEA_Gemiddelde_Hoogste_Grondwaterstand_Huidig",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gemiddelde_Hoogste_Grondwaterstand_Huidig&query_layers=Gemiddelde_Hoogste_Grondwaterstand_Huidig",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Gemiddelde_Hoogste_Grondwaterstand_Huidig&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Gemiddelde_Hoogste_Grondwaterstand_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Gevoeligheid_watererosie",
+          "layerInfo":{
+            "id": "KEA_Gevoeligheid_watererosie",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gevoeligheid_watererosie&query_layers=Gevoeligheid_watererosie",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Gevoeligheid_watererosie&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Gevoeligheid_watererosie/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
+          "layerInfo":{
+            "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar&query_layers=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Waterdiepte_bij_intense_neerslag_-_1-1000_jaar/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
+          "layerInfo":{
+            "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Waterdiepte_bij_intense_neerslag_-_1-100_jaar&query_layers=Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Waterdiepte_bij_intense_neerslag_-_1-100_jaar&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Waterdiepte_bij_intense_neerslag_-_1-100_jaar/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Risico_op_ondergrondverdichting",
+          "layerInfo":{
+            "id": "KEA_Risico_op_ondergrondverdichting",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_op_ondergrondverdichting&query_layers=Risico_op_ondergrondverdichting",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Risico_op_ondergrondverdichting&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Risico_op_ondergrondverdichting/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        },
+        {
+          "title":"Potentie_infiltratie_stedelijk",
+          "layerInfo":{
+            "id": "KEA_Potentie_infiltratie_stedelijk",
+            "type":"raster",
+            "metadata": {
+              "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Potentie_infiltratie_stedelijk&query_layers=Potentie_infiltratie_stedelijk",
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Potentie_infiltratie_stedelijk&format=image%2Fpng"
+            },
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Potentie_infiltratie_stedelijk/spherical_mercator/{z}/{x}/{y}.png"],
+              "attribution":"KEA"
+            }
+          }
+        }
+      ]
+    },
+    {
       "type": "group",
       "title": "Achtergrondlagen",
       "sublayers": [{
