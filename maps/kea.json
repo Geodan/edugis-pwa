@@ -1073,64 +1073,6 @@
       ]
     },
     {
-      "type": "group",
-      "title": "Achtergrondlagen",
-      "sublayers": [{
-          "type": "reference",
-          "title": "OSM Bright (stijl)",
-          "checked": 1,
-          "layerInfo": {
-            "id": "OsmBright",
-            "type": "style",
-            "source": "styles/openmaptiles/osmbright.json",
-            "metadata": {
-              "reference": true
-            }
-          }
-        }, {
-          "title": "Openstreetmap",
-          "type": "reference",
-          "layerInfo": {
-            "id": "openstreetmap",
-            "type": "raster",
-            "metadata": {
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-              ],
-              "attribution": "&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-            }
-          }
-        },
-        {
-          "title": "Openstreetmap Gray",
-          "type": "reference",
-          "checked": 0,
-          "layerInfo": {
-            "id": "openstreetmapgray",
-            "type": "raster",
-            "metadata": {
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-              ],
-              "attribution": "&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-            }
-          }
-        }
-      ]
-    },
-    {
       "title": "Hitte",
       "sublayers": [{
         "title": "Klimaatverandering",
@@ -1613,6 +1555,268 @@
           }
         ]
       }]
+    },
+    {
+      "title": "Overstroming",
+      "type":"group",
+      "sublayers": [
+        {
+          "title":"Klimaatverandering",
+          "type":"group",
+          "sublayers":[
+            {
+              "title":"Stijging_waterstanden_2050_Hoog",
+              "layerInfo": {
+                "id":"KEA_Stijging_waterstanden_2050_Hoog",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Stijging_waterstanden_2050_Hoog&query_layers=Stijging_waterstanden_2050_Hoog",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Stijging_waterstanden_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Stijging_waterstanden_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title":"Fysieke gevolgen",
+          "type":"group",
+          "sublayers":[
+            {
+              "title":"Overstromingsdiepte_grote_kans",
+              "layerInfo": {
+                "id":"KEA_Overstromingsdiepte_grote_kans",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Overstromingsdiepte_grote_kans&query_layers=Overstromingsdiepte_grote_kans",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Overstromingsdiepte_grote_kans&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Overstromingsdiepte_grote_kans/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Overstromingsdiepte_middelgrote_kans",
+              "layerInfo": {
+                "id":"KEA_Overstromingsdiepte_middelgrote_kans",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Overstromingsdiepte_middelgrote_kans&query_layers=Overstromingsdiepte_middelgrote_kans",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Overstromingsdiepte_middelgrote_kans&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Overstromingsdiepte_middelgrote_kans/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Overstromingsdiepte_kleine_kans",
+              "layerInfo": {
+                "id":"KEA_Overstromingsdiepte_kleine_kans",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Overstromingsdiepte_kleine_kans&query_layers=Overstromingsdiepte_kleine_kans",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Overstromingsdiepte_kleine_kans&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Overstromingsdiepte_kleine_kans/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Overstromingsdiepte_bijzonder_kleine_kans",
+              "layerInfo": {
+                "id":"KEA_Overstromingsdiepte_bijzonder_kleine_kans",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Overstromingsdiepte_bijzonder_kleine_kans&query_layers=Overstromingsdiepte_bijzonder_kleine_kans",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Overstromingsdiepte_bijzonder_kleine_kans&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Overstromingsdiepte_bijzonder_kleine_kans/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Plaatsgebonden_Overstromingskans_0cm_2050_Hoog",
+              "layerInfo": {
+                "id":"KEA_Plaatsgebonden_Overstromingskans_0cm_2050_Hoog",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Plaatsgebonden_Overstromingskans_0cm_2050_Hoog&query_layers=Plaatsgebonden_Overstromingskans_0cm_2050_Hoog",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Plaatsgebonden_Overstromingskans_0cm_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Plaatsgebonden_Overstromingskans_0cm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Plaatsgebonden_Overstromingskans_20cm_2050_Hoog",
+              "layerInfo": {
+                "id":"KEA_Plaatsgebonden_Overstromingskans_20cm_2050_Hoog",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Plaatsgebonden_Overstromingskans_20cm_2050_Hoog&query_layers=Plaatsgebonden_Overstromingskans_20cm_2050_Hoog",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Plaatsgebonden_Overstromingskans_20cm_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Plaatsgebonden_Overstromingskans_20cm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Plaatsgebonden_Overstromingskans_50cm_2050_Hoog",
+              "layerInfo": {
+                "id":"KEA_Plaatsgebonden_Overstromingskans_50cm_2050_Hoog",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Plaatsgebonden_Overstromingskans_50cm_2050_Hoog&query_layers=Plaatsgebonden_Overstromingskans_50cm_2050_Hoog",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Plaatsgebonden_Overstromingskans_50cm_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Plaatsgebonden_Overstromingskans_50cm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            },
+            {
+              "title":"Plaatsgebonden_Overstromingskans_200cm_2050_Hoog",
+              "layerInfo": {
+                "id":"KEA_Plaatsgebonden_Overstromingskans_200cm_2050_Hoog",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Plaatsgebonden_Overstromingskans_200cm_2050_Hoog&query_layers=Plaatsgebonden_Overstromingskans_200cm_2050_Hoog",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Plaatsgebonden_Overstromingskans_200cm_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Plaatsgebonden_Overstromingskans_200cm_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "title":"Impact",
+          "type":"group",
+          "sublayers":[
+            {
+              "title":"Kansenkaart_Gevolgbeperking",
+              "layerInfo": {
+                "id":"KEA_Kansenkaart_Gevolgbeperking",
+                "type":"raster",
+                "metadata": {
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Kansenkaart_Gevolgbeperking&query_layers=Kansenkaart_Gevolgbeperking",
+                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/overstroming/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Kansenkaart_Gevolgbeperking&format=image%2Fpng"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":["https://tiles.edugis.nl/mapproxy/overstroming/wmts/Kansenkaart_Gevolgbeperking/spherical_mercator/{z}/{x}/{y}.png"],
+                  "attribution":"KEA"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Achtergrondlagen",
+      "sublayers": [{
+          "type": "reference",
+          "title": "OSM Bright (stijl)",
+          "checked": 1,
+          "layerInfo": {
+            "id": "OsmBright",
+            "type": "style",
+            "source": "styles/openmaptiles/osmbright.json",
+            "metadata": {
+              "reference": true
+            }
+          }
+        }, {
+          "title": "Openstreetmap",
+          "type": "reference",
+          "layerInfo": {
+            "id": "openstreetmap",
+            "type": "raster",
+            "metadata": {
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl": "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+            },
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "tiles": [
+                "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+              ],
+              "attribution": "&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+            }
+          }
+        },
+        {
+          "title": "Openstreetmap Gray",
+          "type": "reference",
+          "checked": 0,
+          "layerInfo": {
+            "id": "openstreetmapgray",
+            "type": "raster",
+            "metadata": {
+              "getFeatureInfoFormat": "application/vnd.ogc.gml",
+              "legendurl": "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+            },
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "tiles": [
+                "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+              ],
+              "attribution": "&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+            }
+          }
+        }
+      ]
     }
   ],
   "tools": {
