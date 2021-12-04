@@ -1138,9 +1138,476 @@
         ]
       },
       {
-        "title": "Droogte",
+        "title": "Hitte",
         "sublayers": [
-
+          {
+            "title":"Aantal_tropische_dagen_max_gte_30C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Aantal_tropische_dagen_max_gte_30C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_tropische_dagen_max_gte_30C_2050_Hoog&query_layers=Aantal_tropische_dagen_max_gte_30C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_tropische_dagen_max_gte_30C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_tropische_dagen_max_gte_30C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_tropische_dagen_max_gte_30C_2050_Laag",
+            "layerInfo": {
+                "id": "KEA_Aantal_tropische_dagen_max_gte_30C_2050_Laag",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_tropische_dagen_max_gte_30C_2050_Laag&query_layers=Aantal_tropische_dagen_max_gte_30C_2050_Laag",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_tropische_dagen_max_gte_30C_2050_Laag&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_tropische_dagen_max_gte_30C_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_tropische_dagen_max_gte_30C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Aantal_tropische_dagen_max_gte_30C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_tropische_dagen_max_gte_30C_Huidig&query_layers=Aantal_tropische_dagen_max_gte_30C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_tropische_dagen_max_gte_30C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_tropische_dagen_max_gte_30C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_zomerse_dagen_max_gte_25C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_zomerse_dagen_max_gte_25C_2050_Hoog&query_layers=Aantal_zomerse_dagen_max_gte_25C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_zomerse_dagen_max_gte_25C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_zomerse_dagen_max_gte_25C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_zomerse_dagen_max_gte_25C_2050_Laag",
+            "layerInfo": {
+                "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_2050_Laag",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_zomerse_dagen_max_gte_25C_2050_Laag&query_layers=Aantal_zomerse_dagen_max_gte_25C_2050_Laag",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_zomerse_dagen_max_gte_25C_2050_Laag&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_zomerse_dagen_max_gte_25C_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_zomerse_dagen_max_gte_25C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Aantal_zomerse_dagen_max_gte_25C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_zomerse_dagen_max_gte_25C_Huidig&query_layers=Aantal_zomerse_dagen_max_gte_25C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_zomerse_dagen_max_gte_25C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_zomerse_dagen_max_gte_25C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_warme_dagen_max_gte_20C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Aantal_warme_dagen_max_gte_20C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_warme_dagen_max_gte_20C_2050_Hoog&query_layers=Aantal_warme_dagen_max_gte_20C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_warme_dagen_max_gte_20C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_warme_dagen_max_gte_20C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_warme_dagen_max_gte_20C_2050_Laag",
+            "layerInfo": {
+                "id": "KEA_Aantal_warme_dagen_max_gte_20C_2050_Laag",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_warme_dagen_max_gte_20C_2050_Laag&query_layers=Aantal_warme_dagen_max_gte_20C_2050_Laag",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_warme_dagen_max_gte_20C_2050_Laag&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_warme_dagen_max_gte_20C_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_warme_dagen_max_gte_20C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Aantal_warme_dagen_max_gte_20C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_warme_dagen_max_gte_20C_Huidig&query_layers=Aantal_warme_dagen_max_gte_20C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_warme_dagen_max_gte_20C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_warme_dagen_max_gte_20C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog&query_layers=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig&query_layers=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Langste_reeks_opvolgende_zomerse_dagen_max_gte_25C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_vorstdagen_min_0C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Aantal_vorstdagen_min_0C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_vorstdagen_min_0C_2050_Hoog&query_layers=Aantal_vorstdagen_min_0C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_vorstdagen_min_0C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_vorstdagen_min_0C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_vorstdagen_min_0C_2050_Laag",
+            "layerInfo": {
+                "id": "KEA_Aantal_vorstdagen_min_0C_2050_Laag",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_vorstdagen_min_0C_2050_Laag&query_layers=Aantal_vorstdagen_min_0C_2050_Laag",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_vorstdagen_min_0C_2050_Laag&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_vorstdagen_min_0C_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_vorstdagen_min_0C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Aantal_vorstdagen_min_0C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_vorstdagen_min_0C_Huidig&query_layers=Aantal_vorstdagen_min_0C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_vorstdagen_min_0C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_vorstdagen_min_0C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_ijsdagen_max_0C_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Aantal_ijsdagen_max_0C_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_ijsdagen_max_0C_2050_Hoog&query_layers=Aantal_ijsdagen_max_0C_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_ijsdagen_max_0C_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_ijsdagen_max_0C_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_ijsdagen_max_0C_2050_Laag",
+            "layerInfo": {
+                "id": "KEA_Aantal_ijsdagen_max_0C_2050_Laag",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_ijsdagen_max_0C_2050_Laag&query_layers=Aantal_ijsdagen_max_0C_2050_Laag",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_ijsdagen_max_0C_2050_Laag&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_ijsdagen_max_0C_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Aantal_ijsdagen_max_0C_Huidig",
+            "layerInfo": {
+                "id": "KEA_Aantal_ijsdagen_max_0C_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Aantal_ijsdagen_max_0C_Huidig&query_layers=Aantal_ijsdagen_max_0C_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Aantal_ijsdagen_max_0C_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Aantal_ijsdagen_max_0C_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Stedelijk_hitte_eiland_effect",
+            "layerInfo": {
+                "id": "KEA_Stedelijk_hitte_eiland_effect",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Stedelijk_hitte_eiland_effect&query_layers=Stedelijk_hitte_eiland_effect",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Stedelijk_hitte_eiland_effect&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Stedelijk_hitte_eiland_effect/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Risico_opwarming_oppervlaktewater_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Risico_opwarming_oppervlaktewater_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_opwarming_oppervlaktewater_2050_Hoog&query_layers=Risico_opwarming_oppervlaktewater_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_opwarming_oppervlaktewater_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Risico_opwarming_oppervlaktewater_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Risico_opwarming_oppervlaktewater_Huidig",
+            "layerInfo": {
+                "id": "KEA_Risico_opwarming_oppervlaktewater_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_opwarming_oppervlaktewater_Huidig&query_layers=Risico_opwarming_oppervlaktewater_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_opwarming_oppervlaktewater_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Risico_opwarming_oppervlaktewater_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Hittekaart_gevoelstemperatuur_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Hittekaart_gevoelstemperatuur_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Hittekaart_gevoelstemperatuur_2050_Hoog&query_layers=Hittekaart_gevoelstemperatuur_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Hittekaart_gevoelstemperatuur_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Hittekaart_gevoelstemperatuur_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Hittekaart_gevoelstemperatuur_Huidig",
+            "layerInfo": {
+                "id": "KEA_Hittekaart_gevoelstemperatuur_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Hittekaart_gevoelstemperatuur_Huidig&query_layers=Hittekaart_gevoelstemperatuur_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Hittekaart_gevoelstemperatuur_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Hittekaart_gevoelstemperatuur_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Hittestress_door_warme_nachten_2050_Hoog",
+            "layerInfo": {
+                "id": "KEA_Hittestress_door_warme_nachten_2050_Hoog",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Hittestress_door_warme_nachten_2050_Hoog&query_layers=Hittestress_door_warme_nachten_2050_Hoog",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Hittestress_door_warme_nachten_2050_Hoog&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Hittestress_door_warme_nachten_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Hittestress_door_warme_nachten_Huidig",
+            "layerInfo": {
+                "id": "KEA_Hittestress_door_warme_nachten_Huidig",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Hittestress_door_warme_nachten_Huidig&query_layers=Hittestress_door_warme_nachten_Huidig",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Hittestress_door_warme_nachten_Huidig&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Hittestress_door_warme_nachten_Huidig/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Ernstig_eenzame_75_plussers",
+            "layerInfo": {
+                "id": "KEA_Ernstig_eenzame_75_plussers",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Ernstig_eenzame_75_plussers&query_layers=Ernstig_eenzame_75_plussers",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Ernstig_eenzame_75_plussers&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Ernstig_eenzame_75_plussers/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        },
+        {
+            "title":"Percentage_ouderen_65_plus",
+            "layerInfo": {
+                "id": "KEA_Percentage_ouderen_65_plus",
+                "type": "raster",
+                "metadata": {
+                    "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/hitte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Percentage_ouderen_65_plus&query_layers=Percentage_ouderen_65_plus",
+                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                    "legendurl": "https://tiles.edugis.nl/mapproxy/hitte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Percentage_ouderen_65_plus&format=image%2Fpng"
+                },
+                "source":{
+                    "type":"raster",
+                    "tileSize":256,
+                    "tiles":["https://tiles.edugis.nl/mapproxy/hitte/wmts/Percentage_ouderen_65_plus/spherical_mercator/{z}/{x}/{y}.png"],
+                    "attribution":"KEA"
+                }
+            }
+        }
         ]
       }
     ],
