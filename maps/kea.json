@@ -18,6 +18,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Beweegbare_bruggen&query_layers=Beweegbare_bruggen",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Beweegbare_bruggen&format=image%2Fpng"
               },
               "source":{
@@ -39,6 +40,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Zwemwaterlocaties&query_layers=Zwemwaterlocaties",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Zwemwaterlocaties&format=image%2Fpng"
               },
               "source":{
@@ -60,6 +62,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tunnels&query_layers=Tunnels",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tunnels&format=image%2Fpng"
               },
               "source":{
@@ -81,6 +84,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Filter_bebouwde_kom&query_layers=Filter_bebouwde_kom",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Filter_bebouwde_kom&format=image%2Fpng"
               },
               "source":{
@@ -102,6 +106,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Boom_per_buurt&query_layers=Boom_per_buurt",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Boom_per_buurt&format=image%2Fpng"
               },
               "source":{
@@ -123,6 +128,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_per_buurt&query_layers=Groen_per_buurt",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_per_buurt&format=image%2Fpng"
               },
               "source":{
@@ -144,6 +150,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Grijs_per_buurt&query_layers=Grijs_per_buurt",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Grijs_per_buurt&format=image%2Fpng"
               },
               "source":{
@@ -165,6 +172,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Water_per_buurt&query_layers=Water_per_buurt",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Water_per_buurt&format=image%2Fpng"
               },
               "source":{
@@ -186,6 +194,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_openbare_ruimte&query_layers=Groen_binnen_openbare_ruimte",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_openbare_ruimte&format=image%2Fpng"
               },
               "source":{
@@ -207,6 +216,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_niet_openbare_ruimte&query_layers=Groen_binnen_niet_openbare_ruimte",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_niet_openbare_ruimte&format=image%2Fpng"
               },
               "source":{
@@ -228,6 +238,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Wijktypologie&query_layers=Wijktypologie",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Wijktypologie&format=image%2Fpng"
               },
               "source":{
@@ -249,6 +260,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Landbouwgebieden&query_layers=Landbouwgebieden",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Landbouwgebieden&format=image%2Fpng"
               },
               "source":{
@@ -270,6 +282,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&format=image%2Fpng"
               },
               "source":{
@@ -291,6 +304,7 @@
               "maxzoom":16.5,
               "metadata":{
                 "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&format=image%2Fpng"
               },
               "source":{
@@ -304,6 +318,764 @@
             }
           }
            
+        ]
+      },
+      { 
+        "type": "group",
+        "title": "Droogte",
+        "sublayers": [
+          {
+            "type": "group",
+            "title": "Klimaatverandering",
+            "sublayers": [
+              {
+                  "title": "Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog&query_layers=Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Potentieel_maximaal_neerslagtekort_(eens_per_10_jaar)_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_Huidig&query_layers=Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Potentieel_maximaal_neerslagtekort_eens_per_10_jaar_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Potentieel_maximaal_neerslagtekort_(gemiddeld)_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Potentieel_maximaal_neerslagtekort_(gemiddeld)_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog&query_layers=Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Potentieel_maximaal_neerslagtekort_gemiddeld_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Potentieel_maximaal_neerslagtekort_(gemiddeld)_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Potentieel_maximaal_neerslagtekort_(gemiddeld)_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Potentieel_maximaal_neerslagtekort_gemiddeld_Huidig&query_layers=Potentieel_maximaal_neerslagtekort_gemiddeld_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Potentieel_maximaal_neerslagtekort_gemiddeld_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Potentieel_maximaal_neerslagtekort_gemiddeld_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Neerslag_zomerkwartaal_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Neerslag_zomerkwartaal_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Neerslag_zomerkwartaal_2050_Hoog&query_layers=Neerslag_zomerkwartaal_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Neerslag_zomerkwartaal_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Neerslag_zomerkwartaal_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Neerslag_zomerkwartaal_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Neerslag_zomerkwartaal_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Neerslag_zomerkwartaal_Huidig&query_layers=Neerslag_zomerkwartaal_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Neerslag_zomerkwartaal_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Neerslag_zomerkwartaal_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Jaarlijkse_referentieverdamping_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Jaarlijkse_referentieverdamping_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Jaarlijkse_referentieverdamping_2050_Hoog&query_layers=Jaarlijkse_referentieverdamping_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Jaarlijkse_referentieverdamping_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Jaarlijkse_referentieverdamping_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Jaarlijkse_referentieverdamping_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Jaarlijkse_referentieverdamping_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Jaarlijkse_referentieverdamping_Huidig&query_layers=Jaarlijkse_referentieverdamping_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Jaarlijkse_referentieverdamping_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Jaarlijkse_referentieverdamping_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              }
+            ]
+          },
+          {
+              "title": "Fysieke_gevolgen",
+              "type": "group",
+              "sublayers":[
+                {
+                  "title": "Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog&query_layers=Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Tekort_oppervlaktewater_extreem_droog_jaar_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Tekort_oppervlaktewater_extreem_droog_jaar_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Tekort_oppervlaktewater_extreem_droog_jaar_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tekort_oppervlaktewater_extreem_droog_jaar_Huidig&query_layers=Tekort_oppervlaktewater_extreem_droog_jaar_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tekort_oppervlaktewater_extreem_droog_jaar_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Tekort_oppervlaktewater_extreem_droog_jaar_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog&query_layers=Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Tekort_oppervlaktewater_gemiddeld_jaar_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Tekort_oppervlaktewater_gemiddeld_jaar_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Tekort_oppervlaktewater_gemiddeld_jaar_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tekort_oppervlaktewater_gemiddeld_jaar_Huidig&query_layers=Tekort_oppervlaktewater_gemiddeld_jaar_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tekort_oppervlaktewater_gemiddeld_jaar_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Tekort_oppervlaktewater_gemiddeld_jaar_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog&query_layers=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag&query_layers=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Laagste_grondwaterstand_-_extreem_droge_zomer_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig&query_layers=Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Laagste_grondwaterstand_-_extreem_droge_zomer_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Gemiddelde_Laagste_Grondwaterstand_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gemiddelde_Laagste_Grondwaterstand_2050_Hoog&query_layers=Gemiddelde_Laagste_Grondwaterstand_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Gemiddelde_Laagste_Grondwaterstand_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Gemiddelde_Laagste_Grondwaterstand_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Gemiddelde_Laagste_Grondwaterstand_2050_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_2050_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gemiddelde_Laagste_Grondwaterstand_2050_Laag&query_layers=Gemiddelde_Laagste_Grondwaterstand_2050_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Gemiddelde_Laagste_Grondwaterstand_2050_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Gemiddelde_Laagste_Grondwaterstand_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Gemiddelde_Laagste_Grondwaterstand_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Gemiddelde_Laagste_Grondwaterstand_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Gemiddelde_Laagste_Grondwaterstand_Huidig&query_layers=Gemiddelde_Laagste_Grondwaterstand_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Gemiddelde_Laagste_Grondwaterstand_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Gemiddelde_Laagste_Grondwaterstand_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Natuurbrandgevoeligheid_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Natuurbrandgevoeligheid_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Natuurbrandgevoeligheid_2050_Hoog&query_layers=Natuurbrandgevoeligheid_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Natuurbrandgevoeligheid_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Natuurbrandgevoeligheid_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Natuurbrandgevoeligheid_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Natuurbrandgevoeligheid_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Natuurbrandgevoeligheid_Huidig&query_layers=Natuurbrandgevoeligheid_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Natuurbrandgevoeligheid_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Natuurbrandgevoeligheid_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Bodemdaling_2020_2100_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Bodemdaling_2020_2100_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Bodemdaling_2020_2100_Hoog&query_layers=Bodemdaling_2020_2100_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Bodemdaling_2020_2100_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Bodemdaling_2020_2100_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Bodemdaling_2020_2100_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Bodemdaling_2020_2100_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Bodemdaling_2020_2100_Laag&query_layers=Bodemdaling_2020_2100_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Bodemdaling_2020_2100_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Bodemdaling_2020_2100_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Bodemdaling_2020_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Bodemdaling_2020_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Bodemdaling_2020_2050_Hoog&query_layers=Bodemdaling_2020_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Bodemdaling_2020_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Bodemdaling_2020_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Bodemdaling_2020_2050_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Bodemdaling_2020_2050_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Bodemdaling_2020_2050_Laag&query_layers=Bodemdaling_2020_2050_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Bodemdaling_2020_2050_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Bodemdaling_2020_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Bodemdaling_door_ophoging_2020_2050",
+                  "layerInfo": {
+                      "id": "KEA_Bodemdaling_door_ophoging_2020_2050",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Bodemdaling_door_ophoging_2020_2050&query_layers=Bodemdaling_door_ophoging_2020_2050",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Bodemdaling_door_ophoging_2020_2050&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Bodemdaling_door_ophoging_2020_2050/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Signaalkaart_bodemdaling_okt16-okt18",
+                  "layerInfo": {
+                      "id": "KEA_Signaalkaart_bodemdaling_okt16-okt18",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Signaalkaart_bodemdaling_okt16-okt18&query_layers=Signaalkaart_bodemdaling_okt16-okt18",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Signaalkaart_bodemdaling_okt16-okt18&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Signaalkaart_bodemdaling_okt16-okt18/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Signaalkaart_bodemdaling_mei15-mei18",
+                  "layerInfo": {
+                      "id": "KEA_Signaalkaart_bodemdaling_mei15-mei18",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Signaalkaart_bodemdaling_mei15-mei18&query_layers=Signaalkaart_bodemdaling_mei15-mei18",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Signaalkaart_bodemdaling_mei15-mei18&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Signaalkaart_bodemdaling_mei15-mei18/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              }
+            ]
+          },
+          {
+              "title": "Impact",
+              "sublayers": [
+                {
+                  "title": "Risico_Paalrot_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Risico_Paalrot_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_Paalrot_2050_Hoog&query_layers=Risico_Paalrot_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_Paalrot_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_Paalrot_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_Paalrot_2050_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Risico_Paalrot_2050_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_Paalrot_2050_Laag&query_layers=Risico_Paalrot_2050_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_Paalrot_2050_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_Paalrot_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_Paalrot_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Risico_Paalrot_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_Paalrot_Huidig&query_layers=Risico_Paalrot_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_Paalrot_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_Paalrot_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_Verschilzetting_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Risico_Verschilzetting_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_Verschilzetting_2050_Hoog&query_layers=Risico_Verschilzetting_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_Verschilzetting_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_Verschilzetting_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_Verschilzetting_2050_Laag",
+                  "layerInfo": {
+                      "id": "KEA_Risico_Verschilzetting_2050_Laag",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_Verschilzetting_2050_Laag&query_layers=Risico_Verschilzetting_2050_Laag",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_Verschilzetting_2050_Laag&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_Verschilzetting_2050_Laag/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_droogtestress_2050_Hoog",
+                  "layerInfo": {
+                      "id": "KEA_Risico_droogtestress_2050_Hoog",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_droogtestress_2050_Hoog&query_layers=Risico_droogtestress_2050_Hoog",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_droogtestress_2050_Hoog&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_droogtestress_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Risico_droogtestress_Huidig",
+                  "layerInfo": {
+                      "id": "KEA_Risico_droogtestress_Huidig",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_droogtestress_Huidig&query_layers=Risico_droogtestress_Huidig",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_droogtestress_Huidig&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_droogtestress_Huidig/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              },
+              {
+                  "title": "Droogtegevoeligheid_grondwaterafhankelijke_natuur",
+                  "layerInfo": {
+                      "id": "KEA_Droogtegevoeligheid_grondwaterafhankelijke_natuur",
+                      "type": "raster",
+                      "minzoom": 2.5,
+                      "maxzoom": 16.5,
+                      "metadata": {
+                          "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Droogtegevoeligheid_grondwaterafhankelijke_natuur&query_layers=Droogtegevoeligheid_grondwaterafhankelijke_natuur",
+                          "legendurl":"https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Droogtegevoeligheid_grondwaterafhankelijke_natuur&format=image%2Fpng"
+                      },
+                      "source": {
+                          "type": "raster",
+                          "tileSize": 256,
+                          "tiles": [
+                              "https://tiles.edugis.nl/mapproxy/droogte/wmts/Droogtegevoeligheid_grondwaterafhankelijke_natuur/spherical_mercator/{z}/{x}/{y}.png"
+                          ],
+                          "attribution": "KEA"
+                      }
+                  }
+              }
+            ]
+          }
         ]
       },
       {
@@ -329,6 +1101,7 @@
               "id":"openstreetmap",
               "type":"raster",
               "metadata":{
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
               },
               "source":{
@@ -349,6 +1122,7 @@
               "id":"openstreetmapgray",
               "type":"raster",
               "metadata":{
+                "getFeatureInfoFormat": "application/vnd.ogc.gml",
                 "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
               },
               "source":{
@@ -361,6 +1135,12 @@
               }
             }
           }
+        ]
+      },
+      {
+        "title": "Droogte",
+        "sublayers": [
+
         ]
       }
     ],
