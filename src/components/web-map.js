@@ -2014,7 +2014,10 @@ class WebMap extends LitElement {
   queryWMSFeatures(lngLat, metadata) {
     const featureInfoUrl = metadata.getFeatureInfoUrl;
     if (featureInfoUrl.startsWith('https://api.openweathermap.org')) {
-      let url = featureInfoUrl.replace('{openweathermapkey}', APIkeys.openweathermap).replace('{longitude}', lngLat.lng).replace('{latitude}',lngLat.lat);
+      /* force lng between -180 and +180 */
+      let lng = lngLat.lng % 360;
+      lng = lng < -180 ? lng + 360 : lng > 180 ? lng - 360 : lng;
+      let url = featureInfoUrl.replace('{openweathermapkey}', APIkeys.openweathermap).replace('{longitude}', lng).replace('{latitude}',lngLat.lat);
       return fetch(url)
       .then(response=>{        
           return response.json().then(json=>this.jsonToGeoJSON(json));
