@@ -1799,12 +1799,21 @@
                                 "id": "bodemdaling",
                                 "type": "raster",
                                 "metadata": {
-                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                    "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                    "attributes": {
+                                      "allowedattributes": ["pnt_linear","pnt_rdx","pnt_rdy"],
+                                      "translations": [
+                                        {"name": "pnt_linear", "translation": "bodemdaling", "unit": " m/jaar", "decimals": 4},
+                                        {"name": "pnt_rdx", "translation": "x", "decimals": 0},
+                                        {"name": "pnt_rdy", "translation": "y", "decimals": 0}
+                                      ]
+                                    }
                                 },
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"]
+                                    "tiles": ["https://tiles.edugis.nl/mapproxy/bodemdaling/service?layers=total_1119"],
+                                    "maxzoom": 14
                                 }
                             }
                         },
@@ -1841,7 +1850,7 @@
                                 "getFeatureInfoFormat":"application/vnd.ogc.gml",
                                 "attributes": {
                                   "translations": [
-                                    {"name": "GRAY_INDEX", "translation": "hoogte", "unit": " m"}
+                                    {"name": "GRAY_INDEX", "translation": "hoogte", "unit": " m", "decimals": 2}
                                   ]
                                 },
                                 "abstract": "Het Actueel Hoogtebestand Nederland (AHN) is de digitale hoogtekaart voor heel Nederland. Het bevat gedetailleerde en precieze hoogtegegevens met gemiddeld acht hoogtemetingen per vierkante meter. AHN is een samenwerking van de provincies, Rijksoverheid en de waterschappen. Deze kaartlaag heeft een resolutie van een halve meter horizontaal en 5cm verticaal. De hoogtegegevens zijn ingewonnen tussen 2014 en 2019."
@@ -1899,7 +1908,15 @@
                                 "id": "bodemdaling2",
                                 "type": "raster",
                                 "metadata": {
-                                    "getFeatureInfoFormat":"application/vnd.ogc.gml"
+                                  "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                  "attributes": {
+                                    "allowedattributes": ["pnt_linear","pnt_rdx","pnt_rdy"],
+                                    "translations": [
+                                      {"name": "pnt_linear", "translation": "bodemdaling", "unit": " m/jaar", "decimals": 4},
+                                      {"name": "pnt_rdx", "translation": "x", "decimals": 0},
+                                      {"name": "pnt_rdy", "translation": "y", "decimals": 0}
+                                    ]
+                                  }
                                 },
                                 "source": {
                                     "type": "raster",
