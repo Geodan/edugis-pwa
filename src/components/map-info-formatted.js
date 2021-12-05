@@ -1,5 +1,4 @@
-
-import {LitElement, html} from 'lit-element';
+import {LitElement, html, css} from 'lit-element';
 
 /**
 * @polymer
@@ -14,6 +13,34 @@ class MapInfoFormatted extends LitElement {
       maxFeaturesPerLayer: Number
     }; 
   }
+  static get styles() {
+    return css`
+    .header {font-weight: bold; height: 1.5em; }
+    .content { height: calc(100% - 1.5em); overflow: auto; font-size: 12px; }
+    .streetviewcontainer {display: flex; flex-direction:row;  justify-content: flex-end;  }
+    .layer {
+      text-align: left;
+      font-weight: bold;
+      margin-top: 2px;
+      background-color: lightgray;
+    }
+    .attributename {
+      width: 90%;
+      text-align: left;
+      font-style: bold;
+    }
+    .attributevalue {
+      width: 90%;
+      text-align: left;
+    }
+    .attributetable {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    tr.even {background: #f0f0f0;}
+    td {width:50%};
+  `}
+  
   constructor() {
       super();
       this.info = [];
@@ -49,49 +76,8 @@ class MapInfoFormatted extends LitElement {
     let layerMap = new Map();
     return html`
       <style>
-        .header {
-          font-weight: bold;
-          height: 1.5em;
-        }
-        .content {
-          height: calc(100% - 1.5em);
-          overflow: auto;
-          font-size: 12px;
-        }
-        .check-on {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 20px 20px;
-      }
-      .check-off {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 20px 0px;
-      }
-      .streetviewcontainer {
-        display: flex;
-        flex-direction:row;
-        justify-content: flex-end;
-      }
-      .layer {
-        text-align: center;
-        font-weight: bold;
-        border-top: 1px solid lightgray;
-      }
-      .attributename {
-        width: 90%;
-        text-align: center;
-        font-style: italic;
-      }
-      .attributevalue {
-        width: 90%;
-        text-align: center;
-        border-bottom: 1px solid lightgray;
-      }
+        .check-on {display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${document.baseURI}/images/checkradio.png') 20px 20px; }
+        .check-off { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${document.baseURI}/images/checkradio.png') 20px 0px; }
       </style>
       <div class="header">Informatie uit de kaart</div>
       <div class="content">
@@ -101,6 +87,7 @@ class MapInfoFormatted extends LitElement {
       </div>
       </div>
       ${this.info.length == 0? 'Klik op een element in de kaart voor informatie over dat element':''}
+      <table class="attributetable">
       ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true)
         .filter(feature=>{ // filter muliple features from same layer
           if (feature.layer && feature.layer.id) {
@@ -118,19 +105,20 @@ class MapInfoFormatted extends LitElement {
         })
         .map(feature=>
         html`
-          <div>
-            <div class="layer">${feature.layer.metadata?feature.layer.metadata.title?feature.layer.metadata.title:feature.layer.id:feature.layer.id}</div>
+            <tr><td colspan="2"><div class="layer">${feature.layer.metadata?feature.layer.metadata.title?feature.layer.metadata.title:feature.layer.id:feature.layer.id}</div></td></tr>
             ${this.renderAttributes(feature)}
-          </div>`
+          `
       )}
+      </table>
       </div>
     `;
   }
   renderAttributes(feature) {
     if (feature.properties.length === 0) {
-      return html`<div class="attributevalue">geen info beschikbaar op deze locatie</div>`
+      return html`<tr>div class="attributevalue">geen info beschikbaar op deze locatie</div></tr>`
     }
     let result = [];
+    let odd = false;
     
     if (feature.layer && feature.layer.metadata && feature.layer.metadata.attributes) {
       let attributes = feature.layer.metadata.attributes;
@@ -156,7 +144,7 @@ class MapInfoFormatted extends LitElement {
                 value += translation.unit;
               }
               let translatedKey = translation.translation ? translation.translation: translation.name;
-              result.push(this.renderAttribute(translatedKey, value));
+              result.push(this.renderAttribute(translatedKey, value, odd=!odd));
             }
           }
         }
@@ -172,16 +160,16 @@ class MapInfoFormatted extends LitElement {
         if (attributes.translations && attributes.translations.findIndex(translation=>translation.name === key) > -1) {
           continue; // skip translated attributes
         }
-        result.push(this.renderAttribute(key, feature.properties[key]));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd));
       }
     } else {
       for (let key in feature.properties) {
-        result.push(this.renderAttribute(key, feature.properties[key]));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd));
       }
     }
     return result;
   }
-  renderAttribute(key, value) {
+  renderAttribute(key, value, odd) {
     let lowCaseValue = typeof value === 'string'? value.toLowerCase() : '';
     let isImage = (
       lowCaseValue.startsWith('https://maps.googleapis.com') || 
@@ -190,10 +178,10 @@ class MapInfoFormatted extends LitElement {
           (lowCaseValue.toLowerCase().endsWith('.png') || lowCaseValue.endsWith('.jpg')  || lowCaseValue.endsWith('.gif') || lowCaseValue.endsWith('.svg'))
         )
       );
-    return html`<div class="attributename">${key}</div>
-    <div class="attributevalue">${typeof value === 'object' && value !== null?
+    return html`<tr class=${odd?'':"even"}><td><div class="attributename">${key}</div></td>
+    <td><div class="attributevalue">${typeof value === 'object' && value !== null?
           JSON.stringify(value)
-        :isImage?html`<img src="${value}" width="95%">`:value}</div>`
+        :isImage?html`<img src="${value}" width="95%">`:value}</div></td></tr>`
   }
 }
 customElements.define('map-info-formatted', MapInfoFormatted);
