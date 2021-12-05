@@ -60,7 +60,15 @@
                       },
                       "layers": [
                         { 
-                          "id": "timezonesfill",
+                          "id": "Tijdzones",
+                          "metadata":{
+                            "attributes": {
+                              "translations":[
+                                {"name": "tz_name1st", "translation": "naam"},
+                                {"name": "zone", "translation": "zone"}
+                              ]
+                            }
+                          },
                           "type": "fill",
                           "source": "timezones",
                           "source-layer": "public.ne_10m_time_zones",
@@ -85,7 +93,7 @@
                           }
                         },
                         {
-                          "id": "timezonesline",
+                          "id": "Tijdzones-lijnen",
                           "type": "line",
                           "source": "timezones",
                           "source-layer": "public.ne_10m_time_zones",
@@ -237,6 +245,14 @@
                         },
                         {
                           "id": "meren",
+                          "metadata": {
+                            "attributes": {
+                              "translations": [
+                                {"name": "name_nl", "translation": "nederlandse naam"},
+                                {"name": "name", "translation": "naam"}
+                              ]
+                            }
+                          },
                           "type": "fill",
                           "source": "lakes",
                           "source-layer": "public.ne_10m_lakes",
