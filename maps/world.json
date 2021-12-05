@@ -577,11 +577,18 @@
               "id": "countryborders",
               "layerInfo": {
                 "id": "countryborders",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "name_nl", "translation": "naam"}
+                    ]
+                  }
+                },
                 "type": "fill",
                 "source": {
                   "type": "vector",
                   "tiles": [
-                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name&include_nulls=0"
+                    "https://tiles.edugis.nl/data/public.ne_10m_admin_0_countries/mvt/{z}/{x}/{y}?geom_column=geom&columns=name_nl&include_nulls=0"
                   ],
                   "bounds": [
                     -180,
