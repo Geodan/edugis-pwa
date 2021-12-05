@@ -2833,7 +2833,12 @@
                                 "id": "rivm_nsl_20180324_gm_pm102016",
                                 "type": "raster",
                                 "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
+                                    "getFeatureInfoFormat":"application/json",
+                                    "attributes": {
+                                      "translations": [
+                                        {"name": "GRAY_INDEX", "translation": "fijnstofconcentratie", "unit": " μg PM10/m3", "decimals":2 }
+                                      ]
+                                    }
                                 },
                                 "source": {
                                     "type": "raster",
