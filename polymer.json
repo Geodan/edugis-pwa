@@ -67,6 +67,7 @@
     "maps/world.json",
     "maps/zuidwestnl.json",
     "maps/nl2100.json",
+    "maps/kea.json",
     "maps/layers/geomorfologischekaart.json"
   ],
   "builds": [
