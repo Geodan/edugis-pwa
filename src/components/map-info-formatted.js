@@ -135,9 +135,9 @@ class MapInfoFormatted extends LitElement {
             if (feature.properties[translation.name]) {
               let value = feature.properties[translation.name];
               if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
-                if (typeof value == "number") {
+                if (typeof parseFloat(value) == "number") {
                   let factor = Math.pow(10, parseInt(translation.decimals));
-                  value = parseInt(Math.round(value * factor)) / factor;
+                  value = parseInt(Math.round(parseFloat(value) * factor)) / factor;
                 }
               }
               if (translation.unit && translation.unit !== "") {
