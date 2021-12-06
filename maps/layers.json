@@ -668,13 +668,12 @@
                                 "id": "werelderfgoed",
                                 "metadata": {
                                     "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
-                                    "legendurl" : "https://www.atlasleefomgeving.nl/documents/10156/115096/Werelderfgoed/50d7e6f1-88fd-48c7-bd8b-2beddf1fa1ad?t=1470644514690",
                                     "getFeatureInfoFormat": "application/vnd.ogc.gml"
                                 },
                                 "source" : {
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
-                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=rce:WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
+                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
                                 }
                             }
                         },
