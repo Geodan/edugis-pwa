@@ -928,6 +928,16 @@
                     ]
                 },
                 {
+                  "type": "group",
+                  "title": "Wegen",
+                  "sublayers": [
+                    {
+                      "title": "Snelwegen",
+                      "layerInfo": "./layers/osmbrightroads.json"
+                    }
+                  ]
+                },
+                {
                     "type": "group",
                     "title": "Fietsen",
                 
@@ -3402,6 +3412,78 @@
                     }
                 }
             ]
+        },
+        {
+          "type": "group",
+          "title": "Klimaat",
+          "sublayers": [
+            {
+              "title": "Gemiddelde neerslag",
+              "layerInfo": {
+                "id":"gemiddeldneerslagklassekaart",
+                "type":"fill",
+                "metadata": {
+                  "abstract": "gemiddelde neerslag in millimeter per jaar tussen 1981 en 2010",
+                  "attributes": {
+                    "translations": [
+                      {"name":"mean", "translation": "Gemiddelde neerslag", "unit": " mm/jaar", "decimals": 0}
+                    ]
+                  }
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.nl_neerslag_gemiddeld_1981_2010_per_jaar/mvt/{z}/{x}/{y}?geom_column=geom&columns=mean&include_nulls=0"],
+                    "bounds":[3.35023075240161,50.7387859339089,7.23112958995271,53.5661603895579],
+                    "attribution": "KNMI"
+                },
+                "source-layer":"public.nl_neerslag_gemiddeld_1981_2010_per_jaar",
+                "paint":{
+                "fill-color":
+                  ["case",
+                    ["<", ["get", "mean"], 750], "#FEE29C",
+                    ["<", ["get", "mean"], 800], "#FEFBCE",
+                    ["<", ["get", "mean"], 850], "#E0ECDE",
+                    ["<", ["get", "mean"], 900], "#B8E1E9",
+                    ["<", ["get", "mean"], 950], "#A0CDF1",
+                    "#72AFD8"
+                  ],
+                "fill-opacity":1
+                }
+              }
+            },
+            {
+              "title": "Gemiddelde neerslag, ongetrapt",
+              "layerInfo": {
+                "id":"1ff3073d-9cb4-4c9c-8910-51ce0bac5d6e",
+                "metadata": {
+                  "abstract": "gemiddelde neerslag in millimeter per jaar tussen 1981 en 2010",
+                  "attributes": {
+                    "translations": [
+                      {"name":"mean", "translation": "Gemiddelde neerslag", "unit": " mm/jaar", "decimals": 0}
+                    ]
+                  }
+                },
+                "type":"fill",
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.nl_neerslag_gemiddeld_1981_2010_per_jaar/mvt/{z}/{x}/{y}?geom_column=geom&columns=mean&include_nulls=0"],
+                    "bounds":[3.35023075240161,50.7387859339089,7.23112958995271,53.5661603895579],
+                    "attribution": "KNMI"
+                },
+                "source-layer":"public.nl_neerslag_gemiddeld_1981_2010_per_jaar",
+                "paint":{
+                "fill-color":
+                  ["interpolate-lab", ["linear"], ["get", "mean"],
+                    700, "#FCE589",
+                    750, "#FAFCD1",
+                    800, "#DCEDE5",
+                    1000, "#72AFD7"
+                  ],
+                "fill-opacity":1
+                }
+              }
+            }
+          ]
         },
         {
             "type": "group",
