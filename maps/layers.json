@@ -668,7 +668,10 @@
                                 "id": "werelderfgoed",
                                 "metadata": {
                                     "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
-                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
+                                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
+                                    "attributes": {
+                                      "deniedattributes": "the_geom"
+                                    }
                                 },
                                 "source" : {
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
