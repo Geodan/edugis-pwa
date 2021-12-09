@@ -60,6 +60,9 @@ class BaseCheckbox extends LitElement {
             .bccontainer:hover input ~ .checkmark {
               background-color: #ccc;
             }
+            .bccontainer.checked:hover input ~ .checkmark {
+                background-color: #2E7DBA;
+            }
             
             /* When the checkbox is checked, add a blue background */
             .bccontainer.checked .checkmark {
@@ -111,7 +114,7 @@ class BaseCheckbox extends LitElement {
     render() {
         return html`
         <label class="bccontainer${this.disabled?' disabled':''}${this.small?' small':''}${this.checked?' checked':''}"><slot></slot>
-            <input type="checkbox" ?checked="${this.checked}" ?disabled="${this.disabled}" ?value="${this.value}" @change="${(e)=>this._handleChange(e)}">
+            <input type="checkbox" ?checked="${this.checked}" ?disabled="${this.disabled}" ?.value="${this.value}" @change="${(e)=>this._handleChange(e)}">
             <span class="checkmark"></span>
         </label>
         `
