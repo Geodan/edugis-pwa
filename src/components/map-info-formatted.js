@@ -88,7 +88,7 @@ class MapInfoFormatted extends LitElement {
       </div>
       ${this.info.length == 0? 'Klik op een element in de kaart voor informatie over dat element':''}
       <table class="attributetable">
-      ${this.info.filter(feature=>feature.layer.metadata?!feature.layer.metadata.reference:true)
+      ${this.info.filter(feature=>(feature.layer.layout && feature.layer.layout.visibility && feature.layer.layout.visibility === 'none') ||  (feature.layer.metadata && feature.layer.metadata.reference)?false:true)
         .filter(feature=>{ // filter muliple features from same layer
           if (feature.layer && feature.layer.id) {
             if (layerMap.has(feature.layer.id)) {
