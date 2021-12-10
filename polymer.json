@@ -11,6 +11,8 @@
     "lib/wms-capabilities.min.js",
     "node_modules/@webcomponents/webcomponentsjs/**",
     "node_modules/@turf/turf/turf.min.js",
+    "node_modules/@simonwep/pickr/dist/themes/nano.min.css",
+    "node_modules/@simonwep/pickr/dist/pickr.min.js",
     "node_modules/file-saver/dist/FileSaver.min.js",
     "node_modules/papaparse/papaparse.min.js",
     "node_modules/hopscotch/dist/js/hopscotch.min.js",
