@@ -931,16 +931,6 @@
                     ]
                 },
                 {
-                  "type": "group",
-                  "title": "Wegen",
-                  "sublayers": [
-                    {
-                      "title": "Snelwegen",
-                      "layerInfo": "./layers/osmbrightroads.json"
-                    }
-                  ]
-                },
-                {
                     "type": "group",
                     "title": "Fietsen",
                 
@@ -3047,6 +3037,44 @@
             "type": "group",
             "title": "Topografie",
             "sublayers": [
+              {
+                "type": "group",
+                "title": "Topografie lagen",
+                "sublayers": [
+                  {
+                    "title": "Water en waterwegen",
+                    "layerInfo": "./layers/osmbrightwater.json"
+                  },
+                  {
+                    "title": "Waternamen",
+                    "layerInfo": "./layers/osmbrightwatername.json"
+                  },
+                  {
+                    "title": "Snelwegen",
+                    "layerInfo": "./layers/osmbrightroads.json"
+                  },
+                  {
+                    "title": "Snelwegnamen",
+                    "layerInfo": "./layers/brightmotorwayname.json"
+                  },
+                  {
+                    "title": "Wegen",
+                    "layerInfo": "./layers/osmbrightallroads.json"
+                  },
+                  {
+                    "title": "Wegnamen",
+                    "layerInfo": "./layers/osmbrightallroadnames.json"
+                  },
+                  {
+                    "title": "Administratieve grenzen",
+                    "layerInfo": "./layers/osmbrightadminborders.json"
+                  },
+                  {
+                    "title": "Plaatsnamen",
+                    "layerInfo": "./layers/osmbrightpoiname.json"
+                  }
+                ]
+              },
                {
                     "type":"getcapabilities",
                     "title":"Topografie",

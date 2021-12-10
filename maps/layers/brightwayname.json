@@ -1,6 +1,6 @@
 {
   "title": "Wegen enzo",
-  "id": "osm-bright-lines",
+  "id": "bright-motorway-with-names",
   "type": "style",
   "source": {
     "sources": {
@@ -13,9 +13,11 @@
       {
         "id": "tunnel-motorway2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849354174.1904"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
         "filter": [
           "all",
           [
@@ -57,6 +59,9 @@
       {
         "id": "highway-motorway-link-casing2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849345966.4436"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
         "minzoom": 12,
@@ -107,6 +112,9 @@
       {
         "id": "highway-motorway-casing2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849345966.4436"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
         "minzoom": 4,
@@ -173,6 +181,9 @@
       {
         "id": "highway-motorway-link2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849345966.4436"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
         "minzoom": 12,
@@ -222,6 +233,9 @@
       {
         "id": "highway-motorway2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849345966.4436"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
         "minzoom": 5,
@@ -276,9 +290,11 @@
       {
         "id": "bridge-motorway-casing2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849334699.1902"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
         "filter": [
           "all",
           [
@@ -323,9 +339,11 @@
       {
         "id": "bridge-motorway-link2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849334699.1902"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
         "filter": [
           "all",
           [
@@ -370,9 +388,11 @@
       {
         "id": "bridge-motorway2",
         "type": "line",
+        "metadata": {
+          "mapbox:group": "1444849334699.1902"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
         "filter": [
           "all",
           [
@@ -408,6 +428,297 @@
               ]
             ]
           }
+        }
+      },
+      {
+        "id": "highway-name-path2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 15.5,
+        "filter": [
+          "==",
+          "class",
+          "path"
+        ],
+        "layout": {
+          "text-size": {
+            "base": 1,
+            "stops": [
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                13
+              ]
+            ]
+          },
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "text-field": "{name:latin} {name:nonlatin}",
+          "symbol-placement": "line",
+          "text-rotation-alignment": "map"
+        },
+        "paint": {
+          "text-halo-color": "#f8f4f0",
+          "text-color": "hsl(30, 23%, 62%)",
+          "text-halo-width": 0.5
+        }
+      },
+      {
+        "id": "highway-name-minor2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 15,
+        "filter": [
+          "all",
+          [
+            "==",
+            "$type",
+            "LineString"
+          ],
+          [
+            "in",
+            "class",
+            "minor",
+            "service",
+            "track"
+          ]
+        ],
+        "layout": {
+          "text-size": {
+            "base": 1,
+            "stops": [
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                13
+              ]
+            ]
+          },
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "text-field": "{name:latin} {name:nonlatin}",
+          "symbol-placement": "line",
+          "text-rotation-alignment": "map"
+        },
+        "paint": {
+          "text-halo-blur": 0.5,
+          "text-color": "#765",
+          "text-halo-width": 1
+        }
+      },
+      {
+        "id": "highway-name-major2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 12.2,
+        "filter": [
+          "in",
+          "class",
+          "primary",
+          "secondary",
+          "tertiary",
+          "trunk"
+        ],
+        "layout": {
+          "text-size": {
+            "base": 1,
+            "stops": [
+              [
+                13,
+                12
+              ],
+              [
+                14,
+                13
+              ]
+            ]
+          },
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "text-field": "{name:latin} {name:nonlatin}",
+          "symbol-placement": "line",
+          "text-rotation-alignment": "map"
+        },
+        "paint": {
+          "text-halo-blur": 0.5,
+          "text-color": "#765",
+          "text-halo-width": 1
+        }
+      },
+      {
+        "id": "highway-shield2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 8,
+        "filter": [
+          "all",
+          [
+            "<=",
+            "ref_length",
+            6
+          ],
+          [
+            "==",
+            "$type",
+            "LineString"
+          ],
+          [
+            "!in",
+            "network",
+            "us-interstate",
+            "us-highway",
+            "us-state"
+          ]
+        ],
+        "layout": {
+          "text-size": 10,
+          "icon-image": "road_{ref_length}",
+          "icon-rotation-alignment": "viewport",
+          "symbol-spacing": 200,
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "symbol-placement": {
+            "base": 1,
+            "stops": [
+              [
+                10,
+                "point"
+              ],
+              [
+                11,
+                "line"
+              ]
+            ]
+          },
+          "text-rotation-alignment": "viewport",
+          "icon-size": 1,
+          "text-field": "{ref}"
+        },
+        "paint": {}
+      },
+      {
+        "id": "highway-shield-us-interstate2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 7,
+        "filter": [
+          "all",
+          [
+            "<=",
+            "ref_length",
+            6
+          ],
+          [
+            "==",
+            "$type",
+            "LineString"
+          ],
+          [
+            "in",
+            "network",
+            "us-interstate"
+          ]
+        ],
+        "layout": {
+          "text-size": 10,
+          "icon-image": "{network}_{ref_length}",
+          "icon-rotation-alignment": "viewport",
+          "symbol-spacing": 200,
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "symbol-placement": {
+            "base": 1,
+            "stops": [
+              [
+                7,
+                "point"
+              ],
+              [
+                7,
+                "line"
+              ],
+              [
+                8,
+                "line"
+              ]
+            ]
+          },
+          "text-rotation-alignment": "viewport",
+          "icon-size": 1,
+          "text-field": "{ref}"
+        },
+        "paint": {
+          "text-color": "rgba(0, 0, 0, 1)"
+        }
+      },
+      {
+        "id": "highway-shield-us-other2",
+        "type": "symbol",
+        "source": "openmaptiles",
+        "source-layer": "transportation_name",
+        "minzoom": 9,
+        "filter": [
+          "all",
+          [
+            "<=",
+            "ref_length",
+            6
+          ],
+          [
+            "==",
+            "$type",
+            "LineString"
+          ],
+          [
+            "in",
+            "network",
+            "us-highway",
+            "us-state"
+          ]
+        ],
+        "layout": {
+          "text-size": 10,
+          "icon-image": "{network}_{ref_length}",
+          "icon-rotation-alignment": "viewport",
+          "symbol-spacing": 200,
+          "text-font": [
+            "Noto Sans Regular"
+          ],
+          "symbol-placement": {
+            "base": 1,
+            "stops": [
+              [
+                10,
+                "point"
+              ],
+              [
+                11,
+                "line"
+              ]
+            ]
+          },
+          "text-rotation-alignment": "viewport",
+          "icon-size": 1,
+          "text-field": "{ref}"
+        },
+        "paint": {
+          "text-color": "rgba(0, 0, 0, 1)"
         }
       }
     ]
