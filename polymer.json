@@ -70,8 +70,7 @@
     "maps/zuidwestnl.json",
     "maps/nl2100.json",
     "maps/kea.json",
-    "maps/layers/geomorfologischekaart.json",
-    "maps/layers/osmbrightroads.json"
+    "maps/layers/*.json"
   ],
   "builds": [
     {
