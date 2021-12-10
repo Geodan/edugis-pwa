@@ -122,7 +122,7 @@ class MapGSheetForm extends LitElement {
       <p></p>
       <label for="sheetcolumn">Sheet koppel-kolom:</label>
       <select name="sheetcolumn" id="sheetcolumn">
-      ${new Array( 26 ).fill( 1 ).map( ( _, i ) => html`<option .selected="${sheetcolumn==String.fromCharCode(65+i)?'true':undefined}">${String.fromCharCode( 65 + i )}</option>`)}
+      ${new Array( 26 ).fill( 1 ).map( ( _, i ) => html`<option .selected="${sheetcolumn==String.fromCharCode(65+i)?true:undefined}">${String.fromCharCode( 65 + i )}</option>`)}
       </select>
       <br/>
       <label for="datacolumn">Kaartlaagdata koppelattribuut:</label>
