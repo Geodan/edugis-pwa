@@ -1,0 +1,34 @@
+{
+  "title": "Waterpatroon",
+  "id": "osm-bright-waterpatroon",
+  "type": "style",
+  "source": {
+    "sources": {
+      "openmaptiles": {
+        "type": "vector",
+        "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
+      }
+    },
+    "layers": [
+      {
+        "id": "water-pattern3",
+        "type": "fill",
+        "metadata": {
+          "mapbox:group": "1444849382550.77"
+        },
+        "source": "openmaptiles",
+        "source-layer": "water",
+        "layout": {
+          "visibility": "visible"
+        },
+        "paint": {
+          "fill-translate": [
+            0,
+            2.5
+          ],
+          "fill-pattern": "wave"
+        }
+      }
+    ]
+  }
+}

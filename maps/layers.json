@@ -3046,6 +3046,10 @@
                     "layerInfo": "./layers/osmbrightwater.json"
                   },
                   {
+                    "title": "Waterpatroon (golven)",
+                    "layerInfo": "./layers/osmbrightwaterpattern.json"
+                  },
+                  {
                     "title": "Waternamen",
                     "layerInfo": "./layers/osmbrightwatername.json"
                   },
