@@ -3074,6 +3074,10 @@
                     "layerInfo": "./layers/osmbrightadminborders.json"
                   },
                   {
+                    "title": "Plaatsen",
+                    "layerInfo": "./layers/osmbrightpoi.json"
+                  },
+                  {
                     "title": "Plaatsnamen",
                     "layerInfo": "./layers/osmbrightpoiname.json"
                   }

@@ -269,6 +269,7 @@
             ]
           },
           "text-field": ["concat", ["coalesce", ["get", "name:nl"],["get", "name:latin"]], "\n", ["get", "name:nonlatin"]],
+          "text-offset": [0.0,-0.5],
           "text-max-width": 8,
           "visibility": "visible"
         },
@@ -306,6 +307,7 @@
             ]
           },
           "text-field": ["concat", ["coalesce", ["get", "name:nl"],["get", "name:latin"]], "\n", ["get", "name:nonlatin"]],
+          "text-offset": [0.0,-0.5],
           "text-max-width": 8,
           "visibility": "visible"
         },
@@ -351,6 +353,7 @@
             ]
           },
           "text-field": ["concat", ["coalesce", ["get", "name:nl"],["get", "name:latin"]], "\n", ["get", "name:nonlatin"]],
+          "text-offset": [0.0,-0.5],
           "text-max-width": 8,
           "visibility": "visible"
         },

@@ -25,7 +25,7 @@
             "Noto Sans Italic"
           ],
           "text-size": 14,
-          "text-field": "{name:latin}\n{name:nonlatin}",
+          "text-field": ["concat",["coalesce", ["get", "name:nl"],["get","name:latin"]], "\n", ["get", "name:nonlatin"]],
           "text-max-width": 5,
           "text-rotation-alignment": "map",
           "symbol-placement": "line",
@@ -61,7 +61,7 @@
             "Noto Sans Italic"
           ],
           "text-size": 14,
-          "text-field": "{name:latin}",
+          "text-field": ["coalesce",["get", "name:nl"],["get","name:latin"]],
           "text-max-width": 5,
           "text-rotation-alignment": "map",
           "symbol-placement": "point",
@@ -108,7 +108,7 @@
               ]
             ]
           },
-          "text-field": "{name:latin}\n{name:nonlatin}",
+          "text-field": ["concat",["coalesce", ["get", "name:nl"],["get","name:latin"]], "\n", ["get", "name:nonlatin"]],
           "text-max-width": 5,
           "text-rotation-alignment": "map",
           "symbol-placement": "point",
