@@ -13,6 +13,19 @@
       {
         "id": "poi-level-3_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "speciale locaties (rang 3)",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "poi",
         "minzoom": 16,
@@ -54,6 +67,19 @@
       {
         "id": "poi-level-2_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "speciale locaties (rang 2)",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "poi",
         "minzoom": 15,
@@ -100,6 +126,19 @@
       {
         "id": "poi-level-1_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "speciale locaties (rang 1)",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "poi",
         "minzoom": 14,
@@ -144,6 +183,19 @@
       },
       {
         "id": "poi-railway_poi",
+        "metadata": {
+          "title": "spoorweglocaties",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "type": "symbol",
         "source": "openmaptiles",
         "source-layer": "poi",
@@ -201,6 +253,19 @@
       {
         "id": "place-other_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "overige locaties",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -244,6 +309,19 @@
       {
         "id": "place-village_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "kleinere plaats",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -282,6 +360,19 @@
       {
         "id": "place-town_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "plaats",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -320,6 +411,19 @@
       {
         "id": "place-city_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "stad",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -366,6 +470,19 @@
       {
         "id": "place-city-capital_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "hoofdstad",
+          "attributes": {
+            "allowedattributes": ["class","name","name:nl","name:latin","rank"],
+            "translations": [
+              {"name": "class", "translation": "soort"},
+              {"name": "name", "translation": "naam"},
+              {"name": "name:nl", "translation": "naam (nl)"},
+              {"name": "name:latin", "translation": "naam (latijns schrift)"},
+              {"name": "rank", "translation": "rangorde"}
+            ]
+          }
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [

@@ -643,7 +643,7 @@ class WebMap extends LitElement {
             if (layerInfo.type === "webgltraffic") {
               this.map.addLayer(new TrafficLayer(layerInfo.source.data));
             } else {
-              if (layerInfo.source.type === "geojson") {
+              if (layerInfo.source && layerInfo.source.type === "geojson") {
                 if (layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
                   await GeoJSON.convertTopoJsonLayer(layerInfo);
                 } 
@@ -1687,8 +1687,8 @@ class WebMap extends LitElement {
     }
 
     if (changedProperties.has("layerlist")) {
-      this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.type !=='background' && layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
-      this.backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference || layer.type==='background').reverse();
+      this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
+      this.backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference).reverse();
     }
 
     return true;

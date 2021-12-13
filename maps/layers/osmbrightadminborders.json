@@ -13,6 +13,9 @@
       {
         "id": "boundary-land-level-4_34",
         "type": "line",
+        "metadata": {
+          "title": "interne administratieve grens "
+        },
         "source": "openmaptiles",
         "source-layer": "boundary",
         "filter": [
@@ -66,6 +69,9 @@
       {
         "id": "boundary-land-level-2_34",
         "type": "line",
+        "metadata": {
+          "title": "landsgrens"
+        },
         "source": "openmaptiles",
         "source-layer": "boundary",
         "filter": [
@@ -118,6 +124,9 @@
       {
         "id": "boundary-land-disputed_34",
         "type": "line",
+        "metadata": {
+          "title":"betwiste grens"
+        },
         "source": "openmaptiles",
         "source-layer": "boundary",
         "filter": [
@@ -169,6 +178,9 @@
       {
         "id": "boundary-water_34",
         "type": "line",
+        "metadata": {
+          "title": "grens in water"
+        },
         "source": "openmaptiles",
         "source-layer": "boundary",
         "filter": [

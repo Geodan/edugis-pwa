@@ -12,6 +12,9 @@
     "layers": [
       {
         "id": "waterway_tunnel3",
+        "metadata": {
+          "title": "duiker"
+        },
         "filter": [
           "all",
           [
@@ -59,7 +62,7 @@
         "id": "waterway-other3",
         "type": "line",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "title": "overig water"
         },
         "source": "openmaptiles",
         "source-layer": "waterway",
@@ -94,7 +97,7 @@
         "id": "waterway-stream-canal3",
         "type": "line",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "title": "kanaal"
         },
         "source": "openmaptiles",
         "source-layer": "waterway",
@@ -136,7 +139,7 @@
         "id": "waterway-river3",
         "type": "line",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "title": "rivier"
         },
         "source": "openmaptiles",
         "source-layer": "waterway",
@@ -177,6 +180,9 @@
         "id": "ferry3",
         "type": "line",
         "source": "openmaptiles",
+        "metadata": {
+          "title": "veerboot"
+        },
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -203,7 +209,7 @@
         "id": "water-offset3",
         "type": "fill",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "titel": "waterverrand"
         },
         "source": "openmaptiles",
         "source-layer": "water",
@@ -244,7 +250,7 @@
         "id": "water3",
         "type": "fill",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "title": "water"
         },
         "source": "openmaptiles",
         "source-layer": "water",
@@ -259,7 +265,7 @@
         "id": "landcover-ice-shelf3",
         "type": "fill",
         "metadata": {
-          "mapbox:group": "1444849382550.77"
+          "title": "ijsbedekking"
         },
         "source": "openmaptiles",
         "source-layer": "landcover",

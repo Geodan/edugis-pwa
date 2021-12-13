@@ -1,0 +1,19 @@
+{
+  "title": "Achtergrond",
+  "id": "OSMAchtergrond",
+  "type": "style",
+  "source": {
+    "sources": {
+      
+    },
+    "layers": [
+      {
+        "id": "background2",
+        "type": "background",
+        "paint": {
+          "background-color": "#f8f4f0"
+        }
+      }
+    ]
+  }
+}

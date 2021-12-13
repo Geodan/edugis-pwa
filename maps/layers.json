@@ -3042,6 +3042,14 @@
                 "title": "Topografie lagen",
                 "sublayers": [
                   {
+                    "title": "Achtergrondkleur",
+                    "layerInfo": "./layers/osmbrightbackground.json"
+                  },
+                  {
+                    "title": "Grondgebruik",
+                    "layerInfo": "./layers/osmbrightlandcov.json"
+                  },
+                  {
                     "title": "Water en waterwegen",
                     "layerInfo": "./layers/osmbrightwater.json"
                   },
@@ -3052,6 +3060,10 @@
                   {
                     "title": "Waternamen",
                     "layerInfo": "./layers/osmbrightwatername.json"
+                  },
+                  {
+                    "title": "Administratieve grenzen",
+                    "layerInfo": "./layers/osmbrightadminborders.json"
                   },
                   {
                     "title": "Snelwegen",
@@ -3070,16 +3082,44 @@
                     "layerInfo": "./layers/osmbrightallroadnames.json"
                   },
                   {
-                    "title": "Administratieve grenzen",
-                    "layerInfo": "./layers/osmbrightadminborders.json"
-                  },
-                  {
                     "title": "Plaatsen",
                     "layerInfo": "./layers/osmbrightpoi.json"
                   },
                   {
                     "title": "Plaatsnamen",
                     "layerInfo": "./layers/osmbrightpoiname.json"
+                  },
+                  {
+                    "title": "Gebouwen",
+                    "layerInfo": "./layers/osmbrightbuildings.json"
+                  },
+                  {
+                    "title": "Huisnummers",
+                    "layerInfo": {
+                      "id": "housenumber-topo",
+                      "type": "symbol",
+                      "source": {
+                        "type": "vector",
+                        "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
+                      },
+                      "source-layer": "housenumber",
+                      "minzoom": 16,
+                      "filter": [
+                        "==",
+                        "$type",
+                        "Point"
+                      ],
+                      "layout": {
+                        "text-field": "{housenumber}",
+                        "text-size": 10,
+                        "text-font": [
+                          "Noto Sans Regular"
+                        ]
+                      },
+                      "paint": {
+                        "text-color": "rgba(212, 177, 146, 1)"
+                      }
+                    }
                   }
                 ]
               },
