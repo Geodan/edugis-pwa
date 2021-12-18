@@ -85,9 +85,6 @@ class MapLayerInfo extends LitElement {
                 max-width: 200px;
                 overflow: auto;
             }
-            .hide {
-                display: none;
-            }
         `
     }
     constructor() {
@@ -172,7 +169,7 @@ class MapLayerInfo extends LitElement {
     _renderLegendClipper() {
         if (this.legendclipper) {
             return html`
-                <div class="fade${this.legendclipped?'':' hide'}"></div>
+                ${this.legendclipped?html`<div class="fade"></div>`:""}
                 <div id="lishowmore" @click="${()=>this._togglelegendclipped()}">Toon ${this.legendclipped?'meer':'minder'}...</div>
             `
         }
@@ -202,7 +199,6 @@ class MapLayerInfo extends LitElement {
         this.layer.metadata.legendclipped = this.legendclipped;        
     }
     _renderLinks(text) {
-        let result = '';
         let matches = text.matchAll(/https?:\/\/[^,;\s)]*/g);
         let prevpos = 0;
         let parts = [];
@@ -222,16 +218,36 @@ class MapLayerInfo extends LitElement {
         } else {
             return html`${text}`
         }
-        return result;
     }
     _renderShowInfo() {
-        if (this.layer.metadata && this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
-            return html`
-                <div class="iconbutton" @click="${()=>this.moreInfo=!this.moreInfo}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
-                <div class="moreinfo${this.moreInfo?'':' hide'}">${this._renderLinks(this.layer.metadata.abstract)}</div>
-            `
-         }
+        if (this.layer.metadata) {
+            if (this.layer.metadata.markdown && this.layer.metadata.markdown.trim() !== "") {
+                return html`
+                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
+                `
+            }
+            if (this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
+                return html`
+                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
+                    ${this.moreInfo?html`<div class="moreinfo">${this._renderLinks(this.layer.metadata.abstract)}</div>`:""}
+                `
+            }
+        }
     }
+    _toggleInfo() {
+        this.moreInfo = !this.moreInfo;
+        if (this.moreInfo && this.layer.metadata.markdown) {
+            this.moreInfo = false;
+            this.dispatchEvent(new CustomEvent("showmodaldialog", {
+                detail: {
+                    markdown: this.layer.metadata.markdown
+                },
+                bubbles: true,
+                composed: true
+            }))
+        }
+    }
+
     _renderLayerConfig() {
         if (this.showLayerConfig) {
             return html`

@@ -347,6 +347,9 @@ class MapLayerTree extends LitElement {
           || (node.layerInfo.metadata
             && node.layerInfo.metadata.abstract
             && node.layerInfo.metadata.abstract.toLowerCase().indexOf(searchString) > -1)
+          || (node.layerInfo.metadata
+            && node.layerInfo.metadata.markdown
+            && node.layerInfo.metadata.markdown.toLowerCase().indexOf(searchString) > -1)
           || (node.layerInfo.source 
             && node.layerInfo.source.attribution
             && node.layerInfo.source.attribution.toLowerCase().indexOf(searchString) > -1)

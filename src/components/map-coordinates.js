@@ -51,6 +51,7 @@ class MapCoordinates extends LitElement {
       } else {
         this.factor = 7;
       }
+      return true;
     }    
     if (changedProps.has('clickpoint') && this.clickpoint && this.clickpoint.length === 2) {
       this.clickpointHtml = html`

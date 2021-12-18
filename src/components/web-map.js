@@ -26,13 +26,13 @@ import './map-info-formatted';
 import './map-panel';
 import './map-geolocation';
 import './map-pitch';
-//import './map-selected-layers';
 import './map/layer/map-layer-container.js';
 import './map/layer/map-layer-set.js';
 import './map-draw';
 import './map-import-export';
 import './map-data-toolbox';
 import './map-sheet-tool';
+import './map-modal-dialog';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -989,7 +989,8 @@ class WebMap extends LitElement {
     ${this.renderCoordinates()}
     ${this.renderLegend()}
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
-    <map-spinner .webmap="${this.map}"></map-spinner>`
+    <map-spinner .webmap="${this.map}"></map-spinner>
+    <map-modal-dialog></map-modal-dialog>`
   }
   getData()
   {
@@ -1350,6 +1351,12 @@ class WebMap extends LitElement {
     } else {
       this.initMap();
     }
+    this.addEventListener('showmodaldialog', event=> {
+      let modalDialog = this.shadowRoot.querySelector('map-modal-dialog');
+      if (modalDialog) {
+        modalDialog.markdown = event.detail.markdown;
+      }
+    });
   }
   _loadCSVLatLon(droppedFile) {
     const longitude = droppedFile.data.meta.fields.find(field=>field.trim().toLowerCase() === "longitude");

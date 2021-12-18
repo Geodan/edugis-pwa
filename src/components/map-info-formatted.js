@@ -135,12 +135,12 @@ class MapInfoFormatted extends LitElement {
             if (feature.properties[translation.name]) {
               let value = feature.properties[translation.name];
               if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
-                if (typeof parseFloat(value) == "number") {
+                if (typeof parseFloat(value) == "number" && !isNaN(parseFloat(value))) {
                   let factor = Math.pow(10, parseInt(translation.decimals));
                   value = parseInt(Math.round(parseFloat(value) * factor)) / factor;
                 }
               }
-              if (translation.unit && translation.unit !== "") {
+              if (translation.unit && translation.unit !== "" && !isNaN(parseInt(value))) {
                 value += translation.unit;
               }
               let translatedKey = translation.translation ? translation.translation: translation.name;
