@@ -3082,6 +3082,10 @@
                     "layerInfo": "./layers/osmbrightallroadnames.json"
                   },
                   {
+                    "title":"Spoorwgen",
+                    "layerInfo": "./layers/osmbrightrail.json"
+                  },
+                  {
                     "title": "Plaatsen",
                     "layerInfo": "./layers/osmbrightpoi.json"
                   },
