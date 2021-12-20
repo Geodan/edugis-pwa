@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html, css} from 'lit-element';
 
 /**
 * @polymer
@@ -13,14 +13,18 @@ class ColorPicker extends LitElement {
         value: {type: String} // output color
     }; 
   }
-  static get style() {
+  static get styles() {
     return css`
+      :host {
+        display: block;
+      }
       #picker {
         display: inline-block;
-        width: 10px;
-        height: 5px;
-        border: 1px solid green;
-        }`
+        width:  15px;
+        height: 10px;
+        border: 1px solid gray;
+        cursor: pointer;
+      }`
   }
   constructor() {
       super();
@@ -28,13 +32,16 @@ class ColorPicker extends LitElement {
       this.color = this.value = "";
   }
   render() {
-    return html`<slot @click="${this.click}"></slot>${this.visible?html`<div id="picker"></div>`:''}`
+    let color = this.color;
+    return html`<slot @click="${this.click}"></slot>
+      ${this.visible?html`<div id="color"><label>&nbsp;&nbsp;kleur aanpassen: </label><div id="picker" style="background-color:${color}"></div></div>`:''}`
   }
   click(e) {
     this.visible = !this.visible;
   }
   _valueChanged(color, source, instance) {
     this.value = color.toRGBA().toString();
+    this.pickerElement.style = `background-color:${this.value}`;
     this.dispatchEvent(new CustomEvent("change", {
       detail: {
         color: this.value,
@@ -53,8 +60,8 @@ class ColorPicker extends LitElement {
           default: this.color,
           el: this.pickerElement,
           theme: 'nano', // or 'monolith', or 'nano'
-      
-          useAsButton: false,
+          comparison:true,
+          useAsButton: true,
           swatches: [
               'rgba(244, 67, 54, 1)',
               'rgba(233, 30, 99, 0.95)',
@@ -73,7 +80,6 @@ class ColorPicker extends LitElement {
           ],
       
           components: {
-      
               // Main components
               preview: true,
               opacity: true,
@@ -81,18 +87,19 @@ class ColorPicker extends LitElement {
       
               // Input / output Options
               interaction: {
-                  hex: true,
-                  rgba: true,
-                  hsla: true,
-                  hsva: true,
-                  cmyk: true,
                   input: true,
-                  clear: true,
+                  cancel: true,
                   save: true
               }
-            }
+          },
+          i18n: {
+            'btn:save': 'Ok',
+            'btn:cancel':'Annuleer'
+          }
+
         });
         this.pickr.on('change', (color, source, instance) => this._valueChanged(color, source, instance));
+        this.pickr.on('save', (color) => this.pickr.hide());
       }
     }  
   }
