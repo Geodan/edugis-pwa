@@ -10,11 +10,10 @@ class ColorPicker extends LitElement {
         visible: {type: Boolean},
         layerid: {type: String},
         color: {type: String}, // input color
-        value: {type: String} // output color
     }; 
   }
   static get styles() {
-    return css`
+    return [css`
       :host {
         display: block;
       }
@@ -24,27 +23,149 @@ class ColorPicker extends LitElement {
         height: 10px;
         border: 1px solid gray;
         cursor: pointer;
-      }`
+      }
+      .panel {
+        margin-left: 2px;
+        background-color: whitesmoke;
+        border-radius: 3px;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        width: 100%;
+      }
+      .wrapper .label {
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+      .wrapper .right {
+        flex: 1;
+      }
+      `,
+      css`input[type=range] {
+        height: 17px;
+        -webkit-appearance: none;
+        margin: 10px 0;
+        width: 100%;
+        background-color: rgba(0,0,0,0);
+      }
+      input[type=range]:focus {
+        outline: none;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #CCCCCC;
+        border-radius: 5px;
+        border: 0px solid #000000;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #2497E3;
+        height: 11px;
+        width: 11px;
+        border-radius: 10px;
+        background: #555;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -4.5px;
+      }
+      input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #CCCCCC;
+      }
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #CCCCCC;
+        border-radius: 5px;
+        border: 0px solid #000000;
+      }
+      input[type=range]::-moz-range-thumb {
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #2497E3;
+        height: 11px;
+        width: 11px;
+        border-radius: 10px;
+        background: #555;
+        cursor: pointer;
+      }
+      input[type=range]::-ms-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        animate: 0.2s;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+      }
+      input[type=range]::-ms-fill-lower {
+        background: #CCCCCC;
+        border: 0px solid #000000;
+        border-radius: 10px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type=range]::-ms-fill-upper {
+        background: #CCCCCC;
+        border: 0px solid #000000;
+        border-radius: 10px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type=range]::-ms-thumb {
+        margin-top: 1px;
+        box-shadow: 0px 0px 0px #000000;
+        border: 0px solid #2497E3;
+        height: 11px;
+        width: 11px;
+        border-radius: 10px;
+        background: #555;
+        cursor: pointer;
+      }
+      input[type=range]:focus::-ms-fill-lower {
+        background: #CCCCCC;
+      }
+      input[type=range]:focus::-ms-fill-upper {
+        background: #CCCCCC;
+      }
+      `]
   }
   constructor() {
       super();
       this.visible = false;
-      this.color = this.value = "";
+      this.color = "";
   }
   render() {
     let color = this.color;
-    return html`<slot @click="${this.click}"></slot>
-      ${this.visible?html`<div id="color"><label>&nbsp;&nbsp;kleur aanpassen: </label><div id="picker" style="background-color:${color}"></div></div>`:''}`
+    return html`<slot @click="${this._click}"></slot>
+      ${this.visible?html`
+        <div class="panel">
+          ${this.width !== undefined?html`<div class="wrapper"><div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.width}" @input=${this._widthChanged}> </div>`:""}
+          <div id="color" class="wrapper"><label>kleur aanpassen: </label><div id="picker" style="background-color:${color}"></div></div>
+        </div>`:""}`
   }
-  click(e) {
+  _click(e) {
     this.visible = !this.visible;
   }
-  _valueChanged(color, source, instance) {
-    this.value = color.toRGBA().toString();
-    this.pickerElement.style = `background-color:${this.value}`;
+  _colorChanged(color, source, instance) {
+    this.color = color.toRGBA().toString();
     this.dispatchEvent(new CustomEvent("change", {
       detail: {
-        color: this.value,
+        color: this.color,
+        layerid: this.layerid
+      }
+    }))
+  }
+  _widthChanged(e) {
+    this.width = parseFloat(e.target.value);
+    this.dispatchEvent(new CustomEvent("change", {
+      detail: {
+        width: this.width,
         layerid: this.layerid
       }
     }))
@@ -60,7 +181,7 @@ class ColorPicker extends LitElement {
           default: this.color,
           el: this.pickerElement,
           theme: 'nano', // or 'monolith', or 'nano'
-          comparison:true,
+          comparison:false,
           useAsButton: true,
           swatches: [
               'rgba(244, 67, 54, 1)',
@@ -98,7 +219,11 @@ class ColorPicker extends LitElement {
           }
 
         });
-        this.pickr.on('change', (color, source, instance) => this._valueChanged(color, source, instance));
+        this.pickr.on('change', (color, source, instance) => this._colorChanged(color, source, instance));
+        this.pickr.on('cancel', () => {
+          this._colorChanged(this.pickr.getColor(), 'cancel', this.pickr);
+          this.pickr.hide()
+        });
         this.pickr.on('save', (color) => this.pickr.hide());
       }
     }  

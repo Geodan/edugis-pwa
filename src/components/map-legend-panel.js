@@ -47,9 +47,13 @@ class MapLegendPanel extends LitElement {
     }
   }
   lineLegend(maplayer) {
+    if (maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom ) {
+      return html``;
+    }
     let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
     const widthResult = {propertyname: layerTitle, items: []};
     const colorResult = {propertyname: layerTitle, items: []};
+    
     let lineColor = "gray";
     let lineWidth = 1;
     if (maplayer._paint) {
@@ -148,7 +152,10 @@ class MapLegendPanel extends LitElement {
             const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color.lineColor};stroke-width:${color.width};" />
             </svg>${html` ${color.label}`}`;
-            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} @change="${this._updateUserColor}">${legendItem}</color-picker>`
+            return html`
+            <color-picker .layerid="${maplayer.id}" .color=${width.lineColor} .width=${color.width} @change="${this._updatePaintProperty}">
+              ${legendItem}
+            </color-picker>`
           })}</div>`
         }
         if (hideLegend === "size") {
@@ -161,7 +168,7 @@ class MapLegendPanel extends LitElement {
             const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${width.lineColor};stroke-width:${width.lineWidth};" />
             </svg>${html` ${width.label}`}`;
-            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} @change="${this._updateUserColor}">${legendItem}</color-picker>`
+            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} .width=${width.lineWidth} @change="${this._updatePaintProperty}">${legendItem}</color-picker>`
           })}</div>`
       }
     } else {
@@ -543,33 +550,40 @@ class MapLegendPanel extends LitElement {
           display: none;
         }
       </style>
-      <input @change="${e=>this._updateUserColor(e)}" type="color" id="colorinput" tabindex=-1 class="hidden">
+      <input @change="${e=>this._updatePaintProperty(e)}" type="color" id="colorinput" tabindex=-1 class="hidden">
       <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
   }
-  _updateUserColor(event) {
-    //let colorInput = this.shadowRoot.querySelector('#colorinput');
-    const color = event.target.value;
-    const layerid = event.detail.layerid;
-
-    //this.maplayer.metadata.classInfo.classes[this.classesIndex].paint = color;
-    //console.log('updating color');
-    this._updatePaintProperty(layerid, color);
-  }
-  _updatePaintProperty(layerid, color)
+  _updatePaintProperty(event)
   {
-    //console.log(e.currentTarget.value);
-    const activeLayer = this.maplayer.id === layerid ? this.maplayer : this.maplayer.metadata.sublayers.find(({id})=>id === layerid);
-    let paintColor = activeLayer.metadata.paint ? 
-      activeLayer.metadata.paint[`${activeLayer.type}-color`] : 
-        activeLayer.paint[`${activeLayer.type}-color`];
-    if (Array.isArray(paintColor)) {
-      paintColor[(this.classesIndex + 1)*2] = color;
-    } else {
-      paintColor = color;
+    const property = {};
+    const layerid = event.detail.layerid;
+    const editLayer = this.maplayer.id === layerid ? this.maplayer : this.maplayer.metadata.sublayers.find(({id})=>id === layerid);
+    property.layerid = editLayer.id;
+    
+    if (event.detail.color) {
+      const color = event.detail.color;
+      let paintColor = editLayer.metadata.paint ? 
+        editLayer.metadata.paint[`${editLayer.type}-color`] : 
+          editLayer.paint[`${editLayer.type}-color`];
+      if (Array.isArray(paintColor)) {
+        paintColor[(this.classesIndex + 1)*2] = color;
+      } else {
+        paintColor = color;
+      }
+      property[`${editLayer.type}-color`] = paintColor;
     }
-    let property = {};
-    property[`${activeLayer.type}-color`] = paintColor;
-    property.layerid = activeLayer.id;
+    if (event.detail.width !== undefined) {
+      const width = event.detail.width;
+      let paintWidth = editLayer.metadata.paint ? 
+        editLayer.metadata.paint[`${editLayer.type}-width`] : 
+          editLayer.paint[`${editLayer.type}-width`];
+      if (Array.isArray(paintWidth)) {
+        paintWidth[(this.classesIndex + 1)*2] = width;
+      } else {
+        paintWidth = width;
+      }
+      property[`${editLayer.type}-width`] = paintWidth;
+    }
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
       detail: property,
       bubbles: true,
