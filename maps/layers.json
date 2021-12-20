@@ -3082,7 +3082,7 @@
                     "layerInfo": "./layers/osmbrightallroadnames.json"
                   },
                   {
-                    "title":"Spoorwgen",
+                    "title":"Spoorwegen",
                     "layerInfo": "./layers/osmbrightrail.json"
                   },
                   {
