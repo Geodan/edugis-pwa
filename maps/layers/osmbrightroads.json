@@ -12,10 +12,13 @@
     "layers": [
       {
         "id": "tunnel-motorway2",
+        "metadata": {
+          "title": "snelwegtunnel"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
+        "minzoom": 12,
         "filter": [
           "all",
           [
@@ -57,6 +60,9 @@
       {
         "id": "highway-motorway-link-casing2",
         "type": "line",
+        "metadata": {
+          "title": "op- en afrit buitenrand"
+        },
         "source": "openmaptiles",
         "source-layer": "transportation",
         "minzoom": 12,
@@ -106,6 +112,9 @@
       },
       {
         "id": "highway-motorway-casing2",
+        "metadata": {
+          "title": "snelweg buitenrand"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
@@ -172,6 +181,9 @@
       },
       {
         "id": "highway-motorway-link2",
+        "metadata": {
+          "title":"op- en afrit"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
@@ -221,6 +233,9 @@
       },
       {
         "id": "highway-motorway2",
+        "metadata": {
+          "title": "snelweg"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
@@ -275,10 +290,13 @@
       },
       {
         "id": "bridge-motorway-casing2",
+        "metadata":{
+          "title": "snelweg brug buitenrand"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
+        "minzoom": 12,
         "filter": [
           "all",
           [
@@ -322,10 +340,13 @@
       },
       {
         "id": "bridge-motorway-link2",
+        "metadata": {
+          "title": "op- en afrit brug"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
+        "minzoom": 12,
         "filter": [
           "all",
           [
@@ -369,10 +390,13 @@
       },
       {
         "id": "bridge-motorway2",
+        "metadata": {
+          "title": "brug snelweg"
+        },
         "type": "line",
         "source": "openmaptiles",
         "source-layer": "transportation",
-        "minzoom": 4,
+        "minzoom": 12,
         "filter": [
           "all",
           [
