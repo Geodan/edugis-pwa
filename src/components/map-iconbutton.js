@@ -1,9 +1,50 @@
-import {LitElement, html,svg} from 'lit-element';
+import {LitElement, html,svg,css} from 'lit-element';
 /**
 * @polymer
 * @extends HTMLElement
 */
 class IconButton extends LitElement {
+  static get styles() {
+    return css`
+    .button {
+      opacity: 0.9;
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      color: rgb(51,51,51);
+      fill: rgb(51,51,51);
+      box-sizing: border-box;
+      background-color: white;
+      text-align: center;
+      user-select:none;
+      cursor: pointer; /* Mouse pointer on hover */
+    }
+    .button:hover {
+      background-color: #3982b9;
+      fill: white;
+      color: white;
+    }
+    .button.disabled:hover {
+      background-color: white;
+      color: rgb(160,160,160);
+      fill: rgb(160,160,160);
+    }
+    .button.active:hover {
+      background-color: #286CA0;
+      fill: white;
+      color: white;
+    }
+    .active {
+      background-color: #2E7DBA;
+      fill: white;
+      color: white;
+    }
+    .disabled {
+      background-color: white;
+      fill: rgb(160,160,160);
+      color: rgb(160,160,160);
+    }`;
+  }
   static get properties() { 
     return { 
       active: {type: Boolean},
@@ -20,47 +61,28 @@ class IconButton extends LitElement {
       this.info = "Button";
   }
   render() {
-    return html`<style>        
-        .button {
-          opacity: 0.9;
-          display: inline-block;
-          height: 100%;
-          width: 100%;
-          color: rgb(51,51,51);
-          fill: rgb(51,51,51);
-          box-sizing: border-box;
-          background-color: white;
-          text-align: center;
-          user-select:none;
-          cursor: pointer; /* Mouse pointer on hover */
-        }
-        .button:hover {
-          background-color: #87D1FF;
-          fill: white;
-          color: white;
-        }
-        .button.disabled:hover {
-          background-color: white;
-          color: rgb(160,160,160);
-          fill: rgb(160,160,160);
-        }
-        .button.active:hover {
-          background-color: #286CA0;
-          fill: white;
-          color: white;
-        }
-        .active {
-          background-color: #2E7DBA;
-          fill: white;
-          color: white;
-        }
-        .disabled {
-          background-color: white;
-          fill: rgb(160,160,160);
-          color: rgb(160,160,160);
-        }
-    </style>
-    <div title="${this.info}" class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}">${this.icon}<slot></slot></div>`;
+    return html`
+    <div 
+      class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}"
+      @mouseover="${this._mouseOver}"
+      @mouseout="${this._mouseOut}">${this.icon}<slot></slot></div>`;
+  }
+  updated(changedProperties) {
+    if (changedProperties.has('active') && !this.active) {
+      this._mouseOut();
+    }
+  }
+  _mouseOver() {
+    if (this.active) {
+      return;
+    }
+    const buttonDiv = this.shadowRoot.querySelector('div');
+    const rect = buttonDiv.getBoundingClientRect();
+    const style = getComputedStyle(buttonDiv);
+    this.dispatchEvent(new CustomEvent('showtooltip', {detail: {title: this.info, rect: rect, style: style}, bubbles: true, composed: true}));
+  }
+  _mouseOut() {
+    this.dispatchEvent(new CustomEvent('hidetooltip', {bubbles: true, composed: true}));
   }
 }
 customElements.define('map-iconbutton', IconButton);

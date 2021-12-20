@@ -21,7 +21,7 @@ import {
 // These are the elements needed by this element.
 import { menuIcon } from './my-icons.js';
 import './web-map.js';
-import './snack-bar.js';
+import './tooltip';
 
 function getHashParameters()
 {
@@ -161,7 +161,7 @@ footer a:hover {
 </style>
     <header>
       <img src="${document.baseURI}images/edugislogo.png" alt="logo"/>
-        <nav class="topnav">        
+        <nav class="topnav">
           <ul>
             <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">Hoe werkt EduGIS?</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
@@ -169,6 +169,7 @@ footer a:hover {
         </nav>
     </header>
     <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
+    <tool-tip></tool-tip>
     <footer className="App-footer">&copy;2021 <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }
