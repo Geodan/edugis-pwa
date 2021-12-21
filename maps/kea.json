@@ -941,6 +941,7 @@
         },
         {
           "title": "Impact",
+          "type": "group",
           "sublayers": [{
               "title":"Risico Paalrot 2050 Hoog",
               "layerInfo": {
@@ -1123,6 +1124,7 @@
     },
     {
       "title": "Hitte",
+      "type": "group",
       "sublayers": [{
         "title": "Klimaatverandering",
         "type": "group",
