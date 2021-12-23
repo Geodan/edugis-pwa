@@ -65,7 +65,8 @@ class IconButton extends LitElement {
     <div 
       class="${`button${this.active ? ' active' : ''}${this.disabled?' disabled':''}`}"
       @mouseover="${this._mouseOver}"
-      @mouseout="${this._mouseOut}">${this.icon}<slot></slot></div>`;
+      @mouseout="${this._mouseOut}"
+      @click="${this._mouseOut}">${this.icon}<slot></slot></div>`;
   }
   updated(changedProperties) {
     if (changedProperties.has('active') && !this.active) {
