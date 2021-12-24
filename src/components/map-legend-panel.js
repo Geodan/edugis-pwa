@@ -3,9 +3,9 @@
    If the layer style is editable, this container also provides buttons to access layer-legend edit dialogs
 */
 
-import {LitElement, html, svg} from 'lit-element';
-import '../utils/mbox-style-parse.js';
+import {LitElement, html, svg, css} from 'lit-element';
 import mbStyleParser from '../utils/mbox-style-parse.js';
+//import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './color-picker';
 
 /**
@@ -21,6 +21,24 @@ class MapLegendPanel extends LitElement {
       transparency: {type: Number},
       updatelegend: { type: Number}
     }; 
+  }
+  static get styles() {
+    return css `
+      :host {
+        display: inline-block;
+      }
+      .legendcontainer {
+        text-align: left;
+        padding-left: 5px;
+        background: white;
+        overflow: hidden;
+      }
+      .legendcontainer img {
+        max-width: calc(100% - 3px);
+      }
+      .hidden {
+        display: none;
+      }`
   }
   constructor() {
       super();
@@ -40,7 +58,7 @@ class MapLegendPanel extends LitElement {
   _legendReady() {
     this.dispatchEvent(new CustomEvent('load', {}));
   }
-  rasterLegend(maplayer)
+  fixedLegend(maplayer)
   {
     if (maplayer.metadata && maplayer.metadata.legendurl) {
       return html`<img @load="${()=>this._legendReady()}" src="${maplayer.metadata.legendurl}">`;
@@ -491,23 +509,25 @@ class MapLegendPanel extends LitElement {
       return this.getUserLegend(maplayer)
     }
     if (maplayer.metadata && maplayer.metadata.legendurl) {
-      return this.rasterLegend(maplayer);
+      return this.fixedLegend(maplayer);
     }
+    const layerTitle = maplayer.metadata && maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
+    const items = mbStyleParser.legendItemsFromLayer(maplayer, layerTitle, this.zoom);
     switch(maplayer.type) {
       case 'raster':
-        legendContent = this.rasterLegend(maplayer);
+        legendContent = this.fixedLegend(maplayer);
         break;
       case 'fill':
-        legendContent = this.fillLegend(maplayer);
+        legendContent = this.fillLegend(maplayer, items);
         break;
       case 'fill-extrusion':
-        legendContent = this.filleExtrusionLegend(maplayer);
+        legendContent = this.filleExtrusionLegend(maplayer, items);
         break;
       case 'line':
-        legendContent = this.lineLegend(maplayer);
+        legendContent = this.lineLegend(maplayer, items);
         break;
       case 'circle':
-        legendContent = this.circleLegend(maplayer);
+        legendContent = this.circleLegend(maplayer, items);
         break;
       case 'style':
         if (maplayer.metadata && maplayer.metadata.sublayers && maplayer.metadata.sublayers.length) {
@@ -520,8 +540,11 @@ class MapLegendPanel extends LitElement {
       case 'background':
         legendContent = this.backgroundLegend(maplayer);
         break;
+      case 'heatmap':
+      case 'hillshade':
+      case 'sky':
       default:
-        legendContent = html`<div>legend not available for type ${maplayer.type}</div>`;
+        legendContent = html`<div>legenda niet beschikbaar voor type ${maplayer.type}</div>`;
     }
     return legendContent;
   }
@@ -533,24 +556,6 @@ class MapLegendPanel extends LitElement {
       legendContent = this.getLegendContent(this.maplayer);
     } 
     return html`
-      <style>
-        :host {
-          display: inline-block;
-        }
-        .legendcontainer {
-          text-align: left;
-          padding-left: 5px;
-          background: white;
-          overflow: hidden;
-        }
-        .legendcontainer img {
-          max-width: calc(100% - 3px);
-        }
-        .hidden {
-          display: none;
-        }
-      </style>
-      <input @change="${e=>this._updatePaintProperty(e)}" type="color" id="colorinput" tabindex=-1 class="hidden">
       <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
   }
   _updatePaintProperty(event)

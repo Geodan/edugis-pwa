@@ -43,11 +43,11 @@ class MBStyleParser
   }
   getZoomDependentValue(zoom, value) {
     let result = value;
-    if (Array.isArray(value) && value.length > 4 && value[0] === "interpolate" && Array.isArray(value[2]) && value[2][0] === "zoom") {      
+    if (Array.isArray(value) && value.length > 4 && value[0] === "interpolate" && Array.isArray(value[2]) && value[2][0] === "zoom") {
       for (let i = 3; i < value.length - 1; i+=2) {
         result = value[i+1];
         if (zoom <= value[i]) {
-          if (i > 3) {          
+          if (i > 3) {
             result = this.interpolate(value[1], zoom, [value[i - 2], value[i - 1]], [value[i], value[i+1]]);
           }
           break;
@@ -63,7 +63,7 @@ class MBStyleParser
           if (zoom < value.stops[i][0]) {
             break;
           } 
-        }        
+        }
       }
     }
     return result;
@@ -300,19 +300,361 @@ class MBStyleParser
     return result;
   }
 
-  propertyType(property) {
-    if (Array.isArray(property)) {
-      return "expression";
+  _parseBooleanExpression(expression) {
+    let attrExpression = expression[0];
+    switch (attrExpression) {
+      case '!':
+        const not = this._parseBooleanExpression(expression[1])[0];
+        return [{attrName: not.attrName, attrExpression: ["!",not.attrExpression], attrValue: not.paintValue}];
+      case 'has':
+        return [{attrName: this._parsePaintProperty(expression[1])[0].paintValue, attrExpression: attrExpression}]
+      case '<':
+      case '>':
+      case '>=':
+      case '<=':
+      case '!=':
+      case '==':
+        const left = this._parsePaintProperty(expression[1])[0];
+        const right = this._parsePaintProperty(expression[2])[0];
+        const attrName = left.attrName !== undefined ? left.attrName : right.attrName;
+        if (left.attrName === undefined && ['<','>'].some(operator=>attrExpression.includes(operator))) {
+          attrExpression = attrExpression.replace('<','@').replace('>', '<').replace('@','>');
+        }
+        const attrValue = left.hasOwnProperty('paintValue') ? left.paintValue : right.paintValue;
+        return [{attrName: attrName, attrExpression: attrExpression, attrValue: attrValue}];
+      case 'any':
+      case 'all':
+        const bools = expression.slice(1).map(expr=>this._parseBooleanExpression(expr)[0]);
+        const attrNames = bools.map((item)=>item.attrName);
+        const attrExpressions = [attrExpression, ...bools.map(({attrExpression})=>attrExpression)];
+        const attrValues = bools.map(({attrValue})=>attrValue);
+        return [{attrName: attrNames, attrExpression: attrExpressions, attrValue: attrValues}];
+      default:
+        console.warn(`unhandled boolean case "${attrExpression}"`);
     }
-    if (property.property) {
-      return "function";
+  }
+  _parseCaseExpression(expression, type, zoom, attrName, layout) {
+    /*
+    Selects the first output whose corresponding test condition evaluates to true, or the fallback value otherwise.
+    Syntax:
+    ["case",
+        condition: boolean, output: OutputType,
+        condition: boolean, output: OutputType,
+        ...,
+        fallback: OutputType
+    ]: OutputType 
+    */
+    if (expression.length < 4 || expression.length % 2 == 1) {
+      console.warn('case expression: expected odd number of parameters and number of parameters > 2');
+      return []
     }
-    if (typeof property === "string") {
-      return "string";
+    const result = []
+    for (let i = 1; i < expression.length - 1; i += 2) {
+      const caseitem = this._parseBooleanExpression(expression[i])[0];
+      caseitem.paintValue = this._parsePaintProperty(expression[i+1])[0].paintValue;      
+      result.push(caseitem);
     }
-    if (typeof property === "") {
-      return "number";
+    result.push(this._parsePaintProperty(expression[expression.length -1])[0]);
+    return result;
+  }
+  _parseMatchExpression(expression, type, zoom, attrName, layout) {
+    /* 
+    Selects the output for which the label value matches the input value, or the fallback value if no match is found. The input can be any 
+    expression (for example, ["get", "building_type"]). Each label must be unique, and must be either:
+    * a single literal value; or
+    * an array of literal values, the values of which must be all strings or all numbers (for example [100, 101] or ["c", "b"]).
+    The input matches if any of the values in the array matches using strict equality, similar to the "in" operator. 
+    If the input type does not match the type of the labels, the result will be the fallback value.
+    Syntax
+    ["match",
+        input: InputType (number or string),
+        label: InputType | [InputType, InputType, ...], output: OutputType,
+        label: InputType | [InputType, InputType, ...], output: OutputType,
+        ...,
+        fallback: OutputType
+    ]: OutputType
+    */
+    if (expression.length < 5 || expression.length % 2 !== 1) {
+      console.warn('match expression: expected even number of parameters and number of parameters > 3');
+      return []
     }
+    const result = [];
+    const attrExpression = "==";
+    attrName = this._parsePaintProperty(expression[1])[0].attrName;
+    for (let i = 2; i < expression.length - 1; i += 2) {
+      const attrValue = this._parsePaintProperty(expression[i])[0].paintValue;
+      const paintValue = this._parsePaintProperty(expression[i+1])[0].paintValue;
+      result.push({attrName: attrName, attrExpression: attrExpression, attrValue: attrValue, paintValue: paintValue});
+    }
+    result.push(this._parsePaintProperty(expression[expression.length -1])[0]);
+    return result;
+  }
+  _parseInterpolateExpression(expression, type, zoom, attrName, layout) {
+    /*
+    Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). The input may be any numeric expression (e.g., ["get", "population"]). 
+    Stop inputs must be numeric literals in strictly ascending order. The output type must be number, array<number>, or color.
+    Interpolation types:
+    ["linear"]: Interpolates linearly between the pair of stops just less than and just greater than the input.
+    ["exponential", base]: Interpolates exponentially between the stops just less than and just greater than the input. base controls the rate at which the output increases: higher values make the output increase more towards the high end of the range. With values close to 1 the output increases linearly.
+    ["cubic-bezier", x1, y1, x2, y2]: Interpolates using the cubic bezier curve defined by the given control points.
+    Syntax
+    ["interpolate",
+        interpolation: ["linear"] | ["exponential", base] | ["cubic-bezier", x1, y1, x2, y2],
+        input: number,
+        stop_input_1: number, stop_output_1: OutputType,
+        stop_input_n: number, stop_output_n: OutputType, ...
+    ]: OutputType (number, array<number>, or Color)
+    */
+    if (expression.length > 4 && Array.isArray(expression[2])) {
+        const input=this._parsePaintProperty(expression[2], type, zoom, attrName, layout)[0];
+        attrName = input.attrName;
+        const attrValue = input.attrValue;
+        const attrExpression = `${expression[0]},${expression[1][0]}`
+        let paintValue = this._parsePaintProperty(expression[4])[0].paintValue;
+        if (attrName === 'zoom') {
+          for (let i = 3; i < expression.length - 1; i+=2) {
+            if (zoom <= this._parsePaintProperty(expression[i+1])[0].paintValue) {
+              if (i > 3) {
+                paintValue = this.interpolate(expression[1],zoom, [expression[i-2],expression[i-1],[expression[i],expression[i+1]]])
+              }
+              break;
+            }
+          }
+          return [{attrName: attrName, attrExpression: attrExpression, attrValue: attrValue, paintValue: paintValue}]
+        } else {
+          const result = []
+          for (let i = 3; i < expression.length - 1; i+=2) {
+            result.push({attrName:attrName, attrValue: this._parsePaintProperty(expression[i])[0].paintValue, attrExpression: attrExpression, paintValue: this._parsePaintProperty(expression[i+1])[0].paintValue});
+          }
+          return result;
+        }
+    }
+    console.warn(`unexpected or incorrect? interpolate expression ${JSON.stringify(expression)}`)
+    return [];
+  }
+  _parseInterpolateLabExpression(expression, type, zoom, attrName, layout) {
+    /*
+    Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). Works like interpolate, but the output type must be color,
+    and the interpolation is performed in the CIELAB color space.
+    Syntax
+    ["interpolate-lab",
+        interpolation: ["linear"] | ["exponential", base] | ["cubic-bezier", x1, y1, x2, y2 ],
+        input: number,
+        stop_input_1: number, stop_output_1: Color,
+        stop_input_n: number, stop_output_n: Color, ...
+    ]: Color
+    */
+   return this._parseInterpolateExpression(expression, type, zoom, attrName, layout);
+  }
+  _parseStepExpression(expression, type, zoom, attrName, layout) {
+    /* Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs of input and output values ("stops").
+       The input may be any numeric expression (e.g., ["get", "population"]). Stop inputs must be numeric literals in strictly ascending order. 
+       Returns the output value of the stop just less than the input, or the first output if the input is less than the first stop.
+      Syntax
+      ["step",
+        input: number,
+        stop_output_0: OutputType,
+        stop_input_1: number, stop_output_1: OutputType,
+        stop_input_n: number, stop_output_n: OutputType, ...
+      ]: OutputType 
+    */
+    const result = [];
+    if (expression.length > 4 && expression.length % 2 == 1) {
+      const test = this._parsePaintProperty(expression[1]);
+      if (!test ){
+        console.warn('teeme');
+      }
+      const input = this._parsePaintProperty(expression[1])[0];
+      let stopOutput = this._parsePaintProperty(expression[2])[0];
+      for (let i = 2; i < expression.length - 1; i += 2) {
+        const stopOutput = this._parsePaintProperty(expression[i])[0];
+        const stopInput = this._parsePaintProperty(expression[i+1])[0];
+        result.push({attrName: input.attrName, attrValue: stopInput.paintValue, attrExpression: "<", paintValue: stopOutput.paintValue});
+      }
+      const lastInput = this._parsePaintProperty(expression[expression.length-2])[0];
+      const lastOutput = this._parsePaintProperty(expression[expression.length-1])[0];
+      result.push({attrName: input.attrName, attrValue: lastInput.paintValue, attrExpression: ">=", paintValue: lastOutput.paintValue});
+    }
+    return result;
+  }
+  _parseArithmeticExpression(expression, type, zoom, attrName, layout) {
+    switch (expression[0]) {
+      case '+':
+      case '*':
+      case '%':
+      case '/':
+      case 'min':
+      case 'max':
+        const attrValues = expression.slice(1).map(subexpression=>this._parsePaintProperty(subexpression)[0].paintValue);
+        return [{attrName: attrName, attrValue: attrValues, attrExpression: expression[0], paintValue: attrValues}];
+      default:
+        let value = this._parsePaintProperty(expression[1])[0].paintValue
+        return [{attrName: attrName, attrValue: value, attrExpression: expression[0], paintValue: value}]
+    }
+  }
+  _parseGetExpression(expression, type, zoom, attrName, layout) {
+    if (expression.length == 2 && (expression[0] === "get" || expression[0] === 'var')) {
+      return [{attrName: expression[1]}]
+    }
+    return [];
+  }
+
+  _parsePaintExpression(expression, type, zoom, attrName, layout) {
+    if (expression.length === 0) {
+      return [];
+    }
+    switch (expression[0]) {
+      case 'zoom':
+        return [{attrName: 'zoom', attrValue: zoom, attrExpression: 'zoom'}];
+      case 'literal':
+        return [{attrValue: expression[1], paintValue: expression[1]}];
+      case 'let':
+        return this._parsePaintProperty(expression.slice(-1));
+      case 'get':
+      case 'var':
+        return this._parseGetExpression(expression, type, zoom, attrName, layout);
+      case 'case':
+        return this._parseCaseExpression(expression, type, zoom, attrName, layout);
+      case 'match':
+        return this._parseMatchExpression(expression, type, zoom, attrName, layout);
+      case 'step':
+        return this._parseStepExpression(expression, type, zoom, attrName, layout);
+      case 'interpolate':
+        return this._parseInterpolateExpression(expression, type, zoom, attrName, layout);
+      case 'interpolate-lab':
+        return this._parseInterpolateLabExpression(expression, type, zoom, attrName, layout);
+      case '*':
+      case '+':
+      case '-':
+      case '%':
+      case '/':
+      case 'abs':
+      case 'acos':
+      case 'asin':
+      case 'atan':
+      case 'ceil':
+      case 'cos':
+      case 'distance':
+      case 'e':
+      case 'floor':
+      case 'ln':
+      case 'ln2':
+      case 'log10':
+      case 'log2':
+      case 'max':
+      case 'min':
+      case 'pi':
+      case 'round':
+      case 'sin':
+      case 'sqrt':
+      case 'tan':
+        return this._parseArithmeticExpression(expression, type, zoom, attrName, layout);
+      case 'to-number':
+      case 'to-string':
+      case 'to-boolean':
+      case 'to-color':
+        return this._parsePaintProperty(expression[1], type, zoom, attrName, layout);
+      default:
+        console.warn(`expression "${expression[0]}" not (yet) supported`);
+    }
+    return [];
+  }
+
+  _interpolate(input, lowerInput, upperInput, lowerOutput, upperOutput, base)
+  {
+    const difference = upperInput - lowerInput;
+    const progress = input - lowerInput;
+    if (difference === 0 || progress === 0) {
+        return lowerOutput;
+    } else if (!base || base === 1) {
+        return (progress / difference) * (upperOutput - lowerOutput) + lowerOutput;
+    } else {
+        return (Math.pow(base, progress) - 1) / (Math.pow(base, difference) - 1) * (upperOutput - lowerOutput) + lowerOutput;
+    }
+  }
+  _parsePaintFunction(paintFunction, type, zoom, attrName, layout)
+  {
+    let result = [];
+    attrName = paintFunction.property;
+    if (!attrName) {
+      attrName = 'zoom';
+      const {stops,base} = paintFunction;
+      if (stops) {
+        for (let i = 0; i < stops.length; i++) {
+          if (zoom < stops[i][0]) {
+            let value = i === 0 ? stops[0][1] : this._interpolate(zoom, stops[i-1][0],stops[i][0],stops[i-1][1],stops[i][1],base);
+            return [{attrName: attrName, attrValue: zoom, paintValue: value}];
+          } 
+        }
+        return [{attrName: attrName, attrValue: zoom, paintValue: stops[stops.length - 1][1]}];
+      }
+      console.warn('unimplemented: zoom function without stops');
+    }
+    if (paintFunction.stops) {
+      result = paintFunction.stops.map(stop=>{
+        return {attrName: stop[0], paintValue: stop[1]}
+      });
+    } 
+    return result;
+  }
+
+  _parsePaintLiteral(literal, type, attrName, layout)
+  {
+    const item = {attrName: attrName, paintValue:literal};
+    if (type === 'text') {
+      item.layout = layout;
+    }
+    return [item];
+  }
+
+  _propertyType(property) {
+    return Array.isArray(property) ? 'expression' 
+      : typeof property === "object" && property !== null && property !== undefined ? 'function' 
+      : 'literal';
+  }
+
+  _parsePaintProperty(paintProperty, type, zoom, attrName, layout) {
+    switch (this._propertyType(paintProperty)) {
+      case 'expression':
+        return this._parsePaintExpression(paintProperty, type, zoom, attrName, layout);
+      case 'function':
+        return this._parsePaintFunction(paintProperty, type, zoom, attrName, layout);
+      case 'literal': 
+        return this._parsePaintLiteral(paintProperty, type, attrName, layout);
+      default:
+        return [];
+    }
+  }
+
+  _legendItems(layer, title, zoom, propertyName) {
+    const {id, metadata, paint, layout} = layer;
+    const attrName = metadata && metadata.title ? metadata.title : title ? title: id;
+    const result = []
+    if (paint) {
+      const type = layer.type === 'symbol'? 'text' : layer.type;
+      if (type === 'fill' && propertyName === 'stroke-color') {
+        propertyName = 'outline-color';
+      }
+      const paintProperty = paint[`${type}-${propertyName}`];
+      if (!paintProperty) {
+        return result;
+      }
+      return this._parsePaintProperty(paintProperty, type, zoom, attrName, layout)
+    } else if (layout && layer.type === 'symbol' && propertyName === 'color') {
+      result.push({attrName: attrName, paintValue: '#000', layout: layout})
+    }
+    return result;
+  }
+
+  legendItemsFromLayer(layer, title, zoom) {
+    const result = {
+      colorItems: this._legendItems(layer, title, zoom, 'color'),
+      widthItems: this._legendItems(layer, title, zoom, 'width'),
+      radiusItems: this._legendItems(layer, title, zoom, 'radius'),
+      strokeColorItems: this._legendItems(layer, title, zoom, 'stroke-color'),
+      strokeWidthItems: this._legendItems(layer, title, zoom, 'stroke-width'),
+    }
+    return result;
   }
 }
 
