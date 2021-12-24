@@ -2090,9 +2090,12 @@ class WebMap extends LitElement {
     if (!this.markerDiv) {
       this.markerDiv = document.createElement('div');
       this.markerDiv.style = 'fill: blue;';
-      this.markerDiv.innerHTML = outlineInfoIcon.getHTML();
-      this.markerDiv.innerHTML = this.markerDiv.firstElementChild.innerHTML;
-      //render (outlineInfoIcon, this.markerDiv); // no longer works?
+      if (outlineInfoIcon.getHTML){
+        this.markerDiv.innerHTML = outlineInfoIcon.getHTML(); // old html template 
+        this.markerDiv.innerHTML = this.markerDiv.firstElementChild.innerHTML;
+      } else if (outlineInfoIcon.strings) {
+        this.markerDiv.innerHTML = outlineInfoIcon.strings[0]; // newer html template
+      }
     }
     if (this.marker) {
       this.marker.remove();
