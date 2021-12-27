@@ -410,12 +410,17 @@ class MBStyleParser
         attrName = input.attrName;
         const attrValue = input.attrValue;
         const attrExpression = `${expression[0]},${expression[1][0]}`
+        let base = expression[1][0] === 'linear' ? 1 : expression[1][0] == 'exponential' ? expression[1][1]: null; // cubic bezier tbi
         let paintValue = this._parsePaintProperty(expression[4])[0].paintValue;
         if (attrName === 'zoom') {
+          const propertyName = this.searchPaintForProperty(expression);
+          if (propertyName) {
+            attrName = attrName ? `${attrName},${propertyName}`: propertyName;
+          }
           for (let i = 3; i < expression.length - 1; i+=2) {
-            if (zoom <= this._parsePaintProperty(expression[i+1])[0].paintValue) {
+            if (zoom <= this._parsePaintProperty(expression[i])[0].paintValue) {
               if (i > 3) {
-                paintValue = this.interpolate(expression[1],zoom, [expression[i-2],expression[i-1],[expression[i],expression[i+1]]])
+                paintValue = this._interpolate(zoom, expression[i-2],expression[i],expression[i-1],this._parsePaintProperty(expression[i+1])[0].paintValue, base);
               }
               break;
             }
@@ -432,6 +437,17 @@ class MBStyleParser
     console.warn(`unexpected or incorrect? interpolate expression ${JSON.stringify(expression)}`)
     return [];
   }
+  _parseInterpolateColorSchemeExpression(expression, type, zoom, attrName, layout, colorScheme) {
+    let interpolationType = expression[1][0];
+    const base = interpolationType === 'linear' ? 1 : interpolationType === 'exponential' ? expression[1][1] : null;
+    const input = this._parsePaintProperty(expression[2])[0];
+    let stops = expression.slice(3);
+    const result = []
+    for (let i = 0; i < stops.length; i+=2) {
+     result.push({attrName: input.attrName, attrValue: stops[i], attrExpression: `interpolate-${colorScheme},${interpolationType},${base}`, paintValue: stops[i+1]});
+    }
+    return result;
+  }
   _parseInterpolateLabExpression(expression, type, zoom, attrName, layout) {
     /*
     Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). Works like interpolate, but the output type must be color,
@@ -444,7 +460,22 @@ class MBStyleParser
         stop_input_n: number, stop_output_n: Color, ...
     ]: Color
     */
-   return this._parseInterpolateExpression(expression, type, zoom, attrName, layout);
+    return this._parseInterpolateColorSchemeExpression(expression, type, zoom, attrName, layout, 'lab');
+  }
+  _parseInterpolateHclExpression(expression, type, zoom, attrName, layout) {
+    /* 
+    Produces continuous, smooth results by interpolating between pairs of input and output values ("stops"). 
+    Works like interpolate, but the output type must be color, and the interpolation is performed in the 
+    Hue-Chroma-Luminance color space.
+    Syntax
+    ["interpolate-hcl",
+        interpolation: ["linear"] | ["exponential", base] | ["cubic-bezier", x1, y1, x2, y2],
+        input: number,
+        stop_input_1: number, stop_output_1: Color,
+        stop_input_n: number, stop_output_n: Color, ...
+    ]: Color
+    */
+    return this._parseInterpolateColorSchemeExpression(expression, type, zoom, attrName, layout, 'hcl');
   }
   _parseStepExpression(expression, type, zoom, attrName, layout) {
     /* Produces discrete, stepped results by evaluating a piecewise-constant function defined by pairs of input and output values ("stops").
@@ -523,6 +554,8 @@ class MBStyleParser
         return this._parseInterpolateExpression(expression, type, zoom, attrName, layout);
       case 'interpolate-lab':
         return this._parseInterpolateLabExpression(expression, type, zoom, attrName, layout);
+      case 'interpolate-hcl':
+        return this._parseInterpolateHclExpression(expression, type, zoom, attrName, layout);
       case '*':
       case '+':
       case '-':
@@ -635,6 +668,9 @@ class MBStyleParser
       if (type === 'fill' && propertyName === 'stroke-color') {
         propertyName = 'outline-color';
       }
+      if (type === 'line' && propertyName === 'stroke-width') {
+        propertyName = 'width';
+      }
       const paintProperty = paint[`${type}-${propertyName}`];
       if (!paintProperty) {
         return result;
@@ -649,7 +685,6 @@ class MBStyleParser
   legendItemsFromLayer(layer, title, zoom) {
     const result = {
       colorItems: this._legendItems(layer, title, zoom, 'color'),
-      widthItems: this._legendItems(layer, title, zoom, 'width'),
       radiusItems: this._legendItems(layer, title, zoom, 'radius'),
       strokeColorItems: this._legendItems(layer, title, zoom, 'stroke-color'),
       strokeWidthItems: this._legendItems(layer, title, zoom, 'stroke-width'),
