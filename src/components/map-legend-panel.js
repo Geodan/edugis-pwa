@@ -7,6 +7,7 @@ import {LitElement, html, svg, css} from 'lit-element';
 import mbStyleParser from '../utils/mbox-style-parse.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './color-picker';
+import './map-legend-line';
 
 /**
 * @polymer
@@ -65,7 +66,7 @@ class MapLegendPanel extends LitElement {
     }
   }
   lineLegend(maplayer) {
-    if (maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom ) {
+    if ((maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom) || (maplayer.hasOwnProperty('maxzoom') && maplayer.maxzoom < this.zoom)) {
       return html``;
     }
     let layerTitle = maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
@@ -504,6 +505,9 @@ class MapLegendPanel extends LitElement {
     }
   }
   getLegendContent(maplayer) {
+    if ((maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom) || (maplayer.hasOwnProperty('maxzoom') && maplayer.maxzoom < this.zoom)) {
+      return html``;
+    }
     let legendContent = html`legenda niet beschikbaar`;
     if (maplayer.metadata && maplayer.metadata.classInfo) {
       return this.getUserLegend(maplayer)
@@ -524,7 +528,8 @@ class MapLegendPanel extends LitElement {
         legendContent = this.filleExtrusionLegend(maplayer, items);
         break;
       case 'line':
-        legendContent = this.lineLegend(maplayer, items);
+        //legendContent = this.lineLegend(maplayer, items);
+        legendContent = html`<map-legend-line .items="${items}"></map-legend-line>`
         break;
       case 'circle':
         legendContent = this.circleLegend(maplayer, items);

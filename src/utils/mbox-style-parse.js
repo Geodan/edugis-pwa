@@ -608,21 +608,21 @@ class MBStyleParser
   _parsePaintFunction(paintFunction, type, zoom, attrName, layout)
   {
     let result = [];
-    attrName = paintFunction.property;
-    if (!attrName) {
-      attrName = 'zoom';
+    if (!paintFunction.hasOwnProperty('property')) {
+      // no input property: use zoom as input 
       const {stops,base} = paintFunction;
       if (stops) {
         for (let i = 0; i < stops.length; i++) {
           if (zoom < stops[i][0]) {
-            let value = i === 0 ? stops[0][1] : this._interpolate(zoom, stops[i-1][0],stops[i][0],stops[i-1][1],stops[i][1],base);
-            return [{attrName: attrName, attrValue: zoom, paintValue: value}];
+            let value = i === 0 ? stops[0][1] : typeof stops[i][1] === 'number' ? this._interpolate(zoom, stops[i-1][0],stops[i][0],stops[i-1][1],stops[i][1],base) : stops[i][1];
+            return [{attrName: attrName, attrExpression: 'zoom', attrValue: zoom, paintValue: value}];
           } 
         }
         return [{attrName: attrName, attrValue: zoom, paintValue: stops[stops.length - 1][1]}];
       }
       console.warn('unimplemented: zoom function without stops');
     }
+    attrName = paintFunction.property;
     if (paintFunction.stops) {
       result = paintFunction.stops.map(stop=>{
         return {attrName: stop[0], paintValue: stop[1]}
