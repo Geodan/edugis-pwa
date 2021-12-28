@@ -15,11 +15,13 @@ class MapLegendLine extends LitElement {
     }
     static get properties() { 
         return { 
+          title: {stype: String},
           items: {type: Array}
         }; 
     }
     constructor() {
         super();
+        this.title = "untitled";
         this.items = [];
     }
     connectedCallback() {
@@ -42,16 +44,38 @@ class MapLegendLine extends LitElement {
         </svg>${html`<span class="label">${label}</span>`}`
     }
     render() {
-        if (this.items.colorItems.length <= 1 && this.items.strokeWidthItems.length <= 1) {
-            const color = this.items.colorItems.length ? this.items.colorItems[0].paintValue : '#000';
-            const width = this.items.strokeWidthItems.length ? this.items.strokeWidthItems[0].paintValue : 1;
-            const label = this.items.colorItems.length ? this.items.colorItems[0].attrName: 'untitled';
+        const items = this.items;
+        if (items.colorItems.length <= 1 && items.strokeWidthItems.length <= 1) {
+            const color = items.colorItems.length ? items.colorItems[0].paintValue : '#000';
+            const width = items.strokeWidthItems.length ? items.strokeWidthItems[0].paintValue : 1;
+            const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: 'untitled';
             const line = this._lineItem(color, width, label);
             return html`
             <div class="container">${line}</div>
             `
         }
-        return html`<div class="container">not yet implemented</div>`
+        let result = []
+        if (items.colorItems.length > 1) {
+            const lineWidth = items.strokeWidthItems.length === 1 ? items.strokeWidthItems[0].paintValue : 1
+            result.push(html`<div class="title">${items.colorItems[0].attrName}</div>`);
+            for (let i = 0; i < items.colorItems.length; i++) {
+                const label = items.colorItems.length ? items.colorItems[i].attrValue: null;
+                if (label) {
+                    result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,width,label)}</div>`)
+                }
+            }
+        }
+        if (items.strokeWidthItems.length > 1) {
+            let lineColor = items.colorItems.length === 1 ? items.colorItems[0].paintValue : '#aaa';
+            result.push(html`<div class="title">${items.strokeWidthItems[0].attrName}</div>`);
+            for (let i = 0; i < items.strokeWidthItems.length; i++) {
+                const label = items.strokeWidthItems[i].attrValue;
+                if (label) {
+                    result.push(html`<div class="container">${this._lineItem(lineColor, items.strokeWidthItems[i].paintValue,label)}</div>`)
+                }
+            }
+        }
+        return result;
     }
     firstUpdated() {
 

@@ -351,7 +351,7 @@ class MBStyleParser
     const result = []
     for (let i = 1; i < expression.length - 1; i += 2) {
       const caseitem = this._parseBooleanExpression(expression[i])[0];
-      caseitem.paintValue = this._parsePaintProperty(expression[i+1])[0].paintValue;      
+      caseitem.paintValue = this._parsePaintProperty(expression[i+1])[0].paintValue;
       result.push(caseitem);
     }
     result.push(this._parsePaintProperty(expression[expression.length -1])[0]);
@@ -615,7 +615,7 @@ class MBStyleParser
         for (let i = 0; i < stops.length; i++) {
           if (zoom < stops[i][0]) {
             let value = i === 0 ? stops[0][1] : typeof stops[i][1] === 'number' ? this._interpolate(zoom, stops[i-1][0],stops[i][0],stops[i-1][1],stops[i][1],base) : stops[i][1];
-            return [{attrName: attrName, attrExpression: 'zoom', attrValue: zoom, paintValue: value}];
+            return [{attrName: attrName, attrExpression: '==', attrValue: zoom, paintValue: value}];
           } 
         }
         return [{attrName: attrName, attrValue: zoom, paintValue: stops[stops.length - 1][1]}];
