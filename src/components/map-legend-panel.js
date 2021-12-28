@@ -504,6 +504,60 @@ class MapLegendPanel extends LitElement {
         return `unsupported user layer: ${maplayer.type}`
     }
   }
+  _translateItems(items, translation) {
+    for (const item of items) {
+      if (translation.name === item.attrName) {
+        item.attrName = translation.translation;
+        if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
+          if (typeof parseFloat(item.attrValue) == "number" && !isNaN(parseFloat(item.attrValue))) {
+            let factor = Math.pow(10, parseInt(translation.decimals));
+            item.attrValue = parseInt(Math.round(parseFloat(item.attrValue) * factor)) / factor;
+          }
+        }
+        if (translation.unit && translation.unit !== "") {
+          item.attrValue = `${item.attrValue}${translation.unit}`
+        }
+      }
+    }
+  }
+  _addExpressionOperatorsToValues(items) {
+    for (const item of items) {
+      if (item.hasOwnProperty('attrValue')) {
+        switch (item.attrExpression) {
+          case '<=':
+          case '>=':
+          case '<':
+          case '>':
+            item.attrValue = item.attrExpression + item.attrValue;
+            break;
+          case '!=':
+            item.attrValue = 'niet ' + item.attrValue;
+            break;
+          case undefined:
+          case null:
+          case '==':
+            break;
+          default:
+            console.warn(`addEpressionOperatorsToValues: not yet implemented: ${item.attrExpression}`);
+        }
+      }
+    }
+  }
+  _formatItems(maplayer, items) {
+    if (maplayer.metadata && maplayer.metadata.attributes && maplayer.metadata.attributes.translations) {
+      let attributes = maplayer.metadata.attributes;
+      for (let translation of attributes.translations) {
+        this._translateItems(items.colorItems, translation);
+        this._translateItems(items.radiusItems, translation);
+        this._translateItems(items.strokeColorItems, translation);
+        this._translateItems(items.strokeWidthItems, translation);
+      }
+    }
+    this._addExpressionOperatorsToValues(items.colorItems);
+    this._addExpressionOperatorsToValues(items.radiusItems);
+    this._addExpressionOperatorsToValues(items.strokeColorItems);
+    this._addExpressionOperatorsToValues(items.strokeWidthItems);
+  }
   getLegendContent(maplayer) {
     if ((maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom) || (maplayer.hasOwnProperty('maxzoom') && maplayer.maxzoom < this.zoom)) {
       return html``;
@@ -517,6 +571,7 @@ class MapLegendPanel extends LitElement {
     }
     const layerTitle = maplayer.metadata && maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
     const items = mbStyleParser.legendItemsFromLayer(maplayer, layerTitle, this.zoom);
+    this._formatItems(maplayer, items);
     switch(maplayer.type) {
       case 'raster':
         legendContent = this.fixedLegend(maplayer);
@@ -529,7 +584,7 @@ class MapLegendPanel extends LitElement {
         break;
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
-        legendContent = html`<map-legend-line .items="${items}"></map-legend-line>`
+        legendContent = html`<map-legend-line .items="${items}" title="${layerTitle}"></map-legend-line>`
         break;
       case 'circle':
         legendContent = this.circleLegend(maplayer, items);
