@@ -1665,7 +1665,7 @@ export default
                 "type":"webgltraffic",
                 "source":{
                   "type":"webgltraffic",
-                  "data":"https://research.geodan.nl/sites/ndw_viewer/traffic.json",
+                  "data":"https://research1.geodan.nl/sites/ndw_viewer/traffic.json",
                   "attribution":"ndw"
                 }
               }
