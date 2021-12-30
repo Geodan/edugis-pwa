@@ -8,6 +8,7 @@ import mbStyleParser from '../utils/mbox-style-parse.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './color-picker';
 import './map-legend-line';
+import './map-legend-fill';
 
 /**
 * @polymer
@@ -577,7 +578,8 @@ class MapLegendPanel extends LitElement {
         legendContent = this.fixedLegend(maplayer);
         break;
       case 'fill':
-        legendContent = this.fillLegend(maplayer, items);
+        //legendContent = this.fillLegend(maplayer, items);
+        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
         break;
       case 'fill-extrusion':
         legendContent = this.filleExtrusionLegend(maplayer, items);
