@@ -1,4 +1,6 @@
 import {LitElement, html, css, svg} from 'lit-element';
+import {hcl, lab} from '../utils/colorspace';
+import Color from '../utils/color';
 class MapLegendFill extends LitElement {
     static get styles() {
         return css`
@@ -8,6 +10,10 @@ class MapLegendFill extends LitElement {
         .container {
             display: flex;
             align-items: center;
+        }
+        .stretch {
+            display: flex;
+            justify-content: space-between;
         }
         .label {
             padding-left: 2px;
@@ -45,6 +51,38 @@ class MapLegendFill extends LitElement {
         </svg>${html`<span class="label">${label}</span>`}`;
         // <rect width="30" height="15" style="fill:${color};fill-opacity:${fillOpacity};stroke-width:1;stroke:${strokeColor}"/>
     }
+    _gradientItem(gradients, label, base) {
+        /*
+        const startColor = Color.parse(items.colorItems[i].paintValue);
+        const endColor = Color.parse(items.colorItems[i+1].paintValue);
+        const startforward = hcl.forward(startColor);
+        const endforward = hcl.forward(endColor);
+        // get colors at start (0) and end (1)
+        let s1 = hcl.reverse(hcl.interpolate(startforward, endforward, 0));
+        let s2 = hcl.reverse(hcl.interpolate(startforward, endforward, 1));
+        gradients.push({
+            startLabel: items.colorItems[i].attrName, 
+            startValue: items.colorItems[i].attrValue, 
+            startColor: s1.toString(), 
+            endLabel: items.colorItems[i+1].attrName, 
+            endValue: items.colorItems[i+1].attrValue, 
+            endColor: s2.toString()}); 
+        */
+        return svg`
+        ${html`<div class="label">${label}</div>`}
+        <svg width="150" height="15">
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                ${gradients.map(({color}, index, arr)=>
+                    svg`
+                    <stop offset="${(index/arr.length)*100}%" style="stop-color:${color};stop-opacity:1" />
+                `)}
+                </linearGradient>
+            </defs>
+          <rect width="150" height="15" style="fill:url(#grad);"/>
+        </svg>
+        ${html`<div class="stretch"><span>${parseFloat(gradients[0].label)}</span></span>${gradients[gradients.length -1].label}</span></div>`}`;
+    }
     _eqSet(as, bs) {
         if (as.size !== bs.size) return false;
         for (var a of as) if (!bs.has(a)) return false;
@@ -61,7 +99,19 @@ class MapLegendFill extends LitElement {
             <div class="container">${fill}</div>
             `
         }
-        let result = [];
+        if (items.colorItems[0].attrExpression.startsWith('interpolate-')) {
+            let gradients = [];
+            for (let i = 0; i < items.colorItems.length; i++) {
+                gradients.push({label: items.colorItems[i].attrValue, color: items.colorItems[i].paintValue});
+            }
+            const label = items.colorItems[0].attrName;
+            const base = items.colorItems[0].attrExpression.split(',')[2];
+            const fill = this._gradientItem(gradients, label, base);
+            return html`
+                <div>${fill}</div>
+                `
+        }
+        let result = []
         let usedStrokeValues = new Set();
         if (items.colorItems.length > 1) {
             result.push(html`<div class="title">${items.colorItems[0].attrName}</div>`);

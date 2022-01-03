@@ -16,7 +16,7 @@ class MapLegendLine extends LitElement {
     static get properties() { 
         return { 
           title: {stype: String},
-          items: {type: Array}
+          items: {type: Object}
         }; 
     }
     constructor() {
@@ -54,14 +54,32 @@ class MapLegendLine extends LitElement {
             <div class="container">${line}</div>
             `
         }
-        let result = []
+        let result = [];
+        if (items.colorItems.length === items.strokeWidthItems.length) {
+            let i;
+            for (i = 0; i < items.colorItems.length; i++) {
+                if (items.colorItems.attrValue !== items.strokeWidthItems.attrValue) {
+                    break;
+                }
+            }
+            if (i === items.colorItems.length) {
+                // same size, same attributes
+                for (i = 0; i < items.colorItems.length; i++) {
+                    const label = items.colorItems.length ? items.colorItems[i].attrValue: null;
+                    if (label) {
+                        result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,items.strokeWidthItems[i].paintValue,label)}</div>`)
+                    }
+                }
+                return result;
+            }
+        }
         if (items.colorItems.length > 1) {
             const lineWidth = items.strokeWidthItems.length === 1 ? items.strokeWidthItems[0].paintValue : 1
             result.push(html`<div class="title">${items.colorItems[0].attrName}</div>`);
             for (let i = 0; i < items.colorItems.length; i++) {
                 const label = items.colorItems.length ? items.colorItems[i].attrValue: null;
                 if (label) {
-                    result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,width,label)}</div>`)
+                    result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,lineWidth,label)}</div>`)
                 }
             }
         }
