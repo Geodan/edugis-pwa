@@ -19,10 +19,13 @@ class Color {
         this.a = a?a:1;
     }
 
+    /* https://github.com/Polymer/tools/issues/3360,
+       polymer-cli doesn't like the following declaration: 
     static black;
     static white;
     static transparent;
     static red;
+    */
 
     /**
      * Parses valid CSS color strings and returns a `Color` instance.
