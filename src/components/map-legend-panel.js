@@ -9,6 +9,7 @@ import mbStyleParser from '../utils/mbox-style-parse.js';
 import './color-picker';
 import './map-legend-line';
 import './map-legend-fill';
+import './map-legend-circle';
 
 /**
 * @polymer
@@ -27,7 +28,7 @@ class MapLegendPanel extends LitElement {
   static get styles() {
     return css `
       :host {
-        display: inline-block;
+        display: block;
       }
       .legendcontainer {
         text-align: left;
@@ -589,7 +590,8 @@ class MapLegendPanel extends LitElement {
         legendContent = html`<map-legend-line .items="${items}" title="${layerTitle}"></map-legend-line>`
         break;
       case 'circle':
-        legendContent = this.circleLegend(maplayer, items);
+        //legendContent = this.circleLegend(maplayer, items);
+        legendContent = html`<map-legend-circle .items="${items}" title="${layerTitle}"></map-legend-circle>`
         break;
       case 'style':
         if (maplayer.metadata && maplayer.metadata.sublayers && maplayer.metadata.sublayers.length) {
