@@ -360,7 +360,7 @@ class MapLegendPanel extends LitElement {
     }
     result = this.translateResult(maplayer, result);
     return html`${result.propertyname?html` ${result.propertyname}<br>`:''}
-      ${result.items.filter(item=>(item.label && item.label.trim() !== "")).map((item)=>{
+      ${result.items.filter(item=>(item.label && item.label.toString().trim() !== "")).map((item)=>{
         return svg`
         <svg width="30" height="15">
           <rect width="30" height="15" style="fill:${item.fillColor};fill-opacity:1;stroke-width:1;stroke:#cccccc"/>

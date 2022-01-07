@@ -622,10 +622,9 @@ class MBStyleParser
       }
       console.warn('unimplemented: zoom function without stops');
     }
-    attrName = paintFunction.property;
     if (paintFunction.stops) {
       result = paintFunction.stops.map(stop=>{
-        return {attrName: stop[0], paintValue: stop[1]}
+        return {attrName: paintFunction.property, attrValue: stop[0], paintValue: stop[1]}
       });
     } 
     return result;

@@ -21,6 +21,10 @@
             ],
             "layout": {
                 "visibility": "visible"
+            },
+            "paint": {
+                "line-color": "black",
+                "line-width": 1
             }
         },
         {

@@ -99,7 +99,7 @@ class MapLegendFill extends LitElement {
             <div class="container">${fill}</div>
             `
         }
-        if (items.colorItems[0].attrExpression.startsWith('interpolate-')) {
+        if (items.colorItems[0].attrExpression && items.colorItems[0].attrExpression.startsWith('interpolate-')) {
             let gradients = [];
             for (let i = 0; i < items.colorItems.length; i++) {
                 gradients.push({label: items.colorItems[i].attrValue, color: items.colorItems[i].paintValue});
