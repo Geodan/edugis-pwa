@@ -80,6 +80,11 @@ class MapLegendCircle extends LitElement {
             </svg>${html`<span class="label">${label}</span>`}
           `
     }
+    _eqSet(as, bs) {
+      if (as.size !== bs.size) return false;
+      for (var a of as) if (!bs.has(a)) return false;
+      return true;
+    }
     render() {
         const items = this.items;
         if (items.colorItems.length <= 1 && items.radiusItems.length <= 1) {
@@ -93,6 +98,7 @@ class MapLegendCircle extends LitElement {
             `
         }
         let result = [];
+        let usedRadiusValues = new Set();
         if (items.colorItems.length > 1) {
             result.push(html`${items.colorItems[0].attrName}`);
             const coloredCircles = items.colorItems.map(({paintValue,attrExpression,attrValue})=>{
@@ -142,8 +148,9 @@ class MapLegendCircle extends LitElement {
                         break;
                     default:
                         const radiusWidths = items.radiusItems.filter(({attrValue})=>attrValue===colorAttrValue);
-                        if (items.radiusItems.length === 1) {
+                        if (radiusWidths.length === 1) {
                             radius = radiusWidths[0].paintValue;
+                            usedRadiusValues.add(colorAttrValue);
                         } else {
                             radius = 3;
                         }
@@ -156,14 +163,17 @@ class MapLegendCircle extends LitElement {
             result.push(coloredCircles);
         }
         if (items.radiusItems.length > 1) {
-            result.push(html`${items.radiusItems[0].attrName}`);
-            const bgcolor = items.colorItems.length === 1 ? items.colorItems[0].paintValue : '#f8f8f8';
-            const radii = items.radiusItems
-              .filter(({attrName})=>attrName !== undefined)
-              .sort((a,b)=>b.paintValue-a.paintValue)
-              .map(({paintValue,attrExpression,attrValue})=>
-                html`<li style="--radius:${paintValue}px"><span>${attrValue}</span></li>`);
-            result.push(html`<div class="bubblecontainer"><ul class="bubbles" style="--map-legend-bubble-background:${bgcolor}">${radii}</ul></div>`)
+            const allRadiusValues = new Set(items.radiusItems.filter(({attrValue})=>attrValue!==undefined).map(({attrValue})=>attrValue));
+            if (!this._eqSet(allRadiusValues, usedRadiusValues)) {
+              result.push(html`${items.radiusItems[0].attrName}`);
+              const bgcolor = items.colorItems.length === 1 ? items.colorItems[0].paintValue : '#f8f8f8';
+              const radii = items.radiusItems
+                .filter(({attrName})=>attrName !== undefined)
+                .sort((a,b)=>b.paintValue-a.paintValue)
+                .map(({paintValue,attrExpression,attrValue})=>
+                  html`<li style="--radius:${paintValue}px"><span>${attrValue}</span></li>`);
+              result.push(html`<div class="bubblecontainer"><ul class="bubbles" style="--map-legend-bubble-background:${bgcolor}">${radii}</ul></div>`)
+            }
         }
         return result;
     }
