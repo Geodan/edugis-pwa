@@ -65,6 +65,7 @@ class MapSpinner extends LitElement {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
+          pointer-events: none;
         }
         .hidden {
           display: none;
