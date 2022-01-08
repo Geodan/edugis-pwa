@@ -6,6 +6,8 @@
   ],
   "extraDependencies": [
     "manifest.json",
+    "notosans-italic.woff2",
+    "notosans-bold.woff2",
     "lib/topojson-client.js",
     "lib/trafficlayer.js",
     "lib/wms-capabilities.min.js",

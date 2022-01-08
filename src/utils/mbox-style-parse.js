@@ -329,6 +329,8 @@ class MBStyleParser
         const attrExpressions = [attrExpression, ...bools.map(({attrExpression})=>attrExpression)];
         const attrValues = bools.map(({attrValue})=>attrValue);
         return [{attrName: attrNames, attrExpression: attrExpressions, attrValue: attrValues}];
+      case 'in':
+        return this._parseInExpression(expression);
       default:
         console.warn(`unhandled boolean case "${attrExpression}"`);
     }
@@ -530,6 +532,20 @@ class MBStyleParser
     return [];
   }
 
+  _parseInExpression(expression, type, zoom, attrName, layout) {
+    /*
+    Determines whether an item exists in an array or a substring exists in a string. In the specific case when the second and 
+    third arguments are string literals, you must wrap at least one of them in a literal expression to hint correct 
+    interpretation to the type system.
+    Syntax
+    ["in",
+        keyword: InputType (boolean, string, or number),
+        input: InputType (array or string)
+    ]: boolean
+    */
+    const input = this._parsePaintProperty(expression[2],type,zoom,attrName,layout);
+    return[{attrName: input[0].attrName, attrValue: expression[1], attrExpression: 'in'}];
+  }
   _parsePaintExpression(expression, type, zoom, attrName, layout) {
     if (expression.length === 0) {
       return [];

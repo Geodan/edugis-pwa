@@ -56,6 +56,10 @@
     <!--script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' -->
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans">
+
     <link href="node_modules/hopscotch/dist/css/hopscotch.min.css" rel="stylesheet">
 
     <script src="node_modules/mapbox-gl/dist/mapbox-gl.js"></script>
@@ -68,6 +72,20 @@
         display: inline-block;
         margin: 2px;
       }
+      @font-face {
+        font-family: 'Noto Sans Bold';
+        src: url(./notosans-bold.woff2);
+        font-style: normal;
+        font-weight: bold;
+      }
+      @font-face {
+        font-family: 'Noto Sans Italic';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url(./notosans-italic.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
     </style>
 
     <!-- load turf globally because import causes polymer build out of heap memory error -->

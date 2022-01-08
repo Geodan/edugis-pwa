@@ -535,6 +535,9 @@
       {
         "id": "place-country-other_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "Overige landen"
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -585,6 +588,9 @@
       {
         "id": "place-country-3_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "land 3"
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -635,6 +641,9 @@
       {
         "id": "place-country-2_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "land 2"
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -685,6 +694,9 @@
       {
         "id": "place-country-1_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "land 1"
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "filter": [
@@ -731,6 +743,9 @@
       {
         "id": "place-continent_poi",
         "type": "symbol",
+        "metadata": {
+          "title": "Continent"
+        },
         "source": "openmaptiles",
         "source-layer": "place",
         "maxzoom": 1,

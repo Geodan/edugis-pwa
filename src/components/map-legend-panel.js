@@ -10,6 +10,7 @@ import './color-picker';
 import './map-legend-line';
 import './map-legend-fill';
 import './map-legend-circle';
+import './map-legend-symbol';
 
 /**
 * @polymer
@@ -583,7 +584,8 @@ class MapLegendPanel extends LitElement {
         legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
         break;
       case 'fill-extrusion':
-        legendContent = this.filleExtrusionLegend(maplayer, items);
+        //legendContent = this.filleExtrusionLegend(maplayer, items);
+        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
         break;
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
@@ -599,7 +601,24 @@ class MapLegendPanel extends LitElement {
         }
         break;
       case 'symbol':
-        legendContent = '';
+        //legendContent = '';
+        let fontSize = maplayer.layout["text-size"];
+        if (fontSize && typeof fontSize !== 'number') {
+          fontSize = mbStyleParser.getZoomDependentPropertyInfo(this.zoom,fontSize,layerTitle);
+          if (fontSize.items && fontSize.items.length) {
+            fontSize = fontSize.items[0].value;
+          } else {
+            fontSize = 12;
+          }
+        }
+        let font = maplayer.layout["text-font"];
+        if (Array.isArray(font)) {
+          font = font.join(', ');
+        }
+        const fontColor=maplayer.paint?maplayer.paint["text-color"]?maplayer.paint["text-color"]:"#000":"#000";
+        const textTransform = maplayer.layout && maplayer.layout["text-transform"]?`text-transform:${maplayer.layout["text-transform"]};`:''
+        const fontStyle = `font-family:${font};font-size:${fontSize}px;color:${fontColor};${textTransform}`;
+        legendContent = html`<map-legend-symbol .items="${items}" title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle}></map-legend-symbol>`
         break;
       case 'background':
         legendContent = this.backgroundLegend(maplayer);

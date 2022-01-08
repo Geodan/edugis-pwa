@@ -630,6 +630,11 @@ class WebMap extends LitElement {
           layerInfo.source.maxzoom = sourceMaxzoom;
         }
       }
+      if (layerInfo.type === 'symbol' && layerInfo.layout && layerInfo.layout.hasOwnProperty("icon-image")) {
+        if (layerInfo.metadata && !layerInfo.metadata.imageData) {
+          layerInfo.metadata.imageData = this._getIconImageDataFromLayer(layerInfo);
+        }
+      }
       if (layerInfo.metadata && layerInfo.metadata.reference) {
         this.removeReferenceLayers();
         this.layerlist = [...this.layerlist.filter(layer=>layer.reference==false || layer.background)];        
@@ -2164,6 +2169,51 @@ class WebMap extends LitElement {
         this.featureInfo = [{layer:{metadata:{title:'Gekozen kaartlagen'}},properties:[]}];
       } else {
         this.featureInfo = featureInfo.reverse();
+      }
+    }
+  }
+  _iconData(iconName, title) {
+    if (!this._iconDataCache) {
+      const images = this.map.style.imageManager.images;
+      this._iconDataCache = []
+      for (const name in images) {
+        const {height,width,data} = images[name].data;
+        const size = Math.max(width, height);
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        const offsetX = (size - width) / 2;
+        const offsetY = (size - height) / 2;
+        const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
+        ctx.putImageData(imageData, offsetX, offsetY);
+        this._iconDataCache.push({name: name, data: canvas.toDataURL()});
+      }
+    }
+    const iconSearch = iconName.replace(/{[^}]+}/g, '(.+)');
+    const matchingIcons = this._iconDataCache.filter(({name})=>name.search(iconSearch) !== -1).map(iconInfo=>{
+      const attributeValues = iconInfo.name.match(iconSearch).slice(1);
+      let attributeNames = attributeValues.length ? iconName.match(/{[^}]+}/g).slice(0) : [];
+      if (attributeNames.length === 0) {
+        attributeNames.push(title)
+      } else {
+        attributeNames = attributeNames.map(attr=>attr.slice(1,-1));
+      }
+      return {
+        iconName: iconInfo.name,
+        data: iconInfo.data,
+        attributeValues: attributeValues,
+        attributeNames: attributeNames
+      }
+    });
+    return matchingIcons;
+  }
+  _getIconImageDataFromLayer(layerInfo) {
+    let iconName = layerInfo.layout ? layerInfo.layout["icon-image"] : undefined;
+    if (iconName) {
+      if (typeof iconName === 'string') {
+        const title = layerInfo.metadata && layerInfo.metadata.title ? layerInfo.metadata.title : layerInfo.id;
+        return this._iconData(iconName, title);
       }
     }
   }

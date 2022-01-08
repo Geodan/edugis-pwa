@@ -92,7 +92,7 @@ class MapLegendCircle extends LitElement {
             const strokeColor = items.strokeColorItems.length ? items.strokeColorItems[0].paintValue : color;
             const strokeWidth = items.strokeWidthItems.lenght ? items.strokeWidthItems[0].paintValue : 1;
             const radius = items.radiusItems.length ? items.radiusItems[0].paintValue : 3;
-            const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: this.title;
+            const label = items.colorItems.length ? items.colorItems[0].attrName: this.title;
             return html`
             <div class="container">${this._circleItem(color, strokeColor, strokeWidth, radius, label)}</div>
             `
@@ -101,7 +101,7 @@ class MapLegendCircle extends LitElement {
         let usedRadiusValues = new Set();
         if (items.colorItems.length > 1) {
             result.push(html`${items.colorItems[0].attrName}`);
-            const coloredCircles = items.colorItems.map(({paintValue,attrExpression,attrValue})=>{
+            const coloredCircles = items.colorItems.map(({paintValue,attrValue})=>{
                 if (attrValue === undefined) {
                     return html``;
                 }
@@ -155,9 +155,9 @@ class MapLegendCircle extends LitElement {
                             radius = 3;
                         }
                 }
-                const label = attrExpression ? attrExpression === '==' ? attrValue : `${attrExpression} ${attrValue}` : attrValue;
+                //const label = attrExpression ? attrExpression === '==' ? attrValue : `${attrExpression} ${attrValue}` : attrValue;
                 return html`
-                <div class="container">${this._circleItem(paintValue, strokeColor, strokeWidth, radius, label)}</div>
+                <div class="container">${this._circleItem(paintValue, strokeColor, strokeWidth, radius, attrValue)}</div>
                 `
             });
             result.push(coloredCircles);
@@ -170,7 +170,7 @@ class MapLegendCircle extends LitElement {
               const radii = items.radiusItems
                 .filter(({attrName})=>attrName !== undefined)
                 .sort((a,b)=>b.paintValue-a.paintValue)
-                .map(({paintValue,attrExpression,attrValue})=>
+                .map(({paintValue,attrValue})=>
                   html`<li style="--radius:${paintValue}px"><span>${attrValue}</span></li>`);
               result.push(html`<div class="bubblecontainer"><ul class="bubbles" style="--map-legend-bubble-background:${bgcolor}">${radii}</ul></div>`)
             }
