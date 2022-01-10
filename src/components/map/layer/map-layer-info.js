@@ -129,7 +129,7 @@ class MapLayerInfo extends LitElement {
         } else if (this.layer.type === 'style') {
             for (let type of ["hillshade","fill","raster","circle","line","fill-extrusion","heatmap","sky","symbol","background"]) {
                 let layer = this.layer.metadata.sublayers.find(layer=>layer.type === type);                
-                if (layer) {
+                if (layer && layer.paint) {
                     let opacityname = layer.type==='hillshade'?'hillshade-exaggeration':`${layer.type}-opacity`;
                     if (layer.paint.hasOwnProperty(opacityname)) {
                         return Math.round(100*(1 - layer.paint[opacityname]));

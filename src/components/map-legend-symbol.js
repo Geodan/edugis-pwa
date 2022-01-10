@@ -19,7 +19,6 @@ class MapLegendSymbol extends LitElement {
     static get properties() { 
         return { 
           title: {stype: String},
-          items: {type: Object},
           symbols: {type: Array},
           fontStyle: {type: String}
         }; 
@@ -27,7 +26,6 @@ class MapLegendSymbol extends LitElement {
     constructor() {
         super();
         this.title = "untitled";
-        this.items = [];
         this.symbols = [];
         this.fontStyle = "font-size:12";
     }
@@ -35,10 +33,10 @@ class MapLegendSymbol extends LitElement {
         if (this.symbols && this.symbols.length) {
             const result = [];
             if (this.symbols.length > 1) {
-                result.push(html`<div>${this.symbols[0].attributeNames.join(',')}</div>`)
+                result.push(html`<div>${this.title}</div>`)
             }
             for (const symbol of this.symbols) {
-                const label = this.symbols.length === 1 ? symbol.attributeNames.join(',') : symbol.attributeValues.join(',');
+                const label = this.symbols.length === 1 ? this.title : symbol.attributeValues.join(',');
                 result.push(html`<div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div>`)
             }
             return result;

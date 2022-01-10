@@ -1,43 +1,6 @@
 {
   "version": 8,
   "name": "OSM Bright",
-  "metadata": {
-    "mapbox:type": "template",
-    "mapbox:groups": {
-      "1444849364238.8171": {
-        "collapsed": false,
-        "name": "Buildings"
-      },
-      "1444849354174.1904": {
-        "collapsed": true,
-        "name": "Tunnels"
-      },
-      "1444849388993.3071": {
-        "collapsed": false,
-        "name": "Land"
-      },
-      "1444849242106.713": {
-        "collapsed": false,
-        "name": "Places"
-      },
-      "1444849382550.77": {
-        "collapsed": false,
-        "name": "Water"
-      },
-      "1444849345966.4436": {
-        "collapsed": false,
-        "name": "Roads"
-      },
-      "1444849334699.1902": {
-        "collapsed": true,
-        "name": "Bridges"
-      }
-    },
-    "mapbox:autocomposite": false,
-    "openmaptiles:version": "3.x",
-    "openmaptiles:mapbox:owner": "openmaptiles",
-    "openmaptiles:mapbox:source:url": "mapbox://openmaptiles.4qljc88t"
-  },
   "sources": {
     "openmaptiles": {
       "type": "vector",
@@ -3864,6 +3827,14 @@
     {
       "id": "poi-level-3",
       "type": "symbol",
+      "metadata": {
+        "title": "Point of Interest 3",
+        "attributes": {
+          "ignoreLegendSymbolValues" : [
+            {"name": "class", "values": ["road","us-highway","us-interstate","us-state"]}
+          ]
+        }
+      },
       "source": "openmaptiles",
       "source-layer": "poi",
       "minzoom": 16,
@@ -3996,6 +3967,14 @@
     {
       "id": "poi-railway",
       "type": "symbol",
+      "metadata": {
+        "title": "station",
+        "attributes": {
+          "allowLegendSymbolValues": [
+            {"name":"class", "values": ["railway"]}
+          ]
+        }
+      },
       "source": "openmaptiles",
       "source-layer": "poi",
       "minzoom": 13,
@@ -4236,6 +4215,9 @@
     {
       "id": "highway-name-major",
       "type": "symbol",
+      "metadata": {
+        "title": "Naam snelweg"
+      },
       "source": "openmaptiles",
       "source-layer": "transportation_name",
       "minzoom": 12.2,
@@ -4276,6 +4258,14 @@
     },
     {
       "id": "highway-shield",
+      "metadata": {
+        "title": "Snelweg label",
+        "attributes": {
+          "ignoreLegendSymbolValues" : [
+            {"name": "ref_length", "values": ["11",11]}
+          ]
+        }
+      },
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
@@ -4330,6 +4320,17 @@
     {
       "id": "highway-shield-us-interstate",
       "type": "symbol",
+      "metadata": {
+        "title": "USA interstate",
+        "attributes": {
+          "ignoreLegendSymbolValues" : [
+            {"name": "ref_length", "values": ["11",11]}
+          ],
+          "allowLegendSymbolValues" : [
+            {"name": "network", "values": ["us-interstate"]}
+          ]
+        }
+      },
       "source": "openmaptiles",
       "source-layer": "transportation_name",
       "minzoom": 7,
@@ -4389,6 +4390,17 @@
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "transportation_name",
+      "metadata": {
+        "title": "Overige USA snelweg",
+        "attributes": {
+          "ignoreLegendSymbolValues" : [
+            {"name": "ref_length", "values": ["11",11]}
+          ],
+          "allowLegendSymbolValues" : [
+            {"name": "network", "values": ["us-highway", "us-state"]}
+          ]
+        }
+      },
       "minzoom": 9,
       "filter": [
         "all",
@@ -4442,7 +4454,7 @@
       "id": "place-other",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Overige namen"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4488,7 +4500,7 @@
       "id": "place-village",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Kleinere plaats"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4528,7 +4540,7 @@
       "id": "place-town",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Plaats"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4568,7 +4580,7 @@
       "id": "place-city",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Stad"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4616,7 +4628,7 @@
       "id": "place-city-capital",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Hoofdstad"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4669,10 +4681,10 @@
     },
     {
       "id": "place-country-other",
-      "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Landnaam overig"
       },
+      "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "place",
       "filter": [
@@ -4724,7 +4736,7 @@
       "id": "place-country-3",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Landnaam (orde 3)"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4777,7 +4789,7 @@
       "id": "place-country-2",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Landnaam (orde 2)"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4830,7 +4842,7 @@
       "id": "place-country-1",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Landnaam (orde 1)"
       },
       "source": "openmaptiles",
       "source-layer": "place",
@@ -4883,7 +4895,7 @@
       "id": "place-continent",
       "type": "symbol",
       "metadata": {
-        "mapbox:group": "1444849242106.713"
+        "title": "Continent"
       },
       "source": "openmaptiles",
       "source-layer": "place",

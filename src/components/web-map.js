@@ -507,7 +507,6 @@ class WebMap extends LitElement {
     this.setReferenceLayers(styleId, styleTitle);
     /* restore old non-reference layers */
     this.restoreNoneReferenceLayers();
-
     /* allow new styles to be set */
     setTimeout(()=>{
         this.resetLayerList();
@@ -590,7 +589,7 @@ class WebMap extends LitElement {
       layerInfo.metadata = Object.assign(layerInfo.metadata || {}, {userlayer: true});
       this.insertServiceKey(layerInfo);
       this.insertTime(layerInfo);
-      if (layerInfo.metadata.wms) {
+      if (layerInfo.metadata.wms && !layerInfo.metadata.featureinfoproxy) {
         if (!layerInfo.metadata.legendurl && layerInfo.metadata.legendurl !== '') {
           layerInfo.metadata.legendurl = wmsUrl(layerInfo.source.tiles[0], 'getlegendgraphic');
         }
@@ -1647,6 +1646,7 @@ class WebMap extends LitElement {
         console.log("layerlist empty")
         return;
       }
+      this._updateLayerIconImages();
       const layerlist = this.map.getStyle().layers;
       this.updateLayerCalculatedPaintProperties(layerlist);
       this.layerlist = [...layerlist];
@@ -2178,15 +2178,16 @@ class WebMap extends LitElement {
       this._iconDataCache = []
       for (const name in images) {
         const {height,width,data} = images[name].data;
-        const size = Math.max(width, height);
+        //const size = Math.max(width, height);
         const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
+        canvas.width = width;
+        canvas.height = height;
         const ctx = canvas.getContext('2d');
-        const offsetX = (size - width) / 2;
-        const offsetY = (size - height) / 2;
+        //const offsetX = (size - width) / 2;
+        //const offsetY = (size - height) / 2;
         const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
-        ctx.putImageData(imageData, offsetX, offsetY);
+        //ctx.putImageData(imageData, offsetX, offsetY);
+        ctx.putImageData(imageData, 0, 0);
         this._iconDataCache.push({name: name, data: canvas.toDataURL()});
       }
     }
@@ -2208,12 +2209,57 @@ class WebMap extends LitElement {
     });
     return matchingIcons;
   }
+  _filterForAllowedAndIgnoredIcons(layer, icons) {
+    if (layer.metadata && layer.metadata.attributes) {
+      if (layer.metadata.attributes.ignoreLegendSymbolValues) {
+        for (const attribute of layer.metadata.attributes.ignoreLegendSymbolValues) {
+          icons = icons.filter(icon=>{
+            let index = icon.attributeNames.indexOf(attribute.name);
+            if (index > -1) {
+              if (icon.attributeValues.length > index) {
+                return !attribute.values.includes(icon.attributeValues[index]);
+              }
+            }
+            return true;
+          })
+        }
+      }
+      if (layer.metadata.attributes.allowLegendSymbolValues) {
+        for (const attribute of layer.metadata.attributes.allowLegendSymbolValues) {
+          icons = icons.filter(icon=>{
+            let index = icon.attributeNames.indexOf(attribute.name);
+            if (index > -1) {
+              if (icon.attributeValues.length > index) {
+                return attribute.values.includes(icon.attributeValues[index]);
+              }
+            }
+            return true;
+          })
+        }
+      }
+    }
+    return icons;
+  }
   _getIconImageDataFromLayer(layerInfo) {
-    let iconName = layerInfo.layout ? layerInfo.layout["icon-image"] : undefined;
+    let iconName = layerInfo.layout && layerInfo.layout["icon-image"] ? layerInfo.layout["icon-image"] :
+            layerInfo.paint && layerInfo.paint["fill-pattern"] ? layerInfo.paint["fill-pattern"] :
+              undefined;
     if (iconName) {
       if (typeof iconName === 'string') {
         const title = layerInfo.metadata && layerInfo.metadata.title ? layerInfo.metadata.title : layerInfo.id;
-        return this._iconData(iconName, title);
+        return this._filterForAllowedAndIgnoredIcons(layerInfo, this._iconData(iconName, title));
+      }
+    }
+  }
+  _updateLayerIconImages() {
+    this.iconCache = undefined;
+    const layers = this.map.getStyle().layers;
+    for (const layer of layers) {
+      if ((
+          (layer.layout && layer.layout.hasOwnProperty('icon-image'))
+          || (layer.paint && layer.paint.hasOwnProperty("fill-pattern"))
+          ) && !layer.metadata.imageData) {
+          layer.metadata.imageData = this._getIconImageDataFromLayer(layer);
       }
     }
   }

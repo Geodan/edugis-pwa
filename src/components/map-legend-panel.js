@@ -126,7 +126,6 @@ class MapLegendPanel extends LitElement {
             }
           }
         }
-        const hideLegend = (maplayer.metadata && maplayer.metadata.hidelegend)?maplayer.metadata.hidelegend:"";
         colorResult.items = colorResult.items.map(item=>{
           item.width = widthResult.items.length == 1 ? widthResult.items[0].lineWidth : widthResult.items[Math.floor(widthResult.items.length / 2)].lineWidth;
           return item;
@@ -145,7 +144,7 @@ class MapLegendPanel extends LitElement {
           }
           widthResult.propertyname = null;
         }
-        if (colorResult.items.length > 1 && widthResult.items.length > 1 && hideLegend == "") {
+        if (colorResult.items.length > 1 && widthResult.items.length > 1) {
           return html`
           <style>
             .twocolumn {
@@ -167,7 +166,7 @@ class MapLegendPanel extends LitElement {
           })}</div>
           </div>`
         }
-        if (colorResult.items.length > 1 && hideLegend !== "color") {
+        if (colorResult.items.length > 1) {
           return html`
           <div>${colorResult.propertyname?html` ${colorResult.propertyname}<br>`:''}
           ${colorResult.items.map(color=>{
@@ -179,9 +178,6 @@ class MapLegendPanel extends LitElement {
               ${legendItem}
             </color-picker>`
           })}</div>`
-        }
-        if (hideLegend === "size") {
-          return html``;
         }
         return html`
           <div>
@@ -224,9 +220,6 @@ class MapLegendPanel extends LitElement {
     }
     if (!Array.isArray(lineColor)) {
       lineColor = [lineColor];
-    }
-    if (hideLegend === "color") {
-      return html``;
     }
     return svg`${lineColor.map((color, index)=>{
         return svg`<svg width="30" height="15">
@@ -562,6 +555,9 @@ class MapLegendPanel extends LitElement {
     this._addExpressionOperatorsToValues(items.strokeWidthItems);
   }
   getLegendContent(maplayer) {
+    if (maplayer && maplayer.metadata && maplayer.metadata.hidelegend) {
+      return html``;
+    }
     if ((maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom) || (maplayer.hasOwnProperty('maxzoom') && maplayer.maxzoom < this.zoom)) {
       return html``;
     }
@@ -581,7 +577,11 @@ class MapLegendPanel extends LitElement {
         break;
       case 'fill':
         //legendContent = this.fillLegend(maplayer, items);
-        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
+        if (maplayer.paint && maplayer.paint["fill-pattern"]) {
+          legendContent = legendContent = html`<map-legend-symbol title="${layerTitle}" .symbols="${maplayer.metadata.imageData}"></map-legend-symbol>`
+        } else {
+          legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
+        }
         break;
       case 'fill-extrusion':
         //legendContent = this.filleExtrusionLegend(maplayer, items);
@@ -618,10 +618,11 @@ class MapLegendPanel extends LitElement {
         const fontColor=maplayer.paint?maplayer.paint["text-color"]?maplayer.paint["text-color"]:"#000":"#000";
         const textTransform = maplayer.layout && maplayer.layout["text-transform"]?`text-transform:${maplayer.layout["text-transform"]};`:''
         const fontStyle = `font-family:${font};font-size:${fontSize}px;color:${fontColor};${textTransform}`;
-        legendContent = html`<map-legend-symbol .items="${items}" title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle}></map-legend-symbol>`
+        legendContent = html`<map-legend-symbol title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle}></map-legend-symbol>`
         break;
       case 'background':
-        legendContent = this.backgroundLegend(maplayer);
+        //legendContent = this.backgroundLegend(maplayer);
+        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
         break;
       case 'heatmap':
       case 'hillshade':

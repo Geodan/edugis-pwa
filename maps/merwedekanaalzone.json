@@ -197,8 +197,7 @@
                   "userlayer": true,
                   "attributes": {
                     "translations": [{"name": "ktype", "translation": "spanning"}]
-                  },
-                  "hidelegend": "size"
+                  }
                 }
               },
               "id": "Stedin_kabels_vectortile_id"
