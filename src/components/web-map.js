@@ -2157,10 +2157,12 @@ class WebMap extends LitElement {
         }
       }
       if (this.streetViewOn) {
-        const streetViewInfo = {"type":"Feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {}}};
+        const streetViewInfo = {"type":"Feature", "properties": {"image": "retrieving..."}, "layer": {"id":"streetview", "metadata": {"attributes":{"allowedattributes":["image"],"translations":[{"name":"image","translation":"afbeelding"}]}}}};
         featureInfo.push(streetViewInfo);
         this.getStreetViewImage(e.lngLat).then(imageurl=>{
           streetViewInfo.properties.image = imageurl;
+          streetViewInfo.properties.latitude = e.lngLat.lat;
+          streetViewInfo.properties.longitude = e.lngLat.lng;
           this.featureInfo = [...this.featureInfo];
           this.requestUpdate();
         });

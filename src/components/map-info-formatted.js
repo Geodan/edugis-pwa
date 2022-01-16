@@ -38,7 +38,8 @@ class MapInfoFormatted extends LitElement {
       border-collapse: collapse;
     }
     tr.even {background: #f0f0f0;}
-    td {width:50%};
+    td {width:50%;}
+    .attributevalue .clickImage {cursor: pointer;}
   `}
   
   constructor() {
@@ -181,7 +182,34 @@ class MapInfoFormatted extends LitElement {
     return html`<tr class=${odd?'':"even"}><td><div class="attributename">${key}</div></td>
     <td><div class="attributevalue">${typeof value === 'object' && value !== null?
           JSON.stringify(value)
-        :isImage?html`<img src="${value}" width="95%">`:value}</div></td></tr>`
+        :isImage?html`<img class="clickImage" src="${value}" width="95%" @click="${e=>this._imageClicked(e)}">`:value}</div></td></tr>`
+  }
+  _imageClicked(event) {
+    const imageUrl = event.target.src;
+    if (imageUrl.startsWith('https://maps.googleapis.com')) {
+      const streetViewLayer = this.info.filter(infoItem=>infoItem.layer.id === 'streetview');
+      if (streetViewLayer.length) {
+        const props = streetViewLayer[0].properties;
+        // https://stackoverflow.com/questions/387942/google-street-view-url
+        const streetViewUrl = `https://maps.google.com/maps?q=&layer=c&cbll=${props.latitude},${props.longitude}&cbp=11,0,0,0,0`
+        this.dispatchEvent(new CustomEvent('showmodaldialog', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            markdown: `[![Afbeelding](${imageUrl})](${streetViewUrl})`
+          }
+        }))
+      }
+      return;
+    }
+    this.dispatchEvent(new CustomEvent('showmodaldialog', {
+      bubbles: true,
+      composed: true,
+      detail: {
+        markdown: `![Afbeelding](${event.target.src})`
+      }
+    }))
   }
 }
+
 customElements.define('map-info-formatted', MapInfoFormatted);

@@ -79,7 +79,7 @@ class MapModalDialog extends LitElement {
     if (!this.active) {
       return html``;
     }
-    const parsed = DOMPurify.sanitize(marked.parse(this.markdown));
+    const parsed = DOMPurify.sanitize(marked.parse(this.markdown)).replace(/<a /g, '<a target="_blank" rel="nofollow" ');
     return html`
     <div id="overlay" @click=${e=>this._close(e)}>
       <div id="window" @click=${e=>e.stopPropagation()}>
