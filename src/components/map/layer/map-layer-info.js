@@ -69,7 +69,7 @@ class MapLayerInfo extends LitElement {
                 position: relative;
             }
             #legend {
-                max-height: 3000px;
+                max-height: 6000px;
                 overflow: hidden;
                 transition: max-height .8s ease-in-out;
             }
@@ -196,7 +196,15 @@ class MapLayerInfo extends LitElement {
     }
     _togglelegendclipped() {
         this.legendclipped = !this.legendclipped;
-        this.layer.metadata.legendclipped = this.legendclipped;        
+        this.layer.metadata.legendclipped = this.legendclipped;
+        if (this.layer.metadata 
+                && this.layer.metadata.sublayers 
+                && this.layer.metadata.sublayers.length
+                && this.layer.metadata.sublayers[0].metadata) {
+            // the layer is a layer set (a style), also store legendclipped status in first sublayer
+            // to be restored when a new layer set is constructed in <map-layer-set>
+            this.layer.metadata.sublayers[0].metadata.legendclipped = this.legendclipped;
+        }
     }
     _renderLinks(text) {
         let matches = text.matchAll(/https?:\/\/[^,;\s)]*/g);

@@ -1625,17 +1625,9 @@ class WebMap extends LitElement {
     })
   };
 
-  updateLayerCalculatedPaintProperties(layerlist) {
-    layerlist.forEach(layer=>{
-      const mapLayer = this.map.getLayer(layer.id);
-      if (mapLayer && mapLayer.paint) {
-        layer._paint = mapLayer.paint;
-      }
-    });
-  }
-
+  
   mapHasZoomed() {
-    this.updateLayerCalculatedPaintProperties(this.layerlist);
+    this.resetLayerListRequested = true;
   }
 
   mapHasRendered() {
@@ -1647,9 +1639,8 @@ class WebMap extends LitElement {
         return;
       }
       this._updateLayerIconImages();
-      const layerlist = this.map.getStyle().layers;
-      this.updateLayerCalculatedPaintProperties(layerlist);
-      this.layerlist = [...layerlist];
+      const newLayerList = this.map.getStyle().layers
+      this.layerlist = [...newLayerList];
       this.checkMapIsLanguageSwitcherCapable(true);
       this.updateInBounds();
       this.resetLayerListRequested = false;

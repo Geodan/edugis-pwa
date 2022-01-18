@@ -1,6 +1,7 @@
 import {LitElement, html, css, svg} from 'lit-element';
-import {hcl, lab} from '../utils/colorspace';
-import Color from '../utils/color';
+import './color-picker';
+/* import {hcl, lab} from '../utils/colorspace';
+imort Color from '../utils/color'; */
 class MapLegendFill extends LitElement {
     static get styles() {
         return css`
@@ -22,7 +23,8 @@ class MapLegendFill extends LitElement {
     static get properties() { 
         return { 
           title: {stype: String},
-          items: {type: Object}
+          items: {type: Object},
+          layerid: {type: String}
         }; 
     }
     constructor() {
@@ -40,7 +42,9 @@ class MapLegendFill extends LitElement {
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('items')) {
-            // do something with sprop change
+            if (this.layerid === 'background') {
+                console.log(`background color: ${this.items.colorItems[0].paintValue}`);
+            }
         }
         return true;
     }
@@ -96,7 +100,7 @@ class MapLegendFill extends LitElement {
             const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: this.title;
             const fill = this._fillItem(color, strokeColor, label);
             return html`
-            <div class="container">${fill}</div>
+            <color-picker @change="${this._fillColorChanged}" .color=${color}><div class="container">${fill}</div></color-picker>
             `
         }
         if (items.colorItems[0].attrExpression && items.colorItems[0].attrExpression.startsWith('interpolate-')) {
@@ -139,6 +143,22 @@ class MapLegendFill extends LitElement {
             }
         }
         return result;
+    }
+    _fillColorChanged(event) {
+        this.items.colorItems[0].paintValue = event.detail.color;
+        const itemsCopy = {
+            colorItems: this.items.colorItems,
+            radiusItems: this.items.radiusItems,
+            strokeColorItems: this.items.strokeColorItems,
+            strokeWidthItems: this.strokeWidthItems
+        }
+        this.items = itemsCopy;
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                color: event.detail.color
+            }
+        }))
     }
     firstUpdated() {
 

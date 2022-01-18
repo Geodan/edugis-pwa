@@ -186,7 +186,7 @@ class MapLegendPanel extends LitElement {
             const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${width.lineColor};stroke-width:${width.lineWidth};" />
             </svg>${html` ${width.label}`}`;
-            return html`<color-picker .layerid="${maplayer.id}" .color=${width.lineColor} .width=${width.lineWidth} @change="${this._updatePaintProperty}">${legendItem}</color-picker>`
+            return html`<color-picker @change="${this._updatePaintProperty}" .layerid="${maplayer.id}" .color=${width.lineColor} .width=${width.lineWidth} @change="${this._updatePaintProperty}">${legendItem}</color-picker>`
           })}</div>`
       }
     } else {
@@ -580,12 +580,12 @@ class MapLegendPanel extends LitElement {
         if (maplayer.paint && maplayer.paint["fill-pattern"]) {
           legendContent = legendContent = html`<map-legend-symbol title="${layerTitle}" .symbols="${maplayer.metadata.imageData}"></map-legend-symbol>`
         } else {
-          legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
+          legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
         }
         break;
       case 'fill-extrusion':
         //legendContent = this.filleExtrusionLegend(maplayer, items);
-        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
+        legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
         break;
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
@@ -622,7 +622,7 @@ class MapLegendPanel extends LitElement {
         break;
       case 'background':
         //legendContent = this.backgroundLegend(maplayer);
-        legendContent = html`<map-legend-fill .items="${items}" title="${layerTitle}"></map-legend-fill>`
+        legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
         break;
       case 'heatmap':
       case 'hillshade':

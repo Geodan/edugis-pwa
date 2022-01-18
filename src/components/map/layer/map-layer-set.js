@@ -49,7 +49,7 @@ class MapLayerSet extends LitElement {
     }
     constructor() {
         super();
-        this.layerlist = this.groupedLayerList = [];
+        this.layerlist = this.layerSet = [];
         this.nolayer = null;
         this.userreorder = false;
         this.open = false;
@@ -61,7 +61,7 @@ class MapLayerSet extends LitElement {
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layerlist')) {
-            this.groupedLayerList = this.layerlist.reduce((result, layer)=>{
+            this.layerSet = this.layerlist.reduce((result, layer)=>{
                 if (layer.metadata && layer.metadata.styleid) {
                     if (result.previd !== layer.metadata.styleid) {
                         // new style layer
@@ -82,6 +82,14 @@ class MapLayerSet extends LitElement {
                 }
                 return result;
             }, {group: [], previd: ""}).group;
+            for (const layer of this.layerSet)
+                if (layer.metadata 
+                && layer.metadata.sublayers
+                && layer.metadata.sublayers.length
+                && layer.metadata.sublayers[0].metadata) {
+                // restore legendclipped setting to whole layerSet, see <map-layer-info> toggleLegendClipped
+                layer.metadata.legendclipped = layer.metadata.sublayers[0].metadata.legendclipped;
+            }
             this._setGroupLayerProperties();
             this._updateContainers();
         }
@@ -117,7 +125,7 @@ class MapLayerSet extends LitElement {
     }
     _setGroupLayerProperties() {
         // set minzoom, maxzoom, boundspos for grouped layers
-        this.groupedLayerList.forEach(layer=>{
+        this.layerSet.forEach(layer=>{
             if (layer.metadata && layer.metadata.sublayers && layer.metadata.sublayers.length) {
                 // this is a group layer
                 layer.minzoom = layer.metadata.sublayers.reduce((result, sublayer)=>{
@@ -156,10 +164,10 @@ class MapLayerSet extends LitElement {
         })
     }
     _renderLayerList() {
-        if (this.groupedLayerList.length == 0) {
+        if (this.layerSet.length == 0) {
             return html`<map-layer .nolayer="${this.nolayer}"></map-layer>`;
         }
-        return this.groupedLayerList.map((layer,index)=>{
+        return this.layerSet.map((layer,index)=>{
             let boundspos = layer.metadata && layer.metadata.boundspos ? layer.metadata.boundspos : "";
             return html`<map-layer 
                 .first="${index == 0}"
@@ -198,8 +206,8 @@ class MapLayerSet extends LitElement {
     }
     _moveLayer(event) {
         /* add detail.layers to event, the bubble up */
-        let sourceLayer = this.groupedLayerList.find(layer=>layer.id === event.detail.layer);
-        let targetLayer = this.groupedLayerList.find(layer=>layer.id == event.detail.beforeLayer);
+        let sourceLayer = this.layerSet.find(layer=>layer.id === event.detail.layer);
+        let targetLayer = this.layerSet.find(layer=>layer.id == event.detail.beforeLayer);
         if (sourceLayer && targetLayer) {
             event.detail.layers = sourceLayer.metadata.sublayers ? sourceLayer.metadata.sublayers.map(layer=>layer.id): [sourceLayer.id];
             if (targetLayer.metadata.sublayers) {
