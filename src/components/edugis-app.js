@@ -170,7 +170,7 @@ footer a:hover {
     </header>
     <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
     <tool-tip></tool-tip>
-    <footer className="App-footer">&copy;2021 <a href="about.html" target="about">EduGIS</a></footer>
+    <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">EduGIS</a></footer>
     `;
   }
   firstUpdated() {
