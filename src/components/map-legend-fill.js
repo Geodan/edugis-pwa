@@ -1,5 +1,5 @@
 import {LitElement, html, css, svg} from 'lit-element';
-import './color-picker';
+import './map-legend-item-edit';
 /* import {hcl, lab} from '../utils/colorspace';
 imort Color from '../utils/color'; */
 class MapLegendFill extends LitElement {
@@ -41,11 +41,7 @@ class MapLegendFill extends LitElement {
         //window.removeEventListener('keydown', this._handleKeydown);
     }
     shouldUpdate(changedProp) {
-        if (changedProp.has('items')) {
-            if (this.layerid === 'background') {
-                console.log(`background color: ${this.items.colorItems[0].paintValue}`);
-            }
-        }
+        // if (changedProp.has('items')) {}
         return true;
     }
     _fillItem(color, strokeColor, label) {
@@ -96,11 +92,12 @@ class MapLegendFill extends LitElement {
         const items = this.items;
         if (items.colorItems.length <= 1 && items.strokeColorItems.length <= 1) {
             const color = items.colorItems.length ? items.colorItems[0].paintValue : 'rgba(0,0,0,0)';
+            const lineColor = items.strokeColorItems.length ? items.strokeColorItems[0].paintValue : undefined;
             const strokeColor = items.strokeColorItems.length ? items.strokeColorItems[0].paintValue : color;
             const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: this.title;
             const fill = this._fillItem(color, strokeColor, label);
             return html`
-            <color-picker @change="${this._fillColorChanged}" .color=${color}><div class="container">${fill}</div></color-picker>
+            <map-legend-item-edit @change="${this._fillColorChanged}" legendItemType="fill" .color=${color} .lineColor=${lineColor}><div class="container">${fill}</div></map-legend-item-edit>
             `
         }
         if (items.colorItems[0].attrExpression && items.colorItems[0].attrExpression.startsWith('interpolate-')) {

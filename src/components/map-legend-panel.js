@@ -6,7 +6,7 @@
 import {LitElement, html, svg, css} from 'lit-element';
 import mbStyleParser from '../utils/mbox-style-parse.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
-import './color-picker';
+import './map-legend-item-edit';
 import './map-legend-line';
 import './map-legend-fill';
 import './map-legend-circle';
@@ -174,9 +174,9 @@ class MapLegendPanel extends LitElement {
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${color.lineColor};stroke-width:${color.width};" />
             </svg>${html` ${color.label}`}`;
             return html`
-            <color-picker .layerid="${maplayer.id}" .color=${width.lineColor} .width=${color.width} @change="${this._updatePaintProperty}">
+            <map-legend-item-edit .layerid="${maplayer.id}" .color=${width.lineColor} .width=${color.width} @change="${this._updatePaintProperty}">
               ${legendItem}
-            </color-picker>`
+          </map-legend-item-edit>`
           })}</div>`
         }
         return html`
@@ -186,7 +186,7 @@ class MapLegendPanel extends LitElement {
             const legendItem = svg`<svg width="30" height="15">
             <line x1="0" y1="15" x2="30" y2="0" style="stroke:${width.lineColor};stroke-width:${width.lineWidth};" />
             </svg>${html` ${width.label}`}`;
-            return html`<color-picker @change="${this._updatePaintProperty}" .layerid="${maplayer.id}" .color=${width.lineColor} .width=${width.lineWidth} @change="${this._updatePaintProperty}">${legendItem}</color-picker>`
+            return html`<map-legend-item-edit @change="${this._updatePaintProperty}" .layerid="${maplayer.id}" .color=${width.lineColor} .width=${width.lineWidth} @change="${this._updatePaintProperty}">${legendItem}</map-legend-item-edit>`
           })}</div>`
       }
     } else {
