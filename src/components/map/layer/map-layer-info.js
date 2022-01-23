@@ -67,6 +67,7 @@ class MapLayerInfo extends LitElement {
                 height: 100px;
                 margin-top: -100px;
                 position: relative;
+                pointer-events: none;
             }
             #legend {
                 max-height: 6000px;

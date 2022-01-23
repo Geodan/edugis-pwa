@@ -97,7 +97,12 @@ class MapLegendFill extends LitElement {
             const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: this.title;
             const fill = this._fillItem(color, strokeColor, label);
             return html`
-            <map-legend-item-edit @change="${this._fillColorChanged}" legendItemType="fill" .color=${color} .lineColor=${lineColor}><div class="container">${fill}</div></map-legend-item-edit>
+            <map-legend-item-edit 
+                @change="${this._fillColorChanged}"
+                @changeLineColor="${this._lineColorChanged}"
+                legendItemType="fill" 
+                .color=${color} 
+                .lineColor=${lineColor}><div class="container">${fill}</div></map-legend-item-edit>
             `
         }
         if (items.colorItems[0].attrExpression && items.colorItems[0].attrExpression.startsWith('interpolate-')) {
@@ -124,7 +129,13 @@ class MapLegendFill extends LitElement {
                     usedStrokeValues.add(strokeColors[0].attrValue);
                 }
                 if (label) {
-                    result.push(html`<div class="container">${this._fillItem(items.colorItems[i].paintValue,strokeColor,label)}</div>`)
+                    result.push(html`<map-legend-item-edit 
+                        @change="${this._fillColorChanged}"
+                        @changeLineColor="${this._lineColorChanged}"
+                        .itemIndex=${i} 
+                        legendItemType="fill" 
+                        .color="${items.colorItems[i].paintValue}" 
+                        .lineColor=${strokeColor}><div class="container">${this._fillItem(items.colorItems[i].paintValue,strokeColor,label)}</div></map-legend-item-edit>`)
                 }
             }
         }
@@ -142,18 +153,20 @@ class MapLegendFill extends LitElement {
         return result;
     }
     _fillColorChanged(event) {
-        this.items.colorItems[0].paintValue = event.detail.color;
-        const itemsCopy = {
-            colorItems: this.items.colorItems,
-            radiusItems: this.items.radiusItems,
-            strokeColorItems: this.items.strokeColorItems,
-            strokeWidthItems: this.strokeWidthItems
-        }
-        this.items = itemsCopy;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                color: event.detail.color
+                color: event.detail.color,
+                itemIndex: event.detail.itemIndex
+            }
+        }))
+    }
+    _lineColorChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                outlineColor: event.detail.color,
+                itemIndex: event.detail.itemIndex
             }
         }))
     }

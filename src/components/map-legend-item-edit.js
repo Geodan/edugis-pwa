@@ -38,6 +38,7 @@ class MapLegendItemEdit extends LitElement {
     static get properties() { 
         return { 
           legendItemType: {type: String}, // 'fill', 'line', 'circle', ...
+          itemIndex: {type: Number},
           color: {type: String},
           lineWidth: {type: Number},
           lineColor: {Stype: String},
@@ -49,6 +50,7 @@ class MapLegendItemEdit extends LitElement {
         super();
         this.visible = false;
         this.legendItemType = undefined;
+        this.itemIndex = 0;
         this.color = undefined;
         this.lineWidth = undefined;
         this.lineColor = undefined;
@@ -81,10 +83,10 @@ class MapLegendItemEdit extends LitElement {
                             <div id="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                         <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
-                            <svg width="20" height="10">
+                            <div><svg width="20" height="10">
                                 <title>lijnkleur</title>
-                                <line x1="0" y1="5" x2="20" y2="5" fill="none" stroke="${this.lineColor?this.lineColor:'gray'}" />
-                            </svg>
+                                <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
+                            </svg></div>
                         </color-picker>
                 </div>`
             case 'line': 
@@ -98,11 +100,22 @@ class MapLegendItemEdit extends LitElement {
         }
     }
     _colorChange(event) {
+        this.color = event.detail.color;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
-                color: event.detail.color
+                color: event.detail.color,
+                itemIndex: this.itemIndex
             }
         }));
+    }
+    _lineColorChange(event) {
+        this.lineColor = event.detail.color;
+        this.dispatchEvent(new CustomEvent('changeLineColor', {
+            detail: {
+                color: event.detail.color,
+                itemIndex: this.itemIndex
+            }
+        }))
     }
 }
 

@@ -646,6 +646,7 @@ class MapLegendPanel extends LitElement {
   {
     const property = {};
     const layerid = event.detail.layerid;
+    const itemIndex = event.detail.itemIndex;
     const editLayer = this.maplayer.id === layerid ? this.maplayer : this.maplayer.metadata.sublayers.find(({id})=>id === layerid);
     property.layerid = editLayer.id;
     
@@ -655,11 +656,30 @@ class MapLegendPanel extends LitElement {
         editLayer.metadata.paint[`${editLayer.type}-color`] : 
           editLayer.paint[`${editLayer.type}-color`];
       if (Array.isArray(paintColor)) {
-        paintColor[(this.classesIndex + 1)*2] = color;
+        paintColor[3 + (itemIndex*2)] = color;
       } else {
         paintColor = color;
       }
       property[`${editLayer.type}-color`] = paintColor;
+    }
+    if (event.detail.outlineColor) {
+      const color = event.detail.outlineColor;
+      let paintColor = editLayer.metadata.paint ? 
+        editLayer.metadata.paint[`${editLayer.type}-outline-color`] : 
+          editLayer.paint[`${editLayer.type}-outline-color`];
+      if (!paintColor) {
+        if (editLayer.metadata.paint) {
+          editLayer.metadata.paint[`${editLayer.type}-outline-color`] = color;
+        } else {
+          editLayer.paint[`${editLayer.type}-outline-color`] = color;
+        }
+      }
+      if (Array.isArray(paintColor)) {
+        paintColor[3 + (itemIndex*2)] = color;
+      } else {
+        paintColor = color;
+      }
+      property[`${editLayer.type}-outline-color`] = paintColor;
     }
     if (event.detail.width !== undefined) {
       const width = event.detail.width;
@@ -667,7 +687,7 @@ class MapLegendPanel extends LitElement {
         editLayer.metadata.paint[`${editLayer.type}-width`] : 
           editLayer.paint[`${editLayer.type}-width`];
       if (Array.isArray(paintWidth)) {
-        paintWidth[(this.classesIndex + 1)*2] = width;
+        paintWidth[3 + (itemIndex * 2)] = width;
       } else {
         paintWidth = width;
       }
