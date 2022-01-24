@@ -91,9 +91,17 @@ class MapLegendItemEdit extends LitElement {
                 </div>`
             case 'line': 
                 return html`
-                <div class="panel">${this.width !== undefined?html`<div class="wrapper">
-                        <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.width}" @input=${this._widthChanged}> </div>`:""}
-                    <div id="color" class="wrapper"><label>kleur aanpassen: </label><div id="picker" style="background-color:${color}"></div></div>
+                <div class="panel">${this.lineWidth !== undefined?html`<div class="wrapper">
+                        <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>`:""}
+                    <div id="color" class="wrapper">
+                        <label>kleur: </label>
+                        <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
+                            <div><svg width="20" height="10">
+                                <title>kleur</title>
+                                <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
+                            </svg></div>
+                        </color-picker>
+                    </div>
                 </div>`
             default:
                 return html`Legend item editor for '${this.legendItemType}' not implemented`;
@@ -113,6 +121,15 @@ class MapLegendItemEdit extends LitElement {
         this.dispatchEvent(new CustomEvent('changeLineColor', {
             detail: {
                 color: event.detail.color,
+                itemIndex: this.itemIndex
+            }
+        }))
+    }
+    _lineWidthChange(event) {
+        const width = parseFloat(this.shadowRoot.querySelector('input').value);
+        this.dispatchEvent(new CustomEvent('changeLineWidth', {
+            detail: {
+                width: width,
                 itemIndex: this.itemIndex
             }
         }))

@@ -589,11 +589,11 @@ class MapLegendPanel extends LitElement {
         break;
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
-        legendContent = html`<map-legend-line .items="${items}" title="${layerTitle}"></map-legend-line>`
+        legendContent = html`<map-legend-line @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-line>`
         break;
       case 'circle':
         //legendContent = this.circleLegend(maplayer, items);
-        legendContent = html`<map-legend-circle .items="${items}" title="${layerTitle}"></map-legend-circle>`
+        legendContent = html`<map-legend-circle @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-circle>`
         break;
       case 'style':
         if (maplayer.metadata && maplayer.metadata.sublayers && maplayer.metadata.sublayers.length) {
@@ -618,7 +618,7 @@ class MapLegendPanel extends LitElement {
         const fontColor=maplayer.paint?maplayer.paint["text-color"]?maplayer.paint["text-color"]:"#000":"#000";
         const textTransform = maplayer.layout && maplayer.layout["text-transform"]?`text-transform:${maplayer.layout["text-transform"]};`:''
         const fontStyle = `font-family:${font};font-size:${fontSize}px;color:${fontColor};${textTransform}`;
-        legendContent = html`<map-legend-symbol title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle}></map-legend-symbol>`
+        legendContent = html`<map-legend-symbol @change="${this._updatePaintProperty}" title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle} layerid="${maplayer.id}"></map-legend-symbol>`
         break;
       case 'background':
         //legendContent = this.backgroundLegend(maplayer);

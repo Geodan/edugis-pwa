@@ -1,4 +1,6 @@
 import {LitElement, html, css, svg} from 'lit-element';
+import './map-legend-item-edit';
+
 class MapLegendLine extends LitElement {
     static get styles() {
         return css`
@@ -16,13 +18,15 @@ class MapLegendLine extends LitElement {
     static get properties() { 
         return { 
           title: {stype: String},
-          items: {type: Object}
+          items: {type: Object},
+          layerid: {type: String}
         }; 
     }
     constructor() {
         super();
         this.title = "untitled";
         this.items = [];
+        this.layerid = ""
     }
     connectedCallback() {
         super.connectedCallback()
@@ -51,7 +55,13 @@ class MapLegendLine extends LitElement {
             const label = items.colorItems.length ? items.colorItems[0].attrExpression ? `${items.colorItems[0].attrExpression} ${items.colorItems[0].attrName}` : items.colorItems[0].attrName: 'untitled';
             const line = this._lineItem(color, width, label);
             return html`
-            <div class="container">${line}</div>
+            <map-legend-item-edit 
+                @change="${this._lineColorChanged}"
+                @changeLineWidth="${this._lineWidthChanged}"
+                legendItemType="line" 
+                .color=${color} 
+                .lineWidth=${width}><div class="container">${line}</div>
+            </map-legend-item-edit>
             `
         }
         let result = [];
@@ -100,6 +110,24 @@ class MapLegendLine extends LitElement {
     }
     updated() {
 
+    }
+    _lineColorChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                color: event.detail.color,
+                itemIndex: event.detail.itemIndex
+            }
+        }))
+    }
+    _lineWidthChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                width: event.detail.width,
+                itemIndex: event.detail.itemIndex
+            }
+        }))
     }
 }
 
