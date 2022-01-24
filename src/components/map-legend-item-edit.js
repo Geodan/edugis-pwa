@@ -25,7 +25,7 @@ class MapLegendItemEdit extends LitElement {
         .wrapper .right {
             flex: 1;
         }
-        #fillpicker {
+        .fillpicker {
             display: inline-block;
             width:  15px;
             height: 10px;
@@ -80,7 +80,7 @@ class MapLegendItemEdit extends LitElement {
                 <div class="panel">
                         <label>Aanpassen: </label>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
-                            <div id="fillpicker" title="kleur" style="background-color:${color}"></div>
+                            <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                         <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
                             <div><svg width="20" height="10">
@@ -99,6 +99,27 @@ class MapLegendItemEdit extends LitElement {
                             <div><svg width="20" height="10">
                                 <title>kleur</title>
                                 <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
+                            </svg></div>
+                        </color-picker>
+                    </div>
+                </div>`
+            case 'circle':
+                return html`
+                <div class="panel">
+                    <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius}" @input=${this._radiusChange}> </div>
+                    <div id="color" class="wrapper">
+                        <label>kleur: </label>
+                        <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
+                            <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
+                        </color-picker>
+                    </div>
+                    <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>
+                    <div id="color" class="wrapper">
+                        <label>randkleur: </label>
+                        <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
+                            <div><svg width="20" height="10">
+                                <title>kleur</title>
+                                <line x1="0" y1="5" x2="20" y2="5" stroke="${this.color}" stroke-width="${this.lineWidth}" />
                             </svg></div>
                         </color-picker>
                     </div>
@@ -126,10 +147,19 @@ class MapLegendItemEdit extends LitElement {
         }))
     }
     _lineWidthChange(event) {
-        const width = parseFloat(this.shadowRoot.querySelector('input').value);
+        this.lineWidth = parseFloat(event.target.value);
         this.dispatchEvent(new CustomEvent('changeLineWidth', {
             detail: {
-                width: width,
+                width: this.lineWidth,
+                itemIndex: this.itemIndex
+            }
+        }))
+    }
+    _radiusChange(event) {
+        this.radius = parseFloat(event.target.value);
+        this.dispatchEvent(new CustomEvent('changeRadius', {
+            detail: {
+                radius: this.radius,
                 itemIndex: this.itemIndex
             }
         }))

@@ -644,34 +644,36 @@ class MapLegendPanel extends LitElement {
   }
   _updatePaintProperty(event)
   {
-    const property = {};
+    const paintProperty = {};
     const layerid = event.detail.layerid;
     const itemIndex = event.detail.itemIndex;
     const editLayer = this.maplayer.id === layerid ? this.maplayer : this.maplayer.metadata.sublayers.find(({id})=>id === layerid);
-    property.layerid = editLayer.id;
+    paintProperty.layerid = editLayer.id;
     
     if (event.detail.color) {
+      const propertyName = `${editLayer.type}-color`;
       const color = event.detail.color;
       let paintColor = editLayer.metadata.paint ? 
-        editLayer.metadata.paint[`${editLayer.type}-color`] : 
-          editLayer.paint[`${editLayer.type}-color`];
+        editLayer.metadata.paint[propertyName] : 
+          editLayer.paint[propertyName];
       if (Array.isArray(paintColor)) {
         paintColor[3 + (itemIndex*2)] = color;
       } else {
         paintColor = color;
       }
-      property[`${editLayer.type}-color`] = paintColor;
+      paintProperty[propertyName] = paintColor;
     }
     if (event.detail.outlineColor) {
+      const propertyName = editLayer.type === 'fill' ? 'fill-outline-color' : `${editLayer.type}-stroke-color`
       const color = event.detail.outlineColor;
       let paintColor = editLayer.metadata.paint ? 
-        editLayer.metadata.paint[`${editLayer.type}-outline-color`] : 
-          editLayer.paint[`${editLayer.type}-outline-color`];
+        editLayer.metadata.paint[propertyName] : 
+          editLayer.paint[propertyName];
       if (!paintColor) {
         if (editLayer.metadata.paint) {
-          editLayer.metadata.paint[`${editLayer.type}-outline-color`] = color;
+          editLayer.metadata.paint[propertyName] = color;
         } else {
-          editLayer.paint[`${editLayer.type}-outline-color`] = color;
+          editLayer.paint[propertyName] = color;
         }
       }
       if (Array.isArray(paintColor)) {
@@ -679,22 +681,43 @@ class MapLegendPanel extends LitElement {
       } else {
         paintColor = color;
       }
-      property[`${editLayer.type}-outline-color`] = paintColor;
+      paintProperty[propertyName] = paintColor;
     }
     if (event.detail.width !== undefined) {
+      const propertyName = editLayer.type === 'line' ? "line-width" : `${editLayer.type}-stroke-width`
       const width = event.detail.width;
       let paintWidth = editLayer.metadata.paint ? 
-        editLayer.metadata.paint[`${editLayer.type}-width`] : 
-          editLayer.paint[`${editLayer.type}-width`];
+        editLayer.metadata.paint[propertyName] : 
+          editLayer.paint[propertyName];
+      if (!paintWidth) {
+        if (editLayer.metadata.paint) {
+          editLayer.metadata.paint[propertyName] = width;
+        } else {
+          editLayer.paint[propertyName] = width;
+        }
+      }
       if (Array.isArray(paintWidth)) {
-        paintWidth[3 + (itemIndex * 2)] = width;
+        paintWidth[3 + (itemIndex*2)] = width;
       } else {
         paintWidth = width;
       }
-      property[`${editLayer.type}-width`] = paintWidth;
+      paintProperty[propertyName] = paintWidth;
+    }
+    if (event.detail.radius !== undefined) {
+      const propertyName = `${editLayer.type}-radius`
+      const radius = event.detail.radius;
+      let paintRadius = editLayer.metadata.paint ? 
+        editLayer.metadata.paint[propertyName] : 
+          editLayer.paint[propertyName];
+      if (Array.isArray(paintRadius)) {
+        paintRadius[3 + (itemIndex * 2)] = radius;
+      } else {
+        paintRadius = radius;
+      }
+      paintProperty[propertyName] = paintRadius;
     }
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
-      detail: property,
+      detail: paintProperty,
       bubbles: true,
       composed: true,
     }));

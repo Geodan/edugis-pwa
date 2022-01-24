@@ -1,4 +1,6 @@
 import {LitElement, html, css, svg} from 'lit-element';
+import './map-legend-item-edit';
+
 class MapLegendCircle extends LitElement {
   static get styles() {
     return css`
@@ -65,7 +67,8 @@ class MapLegendCircle extends LitElement {
     static get properties() { 
         return { 
           title: {stype: String},
-          items: {type: Object}
+          items: {type: Object},
+          layerid: {type: String}
         }; 
     }
     constructor() {
@@ -94,14 +97,23 @@ class MapLegendCircle extends LitElement {
             const radius = items.radiusItems.length ? items.radiusItems[0].paintValue : 3;
             const label = items.colorItems.length ? items.colorItems[0].attrName: this.title;
             return html`
-            <div class="container">${this._circleItem(color, strokeColor, strokeWidth, radius, label)}</div>
+            <map-legend-item-edit 
+                @change="${this._colorChanged}"
+                @changeLineWidth="${this._outlineWidthChanged}"
+                @changeLineColor="${this._outlineColorChanged}"
+                @changeRadius="${this._radiusChanged}"
+                legendItemType="circle" 
+                .color=${color} 
+                .lineWidth=${width}>
+                <div class="container">${this._circleItem(color, strokeColor, strokeWidth, radius, label)}</div>
+            </map-legend-item-edit>
             `
         }
         let result = [];
         let usedRadiusValues = new Set();
         if (items.colorItems.length > 1) {
             result.push(html`${items.colorItems[0].attrName}`);
-            const coloredCircles = items.colorItems.map(({paintValue,attrValue})=>{
+            const coloredCircles = items.colorItems.map(({paintValue,attrValue}, itemIndex)=>{
                 if (attrValue === undefined) {
                     return html``;
                 }
@@ -156,8 +168,19 @@ class MapLegendCircle extends LitElement {
                         }
                 }
                 //const label = attrExpression ? attrExpression === '==' ? attrValue : `${attrExpression} ${attrValue}` : attrValue;
-                return html`
-                <div class="container">${this._circleItem(paintValue, strokeColor, strokeWidth, radius, attrValue)}</div>
+                return html`<map-legend-item-edit 
+                    @change="${this._colorChanged}"
+                    @changeLineColor="${this._outlineColorChanged}"
+                    @changeLineWidth="${this._outlineWidthChanged}"
+                    @changeRadius="${this._radiusChanged}"
+                    .itemIndex=${itemIndex} 
+                    legendItemType="circle" 
+                    .color=${paintValue}
+                    .lineColor=${strokeColor}
+                    .lineWidth=${strokeWidth}
+                    .radius=${radius}>
+                    <div class="container">${this._circleItem(paintValue, strokeColor, strokeWidth, radius, attrValue)}</div>
+                </map-legend-item-edit>
                 `
             });
             result.push(coloredCircles);
@@ -182,6 +205,42 @@ class MapLegendCircle extends LitElement {
     }
     updated() {
 
+    }
+    _colorChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                color: event.detail.color,
+                itemIndex: event.detail.itemIndex
+            }
+        }));
+    }
+    _outlineColorChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                outlineColor: event.detail.color,
+                itemIndex: event.detail.itemIndex
+            }
+        }));
+    }
+    _outlineWidthChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                width: event.detail.width,
+                itemIndex: event.detail.itemIndex
+            }
+        }));
+    }
+    _radiusChanged(event) {
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                radius: event.detail.radius,
+                itemIndex: event.detail.itemIndex
+            }
+        }));
     }
 }
 
