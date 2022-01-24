@@ -1214,6 +1214,7 @@
     {
       "id": "tunnel-railway",
       "type": "line",
+      "minzoom": 10,
       "metadata": {
         "mapbox:group": "1444849354174.1904"
       },
@@ -1262,6 +1263,7 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
+      "minzoom": 11,
       "filter": [
         "all",
         [
@@ -1285,13 +1287,13 @@
     },
     {
       "id": "aeroway-taxiway-casing",
+      "minzoom": 11,
       "type": "line",
       "metadata": {
         "mapbox:group": "1444849345966.4436"
       },
       "source": "openmaptiles",
       "source-layer": "aeroway",
-      "minzoom": 12,
       "filter": [
         "all",
         [
@@ -1409,12 +1411,12 @@
     {
       "id": "aeroway-taxiway",
       "type": "line",
+      "minzoom": 11,
       "metadata": {
         "mapbox:group": "1444849345966.4436"
       },
       "source": "openmaptiles",
       "source-layer": "aeroway",
-      "minzoom": 4,
       "filter": [
         "all",
         [
