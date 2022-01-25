@@ -870,28 +870,63 @@
               "title": "Merwedekanaalzone deelgebieden",
               "layerInfo": {
                 "id": "merwedekanaalzone",
-                "type": "fill",
-                "minzoom": 11,
+                "type": "style",
                 "source": {
-                  "type": "geojson",
-                  "data": "https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
-                  "attribution": "EduGIS"
-                },
-                "paint": {
-                  "fill-color": "#f4b68d",
-                  "fill-opacity": 0.6,
-                  "fill-outline-color": "#c93300"
-                },
-                "metadata": {
-                  "reference": false,
-                  "userlayer": true,
-                  "attributes": {
-                    "translations": [
-                      {"name": "name", "translation": "naam"},
-                      {"name": "area", "translation": "oppervlak", "unit": " m²"}
-                    ],
-                    "deniedattributes": ["perimeter"]
-                  }
+                  "version": 8,
+                  "name": "deelgebieden",
+                  "sources": {
+                    "merwedekanaalzonegeojson":{
+                      "type": "geojson",
+                      "data": "https://tiles.edugis.nl/geojson/merwedekanaalzone.json",
+                      "attribution": "EduGIS"
+                    }
+                  },
+                  "layers": [
+                    {
+                      "id": "merwedekanaalzonefill",
+                      "type": "fill",
+                      "minzoom": 11,
+                      "source": "merwedekanaalzonegeojson",
+                      "paint": {
+                        "fill-color": "rgba(244,182,141,0.6)",
+                        "fill-outline-color": "#c93300"
+                      },
+                      "metadata": {
+                        "title": "Merwedekanaalzone gebied",
+                        "reference": false,
+                        "userlayer": true,
+                        "attributes": {
+                          "translations": [
+                            {"name": "name", "translation": "naam"},
+                            {"name": "area", "translation": "oppervlak", "unit": " m²"}
+                          ],
+                          "deniedattributes": ["perimeter"]
+                        }
+                      }
+                    },
+                    {
+                      "id": "merwedekanaalzoneborder",
+                      "type": "line",
+                      "minzoom": 11,
+                      "source": "merwedekanaalzonegeojson",
+                      "paint": {
+                        "line-color": "#c93300",
+                        "line-width": 2
+                      },
+                      "metadata": {
+                        "title": "Merwedekanaalzone grens",
+                        "reference": false,
+                        "userlayer": true,
+                        "attributes": {
+                          "translations": [
+                            {"name": "name", "translation": "naam"},
+                            {"name": "area", "translation": "oppervlak", "unit": " m²"}
+                          ],
+                          "deniedattributes": ["perimeter"]
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               "id": "Merwedekanaalzone_Utrecht_geojson_id"
