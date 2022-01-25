@@ -888,7 +888,7 @@
                       "minzoom": 11,
                       "source": "merwedekanaalzonegeojson",
                       "paint": {
-                        "fill-color": "rgba(244,182,141,0.6)",
+                        "fill-color": "rgba(244,182,141,0.4)",
                         "fill-outline-color": "#c93300"
                       },
                       "metadata": {
