@@ -93,7 +93,7 @@ class MapLegendCircle extends LitElement {
         if (items.colorItems.length <= 1 && items.radiusItems.length <= 1) {
             const color = items.colorItems.length ? items.colorItems[0].paintValue : 'rgba(0,0,0,0)';
             const strokeColor = items.strokeColorItems.length ? items.strokeColorItems[0].paintValue : color;
-            const strokeWidth = items.strokeWidthItems.lenght ? items.strokeWidthItems[0].paintValue : 1;
+            const strokeWidth = items.strokeWidthItems.length ? items.strokeWidthItems[0].paintValue : 1;
             const radius = items.radiusItems.length ? items.radiusItems[0].paintValue : 3;
             const label = items.colorItems.length ? items.colorItems[0].attrName: this.title;
             return html`
@@ -207,40 +207,64 @@ class MapLegendCircle extends LitElement {
 
     }
     _colorChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const color = event.detail.color;
+        this.items.colorItems[itemIndex].paintValue = color;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                color: event.detail.color,
-                itemIndex: event.detail.itemIndex
+                color: color,
+                itemIndex: itemIndex
             }
         }));
+        this.requestUpdate();
     }
     _outlineColorChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const color = event.detail.color;
+        if (this.items.strokeColorItems.length) {
+            this.items.strokeColorItems[itemIndex].paintValue = color;
+        } else {
+            this.items.strokeColorItems.push({paintvalue: color});
+        }
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                outlineColor: event.detail.color,
+                outlineColor: color,
                 itemIndex: event.detail.itemIndex
             }
         }));
+        this.requestUpdate();
     }
     _outlineWidthChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const width = event.detail.width;
+        if (this.items.strokeWidthItems.length) {
+            this.items.strokeWidthItems[itemIndex].paintValue = width;
+        } else {
+            this.items.strokeWidthItems.push({paintValue: width});
+        }
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                width: event.detail.width,
-                itemIndex: event.detail.itemIndex
+                width: width,
+                itemIndex: itemIndex
             }
         }));
+        this.requestUpdate();
     }
     _radiusChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const radius = event.detail.radius;
+        this.items.radiusItems[itemIndex].paintValue = radius;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                radius: event.detail.radius,
-                itemIndex: event.detail.itemIndex
+                radius: radius,
+                itemIndex: itemIndex
             }
         }));
+        this.requestUpdate();
     }
 }
 

@@ -169,7 +169,11 @@ class MapLegendFill extends LitElement {
     _lineColorChanged(event) {
         const itemIndex = event.detail.itemIndex;
         const color = event.detail.color;
-        this.items.strokeColorItems[itemIndex].paintValue = color;
+        if (this.items.strokeColorItems.length) {
+            this.items.strokeColorItems[itemIndex].paintValue = color;
+        } else {
+            this.items.strokeColorItems.push({paintValue: color});
+        }
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,

@@ -112,22 +112,30 @@ class MapLegendLine extends LitElement {
 
     }
     _lineColorChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const color = event.detail.color;
+        this.items.colorItems[itemIndex].paintValue = color;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                color: event.detail.color,
-                itemIndex: event.detail.itemIndex
+                color: color,
+                itemIndex: itemIndex
             }
-        }))
+        }));
+        this.requestUpdate();
     }
     _lineWidthChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const width = event.detail.width;
+        this.items.strokeWidthItems[itemIndex].paintValue = width;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                width: event.detail.width,
-                itemIndex: event.detail.itemIndex
+                width: width,
+                itemIndex: itemIndex
             }
-        }))
+        }));
+        this.requestUpdate();
     }
 }
 
