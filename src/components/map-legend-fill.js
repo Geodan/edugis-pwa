@@ -41,7 +41,8 @@ class MapLegendFill extends LitElement {
         //window.removeEventListener('keydown', this._handleKeydown);
     }
     shouldUpdate(changedProp) {
-        // if (changedProp.has('items')) {}
+        //if (changedProp.has('items')) {
+        //}
         return true;
     }
     _fillItem(color, strokeColor, label) {
@@ -153,22 +154,30 @@ class MapLegendFill extends LitElement {
         return result;
     }
     _fillColorChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const color = event.detail.color;
+        this.items.colorItems[itemIndex].paintValue = color;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
-                color: event.detail.color,
-                itemIndex: event.detail.itemIndex
+                color: color,
+                itemIndex: itemIndex
             }
-        }))
+        }));
+        this.requestUpdate();
     }
     _lineColorChanged(event) {
+        const itemIndex = event.detail.itemIndex;
+        const color = event.detail.color;
+        this.items.strokeColorItems[itemIndex].paintValue = color;
         this.dispatchEvent(new CustomEvent('change', {
             detail: {
                 layerid: this.layerid,
                 outlineColor: event.detail.color,
                 itemIndex: event.detail.itemIndex
             }
-        }))
+        }));
+        this.requestUpdate();
     }
     firstUpdated() {
 

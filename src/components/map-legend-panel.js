@@ -494,7 +494,7 @@ class MapLegendPanel extends LitElement {
               </svg> 
             ${item.label}<br>
             `
-          })          
+          })
         break;
       default: 
         return `unsupported user layer: ${maplayer.type}`
@@ -721,7 +721,6 @@ class MapLegendPanel extends LitElement {
       bubbles: true,
       composed: true,
     }));
-    this.updatecount++;
   }
 }
 

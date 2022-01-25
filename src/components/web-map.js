@@ -300,7 +300,7 @@ class WebMap extends LitElement {
         this.updateSingleLayerPaintProperty(e.detail.layerid, e.detail);
       }
     }
-    this.updatelegend++;
+    //this.updatelegend++;
   }
   updateLayerFilter(e) {
     if (this.map){
