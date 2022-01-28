@@ -716,6 +716,17 @@ class MapLegendPanel extends LitElement {
       }
       paintProperty[propertyName] = paintRadius;
     }
+    if (event.detail.fontStyle) {
+      const fontStyles = event.detail.fontStyle.split(';');
+      const fontSize = fontStyles.find(style=>style.startsWith('font-size:')).slice(10,-2);
+      const fontColor = fontStyles.find(style=>style.startsWith('color:')).slice(6);
+      if (!this.maplayer.layout || this.maplayer.layout['text-size'] !== fontSize) {
+        paintProperty["text-size"] = parseFloat(fontSize);
+      }
+      if (!this.maplayer.paint || this.maplayer.paint['text-color'] !== fontColor) {
+        paintProperty["text-color"] = fontColor;
+      }
+    }
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
       detail: paintProperty,
       bubbles: true,

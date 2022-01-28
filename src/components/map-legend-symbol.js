@@ -1,4 +1,5 @@
 import {LitElement, html, css, svg} from 'lit-element';
+import "./map-legend-item-edit";
 class MapLegendSymbol extends LitElement {
     static get styles() {
         return css`
@@ -20,14 +21,16 @@ class MapLegendSymbol extends LitElement {
         return { 
           title: {stype: String},
           symbols: {type: Array},
-          fontStyle: {type: String}
+          fontStyle: {type: String},
+          layerid: {type: String}
         }; 
     }
     constructor() {
         super();
         this.title = "untitled";
         this.symbols = [];
-        this.fontStyle = "font-size:12";
+        this.fontStyle = "";
+        this.layerid = "";
     }
     render() {
         if (this.symbols && this.symbols.length) {
@@ -35,13 +38,13 @@ class MapLegendSymbol extends LitElement {
             if (this.symbols.length > 1) {
                 result.push(html`<div>${this.title}</div>`)
             }
-            for (const symbol of this.symbols) {
+            for (const [index,symbol] of this.symbols.entries()) {
                 const label = this.symbols.length === 1 ? this.title : symbol.attributeValues.join(',');
-                result.push(html`<div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div>`)
+                result.push(html`<map-legend-item-edit @change=${this._symbolChange} legendItemType="symbol" itemIndex=${index} fontStyle=${this.fontStyle}><div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div></map-legend-item-edit>`)
             }
             return result;
         } else {
-            return(html`<div><span style=${this.fontStyle}>${this.title}</span></div>`)
+            return(html`<map-legend-item-edit @change=${this._symbolChange} legendItemType="symbol" fontStyle=${this.fontStyle}><div><span style=${this.fontStyle}>${this.title}</span></div></map-legend-item-edit>`)
         }
     }
     firstUpdated() {
@@ -49,6 +52,18 @@ class MapLegendSymbol extends LitElement {
     }
     updated() {
 
+    }
+    _symbolChange(event) {
+        const itemIndex = event.detail.itemIndex;
+        const fontStyle = event.detail.style;
+        this.fontStyle = fontStyle;
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                layerid: this.layerid,
+                fontStyle: fontStyle,
+                itemIndex: itemIndex
+            }
+        }));
     }
 }
 

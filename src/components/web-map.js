@@ -281,11 +281,15 @@ class WebMap extends LitElement {
     }
   }
   updateSingleLayerPaintProperty(id, propertyInfo) {
-    const layer = this.map.getLayer(id);
+    const layer = this.map.getLayer(id)
     if (layer) {
       for (let key in propertyInfo) {
         if (key !== "layerid") {
-          this.map.setPaintProperty(id, key, propertyInfo[key]);  
+          if (key === "text-size") {
+            this.map.setLayoutProperty(id, key, propertyInfo[key]); // hack, text-size is not a paint property
+          } else {
+            this.map.setPaintProperty(id, key, propertyInfo[key]);
+          }
         }
       }
     }
@@ -1084,6 +1088,7 @@ class WebMap extends LitElement {
     this.map.on('mousemove', e=>this.handleInfo(e));
     
     this.map.autodetectLanguage(); // set openmaptiles language to browser language
+
     this._mapMoveEnd();
     this.map.on('moveend', ()=>{this._mapMoveEnd()});
     this.map.on('click', (e)=>this.mapClick(e));
@@ -1778,6 +1783,7 @@ class WebMap extends LitElement {
       this.map.setLanguage(e.detail.language, (e.detail.language !== "native"));
     }
     setTimeout(()=>this.restoreNoneReferenceLayers(), 1000); // how else?    
+    // maybe: this.once('styledata', () => this.restoreNoneReferenceLayers()); ?
   }
   mapClick(e) {
     this.lastClickPoint = [e.lngLat.lng,e.lngLat.lat];
@@ -2251,7 +2257,7 @@ class WebMap extends LitElement {
       if ((
           (layer.layout && layer.layout.hasOwnProperty('icon-image'))
           || (layer.paint && layer.paint.hasOwnProperty("fill-pattern"))
-          ) && !layer.metadata.imageData) {
+          ) && layer.metadata && !layer.metadata.imageData) {
           layer.metadata.imageData = this._getIconImageDataFromLayer(layer);
       }
     }

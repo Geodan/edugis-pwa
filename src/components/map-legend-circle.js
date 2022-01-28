@@ -77,9 +77,11 @@ class MapLegendCircle extends LitElement {
         this.items = [];
     }
     _circleItem(color, strokeColor, strokeWidth, radius,label) {
+        radius += strokeWidth/2; // svg has half of stroke inside circle, mapbox-gl outside circle
+        const size = radius*2+2+strokeWidth;
         return svg`
-            <svg width="${radius*2+2}" height="${radius*2+2}">
-            <circle cx="${radius+1}" cy="${radius+1}" r="${radius}" style="fill:${color};stroke-width:${strokeWidth};stroke:${strokeColor}"/>
+            <svg width="${size}" height="${size}">
+            <circle cx="${size/2}" cy="${size/2}" r="${radius}" style="fill:${color};stroke-width:${strokeWidth};stroke:${strokeColor}"/>
             </svg>${html`<span class="label">${label}</span>`}
           `
     }
@@ -93,7 +95,7 @@ class MapLegendCircle extends LitElement {
         if (items.colorItems.length <= 1 && items.radiusItems.length <= 1) {
             const color = items.colorItems.length ? items.colorItems[0].paintValue : 'rgba(0,0,0,0)';
             const strokeColor = items.strokeColorItems.length ? items.strokeColorItems[0].paintValue : color;
-            const strokeWidth = items.strokeWidthItems.length ? items.strokeWidthItems[0].paintValue : 1;
+            const strokeWidth = items.strokeWidthItems.length ? items.strokeWidthItems[0].paintValue : 0;
             const radius = items.radiusItems.length ? items.radiusItems[0].paintValue : 3;
             const label = items.colorItems.length ? items.colorItems[0].attrName: this.title;
             return html`
@@ -104,7 +106,9 @@ class MapLegendCircle extends LitElement {
                 @changeRadius="${this._radiusChanged}"
                 legendItemType="circle" 
                 .color=${color} 
-                .lineWidth=${width}>
+                .lineWidth=${strokeWidth}
+                lineColor=${strokeColor}
+                radius=${radius}>
                 <div class="container">${this._circleItem(color, strokeColor, strokeWidth, radius, label)}</div>
             </map-legend-item-edit>
             `

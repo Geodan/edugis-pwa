@@ -132,6 +132,7 @@ class MapLegendItemEdit extends LitElement {
           lineWidth: {type: Number},
           lineColor: {Stype: String},
           radius: {type: Number},
+          fontStyle: {type: String},
           visible: {type: Boolean}
         }; 
     }
@@ -144,6 +145,7 @@ class MapLegendItemEdit extends LitElement {
         this.lineWidth = undefined;
         this.lineColor = undefined;
         this.radius = undefined;
+        this.fontStyle = "";
     }
     shouldUpdate(changedProp) {
         return true;
@@ -182,7 +184,7 @@ class MapLegendItemEdit extends LitElement {
                 return html`
                 <div class="panel">${this.lineWidth !== undefined?html`<div class="wrapper">
                         <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>`:""}
-                    <div id="color" class="wrapper">
+                    <div class="wrapper">
                         <label>kleur: </label>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div><svg width="20" height="10">
@@ -195,27 +197,77 @@ class MapLegendItemEdit extends LitElement {
             case 'circle':
                 return html`
                 <div class="panel">
-                    <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius}" @input=${this._radiusChange}> </div>
-                    <div id="color" class="wrapper">
+                    <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius}" @input=${this._radiusChange}></div>
+                    <div class="wrapper">
                         <label>kleur: </label>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                     </div>
                     <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>
-                    <div id="color" class="wrapper">
+                    <div class="wrapper">
                         <label>randkleur: </label>
                         <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
                             <div><svg width="20" height="10">
                                 <title>kleur</title>
-                                <line x1="0" y1="5" x2="20" y2="5" stroke="${this.color}" stroke-width="${this.lineWidth}" />
+                                <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor}" stroke-width="${this.lineWidth}" />
                             </svg></div>
                         </color-picker>
                     </div>
                 </div>`
+            case 'symbol':
+                const fontSizeMatch = this.fontStyle.match(/font-size\s*:\s*([^;]*)/);
+                const fontSize = fontSizeMatch ? parseFloat(fontSizeMatch[1]) : 12;
+                const fontColormatch = this.fontStyle.match(/color\s*:\s*([^;]*)/);
+                const fontColor = fontColormatch ? fontColormatch[1] : "#000";
+                if (fontSizeMatch)
+                return html`
+                <div class="panel">
+                    <div class="label">grootte: </div><input class="right" type="range" min="0" max="20" step="0.1" value="${fontSize}" @input=${this._fontSizeChange}></div>
+                    <div class="wrapper">
+                    <color-picker .color=${fontColor} @change=${e=>this._fontColorChange(e)}>
+                        <div class="fillpicker" title="kleur" style="background-color:${fontColor}"></div>
+                    </color-picker>
+                    </div>
+                </div>
+                `
             default:
                 return html`Legend item editor for '${this.legendItemType}' not implemented`;
         }
+    }
+    _fontSizeChange(event) {
+        const fontStyles = this.fontStyle.split(';');
+        const sizeIndex = fontStyles.findIndex(style=>style.trim().startsWith('font-size'));
+        const fontSizeStyle = `font-size:${event.target.value}px`;
+        if (sizeIndex > -1) {
+            fontStyles[sizeIndex] = fontSizeStyle;
+        } else {
+            fontStyles.push(fontSizeStyle);
+        }
+        this.fontStyle = fontStyles.join(';');
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                style: this.fontStyle,
+                itemIndex: this.itemIndex
+            }
+        }))
+    }
+    _fontColorChange(event) {
+        const fontStyles = this.fontStyle.split(';');
+        const colorIndex = fontStyles.findIndex(style=>style.trim().startsWith('color'));
+        const fontColorStyle = `color:${event.detail.color}`;
+        if (colorIndex > -1) {
+            fontStyles[colorIndex] = fontColorStyle;
+        } else {
+            fontStyles.push(fontColorStyle);
+        }
+        this.fontStyle = fontStyles.join(';');
+        this.dispatchEvent(new CustomEvent('change', {
+            detail: {
+                style: this.fontStyle,
+                itemIndex: this.itemIndex
+            }
+        }))
     }
     _colorChange(event) {
         this.color = event.detail.color;
