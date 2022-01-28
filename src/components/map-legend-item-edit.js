@@ -21,6 +21,7 @@ class MapLegendItemEdit extends LitElement {
         .wrapper .label {
             margin-top: auto;
             margin-bottom: auto;
+            padding-right: 3px;
         }
         .wrapper .right {
             flex: 1;
@@ -169,7 +170,7 @@ class MapLegendItemEdit extends LitElement {
             case 'fill':
                 return html`
                 <div class="panel">
-                        <label>Aanpassen: </label>
+                        <div class="label">Aanpassen:</div>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
@@ -185,7 +186,7 @@ class MapLegendItemEdit extends LitElement {
                 <div class="panel">${this.lineWidth !== undefined?html`<div class="wrapper">
                         <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>`:""}
                     <div class="wrapper">
-                        <label>kleur: </label>
+                        <div class="label">kleur: </div>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div><svg width="20" height="10">
                                 <title>kleur</title>
@@ -197,16 +198,20 @@ class MapLegendItemEdit extends LitElement {
             case 'circle':
                 return html`
                 <div class="panel">
-                    <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius}" @input=${this._radiusChange}></div>
                     <div class="wrapper">
-                        <label>kleur: </label>
+                        <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius}" @input=${this._radiusChange}/>
+                    </div>
+                    <div class="wrapper">
+                        <div class="label">kleur: </div>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                     </div>
-                    <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>
                     <div class="wrapper">
-                        <label>randkleur: </label>
+                        <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}/>
+                    </div>
+                    <div class="wrapper">
+                        <div class="label">randkleur: </div>
                         <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
                             <div><svg width="20" height="10">
                                 <title>kleur</title>
@@ -223,11 +228,14 @@ class MapLegendItemEdit extends LitElement {
                 if (fontSizeMatch)
                 return html`
                 <div class="panel">
-                    <div class="label">grootte: </div><input class="right" type="range" min="0" max="20" step="0.1" value="${fontSize}" @input=${this._fontSizeChange}></div>
                     <div class="wrapper">
-                    <color-picker .color=${fontColor} @change=${e=>this._fontColorChange(e)}>
-                        <div class="fillpicker" title="kleur" style="background-color:${fontColor}"></div>
-                    </color-picker>
+                        <div class="label">grootte: </div><input class="right" type="range" min="0" max="30" step="0.2" value="${fontSize}" @input=${this._fontSizeChange} />
+                    </div>
+                    <div class="wrapper">
+                        <div class="label">tekstkleur: </div>
+                        <color-picker .color=${fontColor} @change=${e=>this._fontColorChange(e)}>
+                            <div class="fillpicker" title="kleur" style="background-color:${fontColor}"></div>
+                        </color-picker>
                     </div>
                 </div>
                 `
