@@ -21,7 +21,7 @@ export default
                   "type":"raster",
                   "tileSize":256,
                   "tiles":[
-                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wms?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&width=256&height=256&styles=default&layers=Actueel_ortho25&transparent=true"
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0/?layers=2018_ortho25&bbox={bbox-epsg-3857}&format=image/png",
                   ],
                   "attribution":"PDOK",
                   "bounds" : [2.75,50.50, 7.5, 53.6]
