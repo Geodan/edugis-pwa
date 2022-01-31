@@ -1,5 +1,17 @@
 import {LitElement, html, css} from 'lit-element';
 
+let colorPalette = [
+  'rgba(128,128,128,0)',
+  'rgba(255,255,255,1)',
+  'rgba(0,0,0,1)',
+  'rgba(103,58,183,1)',
+  'rgba(213,62,79,1)',
+  'rgba(255,255,191,1)',
+  'rgba(33,139,69,1)',
+  'rgba(255,193,7,1)',
+  'rgba(158,202,225,1)'
+];
+
 /**
 * @polymer
 * @extends HTMLElement
@@ -37,12 +49,23 @@ class ColorPicker extends LitElement {
     }
   }
   _colorChanged(color) {
-    this.color = color.toRGBA().toString();
+    this.color = color.toRGBA().toString(3).replace(/ /g,'');
     this.dispatchEvent(new CustomEvent("change", {
       detail: {
         color: this.color
       }
     }))
+  }
+  _updatePalette() {
+    if (!colorPalette.find(colorItem=>colorItem === this.color)) {
+      colorPalette.splice(9, 0, this.color);
+      for (let i = 14; i >= 9; i--) {
+        this.pickr.removeSwatch(i);
+      }
+      for (let i = 9; i < 14 && i < colorPalette.length; i++) {
+        this.pickr.addSwatch(colorPalette[i]);
+      }
+    }
   }
   _attachPickerToElement(element) {
     if (element) {
@@ -55,22 +78,7 @@ class ColorPicker extends LitElement {
         theme: 'nano', // or 'monolith', or 'nano'
         comparison:false,
         useAsButton: true,
-        swatches: [
-            'rgba(244, 67, 54, 1)',
-            'rgba(233, 30, 99, 0.95)',
-            'rgba(156, 39, 176, 0.9)',
-            'rgba(103, 58, 183, 0.85)',
-            'rgba(63, 81, 181, 0.8)',
-            'rgba(33, 150, 243, 0.75)',
-            'rgba(3, 169, 244, 0.7)',
-            'rgba(0, 188, 212, 0.7)',
-            'rgba(0, 150, 136, 0.75)',
-            'rgba(76, 175, 80, 0.8)',
-            'rgba(139, 195, 74, 0.85)',
-            'rgba(205, 220, 57, 0.9)',
-            'rgba(255, 235, 59, 0.95)',
-            'rgba(255, 193, 7, 1)'
-        ],
+        swatches: colorPalette.map(color=>color),
         components: {
             // Main components
             preview: true,
@@ -81,7 +89,12 @@ class ColorPicker extends LitElement {
             interaction: {
                 input: true,
                 cancel: true,
-                save: true
+                save: true,
+                rgba: false,
+                hsla: false,
+                hsva: false,
+                cmyk: false,
+                hex: false
             }
         },
         i18n: {
@@ -95,7 +108,10 @@ class ColorPicker extends LitElement {
         this._colorChanged(this.pickr.getColor());
         this.pickr.hide()
       });
-      this.pickr.on('save', (color) => this.pickr.hide());
+      this.pickr.on('save', (c) => {
+        this.pickr.hide();
+        this._updatePalette();
+      });
     }
   }
 }
