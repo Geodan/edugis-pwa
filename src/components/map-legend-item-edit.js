@@ -162,7 +162,13 @@ class MapLegendItemEdit extends LitElement {
 
     }
     _click(e) {
-        this.visible = !this.visible;
+        //this.visible = !this.visible;
+        this.dispatchEvent(new CustomEvent('editActive', {
+            detail: {
+                editActive: !this.visible,
+                itemIndex: this.itemIndex
+            }
+        }))
     }
     _renderLegendEditor() {
         let color = this.color;
@@ -170,16 +176,21 @@ class MapLegendItemEdit extends LitElement {
             case 'fill':
                 return html`
                 <div class="panel">
-                        <div class="label">Aanpassen:</div>
+                    <div class="wrapper">
+                        <div class="label">Vulkleur:</div>
                         <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
+                    </div>
+                    <div class="wrapper">
+                        <div class="label">Randkleur:</div>
                         <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
                             <div><svg width="20" height="10">
                                 <title>lijnkleur</title>
                                 <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
                             </svg></div>
                         </color-picker>
+                    </div>
                 </div>`
             case 'line': 
                 return html`

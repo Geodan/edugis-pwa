@@ -23,7 +23,8 @@ class MapLegendPanel extends LitElement {
       zoom: {type: Number},
       maplayer: {type: Object},
       transparency: {type: Number},
-      updatelegend: { type: Number}
+      updatelegend: { type: Number},
+      activeEdits: {type: Object}
     }; 
   }
   static get styles() {
@@ -48,6 +49,7 @@ class MapLegendPanel extends LitElement {
       super();
       this.transparency = 0;
       this.updatelegend = 0;
+      this.activeEdits = {};
   }
   shouldUpdate(changedProperties) {
     if (changedProperties.has('maplayer')) {
@@ -568,6 +570,9 @@ class MapLegendPanel extends LitElement {
     if (maplayer.metadata && maplayer.metadata.legendurl) {
       return this.fixedLegend(maplayer);
     }
+    if (!this.activeEdits.hasOwnProperty(maplayer.id)) {
+      this.activeEdits[maplayer.id] = maplayer.metadata.activeEdits ? maplayer.metadata.activeEdits : [];
+    }
     const layerTitle = maplayer.metadata && maplayer.metadata.title?maplayer.metadata.title:maplayer.id;
     const items = mbStyleParser.legendItemsFromLayer(maplayer, layerTitle, this.zoom);
     this._formatItems(maplayer, items);
@@ -578,22 +583,48 @@ class MapLegendPanel extends LitElement {
       case 'fill':
         //legendContent = this.fillLegend(maplayer, items);
         if (maplayer.paint && maplayer.paint["fill-pattern"]) {
-          legendContent = legendContent = html`<map-legend-symbol title="${layerTitle}" .symbols="${maplayer.metadata.imageData}"></map-legend-symbol>`
+          legendContent = legendContent = html`<map-legend-symbol 
+            title="${layerTitle}" 
+            .symbols="${maplayer.metadata.imageData}"></map-legend-symbol>`
         } else {
-          legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
+          legendContent = html`<map-legend-fill 
+            @activeEdits=${this._layerSetActiveEdits}
+            @change="${this._updatePaintProperty}"
+            .activeEdits = "${this.activeEdits[maplayer.id]}"
+            .items="${items}"
+            title="${layerTitle}"
+            layerid="${maplayer.id}"></map-legend-fill>`
         }
         break;
       case 'fill-extrusion':
         //legendContent = this.filleExtrusionLegend(maplayer, items);
-        legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
+        legendContent = html`<map-legend-fill 
+          @activeEdits=${this._layerSetActiveEdits} 
+          @change="${this._updatePaintProperty}" 
+          .activeEdits = "${this.activeEdits[maplayer.id]}"
+          .items="${items}" 
+          title="${layerTitle}" 
+          layerid="${maplayer.id}"></map-legend-fill>`
         break;
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
-        legendContent = html`<map-legend-line @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-line>`
+        legendContent = html`<map-legend-line 
+          @activeEdits=${this._layerSetActiveEdits} 
+          @change="${this._updatePaintProperty}"
+          .activeEdits = "${this.activeEdits[maplayer.id]}"
+          .items="${items}" 
+          title="${layerTitle}" 
+          layerid="${maplayer.id}"></map-legend-line>`
         break;
       case 'circle':
         //legendContent = this.circleLegend(maplayer, items);
-        legendContent = html`<map-legend-circle @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-circle>`
+        legendContent = html`<map-legend-circle 
+          @activeEdits=${this._layerSetActiveEdits}
+          @change="${this._updatePaintProperty}"
+          .activeEdits = "${this.activeEdits[maplayer.id]}"
+          .items="${items}" 
+          title="${layerTitle}" 
+          layerid="${maplayer.id}"></map-legend-circle>`
         break;
       case 'style':
         if (maplayer.metadata && maplayer.metadata.sublayers && maplayer.metadata.sublayers.length) {
@@ -618,11 +649,24 @@ class MapLegendPanel extends LitElement {
         const fontColor=maplayer.paint?maplayer.paint["text-color"]?maplayer.paint["text-color"]:"#000":"#000";
         const textTransform = maplayer.layout && maplayer.layout["text-transform"]?`text-transform:${maplayer.layout["text-transform"]};`:''
         const fontStyle = `font-family:${font};font-size:${fontSize}px;color:${fontColor};${textTransform}`;
-        legendContent = html`<map-legend-symbol @change="${this._updatePaintProperty}" title="${layerTitle}" .symbols="${maplayer.metadata.imageData}" .fontStyle=${fontStyle} layerid="${maplayer.id}"></map-legend-symbol>`
+        legendContent = html`<map-legend-symbol
+          @activeEdits=${this._layerSetActiveEdits}
+          @change="${this._updatePaintProperty}"
+          .activeEdits = "${this.activeEdits[maplayer.id]}"
+          title="${layerTitle}"
+          .symbols="${maplayer.metadata.imageData}"
+          .fontStyle=${fontStyle}
+          layerid="${maplayer.id}"></map-legend-symbol>`
         break;
       case 'background':
         //legendContent = this.backgroundLegend(maplayer);
-        legendContent = html`<map-legend-fill @change="${this._updatePaintProperty}" .items="${items}" title="${layerTitle}" layerid="${maplayer.id}"></map-legend-fill>`
+        legendContent = html`<map-legend-fill 
+          @activeEdits=${this._layerSetActiveEdits}
+          @change="${this._updatePaintProperty}" 
+          .activeEdits = "${this.activeEdits[maplayer.id]}"
+          .items="${items}"
+          title="${layerTitle}"
+          layerid="${maplayer.id}"></map-legend-fill>`
         break;
       case 'heatmap':
       case 'hillshade':
@@ -642,6 +686,52 @@ class MapLegendPanel extends LitElement {
     return html`
       <div class="legendcontainer" style="opacity:${this.transparency?1-Math.round(this.transparency)/100:1};">${legendContent}</div>`;
   }
+  _layerSetActiveEdits(event) {
+    this.activeEdits[event.detail.layerid] = event.detail.activeEdits;
+    this.maplayer.metadata.activeEdits = event.detail.activeEdits;
+  }
+  _uninterpolate(value, input, base, top, bottom) {
+    const difference = top[0] - bottom[0]; 
+    const progress = (input - bottom[0]);
+    if (progress < 0.1) {
+      bottom[1] = value;
+      return;
+    }
+    if (base === 1) {
+      // lineair reverse interpolation      
+      top[1] = bottom[1] + (value - bottom[1]) / (progress / difference);
+      if (top[1] < bottom[1] + 0.1) {
+        top[1] = bottom[1] + 0.1;
+      }
+      return;
+    }
+    top[1] = bottom[1] + (value - bottom[1]) / (progress / difference);
+  }
+  _updatePaintValue(paint, itemIndex, value) {
+    if (Array.isArray(paint)) {
+      switch(paint[0]) {
+        case 'case':
+          paint[2 + (itemIndex*2)] = value;
+          break;
+        case 'match':
+        case 'step':
+          paint[3 + (itemIndex*2)] = value;
+      }
+    } else if (typeof(paint) === 'string') {
+      paint = value;
+    } else if (typeof(paint) === 'object' && paint !== undefined) {
+      paint = value;
+      /* if (!paint.property && paint.base)  {
+        // zoom dependent value
+        let i;
+        for (i = 0; i < paint.stops.length - 1 && this.zoom >= paint.stops[i][0]; i++) {
+          ;
+        }
+        this._uninterpolate(value, this.zoom, paint.base, paint.stops[i], paint.stops[i-1]);
+      }*/
+    }
+    return paint;
+  }
   _updatePaintProperty(event)
   {
     const paintProperty = {};
@@ -656,12 +746,7 @@ class MapLegendPanel extends LitElement {
       let paintColor = editLayer.metadata.paint ? 
         editLayer.metadata.paint[propertyName] : 
           editLayer.paint[propertyName];
-      if (Array.isArray(paintColor)) {
-        paintColor[3 + (itemIndex*2)] = color;
-      } else {
-        paintColor = color;
-      }
-      paintProperty[propertyName] = paintColor;
+      paintProperty[propertyName] = this._updatePaintValue(paintColor, itemIndex, color);
     }
     if (event.detail.outlineColor) {
       const propertyName = editLayer.type === 'fill' ? 'fill-outline-color' : `${editLayer.type}-stroke-color`
@@ -675,13 +760,9 @@ class MapLegendPanel extends LitElement {
         } else {
           editLayer.paint[propertyName] = color;
         }
-      }
-      if (Array.isArray(paintColor)) {
-        paintColor[3 + (itemIndex*2)] = color;
-      } else {
         paintColor = color;
       }
-      paintProperty[propertyName] = paintColor;
+      paintProperty[propertyName] = this._updatePaintValue(paintColor, itemIndex, color);
     }
     if (event.detail.width !== undefined) {
       const propertyName = editLayer.type === 'line' ? "line-width" : `${editLayer.type}-stroke-width`
@@ -696,12 +777,7 @@ class MapLegendPanel extends LitElement {
           editLayer.paint[propertyName] = width;
         }
       }
-      if (Array.isArray(paintWidth)) {
-        paintWidth[3 + (itemIndex*2)] = width;
-      } else {
-        paintWidth = width;
-      }
-      paintProperty[propertyName] = paintWidth;
+      paintProperty[propertyName] = this._updatePaintValue(paintWidth, itemIndex, width);
     }
     if (event.detail.radius !== undefined) {
       const propertyName = `${editLayer.type}-radius`
@@ -709,12 +785,7 @@ class MapLegendPanel extends LitElement {
       let paintRadius = editLayer.metadata.paint ? 
         editLayer.metadata.paint[propertyName] : 
           editLayer.paint[propertyName];
-      if (Array.isArray(paintRadius)) {
-        paintRadius[3 + (itemIndex * 2)] = radius;
-      } else {
-        paintRadius = radius;
-      }
-      paintProperty[propertyName] = paintRadius;
+      paintProperty[propertyName] = this._updatePaintValue(paintRadius, itemIndex, paintRadius);
     }
     if (event.detail.fontStyle) {
       const fontStyles = event.detail.fontStyle.split(';');

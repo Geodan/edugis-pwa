@@ -22,7 +22,8 @@ class MapLegendSymbol extends LitElement {
           title: {stype: String},
           symbols: {type: Array},
           fontStyle: {type: String},
-          layerid: {type: String}
+          layerid: {type: String},
+          activeEdits: {type: Array}
         }; 
     }
     constructor() {
@@ -31,6 +32,7 @@ class MapLegendSymbol extends LitElement {
         this.symbols = [];
         this.fontStyle = "";
         this.layerid = "";
+        this.activeEdits = [];
     }
     render() {
         if (this.symbols && this.symbols.length) {
@@ -40,11 +42,22 @@ class MapLegendSymbol extends LitElement {
             }
             for (const [index,symbol] of this.symbols.entries()) {
                 const label = this.symbols.length === 1 ? this.title : symbol.attributeValues.join(',');
-                result.push(html`<map-legend-item-edit @change=${this._symbolChange} legendItemType="symbol" itemIndex=${index} fontStyle=${this.fontStyle}><div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div></map-legend-item-edit>`)
+                result.push(html`<map-legend-item-edit 
+                    .visible=${this.activeEdits.includes(index)} 
+                    @editActive=${this._editActive}
+                    @change=${this._symbolChange} 
+                    legendItemType="symbol" 
+                    itemIndex=${index} 
+                    fontStyle=${this.fontStyle}><div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div></map-legend-item-edit>`)
             }
             return result;
         } else {
-            return(html`<map-legend-item-edit @change=${this._symbolChange} legendItemType="symbol" fontStyle=${this.fontStyle}><div><span style=${this.fontStyle}>${this.title}</span></div></map-legend-item-edit>`)
+            return(html`<map-legend-item-edit 
+                    .visible=${this.activeEdits.includes(0)} 
+                    @editActive=${this._editActive}
+                    @change=${this._symbolChange} 
+                    legendItemType="symbol" 
+                    fontStyle=${this.fontStyle}><div><span style=${this.fontStyle}>${this.title}</span></div></map-legend-item-edit>`)
         }
     }
     firstUpdated() {
@@ -52,6 +65,19 @@ class MapLegendSymbol extends LitElement {
     }
     updated() {
 
+    }
+    _editActive(event) {
+        if (event.detail.editActive) {
+            this.activeEdits = this.activeEdits.concat(event.detail.itemIndex);
+        } else {
+            this.activeEdits = this.activeEdits.filter(index=>index !== event.detail.itemIndex);
+        }
+        this.dispatchEvent(new CustomEvent('activeEdits', {
+            detail: {
+                activeEdits: this.activeEdits,
+                layerid: this.layerid
+            }
+        }));
     }
     _symbolChange(event) {
         const itemIndex = event.detail.itemIndex;

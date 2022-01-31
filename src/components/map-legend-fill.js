@@ -24,13 +24,15 @@ class MapLegendFill extends LitElement {
         return { 
           title: {stype: String},
           items: {type: Object},
-          layerid: {type: String}
+          layerid: {type: String},
+          activeEdits: {type: Array}
         }; 
     }
     constructor() {
         super();
         this.title = "untitled";
         this.items = [];
+        this.activeEdits = [];
     }
     connectedCallback() {
         super.connectedCallback()
@@ -99,6 +101,8 @@ class MapLegendFill extends LitElement {
             const fill = this._fillItem(color, strokeColor, label);
             return html`
             <map-legend-item-edit 
+                .visible=${this.activeEdits.includes(0)}
+                @editActive=${this._editActive}
                 @change="${this._fillColorChanged}"
                 @changeLineColor="${this._lineColorChanged}"
                 legendItemType="fill" 
@@ -131,6 +135,8 @@ class MapLegendFill extends LitElement {
                 }
                 if (label) {
                     result.push(html`<map-legend-item-edit 
+                        .visible=${this.activeEdits.includes(i)}
+                        @editActive=${this._editActive}
                         @change="${this._fillColorChanged}"
                         @changeLineColor="${this._lineColorChanged}"
                         .itemIndex=${i} 
@@ -153,6 +159,19 @@ class MapLegendFill extends LitElement {
         }
         return result;
     }
+    _editActive(event) {
+        if (event.detail.editActive) {
+            this.activeEdits = this.activeEdits.concat(event.detail.itemIndex);
+        } else {
+            this.activeEdits = this.activeEdits.filter(index=>index !== event.detail.itemIndex);
+        }        
+        this.dispatchEvent(new CustomEvent('activeEdits', {
+            detail: {
+                activeEdits: this.activeEdits,
+                layerid: this.layerid
+            }
+        }))
+    }
     _fillColorChanged(event) {
         const itemIndex = event.detail.itemIndex;
         const color = event.detail.color;
@@ -170,7 +189,11 @@ class MapLegendFill extends LitElement {
         const itemIndex = event.detail.itemIndex;
         const color = event.detail.color;
         if (this.items.strokeColorItems.length) {
-            this.items.strokeColorItems[itemIndex].paintValue = color;
+            if (itemIndex < this.items.strokeColorItems.length) {
+                this.items.strokeColorItems[itemIndex].paintValue = color;
+            } else {
+                this.items.strokeColorItems[0].paintValue = color;
+            }
         } else {
             this.items.strokeColorItems.push({paintValue: color});
         }

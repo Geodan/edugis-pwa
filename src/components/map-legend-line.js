@@ -19,14 +19,16 @@ class MapLegendLine extends LitElement {
         return { 
           title: {stype: String},
           items: {type: Object},
-          layerid: {type: String}
+          layerid: {type: String},
+          activeEdits: {type: Array}
         }; 
     }
     constructor() {
         super();
         this.title = "untitled";
         this.items = [];
-        this.layerid = ""
+        this.layerid = "";
+        this.activeEdits = [];
     }
     connectedCallback() {
         super.connectedCallback()
@@ -56,6 +58,8 @@ class MapLegendLine extends LitElement {
             const line = this._lineItem(color, width, label);
             return html`
             <map-legend-item-edit 
+                .visible=${this.activeEdits.includes(0)}
+                @editActive=${this._editActive}
                 @change="${this._lineColorChanged}"
                 @changeLineWidth="${this._lineWidthChanged}"
                 legendItemType="line" 
@@ -110,6 +114,19 @@ class MapLegendLine extends LitElement {
     }
     updated() {
 
+    }
+    _editActive(event) {
+        if (event.detail.editActive) {
+            this.activeEdits = this.activeEdits.concat(event.detail.itemIndex);
+        } else {
+            this.activeEdits = this.activeEdits.filter(index=>index !== event.detail.itemIndex);
+        }
+        this.dispatchEvent(new CustomEvent('activeEdits', {
+            detail: {
+                activeEdits: this.activeEdits,
+                layerid: this.layerid
+            }
+        }));
     }
     _lineColorChanged(event) {
         const itemIndex = event.detail.itemIndex;

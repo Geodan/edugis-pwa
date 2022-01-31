@@ -68,13 +68,16 @@ class MapLegendCircle extends LitElement {
         return { 
           title: {stype: String},
           items: {type: Object},
-          layerid: {type: String}
+          layerid: {type: String},
+          activeEdits: {type: Array}
         }; 
     }
     constructor() {
         super();
         this.title = "untitled";
         this.items = [];
+        this.layerid = "";
+        this.activeEdits = [];
     }
     _circleItem(color, strokeColor, strokeWidth, radius,label) {
         radius += strokeWidth/2; // svg has half of stroke inside circle, mapbox-gl outside circle
@@ -100,6 +103,8 @@ class MapLegendCircle extends LitElement {
             const label = items.colorItems.length ? items.colorItems[0].attrName: this.title;
             return html`
             <map-legend-item-edit 
+                .visible=${this.activeEdits.includes(0)}
+                @editActive="${this._editActive}"
                 @change="${this._colorChanged}"
                 @changeLineWidth="${this._outlineWidthChanged}"
                 @changeLineColor="${this._outlineColorChanged}"
@@ -173,6 +178,8 @@ class MapLegendCircle extends LitElement {
                 }
                 //const label = attrExpression ? attrExpression === '==' ? attrValue : `${attrExpression} ${attrValue}` : attrValue;
                 return html`<map-legend-item-edit 
+                    .visible=${this.activeEdits.includes[itemIndex]}
+                    @editActive=${this._editActive}
                     @change="${this._colorChanged}"
                     @changeLineColor="${this._outlineColorChanged}"
                     @changeLineWidth="${this._outlineWidthChanged}"
@@ -209,6 +216,19 @@ class MapLegendCircle extends LitElement {
     }
     updated() {
 
+    }
+    _editActive(event) {
+        if (event.detail.editActive) {
+            this.activeEdits = this.activeEdits.concat(event.detail.itemIndex);
+        } else {
+            this.activeEdits = this.activeEdits.filter(index=>index !== event.detail.itemIndex);
+        }
+        this.dispatchEvent(new CustomEvent('activeEdits', {
+            detail: {
+                activeEdits: this.activeEdits,
+                layerid: this.layerid
+            }
+        }));
     }
     _colorChanged(event) {
         const itemIndex = event.detail.itemIndex;
