@@ -301,7 +301,7 @@
               "title": "Klimaat Köppen",
               "id": "klimaat",
               "layerInfo": {
-                "id":"87d600cf-cff3-4aac-92ed-da6d2d2ce2c8",
+                "id":"koppen-klimaat-kaart",
                 "type":"fill",
                 "metadata":{
                   "abstract": "Klimaatkaart volgens Köppen Geiger. Gebruik de i-tool en voor uitgebreidere informatie per klimaatgebied. De klassificatie bestaat uit 3 letters. De eerste letter staat voor het type klimaat. A: Tropisch, B: Droog, C: Gematigd, D: Landklimaat, E: Poolklimaat. De klassificatie wordt verder uitgelegd op wikipedia: https://nl.wikipedia.org/wiki/Klimaatclassificatie_van_K%C3%B6ppen"
@@ -352,7 +352,7 @@
             {
               "title": "Neerslag jaarlijks gemiddeld",
               "layerInfo": {
-                "id":"a9e03848-335e-45e7-90a4-589da57f0915",
+                "id":"neerslag-jaarlijks-gemiddeld",
                 "type":"fill",
                 "metadata": {
                   "attributes":{
