@@ -717,9 +717,9 @@ class MapLegendPanel extends LitElement {
         case 'step':
           paint[3 + (itemIndex*2)] = value;
       }
-    } else if (typeof(paint) === 'string') {
+    } else if (typeof paint === 'string' || typeof paint === 'number') {
       paint = value;
-    } else if (typeof(paint) === 'object' && paint !== undefined) {
+    } else if (typeof paint === 'object' && paint !== undefined) {
       paint = value;
       /* if (!paint.property && paint.base)  {
         // zoom dependent value
