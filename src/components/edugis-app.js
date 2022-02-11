@@ -77,7 +77,7 @@ header {
 
 .topnav {
   position: absolute;
-  top: 0px;
+  top: 5px;
   right: 1em;
   text-align: right;
   box-sizing: border-box;
@@ -168,7 +168,7 @@ footer a:hover {
           </ul>
         </nav>
     </header>
-    <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" haslegend="true" .accesstoken="${APIkeys.mapbox}"></web-map>
+    <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" .haslegend=${true} .accesstoken="${APIkeys.mapbox}"></web-map>
     <tool-tip></tool-tip>
     <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">EduGIS</a></footer>
     `;
