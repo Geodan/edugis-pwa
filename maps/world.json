@@ -312,6 +312,7 @@
                     "bounds":[-180,-89.5,180,83.6]},
                 "source-layer":"public.climate_2007_koppen_geiger",
                 "paint":{
+                  "fill-outline-color": "rgba(255,255,255,0)",
                   "fill-color":[
                       "match",["get","klassificatie"],
                       "Af","#1300FC",

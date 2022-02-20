@@ -755,6 +755,8 @@ class MapLegendPanel extends LitElement {
         editLayer.metadata.paint[propertyName] : 
           editLayer.paint[propertyName];
       if (!paintColor) {
+        // note: if you create 'fill-outline-color' on a previously added layer, the created fill-outline-color is ignored by the renderer
+        // todo: somehow force the renderer to include the newly created fill-outline-color here
         if (editLayer.metadata.paint) {
           editLayer.metadata.paint[propertyName] = color;
         } else {
