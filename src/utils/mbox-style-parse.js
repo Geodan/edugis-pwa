@@ -518,10 +518,10 @@ class MBStyleParser
       case '/':
       case 'min':
       case 'max':
-        const attrValues = expression.slice(1).map(subexpression=>this._parsePaintProperty(subexpression)[0].paintValue);
+        const attrValues = expression.slice(1).map(subexpression=>this._parsePaintProperty(subexpression)[0]);
         return [{attrName: attrName, attrValue: attrValues, attrExpression: expression[0], paintValue: attrValues}];
       default:
-        let value = this._parsePaintProperty(expression[1])[0].paintValue
+        let value = this._parsePaintProperty(expression[1])[0];
         return [{attrName: attrName, attrValue: value, attrExpression: expression[0], paintValue: value}]
     }
   }
@@ -703,6 +703,16 @@ class MBStyleParser
       radiusItems: this._legendItems(layer, title, zoom, 'radius'),
       strokeColorItems: this._legendItems(layer, title, zoom, 'stroke-color'),
       strokeWidthItems: this._legendItems(layer, title, zoom, 'stroke-width'),
+    }
+    if (result.radiusItems.length === 1 && result.radiusItems[0].attrExpression && Array.isArray(result.radiusItems[0].paintValue)) {
+      // value is likely an expression: "c * sqrt(attribute_value)"
+      const expression = result.radiusItems[0];
+      const attrExpression = expression.attrExpression;
+      const constant = expression.paintValue[0].paintValue;
+      const func = expression.paintValue[1].attrExpression;
+      const attrName = expression.paintValue[1].paintValue.attrName;
+      result.radiusItems = [{attrName: attrName, paintValue: 10, attrValue: Math.round(100/(constant*constant))},
+                {attrName: attrName, paintValue: 20, attrValue: Math.round(400/(constant*constant))}]
     }
     return result;
   }
