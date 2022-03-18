@@ -12,6 +12,7 @@
                 {
                     "title":"Openstreetmap",
                     "type":"reference",
+"checked": true,
                     "layerInfo":{
                         "id":"openstreetmap",
                         "type":"raster",
@@ -50,7 +51,7 @@
                 {
                     "type":"reference",
                     "title":"OSM Helder (stijl)",
-                    "checked": true,
+                    
                     "layerInfo":{
                       "id":"OsmBright",
                       "type":"style",
@@ -556,7 +557,7 @@
                             "layerInfo": {
                                 "id": "pandenbouwjaar",
                                 "type":"raster",
-                                "minzoom":13,
+                                "minzoom":11,
                                 "maxzoom":22,
                                 "source":{
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
@@ -2243,7 +2244,7 @@
                           },
                           {
                             "type":"vector",
-                            "title": "Overige ntl landschappen",
+                            "title": "Nationale landschappen",
                             "layerInfo": {
                               "id":"7c209960-b233-4913-975d-2d6a290b1a15",
                               "type":"fill",
@@ -2294,7 +2295,7 @@
                           },
                           {
                             "type": "group",
-                            "title": "Maskers Ntl Landschappen",
+                            "title": "Maskers",
                             "sublayers": [
                               {
                                 "type": "vector",
