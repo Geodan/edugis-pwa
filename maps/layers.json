@@ -335,13 +335,236 @@
                     "title": "Provincies, gemeenten, wijken en buurten (2017)",
                     "sublayers": [
                         {
-                            "type":"getcapabilities",
-                            "title":"provgemwijk2017",
-                            "layerInfo":{
-                              "id":"provgemwijk2017",
-                              "url":"https://map.edugis.nl/cgi-bin/qgis_mapserv.fcgi?dpi=90&map=data/eduqgis/files/Administratieve_Indelingen.qgs&service=WMS&version=1.1.1&request=getcapabilities",
-                              "deniedlayers":"Administratieve_Indelingen"
+                          "title" : "Provincies",
+                          "layerInfo": {
+                            "id": "provincies2017style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "provinciesource": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/cbs.provincie2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"2e12eb6e-1188-42d0-91f1-edb28627a58c",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "provincie",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "provinciesource",
+                                  "source-layer":"cbs.provincie2017",
+                                  "paint": {
+                                    "fill-color": "rgba(227,26,28,0)"
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                },
+                                {
+                                  "id": "provincie-outline",
+                                  "metadata": {
+                                    "title": "provinciegrens",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "provinciesource",
+                                  "source-layer": "cbs.provincie2017",
+                                  "paint": {
+                                    "line-color": "#e31a1c",
+                                    "line-width": 2
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                }
+                              ]
                             }
+                          }
+                        },
+                        {
+                          "title" : "Gemeenten",
+                          "layerInfo": {
+                            "id": "gemeenten2017style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "gemeentesource": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/cbs.gemeente2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"gemeentevlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "gemeente",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "gemeentesource",
+                                  "source-layer":"cbs.gemeente2017",
+                                  "paint": {
+                                    "fill-color": "rgba(10,10,10,0)"
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                },
+                                {
+                                  "id": "gemeente-outline",
+                                  "metadata": {
+                                    "title": "gemeentegrens",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "gemeentesource",
+                                  "source-layer": "cbs.gemeente2017",
+                                  "paint": {
+                                    "line-color": "rgb(10,10,10)",
+                                    "line-width": 2
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title" : "Wijken",
+                          "layerInfo": {
+                            "id": "wijken2017style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "wijksource": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"wijkvlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "wijk",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "wijksource",
+                                  "source-layer":"cbs.wijk2017",
+                                  "paint": {
+                                    "fill-color": "rgba(49,154,42,0)"
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                },
+                                {
+                                  "id": "wijk2017-outline",
+                                  "metadata": {
+                                    "title": "wijkgrens",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "wijksource",
+                                  "source-layer": "cbs.wijk2017",
+                                  "paint": {
+                                    "line-color": "rgb(49,154,42)",
+                                    "line-width": 2
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title" : "Buurten",
+                          "layerInfo": {
+                            "id": "buurt2017style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "buurtsource": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"buurtvlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "buurt",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "buurtsource",
+                                  "source-layer":"cbs.buurt2017",
+                                  "paint": {
+                                    "fill-color": "rgba(254,134,18,0)"
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                },
+                                {
+                                  "id": "buurt2017-outline",
+                                  "metadata": {
+                                    "title": "buurtgrens",
+                                    "attributes": {
+                                      "deniedattributes": "water",
+                                      "translations":[
+                                        {"name": "statnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "buurtsource",
+                                  "source-layer": "cbs.buurt2017",
+                                  "paint": {
+                                    "line-color": "rgb(254,134,18)",
+                                    "line-width": 2
+                                  },
+                                  "filter": ["==",["get","water"],"NEE"]
+                                }
+                              ]
+                            }
+                          }
                         }
                     ]
                 },
