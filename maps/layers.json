@@ -12,7 +12,7 @@
                 {
                     "title":"Openstreetmap",
                     "type":"reference",
-"checked": true,
+                    "checked": true,
                     "layerInfo":{
                         "id":"openstreetmap",
                         "type":"raster",
@@ -313,6 +313,282 @@
                               "allowedlayers":"",
                               "checkedlayers": ""
                             }
+                        },
+                        {
+                          "title" : "Provincies (2005)",
+                          "id": "provicies2005",
+                          "layerInfo": {
+                            "id": "provincies2005style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "provincie2005source": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/edugis.provincie_2005/mvt/{z}/{x}/{y}?geom_column=the_geom&columns=provnaam&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"provincice2005_fill",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "provincie (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "provnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "provincie2005source",
+                                  "source-layer":"edugis.provincie_2005",
+                                  "paint": {
+                                    "fill-color": "rgba(178,0,255,0)"
+                                  }
+                                },
+                                {
+                                  "id": "provincie2005-outline",
+                                  "metadata": {
+                                    "title": "provinciegrens (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "provnaam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "provincie2005source",
+                                  "source-layer": "edugis.provincie_2005",
+                                  "paint": {
+                                    "line-color": "rgb(178,0,255)",
+                                    "line-width": 2
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title": "Provincienamen",
+                          "id": "provincienamen2005",
+                          "layerInfo": {
+                            "id": "provincienamen2005",
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/edugis.provincie_2005/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=provnaam&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "edugis.provincie_2005",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","provnaam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title" : "Gemeenten (2005)",
+                          "id": "gemeenten2005",
+                          "layerInfo": {
+                            "id": "gemeenten2005style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "gemeente2005source": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/edugis.gemeente_2005/mvt/{z}/{x}/{y}?geom_column=the_geom&columns=gm_naam,aant_inw&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"gemeente2005vlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "gemeente (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "gm_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "gemeente2005source",
+                                  "source-layer":"edugis.gemeente_2005",
+                                  "paint": {
+                                    "fill-color": "rgba(10,10,10,0)"
+                                  }
+                                },
+                                {
+                                  "id": "gemeente2005-outline",
+                                  "metadata": {
+                                    "title": "gemeentegrens (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "gm_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "gemeente2005source",
+                                  "source-layer": "edugis.gemeente_2005",
+                                  "paint": {
+                                    "line-color": "rgb(10,10,10)",
+                                    "line-width": 2
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title": "Gemeentenamen",
+                          "id": "gemeentenamen2005",
+                          "layerInfo": {
+                            "id": "gemeentenamen2005",
+                            "metadata": {
+                              "attributes": {
+                                "translations":[
+                                  {"name":"gm_naam", "translation": "naam"},
+                                  {"name":"aant_inw", "translation": "aantal inwoners"}
+                                ]
+                              }
+                            },
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/edugis.gemeente_2005/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gm_naam,aant_inw&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "edugis.gemeente_2005",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","gm_naam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 10,
+                              "symbol-sort-key": ["-",["get","aant_inw"]]
+                            }
+                          }
+                        },
+                        {
+                          "title" : "Wijken (2005)",
+                          "id": "wijken2005",
+                          "layerInfo": {
+                            "id": "wijken2005style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "wijk2005source": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/edugis.wijk_2005/mvt/{z}/{x}/{y}?geom_column=the_geom&columns=bu_naam&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"wijk2005vlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "wijk (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "bu_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "wijk2005source",
+                                  "source-layer":"edugis.wijk_2005",
+                                  "paint": {
+                                    "fill-color": "rgba(49,154,42,0)"
+                                  }
+                                },
+                                {
+                                  "id": "wijk2005-outline",
+                                  "metadata": {
+                                    "title": "wijkgrens (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "bu_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "wijk2005source",
+                                  "source-layer": "edugis.wijk_2005",
+                                  "paint": {
+                                    "line-color": "rgb(49,154,42)",
+                                    "line-width": 2
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "title" : "Buurten (2005)",
+                          "id": "buurten2005",
+                          "layerInfo": {
+                            "id": "buurt2005style",
+                            "type": "style",
+                            "source": {
+                              "version": 8,
+                              "sources": {
+                                "buurt2005source": {
+                                  "type": "vector",
+                                  "tiles":["https://tiles.edugis.nl/data/edugis.buurt_2005/mvt/{z}/{x}/{y}?geom_column=the_geom&columns=bu_naam&include_nulls=0"],
+                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                                }
+                              },
+                              "layers": [
+                                {
+                                  "id":"buurt2005vlak",
+                                  "type": "fill",
+                                  "metadata": {
+                                    "title": "buurt (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "bu_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "source": "buurt2005source",
+                                  "source-layer":"edugis.buurt_2005",
+                                  "paint": {
+                                    "fill-color": "rgba(254,134,18,0)"
+                                  }
+                                },
+                                {
+                                  "id": "buurt2005-outline",
+                                  "metadata": {
+                                    "title": "buurtgrens (2005)",
+                                    "attributes": {
+                                      "translations":[
+                                        {"name": "bu_naam", "translation":"naam"}
+                                      ]
+                                    }
+                                  },
+                                  "type": "line",
+                                  "source": "buurt2005source",
+                                  "source-layer": "edugis.buurt_2005",
+                                  "paint": {
+                                    "line-color": "rgb(254,134,18)",
+                                    "line-width": 2
+                                  }
+                                }
+                              ]
+                            }
+                          }
                         }
                     ]
                 },
@@ -336,6 +612,7 @@
                     "sublayers": [
                         {
                           "title" : "Provincies",
+                          "id": "provincies2017",
                           "layerInfo": {
                             "id": "provincies2017style",
                             "type": "style",
@@ -394,6 +671,7 @@
                         },
                         {
                           "title" : "Gemeenten",
+                          "id": "gemeenten2017",
                           "layerInfo": {
                             "id": "gemeenten2017style",
                             "type": "style",
@@ -452,6 +730,7 @@
                         },
                         {
                           "title" : "Wijken",
+                          "id": "wijken2017",
                           "layerInfo": {
                             "id": "wijken2017style",
                             "type": "style",
@@ -510,6 +789,7 @@
                         },
                         {
                           "title" : "Buurten",
+                          "id": "buurten2017",
                           "layerInfo": {
                             "id": "buurt2017style",
                             "type": "style",
