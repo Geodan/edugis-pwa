@@ -304,17 +304,6 @@
                     "title": "Provincies, gemeenten, wijken en buurten (2005)",
                     "sublayers": [
                         {
-                            "type":"getcapabilities",
-                            "title":"provgemwijk2005",
-                            "layerInfo":{
-                              "id":"provgemwijk2005",
-                              "url":"https://kaart.edugis.nl/data/nederland/adm_grenzen_2005.xml",
-                              "deniedlayers":"",
-                              "allowedlayers":"",
-                              "checkedlayers": ""
-                            }
-                        },
-                        {
                           "title" : "Provincies (2005)",
                           "id": "provicies2005",
                           "layerInfo": {
@@ -718,6 +707,29 @@
                           }
                         },
                         {
+                          "title": "Provincienamen",
+                          "id": "provincienamen2017",
+                          "layerInfo": {
+                            "id": "provincienamen2017",
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/cbs.provincie2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "cbs.provincie2017",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","statnaam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ]
+                            }
+                          }
+                        },
+                        {
                           "title" : "Gemeenten",
                           "id": "gemeenten2017",
                           "layerInfo": {
@@ -773,6 +785,39 @@
                                   "filter": ["==",["get","water"],"NEE"]
                                 }
                               ]
+                            }
+                          }
+                        },
+                        {
+                          "title": "Gemeentenamen",
+                          "id": "gemeentenamen2017",
+                          "layerInfo": {
+                            "id": "gemeentenamen2017",
+                            "metadata": {
+                              "attributes": {
+                                "translations":[
+                                  {"name":"statnaam", "translation": "naam"},
+                                  {"name":"aantalinwoners", "translation": "aantal inwoners"}
+                                ]
+                              }
+                            },
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/cbs.gemeente2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "cbs.gemeente2017",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","statnaam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 10,
+                              "symbol-sort-key": ["-",["get","aantalinwoners"]]
                             }
                           }
                         },
@@ -836,6 +881,39 @@
                           }
                         },
                         {
+                          "title": "Wijknamen",
+                          "id": "wijknamen2017",
+                          "layerInfo": {
+                            "id": "wijknamen2017",
+                            "metadata": {
+                              "attributes": {
+                                "translations":[
+                                  {"name":"statnaam", "translation": "naam"},
+                                  {"name":"aantalinwoners", "translation": "aantal inwoners"}
+                                ]
+                              }
+                            },
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "cbs.wijk2017",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","statnaam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 9,
+                              "symbol-sort-key": ["-",["get","aantalinwoners"]]
+                            }
+                          }
+                        },
+                        {
                           "title" : "Buurten",
                           "id": "buurten2017",
                           "layerInfo": {
@@ -891,6 +969,39 @@
                                   "filter": ["==",["get","water"],"NEE"]
                                 }
                               ]
+                            }
+                          }
+                        },
+                        {
+                          "title": "Buurtnamen",
+                          "id": "buurtnamen2017",
+                          "layerInfo": {
+                            "id": "buurtnamen2017",
+                            "metadata": {
+                              "attributes": {
+                                "translations":[
+                                  {"name":"statnaam", "translation": "naam"},
+                                  {"name":"aantalinwoners", "translation": "aantal inwoners"}
+                                ]
+                              }
+                            },
+                            "type": "symbol",
+                            "source": {
+                              "type": "vector",
+                              "tiles": ["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "cbs.buurt2017",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","statnaam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 8,
+                              "symbol-sort-key": ["-",["get","aantalinwoners"]]
                             }
                           }
                         }
