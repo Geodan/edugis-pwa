@@ -536,6 +536,30 @@
                           }
                         },
                         {
+                          "title": "Wijknamen",
+                          "layerInfo": {
+                            "id": "wijknamen2005",
+                            "type": "symbol",
+                            "source": {
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/edugis.wijk_2005/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=bu_naam,aant_inw&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "edugis.wijk_2005",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","bu_naam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 9,
+                              "symbol-sort-key": ["-",["get","aant_inw"]]
+                            }
+                          }
+                        },
+                        {
                           "title" : "Buurten (2005)",
                           "id": "buurten2005",
                           "layerInfo": {
@@ -587,6 +611,30 @@
                                   }
                                 }
                               ]
+                            }
+                          }
+                        },
+                        {
+                          "title": "Buurtnamen",
+                          "layerInfo": {
+                            "id": "buurtnamen2005",
+                            "type": "symbol",
+                            "source": {
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/edugis.buurt_2005/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=bu_naam,aant_inw&include_nulls=0"],
+                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                            },
+                            "source-layer": "edugis.buurt_2005",
+                            "paint":{
+                                "text-color":"black"
+                            },
+                            "layout":{
+                              "text-field": ["get","bu_naam"],
+                              "text-font": [
+                                "Noto Sans Regular"
+                              ],
+                              "text-size": 9,
+                              "symbol-sort-key": ["-",["get","aant_inw"]]
                             }
                           }
                         }
