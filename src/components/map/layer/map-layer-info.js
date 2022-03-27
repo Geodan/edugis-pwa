@@ -256,18 +256,50 @@ class MapLayerInfo extends LitElement {
             }))
         }
     }
-
+    _getConfigurableLayer() {
+        let layer = this.layer;
+        if (layer.type === 'style') {
+            const fillLayer = layer.metadata.sublayers.find(({type})=>type==='fill');
+            if (fillLayer) {
+                return fillLayer;
+            }
+            const circleLayer = layer.metadata.sublayers.find(({type})=>type === 'circle');
+            if (circleLayer) {
+                return circleLayer;
+            }
+            const lineLayer = layer.metadata.sublayers.find(({type})=>type === 'line');
+            if (lineLayer) {
+                return lineLayer;
+            }
+        }
+        return layer;
+    }
     _renderLayerConfig() {
         if (this.showLayerConfig) {
+            let layer = this._getConfigurableLayer();
+            if (layer.type === 'style') {
+
+            }
             return html`
-            <map-layer-config .layer="${this.layer}" .zoom=${this.zoom} .datagetter="${this.datagetter}"></map-layer-config>
+            <map-layer-config .layer="${layer}" .zoom=${this.zoom} .datagetter="${this.datagetter}"></map-layer-config>
             `
         } else {
             return '';
         }
     }
     _renderSettings(){
-        if (this.layer.type === 'fill' || this.layer.type === 'line' || this.layer.type === 'circle') {
+        if (this.layer.type === 'fill' 
+            || this.layer.type === 'line' 
+            || this.layer.type === 'circle' 
+            || (this.layer.type === 'style' 
+                && this.layer.metadata.sublayers 
+                && this.layer.metadata.sublayers.length
+                && this.layer.metadata.sublayers[0].metadata
+                && !this.layer.metadata.sublayers[0].metadata.reference
+                && this.layer.metadata.sublayers.find(layer=>layer.type === 'fill' 
+                    || layer.type ==='line' 
+                    || layer.type === 'circle'))
+        ) {
             return html`
                 <div class="iconbutton" @click="${()=>this.showLayerConfig=!this.showLayerConfig}"><span class="icon">${iconCog}</span> Instellingen</div>
                 ${this._renderLayerConfig()}
