@@ -33,13 +33,14 @@ import './map-import-export';
 import './map-data-toolbox';
 import './map-sheet-tool';
 import './map-modal-dialog';
+import './map-proj-chooser';
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
 
 import ZoomControl from '../../lib/zoomcontrol';
-import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon } from './my-icons';
+import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 
 function timeout(ms) {
@@ -224,6 +225,7 @@ class WebMap extends LitElement {
       {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
       {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: combineToolIcon},
       {name:"sheetimport", visible: true, position: "", order: 110, info: "Tabel uploaden", icon: sheetIcon},
+      {name:"projchooser", visible: true, position:"", order: 120, info: "Kaartprojectie", icon: world3Icon},
       {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
       {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
@@ -828,6 +830,9 @@ class WebMap extends LitElement {
         <map-panel .active="${this.currentTool==='sheetimport'}">
           <div style="width:100%"></div>
           <map-sheet-tool .active="${this.currentTool==='sheetimport'}" .map="${this.map}" @droppedfile="${e=>this._processDroppedFile(e.detail)}"></map-sheet-tool>
+        </map-panel>
+        <map-panel .active="${this.currentTool==='projchooser'}">
+          <map-proj-chooser .active="${this.currentTool==='projchooser'}" .map="${this.map}"></map-proj-chooser>
         </map-panel>
       </div>
     </div>`
