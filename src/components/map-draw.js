@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import './map-iconbutton';
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
+import theme from './map-draw-theme.js'
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -231,7 +232,8 @@ class MapDraw extends LitElement {
       this.draw = new MapboxDraw({
         displayControlsDefault: true,
         keybindings: true,
-        controls: {point: false, line_string: false, polygon: false, trash: false, combine_features: false, uncombine_features: false}
+        controls: {point: false, line_string: false, polygon: false, trash: false, combine_features: false, uncombine_features: false},
+        styles: theme
       });
       this.draw.options.styles.forEach(style=>style.metadata = {isToolLayer: true});
       this.map.addControl(this.draw, 'bottom-right');
