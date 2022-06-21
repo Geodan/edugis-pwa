@@ -129,16 +129,6 @@ const searchSurface = {
   "filter": ['==', '$type', "Polygon"],
 };
 
-let StaticMode = {
-  onSetup :  function() {
-    this.setActionableState(); // default actionable state is false for all actions
-    return {};
-  },
-  toDisplayFeatures : function(state, geojson, display) {
-    display(geojson);
-  }
-}
-
 // srs optional, defaults to 'EPSG:3857'
 // adds projected .x and .y properties to lngLat
 function projectLngLat(lngLat, srs)
@@ -654,6 +644,7 @@ class WebMap extends LitElement {
               this.map.addLayer(new TrafficLayer(layerInfo.source.data));
             } else {
               if (layerInfo.source && layerInfo.source.type === "geojson") {
+                layerInfo.metadata.cansave = true;
                 if (layerInfo.metadata.topojson && !layerInfo.metadata.originaldata) {
                   await GeoJSON.convertTopoJsonLayer(layerInfo);
                 } 

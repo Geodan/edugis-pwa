@@ -30,7 +30,7 @@ export default [
         ['==', '$type', 'Point'],
         ['==', 'meta', 'midpoint']],
       'paint': {
-        'circle-radius': 5,
+        'circle-radius': 3,
         'circle-color': '#fff',
         'circle-stroke-color': '#3388ff',
         'circle-stroke-width': 1

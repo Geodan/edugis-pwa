@@ -173,7 +173,7 @@ class MapLayerSet extends LitElement {
                 .first="${index == 0}"
                 .layer="${layer}" 
                 .boundspos="${boundspos}" 
-                .zoom=${this.zoom} 
+                .zoom=${this.zoom}
                 .itemcontainer="${this.itemcontainer}" 
                 .itemscroller="${this.itemscroller}"
                 .updatelegend="${this.updatelegend}"

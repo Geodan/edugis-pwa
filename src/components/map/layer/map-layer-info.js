@@ -163,6 +163,7 @@ class MapLayerInfo extends LitElement {
             </div>
             ${this._renderShowInfo()}
             ${this._renderSettings()}
+            ${this._renderSaveLayerButton()}
             `
         }
         return ``;
@@ -306,6 +307,11 @@ class MapLayerInfo extends LitElement {
             `
         }
         return '';
+    }
+    _renderSaveLayerButton() {
+        if (this.layer.metadata && this.layer.metadata.cansave) {
+            return html `<input type="button" value="layer opslaan">`
+        }
     }
     _removeLayer() {
         this.dispatchEvent(new CustomEvent('removelayer', {
