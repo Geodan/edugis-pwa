@@ -3,6 +3,7 @@ import '../../base/base-slider.js';
 import '../../map-legend-panel.js';
 import './map-layer-config.js';
 import {iconInformationCircle, iconCog, iconDelete} from "./map-layer-icons.js";
+import { downloadIcon } from '../../my-icons.js';
 //import Picker from '../../colorpicker/picker.js';
 
 /**
@@ -310,8 +311,19 @@ class MapLayerInfo extends LitElement {
     }
     _renderSaveLayerButton() {
         if (this.layer.metadata && this.layer.metadata.cansave) {
-            return html `<input type="button" value="layer opslaan">`
+            return html`
+            <div class="iconbutton" @click="${()=>this._saveLayer()}" title="laag opslaan"><span class="icon">${downloadIcon}</span> Laag bewaren</div>
+            `
         }
+    }
+    _saveLayer() {
+        this.dispatchEvent(new CustomEvent('savelayer', {
+            detail: {
+                layerid: this.layer.id
+            },
+            bubbles: true,
+            composed: true
+        }))
     }
     _removeLayer() {
         this.dispatchEvent(new CustomEvent('removelayer', {
