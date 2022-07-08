@@ -28,7 +28,7 @@ import './map-geolocation';
 import './map-pitch';
 import './map/layer/map-layer-container.js';
 import './map/layer/map-layer-set.js';
-import './map-draw';
+import './map-draw2';
 import './map-import-export';
 import './map-data-toolbox';
 import './map-sheet-tool';
@@ -809,7 +809,13 @@ class WebMap extends LitElement {
           <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"></map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
-          <map-draw .active="${this.currentTool==='draw'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-draw>
+          <map-draw2 .active="${this.currentTool==='draw'}" 
+            .map="${this.map}" 
+            @addlayer="${e=>this.addLayer(e)}" 
+            @movelayer="${e=>this.moveLayer(e)}"
+            @titlechange="${e=>this.resetLayerList(e)}"
+            @updatevisibility="${(e) => this.updateLayerVisibility(e)}">
+          </map-draw2>
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
@@ -879,7 +885,6 @@ class WebMap extends LitElement {
         display: inline-block;
         margin: 2px;
       }
-      /* @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";*/
       :host {
         display: inline-block;
         min-width: 200px;

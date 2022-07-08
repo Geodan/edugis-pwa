@@ -38,18 +38,20 @@ class MapSaveLayer extends LitElement {
     updated() {
 
     }
-    _metadataCleanup(style) {
+    _styleCleanup(style) {
         if (style.metadata) {
             const metadata = style.metadata;
             delete metadata.userlayer;
             delete metadata.cansave;
             delete metadata.activeEdits;
-            delete metadata.blabla;
+        }
+        if (style.layout && style.layout.visibility && style.layout.visibility === 'none') {
+            delete style.layout.visibility;
         }
     }
     _savelayer(e) {
-        const mapboxglStyle = this.webmap.getLayer(e.detail.layerid).serialize();
-        this._metadataCleanup(mapboxglStyle);
+        const mapboxglStyle = JSON.parse(JSON.stringify(this.webmap.getLayer(e.detail.layerid).serialize()));
+        this._styleCleanup(mapboxglStyle);
         const source = this.webmap.getSource(mapboxglStyle.source).serialize();
         if (source.type === 'geojson') {
             const geojson = source.data;

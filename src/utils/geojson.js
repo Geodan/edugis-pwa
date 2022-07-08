@@ -215,59 +215,95 @@ export class GeoJSON {
       const lineFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
       const pointFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
       if (fillFeatures.length) {
-        result.push( 
-        {
-            "metadata": {"title": `${filename} fill`},
-            "id": GeoJSON._uuidv4(),
-            "type":"fill",
-            "source":{
-              "type":"geojson",
-              "data": {"type": "FeatureCollection", "features": fillFeatures},
-              "attribution":"unknown"
-            },
-            "paint":{
-              "fill-color":"#ccc",
-              "fill-opacity":0.6,
-              "fill-outline-color":"#444"
-            }
-        });
+        if (geojson.style && (geojson.style.type === 'fill' || geojson.style.type === 'fill-extrusion')) {
+          // style part of geojson, this is an EduGIS specific geojson
+          const style = geojson.style;
+          delete geojson.style;
+          style.id = GeoJSON._uuidv4();
+          style.source = {
+            "type":"geojson",
+            "data": {"type": "FeatureCollection", "features": fillFeatures},
+            "attribution":"EduGIS"
+          }
+          result.push(style);
+        } else {
+          result.push( 
+            {
+                "metadata": {"title": `${filename} fill`},
+                "id": GeoJSON._uuidv4(),
+                "type":"fill",
+                "source":{
+                  "type":"geojson",
+                  "data": {"type": "FeatureCollection", "features": fillFeatures}
+                },
+                "paint":{
+                  "fill-color":"#ccc",
+                  "fill-opacity":0.6,
+                  "fill-outline-color":"#444"
+                }
+            });
+        }
       }
       if (lineFeatures.length) {
-        result.push(
-          {
-            "metadata": {"title": `${filename} line`},
-            "id": GeoJSON._uuidv4(),
-            "type":"line",
-            "source":{
-              "type":"geojson",
-              "data": {"type": "FeatureCollection", "features": lineFeatures},
-              "attribution":"unknown"
-            },
-            "paint":{
-              "line-color":"#000",
-              "line-width": 2
-            }
-          });
-      }
-      if (pointFeatures.length) {
-        result.push(
-          {
-              "metadata": {"title": `${filename} point`},
+        if (geojson.style && geojson.style.type === 'line') {
+          // style part of geojson, this is an EduGIS specific geojson
+          const style = geojson.style;
+          delete geojson.style;
+          style.id = GeoJSON._uuidv4();
+          style.source = {
+            "type":"geojson",
+            "data": {"type": "FeatureCollection", "features": lineFeatures},
+            "attribution":"EduGIS"
+          }
+          result.push(style);
+        } else {
+          result.push(
+            {
+              "metadata": {"title": `${filename} line`},
               "id": GeoJSON._uuidv4(),
-              "type":"circle",
+              "type":"line",
               "source":{
                 "type":"geojson",
-                "data": {"type": "FeatureCollection", "features": pointFeatures},
-                "attribution":"unknown"
+                "data": {"type": "FeatureCollection", "features": lineFeatures}
               },
               "paint":{
-                "circle-color":"#FA0",
-                "circle-radius": 10,
-                "circle-stroke-width": 1,
-                "circle-stroke-color": "#FFF"
+                "line-color":"#000",
+                "line-width": 2
               }
+            });
+        }
+      }
+      if (pointFeatures.length) {
+        if (geojson.style && (geojson.style.type === 'circle' || geojson.style.type === 'symbol')) {
+          // style part of geojson, this is an EduGIS specific geojson
+          const style = geojson.style;
+          delete geojson.style;
+          style.id = GeoJSON._uuidv4();
+          style.source = {
+            "type":"geojson",
+            "data": {"type": "FeatureCollection", "features": pointFeatures},
+            "attribution":"EduGIS"
           }
-        );
+          result.push(style);
+        } else {
+          result.push(
+            {
+                "metadata": {"title": `${filename} point`},
+                "id": GeoJSON._uuidv4(),
+                "type":"circle",
+                "source":{
+                  "type":"geojson",
+                  "data": {"type": "FeatureCollection", "features": pointFeatures}
+                },
+                "paint":{
+                  "circle-color":"#FA0",
+                  "circle-radius": 10,
+                  "circle-stroke-width": 1,
+                  "circle-stroke-color": "#FFF"
+                }
+            }
+          );
+        }
       }
     }
     return result;
