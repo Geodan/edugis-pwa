@@ -597,6 +597,8 @@ class MapDraw2 extends LitElement {
       this._changeMode('draw_line_string');
     } else if (event.keyCode === 51) {
       this._changeMode('draw_polygon');
+    } else if (event.keyCode === 27) {
+      this._setMode('simple_select');
     }
   }
   _isTempLayer(id) {
@@ -802,6 +804,7 @@ class MapDraw2 extends LitElement {
           beforeLayer: "gl-draw-polygon-fill-inactive.cold"
         }
       }));
+      this.draw.options.snapLayers.push(this.currentEditLayer.id);
       this._addNewLayerOption();
     }
   }
