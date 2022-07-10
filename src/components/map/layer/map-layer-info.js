@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit-element';
+import {html, css, LitElement} from 'lit';
 import '../../base/base-slider.js';
 import '../../map-legend-panel.js';
 import './map-layer-config.js';

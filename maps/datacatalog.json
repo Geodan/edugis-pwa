@@ -1801,7 +1801,8 @@
     },
     "datacatalog": {
       "visible": 1,
-      "order": 102
+      "order": 102,
+      "search": false
     },
     "info": {
       "visible": 1,

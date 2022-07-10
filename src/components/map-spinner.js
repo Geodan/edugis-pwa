@@ -1,6 +1,6 @@
 import {spinnerIcon} from './my-icons';
 
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 
 /**
 * @polymer
@@ -17,7 +17,7 @@ class MapSpinner extends LitElement {
       super();
       this.delay = false;
       this.visible = false;
-      this.webmap = null;
+      this.webmap = {};
   }
   showSpinner() {
     // prevent short-duration spinners
@@ -39,11 +39,11 @@ class MapSpinner extends LitElement {
   {
     const showSpinner = this.showSpinner.bind(this);
     const hideSpinner = this.hideSpinner.bind(this);
-    if (prevMap) {
+    if (prevMap && prevMap.version) {
         prevMap.off("dataloading", showSpinner);
         prevMap.off("render", hideSpinner);
     }
-    if (newMap) {
+    if (newMap && newMap.version) {
         newMap.on("dataloading", showSpinner);
         newMap.on("render", hideSpinner);
     }
@@ -53,7 +53,7 @@ class MapSpinner extends LitElement {
       if (prevWebMap !== this.webmap) {
         this.registerMapEvents(prevWebMap, this.webmap);
       }
-      return (this.webmap ? true : false);
+      return (this.webmap.version ? true : false);
   }
   render() {
     return html`<style>

@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 
 /* polyfill */
 Math.log10 = Math.log10 || function(x) {

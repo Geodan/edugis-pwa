@@ -3,7 +3,7 @@
    If the layer style is editable, this container also provides buttons to access layer-legend edit dialogs
 */
 
-import {LitElement, html, svg, css} from 'lit-element';
+import {LitElement, html, svg, css} from 'lit';
 import mbStyleParser from '../utils/mbox-style-parse.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './map-legend-item-edit';

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 import './map-iconbutton';
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon, threeDIcon} from './my-icons';
 import drawStyle from './map-draw-theme.js';
@@ -146,7 +146,7 @@ class MapDraw2 extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.active = false;
       this.selectedFeatures = [];
       this.drawMode = 'simple_select';
@@ -161,7 +161,7 @@ class MapDraw2 extends LitElement {
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
-      if (this.map && this.active) {
+      if (this.map.version && this.active) {
         this._addDrawToMap();
       }
     }
@@ -527,7 +527,7 @@ class MapDraw2 extends LitElement {
     this.draw.options.snapLayers = Array.from(drawSnapLayers);
   }
   _addDrawToMap(){ 
-    if (this.map) {
+    if (this.map.version) {
       // store map.boxZoom
       this.boxZoomable = this.map.boxZoom.isEnabled();
       this.draw = new MapboxDraw({
@@ -554,7 +554,7 @@ class MapDraw2 extends LitElement {
   }
   _removeDrawFromMap()
   {
-    if (this.map) {
+    if (this.map.version) {
       if (this.draw) {
         this.draw.changeMode(this.drawMode = 'simple_select');
       }

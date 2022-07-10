@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit-element';
+import {html, css, LitElement} from 'lit';
 
 import "../../base/base-arrow.js";
 import "../../base/base-checkbox.js";

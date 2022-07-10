@@ -1,5 +1,5 @@
-//import {html, css, LitElement} from 'lit-element';
-import {html, LitElement} from 'lit-element';
+//import {html, css, LitElement} from 'lit';
+import {html, LitElement} from 'lit';
 import {MDCSlider} from '@material/slider/index.js';
 import {mdcslidercss} from '../../../lib/mdc.slider.css.js';
 

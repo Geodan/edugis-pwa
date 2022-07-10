@@ -2,7 +2,7 @@
   element that can be dragged inside a vertical scrollable list of elements
 */
 
-import { LitElement, html } from 'lit-element';
+import { LitElement, html } from 'lit';
 import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import * as Gestures from '@polymer/polymer/lib/utils/gestures.js';
 

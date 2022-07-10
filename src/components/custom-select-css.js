@@ -1,4 +1,4 @@
-import {css} from 'lit-element';
+import {css} from 'lit';
 
 export function customSelectCss() {
     /* based on: https://codepen.io/jamesbarnett/pen/JhHjK

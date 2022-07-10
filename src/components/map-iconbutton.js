@@ -1,4 +1,4 @@
-import {LitElement, html,svg,css} from 'lit-element';
+import {LitElement, html,svg,css} from 'lit';
 /**
 * @polymer
 * @extends HTMLElement

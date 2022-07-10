@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit-element';
+import {html, css, LitElement} from 'lit';
 import './map-layer-config-legend.js';
 import mbStyleParser from '../../../utils/mbox-style-parse.js';
 import classify from '../../../lib/classify.js';

@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 import './map-iconbutton';
 import {openfileIcon, downloadIcon} from './my-icons';
 import {toGeoJSON} from '../lib//togeojson'
@@ -18,7 +18,7 @@ export default class MapImportExport extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.active = false;
       this.datacatalog = [];
       this.onlyselected = false;

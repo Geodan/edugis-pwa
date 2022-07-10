@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {filterIcon} from './my-icons';

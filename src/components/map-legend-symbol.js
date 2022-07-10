@@ -1,4 +1,4 @@
-import {LitElement, html, css, svg} from 'lit-element';
+import {LitElement, html, css, svg} from 'lit';
 import "./map-legend-item-edit";
 class MapLegendSymbol extends LitElement {
     static get styles() {

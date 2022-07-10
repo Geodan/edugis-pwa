@@ -1,5 +1,5 @@
-// downloaded from https://cdn.pika.dev/-/lit-element/2.2.1/dist-es2018/lit-element.min.js
-import {html, svg, css, LitElement} from 'lit-element';
+// downloaded from https://cdn.pika.dev/-/lit/2.2.1/dist-es2018/lit.min.js
+import {html, svg, css, LitElement} from 'lit';
 import {getColorSchemes} from '../../../lib/colorbrewer.js';
 import '../../base/base-select.js';
 import '../../base/base-button.js';

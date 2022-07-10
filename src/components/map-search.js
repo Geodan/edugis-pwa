@@ -18,7 +18,7 @@ function getIcon(osmtype) {
   }
 }
 
-import { LitElement, html } from "../../node_modules/lit-element/index.js";
+import { LitElement, html} from "../../node_modules/lit/index.js";
 /**
 * @polymer
 * @extends HTMLElement
@@ -39,7 +39,7 @@ class MapSearch extends LitElement {
 
     this.info = "Landen, Plaatsen, Gebergten, Rivieren";
     this.resultList = null;
-    this.viewbox = undefined;
+    this.viewbox = [];
     this.active = true;
   }
 
@@ -62,7 +62,7 @@ class MapSearch extends LitElement {
     if (searchText.length > 1) {
       let url;
 
-      if (this.viewbox) {
+      if (this.viewbox.length) {
         url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&viewbox=${this.viewbox.join(',')}&bounded=0&polygon_geojson=1&addressdetails=1&limit=15`;
       } else {
         url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&polygon_geojson=1&addressdetails=1&limit=15`;

@@ -1,4 +1,4 @@
-import {LitElement, html, svg, css} from 'lit-element';
+import {LitElement, html, svg, css} from 'lit';
 import {GeoJSON} from '../utils/geojson';
 import GeoJSONParser from 'jsts/org/locationtech/jts/io/GeoJSONParser';
 import DistanceOp from 'jsts/org/locationtech/jts/operation/distance/DistanceOp';
@@ -34,14 +34,14 @@ class MapDataToolDistance extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.buttonEnabled = false;
       this.resultMessage = null;
       this.timeoutId = null;
   }
   render() {
     return html`
-      <b>Afstand berekenen</b><p>
+      <b>Afstand berekenen</b><p></p>
       Bereken de kortste afstand van alle elementen in kaartlaag 1 tot het dichtsbijzijnde element in kaartlaag 2.<p></p>
       <b>Kaartlaag 1</b><br>
       ${this._renderLayerList()}<p></p>

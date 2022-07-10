@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 class MapSaveLayer extends LitElement {
     static get styles() {
         return css`

@@ -1,4 +1,4 @@
-import { svg } from 'lit-element';
+import { svg } from 'lit';
 
 export const bookmarkIcon = svg`<svg height="24" viewBox="0 0 24 24" width="24">
 	<path d="M7,22.1c-0.3,0-0.5-0.2-0.5-0.5V6.8c0-0.3,0.2-0.5,0.5-0.5c0.3,0,0.5,0.2,0.5,0.5v14.8C7.5,21.9,7.3,22.1,7,22.1z"/>

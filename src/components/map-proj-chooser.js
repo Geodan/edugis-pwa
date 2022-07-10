@@ -1,4 +1,4 @@
-import {LitElement, html,css} from 'lit-element';
+import {LitElement, html,css} from 'lit';
 import './map-iconbutton';
 import {openfileIcon, downloadIcon} from './my-icons';
 
@@ -16,7 +16,7 @@ export default class MapProjChooser extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.active = false;
   }
   static get styles() {
@@ -86,19 +86,19 @@ export default class MapProjChooser extends LitElement {
         </fieldset>
         <fieldset class="conic-param-input">
         <label>Center Longitude: <span id="lng-value">0</span></label>
-        <input @change="${e=>this._setProjectionParameter(e)}" id="lng" type="range" min="-180" max="180" step="any" value="0">
+        <input @change="${e=>this._setProjectionParameter(e)}" id="lng" type="range" min="-180" max="180" value="0">
         </fieldset>
         <fieldset class="conic-param-input">
         <label>Center Latitude: <span id="lat-value">30</span></label>
-        <input @change="${e=>this._setProjectionParameter(e)}" id="lat" type="range" min="-90" max="90" step="any" value="30">
+        <input @change="${e=>this._setProjectionParameter(e)}" id="lat" type="range" min="-90" max="90" value="30">
         </fieldset>
         <fieldset class="conic-param-input">
         <label>Southern Parallel Lat: <span id="lat1-value">30</span></label>
-        <input @change="${e=>this._setProjectionParameter(e)}" id="lat1" type="range" min="-90" max="90" step="any" value="30">
+        <input @change="${e=>this._setProjectionParameter(e)}" id="lat1" type="range" min="-90" max="90" value="30">
         </fieldset>
         <fieldset class="conic-param-input">
         <label>Northern Parallel Lat: <span id="lat2-value">30</span></label>
-        <input @change="${e=>this._setProjectionParameter(e)}" id="lat2" type="range" min="-90" max="90" step="any" value="30">
+        <input @change="${e=>this._setProjectionParameter(e)}" id="lat2" type="range" min="-90" max="90" value="30">
         </fieldset>
         </div>
         </div>

@@ -1,7 +1,8 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 import './map-iconbutton';
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon} from './my-icons';
 import theme from './map-draw-theme.js'
+import drawCss from './map-draw-css.js';
 
 const drawPolygons = {
   "id": "drawPolygons",
@@ -80,7 +81,7 @@ class MapDraw extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.active = false;
       this.selectedFeatures = [];
       this.drawMode = 'simple_select';
@@ -94,7 +95,7 @@ class MapDraw extends LitElement {
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
-      if (this.map && this.active) {
+      if (this.map.version && this.active) {
         this._addDrawToMap();
       }
     }
@@ -128,7 +129,7 @@ class MapDraw extends LitElement {
     // <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
     return html`
       <style>
-      @import "${document.baseURI}node_modules/@edugis/mapbox-gl-draw/dist/mapbox-gl-draw.css";  
+      ${drawCss}
       .drawcontainer {font-size:14px;}
       .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;}
       .right {float: right; margin-left: 4px;}
@@ -225,7 +226,7 @@ class MapDraw extends LitElement {
     }
   }
   _addDrawToMap(){ 
-    if (this.map) {
+    if (this.map.version) {
       // store map.boxZoom
       this.boxZoomable = this.map.boxZoom.isEnabled();
       this._setMapDrawLayersVisibility(false);
@@ -271,7 +272,7 @@ class MapDraw extends LitElement {
   }
   _removeDrawFromMap()
   {
-    if (this.map) {
+    if (this.map.version) {
       if (this.draw) {
         this.draw.changeMode(this.drawMode = 'simple_select');
       }

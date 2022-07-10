@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 import {MDCSlider} from '@material/slider/index';
 import {mdcslidercss} from '../../lib/mdc.slider.css';
 

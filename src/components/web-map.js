@@ -144,7 +144,8 @@ function projectLngLat(lngLat, srs)
     return lngLat;
 }
 
-import {LitElement, html, svg} from 'lit-element';
+import {LitElement, html, svg} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import MapImportExport from './map-import-export';
 /**
 * @polymer
@@ -178,10 +179,10 @@ class WebMap extends LitElement {
   }
   constructor() {
     super();
-    this.map = null;
+    this.map = {};
     this.pitch = 0;
     this.bearing = 0;
-    this.viewbox = undefined;
+    this.viewbox = [];
     // default property values
     this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
     this.mapstyleid = "OsmBright";
@@ -200,7 +201,11 @@ class WebMap extends LitElement {
     this.layerlist = [];
     this.haslegend = false;
     this.accesstoken = undefined;
-    this.lastClickPoint = undefined;
+    this.lastClickPoint = [];
+    this.thematicLayers = [];
+    this.layerlist = [];
+    this.backgroundLayers = [];
+    this.datagetter = {};
     this.updatelegend = 0;
     this.currentTool = '';
     this.toolList = [
@@ -235,7 +240,7 @@ class WebMap extends LitElement {
     }
   }
   updateLayerVisibility(e) {
-    if (this.map) {
+    if (this.map.version) {
       if (Array.isArray(e.detail.layerid)) {
         e.detail.layerid.forEach(id=>{
           this.updateSingleLayerVisibility(id, e.detail.visible);
@@ -263,7 +268,7 @@ class WebMap extends LitElement {
     }
   }
   updateLayerOpacity(e) {
-    if (this.map) {
+    if (this.map.version) {
       if (Array.isArray(e.detail.layerid)) {
         e.detail.layerid.forEach(id=>{
           this.updateSingleLayerOpacity(id, e.detail.opacity);
@@ -288,7 +293,7 @@ class WebMap extends LitElement {
     }
   }
   updateLayerPaintProperty(e) {
-    if (this.map) {
+    if (this.map.version) {
       if (Array.isArray(e.detail.layerid)) {
         e.detail.layerid.forEach(id=>{
           this.updateSingleLayerPaintProperty(id, e.detail);
@@ -300,7 +305,7 @@ class WebMap extends LitElement {
     //this.updatelegend++;
   }
   updateLayerFilter(e) {
-    if (this.map){
+    if (this.map.version){
       this.map.setFilter(e.detail.layerid, e.detail.filter);
     }
   }
@@ -313,7 +318,7 @@ class WebMap extends LitElement {
     }
   }
   removeLayer(e) {
-    if (this.map) {
+    if (this.map.version) {
       const targetLayer = this.map.getLayer(e.detail.layerid);
       if (targetLayer) {
         const source = targetLayer.source;
@@ -685,7 +690,7 @@ class WebMap extends LitElement {
     this.resetLayerList();
   }
   updatePitch(degrees) {
-    if (this.map) {
+    if (this.map.version) {
       if (!isNaN(parseFloat(degrees)) && isFinite(degrees)) {
         this.pitch = parseFloat(degrees);
       } else {
@@ -781,7 +786,7 @@ class WebMap extends LitElement {
         <ul>
           ${tools.sort((a,b)=>a.order-b.order).map(tool=>{
             return html`<li>
-              <map-iconbutton .icon="${tool.icon}" info="${tool.info}" @click="${e=>this.toggleTool(tool.name)}" .active="${this.currentTool===tool.name}"></map-iconbutton>
+              <map-iconbutton .icon="${tool.icon}" info="${ifDefined(tool.info)}" @click="${e=>this.toggleTool(tool.name)}" .active="${this.currentTool===tool.name}"></map-iconbutton>
             </li>`
           })}
         </ul>
@@ -838,7 +843,7 @@ class WebMap extends LitElement {
   renderCoordinates(){
     const tool = this.toolList.find(tool=>tool.name==='coordinates');
     if (tool && tool.visible) {
-      return html`<map-coordinates .visible="${true}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint?this.lastClickPoint:undefined}"></map-coordinates>` 
+      return html`<map-coordinates .visible="${true}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint}"></map-coordinates>` 
     }
     return '';
   }
@@ -1006,7 +1011,7 @@ class WebMap extends LitElement {
   }
   getData()
   {
-    if (!this.map) {
+    if (!this.map.version) {
       return {};
     }
     return {querySourceFeatures: this.map.querySourceFeatures.bind(this.map)};
@@ -1027,7 +1032,7 @@ class WebMap extends LitElement {
     if (this.isLanguageSwitcherCapable !== undefined) {
       return this.isLanguageSwitcherCapable;
     }
-    if (!this.map) {
+    if (!this.map.version) {
       return this.isLanguageSwitcherCapable = undefined;
     }
     if (!this.map.isStyleLoaded() && !recheck) {
@@ -1053,7 +1058,7 @@ class WebMap extends LitElement {
     if (this.accesstoken) {
       mapboxgl.accessToken = this.accesstoken;
     }
-    if (this.map) {
+    if (this.map.version) {
       this.map.remove();
     }
     this.map = new mapboxgl.Map({
@@ -1693,7 +1698,7 @@ class WebMap extends LitElement {
     }
 
     if (changedProperties.has("configurl")) {
-      if (this.map) {
+      if (this.map.version) {
         this.loadConfig(this.configurl);
       }
     }
@@ -1820,7 +1825,7 @@ class WebMap extends LitElement {
   }
   searchResult(e) {
     // add list of found elements to temporary map layer
-    if (this.map) {
+    if (this.map.version) {
       const mapSearchSource = this.map.getSource('map-search-geojson');
       if (!mapSearchSource) {
         this.map.addSource('map-search-geojson', searchSource);
@@ -2073,7 +2078,7 @@ class WebMap extends LitElement {
     this.streetViewOn = e.detail.streetview;
   }
   updateInfoMode(e) {
-    if (this.map) {
+    if (this.map.version) {
       this.map.getCanvas().style.cursor = (e.detail) ? 'crosshair' : 'pointer';
     }
   }

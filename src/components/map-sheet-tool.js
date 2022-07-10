@@ -1,4 +1,4 @@
-import {LitElement, html, svg, css} from 'lit-element';
+import {LitElement, html, svg, css} from 'lit';
 import './map-iconbutton';
 import './map-datatool-distance';
 import './map-iconbutton';
@@ -31,7 +31,7 @@ class MapSheetTool extends LitElement {
   }
   constructor() {
       super();
-      this.map = null;
+      this.map = {};
       this.active = false;
       this.currentTool = "";
   }

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 class ToolTip extends LitElement {
     static get styles() {
         return css`

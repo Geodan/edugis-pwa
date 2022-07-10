@@ -1,4 +1,4 @@
-import {LitElement, html, css} from 'lit-element';
+import {LitElement, html, css} from 'lit';
 
 let colorPalette = [
   'rgba(128,128,128,0)',

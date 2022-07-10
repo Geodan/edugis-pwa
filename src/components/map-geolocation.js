@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 
 const startUpMessage = 'Starten plaatsbepaling...';
 
@@ -96,7 +96,7 @@ class MapGeolocation extends LitElement {
     <b>Breedte:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
     <b>Lengte:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
     <b>Nauwkeurigheid:</b> ${Math.round(pos.coords.accuracy)} m`;
-    if (this.webmap) {
+    if (this.webmap.version) {
       this.geojson.features = [];
       this.geojson.features.push(this.geoJSONCircle(pos, pos.coords.accuracy));
       this.geojson.features.push(this.geojSONPoint(pos));
@@ -115,7 +115,7 @@ class MapGeolocation extends LitElement {
     this.message = `Fout: ${err.code} : ${err.message}`;
   }
   prepareMap() {
-    if (this.webmap) {
+    if (this.webmap.version) {
       this.webmap.addSource('map-geolocate', {
         "type":"geojson", 
         "data":this.geojson
@@ -161,7 +161,7 @@ class MapGeolocation extends LitElement {
     this.message = startUpMessage;
     this.geojson.features = [];
     try {
-      if (this.webmap) {
+      if (this.webmap.version) {
         this.webmap.removeLayer('map-geolocate-radius');
         this.webmap.removeLayer('map-geolocate-point');
         this.webmap.removeSource('map-geolocate');

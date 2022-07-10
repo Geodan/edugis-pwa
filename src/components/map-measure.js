@@ -64,16 +64,16 @@ function formatArea(a) {
   }
   if (a < 10000000){
     const km2 = Math.round(a / 10000) / 100;
-    return html`${km2} km<sup>2<sup>`;
+    return html`${km2} km<sup>2</sup>`;
   }
   if (a < 100000000){
     const km2 = Math.round(a / 100000) / 10;
-    return html`${km2} km<sup>2<sup>`;
+    return html`${km2} km<sup>2</sup>`;
   }
   return html`${Math.round(a / 1000000)} km<sup>2</sup>`
 }
 
-import {LitElement, html} from 'lit-element';
+import {LitElement, html} from 'lit';
 /**
 * @polymer
 * @extends HTMLElement
@@ -117,7 +117,7 @@ class MapMeasure extends LitElement {
     }
   }
   handleMapClick(e) {
-    if (this.webmap) {
+    if (this.webmap.version) {
       let clickedFeatures = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
       if (this.hasPolygon) {
         this.resetMeasurement();
@@ -247,7 +247,7 @@ class MapMeasure extends LitElement {
       return;
     }
     this.activated = this.active;
-    if (this.webmap) {
+    if (this.webmap.version) {
       if (this.activated) {
         // setup measuring on map
         this.webmap.addSource('map-measure-geojson', {
