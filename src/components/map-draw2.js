@@ -583,6 +583,8 @@ class MapDraw2 extends LitElement {
   }
   _drawModeChange(e) {
     //this.drawMode = e.mode;
+    //this._setMode(e.mode);
+    this.requestUpdate();
   }
   _keyDown(event) {
     if ((event.srcElement || event.target).classList[0] !== 'mapboxgl-canvas') return; // we only handle events on the map
@@ -642,6 +644,26 @@ class MapDraw2 extends LitElement {
       console.log('_updateMapLayer failed for layer ' + layer.id);
     }
   }
+  _updateDrawLayerStyle(layer) {
+    switch (layer.type) {
+        case 'circle':
+          for (const style of this.draw.options.styles) {
+            if (style.paint.hasOwnProperty("circle-color")) {
+              this.map.setPaintProperty(style.id, "circle-color", layer.paint["circle-color"]);
+            }
+          }
+          break;
+        case 'line':
+          break;
+        case 'fill':
+          for (const style of this.draw.options.styles) {
+            if (style.paint.hasOwnProperty("fill-color")) {
+              this.map.setPaintProperty(style.id, "fill-color", layer.paint["fill-color"]);
+            } 
+          }
+          break;
+    }
+  }
   _updateDrawLayer(layer) {
     this.draw.deleteAll();
     if (!layer || this._isTempLayer(layer.id)){
@@ -652,6 +674,7 @@ class MapDraw2 extends LitElement {
       const sourceData = source.serialize();
       if (sourceData) {
         const featureCollection = sourceData.data;
+        this._updateDrawLayerStyle(layer);
         this.draw.set(featureCollection);
         this._setMapLayerVisibity(layer.id, false);
       }
@@ -728,8 +751,25 @@ class MapDraw2 extends LitElement {
     });
     this.requestUpdate();
   }
+  _convertType(key, value) {
+    if (this.currentEditLayer.metadata && this.currentEditLayer.metadata.properties) {
+      const typeInfo = this.currentEditLayer.metadata.properties.find(({name})=>name===key);
+      if (typeInfo) {
+        if (typeInfo.type === 'number') {
+          return parseFloat(value.replace(',','.'));
+        } 
+      }
+    }
+    return value;
+  }
   _updateFeatureProperty(e, feature, key) {
-    this.draw.setFeatureProperty(feature.id, key, e.target.value);
+    const value = e.target.value;
+    let convertedValue = this._convertType(key, value);
+    if (convertedValue !== value) {
+      const floatValue = value.replace(',', '.').replace(/([\+\-]?)[^\d\.]*([0-9]*)[^\.]*([\.]?)[^0-9]*([0-9]*).*/,'$1$2$3$4')
+      e.target.value = floatValue;
+    }
+    this.draw.setFeatureProperty(feature.id, key, convertedValue);
     this._setMessage(`'${e.target.value}' opgeslagen`)
   }
   _addNewLayerOption() {
