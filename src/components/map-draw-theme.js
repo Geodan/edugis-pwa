@@ -10,7 +10,7 @@ export default [
       'paint': {
         'fill-color': '#3388ff',
         'fill-outline-color': '#3388ff',
-        'fill-opacity': 0.1
+        'fill-opacity': 0.2
       }
     },
     {
@@ -20,7 +20,7 @@ export default [
       'paint': {
         'fill-color': '#3388ff',
         'fill-outline-color': '#3388ff',
-        'fill-opacity': 0.1
+        'fill-opacity': 0.2
       }
     },
     {
@@ -190,7 +190,7 @@ export default [
       'paint': {
         'fill-color': '#404040',
         'fill-outline-color': '#404040',
-        'fill-opacity': 0.1
+        'fill-opacity': 0.2
       }
     },
     {
