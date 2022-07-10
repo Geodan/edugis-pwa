@@ -128,7 +128,7 @@ class MapDraw extends LitElement {
     // <div class="buttoncontainer" @click="${(e)=>this.draw.changeMode(this.drawMode = 'simple_select')}"><map-iconbutton .active="${this.drawMode === 'simple_select' || this.drawMode === 'direct_select'}" info="selecteer" .icon="${selectIcon}"></map-iconbutton></div>
     return html`
       <style>
-      @import "${document.baseURI}node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";  
+      @import "${document.baseURI}node_modules/@edugis/mapbox-gl-draw/dist/mapbox-gl-draw.css";  
       .drawcontainer {font-size:14px;}
       .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;}
       .right {float: right; margin-left: 4px;}
