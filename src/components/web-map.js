@@ -39,6 +39,7 @@ import "./map-save-layer";
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {wmsUrl} from '../utils/wmsurl';
+import mapgl from '../map-gl'
 
 import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
@@ -777,6 +778,11 @@ class WebMap extends LitElement {
     if (tools.length == 0) {
       return '';
     }
+    const datacatalog = tools.find(t=>t.name==="datacatalog");
+    let layerSearch = false;
+    if (datacatalog && datacatalog.search) {
+      layerSearch = true;
+    }
     return html`
     <div id="tool-menu-container" class="${toolbar.position==='opened'?'':'collapsed'}">
       <div id="button-hide-menu" @click="${e=>this.toggleToolMenu()}" class="${toolbar.position==='opened'?'':'collapsed'}">
@@ -796,7 +802,7 @@ class WebMap extends LitElement {
           <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
         </map-panel>
         <map-panel .active="${this.currentTool==="datacatalog"}">
-          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" .search="${tools.find(t=>t.name==="datacatalog").search}" @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
+          <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" .search=${layerSearch} @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
         </map-panel>
         <map-panel .active="${this.currentTool==='measure'}">
           <map-measure .webmap="${this.map}" .active="${this.currentTool==='measure'}"></map-measure>
@@ -884,9 +890,14 @@ class WebMap extends LitElement {
   render() {
     
     return html`<style>
-      @import "${document.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";
+      /*@import "${document.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";*/
+      ${mapgl.css}
       /* workaround bug mapbox-gl v.051, https://github.com/mapbox/mapbox-gl-js/issues/7589 */
       .mapboxgl-ctrl.mapboxgl-ctrl-attrib p {
+        display: inline-block;
+        margin: 2px;
+      }
+      .maplibregl-ctrl.maplibregl-ctrl-attrib p {
         display: inline-block;
         margin: 2px;
       }
@@ -898,6 +909,9 @@ class WebMap extends LitElement {
       }
       .webmap {width: 100%; height: 100%}
       .mapboxgl-ctrl.mapboxgl-ctrl-group.mapboxgl-ctrl-zoom {
+        background: rgba(255, 255, 255, 0.75);
+      }
+      .maplibregl-ctrl.maplibregl-ctrl-group.maplibregl-ctrl-zoom {
         background: rgba(255, 255, 255, 0.75);
       }
       #tool-menu-container {
@@ -1056,12 +1070,12 @@ class WebMap extends LitElement {
   initMap()
   {
     if (this.accesstoken) {
-      mapboxgl.accessToken = this.accesstoken;
+      mapgl.accessToken = this.accesstoken;
     }
     if (this.map.version) {
       this.map.remove();
     }
-    this.map = new mapboxgl.Map({
+    this.map = new mapgl.Map({
         container: this.shadowRoot.querySelector('div'), 
         style: this.mapstyle,
         center: [this.lon,this.lat],
@@ -1069,6 +1083,9 @@ class WebMap extends LitElement {
         pitch: this.pitch,
         bearing: this.bearing
     });
+    if (this.map.version === undefined) {
+      this.map.version = 'mapblibregl';
+    }
     this.datagetter = {
       querySourceFeatures: (source, options) => this.map.querySourceFeatures(source, options),
       getSource: (sourcename) => this.map.getSource(sourcename),
@@ -1082,13 +1099,13 @@ class WebMap extends LitElement {
               this.map.addControl(new ZoomControl(), this._positionString(tool.position));
             break;
           case "navigation":
-            this.map.addControl(new mapboxgl.NavigationControl(), this._positionString(tool.position));
+            this.map.addControl(new mapgl.NavigationControl(), this._positionString(tool.position));
             break;
           case "coordinates":
             this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
             break;
           case "scalebar":
-            this.map.addControl(new mapboxgl.ScaleControl(), this._positionString(tool.position));
+            this.map.addControl(new mapgl.ScaleControl(), this._positionString(tool.position));
             break;
         }
       }
@@ -2111,7 +2128,7 @@ class WebMap extends LitElement {
     if (this.marker) {
       this.marker.remove();
     }
-    this.marker = new mapboxgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
+    this.marker = new mapgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
   }
   handleInfo(e) {
     if (this.currentTool !== 'info') {
