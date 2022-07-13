@@ -175,7 +175,8 @@ class WebMap extends LitElement {
       currentTool: String,
       configurl: String,
       updatelegend: Number,
-      exporttool: Boolean
+      exporttool: Boolean,
+      layerFillColor: Object
     }; 
   }
   constructor() {
@@ -209,6 +210,7 @@ class WebMap extends LitElement {
     this.datagetter = {};
     this.updatelegend = 0;
     this.currentTool = '';
+    this.layerFillColor = {layerid: -1, color: '#000'};
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
@@ -288,6 +290,9 @@ class WebMap extends LitElement {
             this.map.setLayoutProperty(id, key, propertyInfo[key]); // hack, text-size is not a paint property
           } else {
             this.map.setPaintProperty(id, key, propertyInfo[key]);
+            if (key === 'fill-color' || key === 'circle-color') {
+              this.layerFillColor = {layerid: id, color: propertyInfo[key]}; // for draw color update
+            }
           }
         }
       }
@@ -821,7 +826,8 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <map-draw2 .active="${this.currentTool==='draw'}" 
-            .map="${this.map}" 
+            .map="${this.map}"
+            .layercolor=${this.layerFillColor}
             @addlayer="${e=>this.addLayer(e)}" 
             @movelayer="${e=>this.moveLayer(e)}"
             @titlechange="${e=>this.resetLayerList(e)}"

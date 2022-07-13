@@ -132,7 +132,9 @@ class MapDraw2 extends LitElement {
       map: {type: Object},
       selectedFeatures: {type: Array},
       drawMode: {type: String},
-      message: {type: String}
+      message: {type: String},
+      layercolor: {type: Object},
+      editLayerStatus: {type: String}
     }; 
   }
   createRenderRoot() {
@@ -158,11 +160,18 @@ class MapDraw2 extends LitElement {
       this.snapLayers = [];
       this.editableLayers = {Point:[],Line:[],Polygon:[]};
       this.lastEditedLayer = {Point: null, Line: null, Polygon: null};
+      this.layercolor = {layerid: -1, color: '#000'};
+      this.editLayerStatus = "show" // show, select, new
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
       if (this.map.version && this.active) {
         this._addDrawToMap();
+      }
+    }
+    if (changedProp.has('layercolor')) {
+      if (this.map.version && this.active && this.currentEditLayer && this.currentEditLayer.id === this.layercolor.layerid) {
+        this._updateDrawLayerStyle(this.currentEditLayer);
       }
     }
     if (changedProp.has('active')) {
@@ -414,7 +423,10 @@ class MapDraw2 extends LitElement {
     this._prepareLayerForDraw(layer);
     this.lastEditedLayer[type] = layer;
     this._changeMode(this.drawMode);
-    //this._updateCurrentLayerInfo();
+    if (this._isTempLayer(layer.id)) {
+      this._setDefaultTempLayerColors(layer);
+      return;
+    }
     this.requestUpdate();
   }
   _removeProperty(event, idx) {
@@ -629,6 +641,26 @@ class MapDraw2 extends LitElement {
     }
     return true;
   }
+  _setDefaultTempLayerColors(layer) {    
+    switch (layer.id) {
+      case 'drawPoints':
+        const circleColor = drawStyle.find(style=>style.id === 'gl-draw-point-inactive').paint['circle-color'];
+        this.map.setPaintProperty("gl-draw-point-inactive.cold", "circle-color", circleColor);
+        this.map.setPaintProperty("gl-draw-point-active.cold", "circle-color", circleColor);
+        this.map.setPaintProperty("gl-draw-point-inactive.hot", "circle-color", circleColor);
+        this.map.setPaintProperty("gl-draw-point-active.hot", "circle-color", circleColor);
+        break;
+      case 'drawLines':
+        break;
+      case 'drawPolygons':
+        const fillColor = drawStyle.find(style=>style.id === 'gl-draw-polygon-fill-inactive').paint['fill-color'];
+        this.map.setPaintProperty('gl-draw-polygon-fill-inactive.cold', "fill-color", fillColor);
+        this.map.setPaintProperty('gl-draw-polygon-fill-inactive.hot', "fill-color", fillColor);
+        this.map.setPaintProperty('gl-draw-polygon-fill-active.cold', "fill-color", fillColor);
+        this.map.setPaintProperty('gl-draw-polygon-fill-active.hot', "fill-color", fillColor);
+        break;
+    }
+  }
   _updateMapLayer(layer) {
     if (!layer || this._isTempLayer(layer.id)) {
       return;
@@ -649,20 +681,20 @@ class MapDraw2 extends LitElement {
   _updateDrawLayerStyle(layer) {
     switch (layer.type) {
         case 'circle':
-          for (const style of this.draw.options.styles) {
-            if (style.paint.hasOwnProperty("circle-color")) {
-              this.map.setPaintProperty(style.id, "circle-color", layer.paint["circle-color"]);
-            }
-          }
+          const circleColor = this.map.getPaintProperty(layer.id, "circle-color");
+          this.map.setPaintProperty("gl-draw-point-inactive.cold", "circle-color", circleColor);
+          this.map.setPaintProperty("gl-draw-point-active.cold", "circle-color", circleColor);
+          this.map.setPaintProperty("gl-draw-point-inactive.hot", "circle-color", circleColor);
+          this.map.setPaintProperty("gl-draw-point-active.hot", "circle-color", circleColor);
           break;
         case 'line':
           break;
         case 'fill':
-          for (const style of this.draw.options.styles) {
-            if (style.paint.hasOwnProperty("fill-color")) {
-              this.map.setPaintProperty(style.id, "fill-color", layer.paint["fill-color"]);
-            } 
-          }
+          const fillColor = this.map.getPaintProperty(layer.id, "fill-color");
+          this.map.setPaintProperty('gl-draw-polygon-fill-inactive.cold', "fill-color", fillColor);
+          this.map.setPaintProperty('gl-draw-polygon-fill-inactive.hot', "fill-color", fillColor);
+          this.map.setPaintProperty('gl-draw-polygon-fill-active.cold', "fill-color", fillColor);
+          this.map.setPaintProperty('gl-draw-polygon-fill-active.hot', "fill-color", fillColor);
           break;
     }
   }
@@ -778,11 +810,9 @@ class MapDraw2 extends LitElement {
     let featureTypeString = this.featureType === 'Point' ? '(punten)' : this.featureType === 'Line' ? ('lijnen') : '(vlakken)';
     let title = `Nieuwe kaartlaag ${featureTypeString}`;
     let layers = this.map.getStyle().layers;
-    if (layers.find(layer=>layer.metadata.title === title)) {
-      let counter = 1;
-      do {
-        title = `Nieuwe kaartlaag_${counter++} ${featureTypeString}`;
-      } while (layers.find(layer=>layer.metadata.title === title));
+    let counter = 1;
+    while (layers.find(layer=>layer.metadata.title === title)) {
+      title = `Nieuwe kaartlaag_${counter++} ${featureTypeString}`;
     }
     newLayers[this.featureType].metadata.title = title;
     this.editableLayers[this.featureType].unshift(JSON.parse(JSON.stringify(newLayers[this.featureType])));
