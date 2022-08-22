@@ -3,6 +3,8 @@ import './map-iconbutton';
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon, threeDIcon} from './my-icons';
 import drawStyle from './map-draw-theme.js';
 import drawCss from './map-draw-css.js';
+import {MapDrawLayerDialog} from './map-draw-layerdialog';
+import {threedots} from './my-icons.js';
 
 function _uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -43,7 +45,7 @@ const defaultProperties = [
 
 const newLayers = {
   Polygon: {
-    "id": "drawPolygons",
+    "id": _uuidv4(),
     "metadata": {
       "title": "Getekende vlakken",
       "attributes": {
@@ -68,7 +70,7 @@ const newLayers = {
     }
   },
   Line: {
-    "id": "drawLines",
+    "id": _uuidv4(),
     "metadata": {
       "title": "Getekende lijnen",
       "attributes": {
@@ -92,7 +94,7 @@ const newLayers = {
     }
   },
   Point : {
-    "id": "drawPoints",
+    "id": _uuidv4(),
     "metadata": {
       "title": "Getekende punten",
       "attributes": {
@@ -133,8 +135,7 @@ class MapDraw2 extends LitElement {
       selectedFeatures: {type: Array},
       drawMode: {type: String},
       message: {type: String},
-      layercolor: {type: Object},
-      editLayerStatus: {type: String}
+      layercolor: {type: Object}
     }; 
   }
   createRenderRoot() {
@@ -159,9 +160,9 @@ class MapDraw2 extends LitElement {
       this.currentEditLayer = null;
       this.snapLayers = [];
       this.editableLayers = {Point:[],Line:[],Polygon:[]};
+      this.newLayers = {Point:[newLayers.Point], Line: [newLayers.Line], Polygon: [newLayers.Polygon]};
       this.lastEditedLayer = {Point: null, Line: null, Polygon: null};
       this.layercolor = {layerid: -1, color: '#000'};
-      this.editLayerStatus = "show" // show, select, new
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
@@ -182,6 +183,19 @@ class MapDraw2 extends LitElement {
       }
     }
     return true;
+  }
+  firstUpdated(){
+    
+  }
+  _addDialogs() {
+    this.mapDialog = new MapDrawLayerDialog(trl, propertyTypes, defaultProperties);
+    this.map.getContainer().parentNode.appendChild(this.mapDialog);
+    this.mapDialog.clickHandler = () => this._handleClick();
+  }
+  _removeDialogs() {
+    const container = this.map.getContainer().parentNode;
+    const dialogElement = container.querySelector('map-draw-layerdialog');
+    container.removeChild(dialogElement);
   }
   _canCombineFeatures()
   {
@@ -223,6 +237,7 @@ class MapDraw2 extends LitElement {
       return html``;
     }
     const showSelect = this.featureType !== 'None' && !this._isTempLayer(this.currentEditLayer.id);
+    const inSelectMode = this._inSelectMode();
     return html`
       <style>
       ${drawCss}
@@ -235,48 +250,20 @@ class MapDraw2 extends LitElement {
       .buttoncontainer {display: inline-block; box-sizing: border-box; width: 55px; height: 55px; line-height:75px;fill:darkgray;}
       .message {background-color: rgba(146,195,41,0.98);width: 100%;box-shadow: 2px 2px 4px 0; height: 36px; color: white; font-weight: bold; line-height: 36px;padding: 2px;}
       .iconcontainer {display: inline-block; width: 24px; height: 24px; fill: white; margin: 5px; vertical-align: middle;}
-      table, th, td {
-        border: 1px dotted;
-        border-collapse: collapse;
-      }
-      .propertyname  {
-        white-space: nowrap;
-      }
-      table {
-        margin-left: 5px;
-        width: 100%;
-        table-layout: fixed;
-      }
-      th {
-        background-color: lightgray;
-        text-align: left;
-      }
-      button {
-        width: 20px;
-        height: 20px;
-        line-height: 100%;
-        box-sizing: border-box;
-        text-align: center;
-        padding: 0;
-      }
-      .btncolumn {
-        width: 22px;
-      }
       .layertype {
-        display: inline-block;
-        font-weight: bold;
-      }
-      td input {
-        max-width: calc(100% - 10px);
-      }
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}">
       <div class="header">Tekenen</div>
-      <div>${this.featureType === 'None'? 'Kies soort figuur (punt, lijn of vlak):':`${this._inSelectMode()?'Selecteer ':'Teken '} ${trl(this.featureType)}`}</div>
+      <div>${this.featureType === 'None'? 'Kies punt, lijn of vlak:':`${this._inSelectMode()?'Selecteer ':'Teken '} ${trl(this.featureType)}`}</div>
       <div class="buttonbar">
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${this.featureType === 'Point'}" info="teken punt" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${this.featureType === 'Line'}" info="teken lijn" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="teken vlak" .active="${this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="teken punt" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="teken lijn" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="teken vlak" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
       ${showSelect?html`
       <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
@@ -299,18 +286,7 @@ class MapDraw2 extends LitElement {
         return 'None'
     }
   }
-  _layerType(drawMode) {
-    const mode = this._getType(drawMode);
-    switch(mode) {
-      case 'Point': 
-        return 'circle';
-      case 'Line':
-        return 'line';
-      case 'Polygon':
-        return 'fill';
-    }
-  }
-  _layerExists(id) {
+  _isEditableLayer(id) {
     if (this.editableLayers[this.featureType].find((layer)=>layer.id===id)) {
       return true;
     }
@@ -326,7 +302,7 @@ class MapDraw2 extends LitElement {
     }
     this.editableLayers[type] = this.map.getStyle().layers
       .filter(layer=>layerTypes[type].includes(layer.type) && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer);
-    this.editableLayers[type].push(JSON.parse(JSON.stringify(newLayers[type])));
+    this.editableLayers[type].push(...this.newLayers[type]);
     this.editableLayers[type].reverse();
 
     if (this.currentEditLayer !== null) {
@@ -338,7 +314,7 @@ class MapDraw2 extends LitElement {
     if (this.lastEditedLayer[type]) {
       if (this.currentEditLayer === null || this.currentEditLayer.id !== this.lastEditedLayer[type].id) {
         this.currentEditLayer = this.lastEditedLayer[type];
-        if (this._layerExists(this.currentEditLayer.id)) {
+        if (this._isEditableLayer(this.currentEditLayer.id)) {
           this._updateDrawLayer(this.currentEditLayer);
         } else {
           this.currentEditLayer = this.editableLayers[type][0];
@@ -382,13 +358,6 @@ class MapDraw2 extends LitElement {
     }
     return this._getType(mode);
   }
-  _renderActiveLayerDropdown(currentGeometryType) {
-    //const id = this.lastEditedLayer[currentGeometryType] ? this.lastEditedLayer[currentGeometryType].id : newLayers[currentGeometryType].id;
-    const id = this.currentEditLayer.id;
-    const title = this.currentEditLayer.metadata.title;
-    return this.editableLayers[currentGeometryType]
-      .map(layer=>html`<option ?selected=${layer.id===id} value="${layer.id}">${layer.id===id?title:layer.metadata.title}</option>`)
-  }
   _prepareLayerForDraw(layer) {
     let id = 1;
     if (!layer.metadata.hasOwnProperty('properties')) {
@@ -416,89 +385,62 @@ class MapDraw2 extends LitElement {
       }
     }
   }
-  _layerDropDownChange(event) {
-    const selectedLayerId = this.querySelector('select option:checked').value;
+  _addNewLayer(layer, type) {
+    const newLayer = JSON.parse(JSON.stringify(newLayers[type]));
+    newLayer.id = layer.id;
+    newLayer.metadata = layer.metadata;
+    this.newLayers[type].push(newLayer);
+    return newLayer;
+  }
+  _layerChange(newLayerId) {
     const type = this.featureType;
-    const layer = this.editableLayers[type].find(layer=>layer.id === selectedLayerId);
+    let layer = this.editableLayers[type].find(layer=>layer.id === newLayerId);
+    if (!this._isTempLayer(newLayerId) && !this.map.getLayer(newLayerId)) {
+      layer = this._addNewLayer(layer, type);
+    }
     this._prepareLayerForDraw(layer);
     this.lastEditedLayer[type] = layer;
     this._changeMode(this.drawMode);
     if (this._isTempLayer(layer.id)) {
-      this._setDefaultTempLayerColors(layer);
+      this._setDefaultDrawLayerColors(type);
       return;
     }
     this.requestUpdate();
   }
-  _removeProperty(event, idx) {
-    this.currentEditLayer.metadata.properties.splice(idx,1);
-    this.requestUpdate();
-  }
-  _addProperty(event) {
-    const propertyName = this.querySelector('#propertyName').value;
-    const propertyType = this.querySelector('#propertyType').value;
-    if (propertyName.trim() === "") {
-      return;
+  _layerTitleChange() {
+    const mapLayer = this.map.getLayer(this.currentEditLayer.id);
+    if (mapLayer) {
+      mapLayer.metadata.title = this.currentEditLayer.metadata.title;
+      // notify application that layer title has changed
+      this.dispatchEvent(new CustomEvent('titlechange', {
+        detail: {
+          layerid: this.currentEditLayer.id,
+          title: this.currentEditLayer.metadata.title
+        }
+      }));
     }
-    this.currentEditLayer.metadata.properties.push({name: propertyName, type: propertyType});
-    this.querySelector('#propertyName').value = "";
-    this.querySelector('#propertyType').options[0].selected = true;
-    this.requestUpdate();
   }
-  _layerTitleUpdate(event) {
-    const newTitle = event.target.value.trim();
-    if (newTitle !== '') {
-      this.currentEditLayer.metadata.title = newTitle;
-      const layer = this.map.getLayer(this.currentEditLayer.id);
-      if (layer) {
-        layer.metadata.title = newTitle;
-      }
+  _handleClick() {
+    if (this.mapDialog.currentEditLayer !== this.currentEditLayer.id) {
+      // layer changed
+      this._layerChange(this.mapDialog.currentEditLayer.id);
     }
-    this.requestUpdate();
+    if (this.mapDialog.titleHasChanged) {
+      this._layerTitleChange()
+    }
   }
-  _layerTitleChange(event) {
-    // notify application that layer title has changed
-    this.dispatchEvent(new CustomEvent('titlechange', {
-      detail: {
-        layerid: this.currentEditLayer.id,
-        title: this.currentEditLayer.metadata.title
-      }
-    }))
+  _editLayers() {
+    this.mapDialog.featureType = this.featureType;
+    this.mapDialog.currentEditLayerId = this.currentEditLayer.id;
+    this.mapDialog.editableLayers = this.editableLayers[this.featureType];
+    this.mapDialog.active = true;
   }
   _renderEditLayerInfo() {
     const featureType = this.featureType;
     if (featureType == 'None') {
         return html``;
     }
-    if (this.selectedFeatures.length > 0) {
-      return html`<div class="layertype">kaartlaag: ${this.currentEditLayer.metadata.title}</div>`;
-    }
-    return html`
-      <hr>
-      <div class="layertype">${this._inSelectMode()?'Selecteer':'Teken'} ${trl(featureType)}</div>
-      <div class="layerselect">Kaartlaag: <select @change="${(e)=>this._layerDropDownChange(e)}">${this._renderActiveLayerDropdown(featureType)}</select></div>
-      <div>Laagnaam: <input type="text" 
-        @input="${e=>this._layerTitleUpdate(e)}" 
-        @change="${e=>this._layerTitleChange(e)}"
-        .value="${this.currentEditLayer.metadata.title}">
-      </div>
-      <div>
-        <div>${trl(featureType)} eigenschappen:</div>
-        <div>
-          <table id="propertytable">
-            <tr><th>${trl('name')}</th><th>${trl('type')}</th><th class="btncolumn"></th></tr>
-            ${this.currentEditLayer.metadata.properties.map((property,idx)=>html`<tr><td>${trl(property.name)}</td><td>${trl(property.type)}</td><td>${idx===0?'':html`<button @click="${(e)=>this._removeProperty(e, idx)}">-</button>`}</td></tr>`)}
-            <tr>
-              <td><input id="propertyName" type="text" placeholder="eigenschap"></td>
-              <td>
-                <select id="propertyType">
-                  ${propertyTypes[featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${trl(type)}</option>`)}
-                </select>
-              </td>
-              <td><button @click="${(event)=>this._addProperty(event)}">+</button></tr>
-          </table>
-        </div>
-      </div>
-    `
+    return html`<div class="layertype" @click="${()=>this._editLayers()}" >kaartlaag: ${this.currentEditLayer.metadata.title} <span title="kaartlaag aanpassen" class="dotsright">${threedots}</span></div>`;
   }
   _renderMessage() {
     if (this.message) {
@@ -507,19 +449,6 @@ class MapDraw2 extends LitElement {
       `
     }
     return ''
-  }
-  _getFeaturesFromLayer(layerid)
-  {
-    let result = [];
-    const layer = this.map.getStyle().layers.find(layer=>layer.id===layerid);
-    if (layer) {
-      let source = layer.source;
-      if (typeof source === "string") {
-        source = this.map.getSource(source).serialize();
-      }
-      result = source.data.features;
-    }
-    return result;
   }
   _setSnapLayers() {
     const layerTypes = {
@@ -561,6 +490,7 @@ class MapDraw2 extends LitElement {
       this.keyDownBound = this._keyDown.bind(this);
       this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
       this.map.getCanvas().style.cursor = "unset"; // let mapbox-gl-draw handle the cursor
+      this._addDialogs();
       setTimeout(()=>this.draw.changeMode(this.drawMode = 'simple_select'), 100);
     }
   }
@@ -584,6 +514,8 @@ class MapDraw2 extends LitElement {
       this.map.removeControl(this.draw);
 
       this.selectedFeatures = [];
+
+      this._removeDialogs();
       
       // restore map.boxZoom
       if (this.boxZoomable) {
@@ -599,10 +531,10 @@ class MapDraw2 extends LitElement {
     this.requestUpdate();
   }
   _keyDown(event) {
-    if ((event.srcElement || event.target).classList[0] !== 'mapboxgl-canvas') return; // we only handle events on the map
+    if (!(event.srcElement || event.target).classList.contains('mapboxgl-canvas')) return; // we only handle events on the map
     if ((event.keyCode === 8 || event.keyCode === 46)) {
-      event.preventDefault();
       this.draw.trash();
+      event.preventDefault();
     } else if (event.keyCode === 49) {
       this._changeMode('draw_point');
     } else if (event.keyCode === 50) {
@@ -614,7 +546,9 @@ class MapDraw2 extends LitElement {
     }
   }
   _isTempLayer(id) {
-    return ['drawPoints','drawLines','drawPolygons'].includes(id);
+    return (this.newLayers.Point.some(layer=>layer.id === id) ||
+      this.newLayers.Line.some(layer=>layer.id === id) ||
+      this.newLayers.Polygon.some(layer=>layer.id === id));
   }
   _isValidFeature(feature, type) {
     if (feature.geometry.coordinates === null) {
@@ -641,18 +575,18 @@ class MapDraw2 extends LitElement {
     }
     return true;
   }
-  _setDefaultTempLayerColors(layer) {    
-    switch (layer.id) {
-      case 'drawPoints':
+  _setDefaultDrawLayerColors(type) {
+    switch (type) {
+      case 'Point':
         const circleColor = drawStyle.find(style=>style.id === 'gl-draw-point-inactive').paint['circle-color'];
         this.map.setPaintProperty("gl-draw-point-inactive.cold", "circle-color", circleColor);
         this.map.setPaintProperty("gl-draw-point-active.cold", "circle-color", circleColor);
         this.map.setPaintProperty("gl-draw-point-inactive.hot", "circle-color", circleColor);
         this.map.setPaintProperty("gl-draw-point-active.hot", "circle-color", circleColor);
         break;
-      case 'drawLines':
+      case 'Line':
         break;
-      case 'drawPolygons':
+      case 'Polygon':
         const fillColor = drawStyle.find(style=>style.id === 'gl-draw-polygon-fill-inactive').paint['fill-color'];
         this.map.setPaintProperty('gl-draw-polygon-fill-inactive.cold', "fill-color", fillColor);
         this.map.setPaintProperty('gl-draw-polygon-fill-inactive.hot', "fill-color", fillColor);
@@ -671,11 +605,11 @@ class MapDraw2 extends LitElement {
     if (source) {
       this.draw.deleteAll();
       this.selectedFeatures = [];
-      console.log(`adding ${featureCollection.features.length} elements to layer`);
+      //console.log(`adding ${featureCollection.features.length} elements to layer`);
       source.setData(JSON.parse(JSON.stringify(featureCollection)));
       this._setMapLayerVisibity(layer.id, true);
     } else {
-      console.log('_updateMapLayer failed for layer ' + layer.id);
+      //console.log('_updateMapLayer failed for layer ' + layer.id);
     }
   }
   _updateDrawLayerStyle(layer) {
@@ -806,7 +740,7 @@ class MapDraw2 extends LitElement {
     this.draw.setFeatureProperty(feature.id, key, convertedValue);
     this._setMessage(`'${e.target.value}' opgeslagen`)
   }
-  _addNewLayerOption() {
+  /*_addNewLayerOption() {
     let featureTypeString = this.featureType === 'Point' ? '(punten)' : this.featureType === 'Line' ? ('lijnen') : '(vlakken)';
     let title = `Nieuwe kaartlaag ${featureTypeString}`;
     let layers = this.map.getStyle().layers;
@@ -817,14 +751,16 @@ class MapDraw2 extends LitElement {
     newLayers[this.featureType].metadata.title = title;
     this.editableLayers[this.featureType].unshift(JSON.parse(JSON.stringify(newLayers[this.featureType])));
     this._updateCurrentLayerInfo();
-  }
+  }*/
   _featuresCreated(e) {
     e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
     if (this._isTempLayer(this.currentEditLayer.id)) {
       // element created in temp layer, make temp layer permanent
-      this.currentEditLayer.id = _uuidv4();
+      //this.currentEditLayer.id = _uuidv4();
       this.lastEditedLayer[this.featureType] = this.currentEditLayer;
-      
+      //newLayers[this.featureType].metadata.title = this.currentEditLayer.metadata.title;
+      const index = this.newLayers[this.featureType].findIndex(layer=>layer.id===this.currentEditLayer.id);
+      this.newLayers[this.featureType].splice(index, 1);
       this.dispatchEvent(new CustomEvent('addlayer', 
         {detail: this.currentEditLayer}
       ));
@@ -835,7 +771,7 @@ class MapDraw2 extends LitElement {
         }
       }));
       this.draw.options.snapLayers.push(this.currentEditLayer.id);
-      this._addNewLayerOption();
+      //this._addNewLayerOption();
     }
   }
   _featuresSelected(e) {

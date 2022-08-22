@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 * @polymer
 * @extends HTMLElement
 */
-class MapModalDialog extends LitElement {
+export class MapModalDialog extends LitElement {
   static get properties() { 
     return { 
       active: {type: Boolean},
