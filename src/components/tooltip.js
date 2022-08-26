@@ -19,6 +19,7 @@ class ToolTip extends LitElement {
             word-wrap: break-word;
             width: 150px;
             text-align: center;
+            box-sizing: border-box;
         }
         `
     }
