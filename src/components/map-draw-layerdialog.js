@@ -38,7 +38,7 @@ export class MapDrawLayerDialog extends LitElement {
         }
         .button:hover {
             cursor: pointer;
-            background-color: #4791c9;
+            background-color: #286CA0;
         }
         #overlay {
             position: absolute;
