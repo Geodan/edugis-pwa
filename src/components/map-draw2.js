@@ -407,15 +407,16 @@ class MapDraw2 extends LitElement {
     }
     this.requestUpdate();
   }
-  _layerTitleChange() {
+  _layerTitleChange(newTitle) {
+    this.currentEditLayer.metadata.title = newTitle;
     const mapLayer = this.map.getLayer(this.currentEditLayer.id);
     if (mapLayer) {
-      mapLayer.metadata.title = this.currentEditLayer.metadata.title;
+      mapLayer.metadata.title = newTitle;
       // notify application that layer title has changed
       this.dispatchEvent(new CustomEvent('titlechange', {
         detail: {
           layerid: this.currentEditLayer.id,
-          title: this.currentEditLayer.metadata.title
+          title: newTitle
         }
       }));
     }
@@ -426,7 +427,7 @@ class MapDraw2 extends LitElement {
       this._layerChange(this.mapDialog.currentEditLayer.id);
     }
     if (this.mapDialog.titleHasChanged) {
-      this._layerTitleChange()
+      this._layerTitleChange(this.mapDialog.currentEditLayer.metadata.title)
     }
   }
   _editLayers() {
