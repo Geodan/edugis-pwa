@@ -1,11 +1,11 @@
+import {LitElement, html, css} from 'lit';
+
 function _uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
 }
-  
-import {LitElement, html, css} from 'lit';
 
 const FormStatus = {
     setLayer: 1,
@@ -21,6 +21,24 @@ export class MapDrawLayerDialog extends LitElement {
         return css`
         :host {
             display: block;
+        }
+        .button {
+            display: inline-block;
+            color: white;
+            background-color: #2e7dba;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid lightgray;
+            height: 22px;
+            margin-top: 2px;
+            height: 22px;
+            padding-left: 5px;
+            padding-right: 5px;
+            min-width: 60px;
+        }
+        .button:hover {
+            cursor: pointer;
+            background-color: #4791c9;
         }
         #overlay {
             position: absolute;
@@ -45,12 +63,15 @@ export class MapDrawLayerDialog extends LitElement {
           max-width: 50%;
           min-height: 120px;
           max-height: 80%;
-          background-color: white;  
+          background-color: white;
+          font-size: 14px;
         }
         #header {
           display: block;
           height: 2em;
           border-bottom: 1px solid whitesmoke;
+          background-color: #2e7dba;
+          color: white;
         }
         #closebutton {
           float: right;
@@ -61,6 +82,7 @@ export class MapDrawLayerDialog extends LitElement {
         }
         #closebutton:hover {
           background-color: lightgray;
+          color: black;
         }
         #layerlist {
             max-height: 200px;
@@ -160,6 +182,24 @@ export class MapDrawLayerDialog extends LitElement {
             }
         }
     }
+    _layerTypeName()
+    {
+        let layerTypeName;
+        switch (this.featureType) {
+            case 'Point':
+                layerTypeName = 'puntenlaag';
+                break;
+            case 'Line':
+                layerTypeName = 'lijnenlaag';
+                break;
+            case 'Polygon':
+                layerTypeName = 'vlakkenlaag';
+                break;
+            default:
+                layerTypeName = 'tekenlaag'
+        }
+        return layerTypeName;
+    }
     _renderLayerForm(){
         switch(this.formStatus) {
             case FormStatus.setLayer:
@@ -168,13 +208,14 @@ export class MapDrawLayerDialog extends LitElement {
                 <div>Kies een laag om in te tekenen (${this.trl(this.featureType)}): </div>
                 <div id="layerlist">
                     <select size="4">
+                        <option value="${newId}">Nieuwe ${this._layerTypeName()}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
                         })}
-                        <option value="${newId}">Nieuwe tekenlaag</option>
                     </select>
                 </div>
-                <button @click=${(e)=>this._handleNextButtonClick(e)}>Volgende</button>`
+                <div class="button" @click="${(e)=>this._handleNextButtonClick(e)}">Volgende</div>
+                `
             case FormStatus.setLayerDetail:
                 if (!(this.currentEditLayer && this.currentEditLayer.id === this.currentEditLayerId)) {
                     this.currentEditLayer = this.editableLayers.find(layer=>layer.id === this.currentEditLayerId);
@@ -184,7 +225,7 @@ export class MapDrawLayerDialog extends LitElement {
                 }
                 let placeHolder = this.currentEditLayer.metadata.title;
                 if (placeHolder === "") {
-                    placeHolder = "naam nieuwe kaartlaag"
+                    placeHolder = `naam nieuwe ${this._layerTypeName()}`
                 }
                 return html`
                 <label for="layername">Laag naam:</label><input id="layername" type="text" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
@@ -206,8 +247,8 @@ export class MapDrawLayerDialog extends LitElement {
                     </table>
                     </div>
                 </div>
-                <button @click=${(e)=>this._handleBackButtonClick(e)}>Vorige</button>
-                <button @click=${(e)=>this._handleOkButtonClick(e)}>OK</button>
+                <div class="button" @click=${(e)=>this._handleBackButtonClick(e)}>Vorige</div>
+                <div class="button" @click=${(e)=>this._handleOkButtonClick(e)}>OK</div>
                 `;
             default:
                 return html`invalid form status`;

@@ -258,14 +258,14 @@ class MapDraw2 extends LitElement {
         }
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}">
-      <div class="header">Tekenen</div>
-      <div>${this.featureType === 'None'? 'Kies punt, lijn of vlak:':`${this._inSelectMode()?'Selecteer ':'Teken '} ${trl(this.featureType)}`}</div>
+      <div class="header">Kaartlaag tekenen</div>
+      <div>${this.featureType === 'None'? 'Kies punten-, lijnen- of vlakkenlaag':`${this._inSelectMode()?'Selecteer ':'Teken '} ${trl(this.featureType)}`}</div>
       <div class="buttonbar">
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="teken punt" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="teken lijn" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="teken vlak" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="Puntenlaag" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="Lijnenlaag" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="Vlakkenlaag" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
       ${showSelect?html`
-      <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="Selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
