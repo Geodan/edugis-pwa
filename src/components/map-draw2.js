@@ -236,7 +236,7 @@ class MapDraw2 extends LitElement {
     if (!this.active) {
       return html``;
     }
-    const showSelect = this.featureType !== 'None' && !this._isTempLayer(this.currentEditLayer.id);
+    const showSelect = this.featureType !== 'None' && this.currentEditLayer && !this._isTempLayer(this.currentEditLayer.id);
     const inSelectMode = this._inSelectMode();
     return html`
       <style>
@@ -302,28 +302,27 @@ class MapDraw2 extends LitElement {
     }
     this.editableLayers[type] = this.map.getStyle().layers
       .filter(layer=>layerTypes[type].includes(layer.type) && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer);
-    this.editableLayers[type].push(...this.newLayers[type]);
+    //this.editableLayers[type].push(...this.newLayers[type]);
     this.editableLayers[type].reverse();
 
-    if (this.currentEditLayer !== null) {
+    if (this.currentEditLayer) {
       if (this.lastEditedLayer[type] === null || this.lastEditedLayer[type].id !== this.currentEditLayer.id) {
         // apparently switching to new layer, store updates
         this._updateMapLayer(this.currentEditLayer);
       }
     }
     if (this.lastEditedLayer[type]) {
-      if (this.currentEditLayer === null || this.currentEditLayer.id !== this.lastEditedLayer[type].id) {
+      if (this.currentEditLayer == null || this.currentEditLayer.id !== this.lastEditedLayer[type].id) {
         this.currentEditLayer = this.lastEditedLayer[type];
-        if (this._isEditableLayer(this.currentEditLayer.id)) {
-          this._updateDrawLayer(this.currentEditLayer);
-        } else {
+        if (!this._isEditableLayer(this.currentEditLayer.id)) {
           this.currentEditLayer = this.editableLayers[type][0];
-          this._updateDrawLayer(this.currentEditLayer);
         }
+        this._updateDrawLayer(this.currentEditLayer);
       }
     } else {
       this.currentEditLayer = this.editableLayers[type][0];
       this._updateDrawLayer(this.currentEditLayer);
+      this._editLayers();
     }
   }
   _changeMode(newMode) {
@@ -399,7 +398,8 @@ class MapDraw2 extends LitElement {
       layer = this._addNewLayer(layer, type);
     }
     this._prepareLayerForDraw(layer);
-    this.lastEditedLayer[type] = layer;
+    this.lastEditedLayer[type] = this.currentEditLayer = layer;
+    
     this._changeMode(this.drawMode);
     if (this._isTempLayer(layer.id)) {
       this._setDefaultDrawLayerColors(type);
@@ -422,7 +422,7 @@ class MapDraw2 extends LitElement {
     }
   }
   _handleClick() {
-    if (this.mapDialog.currentEditLayer !== this.currentEditLayer.id) {
+    if (!this.currentEditLayer || this.mapDialog.currentEditLayer !== this.currentEditLayer.id) {
       // layer changed
       this._layerChange(this.mapDialog.currentEditLayer.id);
     }
@@ -432,13 +432,13 @@ class MapDraw2 extends LitElement {
   }
   _editLayers() {
     this.mapDialog.featureType = this.featureType;
-    this.mapDialog.currentEditLayerId = this.currentEditLayer.id;
+    this.mapDialog.currentEditLayerId = this.currentEditLayer ? this.currentEditLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
     this.mapDialog.active = true;
   }
   _renderEditLayerInfo() {
     const featureType = this.featureType;
-    if (featureType == 'None') {
+    if (featureType == 'None' || !this.currentEditLayer) {
         return html``;
     }
     return html`<div class="layertype" @click="${()=>this._editLayers()}" >kaartlaag: ${this.currentEditLayer.metadata.title} <span title="kaartlaag aanpassen" class="dotsright">${threedots}</span></div>`;

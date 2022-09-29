@@ -208,7 +208,7 @@ export class MapDrawLayerDialog extends LitElement {
                 <div>Kies een laag om in te tekenen (${this.trl(this.featureType)}): </div>
                 <div id="layerlist">
                     <select size="4">
-                        <option value="${newId}">Nieuwe ${this._layerTypeName()}</option>
+                        <option value="${newId}" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
                         })}
