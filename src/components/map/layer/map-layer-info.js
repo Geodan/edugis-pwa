@@ -290,6 +290,7 @@ class MapLayerInfo extends LitElement {
         }
     }
     _renderSettings(){
+        return html``;
         if (this.layer.type === 'fill' 
             || this.layer.type === 'line' 
             || this.layer.type === 'circle' 
