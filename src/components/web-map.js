@@ -1644,7 +1644,9 @@ class WebMap extends LitElement {
       this.applyConfig(droppedFile.data);
       this.initMap();
     } else if (droppedFile.data.type && (droppedFile.data.type === "Feature" || droppedFile.data.type === "FeatureCollection")) {
-      const layers = GeoJSON.createLayers(droppedFile);
+      const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
+      const geojson = droppedFile.data;
+      const layers = GeoJSON.createLayers(geojson, filename);
       layers.forEach(layer=>this.addLayer({detail: layer}));
     } else if (droppedFile.data && droppedFile.data.data) {
       if (droppedFile.data.data.length) {
@@ -1655,6 +1657,16 @@ class WebMap extends LitElement {
         }
       } else {
         alert ('CSV file is corrupt or empty')
+      }
+    } else if (Array.isArray(droppedFile.data) && droppedFile.data.length) {
+      for (const layer of droppedFile.data) {
+        if (layer.type === 'FeatureCollection' || layer.type === 'Feature') {
+          const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
+          const layers = GeoJSON.createLayers(layer, filename);
+          layers.forEach(layer=>this.addLayer({detail: layer}));
+        } else if (layer.style) {
+          this.addLayer({detail: layer.style});
+        }
       }
     } else {
       alert ('Valid data, but content not recognized');

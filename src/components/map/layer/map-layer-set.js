@@ -1,4 +1,5 @@
 import {html, css, LitElement} from 'lit';
+import { downloadIcon } from '../../my-icons.js';
 
 import "../../base/base-arrow.js";
 import "./map-layer.js";
@@ -44,6 +45,10 @@ class MapLayerSet extends LitElement {
                 height: 0;
                 padding: 0;
                 overflow: hidden;
+            }
+            .iconbutton {
+                padding: 5px;
+                cursor: pointer;
             }
         `
     }
@@ -99,6 +104,7 @@ class MapLayerSet extends LitElement {
         return html`
         <div id="title" @click="${()=>this._toggleArrow()}"><base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}"></base-arrow><slot>Layer set title</slot></div>
         <div id="set" class="${this.open?'':'closed'}">${this._renderLayerList()}</div>
+        <div id="save">${this._renderSaveLayerList()}</div>
         `
     }
     firstUpdated() {
@@ -181,6 +187,30 @@ class MapLayerSet extends LitElement {
                 @movelayer="${(e)=>this._moveLayer(e)}">
             </map-layer>`
         });
+    }
+    _renderSaveLayerList() {
+        if (this.layerSet.length > 1) {
+            return html`<div class="iconbutton" @click="${()=>this._saveLayerList()}" title="lagen-set opslaan"><span class="icon">${downloadIcon}</span> Lagen-set bewaren</div>`
+        }
+    }
+    _saveLayerList() {
+        const layerids = [];
+        for (const layer of this.layerSet) {
+            if (layer.type !== 'style') {
+                layerids.push(layer.id);
+            } else {
+                for (const sublayer of layer.metadata.sublayers) {
+                    layerids.push(sublayer.id);
+                }
+            }
+        }
+        this.dispatchEvent(new CustomEvent('savelayers', {
+            detail: {
+                layerids: layerids
+            },
+            bubbles: true,
+            composed: true
+        }))
     }
     _openChange(event) {
         const setContainer = this.shadowRoot.querySelector('#set');

@@ -18,10 +18,12 @@ class MapSaveLayer extends LitElement {
     connectedCallback() {
         super.connectedCallback()
         window.addEventListener('savelayer', (event)=>this._savelayer(event));
+        window.addEventListener('savelayers', (event)=>this._savelayers(event));
     }
     disconnectedCallback() {
         super.disconnectedCallback()
         window.removeEventListener('savelayer', (event)=>this._savelayer(event));
+        window.removeEventListener('savelayers', (event)=>this._savelayers(event));
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('sprop')) {
@@ -49,18 +51,39 @@ class MapSaveLayer extends LitElement {
             delete style.layout.visibility;
         }
     }
-    _savelayer(e) {
-        const mapboxglStyle = JSON.parse(JSON.stringify(this.webmap.getLayer(e.detail.layerid).serialize()));
-        this._styleCleanup(mapboxglStyle);
-        const source = this.webmap.getSource(mapboxglStyle.source).serialize();
-        if (source.type === 'geojson') {
-            const geojson = source.data;
-            geojson.style = mapboxglStyle;
-            const blob = new Blob([JSON.stringify(geojson, null, 2)], {type: "application/json"});
-            const filename = mapboxglStyle.metadata.title ? `${mapboxglStyle.metadata.title.replace(' ', '_')}.geo.json` : 'layer.geo.json'
-            window.saveAs(blob, filename);
-            console.log(source.data);
+    _getLayerJson(layerid) {
+        const layer = this.webmap.getLayer(layerid);
+        if (layer) {
+            const mapboxglStyle = JSON.parse(JSON.stringify(layer.serialize()));
+            this._styleCleanup(mapboxglStyle);
+            const source = this.webmap.getSource(mapboxglStyle.source).serialize();
+            if (source.type === 'geojson') {
+                const geojson = source.data;
+                geojson.style = mapboxglStyle;
+                return geojson;
+            }
+            mapboxglStyle.source = source;
+            return {
+                style: mapboxglStyle
+            }
         }
+        return {};
+    }
+    _savelayer(e) {
+        const geojson = this._getLayerJson(e.detail.layerid);
+        const blob = new Blob([JSON.stringify(geojson, null, 2)], {type: "application/json"});
+        const filename = geojson.style.metadata.title ? `${geojson.style.metadata.title.replace(' ', '_')}.geo.json` : 'layer.geo.json'
+        window.saveAs(blob, filename);
+    }
+    _savelayers(e) {
+        const layerset = [];
+        for (const layerid of e.detail.layerids) {
+            const geojson = this._getLayerJson(layerid);
+            layerset.push(geojson);
+        }
+        const blob = new Blob([JSON.stringify(layerset,null,2)], {type: "application/json"});
+        const filename = 'layerset.geo.json';
+        window.saveAs(blob, filename);
     }
 }
 

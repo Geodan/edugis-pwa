@@ -195,10 +195,8 @@ export class GeoJSON {
   }
 
   // returns a point-layer, line-layer, fill-layer if point, line, polygon features exist
-  static createLayers(droppedFile) {
+  static createLayers(geojson, filename) {
     const result = [];
-    const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
-    const geojson = droppedFile.data;
     if (geojson.type === "Feature") {
       // convert to FeatureCollection
       geojson.type = "FeatureCollection";
