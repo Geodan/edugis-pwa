@@ -417,6 +417,9 @@ export class MapDrawLayerDialog extends LitElement {
         }
     }
     _close(e) {
+        if (this.cancelHandler) {
+            this.cancelHandler();
+        }
         this.active = false;
     }
 }

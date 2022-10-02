@@ -89,6 +89,7 @@ class MapDraw2 extends LitElement {
     this.mapDialog = new MapDrawLayerDialog(trl);
     this.map.getContainer().parentNode.appendChild(this.mapDialog);
     this.mapDialog.clickHandler = () => this._handleDialogOkClick();
+    this.mapDialog.cancelHandler = () => this._handleDialogCancel();
   }
   _removeDialogs() {
     const container = this.map.getContainer().parentNode;
@@ -281,6 +282,13 @@ class MapDraw2 extends LitElement {
     this._changeMode(this._getMode(this.featureType));
     if (this.mapDialog.titleHasChanged) {
       this._layerTitleChange(this.mapDialog.currentEditLayer.metadata.title)
+    }
+  }
+  _handleDialogCancel() {
+    if (!this.currentLayer[this.featureType]) {
+      this._setMode('simple_select');
+    } else {
+      this._changeMode(this._getMode(this.featureType));
     }
   }
   _showDialog() {
@@ -521,7 +529,7 @@ class MapDraw2 extends LitElement {
             layerid: layerid,
             visible: visible
           }
-      })), 500);
+      })), 100);
     }
   }
   _defaultPropertyValue(type, feature) {
