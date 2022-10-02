@@ -16,6 +16,128 @@ const FormError = {
     noLayerName: 1
 }
 
+const propertyTypes ={
+    "Point":  ["string", "number", "longitude", "latitude"],
+    "Line": ["string", "number", "length"],
+    "Polygon": ["string", "number", "longitude", "latitude", "perimeter", "area"]
+}
+const defaultProperties = [
+    {name: "id", type: "number"},
+    {name: "name", type: "string"}
+]
+
+const newLayers = {
+    Polygon: {
+      "isnewlayer": true,
+      "id": null,
+      "metadata": {
+        "title": "",
+        "attributes": {
+          "translations": [
+            {"name": "name", "tanslation": "naam"}
+          ]
+        },
+        "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
+      },
+      "type": "fill",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": []
+        }
+      },
+      "paint": {
+        "fill-color": "#000",
+        "fill-outline-color": "#000",
+        "fill-opacity": 0.3
+      }
+    },
+    Line: {
+      "isnewlayer": true,
+      "id": null,
+      "metadata": {
+        "title": "",
+        "attributes": {
+          "translations": [
+            {"name": "name", "tanslation": "naam"}
+          ]
+        },
+        "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
+      },
+      "type": "line",
+      "source" : {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": []
+        }
+      },
+      "paint" : {
+        "line-color" : "#000",
+        "line-width" : 3
+      }
+    },
+    Point : {
+      "isnewlayer": true,
+      "id": null,
+      "metadata": {
+        "title": "",
+        "attributes": {
+          "translations": [
+            {"name": "name", "tanslation": "naam"}
+          ]
+        },
+        "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
+      },
+      "type": "circle",
+      "source" : {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": []
+        }
+      },
+      "paint" : {
+        "circle-radius": 6,
+        "circle-color" : "#000",
+        "circle-opacity": 0.3,
+        "circle-stroke-color": "#000",
+        "circle-stroke-width": 2
+      }
+    }
+  };  
+
+  /*
+  _prepareLayerForDraw(layer) {
+    let id = 1;
+    if (!layer.metadata.hasOwnProperty('properties')) {
+      const properties = new Map();
+      const source = this.map.getSource(layer.id).serialize();
+      for (const feature of source.data.features) {
+        if (!feature.properties.hasOwnProperty('id')) {
+          feature.properties.id = id++;
+        }
+        for (const propname in feature.properties) {
+          if (!properties.has(propname)) {
+            if (typeof feature.properties[propname] === 'number') {
+              properties.set(propname, 'number');
+            } else {
+              properties.set(propname, 'string');
+            }
+          }
+        }
+      }
+      layer.metadata.properties = [{"name": "id", "type": "number"}];
+      for (const [key,value] of properties) {
+        if (key !== 'id') {
+          layer.metadata.properties.push({"name": key, "type": value});
+        }
+      }
+    }
+  }
+  */
+
 export class MapDrawLayerDialog extends LitElement {
     static get styles() {
         return css`
@@ -136,13 +258,11 @@ export class MapDrawLayerDialog extends LitElement {
           formStatus: {type: Number}
         }; 
     }
-    constructor(trl, propertyTypes, defaultProperties) {
+    constructor(trl) {
         super();
         this.active = false;
         this.formStatus = FormStatus.setLayer;
         this.trl = trl;
-        this.propertyTypes = propertyTypes;
-        this.defaultProperties = defaultProperties;
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('active')) {
@@ -169,18 +289,8 @@ export class MapDrawLayerDialog extends LitElement {
         this.requestUpdate();
     }
     _createNewLayer() {
-        this.currentEditLayer = {
-            id: this.currentEditLayerId,
-            metadata: {
-                title: "",
-                "attributes": {
-                    "translations": [
-                      {"name": "name", "tanslation": "naam"}
-                    ]
-                },
-                "properties": this.defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
-            }
-        }
+        this.currentEditLayer = JSON.parse(JSON.stringify(newLayers[this.featureType]));
+        this.currentEditLayer.id = _uuidv4();
     }
     _layerTypeName()
     {
@@ -203,12 +313,11 @@ export class MapDrawLayerDialog extends LitElement {
     _renderLayerForm(){
         switch(this.formStatus) {
             case FormStatus.setLayer:
-                const newId = _uuidv4();
                 return html`
                 <div>Kies een laag om in te tekenen (${this.trl(this.featureType)}): </div>
                 <div id="layerlist">
                     <select size="4">
-                        <option value="${newId}" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
+                        <option value="new" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
                         })}
@@ -240,7 +349,7 @@ export class MapDrawLayerDialog extends LitElement {
                         <td><input id="propertyName" type="text" placeholder="eigenschap"></td>
                         <td>
                             <select id="propertyType">
-                            ${this.propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${this.trl(type)}</option>`)}
+                            ${propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${this.trl(type)}</option>`)}
                             </select>
                         </td>
                         <td><button class="btnsmall" @click="${(event)=>this._addProperty(event)}">+</button></tr>

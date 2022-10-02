@@ -6,13 +6,6 @@ import drawCss from './map-draw-css.js';
 import {MapDrawLayerDialog} from './map-draw-layerdialog';
 import {threedots} from './my-icons.js';
 
-function _uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
-
 const translate = {
   "number": "getal",
   "string": "tekst",
@@ -31,96 +24,6 @@ const translate = {
 function trl(word) {
   return translate[word] ? translate[word] : word;
 }
-
-const propertyTypes ={
-  "Point":  ["string", "number", "longitude", "latitude"],
-  "Line": ["string", "number", "length"],
-  "Polygon": ["string", "number", "longitude", "latitude", "perimeter", "area"]
-}
-
-const defaultProperties = [
-  {name: "id", type: "number"},
-  {name: "name", type: "string"}
-]
-
-const newLayers = {
-  Polygon: {
-    "id": _uuidv4(),
-    "metadata": {
-      "title": "Getekende vlakken",
-      "attributes": {
-        "translations": [
-          {"name": "name", "tanslation": "naam"}
-        ]
-      },
-      "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
-    },
-    "type": "fill",
-    "source": {
-      "type": "geojson",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
-    },
-    "paint": {
-      "fill-color": "#000",
-      "fill-outline-color": "#000",
-      "fill-opacity": 0.3
-    }
-  },
-  Line: {
-    "id": _uuidv4(),
-    "metadata": {
-      "title": "Getekende lijnen",
-      "attributes": {
-        "translations": [
-          {"name": "name", "tanslation": "naam"}
-        ]
-      },
-      "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
-    },
-    "type": "line",
-    "source" : {
-      "type": "geojson",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
-    },
-    "paint" : {
-      "line-color" : "#000",
-      "line-width" : 3
-    }
-  },
-  Point : {
-    "id": _uuidv4(),
-    "metadata": {
-      "title": "Getekende punten",
-      "attributes": {
-        "translations": [
-          {"name": "name", "tanslation": "naam"}
-        ]
-      },
-      "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
-    },
-    "type": "circle",
-    "source" : {
-      "type": "geojson",
-      "data": {
-        "type": "FeatureCollection",
-        "features": []
-      }
-    },
-    "paint" : {
-      "circle-radius": 6,
-      "circle-color" : "#000",
-      "circle-opacity": 0.3,
-      "circle-stroke-color": "#000",
-      "circle-stroke-width": 2
-    }
-  }
-};
 
 
 /**
@@ -157,40 +60,35 @@ class MapDraw2 extends LitElement {
       this.featureCollection = {"type": "FeatureCollection", "features": []};
       this.message = null;
       this.timeoutId = null;
-      this.currentEditLayer = null;
       this.snapLayers = [];
       this.editableLayers = {Point:[],Line:[],Polygon:[]};
-      this.newLayers = {Point:[newLayers.Point], Line: [newLayers.Line], Polygon: [newLayers.Polygon]};
-      this.lastEditedLayer = {Point: null, Line: null, Polygon: null};
+      this.currentLayer = {Point: null, Line: null, Polygon: null};
       this.layercolor = {layerid: -1, color: '#000'};
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
       if (this.map.version && this.active) {
-        this._addDrawToMap();
+        this._addMbDrawToMap();
       }
     }
     if (changedProp.has('layercolor')) {
-      if (this.map.version && this.active && this.currentEditLayer && this.currentEditLayer.id === this.layercolor.layerid) {
-        this._updateDrawLayerStyle(this.currentEditLayer);
+      if (this.map.version && this.active && this.currentLayer[this.featureType] && this.currentLayer[this.featureType].id === this.layercolor.layerid) {
+        this._updateDrawLayerStyle(this.currentLayer[this.featureType]);
       }
     }
     if (changedProp.has('active')) {
       if (this.active) {
-        this._addDrawToMap();
+        this._addMbDrawToMap();
       } else {
         this._removeDrawFromMap();
       }
     }
     return true;
   }
-  firstUpdated(){
-    
-  }
   _addDialogs() {
-    this.mapDialog = new MapDrawLayerDialog(trl, propertyTypes, defaultProperties);
+    this.mapDialog = new MapDrawLayerDialog(trl);
     this.map.getContainer().parentNode.appendChild(this.mapDialog);
-    this.mapDialog.clickHandler = () => this._handleClick();
+    this.mapDialog.clickHandler = () => this._handleDialogOkClick();
   }
   _removeDialogs() {
     const container = this.map.getContainer().parentNode;
@@ -214,7 +112,7 @@ class MapDraw2 extends LitElement {
     if (this.selectedFeatures.length === 0) {
       return html``;
     }
-    const currentEditLayer = this.currentEditLayer;
+    const currentLayer = this.currentLayer[this.featureType];
     return html`
     <div id="selectedfeatures">
       <div>Geselecteerd ${trl(this._currentGeometryType())}:</div>
@@ -222,7 +120,7 @@ class MapDraw2 extends LitElement {
         ${this.selectedFeatures.map(feature=>{
           return Object.keys(feature.properties).map(key=>html`
             <tr><td class="propertyname">${trl(key)}</td>
-              <td><input ?disabled=${key==="id" || !["string","number"].includes(currentEditLayer.metadata.properties.find(attr=>attr.name===key).type)} type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${this.draw.get(feature.id).properties[key]}"></td>
+              <td><input ?disabled=${key==="id" || !["string","number"].includes(currentLayer.metadata.properties.find(attr=>attr.name===key).type)} type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${this.mbDraw.get(feature.id).properties[key]}"></td>
             </tr>`
           );
         })}
@@ -230,13 +128,13 @@ class MapDraw2 extends LitElement {
     </div>`
   }
   _inSelectMode() {
-    return ['simple_select','direct_select'].includes(this.draw.getMode())
+    return ['simple_select','direct_select'].includes(this.mbDraw.getMode())
   }
   render() {
     if (!this.active) {
       return html``;
     }
-    const showSelect = this.featureType !== 'None' && this.currentEditLayer && !this._isTempLayer(this.currentEditLayer.id);
+    const showSelect = this.currentLayer[this.featureType] && !this._isEmptyNewLayer(this.currentLayer[this.featureType]);
     const inSelectMode = this._inSelectMode();
     return html`
       <style>
@@ -286,53 +184,41 @@ class MapDraw2 extends LitElement {
         return 'None'
     }
   }
-  _isEditableLayer(id) {
-    if (this.editableLayers[this.featureType].find((layer)=>layer.id===id)) {
-      return true;
-    }
-    return false;
-  }
-  _updateCurrentLayerInfo() {
-    const type = this.featureType;
-    // get list of editable layers for this type
-    const layerTypes = {
-      "Point":["circle", "symbol"],
-      "Line": ["line"],
-      "Polygon": ["fill","fill-extrusion"]
-    }
-    this.editableLayers[type] = this.map.getStyle().layers
-      .filter(layer=>layerTypes[type].includes(layer.type) && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer);
-    //this.editableLayers[type].push(...this.newLayers[type]);
-    this.editableLayers[type].reverse();
-
-    if (this.currentEditLayer) {
-      if (this.lastEditedLayer[type] === null || this.lastEditedLayer[type].id !== this.currentEditLayer.id) {
-        // apparently switching to new layer, store updates
-        this._updateMapLayer(this.currentEditLayer);
-      }
-    }
-    if (this.lastEditedLayer[type]) {
-      if (this.currentEditLayer == null || this.currentEditLayer.id !== this.lastEditedLayer[type].id) {
-        this.currentEditLayer = this.lastEditedLayer[type];
-        if (!this._isEditableLayer(this.currentEditLayer.id)) {
-          this.currentEditLayer = this.editableLayers[type][0];
-        }
-        this._updateDrawLayer(this.currentEditLayer);
-      }
-    } else {
-      this.currentEditLayer = this.editableLayers[type][0];
-      this._updateDrawLayer(this.currentEditLayer);
-      this._editLayers();
+  _getMode(featureType) {
+    switch (featureType) {
+      case 'Point':
+        return 'draw_point';
+      case 'Line':
+        return 'draw_line_string';
+      case 'Polygon':
+        return 'draw_polygon';
+      default:
+        return 'simple_select';
     }
   }
   _changeMode(newMode) {
+      this._storeCurrentFeatures();
       this.drawMode = newMode;
-      this.featureType = this._getType(newMode);
-      this._updateCurrentLayerInfo();
+      const type = this.featureType = this._getType(newMode);
+      if (this.editableLayers[type].length === 0) {
+        const layerTypes = {
+          "Point":["circle", "symbol"],
+          "Line": ["line"],
+          "Polygon": ["fill","fill-extrusion"]
+        }
+        this.editableLayers[type] = this.map.getStyle().layers
+          .filter(layer=>layerTypes[type].includes(layer.type) && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer);
+          this.editableLayers[type].reverse();
+      }
+      if (!this.currentLayer[type]) {
+        this._showDialog();
+      } else {
+        this._loadCurrentFeatures();
+      }
       this._setMode(newMode);
   }
   _setMode(newMode) {
-    this.draw.changeMode(newMode);
+    this.mbDraw.changeMode(newMode);
     this.requestUpdate();
   }
   _currentGeometryType() {
@@ -357,91 +243,61 @@ class MapDraw2 extends LitElement {
     }
     return this._getType(mode);
   }
-  _prepareLayerForDraw(layer) {
-    let id = 1;
-    if (!layer.metadata.hasOwnProperty('properties')) {
-      const properties = new Map();
-      const source = this.map.getSource(layer.id).serialize();
-      for (const feature of source.data.features) {
-        if (!feature.properties.hasOwnProperty('id')) {
-          feature.properties.id = id++;
-        }
-        for (const propname in feature.properties) {
-          if (!properties.has(propname)) {
-            if (typeof feature.properties[propname] === 'number') {
-              properties.set(propname, 'number');
-            } else {
-              properties.set(propname, 'string');
-            }
-          }
-        }
-      }
-      layer.metadata.properties = [{"name": "id", "type": "number"}];
-      for (const [key,value] of properties) {
-        if (key !== 'id') {
-          layer.metadata.properties.push({"name": key, "type": value});
-        }
-      }
-    }
-  }
-  _addNewLayer(layer, type) {
-    const newLayer = JSON.parse(JSON.stringify(newLayers[type]));
-    newLayer.id = layer.id;
-    newLayer.metadata = layer.metadata;
-    this.newLayers[type].push(newLayer);
-    return newLayer;
-  }
-  _layerChange(newLayerId) {
-    const type = this.featureType;
-    let layer = this.editableLayers[type].find(layer=>layer.id === newLayerId);
-    if (!this._isTempLayer(newLayerId) && !this.map.getLayer(newLayerId)) {
-      layer = this._addNewLayer(layer, type);
-    }
-    this._prepareLayerForDraw(layer);
-    this.lastEditedLayer[type] = this.currentEditLayer = layer;
-    
-    this._changeMode(this.drawMode);
-    if (this._isTempLayer(layer.id)) {
-      this._setDefaultDrawLayerColors(type);
-      return;
-    }
-    this.requestUpdate();
-  }
   _layerTitleChange(newTitle) {
-    this.currentEditLayer.metadata.title = newTitle;
-    const mapLayer = this.map.getLayer(this.currentEditLayer.id);
+    this.currentLayer[this.featureType].metadata.title = newTitle;
+    const mapLayer = this.map.getLayer(this.currentLayer[this.featureType].id);
     if (mapLayer) {
       mapLayer.metadata.title = newTitle;
       // notify application that layer title has changed
       this.dispatchEvent(new CustomEvent('titlechange', {
         detail: {
-          layerid: this.currentEditLayer.id,
+          layerid: this.currentLayer[this.featureType].id,
           title: newTitle
         }
       }));
     }
   }
-  _handleClick() {
-    if (!this.currentEditLayer || this.mapDialog.currentEditLayer !== this.currentEditLayer.id) {
-      // layer changed
-      this._layerChange(this.mapDialog.currentEditLayer.id);
+  _addNewLayerToMap() {
+    if (this._isEmptyNewLayer(this.currentLayer[this.featureType])) {
+      delete this.currentLayer[this.featureType].isnewlayer;
+      this.dispatchEvent(new CustomEvent('addlayer', 
+        {detail: this.currentLayer[this.featureType]}
+      ));
+      this.dispatchEvent(new CustomEvent('movelayer', {
+        detail: { 
+          layers: [this.currentLayer[this.featureType].id],
+          beforeLayer: "gl-draw-polygon-fill-inactive.cold"
+        }
+      }));
+      this.mbDraw.options.snapLayers.push(this.currentLayer[this.featureType].id);
+      //this._addNewLayerOption();
     }
+  }
+  _handleDialogOkClick() {
+    this.currentLayer[this.featureType] = this.mapDialog.currentEditLayer;
+    if (this._isEmptyNewLayer(this.currentLayer[this.featureType])) {
+      this._addNewLayerToMap();
+    }
+    this._changeMode(this._getMode(this.featureType));
     if (this.mapDialog.titleHasChanged) {
       this._layerTitleChange(this.mapDialog.currentEditLayer.metadata.title)
     }
   }
-  _editLayers() {
+  _showDialog() {
+    this._storeCurrentFeatures();
+    const currentLayer = this.currentLayer[this.featureType];
+    
     this.mapDialog.featureType = this.featureType;
-    this.mapDialog.currentEditLayerId = this.currentEditLayer ? this.currentEditLayer.id : null;
+    this.mapDialog.currentEditLayerId = currentLayer ? currentLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
     this.mapDialog.active = true;
   }
   _renderEditLayerInfo() {
     const featureType = this.featureType;
-    if (featureType == 'None' || !this.currentEditLayer) {
+    if (featureType == 'None' || !this.currentLayer[this.featureType]) {
         return html``;
     }
-    return html`<div class="layertype" @click="${()=>this._editLayers()}" >kaartlaag: ${this.currentEditLayer.metadata.title} <span title="kaartlaag aanpassen" class="dotsright">${threedots}</span></div>`;
+    return html`<div class="layertype" @click="${()=>this._showDialog()}" >kaartlaag: ${this.currentLayer[this.featureType].metadata.title} <span title="kaartlaag aanpassen" class="dotsright">${threedots}</span></div>`;
   }
   _renderMessage() {
     if (this.message) {
@@ -457,7 +313,7 @@ class MapDraw2 extends LitElement {
       "Line": ["line"],
       "Polygon": ["fill","fill-extrusion"]
     }
-    const drawSnapLayers = new Set(this.draw.options.snapLayers);
+    const drawSnapLayers = new Set(this.mbDraw.options.snapLayers);
     const mapSnapLayers = this.map.getStyle().layers
       .filter(layer=>
         (layerTypes.Point.includes(layer.type) ||
@@ -466,21 +322,21 @@ class MapDraw2 extends LitElement {
           && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer)
       .map(layer=>layer.id);
     mapSnapLayers.forEach(layer=>drawSnapLayers.add(layer));
-    this.draw.options.snapLayers = Array.from(drawSnapLayers);
+    this.mbDraw.options.snapLayers = Array.from(drawSnapLayers);
   }
-  _addDrawToMap(){ 
+  _addMbDrawToMap(){ 
     if (this.map.version) {
       // store map.boxZoom
       this.boxZoomable = this.map.boxZoom.isEnabled();
-      this.draw = new MapboxDraw({
+      this.mbDraw = new MapboxDraw({
         displayControlsDefault: true,
         keybindings: true,
         controls: {point: false, line_string: false, polygon: false, trash: false, combine_features: false, uncombine_features: false},
         styles: drawStyle
       });
       this._setSnapLayers();
-      this.draw.options.styles.forEach(style=>style.metadata = {isToolLayer: true});
-      this.map.addControl(this.draw, 'bottom-right');
+      this.mbDraw.options.styles.forEach(style=>style.metadata = {isToolLayer: true});
+      this.map.addControl(this.mbDraw, 'bottom-right');
       this.map.on('draw.create', this.featuresCreated = (e)=>this._featuresCreated(e));
       this.map.on('draw.selectionchange', this.featuresSelected = (e)=>this._featuresSelected(e));
       this.map.on('draw.update', this.featuresUpdated = (e)=>this._featuresUpdated(e));
@@ -492,17 +348,17 @@ class MapDraw2 extends LitElement {
       this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
       this.map.getCanvas().style.cursor = "unset"; // let mapbox-gl-draw handle the cursor
       this._addDialogs();
-      setTimeout(()=>this.draw.changeMode(this.drawMode = 'simple_select'), 100);
+      setTimeout(()=>this.mbDraw.changeMode(this.drawMode = 'simple_select'), 100);
     }
   }
   _removeDrawFromMap()
   {
     if (this.map.version) {
-      if (this.draw) {
-        this.draw.changeMode(this.drawMode = 'simple_select');
+      if (this.mbDraw) {
+        this.mbDraw.changeMode(this.drawMode = 'simple_select');
       }
-      this._updateMapLayer(this.currentEditLayer);
-      this.currentEditLayer = null;
+      this._storeCurrentFeatures();
+      this.currentLayer[this.featureType] = null;
       this.featureType = 'None';
       this.map.off('draw.create', this.featuresCreated);
       this.map.off('draw.selectionchange', this.featuresSelected);
@@ -512,7 +368,7 @@ class MapDraw2 extends LitElement {
       this.map.getCanvasContainer().removeEventListener('keydown', this.keyDown);
       //this._updateMapDrawLayers();
       //this._setMapDrawLayersVisibility(true);  
-      this.map.removeControl(this.draw);
+      this.map.removeControl(this.mbDraw);
 
       this.selectedFeatures = [];
 
@@ -534,7 +390,7 @@ class MapDraw2 extends LitElement {
   _keyDown(event) {
     if (!(event.srcElement || event.target).classList.contains('mapboxgl-canvas')) return; // we only handle events on the map
     if ((event.keyCode === 8 || event.keyCode === 46)) {
-      this.draw.trash();
+      this.mbDraw.trash();
       event.preventDefault();
     } else if (event.keyCode === 49) {
       this._changeMode('draw_point');
@@ -546,10 +402,8 @@ class MapDraw2 extends LitElement {
       this._setMode('simple_select');
     }
   }
-  _isTempLayer(id) {
-    return (this.newLayers.Point.some(layer=>layer.id === id) ||
-      this.newLayers.Line.some(layer=>layer.id === id) ||
-      this.newLayers.Polygon.some(layer=>layer.id === id));
+  _isEmptyNewLayer(layer) {
+    return layer.isnewlayer;
   }
   _isValidFeature(feature, type) {
     if (feature.geometry.coordinates === null) {
@@ -596,18 +450,21 @@ class MapDraw2 extends LitElement {
         break;
     }
   }
-  _updateMapLayer(layer) {
-    if (!layer || this._isTempLayer(layer.id)) {
+  _storeCurrentFeatures() {
+    const layer = this.currentLayer[this.featureType];
+    if (!layer || this._isEmptyNewLayer(layer)) {
       return;
     }
-    const featureCollection = this.draw.getAll();
-    featureCollection.features = featureCollection.features.filter(this._isValidFeature, this.featureType)
     const source = this.map.getSource(layer.id);
     if (source) {
-      this.draw.deleteAll();
+      const featureCollection = this.mbDraw.getAll();
+      featureCollection.features = featureCollection.features.filter(this._isValidFeature, this.featureType);
+      if (this.hasUnsavedFeatures) {
+        source.setData(JSON.parse(JSON.stringify(featureCollection)));
+        this.hasUnsavedFeatures = false;
+      }
+      this.mbDraw.deleteAll();
       this.selectedFeatures = [];
-      //console.log(`adding ${featureCollection.features.length} elements to layer`);
-      source.setData(JSON.parse(JSON.stringify(featureCollection)));
       this._setMapLayerVisibity(layer.id, true);
     } else {
       //console.log('_updateMapLayer failed for layer ' + layer.id);
@@ -633,9 +490,11 @@ class MapDraw2 extends LitElement {
           break;
     }
   }
-  _updateDrawLayer(layer) {
-    this.draw.deleteAll();
-    if (!layer || this._isTempLayer(layer.id)){
+  _loadCurrentFeatures() {
+    this.mbDraw.deleteAll();
+    this.selectedFeatures = [];
+    const layer = this.currentLayer[this.featureType];
+    if (!layer || this._isEmptyNewLayer(layer)){
       return;
     }
     const source = this.map.getSource(layer.id);
@@ -644,34 +503,25 @@ class MapDraw2 extends LitElement {
       if (sourceData) {
         const featureCollection = sourceData.data;
         this._updateDrawLayerStyle(layer);
-        this.draw.set(featureCollection);
+        this.mbDraw.set(featureCollection);
+        this.hasUnsavedFeatures = false;
         this._setMapLayerVisibity(layer.id, false);
       }
     } else {
       console.error(`could not get source for ${layer.id}`)
     }
   }
-  _setSource(layer, features) {
-    const source = this.map.getSource(layer.id);
-    if (source) {
-      source.setData({"type":"FeatureCollection", "features": features});
-    } else if (this.sourceRetries > 0) {
-      this.sourceRetries--;
-      setTimeout(()=>this._setSource(layer, features), 200);
-    } else {
-      console.log('_setsource failed for layer ' + layer.id);
-    }
-  }
   _setMapLayerVisibity(layerid, visible) {
     const mapLayer = this.map.getLayer(layerid);
     if (mapLayer) {
       //this.map.setLayoutProperty(layer.id, 'visibility', visible?'visible':'none');
-      this.dispatchEvent(new CustomEvent('updatevisibility', {
-        detail: {
-          layerid: layerid,
-          visible: visible
-        }
-      }));
+      setTimeout(()=> // wait for map.addLayer to update full UI
+        this.dispatchEvent(new CustomEvent('updatevisibility', {
+          detail: {
+            layerid: layerid,
+            visible: visible
+          }
+      })), 500);
     }
   }
   _defaultPropertyValue(type, feature) {
@@ -691,7 +541,7 @@ class MapDraw2 extends LitElement {
     }
   }
   _getUniqueFeatureId(){
-    const featureCollection = this.draw.getAll();
+    const featureCollection = this.mbDraw.getAll();
     let result = 1;
     for (const feature of featureCollection.features) {
       const featureId = parseInt(feature.properties.id);
@@ -701,28 +551,30 @@ class MapDraw2 extends LitElement {
     }
     return result;
   }
-  _setDefaultFeatureProperties(feature) {
+  _updateDefaultFeatureProperties(feature) {
     const newId = this._getUniqueFeatureId();
-    this.currentEditLayer.metadata.properties.forEach((property,idx)=>{
+    this.currentLayer[this.featureType].metadata.properties.forEach((property,idx)=>{
       if (idx === 0) {
-        this.draw.setFeatureProperty(feature.id, property.name, newId);
+        this.mbDraw.setFeatureProperty(feature.id, property.name, newId);
       } else {
-        this.draw.setFeatureProperty(feature.id, property.name, this._defaultPropertyValue(property.type, feature))
+        this.mbDraw.setFeatureProperty(feature.id, property.name, this._defaultPropertyValue(property.type, feature))
       }
     });
+    this.hasUnsavedFeatures = true;
   }
   _updateFeatureAutoProperties(feature) {
-    this.currentEditLayer.metadata.properties.forEach((property)=>{
+    this.currentLayer[this.featureType].metadata.properties.forEach((property)=>{
       const value = this._defaultPropertyValue(property.type, feature);
       if (value) {
-        this.draw.setFeatureProperty(feature.id, property.name, value);
+        this.mbDraw.setFeatureProperty(feature.id, property.name, value);
       }
     });
+    this.hasUnsavedFeatures = true;
     this.requestUpdate();
   }
   _convertType(key, value) {
-    if (this.currentEditLayer.metadata && this.currentEditLayer.metadata.properties) {
-      const typeInfo = this.currentEditLayer.metadata.properties.find(({name})=>name===key);
+    if (this.currentLayer[this.featureType].metadata && this.currentLayer[this.featureType].metadata.properties) {
+      const typeInfo = this.currentLayer[this.featureType].metadata.properties.find(({name})=>name===key);
       if (typeInfo) {
         if (typeInfo.type === 'number') {
           return parseFloat(value.replace(',','.'));
@@ -738,51 +590,22 @@ class MapDraw2 extends LitElement {
       const floatValue = value.replace(',', '.').replace(/([\+\-]?)[^\d\.]*([0-9]*)[^\.]*([\.]?)[^0-9]*([0-9]*).*/,'$1$2$3$4')
       e.target.value = floatValue;
     }
-    this.draw.setFeatureProperty(feature.id, key, convertedValue);
-    this._setMessage(`'${e.target.value}' opgeslagen`)
+    this.mbDraw.setFeatureProperty(feature.id, key, convertedValue);
+    this.hasUnsavedFeatures = true;
+    this._setMessage(`'${e.target.value}' opgeslagen`);
   }
-  /*_addNewLayerOption() {
-    let featureTypeString = this.featureType === 'Point' ? '(punten)' : this.featureType === 'Line' ? ('lijnen') : '(vlakken)';
-    let title = `Nieuwe kaartlaag ${featureTypeString}`;
-    let layers = this.map.getStyle().layers;
-    let counter = 1;
-    while (layers.find(layer=>layer.metadata.title === title)) {
-      title = `Nieuwe kaartlaag_${counter++} ${featureTypeString}`;
-    }
-    newLayers[this.featureType].metadata.title = title;
-    this.editableLayers[this.featureType].unshift(JSON.parse(JSON.stringify(newLayers[this.featureType])));
-    this._updateCurrentLayerInfo();
-  }*/
   _featuresCreated(e) {
-    e.features.forEach(feature=>this._setDefaultFeatureProperties(feature));
-    if (this._isTempLayer(this.currentEditLayer.id)) {
-      // element created in temp layer, make temp layer permanent
-      //this.currentEditLayer.id = _uuidv4();
-      this.lastEditedLayer[this.featureType] = this.currentEditLayer;
-      //newLayers[this.featureType].metadata.title = this.currentEditLayer.metadata.title;
-      const index = this.newLayers[this.featureType].findIndex(layer=>layer.id===this.currentEditLayer.id);
-      this.newLayers[this.featureType].splice(index, 1);
-      this.dispatchEvent(new CustomEvent('addlayer', 
-        {detail: this.currentEditLayer}
-      ));
-      this.dispatchEvent(new CustomEvent('movelayer', {
-        detail: { 
-          layers: [this.currentEditLayer.id],
-          beforeLayer: "gl-draw-polygon-fill-inactive.cold"
-        }
-      }));
-      this.draw.options.snapLayers.push(this.currentEditLayer.id);
-      //this._addNewLayerOption();
-    }
+    e.features.forEach(feature=>this._updateDefaultFeatureProperties(feature));
+    this.hasUnsavedFeatures = true;
   }
   _featuresSelected(e) {
     this.selectedFeatures = e.features;
     // check if any newly defined layer properties should be added to the feature
-    for (const prop of this.currentEditLayer.metadata.properties) {
+    for (const prop of this.currentLayer[this.featureType].metadata.properties) {
       for (const feature of this.selectedFeatures) {
         if (!feature.properties.hasOwnProperty(prop.name)) {
           const value = this._defaultPropertyValue(prop.type, feature);
-          this.draw.setFeatureProperty(feature.id, prop.name, value);
+          this.mbDraw.setFeatureProperty(feature.id, prop.name, value);
           feature.properties[prop.name] = value; // update internal copy as well
         }
       }
@@ -791,10 +614,12 @@ class MapDraw2 extends LitElement {
   _featuresUpdated(e) {
     e.features.forEach(feature=>this._updateFeatureAutoProperties(feature));
     this.selectedFeatures = [];
+    this.hasUnsavedFeatures = true;
     setTimeout(()=>this.selectedFeatures = e.features, 0);
   }
   _drawDelete(e) {
     this.selectedFeatures = [];
+    this.hasUnsavedFeatures = true;
   }
   _drawCombine(e) {
     this.selectedFeatures = [];
@@ -802,6 +627,7 @@ class MapDraw2 extends LitElement {
       //e.createdFeatures.forEach(feature=>this._setDefaultFeatureProperties(feature));
       this.selectedFeatures = e.createdFeatures;
     }, 100);
+    this.hasUnsavedFeatures = true;
   }
   _drawUncombine(e) {
     this.selectedFeatures = [];
@@ -809,6 +635,7 @@ class MapDraw2 extends LitElement {
       //e.createdFeatures.forEach(feature=>this._setDefaultFeatureProperties(feature));
       this.selectedFeatures = e.createdFeatures;
     }, 100);
+    this.hasUnsavedFeatures = true;
   }
   _setMessage(message) {
     if (message !== null && this.timeoutId != null) {

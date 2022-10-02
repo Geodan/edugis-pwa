@@ -239,7 +239,9 @@ class WebMap extends LitElement {
       layer.setLayoutProperty('visibility', (visible ? 'visible' : 'none'));
       // update item in this.layerlist
       const layerlistitem = this.layerlist.find(layerlistitem=>layerlistitem.id===id);
-      layerlistitem.layervisible = visible;
+      if (layerlistitem) {
+        layerlistitem.layervisible = visible;
+      }
     }
   }
   updateLayerVisibility(e) {
