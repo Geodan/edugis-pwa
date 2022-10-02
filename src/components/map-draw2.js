@@ -38,7 +38,8 @@ class MapDraw2 extends LitElement {
       selectedFeatures: {type: Array},
       drawMode: {type: String},
       message: {type: String},
-      layercolor: {type: Object}
+      layercolor: {type: Object},
+      removedlayerid: {type: String}
     }; 
   }
   createRenderRoot() {
@@ -83,7 +84,26 @@ class MapDraw2 extends LitElement {
         this._removeDrawFromMap();
       }
     }
+    if (changedProp.has('removedlayerid')) {
+      this._removeLayer()
+    }
     return true;
+  }
+  _removeLayer() {
+    for (const layerType in this.currentLayer) {
+      if (this.currentLayer[layerType] && this.currentLayer[layerType].id===this.removedlayerid) {
+        this.currentLayer[layerType] = null;
+        if (layerType === this.featureType) {
+          this.mbDraw.deleteAll();
+          this.selectedFeatures = [];
+          this.hasUnsavedFeatures = false;
+        }
+      }
+      const index = this.editableLayers[layerType].findIndex(layer=>layer.id===this.removedlayerid);
+      if (index >= 0) {
+        this.editableLayers[layerType].splice(index, 1);
+      }
+    }
   }
   _addDialogs() {
     this.mapDialog = new MapDrawLayerDialog(trl);
@@ -366,7 +386,7 @@ class MapDraw2 extends LitElement {
         this.mbDraw.changeMode(this.drawMode = 'simple_select');
       }
       this._storeCurrentFeatures();
-      this.currentLayer[this.featureType] = null;
+      //this.currentLayer[this.featureType] = null;
       this.featureType = 'None';
       this.map.off('draw.create', this.featuresCreated);
       this.map.off('draw.selectionchange', this.featuresSelected);

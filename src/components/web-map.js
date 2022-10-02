@@ -176,7 +176,8 @@ class WebMap extends LitElement {
       configurl: String,
       updatelegend: Number,
       exporttool: Boolean,
-      layerFillColor: Object
+      layerFillColor: Object,
+      removedLayerId: String
     }; 
   }
   constructor() {
@@ -211,6 +212,7 @@ class WebMap extends LitElement {
     this.updatelegend = 0;
     this.currentTool = '';
     this.layerFillColor = {layerid: -1, color: '#000'};
+    this.removedLayerId = "";
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
@@ -331,7 +333,8 @@ class WebMap extends LitElement {
       if (targetLayer) {
         const source = targetLayer.source;
         this.map.removeLayer(targetLayer.id);
-        this.removeSourceIfOrphaned(source);        
+        this.removeSourceIfOrphaned(source);
+        this.removedLayerId = targetLayer.id;
       } else {
         // layer not found, check if this layer is a style
         const styleLayers = this.map.getStyle().layers.filter(layer=>layer.metadata?layer.metadata.styleid === e.detail.layerid:false);
@@ -830,6 +833,7 @@ class WebMap extends LitElement {
           <map-draw2 .active="${this.currentTool==='draw'}" 
             .map="${this.map}"
             .layercolor=${this.layerFillColor}
+            .removedlayerid="${this.removedLayerId}"
             @addlayer="${e=>this.addLayer(e)}" 
             @movelayer="${e=>this.moveLayer(e)}"
             @titlechange="${e=>this.resetLayerList(e)}"
