@@ -324,7 +324,7 @@ export class MapDrawLayerDialog extends LitElement {
                         })}
                     </select>
                 </div>
-                <div class="button" @click="${(e)=>this._handleNextButtonClick(e)}">Volgende</div>
+                <div tabindex="0" class="button" @keydown="${(e)=>{if (e.key==='Enter') this._handleNextButtonClick()}}" @click="${(e)=>this._handleNextButtonClick(e)}">Volgende</div>
                 `
             case FormStatus.setLayerDetail:
                 if (!(this.currentEditLayer && this.currentEditLayer.id === this.currentEditLayerId)) {
@@ -356,8 +356,8 @@ export class MapDrawLayerDialog extends LitElement {
                     </table>
                     </div>
                 </div>
-                <div class="button" @click=${(e)=>this._handleBackButtonClick(e)}>Vorige</div>
-                <div class="button" @click=${(e)=>this._handleOkButtonClick(e)}>OK</div>
+                <div tabindex="0" class="button" @click=${(e)=>this._handleBackButtonClick(e)} @keydown="${(e)=>{if (e.key==='Enter') this._handleBackButtonClick()}}">Vorige</div>
+                <div tabindex="0" class="button" @click=${(e)=>this._handleOkButtonClick(e)} @keydown="${(e)=>{if (e.key==='Enter') this._handleOkButtonClick()}}">OK</div>
                 `;
             default:
                 return html`invalid form status`;
