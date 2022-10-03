@@ -136,7 +136,7 @@ class MapDraw2 extends LitElement {
     const currentLayer = this.currentLayer[this.featureType];
     return html`
     <div id="selectedfeatures">
-      <div>Geselecteerd ${trl(this._currentGeometryType())}:</div>
+      <div>Geselecteerd${this._currentGeometryType()==='Line'?'e':''} ${trl(this._currentGeometryType()).toLowerCase()}:</div>
       <table id="selectedproperties">
         ${this.selectedFeatures.map(feature=>{
           return Object.keys(feature.properties).map(key=>html`

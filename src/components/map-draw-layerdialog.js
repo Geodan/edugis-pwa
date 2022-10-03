@@ -182,6 +182,7 @@ export class MapDrawLayerDialog extends LitElement {
           border: 1px solid lightgray;
           box-shadow: 4px 4px 9px 0px rgba(168,168,168,1);
           border-radius: 4px;
+          min-width: 20em;
           max-width: 50%;
           min-height: 120px;
           max-height: 80%;
@@ -290,7 +291,7 @@ export class MapDrawLayerDialog extends LitElement {
     }
     _createNewLayer() {
         this.currentEditLayer = JSON.parse(JSON.stringify(newLayers[this.featureType]));
-        this.currentEditLayer.id = _uuidv4();
+        this.currentEditLayer.id = this.currentEditLayerId = _uuidv4();
     }
     _layerTypeName()
     {
@@ -315,7 +316,7 @@ export class MapDrawLayerDialog extends LitElement {
             case FormStatus.setLayer:
                 return html`
                 <div>Kies een laag: </div>
-                <div id="layerlist">
+                <div id="layerlist" @dblclick="${(e)=>this._handleNextButtonClick(e)}">
                     <select size="4">
                         <option value="new" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
                         ${this.editableLayers.map(layer=>{
