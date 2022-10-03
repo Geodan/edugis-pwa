@@ -82,7 +82,7 @@ class MapSaveLayer extends LitElement {
             layerset.push(geojson);
         }
         const blob = new Blob([JSON.stringify(layerset,null,2)], {type: "application/json"});
-        const filename = 'layerset.geo.json';
+        const filename = 'edugislayers.json';
         window.saveAs(blob, filename);
     }
 }

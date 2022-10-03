@@ -314,7 +314,7 @@ export class MapDrawLayerDialog extends LitElement {
         switch(this.formStatus) {
             case FormStatus.setLayer:
                 return html`
-                <div>Kies een laag om in te tekenen (${this.trl(this.featureType)}): </div>
+                <div>Kies een laag: </div>
                 <div id="layerlist">
                     <select size="4">
                         <option value="new" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
@@ -337,16 +337,15 @@ export class MapDrawLayerDialog extends LitElement {
                     placeHolder = `naam nieuwe ${this._layerTypeName()}`
                 }
                 return html`
-                <label for="layername">Laag naam:</label><input id="layername" type="text" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
+                <input id="layername" type="text" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
                 ${this.formError === FormError.noLayerName ? html`<div class="error">Voer een naam in</div>`:''}
                 <div>
-                    <div>${this.trl(this.featureType)} eigenschappen:</div>
                     <div>
                     <table id="propertytable">
-                        <tr><th>${this.trl('name')}</th><th>${this.trl('type')}</th><th class="btncolumn"></th></tr>
+                        <tr><th>eigenschappen</th><th>${this.trl('type')}</th><th class="btncolumn"></th></tr>
                         ${this.currentEditLayer.metadata.properties.map((property,idx)=>html`<tr><td>${this.trl(property.name)}</td><td>${this.trl(property.type)}</td><td>${idx===0?'':html`<button class="btnsmall" @click="${(e)=>this._removeProperty(e, idx)}">-</button>`}</td></tr>`)}
                         <tr>
-                        <td><input id="propertyName" type="text" placeholder="eigenschap"></td>
+                        <td><input id="propertyName" type="text" placeholder="nieuwe eigenschap"></td>
                         <td>
                             <select id="propertyType">
                             ${propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${this.trl(type)}</option>`)}
