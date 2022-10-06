@@ -883,13 +883,13 @@ class WebMap extends LitElement {
         @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         @changefilter="${e=>this.updateLayerFilter(e)}"
         >
-      <span slot="title">Gekozen kaartlagen</span>
+        <span slot="title">Gekozen kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
-          nolayer="Geen thematische kaartlagen geselecteerd">
-            <span>Thematische lagen</span>
+          nolayer="Geen kaartlagen gekozen">
+            <span>Gekozen lagen</span>
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
           .zoom="${this.zoom}"

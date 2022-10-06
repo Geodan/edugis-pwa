@@ -1,4 +1,7 @@
 import {LitElement, html, css} from 'lit';
+import {GeoJSON} from '../utils/geojson';
+// import JSZip from 'jszip'; not an ES6 module, imported as script in index.html
+
 class MapSaveLayer extends LitElement {
     static get styles() {
         return css`
@@ -46,6 +49,12 @@ class MapSaveLayer extends LitElement {
             delete metadata.userlayer;
             delete metadata.cansave;
             delete metadata.activeEdits;
+            if (!metadata.title && metadata.styletitle) {
+                metadata.title = metadata.styletitle;
+            }
+            delete metadata.boundspos;
+            delete metadata.styleid;
+            delete metadata.styletitle;
         }
         if (style.layout && style.layout.visibility && style.layout.visibility === 'none') {
             delete style.layout.visibility;
@@ -60,6 +69,25 @@ class MapSaveLayer extends LitElement {
             if (source.type === 'geojson') {
                 const geojson = source.data;
                 geojson.style = mapboxglStyle;
+                return geojson;
+            }
+            if (source.type === 'vector') {
+                if (mapboxglStyle["source-layer"]) {
+                    delete mapboxglStyle["source-layer"];
+                }
+                mapboxglStyle.id += GeoJSON._uuidv4();
+                const geojson = {
+                    "type":"FeatureCollection",
+                    "style": mapboxglStyle, 
+                    "features": this.webmap.queryRenderedFeatures(undefined, {layers: [layerid]})
+                        .map(feature=>{
+                            delete feature.layer;
+                            delete feature.source;
+                            delete feature.sourceLayer;
+                            delete feature.state;
+                            return feature;
+                        })
+                }
                 return geojson;
             }
             mapboxglStyle.source = source;
@@ -77,13 +105,20 @@ class MapSaveLayer extends LitElement {
     }
     _savelayers(e) {
         const layerset = [];
+        const zip = new JSZip();
+        let filenum = 1;
         for (const layerid of e.detail.layerids) {
             const geojson = this._getLayerJson(layerid);
+            const filename = geojson.style.metadata.title ? `${geojson.style.metadata.title.replace(' ', '_')}.geo.json` : `layer${filenum++}.geo.json`
+            zip.file(filename, JSON.stringify(geojson));
             layerset.push(geojson);
         }
         const blob = new Blob([JSON.stringify(layerset,null,2)], {type: "application/json"});
         const filename = 'edugislayers.json';
-        window.saveAs(blob, filename);
+        //window.saveAs(blob, filename);
+        zip.generateAsync({type:"blob", compression:"DEFLATE"}).then((content)=>{
+            window.saveAs(content, 'edugislayers.zip');
+        })
     }
 }
 

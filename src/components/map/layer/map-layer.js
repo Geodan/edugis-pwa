@@ -144,7 +144,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
             this.subtitle = "Zoom verder uit";
           }
         } else if (!this.visible) {
-          this.subtitle = "Zichtbaarheid uitgeschakeld";
+          this.subtitle = "";
         } else {
           this.subtitle = "";
         }

@@ -206,7 +206,7 @@ class MapLayerSet extends LitElement {
         }
         this.dispatchEvent(new CustomEvent('savelayers', {
             detail: {
-                layerids: layerids
+                layerids: layerids.reverse() // top layer last
             },
             bubbles: true,
             composed: true

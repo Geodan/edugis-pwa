@@ -181,7 +181,7 @@ export default class MapImportExport extends LitElement {
       reader.readAsText(inputFile);
     });
   };
-  static _readSpreadsheet(inputFile) {
+  static _readBlob(inputFile) {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
       reader.onerror = () => {
@@ -190,29 +190,52 @@ export default class MapImportExport extends LitElement {
       };  
       reader.onload = (e) => {
         var data = new Uint8Array(e.target.result);
-        var workbook = XLSX.read(data, {type: 'array'});
-        resolve(workbook);
+        resolve(data);
       };
       reader.readAsArrayBuffer(inputFile);
     });
+  }
+  static _readSpreadsheet(inputFile) {
+    return this._readBlob(inputFile).then(data=>{
+      const workbook = XLSX.read(data, {type: 'array'});
+      return workbook;
+    })
   }
 
   static async _readFile(file)
   {
     try {
-       if (file.name.endsWith('.xlsx') || file.name.endsWith('xls')) {
-         const workbook = await MapImportExport._readSpreadsheet(file);
-         const json = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
-         return {
-          filename: file.name, 
-            data: {
-              data:json, 
-              meta:{
-                fields: json.length?Object.keys(json[0]):[]
+        if (file.name.endsWith('.xlsx') || file.name.endsWith('xls')) {
+          const workbook = await MapImportExport._readSpreadsheet(file);
+          const sheets = Object.keys(workbook.Sheets);
+          let json = {}
+          if (sheets.length) {
+            json = XLSX.utils.sheet_to_json(workbook.Sheets[sheets[0]]);
+          }
+          return {
+            filename: file.name, 
+              data: {
+                data:json, 
+                meta:{
+                  fields: json.length?Object.keys(json[0]):[]
+                }
               }
+            };
+        } else if (file.name.endsWith('.zip')) {
+          const data = await MapImportExport._readBlob(file);
+          const zip = new JSZip();
+          const contents = await zip.loadAsync(data);
+          const result = [];
+          for (const filename in contents.files) {
+            if (filename.endsWith('.json') || filename.endsWith('.geojson')) {
+              console.log(filename);
+              const data = await zip.file(filename).async('text');
+              const json = JSON.parse(data);
+              result.push(json);
             }
-          };
-       } else {
+          }
+          return {filename: file.name, data: result}
+        } else {
         const text = await MapImportExport._readFileAsText(file);
         if (file.name.endsWith('.gpx') || file.name.endsWith('.kml')) {
           try {

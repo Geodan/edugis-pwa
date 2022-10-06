@@ -38,6 +38,7 @@ class MapLayerContainer extends LitElement {
                 margin-bottom: 5px;
             }
             #title {
+                display: none;
                 font-weight: bold;
                 height: 58px;
                 line-height: 58px;

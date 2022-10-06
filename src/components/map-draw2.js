@@ -141,7 +141,10 @@ class MapDraw2 extends LitElement {
         ${this.selectedFeatures.map(feature=>{
           return Object.keys(feature.properties).map(key=>html`
             <tr><td class="propertyname">${trl(key)}</td>
-              <td><input ?disabled=${key==="id" || !["string","number"].includes(currentLayer.metadata.properties.find(attr=>attr.name===key).type)} type="text" @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" value="${this.mbDraw.get(feature.id).properties[key]}"></td>
+              <td><input ?disabled=${key==="id" || !["string","number"].includes(currentLayer.metadata.properties.find(attr=>attr.name===key).type)} 
+                    type="text" 
+                    @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" 
+                    .value="${this.mbDraw.get(feature.id).properties[key]?this.mbDraw.get(feature.id).properties[key]:''}"></td>
             </tr>`
           );
         })}
@@ -311,6 +314,33 @@ class MapDraw2 extends LitElement {
       this._changeMode(this._getMode(this.featureType));
     }
   }
+  _prepareLayerForDraw(layer) {
+    let id = 1;
+    if (!layer.metadata.hasOwnProperty('properties')) {
+      const properties = new Map();
+      const source = this.map.getSource(layer.id).serialize();
+      for (const feature of source.data.features) {
+        if (!feature.properties.hasOwnProperty('id')) {
+          feature.properties.id = id++;
+        }
+        for (const propname in feature.properties) {
+          if (!properties.has(propname)) {
+            if (typeof feature.properties[propname] === 'number') {
+              properties.set(propname, 'number');
+            } else {
+              properties.set(propname, 'string');
+            }
+          }
+        }
+      }
+      layer.metadata.properties = [{"name": "id", "type": "number"}];
+      for (const [key,value] of properties) {
+        if (key !== 'id') {
+          layer.metadata.properties.push({"name": key, "type": value});
+        }
+      }
+    }
+  }
   _showDialog() {
     this._storeCurrentFeatures();
     const currentLayer = this.currentLayer[this.featureType];
@@ -318,6 +348,9 @@ class MapDraw2 extends LitElement {
     this.mapDialog.featureType = this.featureType;
     this.mapDialog.currentEditLayerId = currentLayer ? currentLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
+    for (const layer of this.mapDialog.editableLayers) {
+      this._prepareLayerForDraw(layer);
+    }
     this.mapDialog.active = true;
   }
   _renderEditLayerInfo() {

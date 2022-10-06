@@ -108,36 +108,7 @@ const newLayers = {
     }
   };  
 
-  /*
-  _prepareLayerForDraw(layer) {
-    let id = 1;
-    if (!layer.metadata.hasOwnProperty('properties')) {
-      const properties = new Map();
-      const source = this.map.getSource(layer.id).serialize();
-      for (const feature of source.data.features) {
-        if (!feature.properties.hasOwnProperty('id')) {
-          feature.properties.id = id++;
-        }
-        for (const propname in feature.properties) {
-          if (!properties.has(propname)) {
-            if (typeof feature.properties[propname] === 'number') {
-              properties.set(propname, 'number');
-            } else {
-              properties.set(propname, 'string');
-            }
-          }
-        }
-      }
-      layer.metadata.properties = [{"name": "id", "type": "number"}];
-      for (const [key,value] of properties) {
-        if (key !== 'id') {
-          layer.metadata.properties.push({"name": key, "type": value});
-        }
-      }
-    }
-  }
-  */
-
+  
 export class MapDrawLayerDialog extends LitElement {
     static get styles() {
         return css`
@@ -317,7 +288,7 @@ export class MapDrawLayerDialog extends LitElement {
                 return html`
                 <div>Kies een laag: </div>
                 <div id="layerlist" @dblclick="${(e)=>this._handleNextButtonClick(e)}">
-                    <select size="4">
+                    <select size="6">
                         <option value="new" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
