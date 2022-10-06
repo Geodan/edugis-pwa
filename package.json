@@ -36,7 +36,7 @@
     "lit": "^2.2.7",
     "mapbox-gl": "^1.13.2",
     "maplibre-gl": "^2.1.9",
-    "marked": "^4.0.7",
+    "marked": "^4.0.10",
     "papaparse": "^4.6.3",
     "proj4": "^2.5.0",
     "pwa-helpers": "^0.8.2",
