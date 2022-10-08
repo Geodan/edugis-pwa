@@ -189,6 +189,9 @@ class MapDraw2 extends LitElement {
       ${showSelect?html`
       <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="Selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
+      ${this.selectedFeatures.length?html`
+      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[DEL]" ><map-iconbutton info="Verwijder selectie" .icon="${trashIcon}"></map-iconbutton></div>
+      ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
       ${this._renderSelectedFeatures()}
