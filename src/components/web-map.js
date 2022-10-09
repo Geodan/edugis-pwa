@@ -1398,6 +1398,7 @@ class WebMap extends LitElement {
     } else {
       this.initMap();
     }
+    this.addEventListener('openedfile', (ev)=> this.handleOpenedFile(ev));
     this.addEventListener('showmodaldialog', event=> {
       let modalDialog = this.shadowRoot.querySelector('map-modal-dialog');
       if (modalDialog) {
@@ -1679,7 +1680,11 @@ class WebMap extends LitElement {
      this._processDroppedFile(droppedFile);
     })
   };
-
+  async handleOpenedFile(ev) {
+    const file = ev.detail;
+    const openedFile = await MapImportExport._readFile(file);
+    this._processDroppedFile(openedFile);
+  }
   
   mapHasZoomed() {
     this.resetLayerListRequested = true;

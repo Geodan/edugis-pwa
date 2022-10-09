@@ -1,7 +1,8 @@
 import {LitElement, html} from 'lit';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
-import {filterIcon} from './my-icons';
+import {filterIcon, openfileIcon} from './my-icons';
+import './map-iconbutton'
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -323,8 +324,17 @@ class MapLayerTree extends LitElement {
       .clear::before {
         content: 'x';
       }
+      #edugisfile {
+        display: none;
+      }
+      #filebutton {
+        display: inline-block;
+        position: absolute;
+        right: 20px;
+        height: 20px;
+      }
     </style>
-    <div class="title">${this.headertext}</div>
+    <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
     ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
@@ -335,6 +345,17 @@ class MapLayerTree extends LitElement {
         }
       </div>
     </div>`;
+  }
+  async openFile(e){
+    let file = e.target.files[0];
+    if (!file) {
+      return;
+    }
+    this.dispatchEvent(new CustomEvent('openedfile', {
+      detail: file,
+      bubbles: true,
+      composed: true
+    }))
   }
   searchNodeSet(searchString, nodeList, path) {
     let searchResult = [];
