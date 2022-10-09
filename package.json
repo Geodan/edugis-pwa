@@ -20,7 +20,7 @@
     "test:regenerate_screenshots": "mocha test/integration/screenshots-baseline/regenerate.js --timeout=15000"
   },
   "dependencies": {
-    "@edugis/mapbox-gl-draw": "^0.0.3",
+    "@edugis/mapbox-gl-draw": "^0.0.4",
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-button": "^0.25.1",
     "@material/slider": "^0.44.1",
