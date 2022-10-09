@@ -39,6 +39,7 @@
     "src/keys.js",
     "about.html",
     "layout.html",
+    "mapbox.html",
     "demo.html",
     "help.html",
     "maps/adamnewyork.json",
