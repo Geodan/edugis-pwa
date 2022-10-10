@@ -408,7 +408,9 @@ class MapLegendPanel extends LitElement {
     }
     for (const property in paintProperty) {
       if (property !== 'layerid') {
-        this.maplayer.paint[property] = paintProperty[property];
+        if (editLayer.paint && editLayer.paint[property]) {
+          editLayer.paint[property] = paintProperty[property];
+        }
       }
     }
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
