@@ -406,6 +406,11 @@ class MapLegendPanel extends LitElement {
         paintProperty["text-color"] = fontColor;
       }
     }
+    for (const property in paintProperty) {
+      if (property !== 'layerid') {
+        this.maplayer.paint[property] = paintProperty[property];
+      }
+    }
     this.dispatchEvent(new CustomEvent('changepaintproperty', {
       detail: paintProperty,
       bubbles: true,
