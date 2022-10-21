@@ -145,7 +145,7 @@ class MapLayerInfo extends LitElement {
     _renderVisibleLayerInfo() {
         if (this.layervisible && this.open) {
             return html`
-            <div id="litransparency"><span class="bold">Transparantie:</span> ${Math.round(this.transparency)}%
+            <div id="litransparency"><span class="bold">Doorzichtigheid:</span> ${Math.round(this.transparency)}%
                 <div class="lislidercontainer">
                     <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
                 </div>
@@ -320,7 +320,7 @@ class MapLayerInfo extends LitElement {
     _saveLayer() {
         this.dispatchEvent(new CustomEvent('savelayer', {
             detail: {
-                layerid: this.layer.id
+                layer: {id: this.layer.id}
             },
             bubbles: true,
             composed: true
