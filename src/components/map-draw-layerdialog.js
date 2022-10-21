@@ -45,12 +45,13 @@ const newLayers = {
         "data": {
           "type": "FeatureCollection",
           "features": []
-        }
+        },
+        "attribution": "EduGIS"
       },
       "paint": {
         "fill-color": "#000",
         "fill-outline-color": "#000",
-        "fill-opacity": 0.3
+        "fill-opacity": 0.7
       }
     },
     Line: {
@@ -71,7 +72,8 @@ const newLayers = {
         "data": {
           "type": "FeatureCollection",
           "features": []
-        }
+        },
+        "attribution": "EduGIS"
       },
       "paint" : {
         "line-color" : "#000",
@@ -96,12 +98,13 @@ const newLayers = {
         "data": {
           "type": "FeatureCollection",
           "features": []
-        }
+        },
+        "attribution": "EduGIS"
       },
       "paint" : {
         "circle-radius": 6,
-        "circle-color" : "#000",
-        "circle-opacity": 0.3,
+        "circle-color" : "#fff",
+        "circle-opacity": 0.7,
         "circle-stroke-color": "#000",
         "circle-stroke-width": 2
       }
@@ -208,6 +211,7 @@ export class MapDrawLayerDialog extends LitElement {
             white-space: nowrap;
         }
         table {
+            margin-top: 2px;
             margin-left: 5px;
             width: 100%;
             table-layout: fixed;
