@@ -213,15 +213,18 @@ export class GeoJSON {
       const lineFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='LineString'||feature.geometry.type==='MultiLineString'));
       const pointFeatures = geojson.features.filter(feature=>feature.geometry && (feature.geometry.type==='Point'||feature.geometry.type==='MultiPoint'));
       if (fillFeatures.length) {
-        if (geojson.style && (geojson.style.type === 'fill' || geojson.style.type === 'fill-extrusion')) {
+        if (geojson.style && (geojson.style.type === 'line' || geojson.style.type === 'fill' || geojson.style.type === 'fill-extrusion')) {
           // style part of geojson, this is an EduGIS specific geojson
           const style = geojson.style;
+          const attribution = style.source?style.source.attribution?style.source.attribution:undefined:undefined;
           delete geojson.style;
           style.id = GeoJSON._uuidv4();
           style.source = {
             "type":"geojson",
-            "data": {"type": "FeatureCollection", "features": fillFeatures},
-            "attribution":"EduGIS"
+            "data": {"type": "FeatureCollection", "features": fillFeatures}
+          }
+          if (attribution) {
+            style.source.attribution = attribution;
           }
           result.push(style);
         } else {
@@ -246,12 +249,15 @@ export class GeoJSON {
         if (geojson.style && geojson.style.type === 'line') {
           // style part of geojson, this is an EduGIS specific geojson
           const style = geojson.style;
+          const attribution = style.source?style.source.attribution?style.source.attribution:undefined:undefined;
           delete geojson.style;
           style.id = GeoJSON._uuidv4();
           style.source = {
             "type":"geojson",
-            "data": {"type": "FeatureCollection", "features": lineFeatures},
-            "attribution":"EduGIS"
+            "data": {"type": "FeatureCollection", "features": lineFeatures}
+          }
+          if (attribution){
+            style.source.attribution = attribution;
           }
           result.push(style);
         } else {
@@ -275,12 +281,15 @@ export class GeoJSON {
         if (geojson.style && (geojson.style.type === 'circle' || geojson.style.type === 'symbol')) {
           // style part of geojson, this is an EduGIS specific geojson
           const style = geojson.style;
+          const attribution = style.source?style.source.attribution?style.source.attribution:undefined:undefined;
           delete geojson.style;
           style.id = GeoJSON._uuidv4();
           style.source = {
             "type":"geojson",
-            "data": {"type": "FeatureCollection", "features": pointFeatures},
-            "attribution":"EduGIS"
+            "data": {"type": "FeatureCollection", "features": pointFeatures}
+          }
+          if (attribution) {
+            style.source.attribution = attribution;
           }
           result.push(style);
         } else {

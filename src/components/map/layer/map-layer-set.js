@@ -197,16 +197,14 @@ class MapLayerSet extends LitElement {
         const layerids = [];
         for (const layer of this.layerSet) {
             if (layer.type !== 'style') {
-                layerids.push(layer.id);
+                layerids.push({id: layer.id});
             } else {
-                for (const sublayer of layer.metadata.sublayers) {
-                    layerids.push(sublayer.id);
-                }
+                layerids.push({id:layer.id, layer: layer});
             }
         }
         this.dispatchEvent(new CustomEvent('savelayers', {
             detail: {
-                layerids: layerids.reverse() // top layer last
+                layers: layerids.reverse() // top layer last
             },
             bubbles: true,
             composed: true
