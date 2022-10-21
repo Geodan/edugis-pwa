@@ -177,7 +177,8 @@ class WebMap extends LitElement {
       updatelegend: Number,
       exporttool: Boolean,
       layerFillColor: Object,
-      removedLayerId: String
+      removedLayerId: String,
+      saveCounter: Number
     }; 
   }
   constructor() {
@@ -213,6 +214,7 @@ class WebMap extends LitElement {
     this.currentTool = '';
     this.layerFillColor = {layerid: -1, color: '#000'};
     this.removedLayerId = "";
+    this.saveCounter = 0;
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
@@ -834,6 +836,7 @@ class WebMap extends LitElement {
             .map="${this.map}"
             .layercolor=${this.layerFillColor}
             .removedlayerid="${this.removedLayerId}"
+            .savecounter="${this.saveCounter}"
             @addlayer="${e=>this.addLayer(e)}" 
             @movelayer="${e=>this.moveLayer(e)}"
             @titlechange="${e=>this.resetLayerList(e)}"
@@ -1032,7 +1035,7 @@ class WebMap extends LitElement {
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap=${this.map}></map-spinner>
     <map-modal-dialog></map-modal-dialog>
-    <map-save-layer .webmap=${this.map}></map-save-layer>
+    <map-save-layer .webmap=${this.map} @beforesave=${(e)=>this._beforeSaveLayer(e)}></map-save-layer>
     `
   }
   getData()
@@ -1041,6 +1044,9 @@ class WebMap extends LitElement {
       return {};
     }
     return {querySourceFeatures: this.map.querySourceFeatures.bind(this.map)};
+  }
+  _beforeSaveLayer(event) {
+    this.saveCounter++;
   }
   _positionString(prop) {
     // convert prop to control position

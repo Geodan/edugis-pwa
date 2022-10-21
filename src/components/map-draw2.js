@@ -39,7 +39,8 @@ class MapDraw2 extends LitElement {
       drawMode: {type: String},
       message: {type: String},
       layercolor: {type: Object},
-      removedlayerid: {type: String}
+      removedlayerid: {type: String},
+      savecounter: {type: Number}
     }; 
   }
   createRenderRoot() {
@@ -65,12 +66,16 @@ class MapDraw2 extends LitElement {
       this.editableLayers = {Point:[],Line:[],Polygon:[]};
       this.currentLayer = {Point: null, Line: null, Polygon: null};
       this.layercolor = {layerid: -1, color: '#000'};
+      this.savecounter = 0;
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
       if (this.map.version && this.active) {
         this._addMbDrawToMap();
       }
+    }
+    if (changedProp.has('savecounter')) {
+      this._saveFeaturesToLayer();
     }
     if (changedProp.has('layercolor')) {
       if (this.map.version && this.active && this.currentLayer[this.featureType] && this.currentLayer[this.featureType].id === this.layercolor.layerid) {
@@ -160,6 +165,7 @@ class MapDraw2 extends LitElement {
     }
     const showSelect = this.currentLayer[this.featureType] && !this._isEmptyNewLayer(this.currentLayer[this.featureType]);
     const inSelectMode = this._inSelectMode();
+    const showTrash = this.selectedFeatures.length && (this.mbDraw.getMode() === 'simple_select' || this.mbDraw.getSelectedPoints().features.length)
     return html`
       <style>
       ${drawCss}
@@ -189,7 +195,7 @@ class MapDraw2 extends LitElement {
       ${showSelect?html`
       <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="Selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
-      ${this.selectedFeatures.length?html`
+      ${showTrash?html`
       <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[DEL]" ><map-iconbutton info="Verwijder selectie" .icon="${trashIcon}"></map-iconbutton></div>
       ` : html``}
       </div>
@@ -224,7 +230,7 @@ class MapDraw2 extends LitElement {
     }
   }
   _changeMode(newMode) {
-      this._storeCurrentFeatures();
+      this._restoreCurrentLayer();
       this.drawMode = newMode;
       const type = this.featureType = this._getType(newMode);
       if (this.editableLayers[type].length === 0) {
@@ -304,6 +310,11 @@ class MapDraw2 extends LitElement {
     this.currentLayer[this.featureType] = this.mapDialog.currentEditLayer;
     if (this._isEmptyNewLayer(this.currentLayer[this.featureType])) {
       this._addNewLayerToMap();
+    } else {
+      const mapLayer = this.map.getLayer(this.currentLayer[this.featureType].id);
+      if (mapLayer && mapLayer.metadata) {
+        mapLayer.metadata.properties = JSON.parse(JSON.stringify(this.currentLayer[this.featureType].metadata.properties));
+      }
     }
     this._changeMode(this._getMode(this.featureType));
     if (this.mapDialog.titleHasChanged) {
@@ -345,7 +356,7 @@ class MapDraw2 extends LitElement {
     }
   }
   _showDialog() {
-    this._storeCurrentFeatures();
+    this._restoreCurrentLayer();
     const currentLayer = this.currentLayer[this.featureType];
     
     this.mapDialog.featureType = this.featureType;
@@ -421,7 +432,7 @@ class MapDraw2 extends LitElement {
       if (this.mbDraw) {
         this.mbDraw.changeMode(this.drawMode = 'simple_select');
       }
-      this._storeCurrentFeatures();
+      this._restoreCurrentLayer();
       //this.currentLayer[this.featureType] = null;
       this.featureType = 'None';
       this.map.off('draw.create', this.featuresCreated);
@@ -514,22 +525,28 @@ class MapDraw2 extends LitElement {
         break;
     }
   }
-  _storeCurrentFeatures() {
+  _saveFeaturesToLayer() {
     const layer = this.currentLayer[this.featureType];
     if (!layer || this._isEmptyNewLayer(layer)) {
-      return;
+      return false;
     }
     const source = this.map.getSource(layer.id);
     if (source) {
-      const featureCollection = this.mbDraw.getAll();
-      featureCollection.features = featureCollection.features.filter(this._isValidFeature, this.featureType);
       if (this.hasUnsavedFeatures) {
+        const featureCollection = this.mbDraw.getAll();
+        featureCollection.features = featureCollection.features.filter(this._isValidFeature, this.featureType);
         source.setData(JSON.parse(JSON.stringify(featureCollection)));
         this.hasUnsavedFeatures = false;
       }
+      return true;
+    }
+    return false;
+  }
+  _restoreCurrentLayer() {
+    if (this._saveFeaturesToLayer()) {
       this.mbDraw.deleteAll();
       this.selectedFeatures = [];
-      this._setMapLayerVisibity(layer.id, true);
+      this._setMapLayerVisibity(this.currentLayer[this.featureType].id, true);
     } else {
       //console.log('_updateMapLayer failed for layer ' + layer.id);
     }
