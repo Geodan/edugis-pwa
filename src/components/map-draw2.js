@@ -173,20 +173,20 @@ class MapDraw2 extends LitElement {
             versleep het geselecteerde punt naar een nieuwe plek
             klik op een ander punt om dat te selecteren
             klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
+            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
           } else {
             helptext = `klik op prullenbak om te verwijderen
             klik nogmaals op ${lidwoord} ${element} om vorm te bewerken
             klik op een ander${extraE} ${element} om ${diedat} te selecteren
             klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
+            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
           }
         } else if (this.featureType === 'None') {
             helptext = ``
         } else {
           helptext = `klik op een ${trl(this.featureType).toLowerCase()} om te selecteren
           klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-          klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
+          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         }
         break;
       case 'direct_select':
@@ -195,28 +195,31 @@ class MapDraw2 extends LitElement {
             versleep het geselecteerde punt naar een nieuwe plek
             klik op het kleine punt tussen 2 punten om een punt toe te voegen
             klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
+            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         } else {
           helptext = `klik op punt om te verplaatsen
           klik op het kleine punt tussen 2 punten om een punt toe te voegen
           klik op een ander${extraE} ${element} om ${diedat} te selecteren
           klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-          klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
+          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         }
         break;
       case 'draw_point':
         helptext = `klik op de kaart om punt toe te voegen
-        klik op 'selecteren' om een bestaand punt aan te passen`
+        klik op 'selecteren' om een bestaand punt aan te passen
+        klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
       case 'draw_line_string':
         helptext = `klik op de kaart om de lijn toe te voegen
           klik nogmaals op het eindpunt om de lijn te voltooien
-          klik op 'selecteren' om een bestaande lijn aan te passen`
+          klik op 'selecteren' om een bestaande lijn aan te passen
+          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
       case 'draw_polygon': 
         helptext = `klik op de kaart om een vlak toe te voegen
         klik nogmaals op het laatst toegevoegde punt om het vlak te voltooien
-        klik op 'selecteren' om een bestaand vlak aan te passen`
+        klik op 'selecteren' om een bestaand vlak aan te passen
+        klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
       default:
         helptext = `onbekende modus: ${mode}`
@@ -237,8 +240,8 @@ class MapDraw2 extends LitElement {
     return html`
       <style>
       ${drawCss}
-      .drawcontainer {font-size:14px;}
-      .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;}
+      .drawcontainer {font-size:14px;display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;max-height:100%}
+      .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;flex-shrink: 0}
       .right {float: right; margin-left: 4px;}
       .dropzone {display: inline-block; height: 24px; width: 210px; border: 1px dashed gray; border-radius: 2px;}
       .dragover {background-color: lightgray;} 
@@ -246,6 +249,7 @@ class MapDraw2 extends LitElement {
       .buttoncontainer {display: inline-block; box-sizing: border-box; width: 55px; height: 55px; line-height:75px;fill:darkgray;}
       .message {background-color: rgba(146,195,41,0.98);width: 100%;box-shadow: 2px 2px 4px 0; height: 36px; color: white; font-weight: bold; line-height: 36px;padding: 2px;}
       .iconcontainer {display: inline-block; width: 24px; height: 24px; fill: white; margin: 5px; vertical-align: middle;}
+      .scrollcontainer {flex-grow: 1; overflow: auto;}
       .layertype {
             font-weight: bold;
             cursor: pointer;
@@ -268,9 +272,11 @@ class MapDraw2 extends LitElement {
       ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
+      <div class="scrollcontainer">
       ${this._renderSelectedFeatures()}
       ${this._renderMessage()}
       ${this._renderHelp()}
+      </div>
       </div>
     `
   }
@@ -298,20 +304,34 @@ class MapDraw2 extends LitElement {
         return 'simple_select';
     }
   }
-  _changeMode(newMode) {
+  _setEditableLayers(type) {
+    if (this.editableLayers[type].length === 0) {
+      const layerTypes = {
+        "Point":["circle", "symbol"],
+        "Line": ["line"],
+        "Polygon": ["fill","fill-extrusion"]
+      }
+      this.editableLayers[type] = this.map.getStyle().layers
+        .filter(layer=>{
+          if (layerTypes[type].includes(layer.type) && layer.metadata && !layer.metadata.isToolLayer) {
+            let source = layer.source;
+            if (typeof source === 'string') {
+              source = this.map.getSource(source).serialize();
+            }
+            if (source.type === 'geojson') {
+              return true;
+            }
+          }
+          return false;
+        });
+      this.editableLayers[type].reverse();
+    }
+  }
+  async _changeMode(newMode) {
       this._restoreCurrentLayer();
       this.drawMode = newMode;
       const type = this.featureType = this._getType(newMode);
-      if (this.editableLayers[type].length === 0) {
-        const layerTypes = {
-          "Point":["circle", "symbol"],
-          "Line": ["line"],
-          "Polygon": ["fill","fill-extrusion"]
-        }
-        this.editableLayers[type] = this.map.getStyle().layers
-          .filter(layer=>layerTypes[type].includes(layer.type) && !layer['source-layer'] && layer.metadata && !layer.metadata.isToolLayer);
-          this.editableLayers[type].reverse();
-      }
+      await this._setEditableLayers(type);
       if (!this.currentLayer[type]) {
         this._showDialog();
       } else {
@@ -397,11 +417,23 @@ class MapDraw2 extends LitElement {
       this._changeMode(this._getMode(this.featureType));
     }
   }
-  _prepareLayerForDraw(layer) {
+  async _prepareLayerForDraw(layer) {
     let id = 1;
     if (!layer.metadata.hasOwnProperty('properties')) {
       const properties = new Map();
-      const source = this.map.getSource(layer.id).serialize();
+      
+      let source = this.map.getSource(layer.id).serialize();
+      if (typeof source.data === 'string') {
+        // fetch data and convert layer source to geojsonSource
+        let result = await fetch(source.data);
+        if (result.ok) {
+          let json = await result.json();
+          const mapLayer = this.map.getLayer(layer.id);
+          const mapSource = this.map.getSource(mapLayer.source);
+          mapSource.setData(json);
+          source = this.map.getSource(mapLayer.source).serialize();
+        }
+      }
       for (const feature of source.data.features) {
         if (!feature.properties.hasOwnProperty('id')) {
           feature.properties.id = id++;
@@ -424,7 +456,7 @@ class MapDraw2 extends LitElement {
       }
     }
   }
-  _showDialog() {
+  async _showDialog() {
     this._restoreCurrentLayer();
     const currentLayer = this.currentLayer[this.featureType];
     
@@ -432,7 +464,7 @@ class MapDraw2 extends LitElement {
     this.mapDialog.currentEditLayerId = currentLayer ? currentLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
     for (const layer of this.mapDialog.editableLayers) {
-      this._prepareLayerForDraw(layer);
+      await this._prepareLayerForDraw(layer);
     }
     this.mapDialog.active = true;
   }
