@@ -156,6 +156,66 @@ class MapDraw2 extends LitElement {
       </table>
     </div>`
   }
+  _renderHelp() {
+    let helptext = ''
+    let mode = this.mbDraw.getMode();
+    const showTrash = this.selectedFeatures.length && (this.mbDraw.getMode() === 'simple_select' || this.mbDraw.getSelectedPoints().features.length);
+    const element = trl(this.featureType).toLowerCase();
+    const lidwoord = (element === 'lijn')? 'de': 'het';
+    const extraE = (element === 'lijn')? 'e': ''
+
+    switch (mode) {
+      case 'simple_select':
+        if (this.selectedFeatures.length) {
+          if (this.featureType === 'Point') {
+            helptext = `klik op prullenbak om te verwijderen
+            versleep het geselecteerde punt naar een nieuwe plek
+            klik op een ander punt om dat te selecteren
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+          } else {
+            helptext = `klik op prullenbak om te verwijderen
+            klik nogmaals op ${lidwoord} ${element} om vorm te bewerken
+            klik op een ander${extraE} ${element} om dat te selecteren
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+          }
+        } else if (this.featureType === 'None') {
+            helptext = `kies 'punt', 'lijn' of 'vlak' om te tekenen`
+        } else {
+          helptext = `klik op een ${trl(this.featureType).toLowerCase()} om te selecteren`
+        }
+        break;
+      case 'direct_select':
+        if (this.mbDraw.getSelectedPoints().features.length) {
+          helptext = `klik op prullenbak om punt te verwijderen
+            versleep het geselecteerde punt naar een nieuwe plek
+            klik op het kleine punt tussen 2 punten om een punt toe te voegen
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+        } else {
+          helptext = `klik op punt om te verplaatsen
+          klik op een ander${extraE} ${element} om dat te selecteren
+          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+        }
+        break;
+      case 'draw_point':
+        helptext = `klik op de kaart om punt toe te voegen
+        klik op 'selecteren' om een bestaand punt aan te passen`
+        break;
+      case 'draw_line_string':
+        helptext = `klik op de kaart om de lijn toe te voegen
+          klik nogmaals op het eindpunt om de lijn te voltooien
+          klik op 'selecteren' om een bestaande lijn aan te passen`
+        break;
+      case 'draw_polygon': 
+        helptext = `klik op de kaart om een vlak toe te voegen
+        klik nogmaals op het laats toegevoegde punt om het vlak te voltooien
+        klik op 'selecteren' om een bestaand vlak aan te passen`
+        break;
+      default:
+        helptext = `onbekende modus: ${mode}`
+    }
+    const helphtml = helptext.split('\n').map(line=>html`<li>${line}</li>`);
+    return html`<ul>${helphtml}</ul>`;
+  }
   _inSelectMode() {
     return ['simple_select','direct_select'].includes(this.mbDraw.getMode())
   }
@@ -202,6 +262,7 @@ class MapDraw2 extends LitElement {
       ${this._renderEditLayerInfo()}
       ${this._renderSelectedFeatures()}
       ${this._renderMessage()}
+      ${this._renderHelp()}
       </div>
     `
   }
