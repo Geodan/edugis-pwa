@@ -305,7 +305,6 @@ class MapDraw2 extends LitElement {
     }
   }
   _setEditableLayers(type) {
-    if (this.editableLayers[type].length === 0) {
       const layerTypes = {
         "Point":["circle", "symbol"],
         "Line": ["line"],
@@ -325,13 +324,11 @@ class MapDraw2 extends LitElement {
           return false;
         });
       this.editableLayers[type].reverse();
-    }
   }
   async _changeMode(newMode) {
       this._restoreCurrentLayer();
       this.drawMode = newMode;
       const type = this.featureType = this._getType(newMode);
-      await this._setEditableLayers(type);
       if (!this.currentLayer[type]) {
         this._showDialog();
       } else {
@@ -459,7 +456,8 @@ class MapDraw2 extends LitElement {
   async _showDialog() {
     this._restoreCurrentLayer();
     const currentLayer = this.currentLayer[this.featureType];
-    
+    const type = this.featureType = this._getType(this.drawMode);
+    await this._setEditableLayers(type);
     this.mapDialog.featureType = this.featureType;
     this.mapDialog.currentEditLayerId = currentLayer ? currentLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
