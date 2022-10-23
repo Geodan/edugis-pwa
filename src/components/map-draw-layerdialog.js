@@ -247,6 +247,16 @@ export class MapDrawLayerDialog extends LitElement {
                 this.formStatus = FormStatus.setLayer;
             }
         }
+        if (changedProp.has('formStatus')) {
+            if (this.formStatus === FormStatus.setLayerDetail) {
+                setTimeout(()=>{
+                    const ref = this.shadowRoot.querySelector('#layername');
+                    if (ref) {
+                        ref.focus();
+                    }
+                },500);
+            }
+        }
         return true;
     }
     _removeProperty(event, idx) {
@@ -286,6 +296,19 @@ export class MapDrawLayerDialog extends LitElement {
         }
         return layerTypeName;
     }
+    _checkEnterKeyInTitle(event) {
+        if (event.key === "Enter") {
+            const ref = this.shadowRoot.querySelector('#propertyName');
+            if (ref) {
+                ref.focus();
+            }
+        }
+    }
+    _checkEnterInPropertyName(event) {
+        if (event.key === "Enter") {
+            this._addProperty();
+        }
+    }
     _renderLayerForm(){
         switch(this.formStatus) {
             case FormStatus.setLayer:
@@ -313,7 +336,7 @@ export class MapDrawLayerDialog extends LitElement {
                     placeHolder = `naam nieuwe ${this._layerTypeName()}`
                 }
                 return html`
-                <input id="layername" type="text" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
+                <input id="layername" type="text" @keyup="${(e)=>this._checkEnterKeyInTitle(e)}" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
                 ${this.formError === FormError.noLayerName ? html`<div class="error">Voer een naam in</div>`:''}
                 <div>
                     <div>
@@ -321,7 +344,7 @@ export class MapDrawLayerDialog extends LitElement {
                         <tr><th>eigenschappen</th><th>${this.trl('type')}</th><th class="btncolumn"></th></tr>
                         ${this.currentEditLayer.metadata.properties.map((property,idx)=>html`<tr><td>${this.trl(property.name)}</td><td>${this.trl(property.type)}</td><td>${idx===0?'':html`<button class="btnsmall" @click="${(e)=>this._removeProperty(e, idx)}">-</button>`}</td></tr>`)}
                         <tr>
-                        <td><input id="propertyName" type="text" placeholder="nieuwe eigenschap"></td>
+                        <td><input id="propertyName" @keyup="${(e)=>this._checkEnterInPropertyName(e)}" type="text" placeholder="nieuwe eigenschap"></td>
                         <td>
                             <select id="propertyType">
                             ${propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${this.trl(type)}</option>`)}
