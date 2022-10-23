@@ -162,7 +162,8 @@ class MapDraw2 extends LitElement {
     const showTrash = this.selectedFeatures.length && (this.mbDraw.getMode() === 'simple_select' || this.mbDraw.getSelectedPoints().features.length);
     const element = trl(this.featureType).toLowerCase();
     const lidwoord = (element === 'lijn')? 'de': 'het';
-    const extraE = (element === 'lijn')? 'e': ''
+    const extraE = (element === 'lijn')? 'e': '';
+    const diedat = (element === 'lijn')? 'die' : 'dat'
 
     switch (mode) {
       case 'simple_select':
@@ -171,17 +172,21 @@ class MapDraw2 extends LitElement {
             helptext = `klik op prullenbak om te verwijderen
             versleep het geselecteerde punt naar een nieuwe plek
             klik op een ander punt om dat te selecteren
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
+            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
           } else {
             helptext = `klik op prullenbak om te verwijderen
             klik nogmaals op ${lidwoord} ${element} om vorm te bewerken
-            klik op een ander${extraE} ${element} om dat te selecteren
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+            klik op een ander${extraE} ${element} om ${diedat} te selecteren
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
+            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
           }
         } else if (this.featureType === 'None') {
-            helptext = `kies 'punt', 'lijn' of 'vlak' om te tekenen`
+            helptext = ``
         } else {
-          helptext = `klik op een ${trl(this.featureType).toLowerCase()} om te selecteren`
+          helptext = `klik op een ${trl(this.featureType).toLowerCase()} om te selecteren
+          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
+          klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
         }
         break;
       case 'direct_select':
@@ -189,11 +194,13 @@ class MapDraw2 extends LitElement {
           helptext = `klik op prullenbak om punt te verwijderen
             versleep het geselecteerde punt naar een nieuwe plek
             klik op het kleine punt tussen 2 punten om een punt toe te voegen
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
+            klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
         } else {
           helptext = `klik op punt om te verplaatsen
-          klik op een ander${extraE} ${element} om dat te selecteren
-          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen`
+          klik op een ander${extraE} ${element} om ${diedat} te selecteren
+          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
+          klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
         }
         break;
       case 'draw_point':
@@ -207,13 +214,13 @@ class MapDraw2 extends LitElement {
         break;
       case 'draw_polygon': 
         helptext = `klik op de kaart om een vlak toe te voegen
-        klik nogmaals op het laats toegevoegde punt om het vlak te voltooien
+        klik nogmaals op het laatst toegevoegde punt om het vlak te voltooien
         klik op 'selecteren' om een bestaand vlak aan te passen`
         break;
       default:
         helptext = `onbekende modus: ${mode}`
     }
-    const helphtml = helptext.split('\n').map(line=>html`<li>${line}</li>`);
+    const helphtml = helptext.split('\n').map(line=>line.trim() !== ''? html`<li>${line}</li>`: '');
     return html`<ul>${helphtml}</ul>`;
   }
   _inSelectMode() {
