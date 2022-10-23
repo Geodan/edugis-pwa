@@ -198,6 +198,7 @@ class MapDraw2 extends LitElement {
             klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
         } else {
           helptext = `klik op punt om te verplaatsen
+          klik op het kleine punt tussen 2 punten om een punt toe te voegen
           klik op een ander${extraE} ${element} om ${diedat} te selecteren
           klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
           klik op driestippenmenu voor eigenschappen en nieuwe kaartlaag`
