@@ -144,7 +144,13 @@ class MapDraw2 extends LitElement {
       <div>Geselecteerd${this._currentGeometryType()==='Line'?'e':''} ${trl(this._currentGeometryType()).toLowerCase()}:</div>
       <table id="selectedproperties">
         ${this.selectedFeatures.map(feature=>{
-          return Object.keys(feature.properties).map(key=>html`
+          const properties = {...feature.properties};
+          for (const key in properties) {
+            if (!currentLayer.metadata.properties.find(attr=>attr.name===key)) {
+              delete properties[key]; // only handle user defined properties
+            }
+          }
+          return Object.keys(properties).map(key=>html`
             <tr><td class="propertyname">${trl(key)}</td>
               <td><input ?disabled=${key==="id" || !["string","number"].includes(currentLayer.metadata.properties.find(attr=>attr.name===key).type)} 
                     type="text" 
@@ -392,11 +398,12 @@ class MapDraw2 extends LitElement {
       //this._addNewLayerOption();
     }
   }
-  _handleDialogOkClick() {
+  async _handleDialogOkClick() {
     this.currentLayer[this.featureType] = this.mapDialog.currentEditLayer;
     if (this._isEmptyNewLayer(this.currentLayer[this.featureType])) {
       this._addNewLayerToMap();
     } else {
+      await this._prepareLayerForDraw(this.mapDialog.currentEditLayer);
       const mapLayer = this.map.getLayer(this.currentLayer[this.featureType].id);
       if (mapLayer && mapLayer.metadata) {
         mapLayer.metadata.properties = JSON.parse(JSON.stringify(this.currentLayer[this.featureType].metadata.properties));
@@ -410,37 +417,24 @@ class MapDraw2 extends LitElement {
   _handleDialogCancel() {
     if (!this.currentLayer[this.featureType]) {
       this._setMode('simple_select');
+      this.featureType = 'None';
     } else {
       this._changeMode(this._getMode(this.featureType));
     }
   }
-  async _prepareLayerForDraw(layer) {
-    let id = 1;
+  _prepareProperties(layer) {
     if (!layer.metadata.hasOwnProperty('properties')) {
       const properties = new Map();
-      
-      let source = this.map.getSource(layer.id).serialize();
-      if (typeof source.data === 'string') {
-        // fetch data and convert layer source to geojsonSource
-        let result = await fetch(source.data);
-        if (result.ok) {
-          let json = await result.json();
-          const mapLayer = this.map.getLayer(layer.id);
-          const mapSource = this.map.getSource(mapLayer.source);
-          mapSource.setData(json);
-          source = this.map.getSource(mapLayer.source).serialize();
-        }
-      }
-      for (const feature of source.data.features) {
-        if (!feature.properties.hasOwnProperty('id')) {
-          feature.properties.id = id++;
-        }
+      let features = this.map.queryRenderedFeatures({layer:layer.id});
+      for (const feature of features) {
         for (const propname in feature.properties) {
           if (!properties.has(propname)) {
-            if (typeof feature.properties[propname] === 'number') {
-              properties.set(propname, 'number');
-            } else {
-              properties.set(propname, 'string');
+            if (feature.properties[propname] !== null && feature.properties[propname] !== undefined) {
+              if (typeof feature.properties[propname] === 'number') {
+                properties.set(propname, 'number');
+              } else {
+                properties.set(propname, 'string');
+              }
             }
           }
         }
@@ -453,6 +447,34 @@ class MapDraw2 extends LitElement {
       }
     }
   }
+  async _prepareLayerForDraw(layer) {
+    let id = 1;
+    const source = this.map.getSource(layer.id).serialize();
+    if (typeof source.data === 'string') {
+      // fetch data and convert layer source to geojsonSource
+      let result = await fetch(source.data);
+      if (result.ok) {
+        let json = await result.json();
+        const propertySet = new Set();
+        for (const prop of layer.metadata.properties) {
+            propertySet.add(prop.name);
+        }
+        for (const feature of json.features) {
+          if (!feature.properties.hasOwnProperty('id')) {
+            feature.properties.id = id++;
+          }  
+          for (const key in feature.properties) {
+            if (!propertySet.has(key)) {
+              delete feature.properties[key];
+            }
+          }
+        }
+        const mapLayer = this.map.getLayer(layer.id);
+        const mapSource = this.map.getSource(mapLayer.source);
+        mapSource.setData(json);
+      }
+    }
+  }
   async _showDialog() {
     this._restoreCurrentLayer();
     const currentLayer = this.currentLayer[this.featureType];
@@ -462,7 +484,7 @@ class MapDraw2 extends LitElement {
     this.mapDialog.currentEditLayerId = currentLayer ? currentLayer.id : null;
     this.mapDialog.editableLayers = this.editableLayers[this.featureType];
     for (const layer of this.mapDialog.editableLayers) {
-      await this._prepareLayerForDraw(layer);
+      this._prepareProperties(layer);
     }
     this.mapDialog.active = true;
   }

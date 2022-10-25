@@ -96,7 +96,7 @@ class MapSaveLayer extends LitElement {
             this._styleCleanup(mapboxglStyle, layer);
             const source = this._getFullSource(mapboxglStyle);
             if (source) {
-                if (source.type === 'geojson') {
+                if (source.type === 'geojson' && source.data && source.data.type === 'FeatureCollection') {
                     const geojson = source.data;
                     delete source.data;
                     mapboxglStyle.source = source;
