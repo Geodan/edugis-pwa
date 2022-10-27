@@ -1035,7 +1035,7 @@ class WebMap extends LitElement {
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap=${this.map}></map-spinner>
     <map-modal-dialog></map-modal-dialog>
-    <map-save-layer .webmap=${this.map} @beforesave=${(e)=>this._beforeSaveLayer(e)}></map-save-layer>
+    <map-save-layer .webmap=${this.map} .container=${this} @beforesave=${(e)=>this._beforeSaveLayer(e)}></map-save-layer>
     `
   }
   getData()

@@ -17,16 +17,13 @@ class MapSaveLayer extends LitElement {
     constructor() {
         super();
         this.webmap = undefined;
+        this.container = undefined;
     }
     connectedCallback() {
         super.connectedCallback()
-        window.addEventListener('savelayer', (event)=>this._savelayer(event));
-        window.addEventListener('savelayers', (event)=>this._savelayers(event));
     }
     disconnectedCallback() {
         super.disconnectedCallback()
-        window.removeEventListener('savelayer', (event)=>this._savelayer(event));
-        window.removeEventListener('savelayers', (event)=>this._savelayers(event));
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('sprop')) {
@@ -38,7 +35,12 @@ class MapSaveLayer extends LitElement {
         return html``;
     }
     firstUpdated() {
-
+        if (this.container) {
+            this.container.addEventListener('savelayer', (event)=>this._savelayer(event));
+            this.container.addEventListener('savelayers', (event)=>this._savelayers(event));
+        } else {
+            console.error('no container property for <map-save-layer>')
+        }
     }
     updated() {
 
