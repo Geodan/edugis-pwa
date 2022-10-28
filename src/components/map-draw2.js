@@ -212,18 +212,21 @@ class MapDraw2 extends LitElement {
         break;
       case 'draw_point':
         helptext = `klik op de kaart om punt toe te voegen
+        houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
         klik op 'selecteren' om een bestaand punt aan te passen
         klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
       case 'draw_line_string':
         helptext = `klik op de kaart om de lijn toe te voegen
-          klik nogmaals op het eindpunt om de lijn te voltooien
+          klik nogmaals op het eindpunt of [ENTER] om de lijn te voltooien
+          houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
           klik op 'selecteren' om een bestaande lijn aan te passen
           klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
       case 'draw_polygon': 
         helptext = `klik op de kaart om een vlak toe te voegen
-        klik nogmaals op het laatst toegevoegde punt om het vlak te voltooien
+        houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
+        klik nogmaals op het laatst toegevoegde punt of [ENTER] om het vlak te voltooien
         klik op 'selecteren' om een bestaand vlak aan te passen
         klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
         break;
