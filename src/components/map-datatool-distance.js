@@ -26,7 +26,7 @@ class MapDataToolDistance extends LitElement {
       ${customSelectCss()}
       .buttoncontainer {border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;width:150px;margin-top:5px;}
       .edugisblue {
-        --dark-color: #2E7DBA;
+        --dark-color: #00811f;
         --light-color: white;
         width: 100%;
       }

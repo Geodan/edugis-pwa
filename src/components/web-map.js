@@ -191,11 +191,11 @@ class WebMap extends LitElement {
     this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
     this.mapstyleid = "OsmBright";
     this.mapstyletitle = "OSM bright (stijl)";
-    this.lon = 5.0;
-    this.lat = 52.0;
+    this.lon = 4.5458;
+    this.lat = 51.9397;
     this.displaylat = this.lat;
     this.displaylng = this.lon;
-    this.zoom = 6;
+    this.zoom = 13;
     this.resolution = 0;
     this.navigation = "false";
     this.zoomlevel = "false";
@@ -1309,7 +1309,8 @@ class WebMap extends LitElement {
         } 
       }
       if (!config.map.style.glyphs) {
-        config.map.style.glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
+        config.map.style.glyphs = `https://saturnus.geodan.nl/glyphs/{fontstack}/{range}.pbf`;
+        //config.map.style.glyphs = `https://api.maptiler.com/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
         //config.map.style.glyphs = `https://tiles.edugis.nl/fonts/{fontstack}/{range}.pbf?key=${APIkeys.freetilehosting}`;
       }
       this.mapstyle = config.map.style;

@@ -41,7 +41,7 @@ class MapLayerInfo extends LitElement {
                 margin-bottom: 10px;
             }
             #lishowmore {
-                color: #2E7DBA;
+                color: #00811f;
                 font-style: italic;
                 position: relative;
                 cursor: pointer;

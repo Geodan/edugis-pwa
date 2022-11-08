@@ -69,7 +69,7 @@ header {
   top: 0px;
   width: 100%;
   height: 40px;
-  background-color: #2e7dba;
+  background-color: #00811f;
   color: white;
   box-sizing: border-box;
   padding-left: 1em;
@@ -139,7 +139,7 @@ footer {
   bottom: 0px;
   width: 100%;
   height: 1.5em;
-  background-color: #2e7dba;
+  background-color: #00811f;
   color: white;
   box-sizing: border-box;
   padding-left: 0.5em;
@@ -160,17 +160,17 @@ footer a:hover {
 
 </style>
     <header>
-      <img src="${document.baseURI}images/edugislogo.png" alt="logo"/>
+      <img src="${document.baseURI}images/rdamviewerlogo.svg" alt="logo"/>
         <nav class="topnav">
           <ul>
-            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">Hoe werkt EduGIS?</a></li>
+            <li class="menuitem"><a href="help.html" target="edugishelp">Hoe werkt de Rotterdam Viewer?</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
     </header>
     <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" .haslegend=${true} .accesstoken="${APIkeys.mapbox}"></web-map>
     <tool-tip></tool-tip>
-    <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">EduGIS</a></footer>
+    <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">Rotterdam viewer</a></footer>
     `;
   }
   firstUpdated() {
@@ -195,19 +195,19 @@ footer a:hover {
                   {
                       title: "Kaart",
                       content: "Je kunt:<ul><li><b>in-</b> en <b>uitzoomen</b>, van wereldwijd tot aan je eigen huis</li><li>de kaart <b>verslepen</b> naar bijna elke plek op de wereld.</li></ul>",
-                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
+                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
                       placement: "top"
                   },
                   {
                       title: "Gereedschappen",
                       content: "Met deze knoppen doe je bewerkingen op de kaart.<p>Houd de muis stil boven de knoppen voor meer uitleg over elke knop",
-                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
+                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
                       placement: "right"
                   },
                   {
                       title: "Legenda",
                       content: "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden",
-                      target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
+                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
                       placement: "left"
                   }
               ]
@@ -236,4 +236,4 @@ footer a:hover {
   }
 }
 
-window.customElements.define('edugis-app', EduGISApp);
+window.customElements.define('rotterdam-app', EduGISApp);
