@@ -108,6 +108,9 @@ class MapLayerInfo extends LitElement {
             this.showLayerConfig = false;
             if (this.layer && this.layer.metadata) {
                 this.transparency = this.layer.metadata.transparency?this.layer.metadata.transparency:this._getTransparency();
+                if (this.layer.metadata.transparency) {
+                    this._updateTransparency({target: {value: this.layer.metadata.transparency}});
+                }
                 this.legendclipped = true;
             }
         }
