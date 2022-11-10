@@ -10,6 +10,31 @@
             "title": "Administratieve indelingen",
             "sublayers": [
                  {
+                    "title": "Prinsenland en Het Lage Land",
+                    "layerInfo": {
+                      "id": "PlenhLL",
+                      "type": "fill",
+                      "metadata": {
+                        "title": "Prinsenland en Het Lage Land",
+                        "transparency": 50
+                      },
+                      "source": {
+                        "type": "vector",
+                        "tiles":["https://research1.geodan.nl/data/plll.wijken/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                        "bounds":[4.5194,51.9219,4.5670,51.9556]
+                      },
+                      "source-layer":"plll.wijken",
+                      "paint": {
+                        "fill-color": ["match",["get","naam"], 
+                          "Het Lage Land", "rgba(200,49,80,1)",
+                          "Prinsenland", "rgba(49,154,42,1)",
+                          "#000"
+                        ],
+                        "fill-outline-color": "#000"
+                      }
+                    }
+                 },
+                 {
                     "type": "group",
                     "title": "Wijken en buurten (2017)",
                     "sublayers": [
@@ -422,14 +447,73 @@
                     "title": "Verblijfsobjecten",
                     "sublayers": [
                         {
-                            "type":"getcapabilities",
-                            "title":"verblijfsobjecten",
-                            "layerInfo":{
-                              "id":"verblijfsobjecten",
-                              "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
-                              "allowedlayers":"gebruiksdoel, panden_oppervlakte",
-                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                          "title": "gebruiksdoel",
+                          "layerInfo" : {
+                            "id": "verblijfsobjectgebruiksdoel",
+                            "type": "circle",
+                            "source": {
+                              "type": "vector",
+                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                              "bounds":[4.5194,51.9219,4.5670,51.9556]
+                            },
+                            "source-layer": "plll.verblijfsobjecten",
+                            "paint": {
+                              "circle-radius": 4,
+                              "circle-pitch-alignment": "map",
+                              "circle-stroke-color": "white",
+                              "circle-stroke-width": 1,
+                              "circle-color": ["match", ["get", "gebruiksdoel"], 
+                                "woonfunctie", "green", 
+                                "winkelfunctie", "yellow", 
+                                "industriefunctie", "red", 
+                                "bijeenkomstfunctie", "orange",
+                                "onderwijsfunctie", "blue", 
+                                "woonfunctie,onderwijsfunctie", "blue", 
+                                "kantoorfunctie", "lightblue", 
+                                "overige gebruiksfunctie", "gray", 
+                                "gray"]
                             }
+                          }
+                        },
+                        {
+                          "title": "gasgebruik 2021",
+                          "layerInfo" : {
+                            "id": "verblijfsobjectgasgebruik",
+                            "type": "circle",
+                            "source": {
+                              "type": "vector",
+                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                              "bounds":[4.5194,51.9219,4.5670,51.9556]
+                            },
+                            "source-layer": "plll.verblijfsobjecten",
+                            "paint": {
+                              "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
+                              "circle-pitch-alignment": "map",
+                              "circle-stroke-color": "white",
+                              "circle-stroke-width": 0.4,
+                              "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
+                            }
+                          }
+                        },
+                        {
+                          "title": "elektriciteitsgebruik 2021",
+                          "layerInfo" : {
+                            "id": "verblijfsobjectelektriciteitsgebruik21",
+                            "type": "circle",
+                            "source": {
+                              "type": "vector",
+                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                              "bounds":[4.5194,51.9219,4.5670,51.9556]
+                            },
+                            "source-layer": "plll.verblijfsobjecten",
+                            "paint": {
+                              "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
+                              "circle-pitch-alignment": "map",
+                              "circle-stroke-color": "white",
+                              "circle-stroke-width": 0.4,
+                              "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
+                            }
+                          }
                         }
                     ]
                 },
@@ -511,158 +595,156 @@
             ]
         },
         {
+          "type": "group",
+          "title": "Netwerken",
+          "sublayers": [
+            {
+              "title": "Gasleidingen",
+              "id": "gasleidingenstedin",
+              "layerInfo": {
+                "id": "WarmteAtlas:GasLeidingenStedin",
+                "metadata": {
+                  "abstract": "Ligging Gas Leidingen Stedin met indicatie voor vervanging en ouderdom"
+                },
+                "type": "line",
+                "source": {
+                  "type": "vector",
+                  "tiles": ["https://research1.geodan.nl/data/tomahawk.gasleidingenstedin_geo/mvt/{z}/{x}/{y}?geom_column=geom&include_nulls=0&columns="],
+                  "bounds": [3.3, 50.74, 7.23, 53.6],
+                  "attribution": "<a href=\"https://rvo.b3p.nl/viewer/app/Warmteatlas/v2\">WarmteAtlas</a>"
+                },
+                "source-layer": "tomahawk.gasleidingenstedin_geo",
+                "paint": {
+                  "line-color": "blue",
+                  "line-width": 5
+                },
+                "layout": {
+                  "line-join": "round",
+                  "line-cap": "round"
+                }
+              }
+            },
+            {
+              "title": "Elektriciteitskabels",
+              "layerInfo":{
+                "id":"e5a09a35-e608-41ee-af38-e8daa3840ee0",
+                "type":"line",
+                "metadata": {
+                  "abstract": "Electriciteitskabels 2019. 'aansluiting extra' is berekend."
+                },
+                "source":{
+                    "type":"vector",
+                    "tiles":["https://research1.geodan.nl/data/plll.elektra_kabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder,net,lengte&include_nulls=0"],
+                    "bounds":[3.25742485745802,50.7376603630598,7.23920304144212,53.4855872187456]},
+                "source-layer":"plll.elektra_kabel",
+                "minzoom": 11,
+                "paint":{
+                  "line-color":[
+                    "case",["==",["get","net"],"aansluiting extra"],"#9ab0c7",
+                      ["==",["get","net"],"aansluiting"],"#7792ae",
+                      ["==",["get","net"],"laagspanning"],"#5e39cd",
+                      ["==",["get","net"],"middenspanning"],"#2d5a93",
+                      ["==",["get","net"],"hoogspanning"],"#0d346e",
+                      "#ff7f00"],
+                  "line-width":["case",["==",["get","net"],"aansluiting extra"],2,
+                    ["==",["get","net"],"aansluiting"],2,
+                    ["==",["get","net"],"laagspanning"],2,
+                    ["==",["get","net"],"middenspanning"],3,
+                    ["==",["get","net"],"hoogspanning"],5,
+                    1]
+                }
+              }
+            }
+          ]
+        },
+        {
             "type": "group",
-            "title": "Topografie",
+            "title": "Topografie",  
             "sublayers": [
               {
-                "type": "group",
-                "title": "Topografie lagen",
-                "sublayers": [
-                  {
-                    "title": "Achtergrondkleur",
-                    "layerInfo": "./layers/osmbrightbackground.json"
-                  },
-                  {
-                    "title": "Grondgebruik",
-                    "layerInfo": "./layers/osmbrightlandcov.json"
-                  },
-                  {
-                    "title": "Water en waterwegen",
-                    "layerInfo": "./layers/osmbrightwater.json"
-                  },
-                  {
-                    "title": "Waterpatroon (golven)",
-                    "layerInfo": "./layers/osmbrightwaterpattern.json"
-                  },
-                  {
-                    "title": "Waternamen",
-                    "layerInfo": "./layers/osmbrightwatername.json"
-                  },
-                  {
-                    "title": "Administratieve grenzen",
-                    "layerInfo": "./layers/osmbrightadminborders.json"
-                  },
-                  {
-                    "title": "Snelwegen",
-                    "layerInfo": "./layers/osmbrightroads.json"
-                  },
-                  {
-                    "title": "Snelwegnamen",
-                    "layerInfo": "./layers/brightmotorwayname.json"
-                  },
-                  {
-                    "title": "Wegen",
-                    "layerInfo": "./layers/osmbrightallroads.json"
-                  },
-                  {
-                    "title": "Wegnamen",
-                    "layerInfo": "./layers/osmbrightallroadnames.json"
-                  },
-                  {
-                    "title":"Spoorwegen",
-                    "layerInfo": "./layers/osmbrightrail.json"
-                  },
-                  {
-                    "title": "Plaatsen",
-                    "layerInfo": "./layers/osmbrightpoi.json"
-                  },
-                  {
-                    "title": "Plaatsnamen",
-                    "layerInfo": "./layers/osmbrightpoiname.json"
-                  },
-                  {
-                    "title": "Gebouwen",
-                    "layerInfo": "./layers/osmbrightbuildings.json"
-                  },
-                  {
-                    "title": "Huisnummers",
-                    "layerInfo": {
-                      "id": "housenumber-topo",
-                      "type": "symbol",
-                      "source": {
-                        "type": "vector",
-                        "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
-                      },
-                      "source-layer": "housenumber",
-                      "minzoom": 16,
-                      "filter": [
-                        "==",
-                        "$type",
-                        "Point"
-                      ],
-                      "layout": {
-                        "text-field": "{housenumber}",
-                        "text-size": 10,
-                        "text-font": [
-                          "Noto Sans Regular"
-                        ]
-                      },
-                      "paint": {
-                        "text-color": "rgba(212, 177, 146, 1)"
-                      }
-                    }
-                  }
-                ]
+                "title": "Achtergrondkleur",
+                "layerInfo": "./layers/osmbrightbackground.json"
               },
-               {
-                    "type":"getcapabilities",
-                    "title":"Topografie",
-                    "layerInfo":{
-                        "id":"topografie",
-                        "url": "https://kaart.edugis.nl/data/nederland/topografie.xml",
-                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                    }
-                },{
-                  "type": "wms",
-                  "title": "topografie: 1:250.000",
-                  "layerInfo": {
-                      "id": "top250raster",
-                      "type": "raster",
-                      "minzoom": 9.5,
-                      "metadata": {
-                          "getFeatureInfoFormat":"application/json"
-                          },
-                      "source": {
-                          "type": "raster",
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top250raster"]
-                      }
+              {
+                "title": "Grondgebruik",
+                "layerInfo": "./layers/osmbrightlandcov.json"
+              },
+              {
+                "title": "Water en waterwegen",
+                "layerInfo": "./layers/osmbrightwater.json"
+              },
+              {
+                "title": "Waterpatroon (golven)",
+                "layerInfo": "./layers/osmbrightwaterpattern.json"
+              },
+              {
+                "title": "Waternamen",
+                "layerInfo": "./layers/osmbrightwatername.json"
+              },
+              {
+                "title": "Administratieve grenzen",
+                "layerInfo": "./layers/osmbrightadminborders.json"
+              },
+              {
+                "title": "Snelwegen",
+                "layerInfo": "./layers/osmbrightroads.json"
+              },
+              {
+                "title": "Snelwegnamen",
+                "layerInfo": "./layers/brightmotorwayname.json"
+              },
+              {
+                "title": "Wegen",
+                "layerInfo": "./layers/osmbrightallroads.json"
+              },
+              {
+                "title": "Wegnamen",
+                "layerInfo": "./layers/osmbrightallroadnames.json"
+              },
+              {
+                "title":"Spoorwegen",
+                "layerInfo": "./layers/osmbrightrail.json"
+              },
+              {
+                "title": "Plaatsen",
+                "layerInfo": "./layers/osmbrightpoi.json"
+              },
+              {
+                "title": "Plaatsnamen",
+                "layerInfo": "./layers/osmbrightpoiname.json"
+              },
+              {
+                "title": "Gebouwen",
+                "layerInfo": "./layers/osmbrightbuildings.json"
+              },
+              {
+                "title": "Huisnummers",
+                "layerInfo": {
+                  "id": "housenumber-topo",
+                  "type": "symbol",
+                  "source": {
+                    "type": "vector",
+                    "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
+                  },
+                  "source-layer": "housenumber",
+                  "minzoom": 16,
+                  "filter": [
+                    "==",
+                    "$type",
+                    "Point"
+                  ],
+                  "layout": {
+                    "text-field": "{housenumber}",
+                    "text-size": 10,
+                    "text-font": [
+                      "Noto Sans Regular"
+                    ]
+                  },
+                  "paint": {
+                    "text-color": "rgba(212, 177, 146, 1)"
                   }
-                },
-                {
-                  "type": "wms",
-                  "title": "topografie: 1:50.000",
-                  "layerInfo": {
-                      "id": "top50raster",
-                      "type": "raster",
-                      "minzoom": 11.5,
-                      "metadata": {
-                          "getFeatureInfoFormat":"application/json"
-                          },
-                      "source": {
-                          "type": "raster",
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top50raster"]
-                      }
-                  }
-                },
-                {
-                    "type": "wms",
-                    "title": "topografie: 1:25.000",
-                    "layerInfo": {
-                        "id": "top25raster",
-                        "type": "raster",
-                        "minzoom": 12.5,
-                        "metadata": {
-                            "getFeatureInfoFormat":"application/json"
-                            },
-                        "source": {
-                            "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top25raster"]
-                        }
-                    }
                 }
+              }
             ]
         },
         {
