@@ -220,7 +220,7 @@
                         "type":"raster",
                         "tileSize":256,
                         "tiles":[
-                          "https://t1.edugis.nl/tiles/tilecache.py?LAYERS=brtachtergrondkaart&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=256&height=256&BBOX={bbox-epsg-3857}"
+                          "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png"
                         ],
                         "attribution":"PDOK",
                         "minzoom": 5,
