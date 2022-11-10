@@ -74,6 +74,7 @@
     "maps/zuidwestnl.json",
     "maps/nl2100.json",
     "maps/kea.json",
+    "maps/rotterdam.json",
     "maps/layers/*.json"
   ],
   "builds": [
