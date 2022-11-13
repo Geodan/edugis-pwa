@@ -316,284 +316,277 @@
               ]
         },
         {
-            "type": "group",
-            "title": "Gebouwen",
-            "sublayers": [
-                {
-                    "type": "group",
-                    "title": "Panden e.d.",
-                    "sublayers": [
-                        {
-                          "type": "vector",
-                          "title": "panden - 3D hoogte",
-                          "layerInfo": {
-                            "id": "building3D",
-                            "type": "fill-extrusion",
-                            "metadata": {
-                              "attributes": {
-                                "translations": [
-                                    {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
-                                    {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
-                                ]
-                              },
-                              "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
-                            },
-                            "source": {
-                              "type": "vector",
-                              "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
-                              "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
-                              "minzoom": 13,
-                              "maxzoom": 18,
-                              "attribution": "Kadaster"
-                            },
-                            "source-layer": "public.bag13_lod1213_2d_levering",
-                            "minzoom": 13,
-                            "maxzoom": 24,
-                            "paint": {
-                              "fill-extrusion-color": ["case",
-                              ["==", ["get","bouwjaar"], null], "#cccccc",
-                              ["<",["get","bouwjaar"],1006],"#cccccc",
-                              ["<",["get","bouwjaar"],1700],"#7f0000",
-                              ["<",["get","bouwjaar"],1800],"#b30000",
-                              ["<",["get","bouwjaar"],1900],"#d7301f",
-                              ["<",["get","bouwjaar"],1930],"#ef6548",
-                              ["<",["get","bouwjaar"],1960],"#fc8d59",
-                              ["<",["get","bouwjaar"],1975],"#fdbb84",
-                              ["<",["get","bouwjaar"],1990],"#fdd49e",
-                              ["<",["get","bouwjaar"],2000],"#fee8c8",
-                              ["<=",["get","bouwjaar"],2025],"#fff7ec",
-                              "#cccccc"],
-                              "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
-                              "fill-extrusion-base": 0,
-                              "fill-extrusion-opacity": 0.95
-                            }
-                          }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "panden - bouwjaar",
-                            "layerInfo": {
-                                "id": "pandenbouwjaar",
-                                "type":"raster",
-                                "minzoom":11,
-                                "maxzoom":22,
-                                "source":{
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type":"raster",
-                                    "tileSize":512,
-                                    "tiles":[
-                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
-                                    ],
-                                    "attribution":"Pico, Kadaster"
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "panden - energielabel",
-                            "layerInfo": {
-                                "id": "pandennergielabel",
-                                "type":"raster",
-                                "minzoom":13,
-                                "maxzoom":22,
-                                "source":{
-                                    "type":"raster",
-                                    "tileSize":512,
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles":[
-                                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
-                                    ],
-                                    "attribution":"Pico, Kadaster"
-                                }
-                            }
-                        },
-                        {
-                            "title": "Kadastrale kaart",
-                            "type": "wms",
-                            "layerInfo": {
-                                "id": "kadastralekaart",
-                                "minzoom": 16,
-                                "title": "Kadastralekaart",
-                                "type": "raster",
-                                "metadata": {
-                                    "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
-                                },
-                                "source":{
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type":"raster",
-                                    "tileSize":512,
-                                    "tiles":[
-                                        "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?LAYERS=kadastralekaart"
-                                    ],
-                                    "attribution":"PDOK, Kadaster"
-                                }
-                            }
-                        },
-                        {
-                            "type":"getcapabilities",
-                            "title":"Ligplaatsen en Standplaatsen",
-                            "layerInfo":{
-                              "id":"ligstandplaats",
-                              "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
-                              "deniedlayers":"",
-                              "allowedlayers":"ligplaatsen,standplaatsen",
-                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Verblijfsobjecten",
-                    "sublayers": [
-                        {
-                          "title": "gebruiksdoel",
-                          "layerInfo" : {
-                            "id": "verblijfsobjectgebruiksdoel",
-                            "type": "circle",
-                            "source": {
-                              "type": "vector",
-                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
-                              "bounds":[4.5194,51.9219,4.5670,51.9556]
-                            },
-                            "source-layer": "plll.verblijfsobjecten",
-                            "paint": {
-                              "circle-radius": 4,
-                              "circle-pitch-alignment": "map",
-                              "circle-stroke-color": "white",
-                              "circle-stroke-width": 1,
-                              "circle-color": ["match", ["get", "gebruiksdoel"], 
-                                "woonfunctie", "green", 
-                                "winkelfunctie", "yellow", 
-                                "industriefunctie", "red", 
-                                "bijeenkomstfunctie", "orange",
-                                "onderwijsfunctie", "blue", 
-                                "woonfunctie,onderwijsfunctie", "blue", 
-                                "kantoorfunctie", "lightblue", 
-                                "overige gebruiksfunctie", "gray", 
-                                "gray"]
-                            }
-                          }
-                        },
-                        {
-                          "title": "gasgebruik 2021",
-                          "layerInfo" : {
-                            "id": "verblijfsobjectgasgebruik",
-                            "type": "circle",
-                            "source": {
-                              "type": "vector",
-                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
-                              "bounds":[4.5194,51.9219,4.5670,51.9556]
-                            },
-                            "source-layer": "plll.verblijfsobjecten",
-                            "paint": {
-                              "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
-                              "circle-pitch-alignment": "map",
-                              "circle-stroke-color": "white",
-                              "circle-stroke-width": 0.4,
-                              "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
-                            }
-                          }
-                        },
-                        {
-                          "title": "elektriciteitsgebruik 2021",
-                          "layerInfo" : {
-                            "id": "verblijfsobjectelektriciteitsgebruik21",
-                            "type": "circle",
-                            "source": {
-                              "type": "vector",
-                              "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
-                              "bounds":[4.5194,51.9219,4.5670,51.9556]
-                            },
-                            "source-layer": "plll.verblijfsobjecten",
-                            "paint": {
-                              "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
-                              "circle-pitch-alignment": "map",
-                              "circle-stroke-color": "white",
-                              "circle-stroke-width": 0.4,
-                              "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
-                            }
-                          }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Monumenten",
-                    "sublayers": [
-                        {
-                            "type": "wms",
-                            "title": "Monument",
-                            "layerInfo": {
-                                "type": "raster",
-                                "id": "monument",
-                                "metadata": {
-                                    "legendurl" : "https://www.atlasleefomgeving.nl/documents/10156/115096/Rijksmonumenten/aeef6538-e086-41dd-b8d9-24c0b9aaa1eb?t=1471598655569",
-                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
-                                },
-                                "source" : {
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type" : "raster",
-                                    "tiles": ["https://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "Werelderfgoed",
-                            "layerInfo": {
-                                "type": "raster",
-                                "id": "werelderfgoed",
-                                "metadata": {
-                                    "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
-                                    "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                                    "attributes": {
-                                      "deniedattributes": "the_geom"
-                                    }
-                                },
-                                "source" : {
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type" : "raster",
-                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?layers=WorldHeritage&STYLES=Erfgoedetalage_Werelderfgoed"]
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "Stads- en Dorpsgezichten",
-                            "layerInfo": {
-                                "type": "raster",
-                                "id": "stadsendorpsgezichten",
-                                "metadata": {
-                                    "proxy": "https://map.edugis.nl/cgi-bin/proxy.cgi?url=",
-                                    "getFeatureInfoFormat": "application/vnd.ogc.gml"
-                                },
-                                "source" : {
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "type" : "raster",
-                                    "tiles": ["https://services.rce.geovoorziening.nl/rce/ows?LAYERS=Townscapes&STYLES=Erfgoedetalage_StadsEnDorpsgezicht"]
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Aggregaties",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Aggregaties",
-                            "layerInfo":{
-                              "id":"aggregaties",
-                              "url":"https://kaart.edugis.nl/data/nederland/bag_aggregaties.xml",
-                              "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
+          "type": "group",
+          "title": "Panden e.d.",
+          "sublayers": [
+              {
+                "type": "vector",
+                "title": "panden - 3D hoogte",
+                "layerInfo": {
+                  "id": "building3D",
+                  "type": "fill-extrusion",
+                  "metadata": {
+                    "attributes": {
+                      "translations": [
+                          {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
+                          {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
+                      ]
+                    },
+                    "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
+                  },
+                  "source": {
+                    "type": "vector",
+                    "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
+                    "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
+                    "minzoom": 13,
+                    "maxzoom": 18,
+                    "attribution": "Kadaster"
+                  },
+                  "source-layer": "public.bag13_lod1213_2d_levering",
+                  "minzoom": 13,
+                  "maxzoom": 24,
+                  "paint": {
+                    "fill-extrusion-color": ["case",
+                    ["==", ["get","bouwjaar"], null], "#cccccc",
+                    ["<",["get","bouwjaar"],1006],"#cccccc",
+                    ["<",["get","bouwjaar"],1700],"#7f0000",
+                    ["<",["get","bouwjaar"],1800],"#b30000",
+                    ["<",["get","bouwjaar"],1900],"#d7301f",
+                    ["<",["get","bouwjaar"],1930],"#ef6548",
+                    ["<",["get","bouwjaar"],1960],"#fc8d59",
+                    ["<",["get","bouwjaar"],1975],"#fdbb84",
+                    ["<",["get","bouwjaar"],1990],"#fdd49e",
+                    ["<",["get","bouwjaar"],2000],"#fee8c8",
+                    ["<=",["get","bouwjaar"],2025],"#fff7ec",
+                    "#cccccc"],
+                    "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
+                    "fill-extrusion-base": 0,
+                    "fill-extrusion-opacity": 0.95
+                  }
                 }
-            ]
+              },
+              {
+                  "type": "wms",
+                  "title": "panden - bouwjaar",
+                  "layerInfo": {
+                      "id": "pandenbouwjaar",
+                      "type":"raster",
+                      "minzoom":11,
+                      "maxzoom":22,
+                      "source":{
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "type":"raster",
+                          "tileSize":512,
+                          "tiles":[
+                              "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
+                          ],
+                          "attribution":"Pico, Kadaster"
+                      }
+                  }
+              },
+              {
+                  "type": "wms",
+                  "title": "panden - energielabel",
+                  "layerInfo": {
+                      "id": "pandennergielabel",
+                      "type":"raster",
+                      "minzoom":13,
+                      "maxzoom":22,
+                      "source":{
+                          "type":"raster",
+                          "tileSize":512,
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "tiles":[
+                              "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
+                          ],
+                          "attribution":"Pico, Kadaster"
+                      }
+                  }
+              },
+              {
+                  "title": "Kadastrale kaart",
+                  "type": "wms",
+                  "layerInfo": {
+                      "id": "kadastralekaart",
+                      "minzoom": 16,
+                      "title": "Kadastralekaart",
+                      "type": "raster",
+                      "metadata": {
+                          "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
+                      },
+                      "source":{
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "type":"raster",
+                          "tileSize":512,
+                          "tiles":[
+                              "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?LAYERS=kadastralekaart"
+                          ],
+                          "attribution":"PDOK, Kadaster"
+                      }
+                  }
+              },
+              {
+                  "type":"getcapabilities",
+                  "title":"Ligplaatsen en Standplaatsen",
+                  "layerInfo":{
+                    "id":"ligstandplaats",
+                    "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
+                    "deniedlayers":"",
+                    "allowedlayers":"ligplaatsen,standplaatsen",
+                    "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                  }
+              }
+          ]
+      },
+      {
+        "type": "group",
+        "title": "Verblijfsobjecten",
+        "sublayers": [
+            {
+              "title": "gebruiksdoel",
+              "layerInfo" : {
+                "id": "verblijfsobjectgebruiksdoel",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.verblijfsobjecten",
+                "paint": {
+                  "circle-radius": 4,
+                  "circle-pitch-alignment": "map",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 1,
+                  "circle-color": ["match", ["get", "gebruiksdoel"], 
+                    "woonfunctie", "green", 
+                    "winkelfunctie", "yellow", 
+                    "industriefunctie", "red", 
+                    "bijeenkomstfunctie", "orange",
+                    "onderwijsfunctie", "blue", 
+                    "woonfunctie,onderwijsfunctie", "blue", 
+                    "kantoorfunctie", "lightblue", 
+                    "overige gebruiksfunctie", "gray", 
+                    "gray"]
+                }
+              }
+            },
+            {
+              "title": "gasgebruik 2021",
+              "layerInfo" : {
+                "id": "verblijfsobjectgasgebruik",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.verblijfsobjecten",
+                "paint": {
+                  "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
+                  "circle-pitch-alignment": "map",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 0.4,
+                  "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
+                }
+              }
+            },
+            {
+              "title": "elektriciteitsgebruik 2021",
+              "layerInfo" : {
+                "id": "verblijfsobjectelektriciteitsgebruik21",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.verblijfsobjecten",
+                "paint": {
+                  "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
+                  "circle-pitch-alignment": "map",
+                  "circle-stroke-color": "white",
+                  "circle-stroke-width": 0.4,
+                  "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
+                }
+              }
+            }
+        ]
+    },
+    {
+      "type": "group",
+      "title": "Postcode 6",
+      "sublayers": [
+        {
+          "title": "Postcode 6 punten",
+          "layerInfo": {
+            "id": "postcode6puntencircle",
+            "type": "circle",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,adressen"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556],
+              "paint": {
+                "circle-color": "#000",
+                "circle-radius": 5,
+                "circle-stroke-color": "#fff",
+                "circle-stroke-width": 1
+              }
+            },
+            "source-layer": "plll.pc6points"
+          }
         },
+        {
+          "title": "Postcode 6 gebieden",
+          "layerInfo": {
+            "id": "postcode6gebiedensoceco",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["fid"],
+                "translations": [
+                  {"name": "pc6", "translation": "postcode"},
+                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "inwoner", "translation": "aantal inwoners"},
+                  {"name": "aantal_hh", "translation": "aantal huishoudens"},
+                  {"name": "tothh_eenp", "translation": "totaal eenpersoonshuishoudens"},
+                  {"name": "tothh_mpzk", "translation": "totaal meerpersoonshuishoudens met kinderen"},
+                  {"name": "hh_tweeoud", "translation": "huishoudens met 2 ouders"},
+                  {"name": "gem_hh_gr", "translation": "gemiddelde grootte huishouden", "decimals": 1},
+                  {"name": "woning", "translation": "aantal woningen"},
+                  {"name": "won_4564", "translation": "woningen 1945 - 1964"},
+                  {"name": "won_6574", "translation": "woningen 1965 - 1974"},
+                  {"name": "won_7584", "translation": "woningen 1975 - 1984"},
+                  {"name": "won_8594", "translation": "woningen 1985 - 1994"},
+                  {"name": "won_9504", "translation": "woningen 1995 - 2004"},
+                  {"name": "won_0514", "translation": "woningen 1995 - 2004"},
+                  {"name": "won_1524", "translation": "woningen 2015 - 2024"},
+                  {"name": "won_hcorp", "translation": "woningbouwcorporatie"},
+                  {"name": "won_mrgez", "translation": "meergezinswoningen"},
+                  {"name": "p_koopwon", "translation": "koopwoningen", "unit": " %"},
+                  {"name": "p_huurwon", "translation": "huurwoningen", "unit": " %"},
+                  {"name": "won_nbew", "translation": "onbewoond", "unit": " %"},
+                  {"name": "wozwoning", "translation": "woz waarde", "unit": " x 1000 euro"},
+                  {"name": "uitkminaow", "translation": "uitkeringen (niet aow)"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "fid",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_gebied_soceco/mvt/{z}/{x}/{y}?geom_colum=geom&columns=fid,aant_adres,aant_pand,pc6,inwoner,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.pc6_gebied_soceco",
+            "paint": {
+              "fill-color": "rgba(192, 192, 192, 0.5)",
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#000000"]
+            }
+          }
+        }
+      ]
+    },
         {
           "type": "group",
           "title": "Netwerken",
