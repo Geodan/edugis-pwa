@@ -300,6 +300,15 @@ class MBStyleParser
     return result;
   }
 
+  _parseBooleanCast(expression) {
+    const fallback = expression[expression.length - 1];
+    let attrName = '';
+    if (expression.length > 0 && expression[1].length === 2 && expression[1][0] === 'feature-state') {
+      attrName = 'feature-state';
+    }
+    return[{attrName: attrName, attrExpression: '', attrValue: fallback}];
+  }
+
   _parseBooleanExpression(expression) {
     let attrExpression = expression[0];
     switch (attrExpression) {
@@ -331,6 +340,8 @@ class MBStyleParser
         return [{attrName: attrNames, attrExpression: attrExpressions, attrValue: attrValues}];
       case 'in':
         return this._parseInExpression(expression);
+      case 'boolean':
+        return this._parseBooleanCast(expression);
       default:
         console.warn(`unhandled boolean case "${attrExpression}"`);
     }
@@ -354,7 +365,9 @@ class MBStyleParser
     for (let i = 1; i < expression.length - 1; i += 2) {
       const caseitem = this._parseBooleanExpression(expression[i])[0];
       caseitem.paintValue = this._parsePaintProperty(expression[i+1])[0].paintValue;
-      result.push(caseitem);
+      if (caseitem.attrName !== 'feature-state') {
+        result.push(caseitem);
+      }
     }
     result.push(this._parsePaintProperty(expression[expression.length -1])[0]);
     return result;
