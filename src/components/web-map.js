@@ -765,6 +765,7 @@ class WebMap extends LitElement {
     this.infoClicked = false;
     this.updateInfoMarker();
     this.featureInfo = [];
+    this._updateFeatureState();
     if (this.currentTool === name) {
       this.currentTool = '';
     } else {
@@ -2166,6 +2167,31 @@ class WebMap extends LitElement {
     }
     this.marker = new mapgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
   }
+  _updateFeatureState()
+  {
+    if (this.featureInfo.length) {
+      if (this.oldFeature && 
+        this.oldFeature.id === this.featureInfo[0].id && 
+        this.oldFeature.source === this.featureInfo[0].source && 
+        this.oldFeature.sourceLayer === this.featureInfo[0].sourceLayer) {
+          // same feature selected
+          return;
+      }
+      if (this.oldFeature) {
+        this.map.setFeatureState(this.oldFeature ,{active: false});
+      }
+      if (this.featureInfo[0].id) {
+        const newFeature = {source: this.featureInfo[0].source, sourceLayer: this.featureInfo[0].sourceLayer, id: this.featureInfo[0].id};
+        this.map.setFeatureState(newFeature, {active: true});
+        this.oldFeature = newFeature;
+      } else {
+        this.oldFeature = null;
+      }
+    } else if (this.oldFeature) {
+      this.map.setFeatureState(this.oldFeature ,{active: false});
+      this.oldFeature = null;
+    }
+  }
   handleInfo(e) {
     if (this.currentTool !== 'info') {
       this.infoClicked = false;
@@ -2176,6 +2202,7 @@ class WebMap extends LitElement {
     }
     if (e.type === "mousemove" && !this.infoClicked) {
       this.featureInfo = this.map.queryRenderedFeatures(e.point);
+      this._updateFeatureState();
       return;
     }
     if (e.type === "click") {
@@ -2231,6 +2258,7 @@ class WebMap extends LitElement {
       } else {
         this.featureInfo = featureInfo.reverse();
       }
+      this._updateFeatureState();
     }
   }
   _iconData(iconName, title) {
