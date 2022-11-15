@@ -9,8 +9,7 @@ class MapInfoFormatted extends LitElement {
     return { 
       active: Boolean,
       streetViewOn: Boolean,
-      info: Array,
-      maxFeaturesPerLayer: Number
+      info: Array
     }; 
   }
   static get styles() {
@@ -48,7 +47,6 @@ class MapInfoFormatted extends LitElement {
       this.filteredInfo = [];
       this.active = false;
       this.streetViewOn = false;
-      this.maxFeaturesPerLayer = 10;
   }
   toggleStreetView(e)
   {
@@ -93,8 +91,9 @@ class MapInfoFormatted extends LitElement {
         .filter(feature=>{ // filter muliple features from same layer
           if (feature.layer && feature.layer.id) {
             if (layerMap.has(feature.layer.id)) {
-              let featureCount = layerMap.get(feature.layer.id)
-              if (featureCount < this.maxFeaturesPerLayer) {
+              let featureCount = layerMap.get(feature.layer.id);
+              const maxFeaturesPerLayer = feature.layer.metadata && feature.layer.metadata.maxinfofeatures ? feature.layer.metadata.maxinfofeatures : 1;
+              if (featureCount < maxFeaturesPerLayer) {
                 layerMap.set(feature.layer.id, featureCount + 1);
                 return true;
               }
