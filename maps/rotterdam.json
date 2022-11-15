@@ -223,95 +223,6 @@
                           }
                         }
                     ]
-                },
-                {
-                  "type": "group",
-                  "title": "Kadastrale percelen (2020)",
-                  "sublayers": [
-                    {
-                      "title": "Kadastrale secties",
-                      "layerInfo": {
-                        "id":"a831eaf7-eb01-4271-b79d-95c2008d6498",
-                        "type":"fill",
-                        "source":{
-                            "type":"vector",
-                            "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,sectie&include_nulls=0"],
-                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                            "maxzoom": 17
-                        },
-                        "source-layer":"percelen.gt_gemeenteperceelsectie",
-                        "paint":{
-                          "fill-color":"rgba(0,0,0,0)",
-                          "fill-opacity":1,
-                          "fill-outline-color": "green"
-                        }
-                      }
-                    },
-                    {
-                      "title": "Kadastrale secties (labels)",
-                      "layerInfo": {
-                        "id":"brk2020sectielabels",
-                        "type":"symbol",
-                        "minzoom": 12,
-                        "source":{
-                            "type":"vector",
-                            "tiles":["https://tiles.edugis.nl/data/percelen.gt_gemeenteperceelsectie/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gemeentenaam,sectie&include_nulls=0"],
-                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                            "maxzoom": 17
-                        },
-                        "source-layer":"percelen.gt_gemeenteperceelsectie",
-                        "paint":{
-                            "text-color":"green"
-                        },
-                        "layout":{
-                          "text-field": ["concat", ["get","gemeentenaam"],"-",["get","sectie"]]
-                        }
-                      }
-                    },
-                    {
-                      "title": "Percelen",
-                      "layerInfo": {
-                        "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
-                        "type":"fill",
-                        "minzoom": 14.5,
-                        "source":{
-                            "type":"vector",
-                            "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
-                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                            "maxzoom": 17
-                        },
-                        "source-layer":"percelen.perceel",
-                        "paint":{
-                          "fill-color":"rgba(0,0,0,0)",
-                          "fill-opacity":1,
-                          "fill-outline-color": "darkred"
-                        }
-                      }
-                    },
-                    {
-                      "title": "Percelen (labels)",
-                      "layerInfo": {
-                        "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
-                        "type":"symbol",
-                        "minzoom": 15,
-                        "source":{
-                            "type":"vector",
-                            "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
-                            "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                            "maxzoom": 17
-                        },                                    
-                        "source-layer":"percelen.perceel",
-                        "paint":{
-                          "text-color":"black"
-                        },
-                        "layout":{
-                            "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
-                            "text-rotate": ["get","perceelnummerrotatie"],
-                            "text-size": 10
-                        }
-                      }
-                    }
-                  ]
                 }
               ]
         },
@@ -404,37 +315,135 @@
                   }
               },
               {
-                  "title": "Kadastrale kaart",
-                  "type": "wms",
-                  "layerInfo": {
-                      "id": "kadastralekaart",
-                      "minzoom": 16,
-                      "title": "Kadastralekaart",
-                      "type": "raster",
-                      "metadata": {
-                          "legendurl" : "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?REQUEST=GETLEGENDGRAPHIC&SERVICE=WMS&VERSION=1.1.1&LAYER=kadastralekaart&LAYERS=kadastralekaart&FORMAT=image/jpeg&STYLES="
-                      },
-                      "source":{
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "type":"raster",
-                          "tileSize":512,
-                          "tiles":[
-                              "https://geodata.nationaalgeoregister.nl/kadastralekaart/wms/v4_0?LAYERS=kadastralekaart"
-                          ],
-                          "attribution":"PDOK, Kadaster"
-                      }
+                "title": "Kadastrale Percelen (2020)",
+                "layerInfo": {
+                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
+                  "type":"fill",
+                  "minzoom": 14.5,
+                  "source":{
+                      "type":"vector",
+                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
+                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                      "maxzoom": 17
+                  },
+                  "source-layer":"percelen.perceel",
+                  "paint":{
+                    "fill-color":"rgba(0,0,0,0)",
+                    "fill-opacity":1,
+                    "fill-outline-color": "darkred"
                   }
+                }
               },
               {
-                  "type":"getcapabilities",
-                  "title":"Ligplaatsen en Standplaatsen",
-                  "layerInfo":{
-                    "id":"ligstandplaats",
-                    "url":"https://kaart.edugis.nl/data/nederland/kadaster.xml",
-                    "deniedlayers":"",
-                    "allowedlayers":"ligplaatsen,standplaatsen",
-                    "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
+                "title": "Percelen (labels)",
+                "layerInfo": {
+                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
+                  "type":"symbol",
+                  "minzoom": 15,
+                  "source":{
+                      "type":"vector",
+                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
+                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                      "maxzoom": 17
+                  },                                    
+                  "source-layer":"percelen.perceel",
+                  "paint":{
+                    "text-color":"black"
+                  },
+                  "layout":{
+                      "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
+                      "text-rotate": ["get","perceelnummerrotatie"],
+                      "text-size": 10
                   }
+                }
+              },
+              {
+                "title": "Referentiewoningen",
+                "layerInfo": {
+                  "id": "referentiewoningenenergieprestatie",
+                  "type": "circle",
+                  "metadata": {
+                    "attributes": {
+                      "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                      "translations": [
+                        {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                        {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                        {"name": "straat", "translation": "straat"},
+                        {"name": "huisnummer", "translation": "huisnummer"},
+                        {"name": "postcode", "translation": "postcode"},
+                        {"name": "bouwjaar", "translation": "bouwjaar"},
+                        {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                        {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                        {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                        {"name": "energ_label", "translation": "energielabel"},
+                        {"name": "gebouwtype", "translation": "gebouwtype"},
+                        {"name": "A_EI", "translation": "Huidige energie index"},
+                        {"name": "A_elabel", "translation": "Huidig energielabel"},
+                        {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                        {"name": "A_bwjr", "translation": "Huidig jaar"},
+                        {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                        {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                        {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                        {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                        {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                        {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                        {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                        {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                        {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                        {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                        {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                        {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                      ]
+                    }
+                  },
+                  "source": {
+                    "promoteId": "id",
+                    "type": "vector",
+                    "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr"],
+                    "bounds":[4.5194,51.9219,4.5670,51.9556]
+                  },
+                  "source-layer": "plll.referentiewoningen_energieprestatie",
+                  "paint": {
+                    "circle-radius": 7,
+                    "circle-color": "#673ab7",
+                    "circle-stroke-width": 1,
+                    "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
+                  }
+                }
+              },
+              {
+                "title": "Dakdelen",
+                "layerInfo": {
+                  "id": "plldakdelen",
+                  "type": "fill",
+                  "metadata": {
+                    "attributes": {
+                      "deniedattributes": ["fid"],
+                      "translations": [
+                        {"name": "pc6", "translation": "postcode"}
+                      ]
+                    }
+                  },
+                  "source": {
+                    "promoteId": "dakdeel_id",
+                    "type": "vector",
+                    "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_colum=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
+                    "bounds":[4.5194,51.9219,4.5670,51.9556]
+                  },
+                  "source-layer": "plll.dakdelen_pll",
+                  "paint": {
+                    "fill-color": ["case",
+                      ["==", ["get","aspect"], -1], "#c5b3b5",
+                      ["<", ["get","aspect"], 45], "#ffa7a2",
+                      ["<", ["get","aspect"], 135], "#b32a25",
+                      ["<", ["get","aspect"], 225], "#8c1916",
+                      ["<", ["get","aspect"], 315], "#ff7d79",
+                      ["<", ["get","aspect"], 361], "#ffa7a2",
+                      "#6a6a6a"
+                    ],
+                    "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "rgba(0,0,0,0)"]
+                  }
+                }
               }
           ]
       },
@@ -474,6 +483,9 @@
             {
               "title": "gasgebruik 2021",
               "layerInfo" : {
+                "metadata": {
+                  "maxinfofeatures": 20
+                },
                 "id": "verblijfsobjectgasgebruik",
                 "type": "circle",
                 "source": {
@@ -518,7 +530,7 @@
       "title": "Postcode 6",
       "sublayers": [
         {
-          "title": "Postcode 6 punten",
+          "title": "Postcode punten",
           "layerInfo": {
             "id": "postcode6puntencircle",
             "type": "circle",
@@ -537,7 +549,7 @@
           }
         },
         {
-          "title": "Postcode 6 gebieden",
+          "title": "Postcode gebouwen",
           "layerInfo": {
             "id": "postcode6gebiedensoceco",
             "type": "fill",
@@ -582,6 +594,99 @@
             "paint": {
               "fill-color": "rgba(192, 192, 192, 0.5)",
               "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#000000"]
+            }
+          }
+        },
+        {
+          "title": "Postcode vlakken",
+          "layerInfo": {
+            "id": "postcode6vlakken",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "pc6", "translation": "postcode"},
+                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
+                  {"name": "opp", "translation": "totaal oppervlak"},
+                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                ]
+              }
+            },
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.pc6_energverbruik21_2",
+            "paint": {
+              "fill-color": "rgba(192, 192, 192, 0.5)",
+              "fill-outline-color": "#000000"
+            }
+          }
+        },
+        {
+          "title": "Postcode vlakken gasgebruik",
+          "layerInfo": {
+            "id": "postcode6vlakkengasgebruik",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "pc6", "translation": "postcode"},
+                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
+                  {"name": "opp", "translation": "totaal oppervlak"},
+                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                ]
+              }
+            },
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.pc6_energverbruik21_2",
+            "paint": {
+              "fill-color": ["interpolate-lab", ["linear"], ["get","gas21_cor_gem"], 0, "blue", 3000 , "red"],
+              "fill-outline-color": "#000000"
+            }
+          }
+        },
+        {
+          "title": "Postcode vlakken gasgebruik / m2",
+          "layerInfo": {
+            "id": "postcode6vlakkengasgebruikm2",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "pc6", "translation": "postcode"},
+                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
+                  {"name": "opp", "translation": "totaal oppervlak"},
+                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                ]
+              }
+            },
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.pc6_energverbruik21_2",
+            "paint": {
+              "fill-color": ["interpolate-lab", ["linear"], ["get","gas21_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
+              "fill-outline-color": "#000000"
             }
           }
         }
@@ -742,12 +847,25 @@
         },
         {
           "type": "group",
+          "title": "Rotterdam Buitenruimte",
+          "sublayers": [
+            {
+                "type":"getcapabilities",
+                "title":"Rotterdam Buitenruimte",
+                "layerInfo":{
+                  "id":"rotterdambuitenruimte",
+                  "url":"https://saturnus.geodan.nl/mapproxy/rdambuitenruimte/service?"
+                }
+            }
+          ]
+        },
+        {
+          "type": "group",
           "title": "Achtergrondlagen",
           "sublayers": [
               {
                   "title":"Openstreetmap",
                   "type":"reference",
-                  "checked": true,
                   "layerInfo":{
                       "id":"openstreetmap",
                       "type":"raster",
@@ -964,6 +1082,7 @@
               {
                   "title":"PDOK BRT Achtergrondkaart",
                   "type":"reference",
+                  "checked": true,
                   "layerInfo":{
                     "id":"brtachtergrondkaart",
                     "type":"raster",

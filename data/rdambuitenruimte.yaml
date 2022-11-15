@@ -1,0 +1,3323 @@
+services:
+  demo: null
+  tms: null
+  wmts: null
+  wms:
+    srs:
+      - 'EPSG:3857'
+      - 'EPSG:25831'
+      - 'EPSG:25832'
+      - 'EPSG:28992'
+      - 'EPSG:900913'
+    image_formats:
+      - image/jpeg
+      - image/png
+    md:
+      title: Openbare Mapserver van SB Beheer Buitenruimte Rotterdam
+      abstract: >-
+        Deze Openbare Mapserver van Beheer Buitenruimte Rotterdam toont alle
+        assets uit het asset managementsysteem
+      online_resource: 'http://tiles.edugis.nl/mapproxy/rdambuitenruimte'
+      contact:
+        person: EduGIS support
+        position: Contact
+        organization: EduGIS
+        postcode: 1079MB
+        email: info@edugis.nl
+        city: Amsterdam
+        country: the Netherlands
+      access_constraints: For educational use
+      fees: 'free, fair use'
+layers:
+  - name: Beheer_Buitenruimte
+    title: Openbare Mapserver van SB Beheer Buitenruimte Rotterdam
+    sources:
+      - Beheer_Buitenruimte_cache
+    abstract: >-
+      Deze Openbare Mapserver van Beheer Buitenruimte Rotterdam toont alle
+      assets uit het asset managementsysteem
+  - name: WATER
+    title: overige objecten
+    sources:
+      - WATER_cache
+    abstract: WATER
+  - name: obs_oo_watergang
+    title: watergangen
+    sources:
+      - obs_oo_watergang_cache
+  - name: obs_oo_duikers
+    title: duikers
+    sources:
+      - obs_oo_duikers_cache
+  - name: obs_oo_glooiingen
+    title: glooiingen
+    sources:
+      - obs_oo_glooiingen_cache
+  - name: obs_oo_beschoeiing
+    title: beschoeiing
+    sources:
+      - obs_oo_beschoeiing_cache
+  - name: STRAATMEUBILAIR
+    title: overige objecten
+    sources:
+      - STRAATMEUBILAIR_cache
+    abstract: STRAATMEUBILAIR
+  - name: obs_oo_plantenbak
+    title: plantenbakken
+    sources:
+      - obs_oo_plantenbak_cache
+  - name: obs_oo_fietsenst
+    title: fietsenstallingen
+    sources:
+      - obs_oo_fietsenst_cache
+  - name: obs_oo_parkeerautomaten
+    title: parkeerautomaten
+    sources:
+      - obs_oo_parkeerautomaten_cache
+    min_res: 7.0556194092721976
+  - name: obs_oo_lijngoot
+    title: straatgoten
+    sources:
+      - obs_oo_lijngoot_cache
+  - name: obs_oo_geleiderail
+    title: geleiderails
+    sources:
+      - obs_oo_geleiderail_cache
+  - name: obs_oo_hek
+    title: hekken
+    sources:
+      - obs_oo_hek_cache
+  - name: obs_oo_trommels
+    title: fietstrommels
+    sources:
+      - obs_oo_trommels_cache
+    min_res: 1.7639048523180527
+  - name: obs_oo_kasten
+    title: evenementenkasten
+    sources:
+      - obs_oo_kasten_cache
+  - name: obs_oo_containers
+    title: containers
+    sources:
+      - obs_oo_containers_cache
+  - name: obs_oo_beelden
+    title: beelden
+    sources:
+      - obs_oo_beelden_cache
+  - name: obs_oo_beelden_labels
+    title: beelden labels
+    sources:
+      - obs_oo_beelden_labels_cache
+  - name: obs_oo_toilet
+    title: toiletunits
+    sources:
+      - obs_oo_toilet_cache
+    min_res: 70.55619409272197
+  - name: obs_oo_waterpunt
+    title: waterpunten
+    sources:
+      - obs_oo_waterpunt_cache
+  - name: obs_oo_laadpalengt
+    title: Laadpalen Gem.Ter.
+    sources:
+      - obs_oo_laadpalengt_cache
+    min_res: 3.5278097046360988
+  - name: obs_oo_laadpalen
+    title: laadpalen
+    sources:
+      - obs_oo_laadpalen_cache
+    min_res: 3.5278097046360988
+  - name: obs_oo_banken
+    title: banken
+    sources:
+      - obs_oo_banken_cache
+    min_res: 1.7639048523180527
+  - name: obs_oo_banken_labels
+    title: banken labels
+    sources:
+      - obs_oo_banken_labels_cache
+  - name: obs_oo_prullenbak
+    title: afvalbakken
+    sources:
+      - obs_oo_prullenbak_cache
+  - name: obs_oo_prullenbak_labels
+    title: afvalbakken labels
+    sources:
+      - obs_oo_prullenbak_labels_cache
+  - name: obs_oo_stolper
+    title: stolpersteine
+    sources:
+      - obs_oo_stolper_cache
+    min_res: 1.7639048523180527
+  - name: obs_oo_fietskl
+    title: fietsklemmen en beugels
+    sources:
+      - obs_oo_fietskl_cache
+    min_res: 1.7639048523180527
+  - name: obs_oo_fontein
+    title: fonteinen
+    sources:
+      - obs_oo_fontein_cache
+  - name: obs_oo_electra
+    title: electrakasten tbv singelfonteinen
+    sources:
+      - obs_oo_electra_cache
+  - name: obs_oo_informatiebord
+    title: informatieborden
+    sources:
+      - obs_oo_informatiebord_cache
+  - name: obs_oo_kolken
+    title: kolken
+    sources:
+      - obs_oo_kolken_cache
+  - name: obs_oo_palen
+    title: palen
+    sources:
+      - obs_oo_palen_cache
+  - name: obs_oo_pergola
+    title: pergolas
+    sources:
+      - obs_oo_pergola_cache
+  - name: obs_oo_wildrooster
+    title: wildroosters
+    sources:
+      - obs_oo_wildrooster_cache
+  - name: OBSURV
+    title: overige objecten
+    sources:
+      - OBSURV_cache
+    abstract: OBSURV
+  - name: obs_oo_witgrijs
+    title: witte en grijze vlakken
+    sources:
+      - obs_oo_witgrijs_cache
+  - name: HONDEN
+    title: overige objecten
+    sources:
+      - HONDEN_cache
+    abstract: HONDEN
+  - name: obs_oo_hond
+    title: honden
+    sources:
+      - obs_oo_hond_cache
+  - name: obs_oo_hond_lbl
+    title: honden labels
+    sources:
+      - obs_oo_hond_lbl_cache
+  - name: WEGEN
+    title: weg
+    sources:
+      - WEGEN_cache
+    abstract: WEGEN
+  - name: obs_wgn_gebruik
+    title: Wegen naar Gebruiksfunctie
+    sources:
+      - obs_wgn_gebruik_cache
+  - name: obs_wgn_gebruik_lbl
+    title: Wegen naar Gebruiksfunctie labels
+    sources:
+      - obs_wgn_gebruik_lbl_cache
+  - name: obs_wgn_onddeel
+    title: Wegen naar Onderdeeltype
+    sources:
+      - obs_wgn_onddeel_cache
+  - name: obs_wgn_onddeel_lbl
+    title: Wegen naar Onderdeeltype labels
+    sources:
+      - obs_wgn_onddeel_lbl_cache
+  - name: obs_wgn_materiaal
+    title: Wegen naar Materiaalsoort
+    sources:
+      - obs_wgn_materiaal_cache
+  - name: obs_wgn_materiaal_lbl
+    title: Wegen naar Materiaalsoort labels
+    sources:
+      - obs_wgn_materiaal_lbl_cache
+  - name: GROEN
+    title: groen
+    sources:
+      - GROEN_cache
+    abstract: GROEN
+  - name: obs_gr_beheergr
+    title: Groene inrichtingselementen naar Beheergroep
+    sources:
+      - obs_gr_beheergr_cache
+  - name: obs_gr_beheergr_lbl
+    title: Groene inrichtingselementen naar Beheergroep labels
+    sources:
+      - obs_gr_beheergr_lbl_cache
+  - name: obs_gr_beheerobj
+    title: Groen naar Beheerobjectsoort
+    sources:
+      - obs_gr_beheerobj_cache
+  - name: obs_gr_beheerobj_lbl
+    title: Groen naar Beheerobjectsoort labels
+    sources:
+      - obs_gr_beheerobj_lbl_cache
+  - name: BOMEN
+    title: Bomen
+    sources:
+      - BOMEN_cache
+    abstract: BOMEN
+  - name: obs_bmn_kroonontw
+    title: bomen naar kroonprojectie en ontwikkelingsfase
+    sources:
+      - obs_bmn_kroonontw_cache
+  - name: obs_bmn_kroon
+    title: bomen naar kroonprojectie
+    sources:
+      - obs_bmn_kroon_cache
+  - name: obs_bmn_kroon_labels
+    title: bomen naar kroonprojectie labels
+    sources:
+      - obs_bmn_kroon_labels_cache
+  - name: obs_bmn_alg
+    title: bomen algemeen
+    sources:
+      - obs_bmn_alg_cache
+  - name: obs_bmn_labels
+    title: bomen labels
+    sources:
+      - obs_bmn_labels_cache
+  - name: obs_bmn_bos
+    title: bomen in bosplantsoen
+    sources:
+      - obs_bmn_bos_cache
+  - name: obs_bmn_bos_labels
+    title: bomen in bosplantsoen labels
+    sources:
+      - obs_bmn_bos_labels_cache
+  - name: obs_bmn_bijz
+    title: bomen met bijzonderheid
+    sources:
+      - obs_bmn_bijz_cache
+  - name: obs_bmn_bijz_labels
+    title: bomen met bijzonderheid labels
+    sources:
+      - obs_bmn_bijz_labels_cache
+  - name: obs_bmn_gesl
+    title: bomen naar geslacht
+    sources:
+      - obs_bmn_gesl_cache
+  - name: obs_bmn_gesl_labels
+    title: bomen naar geslacht labels
+    sources:
+      - obs_bmn_gesl_labels_cache
+  - name: obs_bmn_depot
+    title: boomdepot
+    sources:
+      - obs_bmn_depot_cache
+  - name: obs_bmn_depot_labels
+    title: boomdepot labels
+    sources:
+      - obs_bmn_depot_labels_cache
+  - name: BORDEN
+    title: verkeersborden
+    sources:
+      - BORDEN_cache
+    abstract: BORDEN
+  - name: obs_vkb_borden
+    title: verkeersborden
+    sources:
+      - obs_vkb_borden_cache
+  - name: obs_vkb_borden_lbl
+    title: verkeersborden labels
+    sources:
+      - obs_vkb_borden_lbl_cache
+  - name: obs_vkb_milieu
+    title: verkeersborden Milieuzones
+    sources:
+      - obs_vkb_milieu_cache
+  - name: obs_vkb_milieu_lbl
+    title: verkeersborden milieuzones labels
+    sources:
+      - obs_vkb_milieu_lbl_cache
+  - name: obs_vkb_straatnaam
+    title: straatnaamborden
+    sources:
+      - obs_vkb_straatnaam_cache
+  - name: KUNSTWERKEN
+    title: Kunstwerken
+    sources:
+      - KUNSTWERKEN_cache
+    abstract: KUNSTWERKEN
+  - name: obs_kunst_parkeer
+    title: parkeervoorzieningen
+    sources:
+      - obs_kunst_parkeer_cache
+  - name: obs_kunst_kademuren
+    title: kademuren
+    sources:
+      - obs_kunst_kademuren_cache
+  - name: obs_kunst_keermuren
+    title: keermuren
+    sources:
+      - obs_kunst_keermuren_cache
+  - name: obs_kunst_civkunst
+    title: civiele kunstwerken
+    sources:
+      - obs_kunst_civkunst_cache
+    abstract: 'bruggen, tunnels etc.'
+  - name: obs_kunst_civkunst_lbl
+    title: civiele kunstwerken label
+    sources:
+      - obs_kunst_civkunst_lbl_cache
+  - name: SPELEN
+    title: Speelplaatsen
+    sources:
+      - SPELEN_cache
+    abstract: SPELEN
+  - name: obs_speelpl_lbl
+    title: speelplaatsen labels
+    sources:
+      - obs_speelpl_lbl_cache
+  - name: obs_speelpl_lbl2
+    title: speelplaatsen labels2
+    sources:
+      - obs_speelpl_lbl2_cache
+    min_res: 1.7639048523180527
+  - name: obs_speelpl_dg
+    title: speelplaatsen naar doelgroep
+    sources:
+      - obs_speelpl_dg_cache
+  - name: obs_speelonderg
+    title: speelplaatsenondergrond
+    sources:
+      - obs_speelonderg_cache
+  - name: obs_speelonderg_lbl
+    title: speelplaatsenondergrond labels
+    sources:
+      - obs_speelonderg_lbl_cache
+  - name: obs_speeltst
+    title: speeltoestellen
+    sources:
+      - obs_speeltst_cache
+  - name: obs_speeltst_lbl
+    title: speeltoestellen labels
+    sources:
+      - obs_speeltst_lbl_cache
+  - name: Meldingen
+    title: Meldingen
+    sources:
+      - Meldingen_cache
+    abstract: Meldingen
+  - name: sdo_msb_nieuw
+    title: Nieuwe meldingen
+    sources:
+      - sdo_msb_nieuw_cache
+  - name: sdo_msb_inbeh
+    title: In behandeling
+    sources:
+      - sdo_msb_inbeh_cache
+  - name: sdo_msb_doorverw
+    title: Doorverwezen
+    sources:
+      - sdo_msb_doorverw_cache
+  - name: sdo_msb_afgeh
+    title: Afgehandeld
+    sources:
+      - sdo_msb_afgeh_cache
+  - name: Verkeer
+    title: Verkeer
+    sources:
+      - Verkeer_cache
+    abstract: Verkeer
+  - name: sdo_gwr_bsb_tvm_act
+    title: Tijdelijke_verkeersmaatregelen
+    sources:
+      - sdo_gwr_bsb_tvm_act_cache
+  - name: sdo_gwr_bsb_tvm_act_labels
+    title: Tijdelijke_verkeersmaatregelen_labels
+    sources:
+      - sdo_gwr_bsb_tvm_act_labels_cache
+  - name: sdo_gwr_bsb_tvm_act_vlk
+    title: Tijdelijke_verkeersmaatregelen_2
+    sources:
+      - sdo_gwr_bsb_tvm_act_vlk_cache
+  - name: sdo_gwr_bsb_tvm_act_lne
+    title: Tijdelijke_verkeersmaatregelen_3
+    sources:
+      - sdo_gwr_bsb_tvm_act_lne_cache
+  - name: VERLICHTING
+    title: Openbare velichting
+    sources:
+      - VERLICHTING_cache
+    abstract: VERLICHTING
+  - name: sdo_gwr_bsb_ovl
+    title: lichtpunten
+    sources:
+      - sdo_gwr_bsb_ovl_cache
+  - name: sdo_gwr_bsb_ovl_labels
+    title: lichtpunten labels
+    sources:
+      - sdo_gwr_bsb_ovl_labels_cache
+  - name: sdo_gwr_bsb_ovl_sto
+    title: lichtpunten in storing
+    sources:
+      - sdo_gwr_bsb_ovl_sto_cache
+  - name: sdo_gwr_bsb_ovl_sto_labels
+    title: lichtpunten in storing labels
+    sources:
+      - sdo_gwr_bsb_ovl_sto_labels_cache
+  - name: Algemeen
+    title: Algemeen
+    sources:
+      - Algemeen_cache
+    abstract: Algemeen
+  - name: sdo_gwr_bsb_obj_egd
+    title: Buitenruimtebjecten naar eigendom
+    sources:
+      - sdo_gwr_bsb_obj_egd_cache
+  - name: sdo_gwr_bsb_obj_lbl
+    title: Buitenruimtebjecten labels
+    sources:
+      - sdo_gwr_bsb_obj_lbl_cache
+caches:
+  Beheer_Buitenruimte_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - Beheer_Buitenruimte_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  WATER_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - WATER_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_watergang_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_watergang_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_duikers_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_duikers_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_glooiingen_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_glooiingen_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_beschoeiing_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_beschoeiing_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  STRAATMEUBILAIR_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - STRAATMEUBILAIR_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_plantenbak_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_plantenbak_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_fietsenst_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_fietsenst_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_parkeerautomaten_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_parkeerautomaten_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_lijngoot_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_lijngoot_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_geleiderail_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_geleiderail_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_hek_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_hek_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_trommels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_trommels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_kasten_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_kasten_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_containers_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_containers_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_beelden_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_beelden_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_beelden_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_beelden_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_toilet_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_toilet_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_waterpunt_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_waterpunt_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_laadpalengt_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_laadpalengt_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_laadpalen_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_laadpalen_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_banken_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_banken_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_banken_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_banken_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_prullenbak_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_prullenbak_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_prullenbak_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_prullenbak_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_stolper_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_stolper_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_fietskl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_fietskl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_fontein_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_fontein_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_electra_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_electra_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_informatiebord_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_informatiebord_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_kolken_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_kolken_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_palen_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_palen_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_pergola_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_pergola_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_wildrooster_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_wildrooster_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  OBSURV_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - OBSURV_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_witgrijs_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_witgrijs_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  HONDEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - HONDEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_hond_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_hond_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_oo_hond_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_oo_hond_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  WEGEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - WEGEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_gebruik_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_gebruik_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_gebruik_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_gebruik_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_onddeel_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_onddeel_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_onddeel_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_onddeel_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_materiaal_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_materiaal_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_wgn_materiaal_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_wgn_materiaal_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  GROEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - GROEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_gr_beheergr_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_gr_beheergr_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_gr_beheergr_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_gr_beheergr_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_gr_beheerobj_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_gr_beheerobj_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_gr_beheerobj_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_gr_beheerobj_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  BOMEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - BOMEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_kroonontw_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_kroonontw_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_kroon_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_kroon_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_kroon_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_kroon_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_alg_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_alg_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_bos_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_bos_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_bos_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_bos_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_bijz_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_bijz_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_bijz_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_bijz_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_gesl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_gesl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_gesl_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_gesl_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_depot_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_depot_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_bmn_depot_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_bmn_depot_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  BORDEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - BORDEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_vkb_borden_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_vkb_borden_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_vkb_borden_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_vkb_borden_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_vkb_milieu_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_vkb_milieu_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_vkb_milieu_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_vkb_milieu_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_vkb_straatnaam_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_vkb_straatnaam_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  KUNSTWERKEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - KUNSTWERKEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_kunst_parkeer_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_kunst_parkeer_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_kunst_kademuren_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_kunst_kademuren_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_kunst_keermuren_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_kunst_keermuren_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_kunst_civkunst_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_kunst_civkunst_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_kunst_civkunst_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_kunst_civkunst_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  SPELEN_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - SPELEN_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speelpl_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speelpl_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speelpl_lbl2_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speelpl_lbl2_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speelpl_dg_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speelpl_dg_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speelonderg_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speelonderg_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speelonderg_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speelonderg_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speeltst_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speeltst_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  obs_speeltst_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - obs_speeltst_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  Meldingen_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - Meldingen_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_msb_nieuw_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_msb_nieuw_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_msb_inbeh_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_msb_inbeh_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_msb_doorverw_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_msb_doorverw_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_msb_afgeh_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_msb_afgeh_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  Verkeer_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - Verkeer_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_tvm_act_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_tvm_act_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_tvm_act_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_tvm_act_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_tvm_act_vlk_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_tvm_act_vlk_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_tvm_act_lne_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_tvm_act_lne_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  VERLICHTING_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - VERLICHTING_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_ovl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_ovl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_ovl_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_ovl_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_ovl_sto_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_ovl_sto_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_ovl_sto_labels_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_ovl_sto_labels_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  Algemeen_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - Algemeen_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_obj_egd_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_obj_egd_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+  sdo_gwr_bsb_obj_lbl_cache:
+    grids:
+      - spherical_mercator
+    sources:
+      - sdo_gwr_bsb_obj_lbl_wms
+    format: image/png
+    disable_storage: false
+    cache:
+      type: sqlite
+sources:
+  Beheer_Buitenruimte_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: Beheer_Buitenruimte
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  WATER_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: WATER
+      transparent: true
+  obs_oo_watergang_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_watergang
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_duikers_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_duikers
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_glooiingen_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_glooiingen
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_beschoeiing_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_beschoeiing
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  STRAATMEUBILAIR_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: STRAATMEUBILAIR
+      transparent: true
+  obs_oo_plantenbak_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_plantenbak
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_fietsenst_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_fietsenst
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_parkeerautomaten_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_parkeerautomaten
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_lijngoot_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_lijngoot
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_geleiderail_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_geleiderail
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_hek_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_hek
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_trommels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_trommels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_kasten_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_kasten
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_containers_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_containers
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_beelden_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_beelden
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_beelden_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_beelden_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_toilet_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_toilet
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_waterpunt_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_waterpunt
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_laadpalengt_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_laadpalengt
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_laadpalen_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_laadpalen
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_banken_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_banken
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_banken_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_banken_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_prullenbak_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_prullenbak
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_prullenbak_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_prullenbak_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_stolper_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_stolper
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_fietskl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_fietskl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_fontein_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_fontein
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_electra_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_electra
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_informatiebord_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_informatiebord
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_kolken_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_kolken
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_palen_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_palen
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_pergola_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_pergola
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_wildrooster_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_wildrooster
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  OBSURV_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: OBSURV
+      transparent: true
+  obs_oo_witgrijs_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_witgrijs
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  HONDEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: HONDEN
+      transparent: true
+  obs_oo_hond_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_hond
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_oo_hond_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_oo_hond_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  WEGEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: WEGEN
+      transparent: true
+  obs_wgn_gebruik_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_gebruik
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_wgn_gebruik_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_gebruik_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_wgn_onddeel_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_onddeel
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_wgn_onddeel_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_onddeel_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_wgn_materiaal_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_materiaal
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_wgn_materiaal_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_wgn_materiaal_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  GROEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: GROEN
+      transparent: true
+  obs_gr_beheergr_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_gr_beheergr
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_gr_beheergr_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_gr_beheergr_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_gr_beheerobj_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_gr_beheerobj
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_gr_beheerobj_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_gr_beheerobj_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  BOMEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: BOMEN
+      transparent: true
+  obs_bmn_kroonontw_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_kroonontw
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_kroon_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_kroon
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_kroon_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_kroon_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_alg_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_alg
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_bos_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_bos
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_bos_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_bos_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_bijz_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_bijz
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_bijz_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_bijz_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_gesl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_gesl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_gesl_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_gesl_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_depot_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_depot
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_bmn_depot_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_bmn_depot_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  BORDEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: BORDEN
+      transparent: true
+  obs_vkb_borden_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_vkb_borden
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_vkb_borden_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_vkb_borden_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_vkb_milieu_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_vkb_milieu
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_vkb_milieu_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_vkb_milieu_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_vkb_straatnaam_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_vkb_straatnaam
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  KUNSTWERKEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: KUNSTWERKEN
+      transparent: true
+  obs_kunst_parkeer_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_kunst_parkeer
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_kunst_kademuren_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_kunst_kademuren
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_kunst_keermuren_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_kunst_keermuren
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_kunst_civkunst_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_kunst_civkunst
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_kunst_civkunst_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_kunst_civkunst_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  SPELEN_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: SPELEN
+      transparent: true
+  obs_speelpl_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speelpl_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speelpl_lbl2_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speelpl_lbl2
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speelpl_dg_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speelpl_dg
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speelonderg_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speelonderg
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speelonderg_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speelonderg_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speeltst_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speeltst
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  obs_speeltst_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: obs_speeltst_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  Meldingen_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: Meldingen
+      transparent: true
+  sdo_msb_nieuw_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_msb_nieuw
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_msb_inbeh_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_msb_inbeh
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_msb_doorverw_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_msb_doorverw
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_msb_afgeh_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_msb_afgeh
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  Verkeer_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: Verkeer
+      transparent: true
+  sdo_gwr_bsb_tvm_act_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_tvm_act
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_tvm_act_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_tvm_act_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_tvm_act_vlk_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_tvm_act_vlk
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_tvm_act_lne_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_tvm_act_lne
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  VERLICHTING_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: VERLICHTING
+      transparent: true
+  sdo_gwr_bsb_ovl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_ovl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_ovl_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_ovl_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_ovl_sto_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_ovl_sto
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_ovl_sto_labels_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_ovl_sto_labels
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  Algemeen_wms:
+    type: wms
+    wms_opts:
+      featureinfo: false
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: Algemeen
+      transparent: true
+  sdo_gwr_bsb_obj_egd_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_obj_egd
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+  sdo_gwr_bsb_obj_lbl_wms:
+    type: wms
+    wms_opts:
+      featureinfo: true
+      legendgraphic: true
+    supported_srs:
+      - 'EPSG:3857'
+    req:
+      url: >-
+        https://ows.gis.rotterdam.nl/cgi-bin/mapserv.exe?map=d:\gwr\webdata\mapserver\map\BBDWH_pub.map&
+      layers: sdo_gwr_bsb_obj_lbl
+      transparent: true
+    coverage:
+      bbox:
+        - 3.89995
+        - 51.7773
+        - 4.67707
+        - 52.0631
+      bbox_srs: 'EPSG:4326'
+grids:
+  global_geodetic_sqrt2:
+    base: GLOBAL_GEODETIC
+    res_factor: sqrt2
+  spherical_mercator:
+    base: GLOBAL_MERCATOR
+    tile_size:
+      - 256
+      - 256
+    srs: 'EPSG:3857'
+  nltilingschema:
+    tile_size:
+      - 256
+      - 256
+    srs: 'EPSG:28992'
+    bbox:
+      - -285401.92
+      - 22598.08
+      - 595401.92
+      - 903401.92
+    bbox_srs: 'EPSG:28992'
+    min_res: 3440.64
+    max_res: 0.21
+    origin: sw
+globals:
+  cache:
+    meta_buffer: 200
+    meta_size:
+      - 4
+      - 4
+    base_dir: /var/data/mapproxy/mp/rdambuitenruimte
+  image:
+    resampling_method: bicubic
