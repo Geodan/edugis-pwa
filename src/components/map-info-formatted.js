@@ -48,7 +48,7 @@ class MapInfoFormatted extends LitElement {
       this.filteredInfo = [];
       this.active = false;
       this.streetViewOn = false;
-      this.maxFeaturesPerLayer = 1;
+      this.maxFeaturesPerLayer = 10;
   }
   toggleStreetView(e)
   {
