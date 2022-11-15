@@ -3993,7 +3993,7 @@
                         "source": {
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://geodata.rivm.nl/geoserver/dank/ows?layers=rivm_r88_20170621_gm_actueel_uhi"],
+                            "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
                             "attribution":"RIVM"
                         }
                     }
