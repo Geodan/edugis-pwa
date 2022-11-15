@@ -2181,7 +2181,8 @@ class WebMap extends LitElement {
         this.map.setFeatureState(this.oldFeature ,{active: false});
       }
       if (this.featureInfo[0].id) {
-        const newFeature = {source: this.featureInfo[0].source, sourceLayer: this.featureInfo[0].sourceLayer, id: this.featureInfo[0].id};
+        //const newFeature = {source: this.featureInfo[0].source, sourceLayer: this.featureInfo[0].sourceLayer, id: this.featureInfo[0].id};
+        const newFeature = this.featureInfo[0];
         this.map.setFeatureState(newFeature, {active: true});
         this.oldFeature = newFeature;
       } else {
