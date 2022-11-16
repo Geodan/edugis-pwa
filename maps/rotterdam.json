@@ -636,14 +636,23 @@
             "metadata": {
               "attributes": {
                 "translations": [
-                  {"name": "pc6", "translation": "postcode"},
-                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "aantal_adres", "translation": "aantal adressen"},
                   {"name": "aant_pand", "translation": "aantal panden"},
-                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
-                  {"name": "opp", "translation": "totaal oppervlak"},
-                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
-                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                  {"name": "bouwjaren", "translation": "bouwjaren"},
+                  {"name": "opp_totaal", "translation": "totaal oppervlak"},
+                  {"name": "opp_gem", "translation": "gemiddeld oppervlak per adres", "unit": " m2", "decimals": 0},
+                  {"name": "gas21_gem", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_totaal", "translation": "totaal gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_m2", "translation": "gasverbruik 2021 per m2", "unit": " m3/m2", "decimals":0},
+                  {"name": "gas21_cor_gem", "translation": "gem gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_totaal", "translation": "totaal gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_m2", "translation": "gasverbruik '21 weer-gecorrigeerd per m2", "unit": " m3/m2", "decimals":1},
+                  {"name": "elek21_gem", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_totaal", "translation": "totaal elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_m2", "translation": "elektriciteitsverbruik 2021 per m2", "unit": " kwh/m2", "decimals": 0},
+                  {"name": "labels", "translation": "labels"},
+                  {"name": "gebruiksdoelen", "translation": "gebruiksdoelen"}
                 ]
               }
             },
@@ -667,14 +676,23 @@
             "metadata": {
               "attributes": {
                 "translations": [
-                  {"name": "pc6", "translation": "postcode"},
-                  {"name": "aant_adres", "translation": "aantal adressen"},
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "aantal_adres", "translation": "aantal adressen"},
                   {"name": "aant_pand", "translation": "aantal panden"},
-                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
-                  {"name": "opp", "translation": "totaal oppervlak"},
-                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
-                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                  {"name": "bouwjaren", "translation": "bouwjaren"},
+                  {"name": "opp_totaal", "translation": "totaal oppervlak"},
+                  {"name": "opp_gem", "translation": "gemiddeld oppervlak per adres", "unit": " m2", "decimals": 0},
+                  {"name": "gas21_gem", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_totaal", "translation": "totaal gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_m2", "translation": "gasverbruik 2021 per m2", "unit": " m3/m2", "decimals":0},
+                  {"name": "gas21_cor_gem", "translation": "gem gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_totaal", "translation": "totaal gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_m2", "translation": "gasverbruik '21 weer-gecorrigeerd per m2", "unit": " m3/m2", "decimals":1},
+                  {"name": "elek21_gem", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_totaal", "translation": "totaal elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_m2", "translation": "elektriciteitsverbruik 2021 per m2", "unit": " kwh/m2", "decimals": 0},
+                  {"name": "labels", "translation": "labels"},
+                  {"name": "gebruiksdoelen", "translation": "gebruiksdoelen"}
                 ]
               }
             },
@@ -847,15 +865,38 @@
         },
         {
           "type": "group",
-          "title": "Rotterdam Buitenruimte",
+          "title": "Omgeving",
           "sublayers": [
             {
-                "type":"getcapabilities",
-                "title":"Rotterdam Buitenruimte",
-                "layerInfo":{
-                  "id":"rotterdambuitenruimte",
-                  "url":"https://saturnus.geodan.nl/mapproxy/rdambuitenruimte/service?"
+              "type": "wms",
+              "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",
+              "layerInfo": {
+                  "id": "rivm_r88_20170621_gm_actueel_uhi",
+                  "type": "raster",
+                  "metadata": {
+                      "getFeatureInfoFormat":"application/json"
+                  },
+                  "source": {
+                      "type": "raster",
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
+                      "attribution":"RIVM"
+                  }
+              }
+            },
+            {
+              "type": "group",
+              "title": "Rotterdam Buitenruimte",
+              "sublayers": [
+                {
+                  "type":"getcapabilities",
+                  "title":"Rotterdam Buitenruimte",
+                  "layerInfo":{
+                    "id":"rotterdambuitenruimte",
+                    "url":"https://saturnus.geodan.nl/mapproxy/rdambuitenruimte/service?"
+                  }
                 }
+              ]
             }
           ]
         },
