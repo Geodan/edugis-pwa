@@ -17,7 +17,8 @@ class MapCoordinates extends LitElement {
       lat: Number,
       lon: Number,
       resolution: Number,
-      clickpoint: Array
+      clickpoint: Array,
+      copiedcoordinate: String
     }; 
   }
   constructor() {
@@ -30,10 +31,12 @@ class MapCoordinates extends LitElement {
     this.lon = 0.0;
     this.resolution = 0.0;
     this.clickpoint = [];
+    this.copiedcoordinate = '';
   }
   copyCoords(e) {
     const copy = this.shadowRoot.querySelector('#copied');
-    copy.innerHTML = `${this.clickpoint[0].toFixed(this.factor)},${this.clickpoint[1].toFixed(this.factor)}`;
+    this.copiedcoordinate = `${this.clickpoint[0].toFixed(this.factor)},${this.clickpoint[1].toFixed(this.factor)}`;
+    copy.innerHTML = this.copiedcoordinate;
     window.getSelection().removeAllRanges();
     const range = document.createRange();
     range.selectNodeContents(copy);
@@ -43,6 +46,9 @@ class MapCoordinates extends LitElement {
     copy.innerHTML = 'Copied!';
     copy.classList.add('animate');
     setTimeout(()=>copy.classList.remove('animate'), 1500);
+    this.dispatchEvent(new CustomEvent('copiedcoordinate', {
+        detail: this.copiedcoordinate
+    }))
   }
   shouldUpdate(changedProps) {
     if (changedProps.has('resolution')) {

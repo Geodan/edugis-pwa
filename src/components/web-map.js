@@ -178,7 +178,8 @@ class WebMap extends LitElement {
       exporttool: Boolean,
       layerFillColor: Object,
       removedLayerId: String,
-      saveCounter: Number
+      saveCounter: Number,
+      copiedCoordinate: String
     }; 
   }
   constructor() {
@@ -215,6 +216,7 @@ class WebMap extends LitElement {
     this.layerFillColor = {layerid: -1, color: '#000'};
     this.removedLayerId = "";
     this.saveCounter = 0;
+    this.copiedCoordinate = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
       {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
@@ -812,7 +814,7 @@ class WebMap extends LitElement {
       </div>
       <div id="panel-container" class="${this.currentTool !==''?"active":""}">
         <map-panel .active="${this.currentTool==="search"}">
-          <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}"></map-search>
+          <map-search .active="${this.currentTool==="search"}" .viewbox="${this.viewbox}" @searchclick="${e=>this.fitBounds(e)}" @searchresult="${e=>this.searchResult(e)}" copiedcoordinate="${this.copiedCoordinate}"></map-search>
         </map-panel>
         <map-panel .active="${this.currentTool==="datacatalog"}">
           <map-data-catalog .active="${this.currentTool==="datacatalog"}" .datacatalog="${this.datacatalog}" .maplayers="${this.layerlist}" .search=${layerSearch} @addlayer="${(e) => this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-catalog>
@@ -862,10 +864,13 @@ class WebMap extends LitElement {
       </div>
     </div>`
   }
+  handleCopiedCoordinate(e) {
+    this.copiedCoordinate = e.detail;
+  }
   renderCoordinates(){
     const tool = this.toolList.find(tool=>tool.name==='coordinates');
     if (tool && tool.visible) {
-      return html`<map-coordinates .visible="${true}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint}"></map-coordinates>` 
+      return html`<map-coordinates @copiedcoordinate="${e=>this.handleCopiedCoordinate(e)}" .visible="${true}" .lon="${this.displaylng}" .lat="${this.displaylat}" .resolution="${this.resolution}" .clickpoint="${this.lastClickPoint}"></map-coordinates>` 
     }
     return '';
   }
