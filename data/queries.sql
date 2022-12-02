@@ -70,3 +70,40 @@ create table pc6_energverbruik21_2 as
   	  from verblijfsobjecten v join pc6_energverbruik21 p on (v.postcode=p.pc6)
   	   where not v.gas21='.'
     group by postcode,p.geom;
+
+
+-- group verblijfsobjecten by building, postcode, street
+select 
+	openbareruimtenaam, 
+	count(huisnummer) aantaladressen, 
+	min(huisnummer) huisnummervanaf,
+	max(huisnummer) huisnummertot,
+	--huisnummertoevoeging , 
+	postcode, 
+	string_agg(distinct woonplaatsnaam, ';') wonoplaatsnaam, 
+	string_agg(distinct gemeentenaam, ';') gemeentenaam , 
+	min(provincienaam) provincienaam, 
+	string_agg(distinct verblijfsobjectgebruiksdoel,';') gebruiksdoel , 
+	sum(oppervlakteverblijfsobject) somoppervlakteverblijfsobject, 
+	string_agg(distinct "typeadresseerbaarobject",';') typeadresseerbaarobject, 
+	string_agg(distinct "verblijfsobjectstatus", ';') verblijfsobjectstatus, 
+	count(adresseerbaarobject) aantaladressen, 
+	pandid, 
+	"pandstatus", 
+	pandbouwjaar, 
+	--nummeraanduiding, 
+	--nevenadres, 
+	st_union(st_force2d(geopunt)) geom
+from adres_full v 
+where
+st_intersects(v.geopunt, st_transform(st_union(
+        -- het lage land
+        st_geomfromgeojson('{"coordinates": [[[4.535422325134277,51.93732672638376],[4.532154387019631,51.94660245519745],[4.532303880153506,51.95053388439783],[4.550741366665449,51.95326725314072],
+[4.556246995925903,51.94054790877274],[4.535422325134277,51.93732672638376]]],"type": "Polygon"}'),
+        -- prinsenland
+        st_geomfromgeojson('{"coordinates": [[[4.535420306137098,51.93732575720483],[4.539101895589852,51.92819196529314],[4.562934196549065,51.931832272836516],
+[4.561932107112284,51.93407541493622],[4.561082509545969,51.93463954081136],[4.558228733106091,51.93617070386449],[4.556246338784803,51.94054900459233],
+[4.535420306137098,51.93732575720483]]],"type": "Polygon"}')
+      ),28992))
+     group by pandid, pandstatus, pandbouwjaar,postcode,openbareruimtenaam  having count(adresseerbaarobject) > 1;
+     
