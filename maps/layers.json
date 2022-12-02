@@ -22,6 +22,7 @@
                         "source":{
                         "type":"raster",
                         "tileSize":256,
+                        "maxzoom": 19,
                         "tiles":[
                             "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                         ],
@@ -41,6 +42,7 @@
                       "source":{
                         "type":"raster",
                         "tileSize":256,
+                        "maxzoom": 19,
                         "tiles":[
                           "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                         ],
