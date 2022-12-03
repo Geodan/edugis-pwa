@@ -3398,7 +3398,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_20150315_gm_hhavondbew"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3415,7 +3415,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhavondbew"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_20150315_gm_hhavondbew"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3432,7 +3432,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtbew"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_20150315_gm_hhnachtbew"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3449,7 +3449,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_20150315_gm_hhnachtonbew"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_20150315_gm_hhnachtonbew"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3466,7 +3466,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_emissie_iss_nl_2012"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_emissie_iss_nl_2012"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3483,7 +3483,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=dmg:licht_lichtemissie_2012"],
+                                    "tiles": ["https://data.rivm.nl/geo/dmg/wms?layers=licht_lichtemissie_2012"],
                                     "attribution":"RIVM"
                                 }
                             }
@@ -3491,43 +3491,83 @@
                     ]
                 },
                 {
+                  "type": "group",
+                  "title": "Luchtvervuiling (actueel)",
+                  "sublayers": [
+                    {
+                      "type": "wms",
+                      "title": "Luchtkwaliteitsindex (actueel)",
+                      "layerInfo": {
+                          "id": "lucht:actueel_lki",
+                          "type": "raster",
+                          "metadata": {
+                              "getFeatureInfoFormat":"application/json"
+                          },
+                          "source": {
+                              "type": "raster",
+                              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                              "tiles": ["https://data.rivm.nl/geo/lucht/wms?layers=actueel_lki"],
+                              "attribution":"RIVM"
+                          }
+                      }
+                    },
+                    {
+                      "type": "wms",
+                      "title": "Fijnstof pm10 (actueel)",
+                      "layerInfo": {
+                          "id": "fijnstofpm10actueel",
+                          "type": "raster",
+                          "metadata": {
+                              "getFeatureInfoFormat":"application/json"
+                          },
+                          "source": {
+                              "type": "raster",
+                              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                              "tiles": ["https://data.rivm.nl/geo/lucht/wms?layers=actueel_pm10&STYLES=lucht_pm10"],
+                              "attribution":"RIVM"
+                          }
+                      }
+                    },
+                    {
+                      "type": "wms",
+                      "title": "Stikstofoxide NO2 (actueel)",
+                      "layerInfo": {
+                          "id": "stiksofoxideno2actueel",
+                          "type": "raster",
+                          "metadata": {
+                              "getFeatureInfoFormat":"application/json"
+                          },
+                          "source": {
+                              "type": "raster",
+                              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                              "tiles": ["https://data.rivm.nl/geo/lucht/wms?layers=actueel_no2&STYLES=lucht_no2"],
+                              "attribution":"RIVM"
+                          }
+                      }
+                    },
+                    {
+                        "type": "wms",
+                        "title": "Ozon (actueel)",
+                        "layerInfo": {
+                            "id": "luchtactueel_03",
+                            "type": "raster",
+                            "metadata": {
+                                "getFeatureInfoFormat":"application/json"
+                            },
+                            "source": {
+                                "type": "raster",
+                                "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                                "tiles": ["https://data.rivm.nl/geo/lucht/wms?layers=actueel_o3&STYLES=lucht_o3"],
+                                "attribution":"RIVM"
+                            }
+                        }
+                    }
+                  ]
+                },
+                {
                     "type": "group",
                     "title": "Luchtvervuiling (2016)",
                     "sublayers": [
-                        {
-                            "type": "wms",
-                            "title": "Luchtkwaliteitsindex (actueel)",
-                            "layerInfo": {
-                                "id": "lucht:actueel_lki",
-                                "type": "raster",
-                                "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
-                                },
-                                "source": {
-                                    "type": "raster",
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht:actueel_lki"],
-                                    "attribution":"RIVM"
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "Ozon (actueel)",
-                            "layerInfo": {
-                                "id": "luchtactueel_03",
-                                "type": "raster",
-                                "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
-                                },
-                                "source": {
-                                    "type": "raster",
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=lucht%3Aactueel_o3&STYLES=lucht_o3"],
-                                    "attribution":"RIVM"
-                                }
-                            }
-                        },
                         {
                             "type": "wms",
                             "title": "Fijnstof (2016)",
@@ -3545,14 +3585,14 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_pm102016"],
+                                    "tiles": ["https://data.rivm.nl/geo/alo/wms?layers=rivm_nsl_20180324_gm_pm102016"],
                                     "attribution":"RIVM"
                                 }
                             }
                         },
                         {
                             "type": "wms",
-                            "title": "Stikstofdepositie (2016)",
+                            "title": "Stikstofdepositie (2015)",
                             "layerInfo": {
                                 "id": "rivm_r19_gm_n-depositie",
                                 "type": "raster",
@@ -3562,7 +3602,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_r19_gm_n-depositie"]
+                                    "tiles": ["https://data.rivm.nl/geo/ank/wms?layers=rivm_r19_gm_n-depositie"]
                                 }
                             }
                         },
@@ -3578,7 +3618,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_NO22016"]
+                                    "tiles": ["https://data.rivm.nl/geo/alo/wms?layers=rivm_nsl_20180324_gm_NO22016"]
                                 }
                             }
                         },
@@ -3594,7 +3634,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:conc_so2_2016"]
+                                    "tiles": ["https://data.rivm.nl/geo/gcn/wms?layers=conc_so2_2016"]
                                 }
                             }
                         },
@@ -3602,7 +3642,7 @@
                             "type": "wms",
                             "title": "Roet (2016)",
                             "layerInfo": {
-                                "id": "rivm_nsl_20180324_gm_ec2016",
+                                "id": "nsl_20141204_gm_ec2013",
                                 "type": "raster",
                                 "metadata": {
                                     "getFeatureInfoFormat":"application/json"
@@ -3610,7 +3650,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=rivm_nsl_20180324_gm_ec2016"]
+                                    "tiles": ["https://data.rivm.nl/geo/alo/wms?layers=rivm_nsl_20180324_gm_ec2016"]
                                 }
                             }
                         },
@@ -3626,23 +3666,7 @@
                                 "source": {
                                     "type": "raster",
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=gcn:depo_potz_2016"]
-                                }
-                            }
-                        },
-                        {
-                            "type": "wms",
-                            "title": "Koolstofdioxide (2016)",
-                            "layerInfo": {
-                                "id": "gcn_conc_ec_2016",
-                                "type": "raster",
-                                "metadata": {
-                                    "getFeatureInfoFormat":"application/json"
-                                },
-                                "source": {
-                                    "type": "raster",
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tiles": ["https://geodata.rivm.nl/geoserver/wms?layers=conc_ec_2016"]
+                                    "tiles": ["https://data.rivm.nl/geo/gcn/wms?layers=depo_potz_2016"]
                                 }
                             }
                         }
