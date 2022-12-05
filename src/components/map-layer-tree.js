@@ -279,6 +279,7 @@ class MapLayerTree extends LitElement {
         font-size: 12px;
         overflow: auto;
         box-sizing: border-box;
+        user-select: none;
       }
       .search {
         display: flex;
