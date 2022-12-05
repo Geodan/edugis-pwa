@@ -56,7 +56,7 @@ class MapLegendPanel extends LitElement {
       if (this.maplayer && this.maplayer.metadata && this.maplayer.hasOwnProperty('transparency')) {
         this.transparency = this.maplayer.metadata.transparency;
       } else {
-        this.transparency = 0;
+        //this.transparency = 0;
       }
     }
     return true;
