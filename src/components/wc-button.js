@@ -70,7 +70,7 @@ class WcButton extends LitElement {
         `;
     }
     _handleClick(e) {
-        console.log('click');
+        //console.log('click');
     }
 }
 
