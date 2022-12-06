@@ -107,3 +107,32 @@ st_intersects(v.geopunt, st_transform(st_union(
       ),28992))
      group by pandid, pandstatus, pandbouwjaar,postcode,openbareruimtenaam  having count(adresseerbaarobject) > 1;
      
+=======
+-- vwpc6geb_energverbruik21
+drop view if exists vwpc6geb_energverbruik21;
+create view vwpc6geb_energverbruik21 as
+select 
+    pe.postcode,
+    pe.aantal_adres,
+    pe.opp_totaal,
+    pe.opp_gem,
+    pe.gebruiksdoelen,
+    pe.bouwjaren,
+    pe.gas21_gem,
+    pe.gas21_totaal,
+    pe.gas21_m2,
+    pe.gas21_cor_gem,
+    pe.gas21_cor_totaal,
+    pe.gas21_cor_m2,
+    pe.elek21_gem,
+    pe.elek21_totaal,
+    pe.elek21_m2,
+    pe.labels,
+    pe.gebouwtypes,
+    pgs.gem_hh_gr,
+    pgs.p_koopwon,
+    pgs.p_huurwon, 
+	pgs.geom
+	from pc6_gebied_soceco pgs join pc6_energverbruik21_2 pe  on pgs.pc6 = pe.postcode;
+
+

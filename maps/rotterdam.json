@@ -358,60 +358,6 @@
                 }
               },
               {
-                "title": "Referentiewoningen",
-                "layerInfo": {
-                  "id": "referentiewoningenenergieprestatie",
-                  "type": "circle",
-                  "metadata": {
-                    "attributes": {
-                      "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
-                      "translations": [
-                        {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
-                        {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
-                        {"name": "straat", "translation": "straat"},
-                        {"name": "huisnummer", "translation": "huisnummer"},
-                        {"name": "postcode", "translation": "postcode"},
-                        {"name": "bouwjaar", "translation": "bouwjaar"},
-                        {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
-                        {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                        {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
-                        {"name": "energ_label", "translation": "energielabel"},
-                        {"name": "gebouwtype", "translation": "gebouwtype"},
-                        {"name": "A_EI", "translation": "Huidige energie index"},
-                        {"name": "A_elabel", "translation": "Huidig energielabel"},
-                        {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
-                        {"name": "A_bwjr", "translation": "Huidig jaar"},
-                        {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
-                        {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
-                        {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
-                        {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
-                        {"name": "C_EI", "translation": "Energie index (HT warmte)"},
-                        {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
-                        {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
-                        {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
-                        {"name": "E_EI", "translation": "Energie index (MT warmte)"},
-                        {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
-                        {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
-                        {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
-                      ]
-                    }
-                  },
-                  "source": {
-                    "promoteId": "id",
-                    "type": "vector",
-                    "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr"],
-                    "bounds":[4.5194,51.9219,4.5670,51.9556]
-                  },
-                  "source-layer": "plll.referentiewoningen_energieprestatie",
-                  "paint": {
-                    "circle-radius": 7,
-                    "circle-color": "#673ab7",
-                    "circle-stroke-width": 1,
-                    "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
-                  }
-                }
-              },
-              {
                 "title": "Dakdelen",
                 "layerInfo": {
                   "id": "plldakdelen",
@@ -442,6 +388,32 @@
                       "#6a6a6a"
                     ],
                     "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "rgba(0,0,0,0)"]
+                  }
+                }
+              },
+              {
+                "title": "Zonnepotentie gebouwen",
+                "layerInfo": {
+                  "id": "pllzonnepotentiegebouwen",
+                  "type": "fill",
+                  "metadata": {
+                    "attributes": {
+                      "deniedattributes": ["fid"],
+                      "translations": [
+                        {"name": "pc6", "translation": "postcode"}
+                      ]
+                    }
+                  },
+                  "source": {
+                    "promoteId": "dakdeel_id",
+                    "type": "vector",
+                    "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_colum=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
+                    "bounds":[4.5194,51.9219,4.5670,51.9556]
+                  },
+                  "source-layer": "plll.rdam_pll_gebouwpv",
+                  "paint": {
+                    "fill-color": ["interpolate-lab", ["linear"], ["get","dak_pv"], 0, "blue", 700000 , "red"],
+                    "fill-outline-color": "black"
                   }
                 }
               }
@@ -477,6 +449,35 @@
                     "kantoorfunctie", "lightblue", 
                     "overige gebruiksfunctie", "gray", 
                     "gray"]
+                }
+              }
+            },
+            {
+              "title": "energielabels",
+              "layerInfo": {
+                "id": "verblijfsobjectenergielabels",
+                "type": "circle",
+                "source": {
+                  "type": "vector",
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.verblijfsobjecten",
+                "paint": {
+                  "circle-color": ["match", ["get", "label"],
+                    "A+", "#1a9641",
+                    "A", "#6abd58",
+                    "B", "#b3df5b",
+                    "C", "#e6f51f",
+                    "D", "#ffe81c",
+                    "E", "#feba53",
+                    "F", "#ed6e43",
+                    "G", "#d7191c",
+                    "#cccccc"
+                  ],
+                  "circle-radius": 5,
+                  "circle-stroke-color": "#fff",
+                  "circle-stroke-width": 1
                 }
               }
             },
@@ -520,6 +521,181 @@
                   "circle-stroke-color": "white",
                   "circle-stroke-width": 0.4,
                   "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
+                }
+              }
+            },
+            {
+              "title": "Referentiewoningen",
+              "layerInfo": {
+                "id": "referentiewoningenenergieprestatie",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                    "translations": [
+                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                      {"name": "straat", "translation": "straat"},
+                      {"name": "huisnummer", "translation": "huisnummer"},
+                      {"name": "postcode", "translation": "postcode"},
+                      {"name": "bouwjaar", "translation": "bouwjaar"},
+                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                      {"name": "energ_label", "translation": "energielabel"},
+                      {"name": "gebouwtype", "translation": "gebouwtype"},
+                      {"name": "A_EI", "translation": "Huidige energie index"},
+                      {"name": "A_elabel", "translation": "Huidig energielabel"},
+                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                      {"name": "A_bwjr", "translation": "Huidig jaar"},
+                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                    ]
+                  }
+                },
+                "source": {
+                  "promoteId": "id",
+                  "type": "vector",
+                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.referentiewoningen_energieprestatie",
+                "paint": {
+                  "circle-radius": 7,
+                  "circle-color": "#673ab7",
+                  "circle-stroke-width": 1,
+                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
+                }
+              }
+            },
+            {
+              "title": "Referentiewoningen energielabel",
+              "layerInfo": {
+                "id": "referentiewoningenenerglabel",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                    "translations": [
+                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                      {"name": "straat", "translation": "straat"},
+                      {"name": "huisnummer", "translation": "huisnummer"},
+                      {"name": "postcode", "translation": "postcode"},
+                      {"name": "bouwjaar", "translation": "bouwjaar"},
+                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                      {"name": "energ_label", "translation": "energielabel"},
+                      {"name": "gebouwtype", "translation": "gebouwtype"},
+                      {"name": "A_EI", "translation": "Huidige energie index"},
+                      {"name": "A_elabel", "translation": "Huidig energielabel"},
+                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                      {"name": "A_bwjr", "translation": "Huidig jaar"},
+                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                    ]
+                  }
+                },
+                "source": {
+                  "promoteId": "id",
+                  "type": "vector",
+                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.referentiewoningen_energieprestatie",
+                "paint": {
+                  "circle-radius": 7,
+                  "circle-color": ["match", ["get", "energ_label"],
+                    "A+", "#1a9641",
+                    "A", "#6abd58",
+                    "B", "#b3df5b",
+                    "C", "#e6f51f",
+                    "D", "#ffe81c",
+                    "E", "#feba53",
+                    "F", "#ed6e43",
+                    "G", "#d7191c",
+                    "#cccccc"
+                  ],
+                  "circle-stroke-width": 1,
+                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
+                }
+              }
+            },
+            {
+              "title": "Referentiewoningen gasgebruik / m2",
+              "layerInfo": {
+                "id": "referentiewoningengasgebruikm2",
+                "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                    "translations": [
+                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                      {"name": "straat", "translation": "straat"},
+                      {"name": "huisnummer", "translation": "huisnummer"},
+                      {"name": "postcode", "translation": "postcode"},
+                      {"name": "bouwjaar", "translation": "bouwjaar"},
+                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                      {"name": "energ_label", "translation": "energielabel"},
+                      {"name": "gebouwtype", "translation": "gebouwtype"},
+                      {"name": "A_EI", "translation": "Huidige energie index"},
+                      {"name": "A_elabel", "translation": "Huidig energielabel"},
+                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                      {"name": "A_bwjr", "translation": "Huidig jaar"},
+                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                    ]
+                  }
+                },
+                "source": {
+                  "promoteId": "id",
+                  "type": "vector",
+                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                  "bounds":[4.5194,51.9219,4.5670,51.9556]
+                },
+                "source-layer": "plll.referentiewoningen_energieprestatie",
+                "paint": {
+                  "circle-radius": 7,
+                  "circle-color": ["interpolate-lab", ["linear"], ["get","gas_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
+                  "circle-stroke-width": 1,
+                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
                 }
               }
             }
@@ -598,6 +774,86 @@
           }
         },
         {
+          "title": "Postcode gebouwen gasgebruik",
+          "layerInfo": {
+            "id": "postcode6gebouwengasgebruik",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "aantal_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "bouwjaren", "translation": "bouwjaren"},
+                  {"name": "opp_totaal", "translation": "totaal oppervlak"},
+                  {"name": "opp_gem", "translation": "gemiddeld oppervlak per adres", "unit": " m2", "decimals": 0},
+                  {"name": "gas21_gem", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_totaal", "translation": "totaal gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_m2", "translation": "gasverbruik 2021 per m2", "unit": " m3/m2", "decimals":0},
+                  {"name": "gas21_cor_gem", "translation": "gem gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_totaal", "translation": "totaal gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_m2", "translation": "gasverbruik '21 weer-gecorrigeerd per m2", "unit": " m3/m2", "decimals":1},
+                  {"name": "elek21_gem", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_totaal", "translation": "totaal elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_m2", "translation": "elektriciteitsverbruik 2021 per m2", "unit": " kwh/m2", "decimals": 0},
+                  {"name": "labels", "translation": "labels"},
+                  {"name": "gebruiksdoelen", "translation": "gebruiksdoelen"}
+                ]
+              }
+            },
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.vwpc6geb_energverbruik21",
+            "paint": {
+              "fill-color": ["interpolate-lab", ["linear"], ["get","gas21_cor_gem"], 0, "blue", 3000 , "red"],
+              "fill-outline-color": "#000000"
+            }
+          }
+        },
+        {
+          "title": "Postcode gebouwen gasgebruik / m2",
+          "layerInfo": {
+            "id": "postcode6gebouwengasgebruikm2",
+            "type": "fill",
+            "metadata": {
+              "abstract": "Deze kaartlaag toont het aardgasverbruik per m2 woningoppervlakte. Een hogere waarde duidt mogelijk op een moeilijker te verwarmen huis. De brongegevens uit 2021 zijn geaggregeerd op postcode6. De berekening is (som van gasgebruik) / (som van oppervlakte)",
+              "attributes": {
+                "translations": [
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "aantal_adres", "translation": "aantal adressen"},
+                  {"name": "aant_pand", "translation": "aantal panden"},
+                  {"name": "bouwjaren", "translation": "bouwjaren"},
+                  {"name": "opp_totaal", "translation": "totaal oppervlak"},
+                  {"name": "opp_gem", "translation": "gemiddeld oppervlak per adres", "unit": " m2", "decimals": 0},
+                  {"name": "gas21_gem", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_totaal", "translation": "totaal gasverbruik 2021", "unit": " m3", "decimals":0},
+                  {"name": "gas21_m2", "translation": "gasverbruik 2021 per m2", "unit": " m3/m2", "decimals":0},
+                  {"name": "gas21_cor_gem", "translation": "gem gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_totaal", "translation": "totaal gasverbruik '21 weer-gecorrigeerd", "unit": " m3", "decimals":0},
+                  {"name": "gas21_cor_m2", "translation": "gasverbruik '21 weer-gecorrigeerd per m2", "unit": " m3/m2", "decimals":1},
+                  {"name": "elek21_gem", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_totaal", "translation": "totaal elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                  {"name": "elek21_m2", "translation": "elektriciteitsverbruik 2021 per m2", "unit": " kwh/m2", "decimals": 0},
+                  {"name": "labels", "translation": "labels"},
+                  {"name": "gebruiksdoelen", "translation": "gebruiksdoelen"}
+                ]
+              }
+            },
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.vwpc6geb_energverbruik21",
+            "paint": {
+              "fill-color": ["interpolate-lab", ["linear"], ["get","gas21_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
+              "fill-outline-color": "#000000"
+            }
+          }
+        },{
           "title": "Postcode vlakken",
           "layerInfo": {
             "id": "postcode6vlakken",
@@ -608,20 +864,17 @@
                   {"name": "pc6", "translation": "postcode"},
                   {"name": "aant_adres", "translation": "aantal adressen"},
                   {"name": "aant_pand", "translation": "aantal panden"},
-                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"},
-                  {"name": "opp", "translation": "totaal oppervlak"},
-                  {"name": "gas21", "translation": "gemiddeld gasverbruik 2021", "unit": " m3", "decimals":0},
-                  {"name": "gas21_cor", "translation": "gem gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                  {"name": "elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0}
+                  {"name": "bouwjaar", "translation": "gemiddeld bouwjaar"}
+                  
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_polygons/mvt/{z}/{x}/{y}?geom_colum=geom&columns=pc6,aant_adres,aant_pand,bouwjaar,bjtype,hfnc,opp"],
               "bounds":[4.5194,51.9219,4.5670,51.9556]
             },
-            "source-layer": "plll.pc6_energverbruik21_2",
+            "source-layer": "plll.pc6_polygons",
             "paint": {
               "fill-color": "rgba(192, 192, 192, 0.5)",
               "fill-outline-color": "#000000"
@@ -674,6 +927,7 @@
             "id": "postcode6vlakkengasgebruikm2",
             "type": "fill",
             "metadata": {
+              "abstract": "Deze kaartlaag toont het aardgasverbruik per m2 woningoppervlakte. Een hogere waarde duidt mogelijk op een moeilijker te verwarmen huis. De brongegevens uit 2021 zijn geaggregeerd op postcode6. De berekening is (som van gasgebruik) / (som van oppervlakte)",
               "attributes": {
                 "translations": [
                   {"name": "postcode", "translation": "postcode"},
@@ -882,6 +1136,36 @@
                       "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
                       "attribution":"RIVM"
                   }
+              }
+            },
+            {
+              "title": "Geothermie",
+              "layerInfo": {
+                "id": "rdamgeothermie",
+                "type": "fill",
+                "metadata": {
+                  "abstract": "Potentie voor het winnen van warmte uit geothermie. 0 = Zeer slecht (P<10), 1 = Matig (P10-P30), 2 = Mogelijk (P30-P50), 3 = Goed (P50-P70), 4 = Zeer goed (P70-P90), 5 = Uitmuntend (P>90)"
+                },
+                "source":{
+                  "type":"vector",
+                  "tiles":["https://research1.geodan.nl/data/plll.geothermie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gridcode&include_nulls=0"],
+                  "bounds":[3.311103488198423,50.75351353240224,7.222429105415763,53.607949718185424],
+                  "attribution": "Planbureau voor de leefomgeving"
+                },
+                "source-layer":"plll.geothermie",
+                "paint":{
+                "fill-color":[
+                  "match",["get","gridcode"],
+                  0,"#fff5f0",
+                  1,"#fdccb7",
+                  2,"#fc8f6f",
+                  3,"#f44d37",
+                  4,"#c5161b",
+                  5,"#67000d",
+                  "#000000"],
+                  "fill-outline-color":"black",
+                  "fill-opacity":1
+                }
               }
             },
             {
