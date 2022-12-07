@@ -113,6 +113,7 @@ class MapLegendPanel extends LitElement {
           const valueMap = translation.valuemap.find(valueMap=>Array.isArray(valueMap) && valueMap.length > 1 && valueMap[0] == item.attrValue);
           if (valueMap) {
             item.attrValue = valueMap[1];
+            item.mappedValue = true;
           }
         }
         if (translation.unit && translation.unit !== "") {
@@ -123,6 +124,9 @@ class MapLegendPanel extends LitElement {
   }
   _addExpressionOperatorsToValues(items) {
     for (const item of items) {
+      if (item.mappedValue) {
+        continue;
+      }
       if (item.hasOwnProperty('attrValue')) {
         switch (item.attrExpression) {
           case '<=':
