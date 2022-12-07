@@ -4014,7 +4014,12 @@
                         "id": "rivm_r88_20170621_gm_actueel_uhi",
                         "type": "raster",
                         "metadata": {
-                            "getFeatureInfoFormat":"application/json"
+                            "getFeatureInfoFormat":"application/json",
+                            "attributes": {
+                              "translations": [
+                                {"name": "GRAY_INDEX", "translation": "Effect", "decimals": 1, "unit": " °C"}
+                              ]
+                            }
                         },
                         "source": {
                             "type": "raster",
