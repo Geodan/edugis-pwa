@@ -8,8 +8,19 @@
         "translations": [
           {"name": "landformsubgroup_code", "translation": "subgroepcode", "unit": ""},
           {"name": "landformsubgroup_description", "translation": "subgroep omschrijving", "unit": ""},
-          {"name": "genese_code", "translation": "genese code", "unit": ""},
-          {"name": "relief_code", "translation": "reliëf code", "unit": ""}
+          {"name": "genese_code", "translation": "genese code", "valuemap": [
+            [0, "0: Tectonisch: Landvormen die zijn ontstaan door tectonische bewegingen van de aardkorst langs breuken"],
+            [1, "1: Glaciaal: Landvormen die zijn ontstaan door glaciale processen in de aanwezigheid van landijs"],
+            [2, "2: Periglaciaal: Landvormen die zijn ontstaan onder periglaciale omstandigheden, een permanent bevroren ondergrond (permafrost), en periodiek overvloedige hoeveelheden sneeuwsmeltwater"],
+            [3, "3: Denudatief: Landvormen die zijn ontstaan door denudatie (door transport van los materiaal over een helling). Hieronder vallen ook de landvormen die door oplossing van kalksteen in de ondergrond zijn ontstaan"],
+            [4, "4: Fluviatiel: Landvormen die zijn ontstaan door fluviatiele processen (door erosie of afzetting van materiaal door rivierwater, m.u.v. fluviatiele vormen die zijn ontstaan onder (peri)glaciale omstandigheden)"],
+            [5, "5: Eolisch: Landvormen die zijn ontstaan door eolische processen (door erosie of afzetting van materiaal door de wind)"],
+            [6, "6: Lacustrien: Landvormen die zijn ontstaan door lacustriene processen (door erosie of afzetting van materiaal in meren)"],
+            [7, "7: Marien: Landvormen die zijn ontstaan door mariene processen (door erosie of afzetting van materiaal door zeewater onder invloed van het getij)"],
+            [8, "8: Organogeen: Landvormen die zijn ontstaan door veenvorming"],
+            [9, "9: Antropogeen: Landvormen die zijn ontstaan door menselijk handelen"]
+          ]},
+          {"name": "relief_code", "translation": "reliëf code"}
         ]
       }
     },
