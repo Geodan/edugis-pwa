@@ -109,6 +109,12 @@ class MapLegendPanel extends LitElement {
             item.attrValue = parseInt(Math.round(parseFloat(item.attrValue) * factor)) / factor;
           }
         }
+        if (translation.valuemap && Array.isArray(translation.valuemap)) {
+          const valueMap = translation.valuemap.find(valueMap=>Array.isArray(valueMap) && valueMap.length > 1 && valueMap[0] == item.attrValue);
+          if (valueMap) {
+            item.attrValue = valueMap[1];
+          }
+        }
         if (translation.unit && translation.unit !== "") {
           item.attrValue = `${item.attrValue}${translation.unit}`
         }
