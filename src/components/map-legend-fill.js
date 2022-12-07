@@ -133,7 +133,7 @@ class MapLegendFill extends LitElement {
                 if (strokeColors.length === 1) {
                     usedStrokeValues.add(strokeColors[0].attrValue);
                 }
-                if (label) {
+                if (label || label === 0) {
                     result.push(html`<map-legend-item-edit 
                         .visible=${this.activeEdits.includes(i)}
                         @editActive=${this._editActive}
@@ -152,7 +152,7 @@ class MapLegendFill extends LitElement {
             for (let i = 0; i < items.strokeColorItems.length; i++) {
                 let fillColor = items.colorItems.length === 1 ? items.colorItems[0].paintValue : '#fff';
                 const label = items.strokeColorItems[i].attrValue;
-                if (label) {
+                if (label || label === 0) {
                     result.push(html`<div class="container">${this._fillItem(fillColor, items.strokeColorItems[i].paintValue,label)}</div>`)
                 }
             }

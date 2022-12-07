@@ -132,8 +132,14 @@ class MapInfoFormatted extends LitElement {
             if (attributes.allowedattributes && attributes.allowedattributes.indexOf(translation.name) === -1) {
               continue; // skip attribute not in allowedattributes
             }
-            if (feature.properties[translation.name]) {
+            if (feature.properties[translation.name] || feature.properties[translation.name] === 0) {
               let value = feature.properties[translation.name];
+              if (translation.valuemap && Array.isArray(translation.valuemap)) {
+                const valueMap = translation.valuemap.find(valueMap=>Array.isArray(valueMap) && valueMap.length > 1 && valueMap[0] == value);
+                if (valueMap) {
+                  value = valueMap[1];
+                }
+              }
               if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
                 if (typeof parseFloat(value) == "number" && !isNaN(parseFloat(value))) {
                   let factor = Math.pow(10, parseInt(translation.decimals));

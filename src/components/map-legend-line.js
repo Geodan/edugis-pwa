@@ -80,7 +80,7 @@ class MapLegendLine extends LitElement {
                 // same size, same attributes
                 for (i = 0; i < items.colorItems.length; i++) {
                     const label = items.colorItems.length ? items.colorItems[i].attrValue: null;
-                    if (label) {
+                    if (label || label === 0) {
                         result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,items.strokeWidthItems[i].paintValue,label)}</div>`)
                     }
                 }
@@ -92,7 +92,7 @@ class MapLegendLine extends LitElement {
             result.push(html`<div class="title">${items.colorItems[0].attrName}</div>`);
             for (let i = 0; i < items.colorItems.length; i++) {
                 const label = items.colorItems.length ? items.colorItems[i].attrValue: null;
-                if (label) {
+                if (label || label === 0) {
                     result.push(html`<div class="container">${this._lineItem(items.colorItems[i].paintValue,lineWidth,label)}</div>`)
                 }
             }
@@ -102,7 +102,7 @@ class MapLegendLine extends LitElement {
             result.push(html`<div class="title">${items.strokeWidthItems[0].attrName}</div>`);
             for (let i = 0; i < items.strokeWidthItems.length; i++) {
                 const label = items.strokeWidthItems[i].attrValue;
-                if (label) {
+                if (label || label === 0) {
                     result.push(html`<div class="container">${this._lineItem(lineColor, items.strokeWidthItems[i].paintValue,label)}</div>`)
                 }
             }
