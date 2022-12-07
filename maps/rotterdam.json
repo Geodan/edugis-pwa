@@ -12,14 +12,27 @@
               "type": "fill",
               "metadata": {
                 "title": "Prinsenland en Het Lage Land",
-                "transparency": 50
+                "transparency": 50,
+                "attributes": {
+                  "translations": [
+                    {"name": "bu_code", "translation": "cbs buurtcode"},
+                    {"name": "aant_inw", "translation": "aantal inwoners"},
+                    {"name": "aant_man", "translation": "aantal mannen"},
+                    {"name": "aant_vrouw", "translation": "aantal vrouwen"},
+                    {"name": "aantal_hh", "translation" : "aantal huishoudens"},
+                    {"name": "p_eenp_hh", "translation": "percentage eenpersoonshuishoudens", "unit": " %"},
+                    {"name": "p_hh_z_k", "translation": "percentage huishoudens zonder kinderen", "unit": " %"},
+                    {"name": "p_hh_m_k", "translation": "percentage huishoudens met kinderen", "unit": " %"},
+                    {"name": "gem_hh_gr", "translation": "gemiddelde huishoudensgrootte"}
+                  ]
+                }
               },
               "source": {
                 "type": "vector",
-                "tiles":["https://research1.geodan.nl/data/plll.wijken/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
+                "tiles":["https://research1.geodan.nl/data/plll.cbs_buurten/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,bu_code,aant_inw,aant_man,aant_vrouw,aantal_hh,p_eenp_hh,p_hh_z_k,p_hh_m_k,gem_hh_gr&include_nulls=0"],
                 "bounds":[4.5194,51.9219,4.5670,51.9556]
               },
-              "source-layer":"plll.wijken",
+              "source-layer":"plll.cbs_buurten",
               "paint": {
                 "fill-color": ["match",["get","naam"], 
                   "Het Lage Land", "rgba(200,49,80,1)",
@@ -1128,7 +1141,12 @@
                   "id": "rivm_r88_20170621_gm_actueel_uhi",
                   "type": "raster",
                   "metadata": {
-                      "getFeatureInfoFormat":"application/json"
+                      "getFeatureInfoFormat":"application/json",
+                      "attributes": {
+                        "translations": [
+                          {"name": "GRAY_INDEX", "translation": "Effect", "decimals": 1, "unit": " °C"}
+                        ]
+                      }
                   },
                   "source": {
                       "type": "raster",
@@ -1144,7 +1162,19 @@
                 "id": "rdamgeothermie",
                 "type": "fill",
                 "metadata": {
-                  "abstract": "Potentie voor het winnen van warmte uit geothermie. 0 = Zeer slecht (P<10), 1 = Matig (P10-P30), 2 = Mogelijk (P30-P50), 3 = Goed (P50-P70), 4 = Zeer goed (P70-P90), 5 = Uitmuntend (P>90)"
+                  "abstract": "Potentie voor het winnen van warmte uit geothermie. 0 = Zeer slecht (P<10), 1 = Matig (P10-P30), 2 = Mogelijk (P30-P50), 3 = Goed (P50-P70), 4 = Zeer goed (P70-P90), 5 = Uitmuntend (P>90)",
+                  "attributes": {
+                    "translations": [
+                      {"name": "gridcode", "translation": "potentie geothermie", "valuemap": [
+                        [0, "Zeer slecht(P < 10)"],
+                        [1, "Matig (P10 - P30)"],
+                        [2, "Mogelijk (P30 - P50)"],
+                        [3, "Goed (P50 - P70)"],
+                        [4, "Zeer goed (P70 - P90)"],
+                        [5, "Uitmuntend (P > 90)"]
+                      ]}
+                    ]
+                  }
                 },
                 "source":{
                   "type":"vector",
