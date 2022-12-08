@@ -275,3 +275,66 @@ select
 		  on (v2.gerelateerdpand=p.identificatie and st_intersects(p.geovlak,v.geopunt))
 ;
 create index verblijfsobjectengeomidx on verblijfsobjecten using gist(geom);
+drop table if exists spreadpoints;
+create table spreadpoints as
+with pointdump as
+(select 
+    v.gerelateerdpand, 
+    array_agg(v.identificatie order by v.openbareruimtenaam,v.huisnummer) verblijfsobjecten,  
+    st_dump(st_generatepoints(st_buffer(gw.geom,-1),count(v.identificatie)::int,1234)) dump 
+  from gebouw_wijk gw,verblijfsobjecten v 
+	where gw.identificatie =v.gerelateerdpand
+		group by gw.geom,v.gerelateerdpand
+			having count(v.gerelateerdpand) > 1)
+select 
+    row_number() over (partition by gerelateerdpand order by st_y((dump).geom),st_x((dump).geom)),
+    gerelateerdpand, 
+	(dump).geom, 
+	(verblijfsobjecten)[row_number() over (partition by gerelateerdpand)] verblijfsobject
+  from pointdump;
+
+alter table verblijfsobjecten add column if not exists geom2 geometry(point, 28992);
+update verblijfsobjecten set geom2=geom;
+update verblijfsobjecten v set geom2=s.geom from spreadpoints s where v.identificatie = s.verblijfsobject;
+create index if not exists verblijfsobjectengeom2idx on verblijfsobjecten using gist(geom2);
+
+drop table if exists energielabels;
+create table energielabels as 
+  select e.* 
+    from anneb.energielabels202221201 e  
+      join verblijfsobjecten v 
+        on (e.pand_bagverblijfsobjectid=v.identificatie);
+
+drop view if exists verblijfsobjectelabel;
+create view verblijfsobjectelabel as
+  select 
+    ogc_fid,
+	identificatie,
+	oppervlakteverblijfsobject oppervlakte,
+	gebruiksdoel, 
+	openbareruimtenaam straat,
+	huisnummer,
+	huisletter,
+	huisnummertoevoeging,
+	postcode,
+	woonplaatsnaam,
+	gerelateerdpand,
+	bouwjaar,
+	pand_energieindex energieindex,
+	pand_energieklasse energieklasse,
+	pand_gebouwklasse gebouwklasse,
+	pand_gebouwtype gebouwtype,
+	pand_gebouwsubtype gebouwsubtype,
+	pand_gebruiksoppervlakte_thermische_zone gebruiksoppervlakte_thermische_zone,
+	pand_energiebehoefte energiebehoefte,
+	pand_primaire_fossiele_energie primaire_fossiele_energie,
+	pand_primaire_fossiele_energie_emg_forfaitair primaire_fossiele_energie_emg_forfaitair,
+	pand_aandeel_hernieuwbare_energie aandeel_hernieuwbare_energie,
+	pand_aandeel_hernieuwbare_energie_emg_forfaitair aandeel_hernieuwbare_energie_emg_forfaitair,
+	pand_temperatuuroverschrijding temperatuuroverschrijding,
+	pand_warmtebehoefte warmtebehoefte,
+	pand_energieindex_met_emg_forfaitair energieindex_met_emg_forfaitair,
+	geom2 geom
+	from verblijfsobjecten v
+	  left join energielabels e on (v.identificatie = e.pand_bagverblijfsobjectid)
+	  ;

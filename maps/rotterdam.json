@@ -449,9 +449,28 @@
               "layerInfo" : {
                 "id": "verblijfsobjectgebruiksdoel",
                 "type": "circle",
+                "metadata": {
+                  "attributes": {
+                    "translations": [
+                      {"name": "gebruiksdoel"},
+                      {"name": "identificatie"},
+                      {"name": "verblijfsobjectstatus", "translation":"satus"},
+                      {"name": "oppervlakteverblijfsobject", "translation": "oppervlakte", "unit": " m2"},
+                      {"name": "openbareruimtenaam", "translation": "straat"},
+                      {"name": "huisnummer"},
+                      {"name": "huisletter"},
+                      {"name": "huisnummertoevoeging", "translation":"toevoeging"},
+                      {"name": "postcode"},
+                      {"name": "woonplaatsnaam", "translation": "woonplaats"},
+                      {"name": "gerelateerdpand", "translation": "pand id"},
+                      {"name": "bouwjaar"},
+                      {"name": "pandstatus"}
+                    ]
+                  }
+                },
                 "source": {
                   "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom2&columns=ogc_fid,identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,openbareruimtenaam,gebruiksdoel,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,bouwjaar,gerelateerdpand,pandstatus&include_nulls=0"],
                   "bounds":[4.5194,51.9219,4.5670,51.9556]
                 },
                 "source-layer": "plll.verblijfsobjecten",
@@ -480,12 +499,14 @@
                 "type": "circle",
                 "source": {
                   "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
                   "bounds":[4.5194,51.9219,4.5670,51.9556]
                 },
-                "source-layer": "plll.verblijfsobjecten",
+                "source-layer": "plll.verblijfsobjectelabel",
                 "paint": {
-                  "circle-color": ["match", ["get", "label"],
+                  "circle-color": ["match", ["get", "energieklasse"],
+                    "A+++", "#1a9641",
+                    "A++", "#1a9641",
                     "A+", "#1a9641",
                     "A", "#6abd58",
                     "B", "#b3df5b",
@@ -1241,6 +1262,7 @@
                       "tiles":[
                           "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                       ],
+                      "maxzoom": 19,
                       "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
                       }
                   }
@@ -1260,6 +1282,7 @@
                       "tiles":[
                         "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
                       ],
+                      "maxzoom": 19,
                       "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
                     }
                   }
