@@ -236,6 +236,49 @@
                           }
                         }
                     ]
+                },
+                {
+                  "title": "Kadastrale Percelen (2020)",
+                  "layerInfo": {
+                    "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
+                    "type":"fill",
+                    "minzoom": 14.5,
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"percelen.perceel",
+                    "paint":{
+                      "fill-color":"rgba(0,0,0,0)",
+                      "fill-opacity":1,
+                      "fill-outline-color": "darkred"
+                    }
+                  }
+                },
+                {
+                  "title": "Percelen (labels)",
+                  "layerInfo": {
+                    "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
+                    "type":"symbol",
+                    "minzoom": 15,
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },                                    
+                    "source-layer":"percelen.perceel",
+                    "paint":{
+                      "text-color":"black"
+                    },
+                    "layout":{
+                        "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
+                        "text-rotate": ["get","perceelnummerrotatie"],
+                        "text-size": 10
+                    }
+                  }
                 }
               ]
         },
@@ -328,49 +371,6 @@
                   }
               },
               {
-                "title": "Kadastrale Percelen (2020)",
-                "layerInfo": {
-                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
-                  "type":"fill",
-                  "minzoom": 14.5,
-                  "source":{
-                      "type":"vector",
-                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
-                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                      "maxzoom": 17
-                  },
-                  "source-layer":"percelen.perceel",
-                  "paint":{
-                    "fill-color":"rgba(0,0,0,0)",
-                    "fill-opacity":1,
-                    "fill-outline-color": "darkred"
-                  }
-                }
-              },
-              {
-                "title": "Percelen (labels)",
-                "layerInfo": {
-                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
-                  "type":"symbol",
-                  "minzoom": 15,
-                  "source":{
-                      "type":"vector",
-                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
-                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                      "maxzoom": 17
-                  },                                    
-                  "source-layer":"percelen.perceel",
-                  "paint":{
-                    "text-color":"black"
-                  },
-                  "layout":{
-                      "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
-                      "text-rotate": ["get","perceelnummerrotatie"],
-                      "text-size": 10
-                  }
-                }
-              },
-              {
                 "title": "Dakdelen",
                 "layerInfo": {
                   "id": "plldakdelen",
@@ -379,7 +379,14 @@
                     "attributes": {
                       "deniedattributes": ["fid"],
                       "translations": [
-                        {"name": "pc6", "translation": "postcode"}
+                        {"name": "aspect", "translation": "richting", "valuemap":[
+                          [-1, "plat dak"],
+                          [45, "noord (<45)"],
+                          [135, "oost (<135)"],
+                          [225, "zuid (<225)"],
+                          [315, "west (<315)"],
+                          [361, "noord (<360)"]
+                        ]}
                       ]
                     }
                   },
@@ -387,7 +394,8 @@
                     "promoteId": "dakdeel_id",
                     "type": "vector",
                     "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_colum=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
-                    "bounds":[4.5194,51.9219,4.5670,51.9556]
+                    "bounds":[4.5194,51.9219,4.5670,51.9556],
+                    "maxzoom": 19
                   },
                   "source-layer": "plll.dakdelen_pll",
                   "paint": {
