@@ -165,7 +165,7 @@ class MapLayerTree extends LitElement {
       this.replaceNode(nodeList, node.id);
     }
     if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
-      return html`<li><img src="${document.baseURI}/images/spinner.gif"> Loading...</li>`;
+      return html`<li><img src="${document.baseURI}images/spinner.gif"> Loading...</li>`;
     }
     return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}" title="${node.path?node.path:''}">
     <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
@@ -237,28 +237,28 @@ class MapLayerTree extends LitElement {
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 0 0;
+        background: url('${document.baseURI}images/checkradio.png') 0 0;
       }
       .radio-off {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 0 20px;
+        background: url('${document.baseURI}images/checkradio.png') 0 20px;
       }
       .check-on {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 20px 20px;
+        background: url('${document.baseURI}images/checkradio.png') 20px 20px;
       }
       .check-off {
         display: inline-block;
         width: 20px;
         height: 20px;
         vertical-align: middle;
-        background: url('${document.baseURI}/images/checkradio.png') 20px 0px;
+        background: url('${document.baseURI}images/checkradio.png') 20px 0px;
       }
       .label {
         vertical-align: middle;
