@@ -852,7 +852,7 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='datatoolbox'}">
           <div style="width:100%"></div>
-          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @addlayer="${e=>this.addLayer(e)}"></map-data-toolbox>
+          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @titlechange="${()=>this.resetLayerList()}" @addlayer="${e=>this.addLayer(e)}"></map-data-toolbox>
         </map-panel>
         <map-panel .active="${this.currentTool==='sheetimport'}">
           <div style="width:100%"></div>

@@ -1,6 +1,7 @@
 import {LitElement, html, svg, css} from 'lit';
 import './map-iconbutton';
 import './map-datatool-distance';
+import './map-datatool-buffer';
 import './map-iconbutton';
 import {bufferIcon} from './my-icons';
 import { measureIcon} from '../gm/gm-iconset-svg';
@@ -62,9 +63,14 @@ class MapDataToolbox extends LitElement {
         return html`Kies combineergereedschap via de knoppen`;
       case "distancetool":
         return html`<map-datatool-distance .map=${this.map}></map-datatool-distance>`;
+      case "buffertool":
+        return html`<map-datatool-buffer @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-buffer>`;
       default:
         return html`Nog niet geimplementeerd: '${this.currentTool}'`;
     }
+  }
+  _titlechange() {
+    this.dispatchEvent(new CustomEvent("titlechange", {}))
   }
 }
 customElements.define('map-data-toolbox', MapDataToolbox);
