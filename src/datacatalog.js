@@ -165,14 +165,14 @@ export default
                 "id":"knmineerslag",
                 "type":"raster",
                 "metadata":{
-                  "getFeatureInfoUrl":"https://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&query_layers=RADNL_OPER_R___25PCPRR_L3_COLOR&STYLES=rainbow%2Fnearest&",
+                  "getFeatureInfoUrl":"https://geoservices.knmi.nl/adaguc-server?DATASET=RADAR&SERVICE=WMS&&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&LAYERS=RAD_NL25_PCP_CM&query_layers=RAD_NL25_PCP_CM&STYLES=rainbow%2Fnearest&",
                   "getFeatureInfoFormat":"application/json"
                 },
                 "source":{
                   "type":"raster",
                   "tileSize":1024,
                   "tiles":[
-                    "https://geoservices.knmi.nl/cgi-bin/RADNL_OPER_R___25PCPRR_L3.cgi?SERVICE=WMS&&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RADNL_OPER_R___25PCPRR_L3_COLOR&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=1024&HEIGHT=1024"
+                    "https://geoservices.knmi.nl/adaguc-server?DATASET=RADAR&SERVICE=WMS&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=RAD_NL25_PCP_CM&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}&STYLES=rainbow%2Fnearest&FORMAT=image/png&TRANSPARENT=TRUE&WIDTH=1024&HEIGHT=1024"
                   ],
                   "attribution":"KNMI"
                 }
@@ -466,7 +466,7 @@ export default
                 "source":{
                   "type":"raster",
                   "tileSize":256,
-                  "url":"mapbox://mapbox.satellite"
+                  "tiles":["https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"]
                 }
               }
             },
