@@ -141,7 +141,7 @@ class MapDatatoolBuffer extends LitElement {
       async _getVisibleFeatures(layerid) {
         const layer = this.map.getLayer(layerid);
         const mapBounds = this.map.getBounds();
-        if (!layer.sourceLayer && layer.type !== 'circle' && layer.type !== 'symbol') {
+        if (false) {//(!layer.sourceLayer && layer.type !== 'circle' && layer.type !== 'symbol') {
           // not a vector tile layer or circle layer or symbol layer
           const source = this.map.getSource(layer.source).serialize();
           if (typeof source.data === "string") {
@@ -159,7 +159,7 @@ class MapDatatoolBuffer extends LitElement {
           const tileMap = new Map();
           const sphericalmercator = new SphericalMercator();
           const tileBorderFeatures = [];
-          const features = this.map.queryRenderedFeatures(undefined,{layers:[layerid]}).map((mboxfeature, index)=>{
+          let features = this.map.queryRenderedFeatures(undefined,{layers:[layerid]}).map((mboxfeature, index)=>{
             const x = mboxfeature._vectorTileFeature._x;
             const y = mboxfeature._vectorTileFeature._y;
             const z = mboxfeature._vectorTileFeature._z;
@@ -178,32 +178,34 @@ class MapDatatoolBuffer extends LitElement {
           });
 
           console.log(tileBorderFeatures);
-
-          const index = new Flatbush(tileBorderFeatures.length);
-          for (const featureInfo of tileBorderFeatures) {
-            const bbox = featureInfo.bbox;
-            index.add(bbox[0], bbox[1], bbox[2], bbox[3]);
-          }
-          index.finish();
-          for (let i = 0; i < tileBorderFeatures.length; i++) {
-            const featureIndex = tileBorderFeatures[i].index;
-            const bbox = turf.bbox(features[featureIndex]);
-            const intersectCandidates = index.search(bbox[0], bbox[1], bbox[2], bbox[3]).sort((a,b)=>a-b);
-            for (let j = 0; j < intersectCandidates.length - 1; j++) {
-              if (intersectCandidates[j] < i) {
-                continue;
-              }
-              const feature1 = features[tileBorderFeatures[intersectCandidates[j]].index];
-              const feature2 = features[tileBorderFeatures[intersectCandidates[j+1]].index];
-              /*if (turf.booleanIntersects(feature1, feature2)) {
-                const unionedFeature = turf.union(feature1, feature2);
-                features[tileBorderFeatures[intersectCandidates[j+1]].index] = unionedFeature;
-                features[tileBorderFeatures[intersectCandidates[j]].index] = null;
-              }*/
+          
+          if (tileBorderFeatures.length) {
+            const index = new Flatbush(tileBorderFeatures.length);
+            for (const featureInfo of tileBorderFeatures) {
+              const bbox = featureInfo.bbox;
+              index.add(bbox[0], bbox[1], bbox[2], bbox[3]);
             }
-            //console.log(intersectCandidates);
+            index.finish();
+            for (let i = 0; i < tileBorderFeatures.length; i++) {
+              const featureIndex = tileBorderFeatures[i].index;
+              const bbox = turf.bbox(features[featureIndex]);
+              const intersectCandidates = index.search(bbox[0], bbox[1], bbox[2], bbox[3]).sort((a,b)=>a-b);
+              for (let j = 0; j < intersectCandidates.length - 1; j++) {
+                if (intersectCandidates[j] < i) {
+                  continue;
+                }
+                const feature1 = features[tileBorderFeatures[intersectCandidates[j]].index];
+                const feature2 = features[tileBorderFeatures[intersectCandidates[j+1]].index];
+                if (feature1 && feature2 && turf.booleanIntersects(feature1, feature2)) {
+                  const unionedFeature = turf.union(feature1, feature2);
+                  features[tileBorderFeatures[intersectCandidates[j+1]].index] = unionedFeature;
+                  features[tileBorderFeatures[intersectCandidates[j]].index] = null;
+                }
+              }
+              //console.log(intersectCandidates);
+            }
+            features=features.filter(feature=>feature !== null);
           }
-          //features=features.filter(feature=>feature !== null);
           
           const hashMap = new Map();
           const duplicates = [];
