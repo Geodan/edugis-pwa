@@ -428,7 +428,7 @@ class MapDraw2 extends LitElement {
   _prepareProperties(layer) {
     if (!layer.metadata.hasOwnProperty('properties')) {
       const properties = new Map();
-      let features = this.map.queryRenderedFeatures({layer:layer.id});
+      let features = this.map.queryRenderedFeatures(undefined,{layers:[layer.id]});
       for (const feature of features) {
         for (const propname in feature.properties) {
           if (!properties.has(propname)) {
