@@ -8,8 +8,9 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
+import rootUrl from '../utils/rooturl.js';
 
 // These are the actions needed by this element.
 import {
@@ -45,6 +46,97 @@ class EduGISApp extends (LitElement) {
       configUrl: {type: String}
     }
   }
+  static styles = css`
+      :host{
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      header {
+        position: absolute;
+        display: block;
+        top: 0px;
+        width: 100%;
+        height: 40px;
+        background-color: #2e7dba;
+        color: white;
+        box-sizing: border-box;
+        padding-left: 1em;
+      }
+      .topnav {
+        position: absolute;
+        top: 5px;
+        right: 1em;
+        text-align: right;
+        box-sizing: border-box;
+      }
+      .topnav ul { 
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      .topnav ul li {
+        display: inline-block;
+        padding-left: 4px;
+      }
+      .topnav ul .menu-btn-container {
+        display: none;
+      }
+      .topnav ul li a {
+        display: block;
+        text-decoration: none;
+        color: white;
+      }
+      .menu-btn {
+        background: none;
+        border: none;
+        fill: white;
+        cursor: pointer;
+        height: 24px;
+        width: 24px;
+        padding: 1px;
+      }
+      @media only screen and (max-width: 650px) {
+        .topnav ul .menuitem {
+          display: none;
+        }
+        .topnav ul .menu-btn-container {
+          display: inline-block;
+        }
+      }
+      web-map {
+        position: absolute;
+        top: 40px;
+        display: block;
+        width: 100%;
+        bottom: 1.5em;
+        box-sizing: border-box;
+        background: white;
+      }
+      footer {
+        position: absolute;
+        display: block;
+        bottom: 0px;
+        width: 100%;
+        height: 1.5em;
+        background-color: #2e7dba;
+        color: white;
+        box-sizing: border-box;
+        padding-left: 0.5em;
+      }
+      footer a {
+        text-decoration: none;
+        color: white;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      .App-search {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+  `;
   constructor() {
     super();
     this.configUrl = getHashParameters().configurl;
@@ -58,109 +150,10 @@ class EduGISApp extends (LitElement) {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
-:host{
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-header {
-  position: absolute;
-  display: block;
-  top: 0px;
-  width: 100%;
-  height: 40px;
-  background-color: #2e7dba;
-  color: white;
-  box-sizing: border-box;
-  padding-left: 1em;
-}
-
-.topnav {
-  position: absolute;
-  top: 5px;
-  right: 1em;
-  text-align: right;
-  box-sizing: border-box;
-}
-
-.topnav ul { 
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.topnav ul li {
-  display: inline-block;
-  padding-left: 4px;
-}
-
-.topnav ul .menu-btn-container {
-  display: none;
-}
-
-.topnav ul li a {
-  display: block;
-  text-decoration: none;
-  color: white;
-}
-
-.menu-btn {
-  background: none;
-  border: none;
-  fill: white;
-  cursor: pointer;
-  height: 24px;
-  width: 24px;
-  padding: 1px;
-}
-
-@media only screen and (max-width: 650px) {
-  .topnav ul .menuitem {
-    display: none;
-  }
-  .topnav ul .menu-btn-container {
-    display: inline-block;
-  }
-}
-
-web-map {
-  position: absolute;
-  top: 40px;
-  display: block;
-  width: 100%;
-  bottom: 1.5em;
-  box-sizing: border-box;
-  background: white;
-}
-
-footer {
-  position: absolute;
-  display: block;
-  bottom: 0px;
-  width: 100%;
-  height: 1.5em;
-  background-color: #2e7dba;
-  color: white;
-  box-sizing: border-box;
-  padding-left: 0.5em;
-}
-footer a {
-  text-decoration: none;
-  color: white;
-}
-footer a:hover {
-  text-decoration: underline;
-}
-
-.App-search {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
 
 </style>
     <header>
-      <img src="${document.baseURI}images/edugislogo.png" alt="logo"/>
+      <img src="${rootUrl}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
             <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">Hoe werkt EduGIS?</a></li>
