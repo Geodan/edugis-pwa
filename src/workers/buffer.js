@@ -1,5 +1,5 @@
-importScripts('https://unpkg.com/@turf/turf@6/turf.min.js');
-//importScripts('../../node_modules/@turf/buffer.js')
+//importScripts('https://unpkg.com/@turf/turf@6/turf.min.js');
+importScripts('../../node_modules/@turf/buffer/dist/es/index.js');
 
 this.onmessage = function(evt) {
     console.log(evt.data[1]);
