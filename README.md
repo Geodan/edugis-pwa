@@ -34,7 +34,7 @@ If the browser does not open automatically, then click the URL displayed on the 
 ## Build for static http server
 
 ```
-npm build
+npm run build
 ```
 The resulting static web files are generated under `build/`
 
