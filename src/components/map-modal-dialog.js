@@ -1,5 +1,5 @@
 import {LitElement, html,css} from 'lit';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html'
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js'
 import {marked} from "marked";
 import DOMPurify from 'dompurify';
 

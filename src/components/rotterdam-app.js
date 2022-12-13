@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { LitElement, html } from 'lit';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
+import rootUrl from '../utils/rooturl.js';
 
 // These are the actions needed by this element.
 import {
@@ -160,7 +161,7 @@ footer a:hover {
 
 </style>
     <header>
-      <img src="${document.baseURI}images/rdamviewerlogo.svg" alt="logo"/>
+      <img src="${rootUrl}images/rdamviewerlogo.svg" alt="logo"/>
         <nav class="topnav">
           <ul>
             <li class="menuitem"><a href="help.html" target="edugishelp">Hoe werkt de Rotterdam Viewer?</a></li>

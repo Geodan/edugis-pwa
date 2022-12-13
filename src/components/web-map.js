@@ -44,6 +44,7 @@ import mapgl from '../map-gl'
 import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
+import rootUrl from '../utils/rooturl.js';
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -188,7 +189,7 @@ class WebMap extends LitElement {
     this.bearing = 0;
     this.viewbox = [];
     // default property values
-    this.mapstyle = document.baseURI + "styles/openmaptiles/osmbright.json";
+    this.mapstyle = rootUrl + "styles/openmaptiles/osmbright.json";
     this.mapstyleid = "OsmBright";
     this.mapstyletitle = "OSM bright (stijl)";
     this.lon = 4.5458;
@@ -499,7 +500,7 @@ class WebMap extends LitElement {
     }
     if (url.split('/')[0].indexOf(':') === -1) {
       // relative url
-      url = document.baseURI + url;
+      url = rootUrl + url;
     } 
     if (url.indexOf('mapbox:') === 0) {
       url = url.replace('mapbox://styles/mapbox/', 'https://api.mapbox.com/styles/v1/mapbox/') + `?access_token=${APIkeys.mapbox}`;
@@ -906,7 +907,7 @@ class WebMap extends LitElement {
   render() {
     
     return html`<style>
-      /*@import "${document.baseURI}node_modules/mapbox-gl/dist/mapbox-gl.css";*/
+      /*@import "${rootUrl}node_modules/mapbox-gl/dist/mapbox-gl.css";*/
       ${mapgl.css}
       /* workaround bug mapbox-gl v.051, https://github.com/mapbox/mapbox-gl-js/issues/7589 */
       .mapboxgl-ctrl.mapboxgl-ctrl-attrib p {

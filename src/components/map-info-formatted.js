@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import rootUrl from '../utils/rooturl';
 
 /**
 * @polymer
@@ -75,8 +76,8 @@ class MapInfoFormatted extends LitElement {
     let layerMap = new Map();
     return html`
       <style>
-        .check-on {display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${document.baseURI}/images/checkradio.png') 20px 20px; }
-        .check-off { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${document.baseURI}/images/checkradio.png') 20px 0px; }
+        .check-on {display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${rootUrl}images/checkradio.png') 20px 20px; }
+        .check-off { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${rootUrl}images/checkradio.png') 20px 0px; }
       </style>
       <div class="header">Informatie uit de kaart</div>
       <div class="content">
