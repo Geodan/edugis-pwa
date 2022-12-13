@@ -504,6 +504,7 @@
                 },
                 "source-layer": "plll.verblijfsobjectelabel",
                 "paint": {
+                  "circle-pitch-alignment": "map",
                   "circle-color": ["match", ["get", "energieklasse"],
                     "A+++", "#1a9641",
                     "A++", "#1a9641",
@@ -614,6 +615,7 @@
                 },
                 "source-layer": "plll.referentiewoningen_energieprestatie",
                 "paint": {
+                  "circle-pitch-alignment": "map",
                   "circle-radius": 7,
                   "circle-color": "#673ab7",
                   "circle-stroke-width": 1,
@@ -669,6 +671,7 @@
                 },
                 "source-layer": "plll.referentiewoningen_energieprestatie",
                 "paint": {
+                  "circle-pitch-alignment": "map",
                   "circle-radius": 7,
                   "circle-color": ["match", ["get", "energ_label"],
                     "A+", "#1a9641",
@@ -734,6 +737,7 @@
                 },
                 "source-layer": "plll.referentiewoningen_energieprestatie",
                 "paint": {
+                  "circle-pitch-alignment": "map",
                   "circle-radius": 7,
                   "circle-color": ["interpolate-lab", ["linear"], ["get","gas_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
                   "circle-stroke-width": 1,
@@ -757,6 +761,7 @@
               "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,adressen"],
               "bounds":[4.5194,51.9219,4.5670,51.9556],
               "paint": {
+                "circle-pitch-alignment": "map",
                 "circle-color": "#000",
                 "circle-radius": 5,
                 "circle-stroke-color": "#fff",
