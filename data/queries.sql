@@ -338,3 +338,30 @@ create view verblijfsobjectelabel as
 	from verblijfsobjecten v
 	  left join energielabels e on (v.identificatie = e.pand_bagverblijfsobjectid)
 	  ;
+
+
+drop sequence if exists gebouwsequence;
+create sequence gebouwsequence;
+drop table if exists gebouw;
+create table gebouw as
+select 
+	nextval('gebouwsequence') ogc_fid,
+	p.identificatie, 
+	p."pandstatus",
+	case 
+		when "pandstatus" = 'Pand in gebruik' then 5
+		when "pandstatus" = 'Verbouwing pand' then 4
+		when "pandstatus" = 'Bouwvergunning verleend' then 3
+		when "pandstatus" = 'Sloopvergunning verleend' then 2
+		when "pandstatus" = 'Pand gesloopt' then 1
+	end statusorder,
+	p.bouwjaar,
+	p.geovlak geom
+  from bag20221203.pand p
+    join cbs_buurten cb
+      on (st_intersects(cb.geom, p.geovlak))
+    where 
+     p.identificatie <> '0599100000664403' and  -- cbs buurt border touches this building
+     p.begindatumtijdvakgeldigheid <= now() AND 
+     (p.einddatumtijdvakgeldigheid IS NULL OR p.einddatumtijdvakgeldigheid >= now());
+create index gebouwgeomidx on gebouw using gist(geom);

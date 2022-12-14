@@ -1,752 +1,790 @@
 {
-    "map": {
-        "zoom": 13,
-        "center": [4.5458,51.9397],
-        "pitch" : 0
-    },
-    "datacatalog" : [
-          {
+  "map": {
+      "zoom": 13,
+      "center": [4.5458,51.9397],
+      "pitch" : 0
+  },
+  "datacatalog" : [
+    {
+        "title": "Prinsenland en Het Lage Land",
+        "layerInfo": {
+          "id": "PlenhLL",
+          "type": "fill",
+          "metadata": {
             "title": "Prinsenland en Het Lage Land",
-            "layerInfo": {
-              "id": "PlenhLL",
-              "type": "fill",
+            "transparency": 50,
+            "attributes": {
+              "translations": [
+                {"name": "bu_code", "translation": "cbs buurtcode"},
+                {"name": "aant_inw", "translation": "aantal inwoners"},
+                {"name": "aant_man", "translation": "aantal mannen"},
+                {"name": "aant_vrouw", "translation": "aantal vrouwen"},
+                {"name": "aantal_hh", "translation" : "aantal huishoudens"},
+                {"name": "p_eenp_hh", "translation": "percentage eenpersoonshuishoudens", "unit": " %"},
+                {"name": "p_hh_z_k", "translation": "percentage huishoudens zonder kinderen", "unit": " %"},
+                {"name": "p_hh_m_k", "translation": "percentage huishoudens met kinderen", "unit": " %"},
+                {"name": "gem_hh_gr", "translation": "gemiddelde huishoudensgrootte"}
+              ]
+            }
+          },
+          "source": {
+            "type": "vector",
+            "tiles":["https://research1.geodan.nl/data/plll.cbs_buurten/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,bu_code,aant_inw,aant_man,aant_vrouw,aantal_hh,p_eenp_hh,p_hh_z_k,p_hh_m_k,gem_hh_gr&include_nulls=0"],
+            "bounds":[4.5194,51.9219,4.5670,51.9556]
+          },
+          "source-layer":"plll.cbs_buurten",
+          "paint": {
+            "fill-color": ["match",["get","naam"], 
+              "Het Lage Land", "rgba(200,49,80,1)",
+              "Prinsenland", "rgba(49,154,42,1)",
+              "#000"
+            ],
+            "fill-outline-color": "#000"
+          }
+        }
+    },
+    {
+          "type": "group",
+          "title": "Administratieve indelingen",
+          "sublayers": [
+                {
+                  "type": "group",
+                  "title": "Wijken en buurten (2017)",
+                  "sublayers": [
+                      {
+                        "title" : "Wijken",
+                        "id": "wijken2017",
+                        "layerInfo": {
+                          "id": "wijken2017style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "wijksource": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"wijkvlak",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "wijk",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "statnaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "source": "wijksource",
+                                "source-layer":"cbs.wijk2017",
+                                "paint": {
+                                  "fill-color": "rgba(49,154,42,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "wijk2017-outline",
+                                "metadata": {
+                                  "title": "wijkgrens",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "statnaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "wijksource",
+                                "source-layer": "cbs.wijk2017",
+                                "paint": {
+                                  "line-color": "rgb(49,154,42)",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Wijknamen",
+                        "id": "wijknamen2017",
+                        "layerInfo": {
+                          "id": "wijknamen2017",
+                          "metadata": {
+                            "attributes": {
+                              "translations":[
+                                {"name":"statnaam", "translation": "naam"},
+                                {"name":"aantalinwoners", "translation": "aantal inwoners"}
+                              ]
+                            }
+                          },
+                          "type": "symbol",
+                          "source": {
+                            "type": "vector",
+                            "tiles": ["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                          },
+                          "source-layer": "cbs.wijk2017",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","statnaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ],
+                            "text-size": 9,
+                            "symbol-sort-key": ["-",["get","aantalinwoners"]]
+                          }
+                        }
+                      },
+                      {
+                        "title" : "Buurten",
+                        "id": "buurten2017",
+                        "layerInfo": {
+                          "id": "buurt2017style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "buurtsource": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"buurtvlak",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "buurt",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "statnaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "source": "buurtsource",
+                                "source-layer":"cbs.buurt2017",
+                                "paint": {
+                                  "fill-color": "rgba(254,134,18,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "buurt2017-outline",
+                                "metadata": {
+                                  "title": "buurtgrens",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "statnaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "buurtsource",
+                                "source-layer": "cbs.buurt2017",
+                                "paint": {
+                                  "line-color": "rgb(254,134,18)",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Buurtnamen",
+                        "id": "buurtnamen2017",
+                        "layerInfo": {
+                          "id": "buurtnamen2017",
+                          "metadata": {
+                            "attributes": {
+                              "translations":[
+                                {"name":"statnaam", "translation": "naam"},
+                                {"name":"aantalinwoners", "translation": "aantal inwoners"}
+                              ]
+                            }
+                          },
+                          "type": "symbol",
+                          "source": {
+                            "type": "vector",
+                            "tiles": ["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
+                          },
+                          "source-layer": "cbs.buurt2017",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","statnaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ],
+                            "text-size": 8,
+                            "symbol-sort-key": ["-",["get","aantalinwoners"]]
+                          }
+                        }
+                      }
+                  ]
+              },
+              {
+                "title": "Kadastrale Percelen (2020)",
+                "layerInfo": {
+                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
+                  "type":"fill",
+                  "minzoom": 14.5,
+                  "source":{
+                      "type":"vector",
+                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
+                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                      "maxzoom": 17
+                  },
+                  "source-layer":"percelen.perceel",
+                  "paint":{
+                    "fill-color":"rgba(0,0,0,0)",
+                    "fill-opacity":1,
+                    "fill-outline-color": "darkred"
+                  }
+                }
+              },
+              {
+                "title": "Percelen (labels)",
+                "layerInfo": {
+                  "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
+                  "type":"symbol",
+                  "minzoom": 15,
+                  "source":{
+                      "type":"vector",
+                      "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
+                      "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                      "maxzoom": 17
+                  },                                    
+                  "source-layer":"percelen.perceel",
+                  "paint":{
+                    "text-color":"black"
+                  },
+                  "layout":{
+                      "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
+                      "text-rotate": ["get","perceelnummerrotatie"],
+                      "text-size": 10
+                  }
+                }
+              }
+            ]
+    },
+    {
+      "type": "group",
+      "title": "Verblijfsobjecten",
+      "sublayers": [
+          {
+            "title": "gebruiksdoel",
+            "layerInfo" : {
+              "id": "verblijfsobjectgebruiksdoel",
+              "type": "circle",
               "metadata": {
-                "title": "Prinsenland en Het Lage Land",
-                "transparency": 50,
                 "attributes": {
                   "translations": [
-                    {"name": "bu_code", "translation": "cbs buurtcode"},
-                    {"name": "aant_inw", "translation": "aantal inwoners"},
-                    {"name": "aant_man", "translation": "aantal mannen"},
-                    {"name": "aant_vrouw", "translation": "aantal vrouwen"},
-                    {"name": "aantal_hh", "translation" : "aantal huishoudens"},
-                    {"name": "p_eenp_hh", "translation": "percentage eenpersoonshuishoudens", "unit": " %"},
-                    {"name": "p_hh_z_k", "translation": "percentage huishoudens zonder kinderen", "unit": " %"},
-                    {"name": "p_hh_m_k", "translation": "percentage huishoudens met kinderen", "unit": " %"},
-                    {"name": "gem_hh_gr", "translation": "gemiddelde huishoudensgrootte"}
+                    {"name": "gebruiksdoel"},
+                    {"name": "identificatie"},
+                    {"name": "verblijfsobjectstatus", "translation":"satus"},
+                    {"name": "oppervlakteverblijfsobject", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "openbareruimtenaam", "translation": "straat"},
+                    {"name": "huisnummer"},
+                    {"name": "huisletter"},
+                    {"name": "huisnummertoevoeging", "translation":"toevoeging"},
+                    {"name": "postcode"},
+                    {"name": "woonplaatsnaam", "translation": "woonplaats"},
+                    {"name": "gerelateerdpand", "translation": "pand id"},
+                    {"name": "bouwjaar"},
+                    {"name": "pandstatus"}
                   ]
                 }
               },
               "source": {
                 "type": "vector",
-                "tiles":["https://research1.geodan.nl/data/plll.cbs_buurten/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,bu_code,aant_inw,aant_man,aant_vrouw,aantal_hh,p_eenp_hh,p_hh_z_k,p_hh_m_k,gem_hh_gr&include_nulls=0"],
+                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom2&columns=ogc_fid,identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,openbareruimtenaam,gebruiksdoel,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,bouwjaar,gerelateerdpand,pandstatus&include_nulls=0"],
                 "bounds":[4.5194,51.9219,4.5670,51.9556]
               },
-              "source-layer":"plll.cbs_buurten",
+              "source-layer": "plll.verblijfsobjecten",
               "paint": {
-                "fill-color": ["match",["get","naam"], 
-                  "Het Lage Land", "rgba(200,49,80,1)",
-                  "Prinsenland", "rgba(49,154,42,1)",
-                  "#000"
-                ],
-                "fill-outline-color": "#000"
+                "circle-radius": 4,
+                "circle-pitch-alignment": "map",
+                "circle-stroke-color": "white",
+                "circle-stroke-width": 0.5,
+                "circle-color": ["match", ["get", "gebruiksdoel"], 
+                  "woonfunctie", "green", 
+                  "winkelfunctie", "yellow", 
+                  "industriefunctie", "red", 
+                  "bijeenkomstfunctie", "orange",
+                  "onderwijsfunctie", "blue", 
+                  "woonfunctie,onderwijsfunctie", "blue", 
+                  "kantoorfunctie", "lightblue", 
+                  "overige gebruiksfunctie", "gray", 
+                  "gray"]
               }
             }
-        },
-        {
-            "type": "group",
-            "title": "Administratieve indelingen",
-            "sublayers": [
-                 {
-                    "type": "group",
-                    "title": "Wijken en buurten (2017)",
-                    "sublayers": [
-                        {
-                          "title" : "Wijken",
-                          "id": "wijken2017",
-                          "layerInfo": {
-                            "id": "wijken2017style",
-                            "type": "style",
-                            "source": {
-                              "version": 8,
-                              "sources": {
-                                "wijksource": {
-                                  "type": "vector",
-                                  "tiles":["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
-                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
-                                }
-                              },
-                              "layers": [
-                                {
-                                  "id":"wijkvlak",
-                                  "type": "fill",
-                                  "metadata": {
-                                    "title": "wijk",
-                                    "attributes": {
-                                      "deniedattributes": "water",
-                                      "translations":[
-                                        {"name": "statnaam", "translation":"naam"}
-                                      ]
-                                    }
-                                  },
-                                  "source": "wijksource",
-                                  "source-layer":"cbs.wijk2017",
-                                  "paint": {
-                                    "fill-color": "rgba(49,154,42,0)"
-                                  },
-                                  "filter": ["==",["get","water"],"NEE"]
-                                },
-                                {
-                                  "id": "wijk2017-outline",
-                                  "metadata": {
-                                    "title": "wijkgrens",
-                                    "attributes": {
-                                      "deniedattributes": "water",
-                                      "translations":[
-                                        {"name": "statnaam", "translation":"naam"}
-                                      ]
-                                    }
-                                  },
-                                  "type": "line",
-                                  "source": "wijksource",
-                                  "source-layer": "cbs.wijk2017",
-                                  "paint": {
-                                    "line-color": "rgb(49,154,42)",
-                                    "line-width": 2
-                                  },
-                                  "filter": ["==",["get","water"],"NEE"]
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        {
-                          "title": "Wijknamen",
-                          "id": "wijknamen2017",
-                          "layerInfo": {
-                            "id": "wijknamen2017",
-                            "metadata": {
-                              "attributes": {
-                                "translations":[
-                                  {"name":"statnaam", "translation": "naam"},
-                                  {"name":"aantalinwoners", "translation": "aantal inwoners"}
-                                ]
-                              }
-                            },
-                            "type": "symbol",
-                            "source": {
-                              "type": "vector",
-                              "tiles": ["https://tiles.edugis.nl/data/cbs.wijk2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
-                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
-                            },
-                            "source-layer": "cbs.wijk2017",
-                            "paint":{
-                                "text-color":"black"
-                            },
-                            "layout":{
-                              "text-field": ["get","statnaam"],
-                              "text-font": [
-                                "Noto Sans Regular"
-                              ],
-                              "text-size": 9,
-                              "symbol-sort-key": ["-",["get","aantalinwoners"]]
-                            }
-                          }
-                        },
-                        {
-                          "title" : "Buurten",
-                          "id": "buurten2017",
-                          "layerInfo": {
-                            "id": "buurt2017style",
-                            "type": "style",
-                            "source": {
-                              "version": 8,
-                              "sources": {
-                                "buurtsource": {
-                                  "type": "vector",
-                                  "tiles":["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geom&columns=statnaam,water&include_nulls=0"],
-                                  "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
-                                }
-                              },
-                              "layers": [
-                                {
-                                  "id":"buurtvlak",
-                                  "type": "fill",
-                                  "metadata": {
-                                    "title": "buurt",
-                                    "attributes": {
-                                      "deniedattributes": "water",
-                                      "translations":[
-                                        {"name": "statnaam", "translation":"naam"}
-                                      ]
-                                    }
-                                  },
-                                  "source": "buurtsource",
-                                  "source-layer":"cbs.buurt2017",
-                                  "paint": {
-                                    "fill-color": "rgba(254,134,18,0)"
-                                  },
-                                  "filter": ["==",["get","water"],"NEE"]
-                                },
-                                {
-                                  "id": "buurt2017-outline",
-                                  "metadata": {
-                                    "title": "buurtgrens",
-                                    "attributes": {
-                                      "deniedattributes": "water",
-                                      "translations":[
-                                        {"name": "statnaam", "translation":"naam"}
-                                      ]
-                                    }
-                                  },
-                                  "type": "line",
-                                  "source": "buurtsource",
-                                  "source-layer": "cbs.buurt2017",
-                                  "paint": {
-                                    "line-color": "rgb(254,134,18)",
-                                    "line-width": 2
-                                  },
-                                  "filter": ["==",["get","water"],"NEE"]
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        {
-                          "title": "Buurtnamen",
-                          "id": "buurtnamen2017",
-                          "layerInfo": {
-                            "id": "buurtnamen2017",
-                            "metadata": {
-                              "attributes": {
-                                "translations":[
-                                  {"name":"statnaam", "translation": "naam"},
-                                  {"name":"aantalinwoners", "translation": "aantal inwoners"}
-                                ]
-                              }
-                            },
-                            "type": "symbol",
-                            "source": {
-                              "type": "vector",
-                              "tiles": ["https://tiles.edugis.nl/data/cbs.buurt2017/mvt/{z}/{x}/{y}?geom_column=geompoint&columns=statnaam,aantalinwoners&include_nulls=0"],
-                              "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369]
-                            },
-                            "source-layer": "cbs.buurt2017",
-                            "paint":{
-                                "text-color":"black"
-                            },
-                            "layout":{
-                              "text-field": ["get","statnaam"],
-                              "text-font": [
-                                "Noto Sans Regular"
-                              ],
-                              "text-size": 8,
-                              "symbol-sort-key": ["-",["get","aantalinwoners"]]
-                            }
-                          }
-                        }
-                    ]
-                },
-                {
-                  "title": "Kadastrale Percelen (2020)",
-                  "layerInfo": {
-                    "id":"a831eaf7-eb01-4271-b79d-95c2008d64983",
-                    "type":"fill",
-                    "minzoom": 14.5,
-                    "source":{
-                        "type":"vector",
-                        "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=begrenzing&columns=perceelnummer,sectie,kadgemeente,kadgemeentecode&include_nulls=0"],
-                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                        "maxzoom": 17
-                    },
-                    "source-layer":"percelen.perceel",
-                    "paint":{
-                      "fill-color":"rgba(0,0,0,0)",
-                      "fill-opacity":1,
-                      "fill-outline-color": "darkred"
-                    }
-                  }
-                },
-                {
-                  "title": "Percelen (labels)",
-                  "layerInfo": {
-                    "id":"a831eaf7-eb01-4271-b79d-95c2008d64982",
-                    "type":"symbol",
-                    "minzoom": 15,
-                    "source":{
-                        "type":"vector",
-                        "tiles":["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
-                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                        "maxzoom": 17
-                    },                                    
-                    "source-layer":"percelen.perceel",
-                    "paint":{
-                      "text-color":"black"
-                    },
-                    "layout":{
-                        "text-field":["concat", ["get", "sectie"],"-", ["get","perceelnummer"]],
-                        "text-rotate": ["get","perceelnummerrotatie"],
-                        "text-size": 10
-                    }
-                  }
-                }
-              ]
-        },
-        {
-          "type": "group",
-          "title": "Panden e.d.",
-          "sublayers": [
-              {
+          },
+          {
+            "title": "energielabels",
+            "layerInfo": {
+              "id": "verblijfsobjectenergielabels",
+              "type": "circle",
+              "source": {
                 "type": "vector",
-                "title": "panden - 3D hoogte",
-                "layerInfo": {
-                  "id": "building3D",
-                  "type": "fill-extrusion",
-                  "metadata": {
-                    "attributes": {
-                      "translations": [
-                          {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
-                          {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
-                      ]
-                    },
-                    "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
-                  },
-                  "source": {
-                    "type": "vector",
-                    "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
-                    "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
-                    "minzoom": 13,
-                    "maxzoom": 18,
-                    "attribution": "Kadaster"
-                  },
-                  "source-layer": "public.bag13_lod1213_2d_levering",
-                  "minzoom": 13,
-                  "maxzoom": 24,
-                  "paint": {
-                    "fill-extrusion-color": ["case",
-                    ["==", ["get","bouwjaar"], null], "#cccccc",
-                    ["<",["get","bouwjaar"],1006],"#cccccc",
-                    ["<",["get","bouwjaar"],1700],"#7f0000",
-                    ["<",["get","bouwjaar"],1800],"#b30000",
-                    ["<",["get","bouwjaar"],1900],"#d7301f",
-                    ["<",["get","bouwjaar"],1930],"#ef6548",
-                    ["<",["get","bouwjaar"],1960],"#fc8d59",
-                    ["<",["get","bouwjaar"],1975],"#fdbb84",
-                    ["<",["get","bouwjaar"],1990],"#fdd49e",
-                    ["<",["get","bouwjaar"],2000],"#fee8c8",
-                    ["<=",["get","bouwjaar"],2025],"#fff7ec",
-                    "#cccccc"],
-                    "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
-                    "fill-extrusion-base": 0,
-                    "fill-extrusion-opacity": 0.95
-                  }
-                }
+                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
               },
-              {
-                  "type": "wms",
-                  "title": "panden - bouwjaar",
-                  "layerInfo": {
-                      "id": "pandenbouwjaar",
-                      "type":"raster",
-                      "minzoom":11,
-                      "maxzoom":22,
-                      "source":{
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "type":"raster",
-                          "tileSize":512,
-                          "tiles":[
-                              "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
-                          ],
-                          "attribution":"Pico, Kadaster"
-                      }
-                  }
-              },
-              {
-                  "type": "wms",
-                  "title": "panden - energielabel",
-                  "layerInfo": {
-                      "id": "pandennergielabel",
-                      "type":"raster",
-                      "minzoom":13,
-                      "maxzoom":22,
-                      "source":{
-                          "type":"raster",
-                          "tileSize":512,
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles":[
-                              "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
-                          ],
-                          "attribution":"Pico, Kadaster"
-                      }
-                  }
-              },
-              {
-                "title": "Dakdelen",
-                "layerInfo": {
-                  "id": "plldakdelen",
-                  "type": "fill",
-                  "metadata": {
-                    "attributes": {
-                      "deniedattributes": ["fid"],
-                      "translations": [
-                        {"name": "aspect", "translation": "richting", "valuemap":[
-                          [-1, "plat dak"],
-                          [45, "noord (<45)"],
-                          [135, "oost (<135)"],
-                          [225, "zuid (<225)"],
-                          [315, "west (<315)"],
-                          [361, "noord (<360)"]
-                        ]}
-                      ]
-                    }
-                  },
-                  "source": {
-                    "promoteId": "dakdeel_id",
-                    "type": "vector",
-                    "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_colum=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
-                    "bounds":[4.5194,51.9219,4.5670,51.9556],
-                    "maxzoom": 19
-                  },
-                  "source-layer": "plll.dakdelen_pll",
-                  "paint": {
-                    "fill-color": ["case",
-                      ["==", ["get","aspect"], -1], "#c5b3b5",
-                      ["<", ["get","aspect"], 45], "#ffa7a2",
-                      ["<", ["get","aspect"], 135], "#b32a25",
-                      ["<", ["get","aspect"], 225], "#8c1916",
-                      ["<", ["get","aspect"], 315], "#ff7d79",
-                      ["<", ["get","aspect"], 361], "#ffa7a2",
-                      "#6a6a6a"
-                    ],
-                    "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "rgba(0,0,0,0)"]
-                  }
-                }
-              },
-              {
-                "title": "Zonnepotentie gebouwen",
-                "layerInfo": {
-                  "id": "pllzonnepotentiegebouwen",
-                  "type": "fill",
-                  "metadata": {
-                    "attributes": {
-                      "deniedattributes": ["fid"],
-                      "translations": [
-                        {"name": "pc6", "translation": "postcode"}
-                      ]
-                    }
-                  },
-                  "source": {
-                    "promoteId": "dakdeel_id",
-                    "type": "vector",
-                    "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_colum=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
-                    "bounds":[4.5194,51.9219,4.5670,51.9556]
-                  },
-                  "source-layer": "plll.rdam_pll_gebouwpv",
-                  "paint": {
-                    "fill-color": ["interpolate-lab", ["linear"], ["get","dak_pv"], 0, "blue", 700000 , "red"],
-                    "fill-outline-color": "black"
-                  }
-                }
-              }
-          ]
-      },
-      {
-        "type": "group",
-        "title": "Verblijfsobjecten",
-        "sublayers": [
-            {
-              "title": "gebruiksdoel",
-              "layerInfo" : {
-                "id": "verblijfsobjectgebruiksdoel",
-                "type": "circle",
-                "metadata": {
-                  "attributes": {
-                    "translations": [
-                      {"name": "gebruiksdoel"},
-                      {"name": "identificatie"},
-                      {"name": "verblijfsobjectstatus", "translation":"satus"},
-                      {"name": "oppervlakteverblijfsobject", "translation": "oppervlakte", "unit": " m2"},
-                      {"name": "openbareruimtenaam", "translation": "straat"},
-                      {"name": "huisnummer"},
-                      {"name": "huisletter"},
-                      {"name": "huisnummertoevoeging", "translation":"toevoeging"},
-                      {"name": "postcode"},
-                      {"name": "woonplaatsnaam", "translation": "woonplaats"},
-                      {"name": "gerelateerdpand", "translation": "pand id"},
-                      {"name": "bouwjaar"},
-                      {"name": "pandstatus"}
-                    ]
-                  }
-                },
-                "source": {
-                  "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom2&columns=ogc_fid,identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,openbareruimtenaam,gebruiksdoel,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,bouwjaar,gerelateerdpand,pandstatus&include_nulls=0"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.verblijfsobjecten",
-                "paint": {
-                  "circle-radius": 4,
-                  "circle-pitch-alignment": "map",
-                  "circle-stroke-color": "white",
-                  "circle-stroke-width": 1,
-                  "circle-color": ["match", ["get", "gebruiksdoel"], 
-                    "woonfunctie", "green", 
-                    "winkelfunctie", "yellow", 
-                    "industriefunctie", "red", 
-                    "bijeenkomstfunctie", "orange",
-                    "onderwijsfunctie", "blue", 
-                    "woonfunctie,onderwijsfunctie", "blue", 
-                    "kantoorfunctie", "lightblue", 
-                    "overige gebruiksfunctie", "gray", 
-                    "gray"]
-                }
-              }
-            },
-            {
-              "title": "energielabels",
-              "layerInfo": {
-                "id": "verblijfsobjectenergielabels",
-                "type": "circle",
-                "source": {
-                  "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.verblijfsobjectelabel",
-                "paint": {
-                  "circle-pitch-alignment": "map",
-                  "circle-color": ["match", ["get", "energieklasse"],
-                    "A+++", "#1a9641",
-                    "A++", "#1a9641",
-                    "A+", "#1a9641",
-                    "A", "#6abd58",
-                    "B", "#b3df5b",
-                    "C", "#e6f51f",
-                    "D", "#ffe81c",
-                    "E", "#feba53",
-                    "F", "#ed6e43",
-                    "G", "#d7191c",
-                    "#cccccc"
-                  ],
-                  "circle-radius": 4,
-                  "circle-stroke-color": "#fff",
-                  "circle-stroke-width": 1
-                }
-              }
-            },
-            {
-              "title": "gasgebruik 2021",
-              "layerInfo" : {
-                "metadata": {
-                  "maxinfofeatures": 20
-                },
-                "id": "verblijfsobjectgasgebruik",
-                "type": "circle",
-                "source": {
-                  "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.verblijfsobjecten",
-                "paint": {
-                  "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
-                  "circle-pitch-alignment": "map",
-                  "circle-stroke-color": "white",
-                  "circle-stroke-width": 0.4,
-                  "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
-                }
-              }
-            },
-            {
-              "title": "elektriciteitsgebruik 2021",
-              "layerInfo" : {
-                "id": "verblijfsobjectelektriciteitsgebruik21",
-                "type": "circle",
-                "source": {
-                  "type": "vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.verblijfsobjecten",
-                "paint": {
-                  "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
-                  "circle-pitch-alignment": "map",
-                  "circle-stroke-color": "white",
-                  "circle-stroke-width": 0.4,
-                  "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
-                }
-              }
-            },
-            {
-              "title": "Referentiewoningen",
-              "layerInfo": {
-                "id": "referentiewoningenenergieprestatie",
-                "type": "circle",
-                "metadata": {
-                  "attributes": {
-                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
-                    "translations": [
-                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
-                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
-                      {"name": "straat", "translation": "straat"},
-                      {"name": "huisnummer", "translation": "huisnummer"},
-                      {"name": "postcode", "translation": "postcode"},
-                      {"name": "bouwjaar", "translation": "bouwjaar"},
-                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
-                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
-                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
-                      {"name": "energ_label", "translation": "energielabel"},
-                      {"name": "gebouwtype", "translation": "gebouwtype"},
-                      {"name": "A_EI", "translation": "Huidige energie index"},
-                      {"name": "A_elabel", "translation": "Huidig energielabel"},
-                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
-                      {"name": "A_bwjr", "translation": "Bouwjaar"},
-                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
-                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
-                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
-                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
-                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
-                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
-                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
-                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
-                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
-                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
-                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
-                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
-                    ]
-                  }
-                },
-                "source": {
-                  "promoteId": "id",
-                  "type": "vector",
-                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.referentiewoningen_energieprestatie",
-                "paint": {
-                  "circle-pitch-alignment": "map",
-                  "circle-radius": 7,
-                  "circle-color": "#673ab7",
-                  "circle-stroke-width": 1,
-                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
-                }
-              }
-            },
-            {
-              "title": "Referentiewoningen energielabel",
-              "layerInfo": {
-                "id": "referentiewoningenenerglabel",
-                "type": "circle",
-                "metadata": {
-                  "attributes": {
-                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
-                    "translations": [
-                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
-                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
-                      {"name": "straat", "translation": "straat"},
-                      {"name": "huisnummer", "translation": "huisnummer"},
-                      {"name": "postcode", "translation": "postcode"},
-                      {"name": "bouwjaar", "translation": "bouwjaar"},
-                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
-                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
-                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
-                      {"name": "energ_label", "translation": "energielabel"},
-                      {"name": "gebouwtype", "translation": "gebouwtype"},
-                      {"name": "A_EI", "translation": "Huidige energie index"},
-                      {"name": "A_elabel", "translation": "Huidig energielabel"},
-                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
-                      {"name": "A_bwjr", "translation": "Huidig jaar"},
-                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
-                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
-                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
-                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
-                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
-                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
-                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
-                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
-                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
-                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
-                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
-                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
-                    ]
-                  }
-                },
-                "source": {
-                  "promoteId": "id",
-                  "type": "vector",
-                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.referentiewoningen_energieprestatie",
-                "paint": {
-                  "circle-pitch-alignment": "map",
-                  "circle-radius": 7,
-                  "circle-color": ["match", ["get", "energ_label"],
-                    "A+", "#1a9641",
-                    "A", "#6abd58",
-                    "B", "#b3df5b",
-                    "C", "#e6f51f",
-                    "D", "#ffe81c",
-                    "E", "#feba53",
-                    "F", "#ed6e43",
-                    "G", "#d7191c",
-                    "#cccccc"
-                  ],
-                  "circle-stroke-width": 1,
-                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
-                }
-              }
-            },
-            {
-              "title": "Referentiewoningen gasgebruik / m2",
-              "layerInfo": {
-                "id": "referentiewoningengasgebruikm2",
-                "type": "circle",
-                "metadata": {
-                  "attributes": {
-                    "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
-                    "translations": [
-                      {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
-                      {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
-                      {"name": "straat", "translation": "straat"},
-                      {"name": "huisnummer", "translation": "huisnummer"},
-                      {"name": "postcode", "translation": "postcode"},
-                      {"name": "bouwjaar", "translation": "bouwjaar"},
-                      {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
-                      {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
-                      {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
-                      {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
-                      {"name": "energ_label", "translation": "energielabel"},
-                      {"name": "gebouwtype", "translation": "gebouwtype"},
-                      {"name": "A_EI", "translation": "Huidige energie index"},
-                      {"name": "A_elabel", "translation": "Huidig energielabel"},
-                      {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
-                      {"name": "A_bwjr", "translation": "Huidig jaar"},
-                      {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
-                      {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
-                      {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
-                      {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
-                      {"name": "C_EI", "translation": "Energie index (HT warmte)"},
-                      {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
-                      {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
-                      {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
-                      {"name": "E_EI", "translation": "Energie index (MT warmte)"},
-                      {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
-                      {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
-                      {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
-                    ]
-                  }
-                },
-                "source": {
-                  "promoteId": "id",
-                  "type": "vector",
-                  "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
-                  "bounds":[4.5194,51.9219,4.5670,51.9556]
-                },
-                "source-layer": "plll.referentiewoningen_energieprestatie",
-                "paint": {
-                  "circle-pitch-alignment": "map",
-                  "circle-radius": 7,
-                  "circle-color": ["interpolate-lab", ["linear"], ["get","gas_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
-                  "circle-stroke-width": 1,
-                  "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
-                }
+              "source-layer": "plll.verblijfsobjectelabel",
+              "paint": {
+                "circle-pitch-alignment": "map",
+                "circle-color": ["match", ["get", "energieklasse"],
+                  "A+++", "#1a9641",
+                  "A++", "#1a9641",
+                  "A+", "#1a9641",
+                  "A", "#6abd58",
+                  "B", "#b3df5b",
+                  "C", "#e6f51f",
+                  "D", "#ffe81c",
+                  "E", "#feba53",
+                  "F", "#ed6e43",
+                  "G", "#d7191c",
+                  "#cccccc"
+                ],
+                "circle-radius": 4,
+                "circle-stroke-color": "#fff",
+                "circle-stroke-width": 0.5
               }
             }
-        ]
+          },
+          {
+            "title": "gasgebruik 2021",
+            "layerInfo" : {
+              "metadata": {
+                "maxinfofeatures": 20
+              },
+              "id": "verblijfsobjectgasgebruik",
+              "type": "circle",
+              "source": {
+                "type": "vector",
+                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.verblijfsobjecten",
+              "paint": {
+                "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
+                "circle-pitch-alignment": "map",
+                "circle-stroke-color": "white",
+                "circle-stroke-width": 0.4,
+                "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
+              }
+            }
+          },
+          {
+            "title": "elektriciteitsgebruik 2021",
+            "layerInfo" : {
+              "id": "verblijfsobjectelektriciteitsgebruik21",
+              "type": "circle",
+              "source": {
+                "type": "vector",
+                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.verblijfsobjecten",
+              "paint": {
+                "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
+                "circle-pitch-alignment": "map",
+                "circle-stroke-color": "white",
+                "circle-stroke-width": 0.4,
+                "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
+              }
+            }
+          },
+          {
+            "title": "Referentiewoningen",
+            "layerInfo": {
+              "id": "referentiewoningenenergieprestatie",
+              "type": "circle",
+              "metadata": {
+                "attributes": {
+                  "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                  "translations": [
+                    {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                    {"name": "straat", "translation": "straat"},
+                    {"name": "huisnummer", "translation": "huisnummer"},
+                    {"name": "postcode", "translation": "postcode"},
+                    {"name": "bouwjaar", "translation": "bouwjaar"},
+                    {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                    {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                    {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                    {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                    {"name": "energ_label", "translation": "energielabel"},
+                    {"name": "gebouwtype", "translation": "gebouwtype"},
+                    {"name": "A_EI", "translation": "Huidige energie index"},
+                    {"name": "A_elabel", "translation": "Huidig energielabel"},
+                    {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                    {"name": "A_bwjr", "translation": "Bouwjaar"},
+                    {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                    {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                    {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                    {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                    {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                    {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                    {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                    {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                    {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                    {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                    {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                    {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                  ]
+                }
+              },
+              "source": {
+                "promoteId": "id",
+                "type": "vector",
+                "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.referentiewoningen_energieprestatie",
+              "paint": {
+                "circle-pitch-alignment": "map",
+                "circle-radius": 7,
+                "circle-color": "#673ab7",
+                "circle-stroke-width": 1,
+                "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
+              }
+            }
+          },
+          {
+            "title": "Referentiewoningen energielabel",
+            "layerInfo": {
+              "id": "referentiewoningenenerglabel",
+              "type": "circle",
+              "metadata": {
+                "attributes": {
+                  "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                  "translations": [
+                    {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                    {"name": "straat", "translation": "straat"},
+                    {"name": "huisnummer", "translation": "huisnummer"},
+                    {"name": "postcode", "translation": "postcode"},
+                    {"name": "bouwjaar", "translation": "bouwjaar"},
+                    {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                    {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                    {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                    {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                    {"name": "energ_label", "translation": "energielabel"},
+                    {"name": "gebouwtype", "translation": "gebouwtype"},
+                    {"name": "A_EI", "translation": "Huidige energie index"},
+                    {"name": "A_elabel", "translation": "Huidig energielabel"},
+                    {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                    {"name": "A_bwjr", "translation": "Huidig jaar"},
+                    {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                    {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                    {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                    {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                    {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                    {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                    {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                    {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                    {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                    {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                    {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                    {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                  ]
+                }
+              },
+              "source": {
+                "promoteId": "id",
+                "type": "vector",
+                "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.referentiewoningen_energieprestatie",
+              "paint": {
+                "circle-pitch-alignment": "map",
+                "circle-radius": 7,
+                "circle-color": ["match", ["get", "energ_label"],
+                  "A+", "#1a9641",
+                  "A", "#6abd58",
+                  "B", "#b3df5b",
+                  "C", "#e6f51f",
+                  "D", "#ffe81c",
+                  "E", "#feba53",
+                  "F", "#ed6e43",
+                  "G", "#d7191c",
+                  "#cccccc"
+                ],
+                "circle-stroke-width": 1,
+                "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
+              }
+            }
+          },
+          {
+            "title": "Referentiewoningen gasgebruik / m2",
+            "layerInfo": {
+              "id": "referentiewoningengasgebruikm2",
+              "type": "circle",
+              "metadata": {
+                "attributes": {
+                  "deniedattributes": ["id","vblf_identificatie","pandidentificatie","status"],
+                  "translations": [
+                    {"name": "oppervlakte", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "gebruiksdoel", "translation": "gebruiksdoel"},
+                    {"name": "straat", "translation": "straat"},
+                    {"name": "huisnummer", "translation": "huisnummer"},
+                    {"name": "postcode", "translation": "postcode"},
+                    {"name": "bouwjaar", "translation": "bouwjaar"},
+                    {"name": "gas21", "translation": "gasverbruik 2021", "unit": " m3", "decimals":0},
+                    {"name": "gas21_cor", "translation": "gasverbruik 2021 gecorrigeerd voor weer", "unit": " m3", "decimals":0},
+                    {"name": "gas_cor_m2", "translation": "gasverbruik per m2", "unit": " m3", "decimals": 1},
+                    {"name": "elek21", "translation": "elektriciteitsverbruik 2021", "unit": " kwh", "decimals": 0},
+                    {"name": "energ_label", "translation": "energielabel"},
+                    {"name": "gebouwtype", "translation": "gebouwtype"},
+                    {"name": "A_EI", "translation": "Huidige energie index"},
+                    {"name": "A_elabel", "translation": "Huidig energielabel"},
+                    {"name": "A_EMG", "translation": "Huidige energiemaatregelen gebiedsniveau"},
+                    {"name": "A_bwjr", "translation": "Huidig jaar"},
+                    {"name": "B_EI", "translation": "Energie index (2 maatregelen)"},
+                    {"name": "B_elabel", "translation": "Energielabel (2 maatregelen)"},
+                    {"name": "B_EMG", "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"},
+                    {"name": "B_bwjr", "translation": "jaar (2 maatregelen)"},
+                    {"name": "C_EI", "translation": "Energie index (HT warmte)"},
+                    {"name": "C_elabel", "translation": "Energielabel (HT warmte)"},
+                    {"name": "C_EMG", "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"},
+                    {"name": "C_bwjr", "translation": "jaar (HT warmte)"},
+                    {"name": "E_EI", "translation": "Energie index (MT warmte)"},
+                    {"name": "E_elabel", "translation": "Energielabel (MT warmte)"},
+                    {"name": "E_EMG", "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"},
+                    {"name": "E_bwjr", "translation": "jaar (MT warmte)"}
+                  ]
+                }
+              },
+              "source": {
+                "promoteId": "id",
+                "type": "vector",
+                "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.referentiewoningen_energieprestatie",
+              "paint": {
+                "circle-pitch-alignment": "map",
+                "circle-radius": 7,
+                "circle-color": ["interpolate-lab", ["linear"], ["get","gas_cor_m2"], 0, "blue", 20, "red", 60, "yellow"],
+                "circle-stroke-width": 1,
+                "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
+              }
+            }
+          }
+      ]
     },
+    {
+      "type": "group",
+      "title": "Panden e.d.",
+      "sublayers": [
+        {
+          "title": "panden - status",
+          "layerInfo": {
+            "id": "pandenstatus",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["ogc_fid"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "ogc_fid",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "bounds": [4.528310756737802,51.927871239821975,4.564387124629534,51.9531307432199],
+              "maxzoom": 19
+            },
+            "source-layer": "plll.gebouw",
+            "paint": {
+              "fill-color": ["match",["get", "pandstatus"],
+                "Pand gesloopt", "red",
+                "Verbouwing pand", "green",
+                "Pand in gebruik", "gray",
+                "Sloopvergunning verleend", "pink",
+                "Bouwvergunning verleend", "lightgreen",
+                "black"
+              ],
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "white"]
+            },
+            "layout": {
+              "fill-sort-key": ["get","statusorder"]
+            }
+          }
+        },
+        {
+          "title": "panden - 3D hoogte",
+          "layerInfo": {
+            "id": "building3D",
+            "type": "fill-extrusion",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                    {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
+                    {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
+                ]
+              },
+              "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
+            },
+            "source": {
+              "type": "vector",
+              "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
+              "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
+              "minzoom": 13,
+              "maxzoom": 18,
+              "attribution": "Kadaster"
+            },
+            "source-layer": "public.bag13_lod1213_2d_levering",
+            "minzoom": 13,
+            "maxzoom": 24,
+            "paint": {
+              "fill-extrusion-color": ["case",
+              ["==", ["get","bouwjaar"], null], "#cccccc",
+              ["<",["get","bouwjaar"],1006],"#cccccc",
+              ["<",["get","bouwjaar"],1700],"#7f0000",
+              ["<",["get","bouwjaar"],1800],"#b30000",
+              ["<",["get","bouwjaar"],1900],"#d7301f",
+              ["<",["get","bouwjaar"],1930],"#ef6548",
+              ["<",["get","bouwjaar"],1960],"#fc8d59",
+              ["<",["get","bouwjaar"],1975],"#fdbb84",
+              ["<",["get","bouwjaar"],1990],"#fdd49e",
+              ["<",["get","bouwjaar"],2000],"#fee8c8",
+              ["<=",["get","bouwjaar"],2025],"#fff7ec",
+              "#cccccc"],
+              "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
+              "fill-extrusion-base": 0,
+              "fill-extrusion-opacity": 0.95
+            }
+          }
+        },
+        {
+            "type": "wms",
+            "title": "panden - bouwjaar",
+            "layerInfo": {
+                "id": "pandenbouwjaar",
+                "type":"raster",
+                "minzoom":11,
+                "maxzoom":22,
+                "source":{
+                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                    "type":"raster",
+                    "tileSize":512,
+                    "tiles":[
+                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
+                    ],
+                    "attribution":"Pico, Kadaster"
+                }
+            }
+        },
+        {
+            "type": "wms",
+            "title": "panden - energielabel",
+            "layerInfo": {
+                "id": "pandennergielabel",
+                "type":"raster",
+                "minzoom":13,
+                "maxzoom":22,
+                "source":{
+                    "type":"raster",
+                    "tileSize":512,
+                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                    "tiles":[
+                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
+                    ],
+                    "attribution":"Pico, Kadaster"
+                }
+            }
+        },
+        {
+          "title": "Dakdelen",
+          "layerInfo": {
+            "id": "plldakdelen",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["fid"],
+                "translations": [
+                  {"name": "aspect", "translation": "richting", "valuemap":[
+                    [-1, "plat dak"],
+                    [45, "noord (<45)"],
+                    [135, "oost (<135)"],
+                    [225, "zuid (<225)"],
+                    [315, "west (<315)"],
+                    [361, "noord (<360)"]
+                  ]}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "dakdeel_id",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_colum=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556],
+              "maxzoom": 19
+            },
+            "source-layer": "plll.dakdelen_pll",
+            "paint": {
+              "fill-color": ["case",
+                ["==", ["get","aspect"], -1], "#c5b3b5",
+                ["<", ["get","aspect"], 45], "#ffa7a2",
+                ["<", ["get","aspect"], 135], "#b32a25",
+                ["<", ["get","aspect"], 225], "#8c1916",
+                ["<", ["get","aspect"], 315], "#ff7d79",
+                ["<", ["get","aspect"], 361], "#ffa7a2",
+                "#6a6a6a"
+              ],
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "rgba(0,0,0,0)"]
+            }
+          }
+        },
+        {
+          "title": "Zonnepotentie gebouwen",
+          "layerInfo": {
+            "id": "pllzonnepotentiegebouwen",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["fid"],
+                "translations": [
+                  {"name": "pc6", "translation": "postcode"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "dakdeel_id",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_colum=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
+              "bounds":[4.5194,51.9219,4.5670,51.9556]
+            },
+            "source-layer": "plll.rdam_pll_gebouwpv",
+            "paint": {
+              "fill-color": ["interpolate-lab", ["linear"], ["get","dak_pv"], 0, "blue", 700000 , "red"],
+              "fill-outline-color": "black"
+            }
+          }
+        }
+      ]
+   },
     {
       "type": "group",
       "title": "Postcode 6",
@@ -1011,576 +1049,576 @@
         }
       ]
     },
+    {
+      "type": "group",
+      "title": "Netwerken",
+      "sublayers": [
         {
-          "type": "group",
-          "title": "Netwerken",
-          "sublayers": [
-            {
-              "title": "Gasleidingen",
-              "id": "gasleidingenstedin",
-              "layerInfo": {
-                "id": "WarmteAtlas:GasLeidingenStedin",
-                "metadata": {
-                  "abstract": "Ligging Gas Leidingen Stedin met indicatie voor vervanging en ouderdom"
-                },
-                "type": "line",
-                "source": {
-                  "type": "vector",
-                  "tiles": ["https://research1.geodan.nl/data/tomahawk.gasleidingenstedin_geo/mvt/{z}/{x}/{y}?geom_column=geom&include_nulls=0&columns="],
-                  "bounds": [3.3, 50.74, 7.23, 53.6],
-                  "attribution": "<a href=\"https://rvo.b3p.nl/viewer/app/Warmteatlas/v2\">WarmteAtlas</a>"
-                },
-                "source-layer": "tomahawk.gasleidingenstedin_geo",
-                "paint": {
-                  "line-color": "blue",
-                  "line-width": 5
-                },
-                "layout": {
-                  "line-join": "round",
-                  "line-cap": "round"
-                }
-              }
+          "title": "Gasleidingen",
+          "id": "gasleidingenstedin",
+          "layerInfo": {
+            "id": "WarmteAtlas:GasLeidingenStedin",
+            "metadata": {
+              "abstract": "Ligging Gas Leidingen Stedin met indicatie voor vervanging en ouderdom"
             },
-            {
-              "title": "Elektriciteitskabels",
-              "layerInfo":{
-                "id":"e5a09a35-e608-41ee-af38-e8daa3840ee0",
-                "type":"line",
-                "metadata": {
-                  "abstract": "Electriciteitskabels 2019. 'aansluiting extra' is berekend."
-                },
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://research1.geodan.nl/data/plll.elektra_kabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder,net,lengte&include_nulls=0"],
-                    "bounds":[3.25742485745802,50.7376603630598,7.23920304144212,53.4855872187456]},
-                "source-layer":"plll.elektra_kabel",
-                "minzoom": 11,
-                "paint":{
-                  "line-color":[
-                    "case",["==",["get","net"],"aansluiting extra"],"#9ab0c7",
-                      ["==",["get","net"],"aansluiting"],"#7792ae",
-                      ["==",["get","net"],"laagspanning"],"#5e39cd",
-                      ["==",["get","net"],"middenspanning"],"#2d5a93",
-                      ["==",["get","net"],"hoogspanning"],"#0d346e",
-                      "#ff7f00"],
-                  "line-width":["case",["==",["get","net"],"aansluiting extra"],2,
-                    ["==",["get","net"],"aansluiting"],2,
-                    ["==",["get","net"],"laagspanning"],2,
-                    ["==",["get","net"],"middenspanning"],3,
-                    ["==",["get","net"],"hoogspanning"],5,
-                    1]
-                }
+            "type": "line",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/tomahawk.gasleidingenstedin_geo/mvt/{z}/{x}/{y}?geom_column=geom&include_nulls=0&columns="],
+              "bounds": [3.3, 50.74, 7.23, 53.6],
+              "attribution": "<a href=\"https://rvo.b3p.nl/viewer/app/Warmteatlas/v2\">WarmteAtlas</a>"
+            },
+            "source-layer": "tomahawk.gasleidingenstedin_geo",
+            "paint": {
+              "line-color": "blue",
+              "line-width": 5
+            },
+            "layout": {
+              "line-join": "round",
+              "line-cap": "round"
+            }
+          }
+        },
+        {
+          "title": "Elektriciteitskabels",
+          "layerInfo":{
+            "id":"e5a09a35-e608-41ee-af38-e8daa3840ee0",
+            "type":"line",
+            "metadata": {
+              "abstract": "Electriciteitskabels 2019. 'aansluiting extra' is berekend."
+            },
+            "source":{
+                "type":"vector",
+                "tiles":["https://research1.geodan.nl/data/plll.elektra_kabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder,net,lengte&include_nulls=0"],
+                "bounds":[3.25742485745802,50.7376603630598,7.23920304144212,53.4855872187456]},
+            "source-layer":"plll.elektra_kabel",
+            "minzoom": 11,
+            "paint":{
+              "line-color":[
+                "case",["==",["get","net"],"aansluiting extra"],"#9ab0c7",
+                  ["==",["get","net"],"aansluiting"],"#7792ae",
+                  ["==",["get","net"],"laagspanning"],"#5e39cd",
+                  ["==",["get","net"],"middenspanning"],"#2d5a93",
+                  ["==",["get","net"],"hoogspanning"],"#0d346e",
+                  "#ff7f00"],
+              "line-width":["case",["==",["get","net"],"aansluiting extra"],2,
+                ["==",["get","net"],"aansluiting"],2,
+                ["==",["get","net"],"laagspanning"],2,
+                ["==",["get","net"],"middenspanning"],3,
+                ["==",["get","net"],"hoogspanning"],5,
+                1]
+            }
+          }
+        }
+      ]
+    },
+    {
+        "type": "group",
+        "title": "Topografie",  
+        "sublayers": [
+          {
+            "title": "Achtergrondkleur",
+            "layerInfo": "./layers/osmbrightbackground.json"
+          },
+          {
+            "title": "Grondgebruik",
+            "layerInfo": "./layers/osmbrightlandcov.json"
+          },
+          {
+            "title": "Water en waterwegen",
+            "layerInfo": "./layers/osmbrightwater.json"
+          },
+          {
+            "title": "Waterpatroon (golven)",
+            "layerInfo": "./layers/osmbrightwaterpattern.json"
+          },
+          {
+            "title": "Waternamen",
+            "layerInfo": "./layers/osmbrightwatername.json"
+          },
+          {
+            "title": "Administratieve grenzen",
+            "layerInfo": "./layers/osmbrightadminborders.json"
+          },
+          {
+            "title": "Snelwegen",
+            "layerInfo": "./layers/osmbrightroads.json"
+          },
+          {
+            "title": "Snelwegnamen",
+            "layerInfo": "./layers/brightmotorwayname.json"
+          },
+          {
+            "title": "Wegen",
+            "layerInfo": "./layers/osmbrightallroads.json"
+          },
+          {
+            "title": "Wegnamen",
+            "layerInfo": "./layers/osmbrightallroadnames.json"
+          },
+          {
+            "title":"Spoorwegen",
+            "layerInfo": "./layers/osmbrightrail.json"
+          },
+          {
+            "title": "Plaatsen",
+            "layerInfo": "./layers/osmbrightpoi.json"
+          },
+          {
+            "title": "Plaatsnamen",
+            "layerInfo": "./layers/osmbrightpoiname.json"
+          },
+          {
+            "title": "Gebouwen",
+            "layerInfo": "./layers/osmbrightbuildings.json"
+          },
+          {
+            "title": "Huisnummers",
+            "layerInfo": {
+              "id": "housenumber-topo",
+              "type": "symbol",
+              "source": {
+                "type": "vector",
+                "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
+              },
+              "source-layer": "housenumber",
+              "minzoom": 16,
+              "filter": [
+                "==",
+                "$type",
+                "Point"
+              ],
+              "layout": {
+                "text-field": "{housenumber}",
+                "text-size": 10,
+                "text-font": [
+                  "Noto Sans Regular"
+                ]
+              },
+              "paint": {
+                "text-color": "rgba(212, 177, 146, 1)"
               }
             }
-          ]
-        },
+          }
+        ]
+    },
+    {
+      "type": "group",
+      "title": "Omgeving",
+      "sublayers": [
         {
-            "type": "group",
-            "title": "Topografie",  
-            "sublayers": [
-              {
-                "title": "Achtergrondkleur",
-                "layerInfo": "./layers/osmbrightbackground.json"
-              },
-              {
-                "title": "Grondgebruik",
-                "layerInfo": "./layers/osmbrightlandcov.json"
-              },
-              {
-                "title": "Water en waterwegen",
-                "layerInfo": "./layers/osmbrightwater.json"
-              },
-              {
-                "title": "Waterpatroon (golven)",
-                "layerInfo": "./layers/osmbrightwaterpattern.json"
-              },
-              {
-                "title": "Waternamen",
-                "layerInfo": "./layers/osmbrightwatername.json"
-              },
-              {
-                "title": "Administratieve grenzen",
-                "layerInfo": "./layers/osmbrightadminborders.json"
-              },
-              {
-                "title": "Snelwegen",
-                "layerInfo": "./layers/osmbrightroads.json"
-              },
-              {
-                "title": "Snelwegnamen",
-                "layerInfo": "./layers/brightmotorwayname.json"
-              },
-              {
-                "title": "Wegen",
-                "layerInfo": "./layers/osmbrightallroads.json"
-              },
-              {
-                "title": "Wegnamen",
-                "layerInfo": "./layers/osmbrightallroadnames.json"
-              },
-              {
-                "title":"Spoorwegen",
-                "layerInfo": "./layers/osmbrightrail.json"
-              },
-              {
-                "title": "Plaatsen",
-                "layerInfo": "./layers/osmbrightpoi.json"
-              },
-              {
-                "title": "Plaatsnamen",
-                "layerInfo": "./layers/osmbrightpoiname.json"
-              },
-              {
-                "title": "Gebouwen",
-                "layerInfo": "./layers/osmbrightbuildings.json"
-              },
-              {
-                "title": "Huisnummers",
-                "layerInfo": {
-                  "id": "housenumber-topo",
-                  "type": "symbol",
-                  "source": {
-                    "type": "vector",
-                    "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
-                  },
-                  "source-layer": "housenumber",
-                  "minzoom": 16,
-                  "filter": [
-                    "==",
-                    "$type",
-                    "Point"
-                  ],
-                  "layout": {
-                    "text-field": "{housenumber}",
-                    "text-size": 10,
-                    "text-font": [
-                      "Noto Sans Regular"
-                    ]
-                  },
-                  "paint": {
-                    "text-color": "rgba(212, 177, 146, 1)"
-                  }
-                }
-              }
-            ]
-        },
-        {
-          "type": "group",
-          "title": "Omgeving",
-          "sublayers": [
-            {
-              "type": "wms",
-              "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",
-              "layerInfo": {
-                  "id": "rivm_r88_20170621_gm_actueel_uhi",
-                  "type": "raster",
-                  "metadata": {
-                      "getFeatureInfoFormat":"application/json",
-                      "attributes": {
-                        "translations": [
-                          {"name": "GRAY_INDEX", "translation": "Effect", "decimals": 1, "unit": " °C"}
-                        ]
-                      }
-                  },
-                  "source": {
-                      "type": "raster",
-                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                      "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
-                      "attribution":"RIVM"
-                  }
-              }
-            },
-            {
-              "title": "Geothermie",
-              "layerInfo": {
-                "id": "rdamgeothermie",
-                "type": "fill",
-                "metadata": {
-                  "abstract": "Potentie voor het winnen van warmte uit geothermie. 0 = Zeer slecht (P<10), 1 = Matig (P10-P30), 2 = Mogelijk (P30-P50), 3 = Goed (P50-P70), 4 = Zeer goed (P70-P90), 5 = Uitmuntend (P>90)",
+          "type": "wms",
+          "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",
+          "layerInfo": {
+              "id": "rivm_r88_20170621_gm_actueel_uhi",
+              "type": "raster",
+              "metadata": {
+                  "getFeatureInfoFormat":"application/json",
                   "attributes": {
                     "translations": [
-                      {"name": "gridcode", "translation": "potentie geothermie", "valuemap": [
-                        [0, "Zeer slecht(P < 10)"],
-                        [1, "Matig (P10 - P30)"],
-                        [2, "Mogelijk (P30 - P50)"],
-                        [3, "Goed (P50 - P70)"],
-                        [4, "Zeer goed (P70 - P90)"],
-                        [5, "Uitmuntend (P > 90)"]
-                      ]}
+                      {"name": "GRAY_INDEX", "translation": "Effect", "decimals": 1, "unit": " °C"}
                     ]
                   }
+              },
+              "source": {
+                  "type": "raster",
+                  "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                  "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
+                  "attribution":"RIVM"
+              }
+          }
+        },
+        {
+          "title": "Geothermie",
+          "layerInfo": {
+            "id": "rdamgeothermie",
+            "type": "fill",
+            "metadata": {
+              "abstract": "Potentie voor het winnen van warmte uit geothermie. 0 = Zeer slecht (P<10), 1 = Matig (P10-P30), 2 = Mogelijk (P30-P50), 3 = Goed (P50-P70), 4 = Zeer goed (P70-P90), 5 = Uitmuntend (P>90)",
+              "attributes": {
+                "translations": [
+                  {"name": "gridcode", "translation": "potentie geothermie", "valuemap": [
+                    [0, "Zeer slecht(P < 10)"],
+                    [1, "Matig (P10 - P30)"],
+                    [2, "Mogelijk (P30 - P50)"],
+                    [3, "Goed (P50 - P70)"],
+                    [4, "Zeer goed (P70 - P90)"],
+                    [5, "Uitmuntend (P > 90)"]
+                  ]}
+                ]
+              }
+            },
+            "source":{
+              "type":"vector",
+              "tiles":["https://research1.geodan.nl/data/plll.geothermie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gridcode&include_nulls=0"],
+              "bounds":[3.311103488198423,50.75351353240224,7.222429105415763,53.607949718185424],
+              "attribution": "Planbureau voor de leefomgeving"
+            },
+            "source-layer":"plll.geothermie",
+            "paint":{
+            "fill-color":[
+              "match",["get","gridcode"],
+              0,"#fff5f0",
+              1,"#fdccb7",
+              2,"#fc8f6f",
+              3,"#f44d37",
+              4,"#c5161b",
+              5,"#67000d",
+              "#000000"],
+              "fill-outline-color":"black",
+              "fill-opacity":1
+            }
+          }
+        },
+        {
+          "type": "group",
+          "title": "Rotterdam Buitenruimte",
+          "sublayers": [
+            {
+              "type":"getcapabilities",
+              "title":"Rotterdam Buitenruimte",
+              "layerInfo":{
+                "id":"rotterdambuitenruimte",
+                "url":"https://saturnus.geodan.nl/mapproxy/rdambuitenruimte/service?"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Achtergrondlagen",
+      "sublayers": [
+          {
+              "title":"Openstreetmap",
+              "type":"reference",
+              "layerInfo":{
+                  "id":"openstreetmap",
+                  "type":"raster",
+                  "metadata":{
+                  "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                  },
+                  "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                      "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                  ],
+                  "maxzoom": 19,
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                  }
+              }
+          },
+          {
+              "title":"Openstreetmap Grijs",
+              "type":"reference",
+              "layerInfo":{
+                "id":"openstreetmapgray",
+                "type":"raster",
+                "metadata":{
+                  "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
                 },
                 "source":{
-                  "type":"vector",
-                  "tiles":["https://research1.geodan.nl/data/plll.geothermie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gridcode&include_nulls=0"],
-                  "bounds":[3.311103488198423,50.75351353240224,7.222429105415763,53.607949718185424],
-                  "attribution": "Planbureau voor de leefomgeving"
-                },
-                "source-layer":"plll.geothermie",
-                "paint":{
-                "fill-color":[
-                  "match",["get","gridcode"],
-                  0,"#fff5f0",
-                  1,"#fdccb7",
-                  2,"#fc8f6f",
-                  3,"#f44d37",
-                  4,"#c5161b",
-                  5,"#67000d",
-                  "#000000"],
-                  "fill-outline-color":"black",
-                  "fill-opacity":1
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
+                  ],
+                  "maxzoom": 19,
+                  "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
+                }
+              }
+          },
+          {
+              "type":"reference",
+              "title":"OSM Helder (stijl)",
+              
+              "layerInfo":{
+                "id":"OsmBright",
+                "type":"style",
+                "source":"styles/openmaptiles/osmbright.json",
+                "metadata":{
+                  "reference":true
                 }
               }
             },
             {
-              "type": "group",
-              "title": "Rotterdam Buitenruimte",
-              "sublayers": [
-                {
-                  "type":"getcapabilities",
-                  "title":"Rotterdam Buitenruimte",
-                  "layerInfo":{
-                    "id":"rotterdambuitenruimte",
-                    "url":"https://saturnus.geodan.nl/mapproxy/rdambuitenruimte/service?"
-                  }
+              "type":"reference",
+              "title":"OSM Basis (stijl)",
+              "layerInfo":{
+                "id":"klokantechbasic",
+                "type":"style",
+                "source":"styles/openmaptiles/klokantech-basic.json",
+                "metadata":{
+                  "reference":true
                 }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "title": "Achtergrondlagen",
-          "sublayers": [
-              {
-                  "title":"Openstreetmap",
-                  "type":"reference",
-                  "layerInfo":{
-                      "id":"openstreetmap",
-                      "type":"raster",
-                      "metadata":{
-                      "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                      },
-                      "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "tiles":[
-                          "https://tiles.edugis.nl/mapproxy/osm/tiles/osm_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                      ],
-                      "maxzoom": 19,
-                      "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-                      }
-                  }
-              },
-              {
-                  "title":"Openstreetmap Grijs",
-                  "type":"reference",
-                  "layerInfo":{
-                    "id":"openstreetmapgray",
-                    "type":"raster",
-                    "metadata":{
-                      "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
-                    },
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/osm/tiles/osmgrayscale_EPSG900913/{z}/{x}/{y}.png?origin=nw"
-                      ],
-                      "maxzoom": 19,
-                      "attribution":"&copy; <a href=\"https://www.openstreetmap.org/about\" target=\"copyright\">OpenStreetMap contributors</a>"
-                    }
-                  }
-              },
-              {
-                  "type":"reference",
-                  "title":"OSM Helder (stijl)",
-                  
-                  "layerInfo":{
-                    "id":"OsmBright",
-                    "type":"style",
-                    "source":"styles/openmaptiles/osmbright.json",
-                    "metadata":{
-                      "reference":true
-                    }
-                  }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"OSM Positron (stijl)",
+              "layerInfo":{
+                "id":"Positron",
+                "type":"style",
+                "source":"styles/openmaptiles/positron.json",
+                "metadata":{
+                  "reference":true
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"OSM Donker (stijl)",
+              "layerInfo":{
+                "id":"DarkMatter",
+                "type":"style",
+                "source":"styles/openmaptiles/dark-matter.json",
+                "metadata":{
+                  "reference":true
+                }
+              }
+            },
+          {
+              "type":"reference",
+              "title":"Microsoft BING Kaart",
+              "layerInfo":{
+                "id":"bingmaproad",
+                "metadata":{
+                  "reference":true,
+                  "bing":true
                 },
-                {
-                  "type":"reference",
-                  "title":"OSM Basis (stijl)",
-                  "layerInfo":{
-                    "id":"klokantechbasic",
-                    "type":"style",
-                    "source":"styles/openmaptiles/klokantech-basic.json",
-                    "metadata":{
-                      "reference":true
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                  "maxzoom":19
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Hybride (Microsoft BING)",
+              "layerInfo":{
+                "id":"bingmaphybrid",
+                "metadata":{
+                  "reference":true,
+                  "bing":true
                 },
-                {
-                  "type":"reference",
-                  "title":"OSM Positron (stijl)",
-                  "layerInfo":{
-                    "id":"Positron",
-                    "type":"style",
-                    "source":"styles/openmaptiles/positron.json",
-                    "metadata":{
-                      "reference":true
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                  "maxzoom":18
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Luchtfoto (Microsoft BING)",
+              "layerInfo":{
+                "id":"bingmapaerial",
+                "metadata":{
+                  "reference":true,
+                  "bing":true
                 },
-                {
-                  "type":"reference",
-                  "title":"OSM Donker (stijl)",
-                  "layerInfo":{
-                    "id":"DarkMatter",
-                    "type":"style",
-                    "source":"styles/openmaptiles/dark-matter.json",
-                    "metadata":{
-                      "reference":true
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+                  "maxzoom":18
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Luchtfoto (ESRI World Imagery)",
+              "layerInfo":{
+                "id":"esriworldimagery",
+                "metadata":{
+                  "reference":true
                 },
-              {
-                  "type":"reference",
-                  "title":"Microsoft BING Kaart",
-                  "layerInfo":{
-                    "id":"bingmaproad",
-                    "metadata":{
-                      "reference":true,
-                      "bing":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                      "maxzoom":19
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "type": "raster",
+                  "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
+                  "tileSize": 256,
+                  "maxzoom":22,
+                  "attribution": "ESRI World Imagery"
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Stamen Toner",
+              "layerInfo":{
+                "id":"stamentoner",
+                "metadata":{
+                  "reference":true
                 },
-                {
-                  "type":"reference",
-                  "title":"Hybride (Microsoft BING)",
-                  "layerInfo":{
-                    "id":"bingmaphybrid",
-                    "metadata":{
-                      "reference":true,
-                      "bing":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                      "maxzoom":18
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "scheme": "tms",
+                  "tiles":[
+                    "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+                  ],
+                  "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                  "maxzoom":17
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Stamen Waterverf",
+              "layerInfo":{
+                "id":"stamenwatercolor",
+                "metadata":{
+                  "reference":true
                 },
-                {
-                  "type":"reference",
-                  "title":"Luchtfoto (Microsoft BING)",
-                  "layerInfo":{
-                    "id":"bingmapaerial",
-                    "metadata":{
-                      "reference":true,
-                      "bing":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "url":"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-                      "maxzoom":18
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "scheme": "tms",
+                  "tiles":[
+                    "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+                  ],
+                  "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                  "maxzoom":17
+                }
+              }
+            },
+            {
+              "type":"reference",
+              "title":"Stamen Terrein",
+              "layerInfo":{
+                "id":"stamenterrain",
+                "metadata":{
+                  "reference":true
                 },
-                {
-                  "type":"reference",
-                  "title":"Luchtfoto (ESRI World Imagery)",
-                  "layerInfo":{
-                    "id":"esriworldimagery",
-                    "metadata":{
-                      "reference":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "type": "raster",
-                      "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
-                      "tileSize": 256,
-                      "maxzoom":22,
-                      "attribution": "ESRI World Imagery"
-                    }
-                  }
+                "type":"raster",
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "scheme": "tms",
+                  "tiles":[
+                    "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
+                  ],
+                  "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+                  "maxzoom":16
+                }
+              }
+          },
+          {
+              "title":"PDOK BRT Achtergrondkaart",
+              "type":"reference",
+              "checked": true,
+              "layerInfo":{
+                "id":"brtachtergrondkaart",
+                "type":"raster",
+                "metadata":{
+                  "reference": true
                 },
-                {
-                  "type":"reference",
-                  "title":"Stamen Toner",
-                  "layerInfo":{
-                    "id":"stamentoner",
-                    "metadata":{
-                      "reference":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "scheme": "tms",
-                      "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
-                      ],
-                      "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                      "maxzoom":17
-                    }
-                  }
-                },
-                {
-                  "type":"reference",
-                  "title":"Stamen Waterverf",
-                  "layerInfo":{
-                    "id":"stamenwatercolor",
-                    "metadata":{
-                      "reference":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "scheme": "tms",
-                      "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
-                      ],
-                      "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                      "maxzoom":17
-                    }
-                  }
-                },
-                {
-                  "type":"reference",
-                  "title":"Stamen Terrein",
-                  "layerInfo":{
-                    "id":"stamenterrain",
-                    "metadata":{
-                      "reference":true
-                    },
-                    "type":"raster",
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "scheme": "tms",
-                      "tiles":[
-                        "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
-                      ],
-                      "attribution":"&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-                      "maxzoom":16
-                    }
-                  }
-              },
-              {
-                  "title":"PDOK BRT Achtergrondkaart",
-                  "type":"reference",
-                  "checked": true,
-                  "layerInfo":{
-                    "id":"brtachtergrondkaart",
-                    "type":"raster",
-                    "metadata":{
-                      "reference": true
-                    },
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "tiles":[
-                        "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png"
-                      ],
-                      "attribution":"PDOK",
-                      "minzoom": 5,
-                      "maxzoom": 18,
-                      "bounds": [-1.6,47.5,13.0,56.0]
-                    }
-                  }
-              },{
-                  "type": "reference",
-                  "title": "OpenTopo achtergrondkaart [tms]",
-                  "layerInfo": {
-                      "id": "OpenTopo_achtergrondkaart [tms]_id",
-                      "type": "raster",
-                      "metadata": {
-                          "reference": true,
-                          "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
-                      },
-                      "source": {
-                          "tileSize": 512,
-                          "type": "raster",
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
-                          "attribution": "PDOK"
-                      }
-                  }
-              },{
-                  "title":"PDOK luchtfoto's (2016)",
-                  "type":"reference",
-                  "layerInfo":{
-                    "id":"pdokluchtfotowmts2016",
-                    "type":"raster",
-                    "metadata":{
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png"
+                  ],
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18,
+                  "bounds": [-1.6,47.5,13.0,56.0]
+                }
+              }
+          },{
+              "type": "reference",
+              "title": "OpenTopo achtergrondkaart [tms]",
+              "layerInfo": {
+                  "id": "OpenTopo_achtergrondkaart [tms]_id",
+                  "type": "raster",
+                  "metadata": {
                       "reference": true,
-                      "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2016.png"
-                    },
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "tiles":[
-                        "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
-                      ],
-                      "attribution":"PDOK",
-                      "minzoom": 5,
-                      "maxzoom": 18,
-                      "bounds" : [2.75,50.50, 7.5, 53.6]
-                    }
-                  }
-              },
-              {
-                  "title":"PDOK luchtfoto's (Actueel)",
-                  "type":"reference",
-                  "layerInfo":{
-                    "id":"pdokluchtfotowmtsactueel",
-                    "type":"raster",
-                    "metadata":{
-                      "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png",
-                      "reference": true
-                    },
-                    "source":{
-                      "type":"raster",
-                      "tileSize":256,
-                      "tiles":[
-                        "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
-                      ],
-                      "attribution":"PDOK",
-                      "minzoom": 5,
-                      "maxzoom": 18,
-                      "bounds" : [2.75,50.50, 7.5, 53.6]
-                    }
+                      "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
+                  },
+                  "source": {
+                      "tileSize": 512,
+                      "type": "raster",
+                      "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                      "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
+                      "attribution": "PDOK"
                   }
               }
-          ]
-      }
-    ]     
-    ,
-    "tools" : {
-        "toolbar": {"opened" : 1},
-        "search" : {"visible": 1, "order" : 1},
-        "datacatalog" : {"visible": 1, "search": 1, "order" : 2},
-        "measure" : {"visible": 1, "order": 3},
-        "info" : {"visible" : 1, "order": 4},
-        "maplanguage" : {"visible" : 0, "order": 5},
-        "pitch" : {"visible" : 1, "order": 6},
-        "draw" : {"visible" : 1, "order": 7},
-        "geolocate" : {"visible" : 1, "order": 8},
-        "importexport": {"visible": 0, "order": 9},
-        "datatoolbox": {"visible": 0, "order": 10},
-        "sheetimport": {"visible": 0, "order": 11},
-        "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
-        "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
-        "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
-        "coordinates" : {"visible" : 1, "position" : "bottom-center"},
-        "scalebar": {"visible" : 1, "position" : "bottom-right"},
-        "currenttool": null
-    },
-    "keys" : {
-        "mapboxaccesstoken" : null
+          },{
+              "title":"PDOK luchtfoto's (2016)",
+              "type":"reference",
+              "layerInfo":{
+                "id":"pdokluchtfotowmts2016",
+                "type":"raster",
+                "metadata":{
+                  "reference": true,
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2016.png"
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                  ],
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18,
+                  "bounds" : [2.75,50.50, 7.5, 53.6]
+                }
+              }
+          },
+          {
+              "title":"PDOK luchtfoto's (Actueel)",
+              "type":"reference",
+              "layerInfo":{
+                "id":"pdokluchtfotowmtsactueel",
+                "type":"raster",
+                "metadata":{
+                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend.png",
+                  "reference": true
+                },
+                "source":{
+                  "type":"raster",
+                  "tileSize":256,
+                  "tiles":[
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                  ],
+                  "attribution":"PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 18,
+                  "bounds" : [2.75,50.50, 7.5, 53.6]
+                }
+              }
+          }
+      ]
     }
+  ]     
+  ,
+  "tools" : {
+    "toolbar": {"opened" : 1},
+    "search" : {"visible": 1, "order" : 1},
+    "datacatalog" : {"visible": 1, "search": 1, "order" : 2},
+    "measure" : {"visible": 1, "order": 3},
+    "info" : {"visible" : 1, "order": 4},
+    "maplanguage" : {"visible" : 0, "order": 5},
+    "pitch" : {"visible" : 1, "order": 6},
+    "draw" : {"visible" : 1, "order": 7},
+    "geolocate" : {"visible" : 1, "order": 8},
+    "importexport": {"visible": 0, "order": 9},
+    "datatoolbox": {"visible": 0, "order": 10},
+    "sheetimport": {"visible": 0, "order": 11},
+    "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
+    "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
+    "navigation" : {"visible" : 1, "position" : "bottom-left", "order" : 1},
+    "coordinates" : {"visible" : 1, "position" : "bottom-center"},
+    "scalebar": {"visible" : 1, "position" : "bottom-right"},
+    "currenttool": null
+  },
+  "keys" : {
+      "mapboxaccesstoken" : null
+  }
 }
