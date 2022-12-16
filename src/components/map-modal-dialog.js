@@ -81,9 +81,9 @@ export class MapModalDialog extends LitElement {
     }
     const parsed = DOMPurify.sanitize(marked.parse(this.markdown)).replace(/<a /g, '<a target="_blank" rel="nofollow" ');
     return html`
-    <div id="overlay" @click=${e=>this._close(e)}>
-      <div id="window" @click=${e=>e.stopPropagation()}>
-        <div id="header"><div @click=${e=>this._close(e)} id="closebutton">x</div></div>
+    <div id="overlay" @click="${e=>this._close(e)}">
+      <div id="window" @click="${e=>e.stopPropagation()}">
+        <div id="header"><div @click="${e=>this._close(e)}" id="closebutton">x</div></div>
         <div id="content">${unsafeHTML(parsed)}</div>
       </div>
     </div>`

@@ -59,7 +59,7 @@ class MapLegendLine extends LitElement {
             return html`
             <map-legend-item-edit 
                 .visible=${this.activeEdits.includes(0)}
-                @editActive=${this._editActive}
+                @editActive="${this._editActive}"
                 @change="${this._lineColorChanged}"
                 @changeLineWidth="${this._lineWidthChanged}"
                 legendItemType="line" 

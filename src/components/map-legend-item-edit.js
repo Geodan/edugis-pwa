@@ -181,13 +181,13 @@ class MapLegendItemEdit extends LitElement {
                 <div class="panel">
                     <div class="wrapper">
                         <div class="label">Vulkleur:</div>
-                        <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
+                        <color-picker .color=${this.color} @change="${e=>this._colorChange(e)}">
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                     </div>
                     <div class="wrapper">
                         <div class="label">Randkleur:</div>
-                        <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
+                        <color-picker .color=${this.color} @change="${e=>this._lineColorChange(e)}">
                             <div class="linepicker"><svg width="20" height="10">
                                 <title>lijnkleur</title>
                                 <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
@@ -198,10 +198,10 @@ class MapLegendItemEdit extends LitElement {
             case 'line': 
                 return html`
                 <div class="panel">${this.lineWidth !== undefined?html`<div class="wrapper">
-                        <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.lineWidth}" @input=${this._lineWidthChange}> </div>`:""}
+                        <div class="label">dikte: </div><input class="right" type="range" min="0" max="10" step="0.1" value="${this.lineWidth}" @input="${this._lineWidthChange}"> </div>`:""}
                     <div class="wrapper">
                         <div class="label">kleur: </div>
-                        <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
+                        <color-picker .color=${this.color} @change="${e=>this._colorChange(e)}">
                             <div class="linepicker"><svg width="20" height="10">
                                 <title>kleur</title>
                                 <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor?this.lineColor:this.color}" />
@@ -213,20 +213,20 @@ class MapLegendItemEdit extends LitElement {
                 return html`
                 <div class="panel">
                     <div class="wrapper">
-                        <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius?this.radius:0}" @input=${this._radiusChange}/>
+                        <div class="label">straal: </div><input class="right" type="range" min="0" max="40" step="0.1" value="${this.radius?this.radius:0}" @input="${(e)=>this._radiusChange(e)}"/>
                     </div>
                     <div class="wrapper">
                         <div class="label">kleur: </div>
-                        <color-picker .color=${this.color} @change=${e=>this._colorChange(e)}>
+                        <color-picker .color=${this.color} @change="${e=>this._colorChange(e)}">
                             <div class="fillpicker" title="kleur" style="background-color:${color}"></div>
                         </color-picker>
                     </div>
                     <div class="wrapper">
-                        <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth?this.lineWidth:0}" @input=${this._lineWidthChange}/>
+                        <div class="label">randdikte: </div><input class="right" type="range" min="0" max="5" step="0.1" value="${this.lineWidth?this.lineWidth:0}" @input="${(e)=>this._lineWidthChange(e)}"/>
                     </div>
                     <div class="wrapper">
                         <div class="label">randkleur: </div>
-                        <color-picker .color=${this.color} @change=${e=>this._lineColorChange(e)}>
+                        <color-picker .color=${this.color} @change="${e=>this._lineColorChange(e)}">
                             <div class="linepicker"><svg width="20" height="10">
                                 <title>kleur</title>
                                 <line x1="0" y1="5" x2="20" y2="5" stroke="${this.lineColor}" stroke-width="${this.lineWidth}" />
@@ -243,11 +243,11 @@ class MapLegendItemEdit extends LitElement {
                 return html`
                 <div class="panel">
                     <div class="wrapper">
-                        <div class="label">grootte: </div><input class="right" type="range" min="0" max="30" step="0.2" value="${fontSize}" @input=${this._fontSizeChange} />
+                        <div class="label">grootte: </div><input class="right" type="range" min="0" max="30" step="0.2" value="${fontSize}" @input="${this._fontSizeChange}"/>
                     </div>
                     <div class="wrapper">
                         <div class="label">tekstkleur: </div>
-                        <color-picker .color=${fontColor} @change=${e=>this._fontColorChange(e)}>
+                        <color-picker .color=${fontColor} @change="${e=>this._fontColorChange(e)}">
                             <div class="fillpicker" title="kleur" style="background-color:${fontColor}"></div>
                         </color-picker>
                     </div>

@@ -33,7 +33,7 @@ class ColorPicker extends LitElement {
       this.color = "";
   }
   render() {
-    return html`<slot @slotchange=${e=>this._slotChanged(e)}></slot>`
+    return html`<slot @slotchange="${e=>this._slotChanged(e)}"></slot>`
   }
   disconnectedCallback() {
     super.disconnectedCallback()

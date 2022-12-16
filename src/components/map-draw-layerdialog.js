@@ -354,8 +354,8 @@ export class MapDrawLayerDialog extends LitElement {
                     </table>
                     </div>
                 </div>
-                <div tabindex="0" class="button" @click=${(e)=>this._handleBackButtonClick(e)} @keydown="${(e)=>{if (e.key==='Enter') this._handleBackButtonClick()}}">Vorige</div>
-                <div tabindex="0" class="button" @click=${(e)=>this._handleOkButtonClick(e)} @keydown="${(e)=>{if (e.key==='Enter') this._handleOkButtonClick()}}">OK</div>
+                <div tabindex="0" class="button" @click="${(e)=>this._handleBackButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleBackButtonClick()}}">Vorige</div>
+                <div tabindex="0" class="button" @click="${(e)=>this._handleOkButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleOkButtonClick()}}">OK</div>
                 `;
             default:
                 return html`invalid form status`;
@@ -367,8 +367,8 @@ export class MapDrawLayerDialog extends LitElement {
         }
         return html`
         <div id="overlay">
-            <div id="window" @click=${e=>e.stopPropagation()}>
-                <div id="header"><div @click=${e=>this._close(e)} id="closebutton">x</div></div>
+            <div id="window" @click="${e=>e.stopPropagation()}">
+                <div id="header"><div @click="${e=>this._close(e)}" id="closebutton">x</div></div>
                 <div id="content">
                     ${this._renderLayerForm()}
                 </div>

@@ -195,7 +195,7 @@ class MapLegendPanel extends LitElement {
             .symbols="${maplayer.metadata.imageData}"></map-legend-symbol>`
         } else {
           legendContent = html`<map-legend-fill 
-            @activeEdits=${this._layerSetActiveEdits}
+            @activeEdits="${this._layerSetActiveEdits}"
             @change="${this._updatePaintProperty}"
             .activeEdits = "${this.activeEdits[maplayer.id]}"
             .items="${items}"
@@ -206,7 +206,7 @@ class MapLegendPanel extends LitElement {
       case 'fill-extrusion':
         //legendContent = this.filleExtrusionLegend(maplayer, items);
         legendContent = html`<map-legend-fill 
-          @activeEdits=${this._layerSetActiveEdits} 
+          @activeEdits="${this._layerSetActiveEdits}" 
           @change="${this._updatePaintProperty}" 
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           .items="${items}" 
@@ -216,7 +216,7 @@ class MapLegendPanel extends LitElement {
       case 'line':
         //legendContent = this.lineLegend(maplayer, items);
         legendContent = html`<map-legend-line 
-          @activeEdits=${this._layerSetActiveEdits} 
+          @activeEdits="${this._layerSetActiveEdits}"
           @change="${this._updatePaintProperty}"
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           .items="${items}" 
@@ -226,7 +226,7 @@ class MapLegendPanel extends LitElement {
       case 'circle':
         //legendContent = this.circleLegend(maplayer, items);
         legendContent = html`<map-legend-circle 
-          @activeEdits=${this._layerSetActiveEdits}
+          @activeEdits="${this._layerSetActiveEdits}"
           @change="${this._updatePaintProperty}"
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           .items="${items}" 
@@ -257,7 +257,7 @@ class MapLegendPanel extends LitElement {
         const textTransform = maplayer.layout && maplayer.layout["text-transform"]?`text-transform:${maplayer.layout["text-transform"]};`:''
         const fontStyle = `font-family:${font};font-size:${fontSize}px;color:${fontColor};${textTransform}`;
         legendContent = html`<map-legend-symbol
-          @activeEdits=${this._layerSetActiveEdits}
+          @activeEdits="${this._layerSetActiveEdits}"
           @change="${this._updatePaintProperty}"
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           title="${layerTitle}"
@@ -268,7 +268,7 @@ class MapLegendPanel extends LitElement {
       case 'background':
         //legendContent = this.backgroundLegend(maplayer);
         legendContent = html`<map-legend-fill 
-          @activeEdits=${this._layerSetActiveEdits}
+          @activeEdits="${this._layerSetActiveEdits}"
           @change="${this._updatePaintProperty}" 
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           .items="${items}"

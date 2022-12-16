@@ -102,7 +102,7 @@ class MapLegendFill extends LitElement {
             return html`
             <map-legend-item-edit 
                 .visible=${this.activeEdits.includes(0)}
-                @editActive=${this._editActive}
+                @editActive="${this._editActive}"
                 @change="${this._fillColorChanged}"
                 @changeLineColor="${this._lineColorChanged}"
                 legendItemType="fill" 
@@ -136,7 +136,7 @@ class MapLegendFill extends LitElement {
                 if (label || label === 0) {
                     result.push(html`<map-legend-item-edit 
                         .visible=${this.activeEdits.includes(i)}
-                        @editActive=${this._editActive}
+                        @editActive="${this._editActive}"
                         @change="${this._fillColorChanged}"
                         @changeLineColor="${this._lineColorChanged}"
                         .itemIndex=${i} 
