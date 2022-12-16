@@ -274,6 +274,10 @@ class WebMap extends LitElement {
             this.map.setPaintProperty(id, 'text-opacity', opacity);
             this.map.setPaintProperty(id, 'icon-opacity', opacity);
           break;
+        case 'circle':
+          this.map.setPaintProperty(id, `circle-opacity`, opacity);
+          this.map.setPaintProperty(id, `circle-stroke-opacity`, opacity);
+          break;
         default:
           this.map.setPaintProperty(id, `${layer.type}-opacity`, opacity);
       }
@@ -1042,7 +1046,7 @@ class WebMap extends LitElement {
     ${this.sheetdialog?html`<map-dialog dialogtitle="Sheet-Kaart" @close="${e=>{this.sheetdialog=null;this.requestUpdate();}}"><map-gsheet-form .layerinfo="${this.sheetdialog}" @addlayer="${(e) => this.addLayer(e)}"></map-gsheet-form></map-dialog>`:html``} 
     <map-spinner .webmap=${this.map}></map-spinner>
     <map-modal-dialog></map-modal-dialog>
-    <map-save-layer .webmap=${this.map} .container=${this} @beforesave=${(e)=>this._beforeSaveLayer(e)}></map-save-layer>
+    <map-save-layer .webmap=${this.map} .container=${this} @beforesave="${(e)=>this._beforeSaveLayer(e)}"></map-save-layer>
     `
   }
   getData()
@@ -1108,6 +1112,7 @@ class WebMap extends LitElement {
         pitch: this.pitch,
         bearing: this.bearing
     });
+    this.map.showTileBoundaries = true; // debug
     if (this.map.version === undefined) {
       this.map.version = 'mapblibregl';
     }
