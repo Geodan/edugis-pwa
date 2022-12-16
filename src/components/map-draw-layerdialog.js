@@ -102,6 +102,8 @@ const newLayers = {
         "attribution": "EduGIS"
       },
       "paint" : {
+        "circle-pitch-alignment":"map",
+        "circle-pitch-scale": "map",
         "circle-radius": 6,
         "circle-color" : "#fff",
         "circle-opacity": 0.7,
