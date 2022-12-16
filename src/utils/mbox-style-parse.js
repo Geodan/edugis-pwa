@@ -700,7 +700,7 @@ class MBStyleParser
         propertyName = 'width';
       }
       const paintProperty = paint[`${type}-${propertyName}`];
-      if (!paintProperty) {
+      if (!paintProperty && paintProperty !== 0) {
         return result;
       }
       return this._parsePaintProperty(paintProperty, type, zoom, attrName, layout)

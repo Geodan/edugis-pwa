@@ -394,7 +394,7 @@ class MapLegendPanel extends LitElement {
       let paintRadius = editLayer.metadata.paint ? 
         editLayer.metadata.paint[propertyName] : 
           editLayer.paint[propertyName];
-      if (!paintRadius) {
+      if (!paintRadius && paintRadius !== 0) {
         if (editLayer.metadata.paint) {
           editLayer.metadata.paint[propertyName] = radius;
         } else {
