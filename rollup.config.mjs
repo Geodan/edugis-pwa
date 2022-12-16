@@ -14,7 +14,7 @@ export default {
     // Entry point for application build; can specify a glob to build multiple
     // HTML files for non-SPA app
     html({
-      input: '*.html',
+      input: ['index.html', 'demo.html', 'mapbox.html'],
     }),
     // Resolve bare module specifiers to relative paths
     resolve(),
@@ -37,7 +37,8 @@ export default {
         {src: "notosans-*woff2", dest: "build"},
         {src: "node_modules/hopscotch/dist/img/sprite-*.png", dest: "build/img"},
         {src: "images/manifest/*", dest: "build/assets/images"},
-        {src: "course/**/*", dest: "build/course"}
+        {src: "course/**/*", dest: "build/course"},
+        {src: "src/workers/buffer.js", dest: "build/src"}
       ],
       flatten: false
     }),
