@@ -44,8 +44,8 @@ class MapLegendSymbol extends LitElement {
                 const label = this.symbols.length === 1 ? this.title : symbol.attributeValues.join(',');
                 result.push(html`<map-legend-item-edit 
                     .visible=${this.activeEdits.includes(index)} 
-                    @editActive=${this._editActive}
-                    @change=${this._symbolChange} 
+                    @editActive="${this._editActive}"
+                    @change="${this._symbolChange}"
                     legendItemType="symbol" 
                     itemIndex=${index} 
                     fontStyle=${this.fontStyle}><div><img class="icon" src="${symbol.data}"><span style=${this.fontStyle}>${label}</span></div></map-legend-item-edit>`)
@@ -54,8 +54,8 @@ class MapLegendSymbol extends LitElement {
         } else {
             return(html`<map-legend-item-edit 
                     .visible=${this.activeEdits.includes(0)} 
-                    @editActive=${this._editActive}
-                    @change=${this._symbolChange} 
+                    @editActive="${this._editActive}"
+                    @change="${this._symbolChange}"
                     legendItemType="symbol" 
                     fontStyle=${this.fontStyle}><div><span style=${this.fontStyle}>${this.title}</span></div></map-legend-item-edit>`)
         }
