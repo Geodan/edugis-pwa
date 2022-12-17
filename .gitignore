@@ -4,3 +4,6 @@ test/integration/screenshots-current/
 _site/
 .DS_Store
 src/keys.js
+cypress/downloads
+cypress/fixtures
+cypress/support
