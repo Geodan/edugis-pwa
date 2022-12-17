@@ -179,7 +179,7 @@ class MapLegendCircle extends LitElement {
                 //const label = attrExpression ? attrExpression === '==' ? attrValue : `${attrExpression} ${attrValue}` : attrValue;
                 return html`<map-legend-item-edit 
                     .visible=${this.activeEdits.includes[itemIndex]}
-                    @editActive=${this._editActive}
+                    @editActive="${this._editActive}"
                     @change="${this._colorChanged}"
                     @changeLineColor="${this._outlineColorChanged}"
                     @changeLineWidth="${this._outlineWidthChanged}"
