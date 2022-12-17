@@ -110,13 +110,17 @@ class MapLegendPanel extends LitElement {
           }
         }
         if (translation.valuemap && Array.isArray(translation.valuemap)) {
-          const valueMap = translation.valuemap.find(valueMap=>Array.isArray(valueMap) && valueMap.length > 1 && valueMap[0] == item.attrValue);
+          const valueMap = translation.valuemap.find(valueMap=>
+            Array.isArray(valueMap) &&
+            valueMap.length > 1 && 
+            valueMap[0] == item.attrValue && 
+            (valueMap.length < 3 || valueMap[2] === "" || valueMap[2] === "==" || valueMap[2] === item.attrExpression));
           if (valueMap) {
             item.attrValue = valueMap[1];
             item.mappedValue = true;
           }
         }
-        if (translation.unit && translation.unit !== "") {
+        if (!item.mappedValue && translation.unit && translation.unit !== "") {
           item.attrValue = `${item.attrValue}${translation.unit}`
         }
       }
@@ -206,7 +210,7 @@ class MapLegendPanel extends LitElement {
       case 'fill-extrusion':
         //legendContent = this.filleExtrusionLegend(maplayer, items);
         legendContent = html`<map-legend-fill 
-          @activeEdits="${this._layerSetActiveEdits}" 
+          @activeEdits="${this._layerSetActiveEdits}"
           @change="${this._updatePaintProperty}" 
           .activeEdits = "${this.activeEdits[maplayer.id]}"
           .items="${items}" 
