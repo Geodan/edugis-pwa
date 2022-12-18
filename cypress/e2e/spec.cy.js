@@ -3,7 +3,6 @@ describe('empty spec', () => {
     cy.visit('http://localhost:8000')
     //cy.pause()
     //document.querySelector("#app-container > edugis-app").shadowRoot.querySelector("web-map").shadowRoot.querySelector("#tools-menu > ul > li:nth-child(1) > map-iconbutton").shadowRoot.querySelector("div")
-    /*
     const webMapShadow = cy.get('#app-container')
       .find('edugis-app')
       .shadow()
@@ -52,7 +51,6 @@ describe('empty spec', () => {
       .find('map-coordinates')
       .shadow()
     mapCoords.should('contain.text', '4.919')
-    */
     //document.querySelector("#app-container > edugis-app").shadowRoot.querySelector("web-map").shadowRoot.querySelector("#tools-menu > ul > li:nth-child(2) > map-iconbutton")
     cy.get('#app-container')
       .find('edugis-app')
@@ -99,13 +97,14 @@ describe('empty spec', () => {
       .shadow()
       .find("div.wrapper > div > ul > li:nth-child(1) > ul > li:nth-child(6) > ul > li:nth-child(1)")
       .click()
-  //document.querySelector("#app-container > edugis-app").shadowRoot.querySelector("web-map").shadowRoot.querySelector("#legend-container-container > map-layer-container")
-  cy.get('#app-container')
+    cy.wait(2000)
+    //document.querySelector("#app-container > edugis-app").shadowRoot.querySelector("web-map").shadowRoot.querySelector("#legend-container-container > map-layer-container")
+    cy.get('#app-container')
       .find('edugis-app')
       .shadow()
       .find('web-map')
       .shadow()
       .find("#legend-container-container > map-layer-container")
-
+      .matchImage();
   })
 })
