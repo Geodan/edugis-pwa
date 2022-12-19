@@ -202,8 +202,8 @@ export class GeoJSON {
       geojson.type = "FeatureCollection";
       geojson.features = [{
         "type": "Feature",
-        "geometry": object.assign({}, geojson.geometry),
-        "properties": object.assign({}, geojson.properties)
+        "geometry": Object.assign({}, geojson.geometry),
+        "properties": Object.assign({}, geojson.properties)
       }];
       delete geojson.geometry;
       delete geojson.properties;
