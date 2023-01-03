@@ -344,6 +344,7 @@ drop sequence if exists gebouwsequence;
 create sequence gebouwsequence;
 drop table if exists gebouw;
 create table gebouw as
+with buurtgeom as (select st_union(geom) geom from cbs_buurten)
 select 
 	nextval('gebouwsequence') ogc_fid,
 	p.identificatie, 
@@ -358,10 +359,35 @@ select
 	p.bouwjaar,
 	p.geovlak geom
   from bag20221203.pand p
-    join cbs_buurten cb
+    join buurtgeom cb
       on (st_intersects(cb.geom, p.geovlak))
     where 
      p.identificatie <> '0599100000664403' and  -- cbs buurt border touches this building
      p.begindatumtijdvakgeldigheid <= now() AND 
      (p.einddatumtijdvakgeldigheid IS NULL OR p.einddatumtijdvakgeldigheid >= now());
 create index gebouwgeomidx on gebouw using gist(geom);
+
+alter table cbs_verbruik_2021 alter column postcode6 type varchar(6);
+create unique index cbs_verbruik_2021_postcode6idx on cbs_verbruik_2021 (postcode6);
+
+create or replace view vbo_verbruik_2021 as
+select v.*,
+	case
+		when cv.gemiddeldeaardgasleveringwoningen = '.' 
+			then case 
+				when cv.gemiddeldeaardgasleveringbedrijven = '.' 
+					then NULL::int4 
+					else cv.gemiddeldeaardgasleveringbedrijven::int4 
+				end  
+			else cv.gemiddeldeaardgasleveringwoningen::int4 
+		end gem_gas21,
+	case 
+		when cv.gemiddeldeaardgasleveringwoningengecorrigeerd = '.' 
+			then NULL::int4 
+			else cv.gemiddeldeaardgasleveringwoningengecorrigeerd::int4 
+		end gem_gas21cor,
+	case when cv.gemiddeldeelektriciteitsleveringwoningen = '.' then case when cv.gemiddeldeaardgasleveringbedrijven = '.' then NULL::int4 else cv.gemiddeldeaardgasleveringbedrijven::int4 end else cv.gemiddeldeelektriciteitsleveringwoningen::int4 end gem_elek21
+,e.pand_energieklasse as energielabel from verblijfsobjecten v 
+  left join cbs_verbruik_2021 cv 
+    on v.postcode = cv.postcode6
+  left join energielabels e on (e.pand_bagverblijfsobjectid = v.identificatie);

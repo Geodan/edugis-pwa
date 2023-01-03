@@ -335,9 +335,9 @@
             }
           },
           {
-            "title": "energielabels",
+            "title": "Verblijfsobject pandtype",
             "layerInfo": {
-              "id": "verblijfsobjectenergielabels",
+              "id": "verblijfsobjectenpandtype",
               "type": "circle",
               "source": {
                 "type": "vector",
@@ -347,7 +347,51 @@
               "source-layer": "plll.verblijfsobjectelabel",
               "paint": {
                 "circle-pitch-alignment": "map",
-                "circle-color": ["match", ["get", "energieklasse"],
+                "circle-color":[
+                  "match",["get","gebouwtype"],
+                  "Flatwoning (overig)","#a6cee3",
+                  "Appartement","#1f78b4",
+                  "Rijwoning tussen","#b2df8a",
+                  "Portiekwoning","#33a02c",
+                  "Twee-onder-een-kap / rijwoning hoek","#fb9a99",
+                  "Galerijwoning","#e31a1c",
+                  "Maisonnette","#fdbf6f",
+                  "Vrijstaande woning","#ff7f00",
+                  "Rijwoning hoek","#fb6a4a",
+                  "Twee-onder-één-kap","#6a3d9a",
+                  "#cccccc"
+                ],
+                "circle-radius": 4,
+                "circle-stroke-color": "#fff",
+                "circle-stroke-width": 0.5
+              }
+            }
+          },
+          {
+            "title": "energielabels",
+            "layerInfo": {
+              "id": "verblijfsobjectenergielabels",
+              "type": "circle",
+              "metadata": {
+                "title": "energielabels",
+                "attributes" : {
+                  "translations": [
+                    {"name": "energieklasse", "translation": "energielabel", "valuemap": [
+                      ["", "geen of onbekend"]
+                    ]}
+                  ]
+                }
+              },
+              "source": {
+                "type": "vector",
+                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
+                "bounds":[4.5194,51.9219,4.5670,51.9556]
+              },
+              "source-layer": "plll.verblijfsobjectelabel",
+              "paint": {
+                "circle-pitch-alignment": "map",
+                "circle-color": ["match", ["to-string",["get", "energieklasse"]],
+                  "", "#cccccc",
                   "A+++", "#1a9641",
                   "A++", "#1a9641",
                   "A+", "#1a9641",
@@ -358,7 +402,7 @@
                   "E", "#feba53",
                   "F", "#ed6e43",
                   "G", "#d7191c",
-                  "#cccccc"
+                  "#000000"
                 ],
                 "circle-radius": 4,
                 "circle-stroke-color": "#fff",
@@ -370,22 +414,59 @@
             "title": "gasgebruik 2021",
             "layerInfo" : {
               "metadata": {
-                "maxinfofeatures": 20
+                "maxinfofeatures": 20,
+                "attributes": {
+                  "translations": [
+                    {"name": "gem_gas21", "translation": "gem gasverbruik 2021 (pc6)", "unit": " m3", "valuemap": [
+                      [null, "geen gegevens"],
+                      [690, "0 - 690 m3", "<"],
+                      [800, "690 - 800 m3", "<"],
+                      [860, "800 - 860 m3", "<"],
+                      [980, "860 - 980 m3", "<"],
+                      [1040, "980 - 1040 m3", "<"],
+                      [1110, "1040 - 1110 m3", "<"],
+                      [1270, "1110 - 1270 m3", "<"],
+                      [1500, "1270 - 1500 m3", "<"],
+                      [2680, "1500 - 2680 m3", "<"],
+                      [2680, "meer dan 2680 m3, industrie etc", ">="]
+                    ] },
+                    {"name": "gem_gas21cor", "translation": "gem gasverbruik 2021 gecorrigeerd", "unit": " m3"},
+                    {"name": "gem_elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kWh"},
+                    {"name": "oppervlakteverblijfsobject", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "openbareruimtenaam", "translation": "straat"},
+                    {"name": "huisnummer"},
+                    {"name": "huisletter"},
+                    {"name": "huisnummertoevoeging", "translation": "toevoeging"},
+                    {"name": "postcode"}
+                  ]
+                }
               },
               "id": "verblijfsobjectgasgebruik",
               "type": "circle",
               "source": {
                 "type": "vector",
-                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                "tiles":["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
                 "bounds":[4.5194,51.9219,4.5670,51.9556]
               },
-              "source-layer": "plll.verblijfsobjecten",
+              "source-layer": "plll.vbo_verbruik_2021",
               "paint": {
-                "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","gas21"], 16]]],
+                "circle-radius": 4,
                 "circle-pitch-alignment": "map",
                 "circle-stroke-color": "white",
                 "circle-stroke-width": 0.4,
-                "circle-color": ["match", ["get", "gas21"], ".", "gray", "red"]
+                "circle-color":[
+                  "case",["==", ["get","gem_gas21"],null], "#cccccc",
+                  ["<",["get","gem_gas21"],690],"#fff7ec",
+                  ["<",["get","gem_gas21"],800],"#fee8c8",
+                  ["<",["get","gem_gas21"],860],"#fdd49e",
+                  ["<",["get","gem_gas21"],980],"#fdbb84",
+                  ["<",["get","gem_gas21"],1040],"#fc8d59",
+                  ["<",["get","gem_gas21"],1110],"#ef6548",
+                  ["<",["get","gem_gas21"],1270],"#d7301f",
+                  ["<",["get","gem_gas21"],1500],"#b30000",
+                  ["<",["get","gem_gas21"],2680],"#7f0000",
+                  [">=", ["get", "gem_gas21"], 2680], "yellow",
+                  "#cccccc"]
               }
             }
           },
@@ -394,18 +475,47 @@
             "layerInfo" : {
               "id": "verblijfsobjectelektriciteitsgebruik21",
               "type": "circle",
+              "metadata": {
+                "maxinfofeatures": 20,
+                "attributes": {
+                  "translations": [
+                    {"name": "gem_elek21", "translation": "gem elektriciteitsverbruik 2021", "unit": " kWh"},
+                    {"name": "gem_gas21", "translation": "gem gasverbruik 2021 (pc6)", "unit": " m3"},
+                    {"name": "gem_gas21cor", "translation": "gem gasverbruik 2021 gecorrigeerd", "unit": " m3"},
+                    {"name": "oppervlakteverblijfsobject", "translation": "oppervlakte", "unit": " m2"},
+                    {"name": "openbareruimtenaam", "translation": "straat"},
+                    {"name": "huisnummer"},
+                    {"name": "huisletter"},
+                    {"name": "huisnummertoevoeging", "translation": "toevoeging"},
+                    {"name": "postcode"}
+                  ]
+                }
+              },
               "source": {
                 "type": "vector",
-                "tiles":["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,huisletter,toevoeging,postcode,bouwjaar,pandidentificatie,label,gas21,gas21_cor,elek21&include_nulls=0"],
+                "tiles":["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
                 "bounds":[4.5194,51.9219,4.5670,51.9556]
               },
-              "source-layer": "plll.verblijfsobjecten",
+              "source-layer": "plll.vbo_verbruik_2021",
               "paint": {
-                "circle-radius": ["*", 0.2, ["sqrt",["to-number", ["get","elek21"], 16]]],
+                "circle-radius": 4,
                 "circle-pitch-alignment": "map",
                 "circle-stroke-color": "white",
                 "circle-stroke-width": 0.4,
-                "circle-color": ["match", ["get", "elek21"], ".", "gray", "red"]
+                "circle-color":[
+                  "case",["==", ["get","gem_elek21"],null], "#cccccc",
+                  ["<",["get","gem_elek21"],1500],"#f7fcfd",
+                  ["<",["get","gem_elek21"],1750],"#e0ecf4",
+                  ["<",["get","gem_elek21"],2000],"#bfd3e6",
+                  ["<",["get","gem_elek21"],2250],"#9ebcda",
+                  ["<",["get","gem_elek21"],2500],"#8c96c6",
+                  ["<",["get","gem_elek21"],2750],"#8c6bb1",
+                  ["<",["get","gem_elek21"],3000],"#88419d",
+                  ["<",["get","gem_elek21"],3500],"#810f7c",
+                  ["<",["get","gem_elek21"],5000],"#4d004b",
+                  ["<",["get","gem_elek21"],35000],"#000000",
+                  "#000000"
+                ]
               }
             }
           },
@@ -459,7 +569,16 @@
               "paint": {
                 "circle-pitch-alignment": "map",
                 "circle-radius": 7,
-                "circle-color": "#673ab7",
+                "circle-color": [
+                  "case",
+                  ["==",["get","straat"],"Huslystraat"],"#1f78b4",
+                  ["==",["get","straat"],"Van Heukelomstraat"],"#b2df8a",
+                  ["==",["get","straat"],"Prinsenlaan"],"#33a02c",
+                  ["==",["get","straat"],"Annie van Eesstraat"],"#fb9a99",
+                  ["==",["get","straat"],"Jan Stuytstraat"],"#e31a1c",
+                  ["==",["get","straat"],"Edmond Hellenraadstraat"],"#fdbf6f",
+                  "#000000"
+                ],
                 "circle-stroke-width": 1,
                 "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
               }
@@ -594,45 +713,6 @@
       "title": "Panden e.d.",
       "sublayers": [
         {
-          "title": "panden - status",
-          "layerInfo": {
-            "id": "pandenstatus",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["ogc_fid"],
-                "translations": [
-                  {"name": "identificatie", "translation": "bag id"},
-                  {"name": "pandstatus"},
-                  {"name": "bouwjaar"}
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "ogc_fid",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
-              "bounds": [4.528310756737802,51.927871239821975,4.564387124629534,51.9531307432199],
-              "maxzoom": 19
-            },
-            "source-layer": "plll.gebouw",
-            "paint": {
-              "fill-color": ["match",["get", "pandstatus"],
-                "Pand gesloopt", "red",
-                "Verbouwing pand", "green",
-                "Pand in gebruik", "gray",
-                "Sloopvergunning verleend", "pink",
-                "Bouwvergunning verleend", "lightgreen",
-                "black"
-              ],
-              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "white"]
-            },
-            "layout": {
-              "fill-sort-key": ["get","statusorder"]
-            }
-          }
-        },
-        {
           "title": "panden - 3D hoogte",
           "layerInfo": {
             "id": "building3D",
@@ -678,23 +758,105 @@
           }
         },
         {
-            "type": "wms",
-            "title": "panden - bouwjaar",
-            "layerInfo": {
-                "id": "pandenbouwjaar",
-                "type":"raster",
-                "minzoom":11,
-                "maxzoom":22,
-                "source":{
-                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                    "type":"raster",
-                    "tileSize":512,
-                    "tiles":[
-                        "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/gknBouwjaar.qgs&transparent=true&LAYERS=gknBouwjaar&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&SRS=EPSG%3A3857&width=512&height=512&bbox={bbox-epsg-3857}"
-                    ],
-                    "attribution":"Pico, Kadaster"
-                }
+          "title": "panden - status",
+          "layerInfo": {
+            "id": "pandenstatus",
+            "type": "fill",
+            "metadata": {
+              "maxinfofeatures": 20,
+              "attributes": {
+                "deniedattributes": ["ogc_fid","statusorder"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "ogc_fid",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "bounds": [4.528310756737802,51.927871239821975,4.564387124629534,51.9531307432199],
+              "maxzoom": 19
+            },
+            "source-layer": "plll.gebouw",
+            "paint": {
+              "fill-color": ["match",["get", "pandstatus"],
+                "Bouwvergunning verleend", "lightgreen",
+                "Verbouwing pand", "green",
+                "Pand in gebruik", "gray",
+                "Sloopvergunning verleend", "pink",
+                "Pand gesloopt", "red",
+                "black"
+              ],
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "white"]
+            },
+            "layout": {
+              "fill-sort-key": ["get","statusorder"]
             }
+          }
+        },
+        {
+          "title": "panden - bouwjaar",
+          "layerInfo": {
+            "id": "pandenbouwjaarpllvector",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["ogc_fid","statusorder"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "bouwjaar", "translation": "bouwjaar", "valuemap": [
+                    [1900, "1890 - 1899", "<"],
+                    [1920, "1900 - 1919", "<"],
+                    [1945, "1920 - 1944", "<"],
+                    [1965, "1945 - 1964", "<"],
+                    [1975, "1965 - 1974", "<"],
+                    [1978, "1975 - 1977", "<"],
+                    [1982, "1978 - 1981", "<"],
+                    [1990, "1982 - 1989", "<"],
+                    [2000, "1990 - 1999", "<"],
+                    [2005, "2000 - 2004", "<"],
+                    [2015, "2005 - 2014", "<"],
+                    [2023, "2015 - 2023", "<"]
+                  ]},
+                  {"name": "pandstatus"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "ogc_fid",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "bounds": [4.528310756737802,51.927871239821975,4.564387124629534,51.9531307432199],
+              "maxzoom": 19
+            },
+            "source-layer": "plll.gebouw",
+            "paint": {
+              "fill-color": ["case",
+                ["<", ["get","bouwjaar"], 1900], "#99140a",
+                ["<", ["get","bouwjaar"], 1920], "#c6141f",
+                ["<", ["get","bouwjaar"], 1945], "#f21434",
+                ["<", ["get","bouwjaar"], 1965], "#f7512c",
+                ["<", ["get","bouwjaar"], 1975], "#f79520",
+                ["<", ["get","bouwjaar"], 1978], "#f7d915",
+                ["<", ["get","bouwjaar"], 1982], "#d5da32",
+                ["<", ["get","bouwjaar"], 1990], "#97a56f",
+                ["<", ["get","bouwjaar"], 2000], "#5970ad",
+                ["<", ["get","bouwjaar"], 2005], "#1b3beb",
+                ["<", ["get","bouwjaar"], 2015], "#5b24e3",
+                ["<", ["get","bouwjaar"], 2023], "#a911d3",
+                "black"
+              ],
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red",
+                      "rgba(127,127,127,0.1)"]
+            },
+            "filter": ["in", ["get","pandstatus"], ["literal",["Pand in gebruik", "Verbouwing pand"]]],
+            "layout": {
+              "fill-sort-key": ["get","statusorder"]
+            }
+          }
         },
         {
             "type": "wms",
@@ -716,6 +878,32 @@
             }
         },
         {
+          "title": "panden - vergelijk referentiewoning",
+          "layerInfo": {
+            "id": "pandenvergelijkreferentiewoning",
+            "type": "fill",
+            "metadata": {},
+            "source": {
+              "type":"vector",
+              "tiles":["https://research1.geodan.nl/data/plll.vergelijking_referentiewoningen/mvt/{z}/{x}/{y}?geom_column=geom&columns=referentiewoning&include_nulls=0"],
+              "bounds":[4.532970899401299,51.92839550154396,4.564161483160436,51.952896368526844]},
+            "source-layer": "plll.vergelijking_referentiewoningen",
+            "paint": {
+              "fill-color":[
+                  "case",
+                  ["==",["get","referentiewoning"],"Geen vergelijkbare referentiewoning"],"rgba(192,192,192,0.5)",
+                  ["==",["get","referentiewoning"],"Huslystraat"],"#1f78b4",
+                  ["==",["get","referentiewoning"],"Van Heukelomstraat"],"#b2df8a",
+                  ["==",["get","referentiewoning"],"Prinsenlaan"],"#33a02c",
+                  ["==",["get","referentiewoning"],"Annie van Eesstraat"],"#fb9a99",
+                  ["==",["get","referentiewoning"],"Jan Stuytstraat"],"#e31a1c",
+                  ["==",["get","referentiewoning"],"Edmond Hellenraadstraat"],"#fdbf6f",
+                  "#000000"],
+                "fill-outline-color":"white"
+            }
+          }
+        },
+        {
           "title": "Dakdelen",
           "layerInfo": {
             "id": "plldakdelen",
@@ -724,14 +912,18 @@
               "attributes": {
                 "deniedattributes": ["fid"],
                 "translations": [
-                  {"name": "aspect", "translation": "richting", "valuemap":[
+                  {"name": "aspect", "translation": "richting", "unit": " °", "valuemap":[
                     [-1, "plat dak"],
-                    [45, "noord (<45)"],
-                    [135, "oost (<135)"],
-                    [225, "zuid (<225)"],
-                    [315, "west (<315)"],
-                    [361, "noord (<360)"]
-                  ]}
+                    [45, "noord (<45)", "<"],
+                    [135, "oost (<135)", "<"],
+                    [225, "zuid (<225)", "<"],
+                    [315, "west (<315)", "<"],
+                    [361, "noord (<360)", "<"]
+                  ]},
+                  {"name":"slope", "translation": "hellingshoek","unit": " °"},
+                  {"name": "area", "translation": "oppervlakte", "unit": " m2"},
+                  {"name": "elevation", "translation": "hoogte (NAP)", "unit": " m"},
+                  {"name": "dakdeel_id", "translation": "id"}
                 ]
               }
             },
