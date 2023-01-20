@@ -2,7 +2,12 @@ import {LitElement, html, css} from 'lit';
 import {customSelectCss} from './custom-select-css.js';
 import {SphericalMercator} from '../lib/sphericalmercator.js';
 import Flatbush from 'flatbush';
+import 'jsts/org/locationtech/jts/monkey.js';
+import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader';
+import GeoJSONWriter from 'jsts/org/locationtech/jts/io/GeoJSONWriter';
 import './wc-button';
+import {GeoJSON} from '../utils/geojson';
+import lineUnion from '@edugis/lineunion';
 
 class MapDatatoolBuffer extends LitElement {
     static get styles() {
@@ -113,6 +118,7 @@ class MapDatatoolBuffer extends LitElement {
           this.buttonEnabled = false;
           this.targetLayerid = this.sourceLayerid = undefined;
         }
+        this.update();
       }
       _handleClick(e) {
         if (!this.buttonEnabled) {
@@ -138,10 +144,26 @@ class MapDatatoolBuffer extends LitElement {
         
         return 4294967296 * (2097151 & h2) + (h1 >>> 0);
       };
+      featurePropertiesAreEqual(feature1, feature2) {
+        for (const key in feature1.properties) {
+          if (!key in feature2) {
+            return false;
+          }
+          if (feature1.properties[key] !== feature2.properties[key]) {
+            return false;
+          }
+        }
+        for (const key in feature2.properties) {
+          if (!key in feature1) {
+            return false;
+          }
+        }
+        return true;
+      }
       async _getVisibleFeatures(layerid) {
         const layer = this.map.getLayer(layerid);
         const mapBounds = this.map.getBounds();
-        if (false) {//(!layer.sourceLayer && layer.type !== 'circle' && layer.type !== 'symbol') {
+        if (!layer.sourceLayer && layer.type !== 'circle' && layer.type !== 'symbol') {
           // not a vector tile layer or circle layer or symbol layer
           const source = this.map.getSource(layer.source).serialize();
           if (typeof source.data === "string") {
@@ -177,53 +199,47 @@ class MapDatatoolBuffer extends LitElement {
             return jsonFeature;
           });
 
-          console.log(tileBorderFeatures);
-          
           if (tileBorderFeatures.length) {
-            const index = new Flatbush(tileBorderFeatures.length);
+            const flatbushIndex = new Flatbush(tileBorderFeatures.length);
             for (const featureInfo of tileBorderFeatures) {
               const bbox = featureInfo.bbox;
-              index.add(bbox[0], bbox[1], bbox[2], bbox[3]);
+              flatbushIndex.add(bbox[0], bbox[1], bbox[2], bbox[3]);
             }
-            index.finish();
+            flatbushIndex.finish();
+            const firstTileBBox = tileMap.entries().next().value[1];
+            const tolerance = (firstTileBBox[2] - firstTileBBox[0]) / 5000;
+
             for (let i = 0; i < tileBorderFeatures.length; i++) {
               const featureIndex = tileBorderFeatures[i].index;
-              const bbox = turf.bbox(features[featureIndex]);
-              const intersectCandidates = index.search(bbox[0], bbox[1], bbox[2], bbox[3]).sort((a,b)=>a-b);
-              for (let j = 0; j < intersectCandidates.length - 1; j++) {
-                if (intersectCandidates[j] < i) {
-                  continue;
-                }
-                const feature1 = features[tileBorderFeatures[intersectCandidates[j]].index];
-                const feature2 = features[tileBorderFeatures[intersectCandidates[j+1]].index];
-                if (feature1 && feature2 && turf.booleanIntersects(feature1, feature2)) {
-                  const unionedFeature = turf.union(feature1, feature2);
-                  features[tileBorderFeatures[intersectCandidates[j+1]].index] = unionedFeature;
-                  features[tileBorderFeatures[intersectCandidates[j]].index] = null;
+              let feature1 = features[featureIndex];
+              if (feature1 === null) {
+                continue;
+              }
+              const bbox = tileBorderFeatures[i].bbox;
+              const intersectCandidates = flatbushIndex.search(bbox[0], bbox[1], bbox[2], bbox[3]);
+              for (let j = 0; j < intersectCandidates.length; j++) {
+                const feature2Index = tileBorderFeatures[intersectCandidates[j]].index;
+                if (featureIndex !== feature2Index) {
+                  const feature2 = features[feature2Index];
+                  if (feature2 === null) {
+                    continue;
+                  }
+                  if (feature1 && feature2 && turf.booleanIntersects(feature1, feature2)) {
+                    if (this.featurePropertiesAreEqual(feature1, feature2)) {
+                      if (feature1.geometry.type === "LineString" || feature1.geometry.type === "MultiLineString") {
+                        feature1 = features[featureIndex] = lineUnion(feature1, feature2, tolerance);
+                      } else {
+                        feature1 = features[featureIndex] = turf.union(feature1, feature2);
+                      }
+                      features[tileBorderFeatures[intersectCandidates[j]].index] = null;
+                      tileBorderFeatures[intersectCandidates[j]].index = featureIndex;
+                    }
+                  }
                 }
               }
-              //console.log(intersectCandidates);
             }
             features=features.filter(feature=>feature !== null);
           }
-          
-          const hashMap = new Map();
-          const duplicates = [];
-          for (let i = 0; i < features.length; i++) {
-            let props = '';
-            for (const key in features[i].properties) {
-              props += features[i].properties[key];
-            }
-            const hash = this.hash(props);
-            const items = hashMap.get(hash);
-            if (!items) {
-              hashMap.set(hash, [i]);
-            } else {
-              hashMap.set(hash, [...items,i]);
-              duplicates.push({index: i, hash: hash});
-            }
-          }
-          console.log(duplicates);
           return features;
         }
       }
@@ -263,7 +279,8 @@ class MapDatatoolBuffer extends LitElement {
             "id": this.targetLayerid,
             "metadata": {
               "title": title,
-              "bufferSize": bufferSize
+              "bufferSize": bufferSize,
+              "maxinfofeatures": 100,
             },
             "type": "fill",
             "source": {
