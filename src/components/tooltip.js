@@ -45,13 +45,21 @@ class ToolTip extends LitElement {
         window.removeEventListener('showtooltip', this._showToolTip.bind(this));
         window.addEventListener('hidetooltip', this._hideToolTip.bind(this));
     }
+    _getStyle() {
+        let style = this._left ? `left:${this._left}px;` : `right:${this._right}px;`;
+        style += `top: ${this._top}px; height:${this._height}px;`;
+        if (this._style) {
+            style += `background-color:${this._style.backgroundColor};color:${this._style.color};`
+        }
+        return style;
+    }
     render() {
         if (!this.active) {
             return html``;
         }
         return html`
         <div id="tooltip" 
-            style="${this._left?`left: ${this._left}`:`right: ${this._right}`}px; top: ${this._top}px; height:${this._height}px;${this._style?` background-color:${this._style.backgroundColor};color:${this._style.color};`:''}">
+            style="${this._getStyle()}">
             <span>${this._title}</span>
         </div>
         `
