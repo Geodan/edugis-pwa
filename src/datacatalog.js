@@ -377,62 +377,82 @@ export default
               }
             },
             {
-              "title":"PDOK luchtfoto's 2016 (WMTS)",
-              "type":"wmts",
-              "layerInfo":{
-                "id":"pdokluchtfotowmts2016",
-                "type":"raster",
-                "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2016.png"
+              "title": "PDOK luchtfoto's 2016 (WMTS)",
+              "type": "wmts",
+              "layerInfo": {
+                "id": "pdokluchtfotowmts2016",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2016.png"
                 },
-                "source":{
-                  "type":"raster",
-                  "tileSize":256,
-                  "tiles":[
-                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2016_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                   ],
-                  "attribution":"PDOK",
+                  "attribution": "PDOK",
                   "minzoom": 5,
                   "maxzoom": 18
                 }
               }
             },
             {
-              "title":"PDOK luchtfoto's 2017 (WMTS)",
-              "type":"wmts",
-              "layerInfo":{
-                "id":"pdokluchtfotowmts2017",
-                "type":"raster",
-                "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2017.png"
+              "title": "PDOK luchtfoto's 2017 (WMTS)",
+              "type": "wmts",
+              "layerInfo": {
+                "id": "pdokluchtfotowmts2017",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2017.png"
                 },
-                "source":{
-                  "type":"raster",
-                  "tileSize":256,
-                  "tiles":[
-                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2017_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2017_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                   ],
-                  "attribution":"PDOK",
+                  "attribution": "PDOK",
                   "minzoom": 5,
                   "maxzoom": 18
                 }
               }
-            },{
-              "title":"PDOK luchtfoto's 2018 (WMTS)",
-              "type":"wmts",
-              "layerInfo":{
-                "id":"pdokluchtfotowmts2018",
-                "type":"raster",
-                "metadata":{
-                  "legendurl":"https://map.edugis.nl/legends2/pdoklufolegend2018.png"
+            }, {
+              "title": "PDOK luchtfoto's 2020 (WMTS)",
+              "type": "wmts",
+              "layerInfo": {
+                "id": "pdokluchtfotowmts2020",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2018.png"
                 },
-                "source":{
-                  "type":"raster",
-                  "tileSize":256,
-                  "tiles":[
-                    "https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/wmts/2018_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/2020_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
                   ],
-                  "attribution":"PDOK",
+                  "attribution": "PDOK",
+                  "minzoom": 5,
+                  "maxzoom": 19
+                }
+              }
+            },{
+              "title": "PDOK luchtfoto's Actueel (WMTS)",
+              "type": "wmts",
+              "layerInfo": {
+                "id": "pdokluchtfotowmtsactueel",
+                "type": "raster",
+                "metadata": {
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegendactueel.png"
+                },
+                "source": {
+                  "type": "raster",
+                  "tileSize": 256,
+                  "tiles": [
+                    "https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg"
+                  ],
+                  "attribution": "PDOK",
                   "minzoom": 5,
                   "maxzoom": 19
                 }
