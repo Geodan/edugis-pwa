@@ -7,9 +7,11 @@ import pkg from 'rollup-plugin-minify-html-literals';
 const minifyHTML = pkg.default;
 import summary from 'rollup-plugin-summary';
 import del from 'rollup-plugin-delete'
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 export default {
   plugins: [
+    sourcemaps(),
     del({ targets: 'build/**/*'}),
     // Entry point for application build; can specify a glob to build multiple
     // HTML files for non-SPA app
@@ -17,7 +19,9 @@ export default {
       input: ['index.html', 'demo.html', 'mapbox.html'],
     }),
     // Resolve bare module specifiers to relative paths
-    resolve(),
+    resolve({
+      exportConditions: ['development']
+    }),
     // Minify HTML template literals
     minifyHTML(),
     // Minify JS
@@ -44,6 +48,7 @@ export default {
     }),
   ],
   output: {
+    sourcemap: true,
     dir: 'build',
   },
   preserveEntrySignatures: 'strict',
