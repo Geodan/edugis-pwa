@@ -45,6 +45,7 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 import rootUrl from '../utils/rooturl.js';
+import {geoJSONProject} from '@edugis/proj-convert'
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -1112,7 +1113,7 @@ class WebMap extends LitElement {
         pitch: this.pitch,
         bearing: this.bearing
     });
-    this.map.showTileBoundaries = true; // debug
+    //this.map.showTileBoundaries = true; // debug
     if (this.map.version === undefined) {
       this.map.version = 'mapblibregl';
     }
@@ -1667,7 +1668,10 @@ class WebMap extends LitElement {
       this.initMap();
     } else if (droppedFile.data.type && (droppedFile.data.type === "Feature" || droppedFile.data.type === "FeatureCollection")) {
       const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
-      const geojson = droppedFile.data;
+      let geojson = droppedFile.data;
+      if (geojson.crs) {
+        geojson = geoJSONProject(geojson);
+      }
       const layers = GeoJSON.createLayers(geojson, filename);
       layers.forEach(layer=>this.addLayer({detail: layer}));
     } else if (droppedFile.data && droppedFile.data.data) {
