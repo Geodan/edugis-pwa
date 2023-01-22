@@ -1,4 +1,4 @@
-// Checks if `list` looks like a `[x, y]`.
+import {geoJSONProject} from '@edugis/proj-convert'
 
 class Feature {
   constructor(typeName) {
@@ -10,7 +10,6 @@ class Feature {
     }
   }
 }
-
 
 export class GeoJSON {
   static _isXY(list) {
@@ -81,14 +80,6 @@ export class GeoJSON {
     return crs;
   }
 
-  static _getProj(crs, projs) {
-    if (typeof crs === 'string') {
-      return projs[crs] || proj4.Proj(crs);
-    }
-  
-    return crs;
-  }
-
   static _calcBbox(geojson) {
     var min = [Number.MAX_VALUE, Number.MAX_VALUE],
         max = [-Number.MAX_VALUE, -Number.MAX_VALUE];
@@ -104,31 +95,7 @@ export class GeoJSON {
   }
 
   static _project(geojson, from, to, projs) {
-    projs = projs || {};
-    if (!from) {
-      from = GeoJSON._detectCrs(geojson, projs);
-    } else {
-      from = GeoJSON._getProj(from, projs);
-    }
-    to = GeoJSON._getProj(to, projs);
-    var transform = proj4(from, to).forward.bind(transform);
-  
-    var transformGeometryCoords = function(gj) {
-      // No easy way to put correct CRS info into the GeoJSON,
-      // and definitely wrong to keep the old, so delete it.
-      if (gj.crs) {
-        delete gj.crs;
-      }
-      gj.coordinates = GeoJSON._traverseCoords(gj.coordinates, transform);
-    }
-  
-    var transformBbox = function(gj) {
-      if (gj.bbox) {
-        gj.bbox = GeoJSON._calcBbox(gj);
-      }
-    }
-  
-    return GeoJSON._traverseGeoJson(transformGeometryCoords, transformBbox, geojson);
+    return geoJSONProject(geojson, from, to);
   }
 
   /*
@@ -142,7 +109,7 @@ export class GeoJSON {
   */
   
   static _toWgs84(geojson, from, projs) {
-    return GeoJSON._project(geojson, from, proj4.WGS84, projs);
+    return GeoJSON._project(geojson, from, 'EPSG:4326', projs);
   }
   
   static convertTopoJsonLayer(layerInfo) {
@@ -174,14 +141,14 @@ export class GeoJSON {
       return new Promise((resolve, reject)=>{
         if (!layerInfo.metadata.originaldata) {
           layerInfo.metadata.originaldata = layerinfo.source.data;
-          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, proj4.Proj("EPSG:3857"));
+          layerInfo.source.data = GeoJSON._toWgs84(layerInfo.source.data, "EPSG:3857");
         }
         resolve();
       })
     } else {
       return fetch(layerInfo.source.data).then(data=>data.json()).then(json=>{
         layerInfo.metadata.originaldata = layerInfo.source.data;
-        layerInfo.source.data = GeoJSON._toWgs84(json, proj4.Proj("EPSG:3857"));
+        layerInfo.source.data = GeoJSON._toWgs84(json, "EPSG:3857");
         return layerInfo;
       })
     }

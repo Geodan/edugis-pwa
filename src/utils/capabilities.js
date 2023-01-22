@@ -1,4 +1,5 @@
 import {wmsUrl} from './wmsurl';
+import {coordProject} from '@edugis/proj-convert';
 
 function convertToArray(layerlist) {
     if (!layerlist) {
@@ -135,11 +136,15 @@ function layerToNode(Layer, Request, scaleHintType) {
       const bbox4326 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:4326');
       if (bbox4326) {
         node.layerInfo.source.bounds = bbox4326.extent;
-      }
-      const bbox3857 = Layer.BoundingBox.find(bbox=>bbox.crs==='EPSG:3857' || bbox.crs==='EPSG:900913');
-      if (bbox3857) {
-        const forward = proj4(proj4.Proj("EPSG:3857"), proj4.WGS84).forward;
-        node.layerInfo.source.bounds = [...forward([bbox3857.extent[0], bbox3857.extent[1]]), ...forward([bbox3857.extent[2],bbox3857.extent[3]])];
+      } else {
+        for (const bbox of Layer.BoundingBox) {
+          const ll = coordProject([bbox.extent[0], bbox.extent[1]], bbox.crs, 'EPSG:4326');
+          const tr = coordProject([bbox.extent[2],bbox.extent[3]], bbox.crs, 'EPSG:4326');
+          if (ll && tr) {
+            node.layerInfo.source.bounds = [...ll, ...tr];
+            break;
+          }
+        }
       }
     } 
     return node;
