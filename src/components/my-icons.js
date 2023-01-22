@@ -273,3 +273,39 @@ export const world3Icon = svg`
 export const threedots = svg`<svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-three-dots-vertical">
   <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
 </svg>`
+export const intersectIcon = svg`
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 24 24" height="26" width="26" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.5.5a1,1,0,0,1,1,1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.5.5a1,1,0,0,0-1,1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="16.5" x2="16.5" y1="3.5" y2="4.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="12.5" x2="13.5" y1=".5" y2=".5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="9.5" x2="10.5" y1=".5" y2=".5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="6.5" x2="7.5" y1=".5" y2=".5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="3.5" x2="4.5" y1=".5" y2=".5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="6.5" x2="7.5" y1="16.5" y2="16.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="3.5" x2="4.5" y1="16.5" y2="16.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m1.5 16.5a1 1 0 0 1-1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1=".5" x2=".5" y1="13.5" y2="12.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1=".5" x2=".5" y1="10.5" y2="9.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1=".5" x2=".5" y1="7.5" y2="6.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="16.5" x2="16.5" y1="7.5" y2="6.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1=".5" x2=".5" y1="4.5" y2="3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m8.5 23.5a1 1 0 0 1-1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m22.5 23.5a1 1 0 0 0 1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="7.5" x2="7.5" y1="20.5" y2="19.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="11.5" x2="10.5" y1="23.5" y2="23.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="14.5" x2="13.5" y1="23.5" y2="23.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="17.5" x2="16.5" y1="23.5" y2="23.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="20.5" x2="19.5" y1="23.5" y2="23.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="17.5" x2="16.5" y1="7.5" y2="7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="20.5" x2="19.5" y1="7.5" y2="7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m22.5 7.5a1 1 0 0 1 1 1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="23.5" x2="23.5" y1="10.5" y2="11.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="23.5" x2="23.5" y1="13.5" y2="14.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="23.5" x2="23.5" y1="16.5" y2="17.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="7.5" x2="7.5" y1="16.5" y2="17.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="23.5" x2="23.5" y1="19.5" y2="20.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m7.5 8.5a1 1 0 0 1 1-1h8v8a1 1 0 0 1-1 1h-8z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`

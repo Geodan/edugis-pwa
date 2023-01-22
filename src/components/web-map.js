@@ -45,7 +45,7 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 import rootUrl from '../utils/rooturl.js';
-import {geoJSONProject} from '@edugis/proj-convert'
+import {geoJSONProject, coordProject} from '@edugis/proj-convert'
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -140,10 +140,10 @@ function projectLngLat(lngLat, srs)
     if (!srs) {
         srs = 'EPSG:3857';
     }
-    var project = proj4('EPSG:4326', srs);
-    var p = project.forward({x: lngLat.lng, y: lngLat.lat});    
-    lngLat.x = p.x;
-    lngLat.y = p.y;
+    var p = coordProject([lngLat.lng, lngLat.lat], 'EPSG:4326', srs);
+
+    lngLat.x = p[0];
+    lngLat.y = p[1];
     return lngLat;
 }
 
