@@ -34,7 +34,7 @@
     "mapbox-gl": "^1.13.2",
     "maplibre-gl": "^2.4.0",
     "marked": "^4.2.4",
-    "papaparse": "^4.6.3",
+    "papaparse": "^5.2.0",
     "reselect": "^3.0.1",
     "xlsx": "^0.15.1"
   },
