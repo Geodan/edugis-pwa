@@ -1,5 +1,4 @@
 import {LitElement, html, css} from 'lit';
-import { layerIntersect } from '../utils/layerintersect';
 import getVisibleFeatures from '../utils/mbox-features';
 import './wc-button';
 
@@ -14,7 +13,8 @@ class MapDatatoolIntersect extends LitElement {
         return { 
           resulttype: {type: String},
           map: {type: Object},
-          intersectCount: {type: Number}
+          intersectCount: {type: Number},
+          busyMessage: {type: String}
         }; 
     }
     constructor() {
@@ -22,6 +22,9 @@ class MapDatatoolIntersect extends LitElement {
         this.resulttype = 'aantal';
         this.map = {};
         this.intersectCount = -1;
+        this.worker = new Worker('./src/workers/intersect.js');
+        this.worker.onmessage = (e) => this._handleWorkerMessage(e);
+        this.busyMessage = '';
     }
     connectedCallback() {
         super.connectedCallback()
@@ -49,6 +52,7 @@ class MapDatatoolIntersect extends LitElement {
             <input type="radio" name="resulttype" value="layeryes" id="layeryes" ?checked="${this.resulttype==='layeryes'}"><label for="layeryes">Uitvoerkaartlaag met elementen met een overlap</label><br>
             <input type="radio" name="resulttype" value="layerno" id="layerno" ?checked="${this.resulttype==='layerno'}"><label for="layerno">Uitvoerkaartlaag met elementen zonder een overlap</label><br>
             <wc-button class="edugisblue" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
+            ${this.busyMessage !== '' ? html`${this.busyMessage}`:html``}
             ${this.intersectCount > -1 ?html`Aantal elementen: ${this.intersectCount}`:html``}
     </div>
     `
@@ -79,13 +83,11 @@ class MapDatatoolIntersect extends LitElement {
     }
     async _calculateIntersect() {
       if (this.sourceLayerid && this.targetLayerid) {
+        this.intersectCount = -1;
+        this.busyMessage = 'Bezig met berekenen van intersecties...';
         const sourceFeatures = await getVisibleFeatures(this.map, this.sourceLayerid);
         const targetFeatures = await getVisibleFeatures(this.map, this.targetLayerid);
-        const intersectLayer = layerIntersect({type: "FeatureCollection", features:sourceFeatures}, {type:"FeatureCollection", features:targetFeatures});
-        this.intersectCount = intersectLayer.features.reduce((total, feature)=>{
-          return feature.properties.intersect?total+1:total
-        }, 0);
-        this.update();
+        this.worker.postMessage([{type: "FeatureCollection", features:sourceFeatures}, {type:"FeatureCollection", features:targetFeatures}]);
       }
     }
     _handleClick(e) {
@@ -93,6 +95,13 @@ class MapDatatoolIntersect extends LitElement {
         return;
       }
       this._calculateIntersect();
+    }
+    _handleWorkerMessage(event) {
+      this.busyMessage = '';
+      const intersectLayer = event.data;
+      this.intersectCount = intersectLayer.features.reduce((total, feature)=>{
+        return feature.properties.intersect?total+1:total
+      }, 0);
     }
 }
 
