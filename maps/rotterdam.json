@@ -770,6 +770,33 @@
           }
         },
         {
+          "title": "3D hoogte",
+          "layerInfo": {
+            "id":"1d96975a-c4e4-441b-8832-be150d87c2b6",
+            "type":"fill",
+            "source":{
+                "type":"vector",
+                "tiles":["https://research1.geodan.nl/data/plllbronnen.2020_hoogtestatistieken_gebouwen/mvt/{z}/{x}/{y}?geom_column=geom&columns=dd_h_dak_50p&include_nulls=0"],
+                "bounds":[4.532957677889074,51.92839550145261,4.564038729644246,51.95289636866623]},
+            "source-layer":"plllbronnen.2020_hoogtestatistieken_gebouwen",
+            "paint":{
+            "fill-color":[
+                "case",["<=",["get","dd_h_dak_50p"],-3.54722547531128],"#fff7ec",
+                ["<=",["get","dd_h_dak_50p"],-2.9854576587677],"#fee8c8",
+                ["<=",["get","dd_h_dak_50p"],-2.05057406425476],"#fdd49e",
+                ["<=",["get","dd_h_dak_50p"],0.285797119140625],"#fdbb84",
+                ["<=",["get","dd_h_dak_50p"],0.8566974401474],"#fc8d59",
+                ["<=",["get","dd_h_dak_50p"],1.30484104156494],"#ef6548",
+                ["<=",["get","dd_h_dak_50p"],2.80147933959961],"#d7301f",
+                ["<=",["get","dd_h_dak_50p"],5.39347553253174],"#b30000",
+                ["<=",["get","dd_h_dak_50p"],69.9641647338867],"#7f0000",
+                "#7f0000"],
+              "fill-outline-color":"white",
+              "fill-opacity":0.8
+            }
+          }
+        },
+        {
           "title": "panden - status",
           "layerInfo": {
             "id": "pandenstatus",
