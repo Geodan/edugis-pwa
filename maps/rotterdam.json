@@ -988,6 +988,9 @@
           "title": "Postcode punten",
           "layerInfo": {
             "id": "postcode6puntencircle",
+            "metadata": {
+              "maxinfofeatures": 20
+            },
             "type": "circle",
             "source": {
               "type": "vector",
@@ -1050,6 +1053,120 @@
             "paint": {
               "fill-color": "rgba(192, 192, 192, 0.5)",
               "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#000000"]
+            }
+          }
+        },
+        {
+          "title": "particuliere eigenaar bewoner",
+          "layerInfo": {
+            "id": "particuliereeigenaarbewoner",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "particuliere_eigenaar_bewoner", "translation": "particuliere eigenaar bewoner","unit": " %"},
+                  {"name": "particuliere_verhuur", "translation": "particuliere verhuur", "unit": " %"},
+                  {"name": "woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
+                  {"name": "restcategorie", "translation": "restcategorie", "unit": " %"}
+                ]
+              }
+            },
+            "source":{
+              "type":"vector",
+              "tiles":["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
+              "bounds":[4.496119261414023,51.92487682586281,4.565536197853905,51.95902997492585]},
+          "source-layer":"plll.pc6_bezitsverhoudingen",
+          "paint":{
+          "fill-color":[
+              "case",
+              ["==",["get","particuliere_eigenaar_bewoner"],0],"rgba(0,0,0,0)",
+              ["<",["get","particuliere_eigenaar_bewoner"],10],"#fff7ec",
+              ["<",["get","particuliere_eigenaar_bewoner"],20],"#fee8c8",
+              ["<",["get","particuliere_eigenaar_bewoner"],30],"#fdd49e",
+              ["<",["get","particuliere_eigenaar_bewoner"],40],"#fdbb84",
+              ["<",["get","particuliere_eigenaar_bewoner"],50],"#fc8d59",
+              ["<",["get","particuliere_eigenaar_bewoner"],60],"#ef6548",
+              ["<",["get","particuliere_eigenaar_bewoner"],75],"#d7301f",
+              ["<",["get","particuliere_eigenaar_bewoner"],100],"#b30000",
+              ["==",["get","particuliere_eigenaar_bewoner"],100],"#7f0000",
+              "#7f0000"],
+              "fill-outline-color":"black"
+            }
+          }
+        },
+        {
+          "title": "particuliere verhuurder",
+          "layerInfo": {
+            "id": "particuliereverhuurder",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "particuliere_eigenaar_bewoner", "translation": "particuliere eigenaar bewoner","unit": " %"},
+                  {"name": "particuliere_verhuur", "translation": "particuliere verhuur", "unit": " %"},
+                  {"name": "woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
+                  {"name": "restcategorie", "translation": "restcategorie", "unit": " %"}
+                ]
+              }
+            },
+            "source":{
+              "type":"vector",
+              "tiles":["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
+              "bounds":[4.496119261414023,51.92487682586281,4.565536197853905,51.95902997492585]},
+          "source-layer":"plll.pc6_bezitsverhoudingen",
+          "paint":{
+          "fill-color":[
+              "case",
+              ["==",["get","particuliere_verhuur"],0],"rgba(0,0,0,0)",
+              ["<",["get","particuliere_verhuur"],3],"#e5f5f9",
+              ["<",["get","particuliere_verhuur"],9],"#ccece6",
+              ["<",["get","particuliere_verhuur"],12],"#99d8c9",
+              ["<=",["get","particuliere_verhuur"],15],"#66c2a4",
+              ["<",["get","particuliere_verhuur"],60],"#41ae76",
+              ["<",["get","particuliere_verhuur"],75],"#238b45",
+              ["<",["get","particuliere_verhuur"],100],"#006d2c",
+              ["==",["get","particuliere_verhuur"],100],"#00441b",
+              "#00441b"],
+              "fill-outline-color":"black"
+            }
+          }
+        },
+        {
+          "title": "woningcorporatie",
+          "layerInfo": {
+            "id": "woningcorporatie",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "postcode", "translation": "postcode"},
+                  {"name": "particuliere_eigenaar_bewoner", "translation": "particuliere eigenaar bewoner","unit": " %"},
+                  {"name": "particuliere_verhuur", "translation": "particuliere verhuur", "unit": " %"},
+                  {"name": "woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
+                  {"name": "restcategorie", "translation": "restcategorie", "unit": " %"}
+                ]
+              }
+            },
+            "source":{
+              "type":"vector",
+              "tiles":["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
+              "bounds":[4.496119261414023,51.92487682586281,4.565536197853905,51.95902997492585]},
+          "source-layer":"plll.pc6_bezitsverhoudingen",
+          "paint":{
+          "fill-color":[
+              "case",
+              ["==",["get","woningcorporatie"],0],"rgba(0,0,0,0)",
+              ["<",["get","woningcorporatie"],20],"#ece7f2",
+              ["<",["get","woningcorporatie"],40],"#d0d1e6",
+              ["<",["get","woningcorporatie"],60],"#a6bddb",
+              ["<",["get","woningcorporatie"],70],"#74a9cf",
+              ["<",["get","woningcorporatie"],80],"#3690c0",
+              ["<",["get","woningcorporatie"],100],"#0570b0",
+              ["==",["get","woningcorporatie"],100],"#045a8d",
+              "#045a8d"],
+          "fill-outline-color": "black"
             }
           }
         },

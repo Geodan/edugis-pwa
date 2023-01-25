@@ -391,3 +391,16 @@ select v.*,
   left join cbs_verbruik_2021 cv 
     on v.postcode = cv.postcode6
   left join energielabels e on (e.pand_bagverblijfsobjectid = v.identificatie);
+
+-- https://geodata.nationaalgeoregister.nl/neainfolagenkadaster/wfs
+drop table if exists pc6_bezitsverhoudingen;
+create table pc6_bezitsverhoudingen as
+select 
+	kpbgj.geom, 
+	postcode, 
+	particuliere_eigenaar_bewoner , 
+	particuliere_verhuur , 
+	woningcorporatie , 
+	restcategorie  
+from anneb.kadaster_pc6_bezitsverhoudingen_geo_json kpbgj 
+	join cbs_buurten cb on st_intersects(st_transform(kpbgj.geom,28992), cb.geom);
