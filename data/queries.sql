@@ -1,16 +1,23 @@
+-- hoogtestatistieken gebouwen
+drop table if not exists 2000_hoogtestatistieken_gebouwen;
+create table 2000_hoogtestatistieken_gebouwen as select * from anneb.2000_hoogtestatistieken_gebouwen h
+  join cbs_buurten b on st_intersects(h.geom, b.geom);
+
+
 -- pc6 locations
 -- host: leda.geodan.nl
 -- db: research
+drop table if exists plll.pc6points;
 create table plll.pc6points as
 with pc6centroids as
 (select st_centroid(st_union(st_force2d(a.geopunt))) punt, count(postcode) adressen, postcode 
-  from bag_laatst.adres a join plll.wijken w2 on (st_intersects(a.geopunt, w2.geom ))
+  from bag_20221203.bagadres a join plll.wijken w2 on (st_intersects(a.geopunt, w2.geom ) where a.hoofdadres = true)
  	group by postcode)
 select c.postcode, c.adressen,a3.geom 
   from pc6centroids c 
 cross join lateral (select 
     st_force2d(a2.geopunt) geom from 
-      bag_laatst.adres a2 order by a2.geopunt <-> c.punt limit 1) a3;
+      bag_laatst.adres a2 where a2.postcode=c.postcode order by a2.geopunt <-> c.punt limit 1) a3;
 
 
 -- dakdelen
@@ -391,7 +398,7 @@ select v.*,
   left join cbs_verbruik_2021 cv 
     on v.postcode = cv.postcode6
   left join energielabels e on (e.pand_bagverblijfsobjectid = v.identificatie);
-
+  
 -- https://geodata.nationaalgeoregister.nl/neainfolagenkadaster/wfs
 drop table if exists pc6_bezitsverhoudingen;
 create table pc6_bezitsverhoudingen as
