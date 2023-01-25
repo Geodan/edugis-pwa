@@ -335,9 +335,18 @@
             }
           },
           {
-            "title": "Verblijfsobject pandtype",
+            "title": "pandtype",
             "layerInfo": {
               "id": "verblijfsobjectenpandtype",
+              "metadata":{
+                "title": "pandtype",
+                "abstract": "Bij het vaststellen van energielabels wordt ook het pandtype vastgesteld. De pandtypes zijn daardoor alleen bekend voor panden waarvoor ook een energielabel is afgegven.",
+                "attributes": {
+                  "translations": [
+                    {"name": "gebouwtype", "translation": "type"}
+                  ]
+                }
+              },
               "type": "circle",
               "source": {
                 "type": "vector",
