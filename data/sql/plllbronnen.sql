@@ -2,24 +2,10 @@ set search_path=plllbronnen,public;
 
 -- cbs_buurten
 drop table if exists cbs_buurten;
-CREATE TABLE cbs_buurten (
-	ogc_fid int4 NULL,
-	bu_code varchar NULL, -- cbs buurtcode, prefix BU
-	naam varchar NULL, -- buurt naam
-	aant_inw int4 NULL, -- aantal inwoners
-	aant_man int4 NULL, -- aantal mannen
-	aant_vrouw int4 NULL, -- aantal vrouwen
-	aantal_hh int4 NULL, -- aantal huishoudens
-	p_eenp_hh int4 NULL, -- percentage eenpersoons huishoudens
-	p_hh_z_k int4 NULL, -- percentage huishoudens zonder kinderen
-	p_hh_m_k int4 NULL, -- precentage huishoudens met kinderen
-	gem_hh_gr float8 NULL, -- gemiddelde huishoudensgrootte
-	geom public.geometry NULL -- buurtgrens, polygoon 28992
-);
+create table cbs_buurten (like anneb.buurt_2022_v1);
 CREATE INDEX cbs_buurten_geomidx ON plllbronnen.cbs_buurten USING gist (geom);
 
 COMMENT ON TABLE cbs_buurten IS 'bron: CBS wijk en buurtkaart 2020, buurt_2022_v1.shp, https://www.cbs.nl/nl-nl/dossier/nederland-regionaal/geografische-data/wijk-en-buurtkaart-2022. Where naam=''Prinsenland'' or naam=''Het Lage Land''';
-
 COMMENT ON COLUMN cbs_buurten.bu_code IS 'cbs buurtcode, prefix BU';
 COMMENT ON COLUMN cbs_buurten.naam IS 'buurt naam';
 COMMENT ON COLUMN cbs_buurten.aant_inw IS 'aantal inwoners';
@@ -31,6 +17,13 @@ COMMENT ON COLUMN cbs_buurten.p_hh_z_k IS 'percentage huishoudens zonder kindere
 COMMENT ON COLUMN cbs_buurten.p_hh_m_k IS 'precentage huishoudens met kinderen';
 COMMENT ON COLUMN cbs_buurten.gem_hh_gr IS 'gemiddelde huishoudensgrootte';
 COMMENT ON COLUMN cbs_buurten.geom IS 'buurtgrens, polygoon 28992';
+INSERT INTO cbs_buurten
+(bu_code, bu_naam, wk_code, gm_code, gm_naam, ind_wbi, h2o, postcode, dek_perc, oad, sted, bev_dichth, aant_inw, aant_man, aant_vrouw, p_00_14_jr, p_15_24_jr, p_25_44_jr, p_45_64_jr, p_65_eo_jr, p_ongehuwd, p_gehuwd, p_gescheid, p_verweduw, aantal_hh, p_eenp_hh, p_hh_z_k, p_hh_m_k, gem_hh_gr, p_west_al, p_n_w_al, p_marokko, p_ant_aru, p_surinam, p_turkije, p_over_nw, opp_tot, opp_land, opp_water, jrstatcode, jaar, shape_leng, shape_area, geom)
+select bu_code, bu_naam, wk_code, gm_code, gm_naam, ind_wbi, h2o, postcode, dek_perc, oad, sted, bev_dichth, aant_inw, aant_man, aant_vrouw, p_00_14_jr, p_15_24_jr, p_25_44_jr, p_45_64_jr, p_65_eo_jr, p_ongehuwd, p_gehuwd, p_gescheid, p_verweduw, aantal_hh, p_eenp_hh, p_hh_z_k, p_hh_m_k, gem_hh_gr, p_west_al, p_n_w_al, p_marokko, p_ant_aru, p_surinam, p_turkije, p_over_nw, opp_tot, opp_land, opp_water, jrstatcode, jaar, shape_leng, shape_area, geom
+ from anneb.buurt_2022_v1
+   where bu_naam='Prinsenland' or bu_naam='Het Lage Land';
+
+
 
 
 -- BAG panden
