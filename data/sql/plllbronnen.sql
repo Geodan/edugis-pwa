@@ -2,12 +2,59 @@ set search_path=plllbronnen,public;
 
 -- cbs_buurten
 drop table if exists cbs_buurten;
-create table cbs_buurten (like anneb.buurt_2022_v1);
-CREATE INDEX cbs_buurten_geomidx ON plllbronnen.cbs_buurten USING gist (geom);
+CREATE table cbs_buurten (
+	ogc_fid serial4 NOT NULL,
+	bu_code varchar NULL,
+	bu_naam varchar NULL,
+	wk_code varchar NULL,
+	gm_code varchar NULL,
+	gm_naam varchar NULL,
+	ind_wbi int8 NULL,
+	h2o varchar NULL,
+	postcode varchar NULL,
+	dek_perc int8 NULL,
+	oad int8 NULL,
+	sted int8 NULL,
+	bev_dichth int8 NULL,
+	aant_inw int8 NULL,
+	aant_man int8 NULL,
+	aant_vrouw int8 NULL,
+	p_00_14_jr int8 NULL,
+	p_15_24_jr int8 NULL,
+	p_25_44_jr int8 NULL,
+	p_45_64_jr int8 NULL,
+	p_65_eo_jr int8 NULL,
+	p_ongehuwd int8 NULL,
+	p_gehuwd int8 NULL,
+	p_gescheid int8 NULL,
+	p_verweduw int8 NULL,
+	aantal_hh int8 NULL,
+	p_eenp_hh int8 NULL,
+	p_hh_z_k int8 NULL,
+	p_hh_m_k int8 NULL,
+	gem_hh_gr float8 NULL,
+	p_west_al int8 NULL,
+	p_n_w_al int8 NULL,
+	p_marokko int8 NULL,
+	p_ant_aru int8 NULL,
+	p_surinam int8 NULL,
+	p_turkije int8 NULL,
+	p_over_nw int8 NULL,
+	opp_tot int8 NULL,
+	opp_land int8 NULL,
+	opp_water int8 NULL,
+	jrstatcode varchar NULL,
+	jaar int4 NULL,
+	shape_leng float8 NULL,
+	shape_area float8 NULL,
+	geom public.geometry(multipolygon, 28992) NULL,
+	CONSTRAINT cbs_buurt_pkey PRIMARY KEY (ogc_fid)
+);
+CREATE INDEX cbs_buurten_geomidx ON cbs_buurten USING gist (geom);
 
 COMMENT ON TABLE cbs_buurten IS 'bron: CBS wijk en buurtkaart 2020, buurt_2022_v1.shp, https://www.cbs.nl/nl-nl/dossier/nederland-regionaal/geografische-data/wijk-en-buurtkaart-2022. Where naam=''Prinsenland'' or naam=''Het Lage Land''';
 COMMENT ON COLUMN cbs_buurten.bu_code IS 'cbs buurtcode, prefix BU';
-COMMENT ON COLUMN cbs_buurten.naam IS 'buurt naam';
+COMMENT ON COLUMN cbs_buurten.bu_naam IS 'buurt naam';
 COMMENT ON COLUMN cbs_buurten.aant_inw IS 'aantal inwoners';
 COMMENT ON COLUMN cbs_buurten.aant_man IS 'aantal mannen';
 COMMENT ON COLUMN cbs_buurten.aant_vrouw IS 'aantal vrouwen';
@@ -20,27 +67,25 @@ COMMENT ON COLUMN cbs_buurten.geom IS 'buurtgrens, polygoon 28992';
 INSERT INTO cbs_buurten
 (bu_code, bu_naam, wk_code, gm_code, gm_naam, ind_wbi, h2o, postcode, dek_perc, oad, sted, bev_dichth, aant_inw, aant_man, aant_vrouw, p_00_14_jr, p_15_24_jr, p_25_44_jr, p_45_64_jr, p_65_eo_jr, p_ongehuwd, p_gehuwd, p_gescheid, p_verweduw, aantal_hh, p_eenp_hh, p_hh_z_k, p_hh_m_k, gem_hh_gr, p_west_al, p_n_w_al, p_marokko, p_ant_aru, p_surinam, p_turkije, p_over_nw, opp_tot, opp_land, opp_water, jrstatcode, jaar, shape_leng, shape_area, geom)
 select bu_code, bu_naam, wk_code, gm_code, gm_naam, ind_wbi, h2o, postcode, dek_perc, oad, sted, bev_dichth, aant_inw, aant_man, aant_vrouw, p_00_14_jr, p_15_24_jr, p_25_44_jr, p_45_64_jr, p_65_eo_jr, p_ongehuwd, p_gehuwd, p_gescheid, p_verweduw, aantal_hh, p_eenp_hh, p_hh_z_k, p_hh_m_k, gem_hh_gr, p_west_al, p_n_w_al, p_marokko, p_ant_aru, p_surinam, p_turkije, p_over_nw, opp_tot, opp_land, opp_water, jrstatcode, jaar, shape_leng, shape_area, geom
- from anneb.buurt_2022_v1
-   where bu_naam='Prinsenland' or bu_naam='Het Lage Land';
-
-
+ from anneb.buurt_2022_v1 
+   where (bu_naam='Prinsenland' or bu_naam='Het Lage Land') and gm_naam='Rotterdam';
 
 
 -- BAG panden
 drop table if exists pand;
 create table pand (like bag20221203.pand including comments);
-insert into pand 
-	select p.* 
+insert into pand (id, identificatie, documentnummer, documentdatum, "pandstatus", bouwjaar, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, geovlak)
+	select id, identificatie, documentnummer, documentdatum, "pandstatus", bouwjaar, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, geovlak 
 	  from bag20221203.pandactueelbestaand p 
 	    join cbs_buurten b on st_intersects(p.geovlak, b.geom);
 create index pandgeovlakidx on pand using gist(geovlak);
 comment on table pand is 'extracted from bag20221203.pand';
 
 -- BAG verblijfsobjecten
-drop table if exists verblijfsobject;
+drop table if exists verblijfsobject cascade;
 create table verblijfsobject (like bag20221203.verblijfsobject including comments);
-insert into verblijfsobject 
-	select v.* 
+insert into verblijfsobject (id, identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "verblijfsobjectstatus", oppervlakteverblijfsobject, geopunt, geovlak)
+	select id, identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "verblijfsobjectstatus", oppervlakteverblijfsobject, geopunt, geovlak 
 	  from bag20221203.verblijfsobjectactueelbestaand v
 	    join cbs_buurten b on st_intersects(v.geopunt, b.geom);
 create index verblijfsobjectgeopuntidx on verblijfsobject using gist(geopunt);
@@ -49,37 +94,38 @@ comment on table verblijfsobject is 'extracted from bag20221203.verblijfsobject'
 -- BAG standplaatsen
 drop table if exists standplaats;
 create table standplaats (like bag20221203.standplaats including comments);
-insert into standplaats 
-	select v.* 
-	  from bag20221203.standplaatsactueelbestaand v
+insert into standplaats (id,identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "standplaatsstatus", geovlak)
+	select id,identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "standplaatsstatus", geovlak
+	  from bag20221203.standplaats v
 	    join cbs_buurten b on st_intersects(v.geovlak, b.geom);
 create index standplaatsgeovlakidx on standplaats using gist(geovlak);
 comment on table standplaats is 'extracted from bag20221203.standplaats';
+
 
 --- BAG get all nummeraanduiding records that belong to verblijfsobjecten in PLLL
 --- note: nevenadressen are ignored
 drop table if exists nummeraanduiding;
 create table nummeraanduiding (like bag20221203.nummeraanduiding including comments);
-insert into nummeraanduiding
-  select n.* 
+insert into nummeraanduiding (id, identificatie, documentnummer, documentdatum, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, huisnummer, huisletter, huisnummertoevoeging, postcode, "nummeraanduidingstatus", "typeadresseerbaarobject", gerelateerdeopenbareruimte, gerelateerdewoonplaats)
+  select n.id, n.identificatie, n.documentnummer, n.documentdatum, n.begindatumtijdvakgeldigheid, n.einddatumtijdvakgeldigheid, n.huisnummer, n.huisletter, n.huisnummertoevoeging, n.postcode, n."nummeraanduidingstatus", n."typeadresseerbaarobject", n.gerelateerdeopenbareruimte, n.gerelateerdewoonplaats
     from bag20221203.nummeraanduidingactueelbestaand n 
       join verblijfsobject v on (v.hoofdadres=n.identificatie)
   union 
-   select n2.*
+   select n2.id, n2.identificatie, n2.documentnummer, n2.documentdatum, n2.begindatumtijdvakgeldigheid, n2.einddatumtijdvakgeldigheid, n2.huisnummer, n2.huisletter, n2.huisnummertoevoeging, n2.postcode, n2."nummeraanduidingstatus", n2."typeadresseerbaarobject", n2.gerelateerdeopenbareruimte, n2.gerelateerdewoonplaats
      from bag20221203.nummeraanduidingactueelbestaand n2
        join standplaats s on (s.hoofdadres = n2.identificatie);
 
 -- BAG get all openbareruimte used in nummeraanduiding
 drop table if exists openbareruimte;
-create table openbareruimte (like bag20221203.openbareruimte including comments);
+create table openbareruimte (like bag20221203.openbareruimteactueelbestaand including comments);
 insert into openbareruimte
   select distinct o.*
-    from bag20221203.openbareruimte o
+    from bag20221203.openbareruimteactueelbestaand o
       join nummeraanduiding n on (n.gerelateerdeopenbareruimte=o.identificatie);
 
 -- BAG get all woonplaats used in openbareruimte
 drop table if exists woonplaats;
-create table woonplaats (like bag20221203.woonplaats including comments);
+create table woonplaats (like bag20221203.woonplaatsactueelbestaand including comments);
 insert into woonplaats
   select distinct w.*
     from bag20221203.woonplaatsactueelbestaand w
