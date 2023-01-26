@@ -38,7 +38,7 @@ drop table if exists pand;
 create table pand (like bag20221203.pand including comments);
 insert into pand 
 	select p.* 
-	  from bag20221203.pand p 
+	  from bag20221203.pandactueelbestaand p 
 	    join cbs_buurten b on st_intersects(p.geovlak, b.geom);
 create index pandgeovlakidx on pand using gist(geovlak);
 comment on table pand is 'extracted from bag20221203.pand';
@@ -48,7 +48,7 @@ drop table if exists verblijfsobject;
 create table verblijfsobject (like bag20221203.verblijfsobject including comments);
 insert into verblijfsobject 
 	select v.* 
-	  from bag20221203.verblijfsobject v
+	  from bag20221203.verblijfsobjectactueelbestaand v
 	    join cbs_buurten b on st_intersects(v.geopunt, b.geom);
 create index verblijfsobjectgeopuntidx on verblijfsobject using gist(geopunt);
 comment on table verblijfsobject is 'extracted from bag20221203.verblijfsobject';
@@ -58,10 +58,47 @@ drop table if exists standplaats;
 create table standplaats (like bag20221203.standplaats including comments);
 insert into standplaats 
 	select v.* 
-	  from bag20221203.standplaats v
+	  from bag20221203.standplaatsactueelbestaand v
 	    join cbs_buurten b on st_intersects(v.geovlak, b.geom);
 create index standplaatsgeovlakidx on standplaats using gist(geovlak);
 comment on table standplaats is 'extracted from bag20221203.standplaats';
+
+--- BAG get all nummeraanduiding records that belong to verblijfsobjecten in PLLL
+--- note: nevenadressen are ignored
+drop table if exists nummeraanduiding;
+create table nummeraanduiding (like bag20221203.nummeraanduiding including comments);
+insert into nummeraanduiding
+  select n.* 
+    from bag20221203.nummeraanduidingactueelbestaand n 
+      join verblijfsobject v on (v.hoofdadres=n.identificatie)
+  union 
+   select n2.*
+     from bag20221203.nummeraanduidingactueelbestaand n2
+       join standplaats s on (s.hoofdadres = n2.identificatie);
+
+-- BAG get all openbareruimte used in nummeraanduiding
+drop table if exists openbareruimte;
+create table openbareruimte (like bag20221203.openbareruimte including comments);
+insert into openbareruimte
+  select distinct o.*
+    from bag20221203.openbareruimte o
+      join nummeraanduiding n on (n.gerelateerdeopenbareruimte=o.identificatie);
+
+-- BAG get all woonplaats used in openbareruimte
+drop table if exists woonplaats;
+create table woonplaats (like bag20221203.woonplaats including comments);
+insert into woonplaats
+  select distinct w.*
+    from bag20221203.woonplaatsactueelbestaand w
+      join openbareruimte o on (o.gerelateerdewoonplaats=w.identificatie);
+
+-- BAG get relation table bag20221203.verblijfsobjectpandactueelbestaand 
+drop table if exists verblijfsobjectpand;
+create table verblijfsobjectpand (id serial4, identificatie varchar(16), begindatumtijdvakgeldigheid timestamptz, einddatumtijdvakgeldigheid timestamptz, verblijfsobjectstatus varchar, gerelateerdpand varchar(16));
+insert into verblijfsobjectpand
+  select vp.id, vp.identificatie, vp.begindatumtijdvakgeldigheid, vp.einddatumtijdvakgeldigheid, vp."verblijfsobjectstatus", vp.gerelateerdpand 
+    from bag20221203.verblijfsobjectpandactueelbestaand vp
+      join verblijfsobject v on (vp.identificatie=v.identificatie);
 
 
 -- hoogtestatistieken gebouwen
@@ -167,3 +204,74 @@ insert into v20230101_v2_csv
     from anneb.v20230101_v2_csv el
       join cbs_pc6_2020_v1 p on (el.pand_postcode = p.pc6);
 
+-- stedin gasleidingen 1-1-2022
+drop table if exists gasvervangingsdata; 
+create table gasvervangingsdata (like anneb.gasvervangingsdata including comments);
+insert into gasvervangingsdata
+  select g.*
+    from anneb.gasvervangingsdata g 
+	  join cbs_buurten b on (st_intersects(st_buffer(b.geom,200), g.geom));
+create index gasvervangingsdatageomidx on gasvervangingsdata using gist(geom);
+
+
+-- steding hoogspanning 28 jan 2022
+drop table if exists hoogspanningsverbindingen;
+create table hoogspanningsverbindingen (like anneb.hoogspanningsverbindingen including comments);
+insert into hoogspanningsverbindingen
+  select h.*
+    from anneb.hoogspanningsverbindingen h
+	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+
+-- steding middenspanning 28 jan 2022
+drop table if exists middenspanningsverbindingen;
+create table middenspanningsverbindingen (like anneb.middenspanningsverbindingen including comments);
+insert into middenspanningsverbindingen
+  select h.*
+    from anneb.middenspanningsverbindingen h
+	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+
+-- steding laagspanning 28 jan 2022
+drop table if exists laagspanningsverbindingen;
+create table laagspanningsverbindingen (like anneb.laagspanningsverbindingen including comments);
+insert into laagspanningsverbindingen
+  select h.*
+    from anneb.laagspanningsverbindingen h
+	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+
+
+-- create view with all verblijfsobject and standplaats addresses
+drop view if exists hoofdadressen;
+create view hoofdadressen as
+select 
+	v.identificatie, 
+	v."verblijfsobjectstatus"::text, 
+	v.oppervlakteverblijfsobject,
+	o.openbareruimtenaam,
+	n.huisnummer,
+	n.huisletter,
+	n.huisnummertoevoeging,
+	n.postcode,
+	n."typeadresseerbaarobject",
+	w.woonplaatsnaam,
+	geopunt geom
+  from verblijfsobject v
+    join nummeraanduiding n on (v.hoofdadres=n.identificatie)
+      join openbareruimte o on (n.gerelateerdeopenbareruimte=o.identificatie)
+       join woonplaats w on (o.gerelateerdewoonplaats=w.identificatie)
+union 
+select 
+	s.identificatie, 
+	s."standplaatsstatus"::text, 
+	st_area(s.geovlak) oppervlakteverblijfsobject,
+	o.openbareruimtenaam,
+	n.huisnummer,
+	n.huisletter,
+	n.huisnummertoevoeging,
+	n.postcode,
+	n."typeadresseerbaarobject",
+	w.woonplaatsnaam,
+	st_centroid(s.geovlak) geom
+  from standplaats s
+    join nummeraanduiding n on (s.hoofdadres=n.identificatie)
+      join openbareruimte o on (n.gerelateerdeopenbareruimte=o.identificatie)
+       join woonplaats w on (o.gerelateerdewoonplaats=w.identificatie);
