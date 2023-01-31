@@ -139,7 +139,13 @@ insert into verblijfsobjectpand
     from bag20221203.verblijfsobjectpandactueelbestaand vp
       join verblijfsobject v on (vp.identificatie=v.identificatie);
 
-
+-- BAG get relation tabel bag20221203.verblijfsobjectgebruiksdoel
+drop table if exists verblijfsobjectgebruiksdoel;
+create table verblijfsobjectgebruiksdoel (like bag20221203.verblijfsobjectgebruiksdoelactueelbestaand);
+insert into verblijfsobjectgebruiksdoel
+ select d.* from bag20221203.verblijfsobjectgebruiksdoelactueelbestaand d
+  join verblijfsobject v on (v.identificatie = d.identificatie) ; 
+  
 -- hoogtestatistieken gebouwen
 drop table if exists "2020_hoogtestatistieken_gebouwen";
 create table "2020_hoogtestatistieken_gebouwen" as 
