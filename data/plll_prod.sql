@@ -226,4 +226,33 @@ CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (g
 CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
 
 
+--- pc6
+drop table if exists pc6;
+--create table pc6 as
+
+with nummerreeksen as 
+(select v2.postcode, v2.openbareruimtenaam || ' ' || min(v2.huisnummer)::text || ' - ' || max(v2.huisnummer) reeks
+   from verblijfsobject v2 
+     group by v2.postcode, v2.openbareruimtenaam
+)
+, energielabels as 
+(
+select v3.postcode, count(v3.pand_energieklasse) aantallabels, v3.pand_energieklasse || '(' || count(v3.pand_energieklasse) ||')' energielabel
+  from verblijfsobject v3 
+    group by v3.postcode, v3.pand_energieklasse 
+      order by v3.postcode
+)
+select 
+ v.postcode,
+ count(v.identificatie) verblijfsobjecten,
+ string_agg(distinct nr.reeks, ',' order by nr.reeks asc) nummerreeks,
+ sum(v.oppervlakteverblijfsobject) verblijfsobjectoppervlak,
+ string_agg(distinct el.energielabel, ',' order by el.energielabel desc) labels
+  from 
+   verblijfsobject v
+    join nummerreeksen nr on (v.postcode = nr.postcode)
+     join energielabels el on (v.postcode = el.postcode)
+      group by v.postcode 
+
   
+-- pand
