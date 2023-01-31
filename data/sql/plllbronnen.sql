@@ -145,7 +145,7 @@ create table verblijfsobjectgebruiksdoel (like bag20221203.verblijfsobjectgebrui
 insert into verblijfsobjectgebruiksdoel
  select d.* from bag20221203.verblijfsobjectgebruiksdoelactueelbestaand d
   join verblijfsobject v on (v.identificatie = d.identificatie) ; 
-  
+
 -- hoogtestatistieken gebouwen
 drop table if exists "2020_hoogtestatistieken_gebouwen";
 create table "2020_hoogtestatistieken_gebouwen" as 
@@ -291,39 +291,10 @@ insert into laagspanningsverbindingen
 -- psql -h localhost -d pico -c "create table plllbronnen.dakdelen as select d.* from dakdelen_2018.dakdelen d join plllbronnen.cbs_buurten b on (st_intersects(b.geom, d.geom));"
 
 
--- create view with all verblijfsobject and standplaats addresses
-drop view if exists hoofdadressen;
-create view hoofdadressen as
-select 
-	v.identificatie, 
-	v."verblijfsobjectstatus"::text, 
-	v.oppervlakteverblijfsobject,
-	o.openbareruimtenaam,
-	n.huisnummer,
-	n.huisletter,
-	n.huisnummertoevoeging,
-	n.postcode,
-	n."typeadresseerbaarobject",
-	w.woonplaatsnaam,
-	geopunt geom
-  from verblijfsobject v
-    join nummeraanduiding n on (v.hoofdadres=n.identificatie)
-      join openbareruimte o on (n.gerelateerdeopenbareruimte=o.identificatie)
-       join woonplaats w on (o.gerelateerdewoonplaats=w.identificatie)
-union 
-select 
-	s.identificatie, 
-	s."standplaatsstatus"::text, 
-	st_area(s.geovlak) oppervlakteverblijfsobject,
-	o.openbareruimtenaam,
-	n.huisnummer,
-	n.huisletter,
-	n.huisnummertoevoeging,
-	n.postcode,
-	n."typeadresseerbaarobject",
-	w.woonplaatsnaam,
-	st_centroid(s.geovlak) geom
-  from standplaats s
-    join nummeraanduiding n on (s.hoofdadres=n.identificatie)
-      join openbareruimte o on (n.gerelateerdeopenbareruimte=o.identificatie)
-       join woonplaats w on (o.gerelateerdewoonplaats=w.identificatie);
+-- kadaster_pc6_bezitsverhoudingen
+drop table if exists kadaster_pc6_bezitsverhoudingen;
+create table kadaster_pc6_bezitsverhoudingen (like anneb.kadaster_pc6_bezitsverhoudingen_geo_json);
+insert into kadaster_pc6_bezitsverhoudingen
+select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
+  join nummeraanduiding n on (k.postcode=n.postcode);
+

@@ -1,5 +1,10 @@
 set search_path=plll_prod,public;
 
+drop table if exists cbs_buurten;
+create table cbs_buurten (like plllbronnen.cbs_buurten);
+insert into cbs_buurten 
+  select * from plllbronnen.cbs_buurten;
+
 drop table if exists verblijfsobject;
 
 create table verblijfsobject as
@@ -14,7 +19,7 @@ select
 	woonplaatsnaam,
 	typeadresseerbaarobject,
 	v.verblijfsobjectstatus::text,
-	string_agg(d."gebruiksdoelverblijfsobject"::text,',' order by d."gebruiksdoelverblijfsobject"::text ASC) gebruiksdoel,
+	string_agg(distinct d."gebruiksdoelverblijfsobject"::text,',' order by d."gebruiksdoelverblijfsobject"::text ASC) gebruiksdoel,
 	oppervlakteverblijfsobject,
 	pand_opnamedatum,
 	pand_opnametype, 
@@ -195,6 +200,30 @@ select
   	geom2
 ;
 
+drop table if exists tempspreadpoints;
+create table tempspreadpoints as
+with pointdump as
+(select 
+    vp.gerelateerdpand, 
+    array_agg(v.identificatie order by v.openbareruimtenaam,v.huisnummer) verblijfsobjecten,  
+    st_dump(st_generatepoints(st_buffer(p.geovlak,-1),count(v.identificatie)::int,1234)) dump 
+  from plllbronnen.verblijfsobjectpand vp 
+    join verblijfsobject v on (vp.identificatie=v.identificatie)
+      join plllbronnen.pand p on (vp.gerelateerdpand=p.identificatie and st_intersects(v.geom,p.geovlak))
+		group by p.geovlak,vp.gerelateerdpand
+			having count(vp.gerelateerdpand) > 1)
+select 
+    row_number() over (partition by gerelateerdpand order by st_y((dump).geom),st_x((dump).geom)),
+    gerelateerdpand, 
+	(dump).geom, 
+	(verblijfsobjecten)[row_number() over (partition by gerelateerdpand)] verblijfsobject
+  from pointdump;
+update verblijfsobject set geom2=geom where geom2 is null;
+update verblijfsobject v set geom2=s.geom from tempspreadpoints s where v.identificatie = s.verblijfsobject;
+drop table tempspreadpoints;
+
 CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (geom);
 CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
+
+
   
