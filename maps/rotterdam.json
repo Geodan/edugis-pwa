@@ -58,7 +58,8 @@
         "source": {
           "type": "vector",
           "tiles": ["https://research1.geodan.nl/data/plll.cbs_buurten/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,bu_code,aant_inw,aant_man,aant_vrouw,aantal_hh,p_eenp_hh,p_hh_z_k,p_hh_m_k,gem_hh_gr&include_nulls=0"],
-          "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+          "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+          "attribution": "CBS"
         },
         "source-layer": "plll.cbs_buurten",
         "paint": {
@@ -125,7 +126,8 @@
         "source": {
           "type": "vector",
           "tiles": ["https://research1.geodan.nl/data/plll.cbs_buurten/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam,bu_code,aant_inw,aant_man,aant_vrouw,aantal_hh,p_eenp_hh,p_hh_z_k,p_hh_m_k,gem_hh_gr&include_nulls=0"],
-          "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+          "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+          "attribution": "CBS"
         },
         "source-layer": "plll.cbs_buurten",
         "paint": {
@@ -369,6 +371,7 @@
               "type": "vector",
               "tiles": ["https://tiles.edugis.nl/data/percelen.perceel/mvt/{z}/{x}/{y}?geom_column=plaatscoordinaten&columns=kadgemeente,sectie,perceelnummer,perceelnummerrotatie&include_nulls=0"],
               "bounds": [3.30793777653039, 50.7503674846166, 7.22749845044618, 53.5764232865484],
+              "attribution": "Kadaster",
               "maxzoom": 17
             },
             "source-layer": "percelen.perceel",
@@ -446,7 +449,8 @@
             "source": {
               "type": "vector",
               "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom2&columns=ogc_fid,identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,openbareruimtenaam,gebruiksdoel,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,bouwjaar,gerelateerdpand,pandstatus&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+              "attribution": "Kadaster"
             },
             "source-layer": "plll.verblijfsobjecten",
             "paint": {
@@ -486,7 +490,8 @@
             "source": {
               "type": "vector",
               "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+              "attribution": "Kadaster"
             },
             "source-layer": "plll.verblijfsobjectelabel",
             "paint": {
@@ -531,7 +536,8 @@
             "source": {
               "type": "vector",
               "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+              "attribution": "RVO"
             },
             "source-layer": "plll.verblijfsobjectelabel",
             "paint": {
@@ -620,7 +626,8 @@
             "source": {
               "type": "vector",
               "tiles": ["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
+              "attribution": "CBS"
             },
             "source-layer": "plll.vbo_verbruik_2021",
             "paint": {

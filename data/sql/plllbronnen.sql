@@ -277,6 +277,13 @@ insert into laagspanningsverbindingen
     from anneb.laagspanningsverbindingen h
 	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
 
+-- dakvlakken
+-- to prevent copying 95 GB data, create the PLLL dakvlakken tabel in the pico database, then export to plllbronnen
+-- pg_dump -h localhost -d research -t plllbronnen.cbs_buurten > cbs_buurten.sql
+-- psql -h localhost -d pico -c "create schema plllbronnen;"
+-- psql -h localhost -d pico < cbs_buurten.sql
+-- psql -h localhost -d pico -c "create table plllbronnen.dakdelen as select d.* from dakdelen_2018.dakdelen d join plllbronnen.cbs_buurten b on (st_intersects(b.geom, d.geom));"
+
 
 -- create view with all verblijfsobject and standplaats addresses
 drop view if exists hoofdadressen;
