@@ -57,6 +57,9 @@ class EduGISApp extends (LitElement) {
   }
   render() {
     // Anything that's related to rendering should be done in here.
+    if (typeof APIkeys === 'undefined') {
+      alert ('File "keys.js" not installed? RTFM!')
+    }
     return html`
     <style>
 :host{
