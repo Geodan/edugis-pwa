@@ -77,7 +77,7 @@ create table pand (like bag20221203.pand including comments);
 insert into pand (id, identificatie, documentnummer, documentdatum, "pandstatus", bouwjaar, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, geovlak)
 	select id, identificatie, documentnummer, documentdatum, "pandstatus", bouwjaar, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, geovlak 
 	  from bag20221203.pandactueelbestaand p 
-	    join cbs_buurten b on st_intersects(p.geovlak, b.geom);
+	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(p.geovlak, b.geom);
 create index pandgeovlakidx on pand using gist(geovlak);
 comment on table pand is 'extracted from bag20221203.pand';
 
@@ -87,7 +87,7 @@ create table verblijfsobject (like bag20221203.verblijfsobject including comment
 insert into verblijfsobject (id, identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "verblijfsobjectstatus", oppervlakteverblijfsobject, geopunt, geovlak)
 	select id, identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "verblijfsobjectstatus", oppervlakteverblijfsobject, geopunt, geovlak 
 	  from bag20221203.verblijfsobjectactueelbestaand v
-	    join cbs_buurten b on st_intersects(v.geopunt, b.geom);
+	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(v.geopunt, b.geom);
 create index verblijfsobjectgeopuntidx on verblijfsobject using gist(geopunt);
 comment on table verblijfsobject is 'extracted from bag20221203.verblijfsobject';
 
@@ -97,7 +97,7 @@ create table standplaats (like bag20221203.standplaats including comments);
 insert into standplaats (id,identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "standplaatsstatus", geovlak)
 	select id,identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "standplaatsstatus", geovlak
 	  from bag20221203.standplaats v
-	    join cbs_buurten b on st_intersects(v.geovlak, b.geom);
+	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(v.geovlak, b.geom);
 create index standplaatsgeovlakidx on standplaats using gist(geovlak);
 comment on table standplaats is 'extracted from bag20221203.standplaats';
 
@@ -253,7 +253,7 @@ create table gasvervangingsdata (like anneb.gasvervangingsdata including comment
 insert into gasvervangingsdata
   select g.*
     from anneb.gasvervangingsdata g 
-	  join cbs_buurten b on (st_intersects(st_buffer(b.geom,200), g.geom));
+	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(st_buffer(b.geom,200), g.geom));
 create index gasvervangingsdatageomidx on gasvervangingsdata using gist(geom);
 
 
@@ -263,7 +263,7 @@ create table hoogspanningsverbindingen (like anneb.hoogspanningsverbindingen inc
 insert into hoogspanningsverbindingen
   select h.*
     from anneb.hoogspanningsverbindingen h
-	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
 
 -- steding middenspanning 28 jan 2022
 drop table if exists middenspanningsverbindingen;
@@ -271,7 +271,7 @@ create table middenspanningsverbindingen (like anneb.middenspanningsverbindingen
 insert into middenspanningsverbindingen
   select h.*
     from anneb.middenspanningsverbindingen h
-	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
 
 -- steding laagspanning 28 jan 2022
 drop table if exists laagspanningsverbindingen;
@@ -279,7 +279,7 @@ create table laagspanningsverbindingen (like anneb.laagspanningsverbindingen inc
 insert into laagspanningsverbindingen
   select h.*
     from anneb.laagspanningsverbindingen h
-	  join cbs_buurten b on (st_intersects(b.geom, h.geom));
+	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
 
 -- dakvlakken
 -- to prevent copying 95 GB data, create the PLLL dakvlakken tabel in the pico database, then export to plllbronnen

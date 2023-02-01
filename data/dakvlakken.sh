@@ -9,7 +9,7 @@ psql -d research -c "drop table if exists plllbronnen.dakdelen;"
 psql -d pico -c "create schema if not exists plllbronnen;drop table if exists plllbronnen.cbs_buurten;drop table if exists plllbronnen.dakdelen;"
 pg_dump -d research -t plllbronnen.cbs_buurten > cbs_buurten.sql
 psql -d pico < cbs_buurten.sql
-psql -d pico -c "create table plllbronnen.dakdelen as select distinct d.* from dakdelen_2018.dakdelen d join plllbronnen.cbs_buurten b on (st_intersects(b.geom, d.geom));"
+psql -d pico -c "create table plllbronnen.dakdelen as select distinct d.* from dakdelen_2018.dakdelen d join (select st_union(geom) geom from plllbronnen.cbs_buurten) b on (st_intersects(b.geom, d.geom));"
 pg_dump -d pico -t plllbronnen.dakdelen | gzip > dakdelen.sql.gz
 zcat dakdelen.sql.gz | psql -d research 
 rm cbs_buurten.sql
