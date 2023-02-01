@@ -229,9 +229,7 @@ SELECT
     case when wozwoning < 0 then NULL else wozwoning end wozwoning,
     case when uitkminaow < 0 then NULL else uitkminaow end uitkminaow,
     p.geom
-FROM anneb.cbs_pc6_2020_v1 p 
-  join cbs_buurten b on st_intersects(p.geom, b.geom);
-
+FROM anneb.cbs_pc6_2020_v1 p join (select st_union(geom) geom from cbs_buurten) b on st_intersects(p.geom, b.geom);
 
 -- cbs energie per postode 2021, publicatiefile_energie_postcode_2021
 drop table if exists publicatiefile_energie_postcode6_2021;
@@ -294,7 +292,10 @@ insert into laagspanningsverbindingen
 -- kadaster_pc6_bezitsverhoudingen
 drop table if exists kadaster_pc6_bezitsverhoudingen;
 create table kadaster_pc6_bezitsverhoudingen (like anneb.kadaster_pc6_bezitsverhoudingen_geo_json);
+with postcodes as (
+	select postcode from nummeraanduiding group by postcode
+)
 insert into kadaster_pc6_bezitsverhoudingen
 select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
-  join nummeraanduiding n on (k.postcode=n.postcode);
+  join postcodes p on (k.postcode=p.postcode);
 

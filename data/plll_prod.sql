@@ -226,33 +226,98 @@ CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (g
 CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
 
 
---- pc6
-drop table if exists pc6;
---create table pc6 as
-
+--- postcode
+drop table if exists postcode;
+create table postcode as
 with nummerreeksen as 
 (select v2.postcode, v2.openbareruimtenaam || ' ' || min(v2.huisnummer)::text || ' - ' || max(v2.huisnummer) reeks
    from verblijfsobject v2 
      group by v2.postcode, v2.openbareruimtenaam
 )
+, nummerreeksenagg as 
+(
+select 
+	postcode, 
+	string_agg(distinct reeks, ',' order by reeks) reeksen
+  from nummerreeksen
+  	group by postcode
+)
 , energielabels as 
 (
-select v3.postcode, count(v3.pand_energieklasse) aantallabels, v3.pand_energieklasse || '(' || count(v3.pand_energieklasse) ||')' energielabel
+select v3.postcode, count(v3.pand_energieklasse) aantallabels, v3.pand_energieklasse
   from verblijfsobject v3 
     group by v3.postcode, v3.pand_energieklasse 
-      order by v3.postcode
+      order by postcode, count(v3.pand_energieklasse) desc
 )
+, energielabelsagg as 
+(
+select postcode, string_agg(pand_energieklasse || '(' || aantallabels::text || ')', ',' order by aantallabels desc, pand_energieklasse asc) labels
+  from energielabels
+   group by postcode
+)
+, postcodebagrvoenergielabels as
+(
 select 
  v.postcode,
  count(v.identificatie) verblijfsobjecten,
- string_agg(distinct nr.reeks, ',' order by nr.reeks asc) nummerreeks,
  sum(v.oppervlakteverblijfsobject) verblijfsobjectoppervlak,
- string_agg(distinct el.energielabel, ',' order by el.energielabel desc) labels
+ reeksen,
+ labels,
+ toplabel
   from 
    verblijfsobject v
-    join nummerreeksen nr on (v.postcode = nr.postcode)
-     join energielabels el on (v.postcode = el.postcode)
-      group by v.postcode 
+    join nummerreeksenagg nr on (v.postcode = nr.postcode)
+     join energielabelsagg el on (v.postcode = el.postcode)
+       join lateral (select pand_energieklasse toplabel from energielabels el where v.postcode = el.postcode order by aantallabels desc, pand_energieklasse asc limit 1) toplabel on true
+      group by v.postcode, reeksen, labels, toplabel
+)
+select
+  pc.*,
+  kpb.particuliere_eigenaar_bewoner,
+  kpb.particuliere_verhuur,
+  kpb.woningcorporatie,
+  kpb.restcategorie,
+  k.inwoner,
+  k.man,
+  k.vrouw,
+  k.inw_014,
+  k.inw_1524,
+  k.inw_2544,
+  k.inw_4564,
+  k.inw_65pl,
+  k.p_nl_achtg,
+  k.p_we_mig_a,
+  k.p_nw_mig_a,
+  k.aantal_hh,
+  k.tothh_eenp,
+  k.tothh_mpzk,
+  k.hh_eenoud,
+  k.hh_tweeoud,
+  k.gem_hh_gr,
+  k.woning,
+  k.wonvoor45,
+  k.won_4564,
+  k.won_6574,
+  k.won_7584,
+  k.won_8594,
+  k.won_9504,
+  k.won_0514,
+  k.won_1524,
+  k.won_mrgez,
+  k.p_koopwon,
+  k.p_huurwon,
+  k.won_hcorp,
+  k.won_nbew,
+  k.wozwoning,
+  k.uitkminaow,
+  k.geom,
+  null::geometry(multipolygon,28992) geomblok
+  from postcodebagrvoenergielabels pc
+   left join plllbronnen.cbs_pc6_2020_v1 k on (k.pc6=pc.postcode)
+     left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (pc.postcode=kpb.postcode);
 
-  
--- pand
+ update postcode pc 
+   set geomblok=
+     (select st_multi(st_union(st_intersection(pc.geom, p.geovlak))) 
+	   from plllbronnen.pand p 
+	     where st_intersects(pc.geom,p.geovlak));
