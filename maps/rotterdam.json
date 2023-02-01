@@ -863,7 +863,7 @@
             "source": {
               "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_12jan/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,identifica,oppervlakt,status,gebruiksdo,straat,huisnummer,postcode,bouwjaar,pandidenti,gas21_cor_,elek21_gem,gebouwtype,a_ei,a_elabel,a_emg,a_bwj,b_ei,b_elabel,b_emg,b_bwjr,c_ei,c_elabel,c_emg,c_bwjr,d1_ei,d1_elabel,d1_emg,d1_bwjr,d2_ei,d2_elabel,d2_emg,d2_bwjr,e_ei,e_elabel,e_emg,e_bwjr"],
+              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_12jan/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identifica,oppervlakt,status,gebruiksdo,straat,huisnummer,postcode,bouwjaar,pandidenti,gas21_cor_,elek21_gem,gebouwtype,a_ei,a_elabel,a_emg,a_bwj,b_ei,b_elabel,b_emg,b_bwjr,c_ei,c_elabel,c_emg,c_bwjr,d1_ei,d1_elabel,d1_emg,d1_bwjr,d2_ei,d2_elabel,d2_emg,d2_bwjr,e_ei,e_elabel,e_emg,e_bwjr"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.referentiewoningen_12jan",
@@ -1023,7 +1023,7 @@
             "source": {
               "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.referentiewoningen_energieprestatie",
@@ -1181,7 +1181,7 @@
             "source": {
               "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_colum=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
+              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.referentiewoningen_energieprestatie",
@@ -1354,7 +1354,7 @@
             "source": {
               "promoteId": "ogc_fid",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
               "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
               "maxzoom": 19
             },
@@ -1414,7 +1414,7 @@
             "source": {
               "promoteId": "ogc_fid",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_colum=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
               "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
               "maxzoom": 19
             },
@@ -1540,7 +1540,7 @@
             "source": {
               "promoteId": "dakdeel_id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_colum=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
+              "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_column=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "maxzoom": 19
             },
@@ -1576,7 +1576,7 @@
             "source": {
               "promoteId": "dakdeel_id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_colum=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
+              "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_column=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.rdam_pll_gebouwpv",
@@ -1603,17 +1603,123 @@
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,adressen"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "paint": {
-                "circle-pitch-alignment": "map",
-                "circle-color": "#000",
-                "circle-radius": 5,
-                "circle-stroke-color": "#fff",
-                "circle-stroke-width": 1
-              }
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,adressen"],
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
-            "source-layer": "plll.pc6points"
+            "source-layer": "plll.pc6points",
+            "paint": {
+              "circle-pitch-alignment": "map",
+              "circle-color": "#000",
+              "circle-radius": 5,
+              "circle-stroke-color": "#fff",
+              "circle-stroke-width": 1
+            }
+          }
+        },
+        {
+          "title": "Postcode verblijfsobjecten",
+          "layerInfo": {
+            "id": "postcode6verblijfsobjecten",
+            "metadata": {
+              "maxinfofeatures": 20
+            },
+            "type": "circle",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject2/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,postcode,openbareruimtenaam,huisnummer"],
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+            },
+            "source-layer": "plll_prod.verblijfsobject2",
+            "paint": {
+              "circle-color":[
+                "match", ["get","postcode"] ,
+                "3067TZ","#8dd3c7",
+                "3066KJ","#ffffb3",
+                "3066KG","#bebada",
+                "3067TG","#fb8072",
+                "3067NG","#80b1d3",
+                "3067XX","#fdb462",
+                "3067NX","#b3de69",
+                "3067NW","#fccde5",
+                "3067AR","#d9d9d9",
+                "3067AS","#bc80bd",
+                "3067AN","#ccebc5",
+                "3067AG","#ffed6f",
+                "3067NC","#5e4fa2",
+                "red"],
+              "circle-stroke-width":0.5,
+              "circle-stroke-color":"white"
+            }
+          }
+        },
+        {
+          "title": "Postcode gebied",
+          "layerInfo": {
+            "id": "postcode6gebied",
+            "metadata": {
+              "maxinfofeatures": 20
+            },
+            "type": "fill",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode"],
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+            },
+            "source-layer": "plll_prod.postcode",
+            "paint": {
+              "fill-color":[
+                "match", ["get","postcode"],
+                "3067TZ","#8dd3c7",
+                "3066KJ","#ffffb3",
+                "3066KG","#bebada",
+                "3067TG","#fb8072",
+                "3067NG","#80b1d3",
+                "3067XX","#fdb462",
+                "3067NX","#b3de69",
+                "3067NW","#fccde5",
+                "3067AR","#d9d9d9",
+                "3067AS","#bc80bd",
+                "3067AN","#ccebc5",
+                "3067AG","#ffed6f",
+                "3067NC","#5e4fa2",
+                "#ccc"],
+              "fill-outline-color":"white"
+            }
+          }
+        },
+        {
+          "title": "Postcode blokken",
+          "layerInfo": {
+            "id": "postcode6blokken",
+            "metadata": {
+              "maxinfofeatures": 20
+            },
+            "type": "fill",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geomblok&columns=id,postcode"],
+              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+            },
+            "source-layer": "plll_prod.postcode",
+            "paint": {
+              "fill-color":[
+                "match", ["get","postcode"],
+                "3067TZ","#8dd3c7",
+                "3066KJ","#ffffb3",
+                "3066KG","#bebada",
+                "3067TG","#fb8072",
+                "3067NG","#80b1d3",
+                "3067XX","#fdb462",
+                "3067NX","#b3de69",
+                "3067NW","#fccde5",
+                "3067AR","#d9d9d9",
+                "3067AS","#bc80bd",
+                "3067AN","#ccebc5",
+                "3067AG","#ffed6f",
+                "3067NC","#5e4fa2",
+                "#ccc"],
+              "fill-outline-color":"white"
+            }
           }
         },
         {
@@ -1731,7 +1837,7 @@
             "source": {
               "promoteId": "fid",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_gebied_soceco/mvt/{z}/{x}/{y}?geom_colum=geom&columns=fid,aant_adres,aant_pand,pc6,inwoner,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow"],
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_gebied_soceco/mvt/{z}/{x}/{y}?geom_column=geom&columns=fid,aant_adres,aant_pand,pc6,inwoner,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.pc6_gebied_soceco",
@@ -2015,7 +2121,7 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
+              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.vwpc6geb_energverbruik21",
@@ -2128,7 +2234,7 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
+              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.vwpc6geb_energverbruik21",
@@ -2168,7 +2274,7 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_polygons/mvt/{z}/{x}/{y}?geom_colum=geom&columns=pc6,aant_adres,aant_pand,bouwjaar,bjtype,hfnc,opp"],
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_polygons/mvt/{z}/{x}/{y}?geom_column=geom&columns=pc6,aant_adres,aant_pand,bouwjaar,bjtype,hfnc,opp"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.pc6_polygons",
@@ -2278,7 +2384,7 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.pc6_energverbruik21_2",
@@ -2391,7 +2497,7 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_colum=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
+              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll.pc6_energverbruik21_2",
