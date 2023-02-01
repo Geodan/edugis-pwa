@@ -228,6 +228,8 @@ CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (
 
 --- postcode
 drop table if exists postcode;
+create sequence if not exists postcodeseq;
+alter sequence postcodeseq restart with 1;
 create table postcode as
 with nummerreeksen as 
 (select v2.postcode, v2.openbareruimtenaam || ' ' || min(v2.huisnummer)::text || ' - ' || max(v2.huisnummer) reeks
@@ -272,11 +274,17 @@ select
       group by v.postcode, reeksen, labels, toplabel
 )
 select
+  nextval('postcodeseq') id,
   pc.*,
   kpb.particuliere_eigenaar_bewoner,
   kpb.particuliere_verhuur,
   kpb.woningcorporatie,
   kpb.restcategorie,
+  pep.gemiddelde_aardgaslevering_woningen,
+  pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  pep.gemiddelde_elektriciteitslevering_woningen,
+  pep.gemiddelde_aardgaslevering_bedrijven,
+  pep.gemiddelde_elektriciteitslevering_bedrijven,
   k.inwoner,
   k.man,
   k.vrouw,
@@ -314,10 +322,14 @@ select
   null::geometry(multipolygon,28992) geomblok
   from postcodebagrvoenergielabels pc
    left join plllbronnen.cbs_pc6_2020_v1 k on (k.pc6=pc.postcode)
-     left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (pc.postcode=kpb.postcode);
+     left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (pc.postcode=kpb.postcode)
+      left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (pc.postcode=pep.postcode6);
 
- update postcode pc 
+update postcode pc 
    set geomblok=
      (select st_multi(st_union(st_intersection(pc.geom, p.geovlak))) 
 	   from plllbronnen.pand p 
 	     where st_intersects(pc.geom,p.geovlak));
+alter table postcode add primary key (id);
+create index postcodegeomidx on postcode using gist(geom);
+create index postcodegeomblokidx on postcode using gist(geomblok);
