@@ -1626,10 +1626,10 @@
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject2/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,postcode,openbareruimtenaam,huisnummer"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=postcode&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
-            "source-layer": "plll_prod.verblijfsobject2",
+            "source-layer": "plll_prod.verblijfsobject",
             "paint": {
               "circle-color":[
                 "match", ["get","postcode"] ,
@@ -2816,6 +2816,40 @@
               "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
               "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
               "attribution": "RIVM"
+            }
+          }
+        },
+        {
+          "title": "Stedelijk hitte-eiland effect (UHI) Prinsenland / Het Lage Land",
+          "layerInfo": {
+            "id":"4ae89115-6144-4862-9310-e27f172c3186",
+            "metadata":{
+              "title": "Stedelijk hitte-eiland effect (UHI)",
+              "attributes": {
+                "translations": [
+                  {"name": "temperature", "translation": "uhi", "unit": " °C"}
+                ]
+              }
+            },
+            "type":"fill",
+            "source":{
+                "type":"vector",
+                "tiles":["https://research1.geodan.nl/data/plllbronnen.plll_uhi/mvt/{z}/{x}/{y}?geom_column=geom&columns=temperature&include_nulls=0"],
+                "bounds":[4.524450178901377,51.91733338317203,4.571615873427298,51.95945605719342]},
+            "source-layer":"plllbronnen.plll_uhi",
+            "paint":{
+            "fill-color":[
+                "case",["<",["get","temperature"],1.0],"#fff7ec",
+                ["<",["get","temperature"],1.2],"#fee8c8",
+                ["<",["get","temperature"],1.3],"#fdd49e",
+                ["<",["get","temperature"],1.4],"#fdbb84",
+                ["<=",["get","temperature"],1.4],"#fc8d59",
+                ["<",["get","temperature"],1.6],"#ef6548",
+                ["<",["get","temperature"],1.7],"#d7301f",
+                ["<",["get","temperature"],1.8],"#b30000",
+                ["<=",["get","temperature"],2.0],"#7f0000",
+                "#7f0000"],
+              "fill-opacity":0.8
             }
           }
         },
