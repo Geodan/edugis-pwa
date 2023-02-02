@@ -1200,65 +1200,8 @@
     },
     {
       "type": "group",
-      "title": "Panden e.d.",
+      "title": "Gebouwen",
       "sublayers": [{
-          "title": "panden - 3D hoogte",
-          "layerInfo": {
-            "id": "building3D",
-            "type": "fill-extrusion",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "dd_h_dak_max",
-                    "translation": "gebouwhoogte (NAP)",
-                    "unit": " m",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "h_maaiveld",
-                    "translation": "maaiveld (NAP)",
-                    "unit": " m",
-                    "decimals": 3
-                  }
-                ]
-              },
-              "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
-              "bounds": [3.25524871110589, 50.7347266517351, 7.24079584680245, 53.5258520631408],
-              "minzoom": 13,
-              "maxzoom": 18,
-              "attribution": "Kadaster"
-            },
-            "source-layer": "public.bag13_lod1213_2d_levering",
-            "minzoom": 13,
-            "maxzoom": 24,
-            "paint": {
-              "fill-extrusion-color": ["case",
-                ["==", ["get", "bouwjaar"], null], "#cccccc",
-                ["<", ["get", "bouwjaar"], 1006], "#cccccc",
-                ["<", ["get", "bouwjaar"], 1700], "#7f0000",
-                ["<", ["get", "bouwjaar"], 1800], "#b30000",
-                ["<", ["get", "bouwjaar"], 1900], "#d7301f",
-                ["<", ["get", "bouwjaar"], 1930], "#ef6548",
-                ["<", ["get", "bouwjaar"], 1960], "#fc8d59",
-                ["<", ["get", "bouwjaar"], 1975], "#fdbb84",
-                ["<", ["get", "bouwjaar"], 1990], "#fdd49e",
-                ["<", ["get", "bouwjaar"], 2000], "#fee8c8",
-                ["<=", ["get", "bouwjaar"], 2025], "#fff7ec",
-                "#cccccc"
-              ],
-              "fill-extrusion-height": ["-", ["get", "dd_h_dak_max"],
-                ["get", "h_maaiveld"]
-              ],
-              "fill-extrusion-base": 0,
-              "fill-extrusion-opacity": 0.95
-            }
-          }
-        },
-        {
           "title": "3D hoogte",
           "layerInfo": {
             "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
@@ -1292,40 +1235,6 @@
               ],
               "fill-extrusion-base": 0,
               "fill-extrusion-opacity": 0.95
-            }
-          }
-        },
-        {
-          "title": "3D hoogte 2D",
-          "layerInfo": {
-            "id": "2D 1d96975a-c4e4-441b-8832-be150d87c2b6",
-            "type": "fill",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plllbronnen.2020_hoogtestatistieken_gebouwen/mvt/{z}/{x}/{y}?geom_column=geom&columns=dd_h_dak_max,h_maaiveld&include_nulls=0"],
-              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
-            },
-            "source-layer": "plllbronnen.2020_hoogtestatistieken_gebouwen",
-            "paint": {
-              "fill-color": [
-                "let", "height", ["-", ["get", "dd_h_dak_max"],
-                  ["get", "h_maaiveld"]
-                ],
-                [
-                  "case", ["<=", ["var", "height"], -3.54722547531128], "#fff7ec",
-                  ["<=", ["var", "height"], 4], "#fee8c8",
-                  ["<=", ["var", "height"], 8], "#fdd49e",
-                  ["<=", ["var", "height"], 13], "#fdbb84",
-                  ["<=", ["var", "height"], 16], "#fc8d59",
-                  ["<=", ["var", "height"], 19], "#ef6548",
-                  ["<=", ["var", "height"], 24], "#d7301f",
-                  ["<=", ["var", "height"], 40], "#b30000",
-                  ["<=", ["var", "height"], 75], "#7f0000",
-                  "#7f0000"
-                ]
-              ],
-              "fill-outline-color": "white",
-              "fill-opacity": 0.95
             }
           }
         },
@@ -2794,31 +2703,7 @@
     {
       "type": "group",
       "title": "Omgeving",
-      "sublayers": [{
-          "type": "wms",
-          "title": "Stedelijk hitte-eiland effect (UHI) in Nederland",
-          "layerInfo": {
-            "id": "rivm_r88_20170621_gm_actueel_uhi",
-            "type": "raster",
-            "metadata": {
-              "getFeatureInfoFormat": "application/json",
-              "attributes": {
-                "translations": [{
-                  "name": "GRAY_INDEX",
-                  "translation": "Effect",
-                  "decimals": 1,
-                  "unit": " °C"
-                }]
-              }
-            },
-            "source": {
-              "type": "raster",
-              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-              "tiles": ["https://data.rivm.nl/geo/ank/ows?layers=Stedelijk_hitte_eiland_effect_01062022_v2"],
-              "attribution": "RIVM"
-            }
-          }
-        },
+      "sublayers": [
         {
           "title": "Stedelijk hitte-eiland effect (UHI) Prinsenland / Het Lage Land",
           "layerInfo": {
