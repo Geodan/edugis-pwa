@@ -340,8 +340,7 @@ CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (
 
 -- GEBOUW
 drop table if exists gebouw;
---create table gebouw as
-
+create table gebouw as
 with verblijfsobjectenpand as
 (
 	select 
@@ -355,9 +354,27 @@ with verblijfsobjectenpand as
 	select 
 	  vbo1.gerelateerdpand,
 	  count(identificatie) verblijfsobjecten,
-	  sum(vbo1.oppervlakteverblijfsobject) oppervlakteverblijfobjecten
+	  sum(vbo1.oppervlakteverblijfsobject) oppervlakteverblijfsobjecten
 	  from verblijfsobjectenpand vbo1
 	    group by vbo1.gerelateerdpand
+)
+, gebouwtypen as 
+(
+	select
+	  vbo2.gerelateerdpand,
+	  vbo2.pand_gebouwtype gebouwtype,
+	  count(vbo2.pand_gebouwtype) aantal
+	  from verblijfsobjectenpand vbo2
+	    where vbo2.pand_gebouwtype is not null and trim(vbo2.pand_gebouwtype) <> ''
+	    group by vbo2.gerelateerdpand, vbo2.pand_gebouwtype
+)
+, gebouwtypenagg as 
+(
+	select 
+	  gerelateerdpand,
+	  string_agg(gebouwtype || '(' || aantal || ')', ',' order by aantal desc, gebouwtype asc) gebouwtypen
+	  from gebouwtypen
+	    group by gerelateerdpand
 )
 , reeksen as (
     select 
@@ -424,11 +441,14 @@ select
     p.identificatie,
     p.bouwjaar,
     p."pandstatus",
-    vboa.*,
-    r.*,
-    ela.*,
-    tl.*,
-    pca.*,
+    coalesce(vboa.verblijfsobjecten,0) verblijfsobjecten,
+    vboa.oppervlakteverblijfsobjecten,
+    gta.gebouwtypen,
+    ra.nummerreeks,
+    ela.elabels,
+    tl.meestvoorkomendelabel,
+    pca.postcodes,
+    tpc.meestvoorkomendepostcode,
     gh.volume::int,
 	case when volume > 0 then ((gh.volume / st_area(geovlak))*10)::int / 10.0 else NULL end gem_hoogte,
     case when volume > 0 then 
@@ -442,16 +462,23 @@ select
     end vloeroppervlakte2,
     p.geovlak geom
   from plllbronnen.pand p
-  left join reeksenagg r on (p.identificatie=r.gerelateerdpand)
+  left join reeksenagg ra on (p.identificatie=ra.gerelateerdpand)
   left join verblijfsobjectenagg vboa on (p.identificatie=vboa.gerelateerdpand)
+  left join gebouwtypenagg gta on (p.identificatie=gta.gerelateerdpand)
   left join elabelsagg ela on (p.identificatie=ela.gerelateerdpand)
   left join postcodesagg pca on (p.identificatie=pca.gerelateerdpand)
   left join gebouwhoogten gh on (p.identificatie=gh.identificatie)
-   join lateral (
-      select elabel meestvoorkomendlabel from elabels 
+   left join lateral (
+      select elabel meestvoorkomendelabel from elabels 
         where elabels.gerelateerdpand=p.identificatie
           order by elabels desc, elabel asc
             limit 1
-   ) tl on true;
-
-
+   ) tl on true
+    left join lateral (
+   	  select postcode meestvoorkomendepostcode from postcodes 
+   	    where postcodes.gerelateerdpand=p.identificatie 
+   	      order by postcodes desc, postcode asc 
+   	        limit 1
+   ) tpc on true;
+  
+  create index gebouwgeomidx on gebouw using gist(geom);
