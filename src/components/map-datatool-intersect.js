@@ -19,7 +19,7 @@ class MapDatatoolIntersect extends LitElement {
     }
     constructor() {
         super();
-        this.resulttype = 'aantal';
+        this.resulttype = 'complete';
         this.map = {};
         this.intersectCount = -1;
         this.worker = new Worker('./src/workers/intersect.js');
@@ -48,9 +48,10 @@ class MapDatatoolIntersect extends LitElement {
             ${this._renderLayerList()}
             <b>Kaartlaag 2</b><br>
             ${this._renderLayerList()}
-            <input type="radio" name="resulttype" value="aantal" id="aantal" ?checked="${this.resulttype==='aantal'}"><label for="aantal">Aantal</label><br>
-            <input type="radio" name="resulttype" value="layeryes" id="layeryes" ?checked="${this.resulttype==='layeryes'}"><label for="layeryes">Uitvoerkaartlaag met elementen met een overlap</label><br>
-            <input type="radio" name="resulttype" value="layerno" id="layerno" ?checked="${this.resulttype==='layerno'}"><label for="layerno">Uitvoerkaartlaag met elementen zonder een overlap</label><br>
+            <b>Uitvoer:</b><br>
+            <input type="radio" name="resulttype" value="complete" id="complete" ?checked="${this.resulttype==='complete'}" @change="${(e)=>this._radioChanged(e)}"><label for="complete">Volledig</label><br>
+            <input type="radio" name="resulttype" value="intersectonly" id="intersectonly" ?checked="${this.resulttype==='intersectonly'}" @change="${(e)=>this._radioChanged(e)}"><label for="intersectonly">Alleen elementen met een overlap</label><br>
+            <input type="radio" name="resulttype" value="nonintersectonly" id="nonintersectonly" ?checked="${this.resulttype==='nonintersectonly'}" @change="${(e)=>this._radioChanged(e)}"><label for="nonintersectonly">Alleen elementen zonder een overlap</label><br>
             <wc-button class="edugisblue" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
             ${this.busyMessage !== '' ? html`${this.busyMessage}`:html``}
             ${this.intersectCount > -1 ?html`Aantal elementen: ${this.intersectCount}`:html``}
@@ -62,6 +63,9 @@ class MapDatatoolIntersect extends LitElement {
     }
     updated() {
 
+    }
+    _radioChanged(e) {
+      this.resulttype = e.target.value;
     }
     _layerSelected(e) {
       const selections = this.shadowRoot.querySelectorAll('select');
@@ -81,12 +85,66 @@ class MapDatatoolIntersect extends LitElement {
       ${layers.map(layer=>html`<option value=${layer.id}>${layer.metadata.title?layer.metadata.title:layer.id}</option>`)}
       </select><span class="arrow"></span></div>`
     }
+    _prepareResultLayer(sourceLayerid, targetLayerid) {
+      const sourceLayer = this.map.getLayer(sourceLayerid).serialize();
+      if (!sourceLayer) {
+        this.resultLayer = null;
+        return;
+      }
+      const resultLayerId = sourceLayerid+targetLayerid;
+      if (this.map.getLayer(resultLayerId)) {
+        this.dispatchEvent(new CustomEvent('removeLayer', {
+          detail: resultLayerId,
+          bubbles: true,
+          composed: true
+        }))
+      }
+      this.resultLayer = {
+        id: resultLayerId,
+        metadata: {
+          title: "intersect"
+        },
+        type: sourceLayer.type,
+        source: {
+          type: "geojson",
+          data: []
+        },
+      };
+      this.resultLayer.paint = sourceLayer.paint;
+      switch(this.resultLayer.type) {
+        case 'fill':
+          this.resultLayer.paint["fill-color"] = ["match", ["to-number",["get", "intersect"]],
+              1, "red",
+              0, "black",
+              "gray"
+            ];
+          break;
+        case 'line':
+          this.resultLayer.paint["line-color"] =  ["match", ["to-number",["get", "intersect"]],
+              1, "red",
+              0, "black",
+              "gray"
+            ];
+          break;
+        case 'circle':
+          this.resultLayer.paint["circle-color"] = ["match", ["to-number",["get", "intersect"]],
+              1, "red",
+              0, "black",
+              "gray"
+            ];
+          break;
+        default:
+          this.resultLayer = null;
+          break;
+      }
+    }
     async _calculateIntersect() {
       if (this.sourceLayerid && this.targetLayerid) {
         this.intersectCount = -1;
         this.busyMessage = 'Bezig met berekenen van intersecties...';
         const sourceFeatures = await getVisibleFeatures(this.map, this.sourceLayerid);
         const targetFeatures = await getVisibleFeatures(this.map, this.targetLayerid);
+        this._prepareResultLayer(this.sourceLayerid, this.targetLayerid);
         this.worker.postMessage([{type: "FeatureCollection", features:sourceFeatures}, {type:"FeatureCollection", features:targetFeatures}]);
       }
     }
@@ -102,6 +160,28 @@ class MapDatatoolIntersect extends LitElement {
       this.intersectCount = intersectLayer.features.reduce((total, feature)=>{
         return feature.properties.intersect?total+1:total
       }, 0);
+      if (this.resultLayer) {
+        switch (this.resulttype) {
+          case 'intersectonly':
+            intersectLayer.features = intersectLayer.features.filter(feature=>feature.properties.intersect);
+            break;
+          case 'nonintersectonly':
+            intersectLayer.features = intersectLayer.features.filter(feature=>!feature.properties.intersect);
+            break;
+          case 'complete':
+          default:
+            break;
+
+        }
+        const selections = this.shadowRoot.querySelectorAll('select');
+        this.resultLayer.source.data = intersectLayer;
+        this.resultLayer.metadata.abstract = `Deze kaartlaag is gemaakt met de 'intersect'-tool. ${this.intersectCount} elementen uit ${selections[0][selections[0].selectedIndex].text} snijden met de elementen uit ${selections[1][selections[1].selectedIndex].text}`
+        this.dispatchEvent(new CustomEvent('addlayer', {
+          detail: this.resultLayer,
+          bubbles: true,
+          composed: true
+        }))
+      }
     }
 }
 
