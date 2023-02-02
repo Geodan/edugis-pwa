@@ -312,4 +312,4 @@ select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
 -- Layer=>Save as..=>Format GeoJSON
 -- import into database http://leda.geodan.nl:8090
 drop table if exists plll_uhi;
-create table plll_uhi as select ogc_fid id, temperature/10.0 temperature, geom from anneb.plll_uhi;
+create table plll_uhi as select ogc_fid id, (temperature/10.0)::float temperature, geom from anneb.plll_uhi;
