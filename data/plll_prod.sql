@@ -200,32 +200,6 @@ select
   	geom2
 ;
 
-drop table if exists tempspreadpoints;
-create table tempspreadpoints as
-with pointdump as
-(select 
-    vp.gerelateerdpand, 
-    array_agg(v.identificatie order by v.openbareruimtenaam,v.huisnummer) verblijfsobjecten,  
-    st_dump(st_generatepoints(st_buffer(p.geovlak,-1),count(v.identificatie)::int,1234)) dump 
-  from plllbronnen.verblijfsobjectpand vp 
-    join verblijfsobject v on (vp.identificatie=v.identificatie)
-      join plllbronnen.pand p on (vp.gerelateerdpand=p.identificatie and st_intersects(v.geom,p.geovlak))
-		group by p.geovlak,vp.gerelateerdpand
-			having count(vp.gerelateerdpand) > 1)
-select 
-    row_number() over (partition by gerelateerdpand order by st_y((dump).geom),st_x((dump).geom)),
-    gerelateerdpand, 
-	(dump).geom, 
-	(verblijfsobjecten)[row_number() over (partition by gerelateerdpand)] verblijfsobject
-  from pointdump;
-update verblijfsobject set geom2=geom where geom2 is null;
-update verblijfsobject v set geom2=s.geom from tempspreadpoints s where v.identificatie = s.verblijfsobject;
-drop table tempspreadpoints;
-
-CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (geom);
-CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
-
-
 --- postcode
 drop table if exists postcode;
 create sequence if not exists postcodeseq;
@@ -333,3 +307,151 @@ update postcode pc
 alter table postcode add primary key (id);
 create index postcodegeomidx on postcode using gist(geom);
 create index postcodegeomblokidx on postcode using gist(geomblok);
+
+
+-- spread verblijfsobjecten over postcodeblokken
+drop table if exists tempspreadpoints;
+create table tempspreadpoints as
+with pointdump as
+(select 
+    vp.gerelateerdpand, 
+    pc.postcode,
+    array_agg(v.identificatie order by v.openbareruimtenaam,v.huisnummer) verblijfsobjecten,  
+    st_dump(st_generatepoints(st_buffer(st_intersection(p.geovlak,pc.geom),-1),count(v.identificatie)::int,1234)) dump 
+  from plllbronnen.verblijfsobjectpand vp 
+    join verblijfsobject v on (vp.identificatie=v.identificatie)
+      join plllbronnen.pand p on (vp.gerelateerdpand=p.identificatie and st_intersects(v.geom,p.geovlak))
+	   join postcode pc on (v.postcode=pc.postcode)
+		group by p.geovlak,pc.geom,vp.gerelateerdpand,pc.postcode
+			having count(vp.gerelateerdpand) > 1)
+select 
+    row_number() over (partition by gerelateerdpand order by st_y((dump).geom),st_x((dump).geom)),
+    gerelateerdpand,
+    postcode,
+	(dump).geom, 
+	(verblijfsobjecten)[row_number() over (partition by gerelateerdpand,postcode)] verblijfsobject
+  from pointdump;
+update verblijfsobject set geom2=geom where geom2 is null;
+update verblijfsobject v set geom2=s.geom from tempspreadpoints s where v.identificatie = s.verblijfsobject;
+drop table tempspreadpoints;
+
+CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (geom);
+CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
+
+-- GEBOUW
+drop table if exists gebouw;
+--create table gebouw as
+
+with verblijfsobjectenpand as
+(
+	select 
+	v2.gerelateerdpand,
+	v3.*
+	 from plllbronnen.verblijfsobjectpand v2 
+	   join verblijfsobject v3 on (v2.identificatie=v3.identificatie) 
+)
+, verblijfsobjectenagg as 
+(
+	select 
+	  vbo1.gerelateerdpand,
+	  count(identificatie) verblijfsobjecten,
+	  sum(vbo1.oppervlakteverblijfsobject) oppervlakteverblijfobjecten
+	  from verblijfsobjectenpand vbo1
+	    group by vbo1.gerelateerdpand
+)
+, reeksen as (
+    select 
+    	v4.gerelateerdpand,
+	    openbareruimtenaam, 
+	    min(huisnummer) vanhuisnummer,
+	    max(huisnummer) tothuisnummer,
+	    case when min(huisnummer) <> max(huisnummer) then
+		    openbareruimtenaam || ' ' || min(huisnummer) || ' - ' || max(huisnummer) 
+		    else 
+		    openbareruimtenaam || ' ' || min(huisnummer)
+		end reeks
+	  from 
+		verblijfsobjectenpand v4
+	        group by v4.gerelateerdpand,v4.openbareruimtenaam 
+)
+,reeksenagg as (
+	select 
+	  r.gerelateerdpand,
+	  string_agg(r.reeks, ',') nummerreeks
+	  from reeksen r
+	    group by r.gerelateerdpand
+)
+,elabels as (
+	select 
+		v5.gerelateerdpand,
+		v5.pand_energieklasse elabel,
+		count(v5.pand_energieklasse) elabels
+	  from verblijfsobjectenpand v5
+	    group by v5.gerelateerdpand, v5.pand_energieklasse
+)
+,elabelsagg as (
+	select 
+	el.gerelateerdpand,
+	string_agg(el.elabel || '(' || el.elabels || ')', ',' order by el.elabels desc, el.elabel asc) elabels
+	 from elabels el
+	   group by el.gerelateerdpand
+)
+,postcodes as (
+   select 
+     v6.gerelateerdpand,
+     v6.postcode,
+     count(postcode) postcodes
+    from verblijfsobjectenpand v6
+      group by v6.gerelateerdpand, postcode
+)
+,postcodesagg as (
+   select 
+     pc.gerelateerdpand,
+     string_agg(pc.postcode || '(' || pc.postcodes || ')', ',' order by pc.postcodes desc, pc.postcode asc) postcodes
+     from postcodes pc
+       group by pc.gerelateerdpand
+)
+,gebouwhoogten as 
+(
+	select 
+	 identificatie,
+	 sum((hg.dd_h_dak_50p - hg.h_maaiveld) * st_area(hg.geom)) volume
+	  from plllbronnen."2020_hoogtestatistieken_gebouwen" hg 
+		group by hg.identificatie 
+)
+select 
+    p.id,
+    p.identificatie,
+    p.bouwjaar,
+    p."pandstatus",
+    vboa.*,
+    r.*,
+    ela.*,
+    tl.*,
+    pca.*,
+    gh.volume::int,
+	case when volume > 0 then ((gh.volume / st_area(geovlak))*10)::int / 10.0 else NULL end gem_hoogte,
+    case when volume > 0 then 
+  	  case when gh.volume / st_area(geovlak) < 3.1 then 1 else floor((gh.volume/st_area(geovlak))/3.1)::int end
+    end gem_bouwlagen,
+    case when volume > 0 then
+  	  case when gh.volume / st_area(geovlak) < 3.1 then st_area(geovlak)::int else (floor((gh.volume/st_area(geovlak))/3.1)::int * st_area(geovlak))::int end
+    end vloeroppervlakte1,
+    case when volume > 0 then
+  	  case when gh.volume / st_area(geovlak) < 3.1 then st_area(geovlak)::int else (gh.volume/3.1)::int end
+    end vloeroppervlakte2,
+    p.geovlak geom
+  from plllbronnen.pand p
+  left join reeksenagg r on (p.identificatie=r.gerelateerdpand)
+  left join verblijfsobjectenagg vboa on (p.identificatie=vboa.gerelateerdpand)
+  left join elabelsagg ela on (p.identificatie=ela.gerelateerdpand)
+  left join postcodesagg pca on (p.identificatie=pca.gerelateerdpand)
+  left join gebouwhoogten gh on (p.identificatie=gh.identificatie)
+   join lateral (
+      select elabel meestvoorkomendlabel from elabels 
+        where elabels.gerelateerdpand=p.identificatie
+          order by elabels desc, elabel asc
+            limit 1
+   ) tl on true;
+
+

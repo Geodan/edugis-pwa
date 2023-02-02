@@ -299,3 +299,17 @@ insert into kadaster_pc6_bezitsverhoudingen
 select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
   join postcodes p on (k.postcode=p.postcode);
 
+-- UHI, stedelijke hitteeiland effect, Atlas Natuurlijk Kapitaal RIVM
+-- download tif from https://nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/metadata/c9aa9109-3f32-4f65-84e5-bb1c9ebdfbec?tab=relations
+-- import stedelijk_hitte_eiland_effect_01062022_v2 into QGIS
+-- zoom to Prinsenland / Het Lage Land
+-- RASTER=>Extraction=>Clip raster by extent => canvas
+-- select clipped raster layer
+-- RASTER=>RASTER Calculator=>Expression: "Clipped (extent)@1"*10
+-- select calculated raster layer
+-- RASTER=>Conversion=>Polygonize
+-- select vectorized layer
+-- Layer=>Save as..=>Format GeoJSON
+-- import into database http://leda.geodan.nl:8090
+drop table if exists plll_uhi;
+create table plll_uhi as select ogc_fid id, temperature/10.0 temperature, geom from anneb.plll_uhi;
