@@ -20,10 +20,21 @@ const featurePropertiesAreEqual = (feature1, feature2) => {
 }
 
 export const getVisibleFeatures = async (map, layerid) => {
+    if (!map || !map.version || !layerid) {
+      return [];
+    }
     const layer = map.getLayer(layerid);
+    if (!layer) {
+      return [];
+    }
     const mapBounds = map.getBounds();
-    if (!layer.sourceLayer && layer.type !== 'circle' && layer.type !== 'symbol') {
-      // not a vector tile layer or circle layer or symbol layer
+    if (!layer.sourceLayer) { // && layer.type !== 'circle' && layer.type !== 'symbol') {
+      // not a vector tile layer 
+      const layout = layer.serialize().layout;
+      if (layout && layout.visibility && layout.visibility === 'none') {
+        // layer not visible, so return empty feature set
+        return [];
+      }
       const source = map.getSource(layer.source).serialize();
       if (typeof source.data === "string") {
         const response = await fetch(source.data);
