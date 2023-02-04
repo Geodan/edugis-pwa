@@ -3,8 +3,9 @@ import './map-iconbutton';
 import './map-datatool-distance';
 import './map-datatool-buffer';
 import './map-datatool-intersect';
+import './map-datatool-filter';
 import './map-iconbutton';
-import {bufferIcon, intersectIcon} from './my-icons';
+import {bufferIcon, intersectIcon, filterIcon} from './my-icons';
 import { measureIcon} from '../gm/gm-iconset-svg';
 
 //const dummyIcon = svg`<svg height="24" width="24" viewbox="0 0 24 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="16" class="normal">A</text></svg>`;
@@ -54,6 +55,9 @@ class MapDataToolbox extends LitElement {
             <div class="tool">
             <map-iconbutton .active="${this.currentTool==='intersecttool'}" .icon="${intersectIcon}" info="Overlap" @click="${e=>this.currentTool='intersecttool'}"></map-iconbutton>
             </div>
+            <div class="tool">
+            <map-iconbutton .active="${this.currentTool==='filtertool'}" .icon="${filterIcon}" info="Filteren" @click="${e=>this.currentTool='filtertool'}"></map-iconbutton>
+            </div>
         </div>
         <div class="toolpanel">
           ${this._renderCurrentTool()}
@@ -71,6 +75,8 @@ class MapDataToolbox extends LitElement {
         return html`<map-datatool-buffer @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-buffer>`;
       case "intersecttool":
         return html`<map-datatool-intersect @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-intersect>`;
+      case "filtertool":
+        return html`<map-datatool-filter @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-filter>`;
       default:
         return html`Nog niet geimplementeerd: '${this.currentTool}'`;
     }

@@ -85,6 +85,7 @@ class MapDatatoolIntersect extends LitElement {
         const outputLayer = this.map.getLayer(this.sourceLayerid+this.targetLayerid);
         if (outputLayer) {
           this.outputLayername = outputLayer.metadata.title;
+          this.buttonEnabled = this.outputLayername.trim().length && this.sourceLayerid && this.targetLayerid;
         } else {
           this.outputLayername = "";
         }
