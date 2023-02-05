@@ -6,7 +6,6 @@ insert into cbs_buurten
   select * from plllbronnen.cbs_buurten;
 
 drop table if exists verblijfsobject;
-
 create table verblijfsobject as
 select
     v.id,
@@ -51,6 +50,21 @@ select
 	pand_eis_temperatuuroverschrijding, 
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
+	u.temperature uhi_temperature,
+	cbs.aantal_hh cbs_aantal_hh,
+	cbs.tothh_eenp cbs_tothh_eenp,
+	cbs.tothh_mpzk cbs_tothh_mpzk,
+	cbs.hh_eenoud cbs_hh_eenoud,
+	cbs.hh_tweeoud cbs_hh_tweeoud,
+	cbs.gem_hh_gr cbs_gem_hh_gr,
+	cbs.p_nl_achtg cbs_p_nl_achtg,
+	cbs.p_we_mig_a cbs_p_we_mig_a,
+	cbs.p_nw_mig_a cbs_p_nw_mig_a,
+	cbs.p_koopwon cbs_p_koopwon,
+	cbs.p_huurwon cbs_p_huurwon,
+	cbs.won_hcorp cbs_won_hcorp,
+	cbs.wozwoning cbs_wozwoning,
+	uitkminaow cbs_uitkminaow,
 	geopunt geom,
 	null::geometry(point,28992) geom2
   from plllbronnen.verblijfsobject v   
@@ -59,6 +73,8 @@ select
       join plllbronnen.woonplaats w on (o.gerelateerdewoonplaats=w.identificatie)
        join plllbronnen.verblijfsobjectgebruiksdoel d on (v.identificatie=d.identificatie)
 		left join plllbronnen.v20230101_v2_csv vvc on (v.identificatie = vvc.pand_bagverblijfsobjectid)
+		  left join plllbronnen.plll_uhi u on (st_intersects(v.geopunt, u.geom))
+		    left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n.postcode)
   group by 
   	v.id,
   	v.identificatie,
@@ -101,7 +117,22 @@ select
 	pand_eis_temperatuuroverschrijding, 
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
-  	geom,
+	u.temperature,
+	cbs.aantal_hh,
+	cbs.tothh_eenp,
+	cbs.tothh_mpzk,
+	cbs.hh_eenoud,
+	cbs.hh_tweeoud,
+	cbs.gem_hh_gr,
+	cbs.p_nl_achtg,
+	cbs.p_we_mig_a,
+	cbs.p_nw_mig_a,
+	cbs.p_koopwon,
+	cbs.p_huurwon,
+	cbs.won_hcorp,
+	cbs.wozwoning,
+	uitkminaow,
+  	v.geopunt,
   	geom2
  union
 select
@@ -147,6 +178,21 @@ select
 	pand_eis_temperatuuroverschrijding, 
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
+	u.temperature uhi_temperature,
+	cbs.aantal_hh cbs_aantal_hh,
+	cbs.tothh_eenp cbs_tothh_eenp,
+	cbs.tothh_mpzk cbs_tothh_mpzk,
+	cbs.hh_eenoud cbs_hh_eenoud,
+	cbs.hh_tweeoud cbs_hh_tweeoud,
+	cbs.gem_hh_gr cbs_gem_hh_gr,
+	cbs.p_nl_achtg cbs_p_nl_achtg,
+	cbs.p_we_mig_a cbs_p_we_mig_a,
+	cbs.p_nw_mig_a cbs_p_nw_mig_a,
+	cbs.p_koopwon cbs_p_koopwon,
+	cbs.p_huurwon cbs_p_huurwon,
+	cbs.won_hcorp cbs_won_hcorp,
+	cbs.wozwoning cbs_wozwoning,
+	uitkminaow cbs_uitkminaow,
 	st_centroid(s.geovlak) geom,
 	st_centroid(s.geovlak) geom2
   from plllbronnen.standplaats s  
@@ -154,6 +200,8 @@ select
      join plllbronnen.openbareruimte o2 on (n2.gerelateerdeopenbareruimte=o2.identificatie)
       join plllbronnen.woonplaats w2 on (o2.gerelateerdewoonplaats=w2.identificatie)
        left join plllbronnen.v20230101_v2_csv vvc2 on (s.identificatie =vvc2.pand_bagstandplaatsid)
+       	left join plllbronnen.plll_uhi u on (st_intersects(st_centroid(s.geovlak), u.geom))
+		 left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n2.postcode)
   group by 
   	s.id,
   	s.identificatie,
@@ -196,7 +244,22 @@ select
 	pand_eis_temperatuuroverschrijding, 
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
-  	geom,
+	u.temperature,
+	cbs.aantal_hh,
+	cbs.tothh_eenp,
+	cbs.tothh_mpzk,
+	cbs.hh_eenoud,
+	cbs.hh_tweeoud,
+	cbs.gem_hh_gr,
+	cbs.p_nl_achtg,
+	cbs.p_we_mig_a,
+	cbs.p_nw_mig_a,
+	cbs.p_koopwon,
+	cbs.p_huurwon,
+	cbs.won_hcorp,
+	cbs.wozwoning,
+	uitkminaow,
+  	st_centroid(s.geovlak),
   	geom2
 ;
 
@@ -335,8 +398,8 @@ update verblijfsobject set geom2=geom where geom2 is null;
 update verblijfsobject v set geom2=s.geom from tempspreadpoints s where v.identificatie = s.verblijfsobject;
 drop table tempspreadpoints;
 
-CREATE INDEX verblijfsobjectgeomidx ON plllbronnen.verblijfsobject USING gist (geom);
-CREATE INDEX verblijfsobjectgeom2idx ON plllbronnen.verblijfsobject USING gist (geom2);
+CREATE INDEX verblijfsobjectgeomidx ON verblijfsobject USING gist (geom);
+CREATE INDEX verblijfsobjectgeom2idx ON verblijfsobject USING gist (geom2);
 
 -- GEBOUW
 drop table if exists gebouw;
