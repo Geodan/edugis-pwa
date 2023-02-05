@@ -6,11 +6,7 @@ import getVisibleFeatures from '../utils/mbox-features';
 import {until} from 'lit-html/directives/until.js';
 import './wc-button';
 
-// hash function
-function hashCode(s) {
-    for(var i = 0, h = 0; i < s.length; i++)    h = Math.imul(31, h) + s.charCodeAt(i) | 0; 
-    return h;
-}
+let outputLayerCounter = 0;
 
 class MapDatatoolFilter extends LitElement {
     static get styles() {
@@ -53,7 +49,10 @@ class MapDatatoolFilter extends LitElement {
         this.outputLayername = "";
         this.map = {};
         this.buttonEnabled = false;
-        this.value = undefined
+        this.value = undefined;
+        this.logicalOperator = "new";
+        this.outputLayerId = "";
+        this.outputLayer = undefined;
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('map')) {
@@ -83,6 +82,9 @@ class MapDatatoolFilter extends LitElement {
         this.outputLayername = e.target.value;
         this.buttonEnabled = this.outputLayername.trim().length && this.layerid !== "";
     }
+    _handleLogicalOperatorChange(e) {
+        this.logicalOperator = e.target.value;
+    }
     _renderLogicalOperators() {
         if (this.selectedProperty === "") {
             return html``;
@@ -94,8 +96,12 @@ class MapDatatoolFilter extends LitElement {
             return html``;
         }
         return html`<div>
-        <input name="logicop" type="radio" id="and" checked><label for="and">toepassen op bestaande uitvoer</label><br/>
-        <input name="logicop" type="radio" id="or"><label for="or">toevoegen aan bestaande uitvoer</label>
+        <input name="logicop" type="radio" id="new" ?checked="${this.logicalOperator==="new"}" value="new" @change="${(e)=>this._handleLogicalOperatorChange(e)}">
+        <label for="new">maak nieuwe uitvoer-laag</label><br/>
+        <input name="logicop" type="radio" id="and" ?checked="${this.logicalOperator==="and"}" value="and" @change="${(e)=>this._handleLogicalOperatorChange(e)}">
+        <label for="and">toepassen op bestaande uitvoer</label><br/>
+        <input name="logicop" type="radio" id="or" ?checked="${this.logicalOperator==="or"}" value="or" @change="${(e)=>this._handleLogicalOperatorChange(e)}">
+        <label for="or">toevoegen aan bestaande uitvoer</label>
         </div>
         `;
     }
@@ -134,7 +140,7 @@ class MapDatatoolFilter extends LitElement {
             this.outputLayername = "";
             return;
         }
-        this.outputLayerId = layer.id + "_filter_";
+        this.outputLayerId = layer.id + "_filter_" + outputLayerCounter;
         this.outputLayer = this.map.getLayer(this.outputLayerId);
         if (this.outputLayer) {
             this.outputLayername = layer.metadata.title;
@@ -220,15 +226,17 @@ class MapDatatoolFilter extends LitElement {
         const attributes = {};
         features.forEach(feature=>{
             Object.keys(feature.properties).forEach(attribute=>{
-                if (!attributes[attribute]) {
-                    attributes[attribute] = {type: typeof feature.properties[attribute], values: []};
-                } 
-                if (attributes[attribute].type != typeof feature.properties[attribute]) {
-                    attributes[attribute].type = "mixed";
-                } else {
-                    if (attributes[attribute].type == "string") {
-                        if (!attributes[attribute].values.includes(feature.properties[attribute])) {
-                            attributes[attribute].values.push(feature.properties[attribute]);
+                if (feature.properties[attribute] !== null && feature.properties[attribute] !== undefined) {
+                    if (!attributes[attribute]) {
+                        attributes[attribute] = {type: typeof feature.properties[attribute], values: []};
+                    } 
+                    if (attributes[attribute].type != typeof feature.properties[attribute]) {
+                        attributes[attribute].type = "mixed";
+                    } else {
+                        if (attributes[attribute].type == "string") {
+                            if (!attributes[attribute].values.includes(feature.properties[attribute])) {
+                                attributes[attribute].values.push(feature.properties[attribute]);
+                            }
                         }
                     }
                 }
@@ -249,6 +257,75 @@ class MapDatatoolFilter extends LitElement {
         <option value="" disabled ?selected="${this.selectedProperty===''}">Selecteer attribuut</option>
         ${Object.keys(this.properties).map(property=>html`<option value=${property} ?selected="${this.selectedProperty===property}">${property}</option>`)}
         </select><span class="arrow"></span></div>`
+    }
+    async _handleClick(e) {
+        let features = [];
+        switch (this.logicalOperator)   {
+            case "new":
+                features = await getVisibleFeatures(this.map, this.layerId);
+                if (this.outputLayer) {
+                    outputLayerCounter++;
+                    this.outputLayerId = this.layerId + "_filter_" + outputLayerCounter;
+                    this.outputLayer = undefined;
+                }
+                break;
+            case "and":
+                features = await getVisibleFeatures(this.map, this.outputLayerId);
+                this.dispatchEvent(new CustomEvent('removelayer', {detail: {layerid: this.outputLayerId}, bubbles: true, composed: true}));
+                this.outputLayer = undefined;
+                break;
+            case "or":
+                features = await getVisibleFeatures(this.map, this.layerId);
+                break;
+        }
+        if (features.length) {
+            const filteredFeatures = features.filter(feature=>{
+                if (this.selectedOperator === "null") {
+                    return feature.properties[this.selectedProperty] === null;
+                } else if (this.selectedOperator === "!null") {
+                    return feature.properties[this.selectedProperty] !== null;
+                } else if (this.selectedOperator === "contains") {
+                    return feature.properties[this.selectedProperty].includes(this.value);
+                } else if (this.selectedOperator === "!contains") {
+                    return !feature.properties[this.selectedProperty].includes(this.value);
+                } else if (this.selectedOperator === "startsWith") {
+                    return feature.properties[this.selectedProperty].startsWith(this.value);
+                } else if (this.selectedOperator === "endsWith") {
+                    return feature.properties[this.selectedProperty].endsWith(this.value);
+                } else {
+                    return eval(feature.properties[this.selectedProperty] + this.selectedOperator + this.value);
+                }
+            });
+            if (this.outputLayer) {
+                const features = this.map.getSource(this.outputLayer.source).serialize().data.features;
+                this.map.getSource(this.outputLayer.source).setData({
+                    type: 'FeatureCollection',
+                    features: [...features, ...filteredFeatures]
+                });
+            } else {
+                const inputLayer = this.map.getLayer(this.layerId).serialize();
+                const newLayer = {
+                    id: this.outputLayerId,
+                    type: inputLayer.type,
+                    metadata: {
+                        title: this.outputLayername,
+                        abstract: `Filter op ${this.selectedProperty} ${this.selectedOperator} ${this.value}`,
+                    },
+                    source: {
+                        type: 'geojson',
+                        data: {
+                            type: 'FeatureCollection',
+                            features: filteredFeatures
+                        }
+                    },
+                    paint: inputLayer.paint,
+                };
+                this.dispatchEvent(new CustomEvent('addlayer', {detail: newLayer, bubbles: true, composed: true}));
+                setTimeout(() => {
+                    this.outputLayer = this.map.getLayer(this.outputLayerId);
+                }, 500);
+            }
+        }
     }
 }
 
