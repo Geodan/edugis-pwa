@@ -45,6 +45,8 @@ import ZoomControl from '../../lib/zoomcontrol';
 import { importExportIcon, gpsIcon, languageIcon, arrowLeftIcon, outlineInfoIcon, combineToolIcon, threeDIcon, infoIcon, drawIcon, sheetIcon, world3Icon } from './my-icons';
 import { measureIcon, layermanagerIcon, searchIcon as gmSearchIcon } from '../gm/gm-iconset-svg';
 import rootUrl from '../utils/rooturl.js';
+import {CkanConnector} from '../utils/ckanconnector';
+
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -1375,22 +1377,37 @@ class WebMap extends LitElement {
       }
     }
   }
-  loadConfig(configurl) {
+  async prepareListItems(list) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].type && list[i].type === "ckan") {
+        const ckanConnector = new CkanConnector({url:list[i].url, organizations: list[i].organizations});
+        const data = await ckanConnector.getData();
+        const layers = ckanConnector.convertToMapboxLayers(data);
+        list.splice(i, 1, ...layers)
+      } else if (list[i].sublayers) {
+        this.prepareListItems(list[i].sublayers);
+      }
+    }
+  }
+  async prepareCatalog(list) {
+    await this.prepareListItems(list);
+  }
+  async loadConfig(configurl) {
     if (configurl && configurl !== '') {
-      fetch(configurl).then(response=>{
-        if (response.status >= 200 && response.status < 300) {
-            return response.json()
+      const response = await fetch (configurl);
+      if (response.ok) {
+        try {
+          const config = await response.json();
+          await this.resolveLayerReferences(configurl, config.datacatalog);
+          await this.prepareCatalog(config.datacatalog);
+          this.applyConfig(config);
+          this.initMap();
+        } catch(err) {
+          throw new Error(`Error parsing config from ${this.configurl}: ${err.message}`)
         }
+      } else {
         throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
-      }).then(config=>{
-        this.resolveLayerReferences(configurl, config.datacatalog).then(()=>
-          {
-            this.applyConfig(config);
-            this.initMap();
-        })
-      }).catch(error=>{
-        alert(`Error loading config:\n${configurl}\n${error}`);
-      });
+      }
     } else {
       this.applyConfig(this.datacatalog);
       this.initMap();
