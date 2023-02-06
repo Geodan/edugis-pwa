@@ -241,9 +241,47 @@ insert into publicatiefile_energie_postcode6_2021
 
 -- rvo energielabels 1 jan 2023
 drop table if exists v20230101_v2_csv;
-create table v20230101_v2_csv (like anneb.v20230101_v2_csv including comments);
-insert into v20230101_v2_csv
-  select el.*
+create table v20230101_v2_csv as
+  select 
+    p.ogc_fid id,
+	case when pand_opnamedatum='' then NULL else pand_opnamedatum end pand_opnamedatum,
+	case when pand_opnametype='' then NULL else pand_opnametype end pand_opnametype,
+	case when pand_status='' then NULL else pand_status end pand_status,
+	case when pand_berekeningstype='' then NULL else pand_berekeningstype end pand_berekeningstype,
+	case when pand_energieindex='' then NULL else pand_energieindex end::float pand_energieindex,
+	case when pand_energieklasse='' then NULL else pand_energieklasse end pand_energieklasse,
+	case when pand_energielabel_is_prive='' then NULL else pand_energielabel_is_prive end::bool pand_energielabel_is_prive,
+	case when pand_is_op_basis_van_referentie_gebouw='' then NULL else pand_is_op_basis_van_referentie_gebouw end::bool pand_is_op_basis_van_referentie_gebouw,
+	case when pand_gebouwklasse='' then NULL else pand_gebouwklasse end pand_gebouwklasse,
+	case when meting_geldig_tot='' then NULL else meting_geldig_tot end meting_geldig_tot,
+	case when pand_registratiedatum='' then NULL else pand_registratiedatum end pand_registratiedatum,
+	case when pand_postcode='' then NULL else pand_postcode end pand_postcode,
+	case when pand_huisnummer='' then NULL else pand_huisnummer end::int pand_huisnummer,
+	case when pand_huisletter='' then NULL else pand_huisletter end pand_huisletter,
+	case when pand_huisnummertoevoeging='' then NULL else pand_huisnummertoevoeging end pand_huisnummertoevoeging,
+	case when pand_detailaanduiding='' then NULL else pand_detailaanduiding end pand_detailaanduiding,
+	case when pand_bagverblijfsobjectid='' then NULL else pand_bagverblijfsobjectid end pand_bagverblijfsobjectid,
+	case when pand_bagligplaatsid='' then NULL else pand_bagligplaatsid end pand_bagligplaatsid,
+	case when pand_bagstandplaatsid='' then NULL else pand_bagstandplaatsid end pand_bagstandplaatsid,
+	case when pand_bagpandid='' then NULL else pand_bagpandid end pand_bagpandid,
+	case when pand_gebouwtype='' then NULL else pand_gebouwtype end pand_gebouwtype,
+	case when pand_gebouwsubtype='' then NULL else pand_gebouwsubtype end pand_gebouwsubtype,
+	case when pand_projectnaam='' then NULL else pand_projectnaam end pand_projectnaam,
+	case when pand_projectobject='' then NULL else pand_projectobject end pand_projectobject,
+	case when pand_sbicode='' then NULL else pand_sbicode end pand_sbicode,
+	case when pand_gebruiksoppervlakte_thermische_zone='' then NULL else pand_gebruiksoppervlakte_thermische_zone end pand_gebruiksoppervlakte_thermische_zone,
+	case when pand_energiebehoefte='' then NULL else pand_energiebehoefte end pand_energiebehoefte,
+	case when pand_eis_energiebehoefte='' then NULL else pand_eis_energiebehoefte end::float pand_eis_energiebehoefte,
+	case when pand_primaire_fossiele_energie='' then NULL else pand_primaire_fossiele_energie end::float pand_primaire_fossiele_energie,
+	case when pand_eis_primaire_fossiele_energie='' then NULL else pand_eis_primaire_fossiele_energie end pand_eis_primaire_fossiele_energie,
+	case when pand_primaire_fossiele_energie_emg_forfaitair='' then NULL else pand_primaire_fossiele_energie_emg_forfaitair end pand_primaire_fossiele_energie_emg_forfaitair,
+	case when pand_aandeel_hernieuwbare_energie='' then NULL else pand_aandeel_hernieuwbare_energie end::float pand_aandeel_hernieuwbare_energie,
+	case when pand_eis_aandeel_hernieuwbare_energie='' then NULL else pand_eis_aandeel_hernieuwbare_energie end pand_eis_aandeel_hernieuwbare_energie,
+	case when pand_aandeel_hernieuwbare_energie_emg_forfaitair='' then NULL else pand_aandeel_hernieuwbare_energie_emg_forfaitair end pand_aandeel_hernieuwbare_energie_emg_forfaitair,
+	case when pand_temperatuuroverschrijding='' then NULL else pand_temperatuuroverschrijding end::float pand_temperatuuroverschrijding,
+	case when pand_eis_temperatuuroverschrijding='' then NULL else pand_eis_temperatuuroverschrijding end pand_eis_temperatuuroverschrijding,
+	case when pand_warmtebehoefte='' then NULL else pand_warmtebehoefte end::float pand_warmtebehoefte,
+	case when pand_energieindex_met_emg_forfaitair='' then NULL else pand_energieindex_met_emg_forfaitair end::float pand_energieindex_met_emg_forfaitair
     from anneb.v20230101_v2_csv el
       join cbs_pc6_2020_v1 p on (el.pand_postcode = p.pc6);
 
