@@ -233,9 +233,14 @@ FROM anneb.cbs_pc6_2020_v1 p join (select st_union(geom) geom from cbs_buurten) 
 
 -- cbs energie per postode 2021, publicatiefile_energie_postcode_2021
 drop table if exists publicatiefile_energie_postcode6_2021;
-create table publicatiefile_energie_postcode6_2021 (like anneb.publicatiefile_energie_postcode6_2021 including comments);
-insert into publicatiefile_energie_postcode6_2021
-  select e.* 
+create table publicatiefile_energie_postcode6_2021 as select 
+  e.ogc_fid id,
+  postcode6,
+  case when gemiddelde_aardgaslevering_woningen = '.' then NULL else gemiddelde_aardgaslevering_woningen end::int gemiddelde_aardgaslevering_woningen,
+  case when gemiddelde_aardgaslevering_woningen_gecorrigeerd = '.' then NULL else gemiddelde_aardgaslevering_woningen_gecorrigeerd end::int gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  case when gemiddelde_elektriciteitslevering_woningen = '.' then NULL else gemiddelde_elektriciteitslevering_woningen end::int gemiddelde_elektriciteitslevering_woningen,
+  case when gemiddelde_aardgaslevering_bedrijven = '.' then NULL else gemiddelde_aardgaslevering_bedrijven end::int gemiddelde_elektriciteitslevering_bedrijven,
+  case when gemiddelde_aardgaslevering_bedrijven = '.' then NULL else gemiddelde_aardgaslevering_bedrijven end::int gemiddelde_aardgaslevering_bedrijven
     from anneb.publicatiefile_energie_postcode6_2021 e
       join cbs_pc6_2020_v1 p on (e.postcode6=p.pc6);
 
@@ -351,3 +356,7 @@ select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
 -- import into database http://leda.geodan.nl:8090
 drop table if exists plll_uhi;
 create table plll_uhi as select ogc_fid id, (temperature/10.0)::float temperature, geom from anneb.plll_uhi;
+
+
+
+-- create table referentiewoningen as select * from plll.referentiewoningen_energiepres;
