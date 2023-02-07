@@ -135,6 +135,10 @@ class MapInfoFormatted extends LitElement {
             }
             if (feature.properties[translation.name] || feature.properties[translation.name] === 0) {
               let value = feature.properties[translation.name];
+              if (translation.date) {
+                const date = new Date(value);
+                value = date.toLocaleString();
+              }
               if (translation.valuemap && Array.isArray(translation.valuemap)) {
                 const valueMap = translation.valuemap.find(valueMap=>
                     Array.isArray(valueMap) &&
