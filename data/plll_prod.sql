@@ -290,7 +290,9 @@ select v3.postcode, count(v3.pand_energieklasse) aantallabels, v3.pand_energiekl
 )
 , energielabelsagg as 
 (
-select postcode, string_agg(pand_energieklasse || '(' || aantallabels::text || ')', ',' order by aantallabels desc, pand_energieklasse asc) labels
+select 
+	postcode, 
+	string_agg(pand_energieklasse || '(' || aantallabels::text || ')', ',' order by aantallabels desc, pand_energieklasse asc) labels
   from energielabels
    group by postcode
 )
@@ -312,7 +314,12 @@ select
 )
 select
   nextval('postcodeseq') id,
-  pc.*,
+  k.pc6 postcode,
+  pc.verblijfsobjecten,
+  pc.verblijfsobjectoppervlak,
+  pc.reeksen,
+  pc.labels,
+  pc.toplabel,
   kpb.particuliere_eigenaar_bewoner,
   kpb.particuliere_verhuur,
   kpb.woningcorporatie,
@@ -322,6 +329,10 @@ select
   pep.gemiddelde_elektriciteitslevering_woningen,
   pep.gemiddelde_aardgaslevering_bedrijven,
   pep.gemiddelde_elektriciteitslevering_bedrijven,
+  case when pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd is not null
+    and pc.verblijfsobjecten is not null and pc.verblijfsobjectoppervlak is not null 
+      then (pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd * pc.verblijfsobjecten) / pc.verblijfsobjectoppervlak 
+        else null end aardgasperm2,
   k.inwoner,
   k.man,
   k.vrouw,
