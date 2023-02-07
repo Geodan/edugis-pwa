@@ -569,7 +569,7 @@ class MBStyleParser
       case 'literal':
         return [{attrValue: expression[1], paintValue: expression[1]}];
       case 'let':
-        return this._parsePaintProperty(expression.slice(-1));
+        return this._parsePaintProperty(expression.slice(-1)[0]);
       case 'get':
       case 'var':
         return this._parseGetExpression(expression, type, zoom, attrName, layout);
