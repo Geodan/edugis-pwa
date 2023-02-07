@@ -131,7 +131,7 @@
     },
     {
       "type": "geojson",
-      "title": "Aardbevingen laatste 2.5 dag",
+      "title": "Aardbevingen vandaag > 2.5",
       "checked": false,
       "layerInfo": {
         "id": "abd0c37d-390d-4b9f-9752-84d42829dfe7",
@@ -142,26 +142,111 @@
           "attribution": "USGS"
         },
         "metadata": {
-          "abstract": "Aardevingen van de laatste 2.5 dag (USGS)",
-          "title": "Aardbevingen",
+          "abstract": "Aardbevingen tot 24 uur geleden, groter dan 2.5 op de schaal van Richter (USGS)",
+          "title": "Aardbevingen 24 uur > 2.5",
           "userlayer": true,
-          "reference": false,
-          "attributes": {
-            "translations": [
-              {"name":"mag", "translation": "magnitude", "unit": " schaal van Richter"},
-              {"name": "time", "date":true},
-              {"name": "updated", "date":true}
-            ]
-          }
+          "reference": false
         },
         "paint": {
-            "circle-color": "rgba(0,0,0,0.5)",
-            "circle-radius": ["*", 2 ,["get", "mag"]],
+             "circle-color":[  "interpolate",  ["linear"],
+  ["get", "mag"],
+  2, "#faf207",
+  4, "#faa907",
+  6, "#fa6c07",
+  8, "#fa0707"
+],
+                        
+"circle-radius": [  "interpolate",  ["exponential", 2],
+  ["get", "mag"],
+  2, 5,
+  4, 10,
+  6, 20,
+  8, 50
+], 
             "circle-stroke-width": 1,
             "circle-stroke-color": "rgba(255,255,0,0.9)"
         }
       },
+      "id": "Aardbevingen_vandaag_geojson_id"
+    },
+{
+      "type": "geojson",
+      "title": "Aardbevingen deze week > 2.5",
+      "checked": false,
+      "layerInfo": {
+        "id": "abd0c37d-390d-4b9f-9752-84d42829dfe8",
+        "type": "circle",
+        "source": {
+          "type": "geojson",
+          "data": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson",
+          "attribution": "USGS"
+        },
+        "metadata": {
+          "abstract": "Aardbevingen tot 7 dagen geleden, groter dan 2.5 op de schaal van Richter (USGS)",
+          "title": "Aardbevingen 7 dagen > 2.5",
+          "userlayer": true,
+          "reference": false
+        },
+        "paint": {
+            "circle-color":[  "interpolate",  ["linear"],
+  ["get", "mag"],
+  2, "#faf207",
+  4, "#faa907",
+  6, "#fa6c07",
+  8, "#fa0707"
+],
+            
+"circle-radius": [  "interpolate",  ["exponential", 2],
+  ["get", "mag"],
+  2, 5,
+  4, 10,
+  6, 20,
+  8, 50
+],            "circle-stroke-width": 1,
+            "circle-stroke-color": "rgba(255,255,0,0.9)"
+        }
+      },
       "id": "Aardbevingen_vorige week_geojson_id"
+    },
+{
+      "type": "geojson",
+      "title": "Aardbevingen deze maand > 2.5",
+      "checked": false,
+      "layerInfo": {
+        "id": "abd0c37d-390d-4b9f-9752-84d42829dfe9",
+        "type": "circle",
+        "source": {
+          "type": "geojson",
+          "data": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson",
+          "attribution": "USGS"
+        },
+        "metadata": {
+          "abstract": "Aardbevingen tot 30 dagen geleden, groter dan 2.5 op de schaal van Richter (USGS)",
+          "title": "Aardbevingen 30 dagen > 2.5",
+          "userlayer": true,
+          "reference": false
+        },
+        "paint": {
+           "circle-color":[  "interpolate",  ["linear"],
+  ["get", "mag"],
+  2, "#faf207",
+  4, "#faa907",
+  6, "#fa6c07",
+  8, "#fa0707"
+],
+                       
+"circle-radius": [  "interpolate",  ["exponential", 2],
+  ["get", "mag"],
+  2, 5,
+  4, 10,
+  6, 20,
+  8, 50
+], 
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "rgba(255,255,0,0.9)"
+        }
+      },
+      "id": "Aardbevingen_deze_maand_geojson_id"
     },
     {
       "type": "geojson",
