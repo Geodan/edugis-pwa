@@ -41,6 +41,7 @@ export class CkanConnector {
                         resultLayer.layerInfo.type = "raster";
                         break;
                     case 'wms':
+                        resultLayer.type = "wms";
                         resultLayer.layerInfo.type = "raster";
                         resultLayer.layerInfo.source.tiles[0] += `&layers=${layer.settings.featureName}`
                 }
