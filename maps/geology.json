@@ -131,25 +131,32 @@
     },
     {
       "type": "geojson",
-      "title": "Aardbevingen",
+      "title": "Aardbevingen laatste 2.5 dag",
       "checked": false,
       "layerInfo": {
         "id": "abd0c37d-390d-4b9f-9752-84d42829dfe7",
         "type": "circle",
         "source": {
           "type": "geojson",
-          "data": "https://dl.dropbox.com/s/qjgjlcu6uwhkich/aardbevingen.json?dl=0",
-          "attribution": "unknown"
+          "data": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson",
+          "attribution": "USGS"
         },
         "metadata": {
-          "abstract": "Een voorbeeld van aardbevingen over de periode van 1 week",
+          "abstract": "Aardevingen van de laatste 2.5 dag (USGS)",
           "title": "Aardbevingen",
           "userlayer": true,
-          "reference": false
+          "reference": false,
+          "attributes": {
+            "translations": [
+              {"name":"mag", "translation": "magnitude", "unit": " schaal van Richter"},
+              {"name": "time", "date":true},
+              {"name": "updated", "date":true}
+            ]
+          }
         },
         "paint": {
             "circle-color": "rgba(0,0,0,0.5)",
-            "circle-radius": 5,
+            "circle-radius": ["*", 2 ,["get", "mag"]],
             "circle-stroke-width": 1,
             "circle-stroke-color": "rgba(255,255,0,0.9)"
         }
