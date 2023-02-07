@@ -357,10 +357,10 @@ select
   k.uitkminaow,
   k.geom,
   null::geometry(multipolygon,28992) geomblok
-  from postcodebagrvoenergielabels pc
-   left join plllbronnen.cbs_pc6_2020_v1 k on (k.pc6=pc.postcode)
-     left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (pc.postcode=kpb.postcode)
-      left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (pc.postcode=pep.postcode6);
+  from plllbronnen.cbs_pc6_2020_v1 k 
+    left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (k.pc6=kpb.postcode) 
+      left join postcodebagrvoenergielabels pc on (k.pc6=pc.postcode) 
+        left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (k.pc6=pep.postcode6);
 
 update postcode pc 
    set geomblok=
