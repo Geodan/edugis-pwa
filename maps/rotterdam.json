@@ -1241,6 +1241,25 @@
           "title": "3D hoogte",
           "layerInfo": {
             "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
+            "metadata": {
+              "attributes": {
+                "translations": [
+                  {"name": "height", "translation": "hoogte", "valuemap": [
+                    [4, "0 - 4 m", "<"],
+                    [8, "4 - 8 m", "<"],
+                    [13, "8 - 13 m", "<"],
+                    [16, "13 - 16 m", "<"],
+                    [19, "16 - 19 m", "<"],
+                    [24, "19 - 24 m", "<"],
+                    [40, "24 - 40 m", "<"],
+                    [60, "40 - 60 m", "<"],
+                    [80, "60 - 80 m", "<"]
+                  ], "unit": " m", "decimals": 1},
+                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_max", "translation": "max dakhoogte (NAP)", "unit": " m", "decimals": 1}
+                ]
+              }
+            },  
             "type": "fill-extrusion",
             "source": {
               "type": "vector",
@@ -1254,15 +1273,15 @@
                   ["get", "h_maaiveld"]
                 ],
                 [
-                  "case", ["<=", ["var", "height"], -3.54722547531128], "#fff7ec",
-                  ["<=", ["var", "height"], 4], "#fee8c8",
-                  ["<=", ["var", "height"], 8], "#fdd49e",
-                  ["<=", ["var", "height"], 13], "#fdbb84",
-                  ["<=", ["var", "height"], 16], "#fc8d59",
-                  ["<=", ["var", "height"], 19], "#ef6548",
-                  ["<=", ["var", "height"], 24], "#d7301f",
-                  ["<=", ["var", "height"], 40], "#b30000",
-                  ["<=", ["var", "height"], 75], "#7f0000",
+                  "case", ["<", ["var", "height"], 4], "#fff7ec",
+                  ["<", ["var", "height"], 8], "#fee8c8",
+                  ["<", ["var", "height"], 13], "#fdd49e",
+                  ["<", ["var", "height"], 16], "#fdbb84",
+                  ["<", ["var", "height"], 19], "#fc8d59",
+                  ["<", ["var", "height"], 24], "#ef6548",
+                  ["<", ["var", "height"], 40], "#d7301f",
+                  ["<", ["var", "height"], 60], "#b30000",
+                  ["<", ["var", "height"], 80], "#7f0000",
                   "#7f0000"
                 ]
               ],
@@ -1280,30 +1299,41 @@
             "id": "pandenstatus",
             "type": "fill",
             "metadata": {
-              "maxinfofeatures": 20,
+              "maxinfofeatures": 1,
+              "abstract": "gebouwen, data gebaseerd op de BAG, BAG 3D en de RVO energielabels. Attribuut gem_hoogte is berekend: gebouwvolume/gebouwoppervlak. Bouwlagen zijn geschat: floor(gem_hoogte/3,1). Vloeroppervlak1:bouwlagen x gebouwoppervlak. Vloeroppervlak2: gebouwvolume/gebouwoppervlak/3,1.",
               "attributes": {
-                "deniedattributes": ["ogc_fid", "statusorder"],
+                "deniedattributes": ["id"],
                 "translations": [{
                     "name": "identificatie",
                     "translation": "bag id"
                   },
-                  {
-                    "name": "pandstatus"
-                  },
-                  {
-                    "name": "bouwjaar"
-                  }
+                  {"name": "pandstatus"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendlabel", "translation": "meestvoorkomend label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"}
                 ]
               }
             },
             "source": {
-              "promoteId": "ogc_fid",
+              "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2"],
               "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
               "maxzoom": 19
             },
-            "source-layer": "plll.gebouw",
+            "source-layer": "plll_prod.gebouw",
             "paint": {
               "fill-color": ["match", ["get", "pandstatus"],
                 "Bouwvergunning verleend", "lightgreen",
@@ -1538,135 +1568,7 @@
     {
       "type": "group",
       "title": "Postcode 6",
-      "sublayers": [{
-          "title": "Postcode punten",
-          "layerInfo": {
-            "id": "postcode6puntencircle",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,adressen"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6points",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-color": "#000",
-              "circle-radius": 5,
-              "circle-stroke-color": "#fff",
-              "circle-stroke-width": 1
-            }
-          }
-        },
-        {
-          "title": "Postcode verblijfsobjecten",
-          "layerInfo": {
-            "id": "postcode6verblijfsobjecten",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=postcode&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.verblijfsobject",
-            "paint": {
-              "circle-color":[
-                "match", ["get","postcode"] ,
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "red"],
-              "circle-stroke-width":0.5,
-              "circle-stroke-color":"white"
-            }
-          }
-        },
-        {
-          "title": "Postcode gebied",
-          "layerInfo": {
-            "id": "postcode6gebied",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "fill",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.postcode",
-            "paint": {
-              "fill-color":[
-                "match", ["get","postcode"],
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "#ccc"],
-              "fill-outline-color":"white"
-            }
-          }
-        },
-        {
-          "title": "Postcode blokken",
-          "layerInfo": {
-            "id": "postcode6blokken",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "fill",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geomblok&columns=id,postcode"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.postcode",
-            "paint": {
-              "fill-color":[
-                "match", ["get","postcode"],
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "#ccc"],
-              "fill-outline-color":"white"
-            }
-          }
-        },
+      "sublayers": [
         {
           "title": "Postcode gebouwen",
           "layerInfo": {
@@ -2932,10 +2834,10 @@
             "source": {
               "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_12jan/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identifica,oppervlakt,status,gebruiksdo,straat,huisnummer,postcode,bouwjaar,pandidenti,gas21_cor_,elek21_gem,gebouwtype,a_ei,a_elabel,a_emg,a_bwj,b_ei,b_elabel,b_emg,b_bwjr,c_ei,c_elabel,c_emg,c_bwjr,d1_ei,d1_elabel,d1_emg,d1_bwjr,d2_ei,d2_elabel,d2_emg,d2_bwjr,e_ei,e_elabel,e_emg,e_bwjr"],
+              "tiles": ["https://research1.geodan.nl/data/plllbronnen.referentiewoningen/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identifica,oppervlakt,status,gebruiksdo,straat,huisnummer,postcode,bouwjaar,pandidenti,gas21_cor_,elek21_gem,gebouwtype,a_ei,a_elabel,a_emg,a_bwj,b_ei,b_elabel,b_emg,b_bwjr,c_ei,c_elabel,c_emg,c_bwjr,d1_ei,d1_elabel,d1_emg,d1_bwjr,d2_ei,d2_elabel,d2_emg,d2_bwjr,e_ei,e_elabel,e_emg,e_bwjr"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
-            "source-layer": "plll.referentiewoningen_12jan",
+            "source-layer": "plllbronnen.referentiewoningen",
             "paint": {
               "circle-pitch-alignment": "map",
               "circle-radius": 7,
