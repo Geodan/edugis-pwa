@@ -1294,7 +1294,7 @@
           }
         },
         {
-          "title": "panden - status",
+          "title": "status",
           "layerInfo": {
             "id": "pandenstatus",
             "type": "fill",
@@ -1311,11 +1311,11 @@
                   {"name": "pandstatus"},
                   {"name": "bouwjaar"},
                   {"name": "verblijfsobjecten"},
-                  {"name": "oppervlakteverblijfsobjecten", "unit": " m2"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
                   {"name": "gebouwtypen"},
                   {"name": "nummerreeks"},
                   {"name": "elabels", "translation": "energielabels"},
-                  {"name": "meestvoorkomendlabel", "translation": "meestvoorkomend label"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
                   {"name": "postcodes"},
                   {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
                   {"name": "volume", "unit": " m3"},
@@ -1351,21 +1351,19 @@
           }
         },
         {
-          "title": "panden - bouwjaar",
+          "title": "bouwjaar",
+          "id": "pandenbouwjaarpllprodvector",
           "layerInfo": {
-            "id": "pandenbouwjaarpllvector",
+            "id": "pandenbouwjaarpllprodvector",
             "type": "fill",
             "metadata": {
               "attributes": {
-                "deniedattributes": ["ogc_fid", "statusorder"],
-                "translations": [{
-                    "name": "identificatie",
-                    "translation": "bag id"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "bouwjaar",
-                    "valuemap": [
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar","translation": "bouwjaar", "valuemap": [
                       [1900, "1890 - 1899", "<"],
                       [1920, "1900 - 1919", "<"],
                       [1945, "1920 - 1944", "<"],
@@ -1380,20 +1378,30 @@
                       [2023, "2015 - 2023", "<"]
                     ]
                   },
-                  {
-                    "name": "pandstatus"
-                  }
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"}
                 ]
               }
             },
             "source": {
-              "promoteId": "ogc_fid",
+              "promoteId": "id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2"],
               "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
               "maxzoom": 19
             },
-            "source-layer": "plll.gebouw",
+            "source-layer": "plll_prod.gebouw",
             "paint": {
               "fill-color": ["case",
                 ["<", ["get", "bouwjaar"], 1900], "#99140a",
@@ -1423,21 +1431,65 @@
           }
         },
         {
-          "type": "wms",
-          "title": "panden - energielabel",
+          "title": "energielabel",
+          "id": "gebouwenergielabelpllprodvector",
           "layerInfo": {
-            "id": "pandennergielabel",
-            "type": "raster",
-            "minzoom": 13,
-            "maxzoom": 22,
+            "id": "gebouwenergielabelllprodvector",
+            "type": "fill",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar","translation": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"}
+                ]
+              }
+            },
             "source": {
-              "type": "raster",
-              "tileSize": 512,
-              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-              "tiles": [
-                "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
+              "promoteId": "id",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2"],
+              "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
+              "maxzoom": 19
+            },
+            "source-layer": "plll_prod.gebouw",
+            "paint": {
+              "fill-color": [
+                "match",["get", "meestvoorkomendelabel"],
+                "A+++", "#1a9641",
+                "A++", "#1a9641",
+                "A+", "#1a9641",
+                "A", "#6abd58",
+                "B", "#b3df5b",
+                "C", "#e6f51f",
+                "D", "#ffe81c",
+                "E", "#feba53",
+                "F", "#ed6e43",
+                "G", "#d7191c",
+                "#cccccc"
               ],
-              "attribution": "Pico, Kadaster"
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red",
+                "rgba(127,127,127,0.1)"
+              ]
+            },
+            "filter": ["has", "meestvoorkomendelabel"],
+            "layout": {
+              "fill-sort-key": ["get", "statusorder"]
             }
           }
         },
@@ -1515,11 +1567,11 @@
             "source": {
               "promoteId": "dakdeel_id",
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_column=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
+              "tiles": ["https://research1.geodan.nl/data/plllbronnen.dakdelen/mvt/{z}/{x}/{y}?geom_column=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "maxzoom": 19
             },
-            "source-layer": "plll.dakdelen_pll",
+            "source-layer": "plllbronnen.dakdelen",
             "paint": {
               "fill-color": ["case",
                 ["==", ["get", "aspect"], -1], "#c5b3b5",
@@ -1704,7 +1756,9 @@
                 "deniedattributes": ["id"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
                 {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
                 {"name":"reeksen", "translation": "reeksen"},
                 {"name":"labels", "translation": "labels"},
                 {"name":"toplabel", "translation": "toplabel"},
@@ -1713,50 +1767,48 @@
                 {"name":"woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
                 {"name":"restcategorie", "translation": "restcategorie", "unit": " %"},
                 {"name":"gemiddelde_aardgaslevering_woningen", "translation": "gemiddelde aardgaslevering woningen", "unit": " m3"},
-                {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "gemiddelde aardgaslevering woningen", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
                 {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
-                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3"},
-                {"name":"inwoner", "translation": "inwoner"},
-                {"name":"man", "translation": "man"},
-                {"name":"vrouw", "translation": "vrouw"},
-                {"name":"inw_014", "translation": "inw_014"},
-                {"name":"inw_1524", "translation": "inw_1524"},
-                {"name":"inw_2544", "translation": "inw_2544"},
-                {"name":"inw_4564", "translation": "inw_4564"},
-                {"name":"inw_65pl", "translation": "inw_65pl"},
-                {"name":"p_nl_achtg", "translation": "nl achtg", "unit": " %"},
-                {"name":"p_we_mig_a", "translation": "we_mig_a", "unit": " %"},
-                {"name":"p_nw_mig_a", "translation": "nw_mig_a", "unit": " %"},
-                {"name":"aantal_hh", "translation": "aantal_hh"},
-                {"name":"tothh_eenp", "translation": "tothh_eenp"},
-                {"name":"tothh_mpzk", "translation": "tothh_mpzk"},
-                {"name":"hh_eenoud", "translation": "hh_eenoud"},
-                {"name":"hh_tweeoud", "translation": "hh_tweeoud"},
-                {"name":"gem_hh_gr", "translation": "gem_hh_gr"},
-                {"name":"woning", "translation": "woning"},
-                {"name":"wonvoor45", "translation": "wonvoor45"},
-                {"name":"won_4564", "translation": "won_4564"},
-                {"name":"won_6574", "translation": "won_6574"},
-                {"name":"won_7584", "translation": "won_7584"},
-                {"name":"won_8594", "translation": "won_8594"},
-                {"name":"won_9504", "translation": "won_9504"},
-                {"name":"won_0514", "translation": "won_0514"},
-                {"name":"won_1524", "translation": "won_1524"},
-                {"name":"won_mrgez", "translation": "won_mrgez"},
-                {"name":"p_koopwon", "translation": "koopwon", "unit": " %"},
-                {"name":"p_huurwon", "translation": "huurwon", "unit": " %"},
-                {"name":"won_hcorp", "translation": "won_hcorp"},
-                {"name":"won_nbew", "translation": "won_nbew"},
-                {"name":"wozwoning", "translation": "wozwoning"},
-                {"name":"uitkminaow", "translation": "uitkminaow"}
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,verblijfsobjectoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
               "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
             },
             "source-layer": "plll_prod.postcode",
@@ -1791,7 +1843,9 @@
                 "deniedattributes": ["id"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
                 {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
                 {"name":"reeksen", "translation": "reeksen"},
                 {"name":"labels", "translation": "labels"},
                 {"name":"toplabel", "translation": "toplabel"},
@@ -1804,46 +1858,44 @@
                 {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
                 {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
-                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3"},
-                {"name":"inwoner", "translation": "inwoner"},
-                {"name":"man", "translation": "man"},
-                {"name":"vrouw", "translation": "vrouw"},
-                {"name":"inw_014", "translation": "inw_014"},
-                {"name":"inw_1524", "translation": "inw_1524"},
-                {"name":"inw_2544", "translation": "inw_2544"},
-                {"name":"inw_4564", "translation": "inw_4564"},
-                {"name":"inw_65pl", "translation": "inw_65pl"},
-                {"name":"p_nl_achtg", "translation": "nl achtg", "unit": " %"},
-                {"name":"p_we_mig_a", "translation": "we_mig_a", "unit": " %"},
-                {"name":"p_nw_mig_a", "translation": "nw_mig_a", "unit": " %"},
-                {"name":"aantal_hh", "translation": "aantal_hh"},
-                {"name":"tothh_eenp", "translation": "tothh_eenp"},
-                {"name":"tothh_mpzk", "translation": "tothh_mpzk"},
-                {"name":"hh_eenoud", "translation": "hh_eenoud"},
-                {"name":"hh_tweeoud", "translation": "hh_tweeoud"},
-                {"name":"gem_hh_gr", "translation": "gem_hh_gr"},
-                {"name":"woning", "translation": "woning"},
-                {"name":"wonvoor45", "translation": "wonvoor45"},
-                {"name":"won_4564", "translation": "won_4564"},
-                {"name":"won_6574", "translation": "won_6574"},
-                {"name":"won_7584", "translation": "won_7584"},
-                {"name":"won_8594", "translation": "won_8594"},
-                {"name":"won_9504", "translation": "won_9504"},
-                {"name":"won_0514", "translation": "won_0514"},
-                {"name":"won_1524", "translation": "won_1524"},
-                {"name":"won_mrgez", "translation": "won_mrgez"},
-                {"name":"p_koopwon", "translation": "koopwon", "unit": " %"},
-                {"name":"p_huurwon", "translation": "huurwon", "unit": " %"},
-                {"name":"won_hcorp", "translation": "won_hcorp"},
-                {"name":"won_nbew", "translation": "won_nbew"},
-                {"name":"wozwoning", "translation": "wozwoning"},
-                {"name":"uitkminaow", "translation": "uitkminaow"}
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,verblijfsobjectoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
               "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
             },
             "source-layer": "plll_prod.postcode",
@@ -1878,7 +1930,9 @@
                 "deniedattributes": ["id"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
                 {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
                 {"name":"reeksen", "translation": "reeksen"},
                 {"name":"labels", "translation": "labels"},
                 {"name":"toplabel", "translation": "toplabel"},
@@ -1891,46 +1945,44 @@
                 {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
                 {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
-                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3"},
-                {"name":"inwoner", "translation": "inwoner"},
-                {"name":"man", "translation": "man"},
-                {"name":"vrouw", "translation": "vrouw"},
-                {"name":"inw_014", "translation": "inw_014"},
-                {"name":"inw_1524", "translation": "inw_1524"},
-                {"name":"inw_2544", "translation": "inw_2544"},
-                {"name":"inw_4564", "translation": "inw_4564"},
-                {"name":"inw_65pl", "translation": "inw_65pl"},
-                {"name":"p_nl_achtg", "translation": "nl achtg", "unit": " %"},
-                {"name":"p_we_mig_a", "translation": "we_mig_a", "unit": " %"},
-                {"name":"p_nw_mig_a", "translation": "nw_mig_a", "unit": " %"},
-                {"name":"aantal_hh", "translation": "aantal_hh"},
-                {"name":"tothh_eenp", "translation": "tothh_eenp"},
-                {"name":"tothh_mpzk", "translation": "tothh_mpzk"},
-                {"name":"hh_eenoud", "translation": "hh_eenoud"},
-                {"name":"hh_tweeoud", "translation": "hh_tweeoud"},
-                {"name":"gem_hh_gr", "translation": "gem_hh_gr"},
-                {"name":"woning", "translation": "woning"},
-                {"name":"wonvoor45", "translation": "wonvoor45"},
-                {"name":"won_4564", "translation": "won_4564"},
-                {"name":"won_6574", "translation": "won_6574"},
-                {"name":"won_7584", "translation": "won_7584"},
-                {"name":"won_8594", "translation": "won_8594"},
-                {"name":"won_9504", "translation": "won_9504"},
-                {"name":"won_0514", "translation": "won_0514"},
-                {"name":"won_1524", "translation": "won_1524"},
-                {"name":"won_mrgez", "translation": "won_mrgez"},
-                {"name":"p_koopwon", "translation": "koopwon", "unit": " %"},
-                {"name":"p_huurwon", "translation": "huurwon", "unit": " %"},
-                {"name":"won_hcorp", "translation": "won_hcorp"},
-                {"name":"won_nbew", "translation": "won_nbew"},
-                {"name":"wozwoning", "translation": "wozwoning"},
-                {"name":"uitkminaow", "translation": "uitkminaow"}
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,verblijfsobjectoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
               "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
             },
             "source-layer": "plll_prod.postcode",
@@ -1955,17 +2007,20 @@
           }
         },
         {
-          "title": "Gemiddelde aardgaslevering woningen gecorrigeerd",
+          "title": "Gem. aardgaslevering woningen",
           "id": "aargasleveringpc6vlak",
           "layerInfo": {
             "id": "aargasleveringpc6vlak",
             "type": "fill",
             "metadata": {
+              "abstract": "gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied.",
               "attributes": {
                 "deniedattributes": ["id"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
                 {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
                 {"name":"reeksen", "translation": "reeksen"},
                 {"name":"labels", "translation": "labels"},
                 {"name":"toplabel", "translation": "toplabel"},
@@ -1978,47 +2033,46 @@
                 {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
                 {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
-                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3"},
-                {"name":"inwoner", "translation": "inwoner"},
-                {"name":"man", "translation": "man"},
-                {"name":"vrouw", "translation": "vrouw"},
-                {"name":"inw_014", "translation": "inw_014"},
-                {"name":"inw_1524", "translation": "inw_1524"},
-                {"name":"inw_2544", "translation": "inw_2544"},
-                {"name":"inw_4564", "translation": "inw_4564"},
-                {"name":"inw_65pl", "translation": "inw_65pl"},
-                {"name":"p_nl_achtg", "translation": "nl achtg", "unit": " %"},
-                {"name":"p_we_mig_a", "translation": "we_mig_a", "unit": " %"},
-                {"name":"p_nw_mig_a", "translation": "nw_mig_a", "unit": " %"},
-                {"name":"aantal_hh", "translation": "aantal_hh"},
-                {"name":"tothh_eenp", "translation": "tothh_eenp"},
-                {"name":"tothh_mpzk", "translation": "tothh_mpzk"},
-                {"name":"hh_eenoud", "translation": "hh_eenoud"},
-                {"name":"hh_tweeoud", "translation": "hh_tweeoud"},
-                {"name":"gem_hh_gr", "translation": "gem_hh_gr"},
-                {"name":"woning", "translation": "woning"},
-                {"name":"wonvoor45", "translation": "wonvoor45"},
-                {"name":"won_4564", "translation": "won_4564"},
-                {"name":"won_6574", "translation": "won_6574"},
-                {"name":"won_7584", "translation": "won_7584"},
-                {"name":"won_8594", "translation": "won_8594"},
-                {"name":"won_9504", "translation": "won_9504"},
-                {"name":"won_0514", "translation": "won_0514"},
-                {"name":"won_1524", "translation": "won_1524"},
-                {"name":"won_mrgez", "translation": "won_mrgez"},
-                {"name":"p_koopwon", "translation": "koopwon", "unit": " %"},
-                {"name":"p_huurwon", "translation": "huurwon", "unit": " %"},
-                {"name":"won_hcorp", "translation": "won_hcorp"},
-                {"name":"won_nbew", "translation": "won_nbew"},
-                {"name":"wozwoning", "translation": "wozwoning"},
-                {"name":"uitkminaow", "translation": "uitkminaow"}
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,verblijfsobjectoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
-              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585],
+              "attribution": "CBS"
             },
             "source-layer": "plll_prod.postcode",
             "paint": {
@@ -2042,17 +2096,20 @@
           }
         },
         {
-          "title": "Gemiddelde aardgaslevering woningen / m2",
+          "title": "Gem. aardgaslevering woningen / m2",
           "id": "aargasleveringm2pc6vlak",
           "layerInfo": {
             "id": "aargasleveringm2pc6vlak",
             "type": "fill",
             "metadata": {
+              "abstract": "Gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied per m2 woningoppervlak. Berekend door de gemiddelde aargaslevering te vermenigvuldigen met het aantal woningen en te delen door de som van de oppervlakten van woningen",
               "attributes": {
                 "deniedattributes": ["id"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
                 {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
                 {"name":"reeksen", "translation": "reeksen"},
                 {"name":"labels", "translation": "labels"},
                 {"name":"toplabel", "translation": "toplabel"},
@@ -2065,46 +2122,44 @@
                 {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
                 {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
                 {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
-                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3"},
-                {"name":"inwoner", "translation": "inwoner"},
-                {"name":"man", "translation": "man"},
-                {"name":"vrouw", "translation": "vrouw"},
-                {"name":"inw_014", "translation": "inw_014"},
-                {"name":"inw_1524", "translation": "inw_1524"},
-                {"name":"inw_2544", "translation": "inw_2544"},
-                {"name":"inw_4564", "translation": "inw_4564"},
-                {"name":"inw_65pl", "translation": "inw_65pl"},
-                {"name":"p_nl_achtg", "translation": "nl achtg", "unit": " %"},
-                {"name":"p_we_mig_a", "translation": "we_mig_a", "unit": " %"},
-                {"name":"p_nw_mig_a", "translation": "nw_mig_a", "unit": " %"},
-                {"name":"aantal_hh", "translation": "aantal_hh"},
-                {"name":"tothh_eenp", "translation": "tothh_eenp"},
-                {"name":"tothh_mpzk", "translation": "tothh_mpzk"},
-                {"name":"hh_eenoud", "translation": "hh_eenoud"},
-                {"name":"hh_tweeoud", "translation": "hh_tweeoud"},
-                {"name":"gem_hh_gr", "translation": "gem_hh_gr"},
-                {"name":"woning", "translation": "woning"},
-                {"name":"wonvoor45", "translation": "wonvoor45"},
-                {"name":"won_4564", "translation": "won_4564"},
-                {"name":"won_6574", "translation": "won_6574"},
-                {"name":"won_7584", "translation": "won_7584"},
-                {"name":"won_8594", "translation": "won_8594"},
-                {"name":"won_9504", "translation": "won_9504"},
-                {"name":"won_0514", "translation": "won_0514"},
-                {"name":"won_1524", "translation": "won_1524"},
-                {"name":"won_mrgez", "translation": "won_mrgez"},
-                {"name":"p_koopwon", "translation": "koopwon", "unit": " %"},
-                {"name":"p_huurwon", "translation": "huurwon", "unit": " %"},
-                {"name":"won_hcorp", "translation": "won_hcorp"},
-                {"name":"won_nbew", "translation": "won_nbew"},
-                {"name":"wozwoning", "translation": "wozwoning"},
-                {"name":"uitkminaow", "translation": "uitkminaow"}
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,verblijfsobjectoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
               "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
             },
             "source-layer": "plll_prod.postcode",
@@ -2127,429 +2182,167 @@
             },
             "filter": ["has", "aardgasperm2"]
           }
-        }, {
-          "title": "Postcode vlakken",
+        },
+        {
+          "title": "Gem. elektriciteitslevering woningen",
+          "id": "elektriciteitsleveringpc6vlak",
           "layerInfo": {
-            "id": "postcode6vlakken",
+            "id": "elektriciteitsleveringpc6vlak",
             "type": "fill",
             "metadata": {
+              "abstract": "Gemiddelde elektriciteitslevering woningen (2021)",
               "attributes": {
-                "translations": [{
-                    "name": "pc6",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aant_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "gemiddeld bouwjaar"
-                  }
+                "deniedattributes": ["id"],
+                "translations": [{"name":"postcode", "translation": "postcode"},
+                {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
+                {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
+                {"name":"reeksen", "translation": "reeksen"},
+                {"name":"labels", "translation": "labels"},
+                {"name":"toplabel", "translation": "toplabel"},
+                {"name":"particuliere_eigenaar_bewoner", "translation": "particuliere eigenaar bewoner", "unit": " %"},
+                {"name":"particuliere_verhuur", "translation": "particuliere verhuur", "unit": " %"},
+                {"name":"woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
+                {"name":"restcategorie", "translation": "restcategorie", "unit": " %"},
+                {"name":"gemiddelde_aardgaslevering_woningen", "translation": "gemiddelde aardgaslevering woningen", "unit": " m3"},
+                {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
+                ]
+              }
+            },
+            "source": {
+              "promoteId": "id",
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
+            },
+            "source-layer": "plll_prod.postcode",
+            "paint": {
+              "fill-color": [
+                "case",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],1500],"#f7f4f9",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],1800],"#e7e1ef",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2000],"#d4b9da",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2300],"#c994c7",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2700],"#df65b0",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],3000],"#e7298a",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],3250],"#ce1256",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],3500],"#980043",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],6500],"#67001f",
+                "#000000"
+              ],
+              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "white", "black"]
 
-                ]
-              }
             },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_polygons/mvt/{z}/{x}/{y}?geom_column=geom&columns=pc6,aant_adres,aant_pand,bouwjaar,bjtype,hfnc,opp"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_polygons",
-            "paint": {
-              "fill-color": "rgba(192, 192, 192, 0.5)",
-              "fill-outline-color": "#000000"
-            }
+            "filter": ["has", "gemiddelde_elektriciteitslevering_woningen"]
           }
         },
         {
-          "title": "Postcode vlakken gasgebruik",
+          "title": "Energielabels",
+          "id": "energielabelspc6vlak",
           "layerInfo": {
-            "id": "postcode6vlakkengasgebruik",
+            "id": "energielabelspc6vlak",
             "type": "fill",
             "metadata": {
+              "abstract": "Meest voorkomend energielabel per postcode",
               "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
+                "deniedattributes": ["id"],
+                "translations": [{"name":"postcode", "translation": "postcode"},
+                {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
+                {"name":"woningen"},
+                {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
+                {"name":"woningoppervlak"},
+                {"name":"reeksen", "translation": "reeksen"},
+                {"name":"labels", "translation": "labels"},
+                {"name":"toplabel", "translation": "toplabel"},
+                {"name":"particuliere_eigenaar_bewoner", "translation": "particuliere eigenaar bewoner", "unit": " %"},
+                {"name":"particuliere_verhuur", "translation": "particuliere verhuur", "unit": " %"},
+                {"name":"woningcorporatie", "translation": "woningcorporatie", "unit": " %"},
+                {"name":"restcategorie", "translation": "restcategorie", "unit": " %"},
+                {"name":"gemiddelde_aardgaslevering_woningen", "translation": "gemiddelde aardgaslevering woningen", "unit": " m3"},
+                {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "gemiddeld elektriciteitslevering bedrijven", "unit": " kWh"},
+                {"name":"aardgasperm2", "translation": "aardgas per m2 woningoppervlak", "unit": " m3", "decimals": 1},
+                {"name": "inwoner","translation": "aantal inwoners"},
+                {"name": "aantal_hh","translation": "aantal huishoudens"},
+                {"name": "tothh_eenp","translation": "totaal eenpersoonshuishoudens"},
+                {"name": "tothh_mpzk","translation": "totaal meerpersoonshuishoudens met kinderen"},
+                {"name": "hh_tweeoud","translation": "huishoudens met 2 ouders"},
+                {"name": "gem_hh_gr","translation": "gemiddelde grootte huishouden","decimals": 1},
+                {"name": "woning","translation": "aantal woningen"},
+                {"name": "won_4564","translation": "woningen 1945 - 1964"},
+                {"name": "won_6574","translation": "woningen 1965 - 1974"},
+                {"name": "won_7584","translation": "woningen 1975 - 1984"},
+                {"name": "won_8594","translation": "woningen 1985 - 1994"},
+                {"name": "won_9504","translation": "woningen 1995 - 2004"},
+                {"name": "won_0514","translation": "woningen 1995 - 2004"},
+                {"name": "won_1524","translation": "woningen 2015 - 2024"},
+                {"name": "won_hcorp","translation": "woningbouwcorporatie"},
+                {"name": "won_mrgez","translation": "meergezinswoningen"},
+                {"name": "p_koopwon","translation": "koopwoningen","unit": " %"},
+                {"name": "p_huurwon","translation": "huurwoningen","unit": " %"},
+                {"name": "won_nbew","translation": "onbewoond","unit": " %"},
+                {"name": "wozwoning","translation": "woz waarde","unit": " x 1000 euro"},
+                {"name": "uitkminaow","translation": "uitkeringen (niet aow)"},
+                {"name": "man", "translation": "aantal mannen"},
+                {"name": "vrouw", "translation": "aantal vrouwen"},
+                {"name": "inw_014", "translation": "aantal 0 - 14 jaar"},
+                {"name": "inw_1524", "translation": "aantal 15 - 24 jaar"},
+                {"name": "inw_2544", "translation": "aantal 25 - 44 jaar"},
+                {"name": "inw_4564", "translation": "aantal 45 - 64 jaar"},
+                {"name": "inw_65pl", "translation": "aantal 65 jaar en ouder"},
+                {"name": "p_nl_achtg", "translation": "nl achtergrond", "unit": " %"},
+                {"name": "p_we_mig_a", "translation": "westerse achtergrond", "unit": " %"},
+                {"name": "p_nw_mig_a", "translation": "niet-westerse achtergrond", "unit": " %"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode,verblijfsobjecten,woningen,verblijfsobjectoppervlak,woningoppervlak,reeksen,labels,toplabel,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,aardgasperm2,inwoner,man,vrouw,inw_014,inw_1524,inw_2544,inw_4564,inw_65pl,p_nl_achtg,p_we_mig_a,p_nw_mig_a,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow&include_nulls=0"],
+              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
             },
-            "source-layer": "plll.pc6_energverbruik21_2",
+            "source-layer": "plll_prod.postcode",
             "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_gem"], 0, "blue", 3000, "red"
-              ],
-              "fill-outline-color": "#000000"
-            }
-          }
-        },
-        {
-          "title": "Postcode vlakken gasgebruik / m2",
-          "layerInfo": {
-            "id": "postcode6vlakkengasgebruikm2",
-            "type": "fill",
-            "metadata": {
-              "abstract": "Deze kaartlaag toont het aardgasverbruik per m2 woningoppervlakte. Een hogere waarde duidt mogelijk op een moeilijker te verwarmen huis. De brongegevens uit 2021 zijn geaggregeerd op postcode6. De berekening is (som van gasgebruik) / (som van oppervlakte)",
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_energverbruik21_2",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_m2"], 0, "blue", 20, "red", 60, "yellow"
-              ],
-              "fill-outline-color": "#000000"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "group",
-      "title": "Verblijfsobjecten orig",
-      "sublayers": [{
-          "title": "gebruiksdoel",
-          "layerInfo": {
-            "id": "verblijfsobjectgebruiksdoel",
-            "type": "circle",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "gebruiksdoel"
-                  },
-                  {
-                    "name": "identificatie"
-                  },
-                  {
-                    "name": "verblijfsobjectstatus",
-                    "translation": "status"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  },
-                  {
-                    "name": "woonplaatsnaam",
-                    "translation": "woonplaats"
-                  },
-                  {
-                    "name": "gerelateerdpand",
-                    "translation": "pand id"
-                  },
-                  {
-                    "name": "bouwjaar"
-                  },
-                  {
-                    "name": "pandstatus"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjecten/mvt/{z}/{x}/{y}?geom_column=geom2&columns=ogc_fid,identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,openbareruimtenaam,gebruiksdoel,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,bouwjaar,gerelateerdpand,pandstatus&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "attribution": "Kadaster"
-            },
-            "source-layer": "plll.verblijfsobjecten",
-            "paint": {
-              "circle-radius": 4,
-              "circle-pitch-alignment": "map",
-              "circle-stroke-color": "white",
-              "circle-stroke-width": 0.5,
-              "circle-color": ["match", ["get", "gebruiksdoel"],
-                "woonfunctie", "green",
-                "winkelfunctie", "yellow",
-                "industriefunctie", "red",
-                "bijeenkomstfunctie", "orange",
-                "onderwijsfunctie", "blue",
-                "woonfunctie,onderwijsfunctie", "blue",
-                "kantoorfunctie", "lightblue",
-                "overige gebruiksfunctie", "gray",
-                "gray"
-              ]
-            }
-          }
-        },
-        {
-          "title": "pandtype",
-          "layerInfo": {
-            "id": "verblijfsobjectenpandtype",
-            "metadata": {
-              "title": "pandtype",
-              "abstract": "Bij het vaststellen van energielabels wordt ook het pandtype vastgesteld. De pandtypes zijn daardoor alleen bekend voor panden waarvoor ook een energielabel is afgegven.",
-              "attributes": {
-                "translations": [{
-                  "name": "gebouwtype",
-                  "translation": "type"
-                }]
-              }
-            },
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "attribution": "Kadaster"
-            },
-            "source-layer": "plll.verblijfsobjectelabel",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-color": [
-                "match", ["get", "gebouwtype"],
-                "Flatwoning (overig)", "#a6cee3",
-                "Appartement", "#1f78b4",
-                "Rijwoning tussen", "#b2df8a",
-                "Portiekwoning", "#33a02c",
-                "Twee-onder-een-kap / rijwoning hoek", "#fb9a99",
-                "Galerijwoning", "#e31a1c",
-                "Maisonnette", "#fdbf6f",
-                "Vrijstaande woning", "#ff7f00",
-                "Rijwoning hoek", "#fb6a4a",
-                "Twee-onder-één-kap", "#6a3d9a",
-                "#cccccc"
-              ],
-              "circle-radius": 4,
-              "circle-stroke-color": "#fff",
-              "circle-stroke-width": 0.5
-            }
-          }
-        },
-        {
-          "title": "energielabels",
-          "layerInfo": {
-            "id": "verblijfsobjectenergielabels",
-            "type": "circle",
-            "metadata": {
-              "title": "energielabels",
-              "attributes": {
-                "translations": [{
-                  "name": "energieklasse",
-                  "translation": "energielabel",
-                  "valuemap": [
-                    ["", "geen of onbekend"]
-                  ]
-                }]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "attribution": "RVO"
-            },
-            "source-layer": "plll.verblijfsobjectelabel",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-color": ["match", ["to-string", ["get", "energieklasse"]],
-                "", "#cccccc",
+              "fill-color": [
+                "match",["get", "toplabel"],
                 "A+++", "#1a9641",
                 "A++", "#1a9641",
                 "A+", "#1a9641",
@@ -2560,1867 +2353,9 @@
                 "E", "#feba53",
                 "F", "#ed6e43",
                 "G", "#d7191c",
-                "#000000"
-              ],
-              "circle-radius": 4,
-              "circle-stroke-color": "#fff",
-              "circle-stroke-width": 0.5
-            }
-          }
-        },
-        {
-          "title": "gasgebruik 2021",
-          "layerInfo": {
-            "metadata": {
-              "maxinfofeatures": 20,
-              "attributes": {
-                "translations": [{
-                    "name": "gem_gas21",
-                    "translation": "gem gasverbruik 2021 (pc6)",
-                    "unit": " m3",
-                    "valuemap": [
-                      [null, "geen gegevens"],
-                      [690, "0 - 690 m3", "<"],
-                      [800, "690 - 800 m3", "<"],
-                      [860, "800 - 860 m3", "<"],
-                      [980, "860 - 980 m3", "<"],
-                      [1040, "980 - 1040 m3", "<"],
-                      [1110, "1040 - 1110 m3", "<"],
-                      [1270, "1110 - 1270 m3", "<"],
-                      [1500, "1270 - 1500 m3", "<"],
-                      [2680, "1500 - 2680 m3", "<"],
-                      [2680, "meer dan 2680 m3, industrie etc", ">="]
-                    ]
-                  },
-                  {
-                    "name": "gem_gas21cor",
-                    "translation": "gem gasverbruik 2021 gecorrigeerd",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "gem_elek21",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kWh"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  }
-                ]
-              }
-            },
-            "id": "verblijfsobjectgasgebruik",
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "attribution": "CBS"
-            },
-            "source-layer": "plll.vbo_verbruik_2021",
-            "paint": {
-              "circle-radius": 4,
-              "circle-pitch-alignment": "map",
-              "circle-stroke-color": "white",
-              "circle-stroke-width": 0.4,
-              "circle-color": [
-                "case", ["==", ["get", "gem_gas21"], null], "#cccccc",
-                ["<", ["get", "gem_gas21"], 690], "#fff7ec",
-                ["<", ["get", "gem_gas21"], 800], "#fee8c8",
-                ["<", ["get", "gem_gas21"], 860], "#fdd49e",
-                ["<", ["get", "gem_gas21"], 980], "#fdbb84",
-                ["<", ["get", "gem_gas21"], 1040], "#fc8d59",
-                ["<", ["get", "gem_gas21"], 1110], "#ef6548",
-                ["<", ["get", "gem_gas21"], 1270], "#d7301f",
-                ["<", ["get", "gem_gas21"], 1500], "#b30000",
-                ["<", ["get", "gem_gas21"], 2680], "#7f0000",
-                [">=", ["get", "gem_gas21"], 2680], "yellow",
-                "#cccccc"
-              ]
-            }
-          }
-        },
-        {
-          "title": "elektriciteitsgebruik 2021",
-          "layerInfo": {
-            "id": "verblijfsobjectelektriciteitsgebruik21",
-            "type": "circle",
-            "metadata": {
-              "maxinfofeatures": 20,
-              "attributes": {
-                "translations": [{
-                    "name": "gem_elek21",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kWh"
-                  },
-                  {
-                    "name": "gem_gas21",
-                    "translation": "gem gasverbruik 2021 (pc6)",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "gem_gas21cor",
-                    "translation": "gem gasverbruik 2021 gecorrigeerd",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.vbo_verbruik_2021",
-            "paint": {
-              "circle-radius": 4,
-              "circle-pitch-alignment": "map",
-              "circle-stroke-color": "white",
-              "circle-stroke-width": 0.4,
-              "circle-color": [
-                "case", ["==", ["get", "gem_elek21"], null], "#cccccc",
-                ["<", ["get", "gem_elek21"], 1500], "#f7fcfd",
-                ["<", ["get", "gem_elek21"], 1750], "#e0ecf4",
-                ["<", ["get", "gem_elek21"], 2000], "#bfd3e6",
-                ["<", ["get", "gem_elek21"], 2250], "#9ebcda",
-                ["<", ["get", "gem_elek21"], 2500], "#8c96c6",
-                ["<", ["get", "gem_elek21"], 2750], "#8c6bb1",
-                ["<", ["get", "gem_elek21"], 3000], "#88419d",
-                ["<", ["get", "gem_elek21"], 3500], "#810f7c",
-                ["<", ["get", "gem_elek21"], 5000], "#4d004b",
-                ["<", ["get", "gem_elek21"], 35000], "#000000",
-                "#000000"
-              ]
-            }
-          }
-        },
-        {
-          "title": "Referentiewoningen",
-          "layerInfo": {
-            "id": "referentiewoningenenergieprestatie",
-            "type": "circle",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["id", "identifica", "pandidenti", "status"],
-                "translations": [{
-                    "name": "oppervlakt",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "gebruiksdo",
-                    "translation": "gebruiksdoel"
-                  },
-                  {
-                    "name": "straat",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer",
-                    "translation": "huisnummer"
-                  },
-                  {
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "bouwjaar"
-                  },
-                  {
-                    "name": "gas21",
-                    "translation": "gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_",
-                    "translation": "gasverbruik 2021 gecorrigeerd voor weer",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas_cor_m2",
-                    "translation": "gasverbruik per m2",
-                    "unit": " m3",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "energ_label",
-                    "translation": "energielabel"
-                  },
-                  {
-                    "name": "gebouwtype",
-                    "translation": "gebouwtype"
-                  },
-                  {
-                    "name": "a_ei",
-                    "translation": "Huidige energie index"
-                  },
-                  {
-                    "name": "a_elabel",
-                    "translation": "Huidig energielabel"
-                  },
-                  {
-                    "name": "a_emg",
-                    "translation": "Huidige energiemaatregelen gebiedsniveau"
-                  },
-                  {
-                    "name": "a_bwj",
-                    "translation": "Bouwjaar"
-                  },
-                  {
-                    "name": "b_ei",
-                    "translation": "Energie index (2 maatregelen)"
-                  },
-                  {
-                    "name": "b_elabel",
-                    "translation": "Energielabel (2 maatregelen)"
-                  },
-                  {
-                    "name": "b_emg",
-                    "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"
-                  },
-                  {
-                    "name": "b_bwjr",
-                    "translation": "jaar (2 maatregelen)"
-                  },
-                  {
-                    "name": "c_ei",
-                    "translation": "Energie index (HT warmte)"
-                  },
-                  {
-                    "name": "c_elabel",
-                    "translation": "Energielabel (HT warmte)"
-                  },
-                  {
-                    "name": "c_emg",
-                    "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"
-                  },
-                  {
-                    "name": "c_bwjr",
-                    "translation": "jaar (HT warmte)"
-                  },
-                  {
-                    "name": "e_ei",
-                    "translation": "Energie index (MT warmte)"
-                  },
-                  {
-                    "name": "e_elabel",
-                    "translation": "Energielabel (MT warmte)"
-                  },
-                  {
-                    "name": "e_emg",
-                    "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"
-                  },
-                  {
-                    "name": "e_bwjr",
-                    "translation": "jaar (MT warmte)"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "id",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plllbronnen.referentiewoningen/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identifica,oppervlakt,status,gebruiksdo,straat,huisnummer,postcode,bouwjaar,pandidenti,gas21_cor_,elek21_gem,gebouwtype,a_ei,a_elabel,a_emg,a_bwj,b_ei,b_elabel,b_emg,b_bwjr,c_ei,c_elabel,c_emg,c_bwjr,d1_ei,d1_elabel,d1_emg,d1_bwjr,d2_ei,d2_elabel,d2_emg,d2_bwjr,e_ei,e_elabel,e_emg,e_bwjr"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plllbronnen.referentiewoningen",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-radius": 7,
-              "circle-color": [
-                "case",
-                ["==", ["get", "straat"], "Akkerwinde"], "#b15928",
-                ["==", ["get", "straat"], "Annie van Eesstraat"], "#fb9a99",
-                ["==", ["get", "straat"], "Edmond Hellenraadstraat"], "#fdbf6f",
-                ["==", ["get", "straat"], "Haagwinde"], "#cab2d6",
-                ["==", ["get", "straat"], "Huslystraat"], "#1f78b4",
-                ["==", ["get", "straat"], "Jan Stuytstraat"], "#e31a1c",
-                ["==", ["get", "straat"], "Prinsenlaan"], "#33a02c",
-                ["==", ["get", "straat"], "Van Heukelomstraat"], "#b2df8a",
-                ["==", ["get", "straat"], "Wingerd"], "#ffff99",
-                "#000000"
-              ],
-              "circle-stroke-width": 1,
-              "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "#673ab7", "#ffffff"]
-            }
-          }
-        },
-        {
-          "title": "Referentiewoningen energielabel",
-          "layerInfo": {
-            "id": "referentiewoningenenerglabel",
-            "type": "circle",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["id", "vblf_identificatie", "pandidentificatie", "status"],
-                "translations": [{
-                    "name": "oppervlakte",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "gebruiksdoel",
-                    "translation": "gebruiksdoel"
-                  },
-                  {
-                    "name": "straat",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer",
-                    "translation": "huisnummer"
-                  },
-                  {
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "bouwjaar"
-                  },
-                  {
-                    "name": "gas21",
-                    "translation": "gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor",
-                    "translation": "gasverbruik 2021 gecorrigeerd voor weer",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas_cor_m2",
-                    "translation": "gasverbruik per m2",
-                    "unit": " m3",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21",
-                    "translation": "elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "energ_label",
-                    "translation": "energielabel"
-                  },
-                  {
-                    "name": "gebouwtype",
-                    "translation": "gebouwtype"
-                  },
-                  {
-                    "name": "A_EI",
-                    "translation": "Huidige energie index"
-                  },
-                  {
-                    "name": "A_elabel",
-                    "translation": "Huidig energielabel"
-                  },
-                  {
-                    "name": "A_EMG",
-                    "translation": "Huidige energiemaatregelen gebiedsniveau"
-                  },
-                  {
-                    "name": "A_bwjr",
-                    "translation": "Huidig jaar"
-                  },
-                  {
-                    "name": "B_EI",
-                    "translation": "Energie index (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_elabel",
-                    "translation": "Energielabel (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_bwjr",
-                    "translation": "jaar (2 maatregelen)"
-                  },
-                  {
-                    "name": "C_EI",
-                    "translation": "Energie index (HT warmte)"
-                  },
-                  {
-                    "name": "C_elabel",
-                    "translation": "Energielabel (HT warmte)"
-                  },
-                  {
-                    "name": "C_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"
-                  },
-                  {
-                    "name": "C_bwjr",
-                    "translation": "jaar (HT warmte)"
-                  },
-                  {
-                    "name": "E_EI",
-                    "translation": "Energie index (MT warmte)"
-                  },
-                  {
-                    "name": "E_elabel",
-                    "translation": "Energielabel (MT warmte)"
-                  },
-                  {
-                    "name": "E_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"
-                  },
-                  {
-                    "name": "E_bwjr",
-                    "translation": "jaar (MT warmte)"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "id",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.referentiewoningen_energieprestatie",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-radius": 7,
-              "circle-color": ["match", ["get", "energ_label"],
-                "A+", "#1a9641",
-                "A", "#6abd58",
-                "B", "#b3df5b",
-                "C", "#e6f51f",
-                "D", "#ffe81c",
-                "E", "#feba53",
-                "F", "#ed6e43",
-                "G", "#d7191c",
                 "#cccccc"
               ],
-              "circle-stroke-width": 1,
-              "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
-            }
-          }
-        },
-        {
-          "title": "Referentiewoningen gasgebruik / m2",
-          "layerInfo": {
-            "id": "referentiewoningengasgebruikm2",
-            "type": "circle",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["id", "vblf_identificatie", "pandidentificatie", "status"],
-                "translations": [{
-                    "name": "oppervlakte",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "gebruiksdoel",
-                    "translation": "gebruiksdoel"
-                  },
-                  {
-                    "name": "straat",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer",
-                    "translation": "huisnummer"
-                  },
-                  {
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "bouwjaar"
-                  },
-                  {
-                    "name": "gas21",
-                    "translation": "gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor",
-                    "translation": "gasverbruik 2021 gecorrigeerd voor weer",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas_cor_m2",
-                    "translation": "gasverbruik per m2",
-                    "unit": " m3",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21",
-                    "translation": "elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "energ_label",
-                    "translation": "energielabel"
-                  },
-                  {
-                    "name": "gebouwtype",
-                    "translation": "gebouwtype"
-                  },
-                  {
-                    "name": "A_EI",
-                    "translation": "Huidige energie index"
-                  },
-                  {
-                    "name": "A_elabel",
-                    "translation": "Huidig energielabel"
-                  },
-                  {
-                    "name": "A_EMG",
-                    "translation": "Huidige energiemaatregelen gebiedsniveau"
-                  },
-                  {
-                    "name": "A_bwjr",
-                    "translation": "Huidig jaar"
-                  },
-                  {
-                    "name": "B_EI",
-                    "translation": "Energie index (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_elabel",
-                    "translation": "Energielabel (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (2 maatregelen)"
-                  },
-                  {
-                    "name": "B_bwjr",
-                    "translation": "jaar (2 maatregelen)"
-                  },
-                  {
-                    "name": "C_EI",
-                    "translation": "Energie index (HT warmte)"
-                  },
-                  {
-                    "name": "C_elabel",
-                    "translation": "Energielabel (HT warmte)"
-                  },
-                  {
-                    "name": "C_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (HT warmte)"
-                  },
-                  {
-                    "name": "C_bwjr",
-                    "translation": "jaar (HT warmte)"
-                  },
-                  {
-                    "name": "E_EI",
-                    "translation": "Energie index (MT warmte)"
-                  },
-                  {
-                    "name": "E_elabel",
-                    "translation": "Energielabel (MT warmte)"
-                  },
-                  {
-                    "name": "E_EMG",
-                    "translation": "Energiemaatregelen gebiedsniveau (MT warmte)"
-                  },
-                  {
-                    "name": "E_bwjr",
-                    "translation": "jaar (MT warmte)"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "id",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.referentiewoningen_energieprestatie/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,vblf_identificatie,oppervlakte,status,gebruiksdoel,straat,huisnummer,toevoeging,postcode,bouwjaar,pandidentificatie,gas21,gas21_cor,elek21,energ_label,gebouwtype,A_EI,A_elabel,A_EMG,A_bwjr,B_EI,B_elabel,B_EMG,B_bwjr,C_EI,C_elabel,C_EMG,C_bwjr,D1_EI,D1_elabel,D1_EMG,D1_bwjr,D2_EI,D2_elabel,D2_EMG,D2_bwjr,E_EI,E_elabel,E_EMG,E_bwjr,gas_cor_m2"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.referentiewoningen_energieprestatie",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-radius": 7,
-              "circle-color": ["interpolate-lab", ["linear"],
-                ["get", "gas_cor_m2"], 0, "blue", 20, "red", 60, "yellow"
-              ],
-              "circle-stroke-width": 1,
-              "circle-stroke-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#999999"]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "group",
-      "title": "Gebouwen orig",
-      "sublayers": [{
-          "title": "3D hoogte",
-          "layerInfo": {
-            "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
-            "type": "fill-extrusion",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plllbronnen.2020_hoogtestatistieken_gebouwen/mvt/{z}/{x}/{y}?geom_column=geom&columns=dd_h_dak_max,h_maaiveld&include_nulls=0"],
-              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
-            },
-            "source-layer": "plllbronnen.2020_hoogtestatistieken_gebouwen",
-            "paint": {
-              "fill-extrusion-color": [
-                "let", "height", ["-", ["get", "dd_h_dak_max"],
-                  ["get", "h_maaiveld"]
-                ],
-                [
-                  "case", ["<=", ["var", "height"], -3.54722547531128], "#fff7ec",
-                  ["<=", ["var", "height"], 4], "#fee8c8",
-                  ["<=", ["var", "height"], 8], "#fdd49e",
-                  ["<=", ["var", "height"], 13], "#fdbb84",
-                  ["<=", ["var", "height"], 16], "#fc8d59",
-                  ["<=", ["var", "height"], 19], "#ef6548",
-                  ["<=", ["var", "height"], 24], "#d7301f",
-                  ["<=", ["var", "height"], 40], "#b30000",
-                  ["<=", ["var", "height"], 75], "#7f0000",
-                  "#7f0000"
-                ]
-              ],
-              "fill-extrusion-height": ["-", ["get", "dd_h_dak_max"],
-                ["get", "h_maaiveld"]
-              ],
-              "fill-extrusion-base": 0,
-              "fill-extrusion-opacity": 0.95
-            }
-          }
-        },
-        {
-          "title": "panden - status",
-          "layerInfo": {
-            "id": "pandenstatus",
-            "type": "fill",
-            "metadata": {
-              "maxinfofeatures": 20,
-              "attributes": {
-                "deniedattributes": ["ogc_fid", "statusorder"],
-                "translations": [{
-                    "name": "identificatie",
-                    "translation": "bag id"
-                  },
-                  {
-                    "name": "pandstatus"
-                  },
-                  {
-                    "name": "bouwjaar"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "ogc_fid",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
-              "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
-              "maxzoom": 19
-            },
-            "source-layer": "plll.gebouw",
-            "paint": {
-              "fill-color": ["match", ["get", "pandstatus"],
-                "Bouwvergunning verleend", "lightgreen",
-                "Verbouwing pand", "green",
-                "Pand in gebruik", "gray",
-                "Sloopvergunning verleend", "pink",
-                "Pand gesloopt", "red",
-                "black"
-              ],
-              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "white"]
-            },
-            "layout": {
-              "fill-sort-key": ["get", "statusorder"]
-            }
-          }
-        },
-        {
-          "title": "panden - bouwjaar",
-          "layerInfo": {
-            "id": "pandenbouwjaarpllvector",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["ogc_fid", "statusorder"],
-                "translations": [{
-                    "name": "identificatie",
-                    "translation": "bag id"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "bouwjaar",
-                    "valuemap": [
-                      [1900, "1890 - 1899", "<"],
-                      [1920, "1900 - 1919", "<"],
-                      [1945, "1920 - 1944", "<"],
-                      [1965, "1945 - 1964", "<"],
-                      [1975, "1965 - 1974", "<"],
-                      [1978, "1975 - 1977", "<"],
-                      [1982, "1978 - 1981", "<"],
-                      [1990, "1982 - 1989", "<"],
-                      [2000, "1990 - 1999", "<"],
-                      [2005, "2000 - 2004", "<"],
-                      [2015, "2005 - 2014", "<"],
-                      [2023, "2015 - 2023", "<"]
-                    ]
-                  },
-                  {
-                    "name": "pandstatus"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "ogc_fid",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.gebouw/mvt/{z}/{x}/{y}?geom_column=geom&columns=ogc_fid,identificatie,pandstatus,statusorder,bouwjaar"],
-              "bounds": [4.528310756737802, 51.927871239821975, 4.564387124629534, 51.9531307432199],
-              "maxzoom": 19
-            },
-            "source-layer": "plll.gebouw",
-            "paint": {
-              "fill-color": ["case",
-                ["<", ["get", "bouwjaar"], 1900], "#99140a",
-                ["<", ["get", "bouwjaar"], 1920], "#c6141f",
-                ["<", ["get", "bouwjaar"], 1945], "#f21434",
-                ["<", ["get", "bouwjaar"], 1965], "#f7512c",
-                ["<", ["get", "bouwjaar"], 1975], "#f79520",
-                ["<", ["get", "bouwjaar"], 1978], "#f7d915",
-                ["<", ["get", "bouwjaar"], 1982], "#d5da32",
-                ["<", ["get", "bouwjaar"], 1990], "#97a56f",
-                ["<", ["get", "bouwjaar"], 2000], "#5970ad",
-                ["<", ["get", "bouwjaar"], 2005], "#1b3beb",
-                ["<", ["get", "bouwjaar"], 2015], "#5b24e3",
-                ["<", ["get", "bouwjaar"], 2023], "#a911d3",
-                "black"
-              ],
-              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red",
-                "rgba(127,127,127,0.1)"
-              ]
-            },
-            "filter": ["in", ["get", "pandstatus"],
-              ["literal", ["Pand in gebruik", "Verbouwing pand"]]
-            ],
-            "layout": {
-              "fill-sort-key": ["get", "statusorder"]
-            }
-          }
-        },
-        {
-          "type": "wms",
-          "title": "panden - energielabel",
-          "layerInfo": {
-            "id": "pandennergielabel",
-            "type": "raster",
-            "minzoom": 13,
-            "maxzoom": 22,
-            "source": {
-              "type": "raster",
-              "tileSize": 512,
-              "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-              "tiles": [
-                "https://pico.geodan.nl/cgi-bin/qgis_mapserv.fcgi?DPI=120&map=/usr/lib/cgi-bin/projects/rvoLabel2017.qgs&LAYERS=rvoLabel2017"
-              ],
-              "attribution": "Pico, Kadaster"
-            }
-          }
-        },
-        {
-          "title": "panden - vergelijk referentiewoning",
-          "layerInfo": {
-            "id": "pandenvergelijkreferentiewoning",
-            "type": "fill",
-            "metadata": {},
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vergelijking_referentiewoningen/mvt/{z}/{x}/{y}?geom_column=geom&columns=referentiewoning&include_nulls=0"],
-              "bounds": [4.532970899401299, 51.92839550154396, 4.564161483160436, 51.952896368526844]
-            },
-            "source-layer": "plll.vergelijking_referentiewoningen",
-            "paint": {
-              "fill-color": [
-                "case",
-                ["==", ["get", "referentiewoning"], "Geen vergelijkbare referentiewoning"], "rgba(192,192,192,0.5)",
-                ["==", ["get", "referentiewoning"], "Huslystraat"], "#1f78b4",
-                ["==", ["get", "referentiewoning"], "Van Heukelomstraat"], "#b2df8a",
-                ["==", ["get", "referentiewoning"], "Prinsenlaan"], "#33a02c",
-                ["==", ["get", "referentiewoning"], "Annie van Eesstraat"], "#fb9a99",
-                ["==", ["get", "referentiewoning"], "Jan Stuytstraat"], "#e31a1c",
-                ["==", ["get", "referentiewoning"], "Edmond Hellenraadstraat"], "#fdbf6f",
-                "#000000"
-              ],
-              "fill-outline-color": "white"
-            }
-          }
-        },
-        {
-          "title": "Dakdelen",
-          "layerInfo": {
-            "id": "plldakdelen",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["fid"],
-                "translations": [{
-                    "name": "aspect",
-                    "translation": "richting",
-                    "unit": " °",
-                    "valuemap": [
-                      [-1, "plat dak"],
-                      [45, "noord (<45)", "<"],
-                      [135, "oost (<135)", "<"],
-                      [225, "zuid (<225)", "<"],
-                      [315, "west (<315)", "<"],
-                      [361, "noord (<360)", "<"]
-                    ]
-                  },
-                  {
-                    "name": "slope",
-                    "translation": "hellingshoek",
-                    "unit": " °"
-                  },
-                  {
-                    "name": "area",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "elevation",
-                    "translation": "hoogte (NAP)",
-                    "unit": " m"
-                  },
-                  {
-                    "name": "dakdeel_id",
-                    "translation": "id"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "dakdeel_id",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.dakdelen_pll/mvt/{z}/{x}/{y}?geom_column=geom&columns=dakdeel_id,aspect,slope,elevation,area"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
-              "maxzoom": 19
-            },
-            "source-layer": "plll.dakdelen_pll",
-            "paint": {
-              "fill-color": ["case",
-                ["==", ["get", "aspect"], -1], "#c5b3b5",
-                ["<", ["get", "aspect"], 45], "#ffa7a2",
-                ["<", ["get", "aspect"], 135], "#b32a25",
-                ["<", ["get", "aspect"], 225], "#8c1916",
-                ["<", ["get", "aspect"], 315], "#ff7d79",
-                ["<", ["get", "aspect"], 361], "#ffa7a2",
-                "#6a6a6a"
-              ],
-              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "rgba(0,0,0,0)"]
-            }
-          }
-        },
-        {
-          "title": "Zonnepotentie gebouwen",
-          "layerInfo": {
-            "id": "pllzonnepotentiegebouwen",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["fid"],
-                "translations": [{
-                  "name": "pc6",
-                  "translation": "postcode"
-                }]
-              }
-            },
-            "source": {
-              "promoteId": "dakdeel_id",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.rdam_pll_gebouwpv/mvt/{z}/{x}/{y}?geom_column=geom&columns=gebwbagid,postcode6,dakdelen,dak_opp_schuinnoord,dak_opp_schuinoost,dak_opp_schuinwest,dak_opp_schuinzuid,dak_opp_plat,dak_opp,dak_pv_schuinnoord,dak_pv_schuinoost,dak_pv_schuinwest,dak_pv_schuinzuid,dak_pv_plat,dak_pv"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.rdam_pll_gebouwpv",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "dak_pv"], 0, "blue", 700000, "red"
-              ],
               "fill-outline-color": "black"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "group",
-      "title": "Postcode 6 orig",
-      "sublayers": [{
-          "title": "Postcode punten",
-          "layerInfo": {
-            "id": "postcode6puntencircle",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6points/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,adressen"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6points",
-            "paint": {
-              "circle-pitch-alignment": "map",
-              "circle-color": "#000",
-              "circle-radius": 5,
-              "circle-stroke-color": "#fff",
-              "circle-stroke-width": 1
-            }
-          }
-        },
-        {
-          "title": "Postcode verblijfsobjecten",
-          "layerInfo": {
-            "id": "postcode6verblijfsobjecten",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "circle",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=postcode&include_nulls=0"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.verblijfsobject",
-            "paint": {
-              "circle-color":[
-                "match", ["get","postcode"] ,
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "red"],
-              "circle-stroke-width":0.5,
-              "circle-stroke-color":"white"
-            }
-          }
-        },
-        {
-          "title": "Postcode gebied",
-          "layerInfo": {
-            "id": "postcode6gebied",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "fill",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,postcode"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.postcode",
-            "paint": {
-              "fill-color":[
-                "match", ["get","postcode"],
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "#ccc"],
-              "fill-outline-color":"white"
-            }
-          }
-        },
-        {
-          "title": "Postcode blokken",
-          "layerInfo": {
-            "id": "postcode6blokken",
-            "metadata": {
-              "maxinfofeatures": 20
-            },
-            "type": "fill",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.postcode/mvt/{z}/{x}/{y}?geom_column=geomblok&columns=id,postcode"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll_prod.postcode",
-            "paint": {
-              "fill-color":[
-                "match", ["get","postcode"],
-                "3067TZ","#8dd3c7",
-                "3066KJ","#ffffb3",
-                "3066KG","#bebada",
-                "3067TG","#fb8072",
-                "3067NG","#80b1d3",
-                "3067XX","#fdb462",
-                "3067NX","#b3de69",
-                "3067NW","#fccde5",
-                "3067AR","#d9d9d9",
-                "3067AS","#bc80bd",
-                "3067AN","#ccebc5",
-                "3067AG","#ffed6f",
-                "3067NC","#5e4fa2",
-                "#ccc"],
-              "fill-outline-color":"white"
-            }
-          }
-        },
-        {
-          "title": "Postcode gebouwen",
-          "layerInfo": {
-            "id": "postcode6gebiedensoceco",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "deniedattributes": ["fid"],
-                "translations": [{
-                    "name": "pc6",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aant_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "inwoner",
-                    "translation": "aantal inwoners"
-                  },
-                  {
-                    "name": "aantal_hh",
-                    "translation": "aantal huishoudens"
-                  },
-                  {
-                    "name": "tothh_eenp",
-                    "translation": "totaal eenpersoonshuishoudens"
-                  },
-                  {
-                    "name": "tothh_mpzk",
-                    "translation": "totaal meerpersoonshuishoudens met kinderen"
-                  },
-                  {
-                    "name": "hh_tweeoud",
-                    "translation": "huishoudens met 2 ouders"
-                  },
-                  {
-                    "name": "gem_hh_gr",
-                    "translation": "gemiddelde grootte huishouden",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "woning",
-                    "translation": "aantal woningen"
-                  },
-                  {
-                    "name": "won_4564",
-                    "translation": "woningen 1945 - 1964"
-                  },
-                  {
-                    "name": "won_6574",
-                    "translation": "woningen 1965 - 1974"
-                  },
-                  {
-                    "name": "won_7584",
-                    "translation": "woningen 1975 - 1984"
-                  },
-                  {
-                    "name": "won_8594",
-                    "translation": "woningen 1985 - 1994"
-                  },
-                  {
-                    "name": "won_9504",
-                    "translation": "woningen 1995 - 2004"
-                  },
-                  {
-                    "name": "won_0514",
-                    "translation": "woningen 1995 - 2004"
-                  },
-                  {
-                    "name": "won_1524",
-                    "translation": "woningen 2015 - 2024"
-                  },
-                  {
-                    "name": "won_hcorp",
-                    "translation": "woningbouwcorporatie"
-                  },
-                  {
-                    "name": "won_mrgez",
-                    "translation": "meergezinswoningen"
-                  },
-                  {
-                    "name": "p_koopwon",
-                    "translation": "koopwoningen",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "p_huurwon",
-                    "translation": "huurwoningen",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "won_nbew",
-                    "translation": "onbewoond",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "wozwoning",
-                    "translation": "woz waarde",
-                    "unit": " x 1000 euro"
-                  },
-                  {
-                    "name": "uitkminaow",
-                    "translation": "uitkeringen (niet aow)"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "promoteId": "fid",
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_gebied_soceco/mvt/{z}/{x}/{y}?geom_column=geom&columns=fid,aant_adres,aant_pand,pc6,inwoner,aantal_hh,tothh_eenp,tothh_mpzk,hh_eenoud,hh_tweeoud,gem_hh_gr,woning,wonvoor45,won_4564,won_6574,won_7584,won_8594,won_9504,won_0514,won_1524,won_mrgez,p_koopwon,p_huurwon,won_hcorp,won_nbew,wozwoning,uitkminaow"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_gebied_soceco",
-            "paint": {
-              "fill-color": "rgba(192, 192, 192, 0.5)",
-              "fill-outline-color": ["case", ["boolean", ["feature-state", "active"], false], "red", "#000000"]
-            }
-          }
-        },
-        {
-          "title": "particuliere eigenaar bewoner",
-          "layerInfo": {
-            "id": "particuliereeigenaarbewoner",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "particuliere_eigenaar_bewoner",
-                    "translation": "particuliere eigenaar bewoner",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "particuliere_verhuur",
-                    "translation": "particuliere verhuur",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "woningcorporatie",
-                    "translation": "woningcorporatie",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "restcategorie",
-                    "translation": "restcategorie",
-                    "unit": " %"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
-              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
-            },
-            "source-layer": "plll.pc6_bezitsverhoudingen",
-            "paint": {
-              "fill-color": [
-                "case",
-                ["==", ["get", "particuliere_eigenaar_bewoner"], 0], "rgba(0,0,0,0)",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 10], "#fff7ec",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 20], "#fee8c8",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 30], "#fdd49e",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 40], "#fdbb84",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 50], "#fc8d59",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 60], "#ef6548",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 75], "#d7301f",
-                ["<", ["get", "particuliere_eigenaar_bewoner"], 100], "#b30000",
-                ["==", ["get", "particuliere_eigenaar_bewoner"], 100], "#7f0000",
-                "#7f0000"
-              ],
-              "fill-outline-color": "black"
-            }
-          }
-        },
-        {
-          "title": "particuliere verhuurder",
-          "layerInfo": {
-            "id": "particuliereverhuurder",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "particuliere_eigenaar_bewoner",
-                    "translation": "particuliere eigenaar bewoner",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "particuliere_verhuur",
-                    "translation": "particuliere verhuur",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "woningcorporatie",
-                    "translation": "woningcorporatie",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "restcategorie",
-                    "translation": "restcategorie",
-                    "unit": " %"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
-              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
-            },
-            "source-layer": "plll.pc6_bezitsverhoudingen",
-            "paint": {
-              "fill-color": [
-                "case",
-                ["==", ["get", "particuliere_verhuur"], 0], "rgba(0,0,0,0)",
-                ["<", ["get", "particuliere_verhuur"], 3], "#e5f5f9",
-                ["<", ["get", "particuliere_verhuur"], 9], "#ccece6",
-                ["<", ["get", "particuliere_verhuur"], 12], "#99d8c9",
-                ["<=", ["get", "particuliere_verhuur"], 15], "#66c2a4",
-                ["<", ["get", "particuliere_verhuur"], 60], "#41ae76",
-                ["<", ["get", "particuliere_verhuur"], 75], "#238b45",
-                ["<", ["get", "particuliere_verhuur"], 100], "#006d2c",
-                ["==", ["get", "particuliere_verhuur"], 100], "#00441b",
-                "#00441b"
-              ],
-              "fill-outline-color": "black"
-            }
-          }
-        },
-        {
-          "title": "woningcorporatie",
-          "layerInfo": {
-            "id": "woningcorporatie",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "particuliere_eigenaar_bewoner",
-                    "translation": "particuliere eigenaar bewoner",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "particuliere_verhuur",
-                    "translation": "particuliere verhuur",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "woningcorporatie",
-                    "translation": "woningcorporatie",
-                    "unit": " %"
-                  },
-                  {
-                    "name": "restcategorie",
-                    "translation": "restcategorie",
-                    "unit": " %"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_bezitsverhoudingen/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,particuliere_eigenaar_bewoner,particuliere_verhuur,woningcorporatie,restcategorie&include_nulls=0"],
-              "bounds": [4.496119261414023, 51.92487682586281, 4.565536197853905, 51.95902997492585]
-            },
-            "source-layer": "plll.pc6_bezitsverhoudingen",
-            "paint": {
-              "fill-color": [
-                "case",
-                ["==", ["get", "woningcorporatie"], 0], "rgba(0,0,0,0)",
-                ["<", ["get", "woningcorporatie"], 20], "#ece7f2",
-                ["<", ["get", "woningcorporatie"], 40], "#d0d1e6",
-                ["<", ["get", "woningcorporatie"], 60], "#a6bddb",
-                ["<", ["get", "woningcorporatie"], 70], "#74a9cf",
-                ["<", ["get", "woningcorporatie"], 80], "#3690c0",
-                ["<", ["get", "woningcorporatie"], 100], "#0570b0",
-                ["==", ["get", "woningcorporatie"], 100], "#045a8d",
-                "#045a8d"
-              ],
-              "fill-outline-color": "black"
-            }
-          }
-        },
-        {
-          "title": "Postcode gebouwen gasgebruik",
-          "layerInfo": {
-            "id": "postcode6gebouwengasgebruik",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.vwpc6geb_energverbruik21",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_gem"], 0, "blue", 3000, "red"
-              ],
-              "fill-outline-color": "#000000"
-            }
-          }
-        },
-        {
-          "title": "Postcode gebouwen gasgebruik / m2",
-          "layerInfo": {
-            "id": "postcode6gebouwengasgebruikm2",
-            "type": "fill",
-            "metadata": {
-              "abstract": "Deze kaartlaag toont het aardgasverbruik per m2 woningoppervlakte. Een hogere waarde duidt mogelijk op een moeilijker te verwarmen huis. De brongegevens uit 2021 zijn geaggregeerd op postcode6. De berekening is (som van gasgebruik) / (som van oppervlakte)",
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vwpc6geb_energverbruik21/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes,gem_hh_gr,p_koopwon,p_huurwon"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.vwpc6geb_energverbruik21",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_m2"], 0, "blue", 20, "red", 60, "yellow"
-              ],
-              "fill-outline-color": "#000000"
-            }
-          }
-        }, {
-          "title": "Postcode vlakken",
-          "layerInfo": {
-            "id": "postcode6vlakken",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "pc6",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aant_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaar",
-                    "translation": "gemiddeld bouwjaar"
-                  }
-
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_polygons/mvt/{z}/{x}/{y}?geom_column=geom&columns=pc6,aant_adres,aant_pand,bouwjaar,bjtype,hfnc,opp"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_polygons",
-            "paint": {
-              "fill-color": "rgba(192, 192, 192, 0.5)",
-              "fill-outline-color": "#000000"
-            }
-          }
-        },
-        {
-          "title": "Postcode vlakken gasgebruik",
-          "layerInfo": {
-            "id": "postcode6vlakkengasgebruik",
-            "type": "fill",
-            "metadata": {
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_energverbruik21_2",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_gem"], 0, "blue", 3000, "red"
-              ],
-              "fill-outline-color": "#000000"
-            }
-          }
-        },
-        {
-          "title": "Postcode vlakken gasgebruik / m2",
-          "layerInfo": {
-            "id": "postcode6vlakkengasgebruikm2",
-            "type": "fill",
-            "metadata": {
-              "abstract": "Deze kaartlaag toont het aardgasverbruik per m2 woningoppervlakte. Een hogere waarde duidt mogelijk op een moeilijker te verwarmen huis. De brongegevens uit 2021 zijn geaggregeerd op postcode6. De berekening is (som van gasgebruik) / (som van oppervlakte)",
-              "attributes": {
-                "translations": [{
-                    "name": "postcode",
-                    "translation": "postcode"
-                  },
-                  {
-                    "name": "aantal_adres",
-                    "translation": "aantal adressen"
-                  },
-                  {
-                    "name": "aant_pand",
-                    "translation": "aantal panden"
-                  },
-                  {
-                    "name": "bouwjaren",
-                    "translation": "bouwjaren"
-                  },
-                  {
-                    "name": "opp_totaal",
-                    "translation": "totaal oppervlak"
-                  },
-                  {
-                    "name": "opp_gem",
-                    "translation": "gemiddeld oppervlak per adres",
-                    "unit": " m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_gem",
-                    "translation": "gemiddeld gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_totaal",
-                    "translation": "totaal gasverbruik 2021",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_m2",
-                    "translation": "gasverbruik 2021 per m2",
-                    "unit": " m3/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_gem",
-                    "translation": "gem gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_totaal",
-                    "translation": "totaal gasverbruik '21 weer-gecorrigeerd",
-                    "unit": " m3",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "gas21_cor_m2",
-                    "translation": "gasverbruik '21 weer-gecorrigeerd per m2",
-                    "unit": " m3/m2",
-                    "decimals": 1
-                  },
-                  {
-                    "name": "elek21_gem",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_totaal",
-                    "translation": "totaal elektriciteitsverbruik 2021",
-                    "unit": " kwh",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "elek21_m2",
-                    "translation": "elektriciteitsverbruik 2021 per m2",
-                    "unit": " kwh/m2",
-                    "decimals": 0
-                  },
-                  {
-                    "name": "labels",
-                    "translation": "labels"
-                  },
-                  {
-                    "name": "gebruiksdoelen",
-                    "translation": "gebruiksdoelen"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.pc6_energverbruik21_2/mvt/{z}/{x}/{y}?geom_column=geom&columns=postcode,aantal_adres,opp_totaal,opp_gem,gebruiksdoelen,bouwjaren,gas21_gem,gas21_totaal,gas21_m2,gas21_cor_gem,gas21_cor_totaal,gas21_cor_m2,elek21_gem,elek21_totaal,elek21_m2,labels,gebouwtypes"],
-              "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
-            },
-            "source-layer": "plll.pc6_energverbruik21_2",
-            "paint": {
-              "fill-color": ["interpolate-lab", ["linear"],
-                ["get", "gas21_cor_m2"], 0, "blue", 20, "red", 60, "yellow"
-              ],
-              "fill-outline-color": "#000000"
             }
           }
         }
@@ -4768,11 +2703,11 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.geothermie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gridcode&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plllbronnen.geothermie/mvt/{z}/{x}/{y}?geom_column=geom&columns=gridcode&include_nulls=0"],
               "bounds": [3.311103488198423, 50.75351353240224, 7.222429105415763, 53.607949718185424],
               "attribution": "Planbureau voor de leefomgeving"
             },
-            "source-layer": "plll.geothermie",
+            "source-layer": "plllbronnen.geothermie",
             "paint": {
               "fill-color": [
                 "match", ["get", "gridcode"],
