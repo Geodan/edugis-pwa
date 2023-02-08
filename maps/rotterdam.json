@@ -3190,32 +3190,7 @@
     {
       "type": "group",
       "title": "Netwerken",
-      "sublayers": [{
-          "title": "Gasleidingen",
-          "id": "gasleidingenstedin",
-          "layerInfo": {
-            "id": "WarmteAtlas:GasLeidingenStedin",
-            "metadata": {
-              "abstract": "Ligging gasleidingen Stedin met indicatie voor vervanging en ouderdom"
-            },
-            "type": "line",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/tomahawk.gasleidingenstedin_geo/mvt/{z}/{x}/{y}?geom_column=geom&include_nulls=0&columns=status"],
-              "bounds": [3.3, 50.74, 7.23, 53.6],
-              "attribution": "<a href=\"https://rvo.b3p.nl/viewer/app/Warmteatlas/v2\">WarmteAtlas</a>"
-            },
-            "source-layer": "tomahawk.gasleidingenstedin_geo",
-            "paint": {
-              "line-color": "blue",
-              "line-width": 5
-            },
-            "layout": {
-              "line-join": "round",
-              "line-cap": "round"
-            }
-          }
-        },
+      "sublayers": [
         {
           "title": "Gasleidingen 2022, vervangingsdata",
           "layerInfo": {
@@ -3240,58 +3215,6 @@
                 "#e41a1c"
               ],
               "line-width": 3
-            }
-          }
-        },
-        {
-          "title": "Elektriciteitskabels",
-          "layerInfo": {
-            "id": "e5a09a35-e608-41ee-af38-e8daa3840ee0",
-            "type": "line",
-            "metadata": {
-              "abstract": "Electriciteitskabels 2019. 'aansluiting extra' is berekend.",
-              "attributes": {
-                "translations": [{
-                    "name": "net",
-                    "valuemap": [
-                      ["as extra", "aansluiting extra"],
-                      ["as", "aansluiting"],
-                      ["ls", "laagspanning"],
-                      ["ms", "middenspanning"],
-                      ["hs", "hoogspanning"]
-                    ]
-                  },
-                  {
-                    "name": "lengte",
-                    "decimals": 0,
-                    "unit": " m"
-                  }
-                ]
-              }
-            },
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.elektra_kabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=beheerder,net,lengte&include_nulls=0"],
-              "bounds": [3.25742485745802, 50.7376603630598, 7.23920304144212, 53.4855872187456]
-            },
-            "source-layer": "plll.elektra_kabel",
-            "minzoom": 11,
-            "paint": {
-              "line-color": [
-                "case", ["==", ["get", "net"], "as extra"], "#9ab0c7",
-                ["==", ["get", "net"], "as"], "#7792ae",
-                ["==", ["get", "net"], "ls"], "#5e39cd",
-                ["==", ["get", "net"], "ms"], "#2d5a93",
-                ["==", ["get", "net"], "hs"], "#0d346e",
-                "#ff7f00"
-              ],
-              "line-width": ["case", ["==", ["get", "net"], "as extra"], 2,
-                ["==", ["get", "net"], "as"], 2,
-                ["==", ["get", "net"], "ls"], 2,
-                ["==", ["get", "net"], "ms"], 3,
-                ["==", ["get", "net"], "hs"], 5,
-                1
-              ]
             }
           }
         },
