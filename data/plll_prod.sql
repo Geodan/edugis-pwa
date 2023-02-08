@@ -51,6 +51,11 @@ select
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
 	u.temperature uhi_temperature,
+	pep.gemiddelde_aardgaslevering_woningen,
+  	pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  	pep.gemiddelde_elektriciteitslevering_woningen,
+  	pep.gemiddelde_aardgaslevering_bedrijven,
+  	pep.gemiddelde_elektriciteitslevering_bedrijven,
 	cbs.aantal_hh cbs_aantal_hh,
 	cbs.tothh_eenp cbs_tothh_eenp,
 	cbs.tothh_mpzk cbs_tothh_mpzk,
@@ -67,14 +72,15 @@ select
 	uitkminaow cbs_uitkminaow,
 	geopunt geom,
 	null::geometry(point,28992) geom2
-  from plllbronnen.verblijfsobject v   
+  from plllbronnen.verblijfsobject v
     join plllbronnen.nummeraanduiding n on (v.hoofdadres = n.identificatie)
      join plllbronnen.openbareruimte o on (n.gerelateerdeopenbareruimte=o.identificatie)
       join plllbronnen.woonplaats w on (o.gerelateerdewoonplaats=w.identificatie)
        join plllbronnen.verblijfsobjectgebruiksdoel d on (v.identificatie=d.identificatie)
 		left join plllbronnen.v20230101_v2_csv vvc on (v.identificatie = vvc.pand_bagverblijfsobjectid)
-		  left join plllbronnen.plll_uhi u on (st_intersects(v.geopunt, u.geom))
-		    left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n.postcode)
+	     left join lateral (select u2.temperature from plllbronnen.plll_uhi u2 where st_intersects(v.geopunt, u2.geom) limit 1) u on true
+		  left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (n.postcode=pep.postcode6)
+		   left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n.postcode)
   group by 
   	v.id,
   	v.identificatie,
@@ -118,6 +124,11 @@ select
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
 	u.temperature,
+	pep.gemiddelde_aardgaslevering_woningen,
+  	pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  	pep.gemiddelde_elektriciteitslevering_woningen,
+  	pep.gemiddelde_aardgaslevering_bedrijven,
+  	pep.gemiddelde_elektriciteitslevering_bedrijven,
 	cbs.aantal_hh,
 	cbs.tothh_eenp,
 	cbs.tothh_mpzk,
@@ -179,6 +190,11 @@ select
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
 	u.temperature uhi_temperature,
+	pep2.gemiddelde_aardgaslevering_woningen,
+  	pep2.gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  	pep2.gemiddelde_elektriciteitslevering_woningen,
+  	pep2.gemiddelde_aardgaslevering_bedrijven,
+  	pep2.gemiddelde_elektriciteitslevering_bedrijven,
 	cbs.aantal_hh cbs_aantal_hh,
 	cbs.tothh_eenp cbs_tothh_eenp,
 	cbs.tothh_mpzk cbs_tothh_mpzk,
@@ -200,8 +216,9 @@ select
      join plllbronnen.openbareruimte o2 on (n2.gerelateerdeopenbareruimte=o2.identificatie)
       join plllbronnen.woonplaats w2 on (o2.gerelateerdewoonplaats=w2.identificatie)
        left join plllbronnen.v20230101_v2_csv vvc2 on (s.identificatie =vvc2.pand_bagstandplaatsid)
-       	left join plllbronnen.plll_uhi u on (st_intersects(st_centroid(s.geovlak), u.geom))
-		 left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n2.postcode)
+       	left join lateral (select u2.temperature from plllbronnen.plll_uhi u2 where st_intersects(st_centroid(s.geovlak), u2.geom) limit 1) u on true
+		 left join plllbronnen.publicatiefile_energie_postcode6_2021 pep2 on (n2.postcode=pep2.postcode6)
+		  left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n2.postcode)
   group by 
   	s.id,
   	s.identificatie,
@@ -245,6 +262,11 @@ select
 	pand_warmtebehoefte, 
 	pand_energieindex_met_emg_forfaitair,
 	u.temperature,
+	pep2.gemiddelde_aardgaslevering_woningen,
+  	pep2.gemiddelde_aardgaslevering_woningen_gecorrigeerd,
+  	pep2.gemiddelde_elektriciteitslevering_woningen,
+  	pep2.gemiddelde_aardgaslevering_bedrijven,
+  	pep2.gemiddelde_elektriciteitslevering_bedrijven,
 	cbs.aantal_hh,
 	cbs.tothh_eenp,
 	cbs.tothh_mpzk,
@@ -262,6 +284,7 @@ select
   	st_centroid(s.geovlak),
   	geom2
 ;
+alter table verblijfsobject add primary key (identificatie);
 
 --- postcode
 drop table if exists postcode;
