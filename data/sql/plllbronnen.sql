@@ -78,6 +78,7 @@ insert into pand (id, identificatie, documentnummer, documentdatum, "pandstatus"
 	select id, identificatie, documentnummer, documentdatum, "pandstatus", bouwjaar, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, geovlak 
 	  from bag20221203.pandactueelbestaand p 
 	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(p.geovlak, b.geom);
+alter table pand add primary key (identificatie);
 create index pandgeovlakidx on pand using gist(geovlak);
 comment on table pand is 'extracted from bag20221203.pand';
 
@@ -88,6 +89,7 @@ insert into verblijfsobject (id, identificatie, begindatumtijdvakgeldigheid, ein
 	select id, identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "verblijfsobjectstatus", oppervlakteverblijfsobject, geopunt, geovlak 
 	  from bag20221203.verblijfsobjectactueelbestaand v
 	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(v.geopunt, b.geom);
+alter table verblijfsobject add primary key (identificatie);
 create index verblijfsobjectgeopuntidx on verblijfsobject using gist(geopunt);
 comment on table verblijfsobject is 'extracted from bag20221203.verblijfsobject';
 
@@ -98,6 +100,7 @@ insert into standplaats (id,identificatie, begindatumtijdvakgeldigheid, einddatu
 	select id,identificatie, begindatumtijdvakgeldigheid, einddatumtijdvakgeldigheid, documentnummer, documentdatum, hoofdadres, "standplaatsstatus", geovlak
 	  from bag20221203.standplaats v
 	    join (select st_union(geom) geom from cbs_buurten) b on st_intersects(v.geovlak, b.geom);
+alter table standplaats add primary key (identificatie);
 create index standplaatsgeovlakidx on standplaats using gist(geovlak);
 comment on table standplaats is 'extracted from bag20221203.standplaats';
 
@@ -114,6 +117,7 @@ insert into nummeraanduiding (id, identificatie, documentnummer, documentdatum, 
    select n2.id, n2.identificatie, n2.documentnummer, n2.documentdatum, n2.begindatumtijdvakgeldigheid, n2.einddatumtijdvakgeldigheid, n2.huisnummer, n2.huisletter, n2.huisnummertoevoeging, n2.postcode, n2."nummeraanduidingstatus", n2."typeadresseerbaarobject", n2.gerelateerdeopenbareruimte, n2.gerelateerdewoonplaats
      from bag20221203.nummeraanduidingactueelbestaand n2
        join standplaats s on (s.hoofdadres = n2.identificatie);
+alter table nummeraanduiding add primary key (identificatie);
 
 -- BAG get all openbareruimte used in nummeraanduiding
 drop table if exists openbareruimte;
@@ -122,6 +126,7 @@ insert into openbareruimte
   select distinct o.*
     from bag20221203.openbareruimteactueelbestaand o
       join nummeraanduiding n on (n.gerelateerdeopenbareruimte=o.identificatie);
+alter table openbareruimte add primary key (identificatie);
 
 -- BAG get all woonplaats used in openbareruimte
 drop table if exists woonplaats;
@@ -130,6 +135,7 @@ insert into woonplaats
   select distinct w.*
     from bag20221203.woonplaatsactueelbestaand w
       join openbareruimte o on (o.gerelateerdewoonplaats=w.identificatie);
+alter table woonplaats add primary key (identificatie);
 
 -- BAG get relation table bag20221203.verblijfsobjectpandactueelbestaand 
 drop table if exists verblijfsobjectpand;
@@ -230,6 +236,7 @@ SELECT
     case when uitkminaow < 0 then NULL else uitkminaow end uitkminaow,
     p.geom
 FROM anneb.cbs_pc6_2020_v1 p join (select st_union(geom) geom from cbs_buurten) b on st_intersects(p.geom, b.geom);
+alter table cbs_pc6_2020_v1 add primary key (pc6);
 
 -- cbs energie per postode 2021, publicatiefile_energie_postcode_2021
 drop table if exists publicatiefile_energie_postcode6_2021;
@@ -243,6 +250,7 @@ create table publicatiefile_energie_postcode6_2021 as select
   case when gemiddelde_aardgaslevering_bedrijven = '.' then NULL else gemiddelde_aardgaslevering_bedrijven end::int gemiddelde_aardgaslevering_bedrijven
     from anneb.publicatiefile_energie_postcode6_2021 e
       join cbs_pc6_2020_v1 p on (e.postcode6=p.pc6);
+alter table publicatiefile_energie_postcode6_2021 add primary key (postcode6);
 
 -- rvo energielabels 1 jan 2023
 drop table if exists v20230101_v2_csv;
@@ -289,6 +297,8 @@ create table v20230101_v2_csv as
 	case when pand_energieindex_met_emg_forfaitair='' then NULL else pand_energieindex_met_emg_forfaitair end::float pand_energieindex_met_emg_forfaitair
     from anneb.v20230101_v2_csv el
       join cbs_pc6_2020_v1 p on (el.pand_postcode = p.pc6);
+delete from v20230101_v2_csv where pand_bagverblijfsobjectid is null; -- old labels for same address
+alter table v20230101_v2_csv add primary key (pand_bagverblijfsobjectid);
 
 -- stedin gasleidingen 1-1-2022
 drop table if exists gasvervangingsdata; 
@@ -307,6 +317,7 @@ insert into hoogspanningsverbindingen
   select h.*
     from anneb.hoogspanningsverbindingen h
 	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
+create index hoogspanningsverbindingengeomidx on hoogspanningsverbindingen using gist(geom);
 
 -- steding middenspanning 28 jan 2022
 drop table if exists middenspanningsverbindingen;
@@ -315,6 +326,7 @@ insert into middenspanningsverbindingen
   select h.*
     from anneb.middenspanningsverbindingen h
 	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
+create index middenspanningsverbindingengeomidx on middenspanningsverbindingen using gist(geom);
 
 -- steding laagspanning 28 jan 2022
 drop table if exists laagspanningsverbindingen;
@@ -323,6 +335,7 @@ insert into laagspanningsverbindingen
   select h.*
     from anneb.laagspanningsverbindingen h
 	  join (select st_union(geom) geom from cbs_buurten) b on (st_intersects(b.geom, h.geom));
+create index laagspanningsverbindingengeomidx on laagspanningsverbindingen using gist(geom);
 
 -- dakvlakken
 -- to prevent copying 95 GB data, create the PLLL dakvlakken tabel in the pico database, then export to plllbronnen
@@ -341,6 +354,7 @@ with postcodes as (
 insert into kadaster_pc6_bezitsverhoudingen
 select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
   join postcodes p on (k.postcode=p.postcode);
+alter table kadaster_pc6_bezitsverhoudingen add primary key (postcode);
 
 -- UHI, stedelijke hitteeiland effect, Atlas Natuurlijk Kapitaal RIVM
 -- download tif from https://nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/metadata/c9aa9109-3f32-4f65-84e5-bb1c9ebdfbec?tab=relations
@@ -356,7 +370,10 @@ select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
 -- import into database http://leda.geodan.nl:8090
 drop table if exists plll_uhi;
 create table plll_uhi as select ogc_fid id, (temperature/10.0)::float temperature, geom from anneb.plll_uhi;
+create index plll_uhi_geom_idx on plll_uhi using gist(geom);
 
+drop table if exists geothermie;
 create table geothermie as select * from anneb.geothermie2;
+create index geothermie_geom_idx on geothermie using gist(geom);
 
 -- create table referentiewoningen as select * from plll.referentiewoningen_energiepres;
