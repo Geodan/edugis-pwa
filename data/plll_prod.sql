@@ -269,9 +269,10 @@ create sequence if not exists postcodeseq;
 alter sequence postcodeseq restart with 1;
 create table postcode as
 with nummerreeksen as 
-(select v2.postcode, v2.openbareruimtenaam || ' ' || min(v2.huisnummer)::text || ' - ' || max(v2.huisnummer) reeks
-   from verblijfsobject v2 
-     group by v2.postcode, v2.openbareruimtenaam
+(select v2.postcode, 
+	v2.openbareruimtenaam || ' ' || min(v2.huisnummer)::text || ' - ' || max(v2.huisnummer) reeks
+   		from verblijfsobject v2 
+     		group by v2.postcode, v2.openbareruimtenaam
 )
 , nummerreeksenagg as 
 (
@@ -280,6 +281,17 @@ select
 	string_agg(distinct reeks, ',' order by reeks) reeksen
   from nummerreeksen
   	group by postcode
+)
+,totalen as (
+  select v.postcode,
+    reeksen,
+	count(v.identificatie) verblijfsobjecten,
+ 	sum(v.oppervlakteverblijfsobject) verblijfsobjectoppervlak,
+ 	sum(case when v.gebruiksdoel like '%woonfunctie%' then 1 else 0 end) woningen,
+	 sum(case when v.gebruiksdoel like '%woonfunctie%' then v.oppervlakteverblijfsobject else 0 end) woningoppervlak
+   		from verblijfsobject v
+		  left join nummerreeksenagg n on (v.postcode = n.postcode)
+		   group by v.postcode, n.reeksen
 )
 , energielabels as 
 (
@@ -300,9 +312,6 @@ select
 (
 select 
  v.postcode,
- count(v.identificatie) verblijfsobjecten,
- sum(v.oppervlakteverblijfsobject) verblijfsobjectoppervlak,
- reeksen,
  labels,
  toplabel
   from 
@@ -310,16 +319,18 @@ select
     join nummerreeksenagg nr on (v.postcode = nr.postcode)
      join energielabelsagg el on (v.postcode = el.postcode)
        join lateral (select pand_energieklasse toplabel from energielabels el where v.postcode = el.postcode order by aantallabels desc, pand_energieklasse asc limit 1) toplabel on true
-      group by v.postcode, reeksen, labels, toplabel
+      group by v.postcode, labels, toplabel
 )
 select
   nextval('postcodeseq') id,
   k.pc6 postcode,
-  pc.verblijfsobjecten,
-  pc.verblijfsobjectoppervlak,
-  pc.reeksen,
-  pc.labels,
-  pc.toplabel,
+  tot.verblijfsobjecten,
+  tot.woningen,
+  tot.verblijfsobjectoppervlak,
+  tot.woningoppervlak,
+  tot.reeksen,
+  el.labels,
+  el.toplabel,
   kpb.particuliere_eigenaar_bewoner,
   kpb.particuliere_verhuur,
   kpb.woningcorporatie,
@@ -330,8 +341,8 @@ select
   pep.gemiddelde_aardgaslevering_bedrijven,
   pep.gemiddelde_elektriciteitslevering_bedrijven,
   case when pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd is not null
-    and pc.verblijfsobjecten is not null and pc.verblijfsobjectoppervlak is not null 
-      then (pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd * pc.verblijfsobjecten) / pc.verblijfsobjectoppervlak 
+    and tot.woningen is not null and tot.woningoppervlak is not null 
+      then (pep.gemiddelde_aardgaslevering_woningen_gecorrigeerd * tot.woningen) / tot.woningoppervlak 
         else null end aardgasperm2,
   k.inwoner,
   k.man,
@@ -369,8 +380,9 @@ select
   k.geom,
   null::geometry(multipolygon,28992) geomblok
   from plllbronnen.cbs_pc6_2020_v1 k 
+    left join totalen tot on (k.pc6=tot.postcode)
     left join plllbronnen.kadaster_pc6_bezitsverhoudingen kpb on (k.pc6=kpb.postcode) 
-      left join postcodebagrvoenergielabels pc on (k.pc6=pc.postcode) 
+      left join postcodebagrvoenergielabels el on (k.pc6=el.postcode) 
         left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (k.pc6=pep.postcode6);
 
 update postcode pc 
