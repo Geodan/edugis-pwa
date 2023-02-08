@@ -413,7 +413,7 @@ update postcode pc
      (select st_multi(st_union(st_intersection(pc.geom, p.geovlak))) 
 	   from plllbronnen.pand p 
 	     where st_intersects(pc.geom,p.geovlak));
-alter table postcode add primary key (id);
+alter table postcode add primary key (postcode);
 create index postcodegeomidx on postcode using gist(geom);
 create index postcodegeomblokidx on postcode using gist(geomblok);
 
@@ -589,5 +589,5 @@ select
    	      order by postcodes desc, postcode asc 
    	        limit 1
    ) tpc on true;
-  
+  alter table gebouw add primary key(identificatie);
   create index gebouwgeomidx on gebouw using gist(geom);
