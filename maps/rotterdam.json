@@ -399,42 +399,17 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
-                "translations": [{
-                    "name": "gebruiksdoel"
-                  },
-                  {
-                    "name": "identificatie"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  },
-                  {
-                    "name": "woonplaatsnaam",
-                    "translation": "woonplaats"
-                  },
-                  {
-                    "name": "verblijfsobjectstatus",
-                    "translation": "status"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
+                "translations": [
+                  {"name": "gebruiksdoel"},
+                  {"name": "identificatie"},
+                  {"name": "openbareruimtenaam","translation": "straat"},
+                  {"name": "huisnummer"},
+                  {"name": "huisletter"},
+                  {"name": "huisnummertoevoeging","translation": "toevoeging"},
+                  {"name": "postcode"},
+                  {"name": "woonplaatsnaam","translation": "woonplaats"},
+                  {"name": "verblijfsobjectstatus","translation": "status"},
+                  {"name": "oppervlakteverblijfsobject","translation": "oppervlakte","unit": " m2"},
                   { "name":"pand_opnamedatum", "translation": "opnamedatum"},
                   { "name":"pand_opnametype", "translation": "opnametype"},
                   { "name":"pand_status", "translation": "status"},
@@ -473,12 +448,17 @@
                   { "name":"pand_eis_temperatuuroverschrijding", "translation": "eis temperatuuroverschrijding"},
                   { "name":"pand_warmtebehoefte", "translation": "warmtebehoefte"},
                   { "name":"pand_energieindex_met_emg_forfaitair", "translation": "energieindex met emg forfaitair"},
-                  {
-                    "name": "bouwjaar"
-                  },
-                  {
-                    "name": "pandstatus"
-                  }
+                  {"name": "bouwjaar"},
+                  {"name": "pandstatus"},
+                  {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
+                  {"name": "cbs_aantal_hh", "translation": "aantal huishoudens in postcode"},
+                  {"name": "cbs_tothh_eenp", "translation": "aantal eenpersoonshuishoudens in postcode"},
+                  {"name": "cbs_gem_hh_gr", "translation": "gemiddeld huishoudensgrootte in postcode"},
+                  {"name": "cbs_p_nl_achtg", "translation": "nl achtergrond in postcode", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "westerse migratie-achtergrond in postcode", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "niet westerse migratie-achtergrond in postcode", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "gem WOZ-waarde woning in postcdoe", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "uitkeringen m.u.v. AOW in postcode"}
                 ]
               }
             },
@@ -525,11 +505,11 @@
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "Kadaster"
             },
-            "source-layer": "plll.verblijfsobjectelabel",
+            "source-layer": "plll_prod.verblijfsobject",
             "paint": {
               "circle-pitch-alignment": "map",
               "circle-color": [
@@ -571,14 +551,14 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.verblijfsobjectelabel/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,oppervlakte,gebruiksdoel,straat,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energieklasse,gerelateerdpand,gebouwklasse,gebouwtype,gebouwsubtype,gebruiksoppervlakte_thermische_zone,energiebehoefte,primaire_fossiele_energie,aandeel_hernieuwbare_energie,temperatuuroverschrijding,warmtebehoefte&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "RVO"
             },
-            "source-layer": "plll.verblijfsobjectelabel",
+            "source-layer": "plll_prod.verblijfsobject",
             "paint": {
               "circle-pitch-alignment": "map",
-              "circle-color": ["match", ["to-string", ["get", "energieklasse"]],
+              "circle-color": ["match", ["to-string", ["get", "pand_energieklasse"]],
                 "", "#cccccc",
                 "A+++", "#1a9641",
                 "A++", "#1a9641",
@@ -661,11 +641,11 @@
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "CBS"
             },
-            "source-layer": "plll.vbo_verbruik_2021",
+            "source-layer": "plll_prod.verblijfsobject",
             "paint": {
               "circle-radius": 4,
               "circle-pitch-alignment": "map",
@@ -738,10 +718,10 @@
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll.vbo_verbruik_2021/mvt/{z}/{x}/{y}?geom_column=geom2&columns=identificatie,oppervlakteverblijfsobject,verblijfsobjectstatus,gebruiksdoel,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,bouwjaar,energielabel,gem_gas21,gem_gas21cor,gem_elek21&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
-            "source-layer": "plll.vbo_verbruik_2021",
+            "source-layer": "plll_prod.verblijfsobject",
             "paint": {
               "circle-radius": 4,
               "circle-pitch-alignment": "map",
