@@ -451,20 +451,31 @@
                   {"name": "bouwjaar"},
                   {"name": "pandstatus"},
                   {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
-                  {"name": "cbs_aantal_hh", "translation": "aantal huishoudens in postcode"},
-                  {"name": "cbs_tothh_eenp", "translation": "aantal eenpersoonshuishoudens in postcode"},
-                  {"name": "cbs_gem_hh_gr", "translation": "gemiddeld huishoudensgrootte in postcode"},
-                  {"name": "cbs_p_nl_achtg", "translation": "nl achtergrond in postcode", "unit": " %"},
-                  {"name": "cbs_p_we_mig_a", "translation": "westerse migratie-achtergrond in postcode", "unit": " %"},
-                  {"name": "cbs_p_nw_mig_a", "translation": "niet westerse migratie-achtergrond in postcode", "unit": " %"},
-                  {"name": "cbs_wozwoning", "translation": "gem WOZ-waarde woning in postcdoe", "unit": " 000 euro"},
-                  {"name": "cbs_uitkminaow", "translation": "uitkeringen m.u.v. AOW in postcode"}
+                  {"name":"gemiddelde_aardgaslevering_woningen", "translation": "postcode gemiddelde aardgaslevering woningen", "unit": " m3"},
+                  {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "postcode gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "postcode gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                  {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "postcode gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "postcode gemiddelde elektriciteitslevering bedrijven", "unit": " kWh"},
+                  {"name": "cbs_aantal_hh", "translation": "postcode aantal huishoudens"},
+                  {"name": "cbs_gem_hh_gr", "translation": "postcode gemiddeld huishoudensgrootte"},
+                  {"name": "cbs_tothh_eenp", "translation": "postcode aantal eenperoonshuishoudens"},
+	                {"name": "cbs_tothh_mpzk", "translation": "postcode aantal meerpersoonshuishoudens zonder kinderen"},
+                  {"name": "cbs_hh_eenoud", "translation": "postcode aantal eenouder huishoudens"},
+                  {"name": "cbs_hh_tweeoud", "translation": "postcode aantal tweeouder huishoudens"},
+                  {"name": "cbs_p_koopwon", "translation": "postcode koopwoningen", "unit": " %"},
+                  {"name": "cbs_p_huurwon", "translation": "postcode huurwoningen", "unit": " %"},
+                  {"name": "cbs_won_hcorp", "translation": "postcode woningbouwcorporatie", "unit": " %"},
+                  {"name": "cbs_p_nl_achtg", "translation": "postcode nl achtergrond", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "postcode westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "postcode niet westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "postcode gem WOZ-waarde woning", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "postcode uitkeringen m.u.v. AOW"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "Kadaster"
             },
@@ -496,16 +507,85 @@
               "title": "pandtype",
               "abstract": "Bij het vaststellen van energielabels wordt ook het pandtype vastgesteld. De pandtypes zijn daardoor alleen bekend voor panden waarvoor ook een energielabel is afgegven.",
               "attributes": {
-                "translations": [{
-                  "name": "gebouwtype",
-                  "translation": "type"
-                }]
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "gebruiksdoel"},
+                  {"name": "identificatie"},
+                  {"name": "openbareruimtenaam","translation": "straat"},
+                  {"name": "huisnummer"},
+                  {"name": "huisletter"},
+                  {"name": "huisnummertoevoeging","translation": "toevoeging"},
+                  {"name": "postcode"},
+                  {"name": "woonplaatsnaam","translation": "woonplaats"},
+                  {"name": "verblijfsobjectstatus","translation": "status"},
+                  {"name": "oppervlakteverblijfsobject","translation": "oppervlakte","unit": " m2"},
+                  { "name":"pand_opnamedatum", "translation": "opnamedatum"},
+                  { "name":"pand_opnametype", "translation": "opnametype"},
+                  { "name":"pand_status", "translation": "status"},
+                  { "name":"pand_berekeningstype", "translation": "berekeningstype"},
+                  { "name":"pand_energieindex", "translation": "energieindex"},
+                  { "name":"pand_energieklasse", "translation": "energieklasse"},
+                  { "name":"pand_energielabel_is_prive", "translation": "energielabel isprive"},
+                  { "name":"pand_is_op_basis_van_referentie_gebouw", "translation": "is op basis van referentie gebouw"},
+                  { "name":"pand_gebouwklasse", "translation": "gebouwklasse"},
+                  { "name":"meting_geldig_tot", "translation": "meting geldig tot"},
+                  { "name":"pand_registratiedatum", "translation": "registratiedatum"},
+                  { "name":"pand_postcode", "translation": "postcode"},
+                  { "name":"pand_huisnummer", "translation": "huisnummer"},
+                  { "name":"pand_huisletter", "translation": "huisletter"},
+                  { "name":"pand_huisnummertoevoeging", "translation": "huisnummertoevoeging"},
+                  { "name":"pand_detailaanduiding", "translation": "detailaanduiding"},
+                  { "name":"pand_bagverblijfsobjectid", "translation": "bagverblijfsobjectid"},
+                  { "name":"pand_bagligplaatsid", "translation": "bagligplaatsid"},
+                  { "name":"pand_bagstandplaatsid", "translation": "bagstandplaatsid"},
+                  { "name":"pand_bagpandid", "translation": "bagpandid"},
+                  { "name":"pand_gebouwtype", "translation": "gebouwtype"},
+                  { "name":"pand_gebouwsubtype", "translation": "gebouwsubtype"},
+                  { "name":"pand_projectnaam", "translation": "projectnaam"},
+                  { "name":"pand_projectobject", "translation": "projectobject"},
+                  { "name":"pand_sbicode", "translation": "sbicode"},
+                  { "name":"pand_gebruiksoppervlakte_thermische_zone", "translation": "gebruiksoppervlakte thermische zone"},
+                  { "name":"pand_energiebehoefte", "translation": "energiebehoefte"},
+                  { "name":"pand_eis_energiebehoefte", "translation": "eis_energiebehoefte"},
+                  { "name":"pand_primaire_fossiele_energie", "translation": "primaire fossiele energie"},
+                  { "name":"pand_eis_primaire_fossiele_energie", "translation": "eis primaire fossiele energie"},
+                  { "name":"pand_primaire_fossiele_energie_emg_forfaitair", "translation": "primaire fossiele energie emg forfaitair"},
+                  { "name":"pand_aandeel_hernieuwbare_energie", "translation": "aandeel hernieuwbare energie"},
+                  { "name":"pand_eis_aandeel_hernieuwbare_energie", "translation": "eis aandeel hernieuwbare energie"},
+                  { "name":"pand_aandeel_hernieuwbare_energie_emg_forfaitair", "translation": "aandeel hernieuwbare energie emg forfaitair"},
+                  { "name":"pand_temperatuuroverschrijding", "translation": "temperatuuroverschrijding"},
+                  { "name":"pand_eis_temperatuuroverschrijding", "translation": "eis temperatuuroverschrijding"},
+                  { "name":"pand_warmtebehoefte", "translation": "warmtebehoefte"},
+                  { "name":"pand_energieindex_met_emg_forfaitair", "translation": "energieindex met emg forfaitair"},
+                  {"name": "bouwjaar"},
+                  {"name": "pandstatus"},
+                  {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
+                  {"name":"gemiddelde_aardgaslevering_woningen", "translation": "postcode gemiddelde aardgaslevering woningen", "unit": " m3"},
+                  {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "postcode gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "postcode gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                  {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "postcode gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "postcode gemiddelde elektriciteitslevering bedrijven", "unit": " kWh"},
+                  {"name": "cbs_aantal_hh", "translation": "postcode aantal huishoudens"},
+                  {"name": "cbs_gem_hh_gr", "translation": "postcode gemiddeld huishoudensgrootte"},
+                  {"name": "cbs_tothh_eenp", "translation": "postcode aantal eenperoonshuishoudens"},
+	                {"name": "cbs_tothh_mpzk", "translation": "postcode aantal meerpersoonshuishoudens zonder kinderen"},
+                  {"name": "cbs_hh_eenoud", "translation": "postcode aantal eenouder huishoudens"},
+                  {"name": "cbs_hh_tweeoud", "translation": "postcode aantal tweeouder huishoudens"},
+                  {"name": "cbs_p_koopwon", "translation": "postcode koopwoningen", "unit": " %"},
+                  {"name": "cbs_p_huurwon", "translation": "postcode huurwoningen", "unit": " %"},
+                  {"name": "cbs_won_hcorp", "translation": "postcode woningbouwcorporatie", "unit": " %"},
+                  {"name": "cbs_p_nl_achtg", "translation": "postcode nl achtergrond", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "postcode westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "postcode niet westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "postcode gem WOZ-waarde woning", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "postcode uitkeringen m.u.v. AOW"}
+                ]
               }
             },
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "Kadaster"
             },
@@ -513,7 +593,7 @@
             "paint": {
               "circle-pitch-alignment": "map",
               "circle-color": [
-                "match", ["get", "gebouwtype"],
+                "match", ["get", "pand_gebouwtype"],
                 "Flatwoning (overig)", "#a6cee3",
                 "Appartement", "#1f78b4",
                 "Rijwoning tussen", "#b2df8a",
@@ -540,18 +620,84 @@
             "metadata": {
               "title": "energielabels",
               "attributes": {
-                "translations": [{
-                  "name": "energieklasse",
-                  "translation": "energielabel",
-                  "valuemap": [
-                    ["", "geen of onbekend"]
-                  ]
-                }]
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "gebruiksdoel"},
+                  {"name": "identificatie"},
+                  {"name": "openbareruimtenaam","translation": "straat"},
+                  {"name": "huisnummer"},
+                  {"name": "huisletter"},
+                  {"name": "huisnummertoevoeging","translation": "toevoeging"},
+                  {"name": "postcode"},
+                  {"name": "woonplaatsnaam","translation": "woonplaats"},
+                  {"name": "verblijfsobjectstatus","translation": "status"},
+                  {"name": "oppervlakteverblijfsobject","translation": "oppervlakte","unit": " m2"},
+                  { "name":"pand_opnamedatum", "translation": "opnamedatum"},
+                  { "name":"pand_opnametype", "translation": "opnametype"},
+                  { "name":"pand_status", "translation": "status"},
+                  { "name":"pand_berekeningstype", "translation": "berekeningstype"},
+                  { "name":"pand_energieindex", "translation": "energieindex"},
+                  { "name":"pand_energieklasse", "translation": "energieklasse", "valuemap":[["","geen of onbekend"]]},
+                  { "name":"pand_energielabel_is_prive", "translation": "energielabel isprive"},
+                  { "name":"pand_is_op_basis_van_referentie_gebouw", "translation": "is op basis van referentie gebouw"},
+                  { "name":"pand_gebouwklasse", "translation": "gebouwklasse"},
+                  { "name":"meting_geldig_tot", "translation": "meting geldig tot"},
+                  { "name":"pand_registratiedatum", "translation": "registratiedatum"},
+                  { "name":"pand_postcode", "translation": "postcode"},
+                  { "name":"pand_huisnummer", "translation": "huisnummer"},
+                  { "name":"pand_huisletter", "translation": "huisletter"},
+                  { "name":"pand_huisnummertoevoeging", "translation": "huisnummertoevoeging"},
+                  { "name":"pand_detailaanduiding", "translation": "detailaanduiding"},
+                  { "name":"pand_bagverblijfsobjectid", "translation": "bagverblijfsobjectid"},
+                  { "name":"pand_bagligplaatsid", "translation": "bagligplaatsid"},
+                  { "name":"pand_bagstandplaatsid", "translation": "bagstandplaatsid"},
+                  { "name":"pand_bagpandid", "translation": "bagpandid"},
+                  { "name":"pand_gebouwtype", "translation": "gebouwtype"},
+                  { "name":"pand_gebouwsubtype", "translation": "gebouwsubtype"},
+                  { "name":"pand_projectnaam", "translation": "projectnaam"},
+                  { "name":"pand_projectobject", "translation": "projectobject"},
+                  { "name":"pand_sbicode", "translation": "sbicode"},
+                  { "name":"pand_gebruiksoppervlakte_thermische_zone", "translation": "gebruiksoppervlakte thermische zone"},
+                  { "name":"pand_energiebehoefte", "translation": "energiebehoefte"},
+                  { "name":"pand_eis_energiebehoefte", "translation": "eis_energiebehoefte"},
+                  { "name":"pand_primaire_fossiele_energie", "translation": "primaire fossiele energie"},
+                  { "name":"pand_eis_primaire_fossiele_energie", "translation": "eis primaire fossiele energie"},
+                  { "name":"pand_primaire_fossiele_energie_emg_forfaitair", "translation": "primaire fossiele energie emg forfaitair"},
+                  { "name":"pand_aandeel_hernieuwbare_energie", "translation": "aandeel hernieuwbare energie"},
+                  { "name":"pand_eis_aandeel_hernieuwbare_energie", "translation": "eis aandeel hernieuwbare energie"},
+                  { "name":"pand_aandeel_hernieuwbare_energie_emg_forfaitair", "translation": "aandeel hernieuwbare energie emg forfaitair"},
+                  { "name":"pand_temperatuuroverschrijding", "translation": "temperatuuroverschrijding"},
+                  { "name":"pand_eis_temperatuuroverschrijding", "translation": "eis temperatuuroverschrijding"},
+                  { "name":"pand_warmtebehoefte", "translation": "warmtebehoefte"},
+                  { "name":"pand_energieindex_met_emg_forfaitair", "translation": "energieindex met emg forfaitair"},
+                  {"name": "bouwjaar"},
+                  {"name": "pandstatus"},
+                  {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
+                  {"name":"gemiddelde_aardgaslevering_woningen", "translation": "postcode gemiddelde aardgaslevering woningen", "unit": " m3"},
+                  {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "postcode gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "postcode gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                  {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "postcode gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "postcode gemiddelde elektriciteitslevering bedrijven", "unit": " kWh"},
+                  {"name": "cbs_aantal_hh", "translation": "postcode aantal huishoudens"},
+                  {"name": "cbs_gem_hh_gr", "translation": "postcode gemiddeld huishoudensgrootte"},
+                  {"name": "cbs_tothh_eenp", "translation": "postcode aantal eenperoonshuishoudens"},
+	                {"name": "cbs_tothh_mpzk", "translation": "postcode aantal meerpersoonshuishoudens zonder kinderen"},
+                  {"name": "cbs_hh_eenoud", "translation": "postcode aantal eenouder huishoudens"},
+                  {"name": "cbs_hh_tweeoud", "translation": "postcode aantal tweeouder huishoudens"},
+                  {"name": "cbs_p_koopwon", "translation": "postcode koopwoningen", "unit": " %"},
+                  {"name": "cbs_p_huurwon", "translation": "postcode huurwoningen", "unit": " %"},
+                  {"name": "cbs_won_hcorp", "translation": "postcode woningbouwcorporatie", "unit": " %"},
+                  {"name": "cbs_p_nl_achtg", "translation": "postcode nl achtergrond", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "postcode westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "postcode niet westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "postcode gem WOZ-waarde woning", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "postcode uitkeringen m.u.v. AOW"}
+                ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "RVO"
             },
@@ -579,61 +725,83 @@
           }
         },
         {
-          "title": "gasgebruik 2021",
+          "title": "gaslevering 2021",
           "layerInfo": {
             "metadata": {
               "maxinfofeatures": 20,
               "attributes": {
-                "translations": [{
-                    "name": "gem_gas21",
-                    "translation": "gem gasverbruik 2021 (pc6)",
-                    "unit": " m3",
-                    "valuemap": [
-                      [null, "geen gegevens"],
-                      [690, "0 - 690 m3", "<"],
-                      [800, "690 - 800 m3", "<"],
-                      [860, "800 - 860 m3", "<"],
-                      [980, "860 - 980 m3", "<"],
-                      [1040, "980 - 1040 m3", "<"],
-                      [1110, "1040 - 1110 m3", "<"],
-                      [1270, "1110 - 1270 m3", "<"],
-                      [1500, "1270 - 1500 m3", "<"],
-                      [2680, "1500 - 2680 m3", "<"],
-                      [2680, "meer dan 2680 m3, industrie etc", ">="]
-                    ]
-                  },
-                  {
-                    "name": "gem_gas21cor",
-                    "translation": "gem gasverbruik 2021 gecorrigeerd",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "gem_elek21",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kWh"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  }
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "gebruiksdoel"},
+                  {"name": "identificatie"},
+                  {"name": "openbareruimtenaam","translation": "straat"},
+                  {"name": "huisnummer"},
+                  {"name": "huisletter"},
+                  {"name": "huisnummertoevoeging","translation": "toevoeging"},
+                  {"name": "postcode"},
+                  {"name": "woonplaatsnaam","translation": "woonplaats"},
+                  {"name": "verblijfsobjectstatus","translation": "status"},
+                  {"name": "oppervlakteverblijfsobject","translation": "oppervlakte","unit": " m2"},
+                  { "name":"pand_opnamedatum", "translation": "opnamedatum"},
+                  { "name":"pand_opnametype", "translation": "opnametype"},
+                  { "name":"pand_status", "translation": "status"},
+                  { "name":"pand_berekeningstype", "translation": "berekeningstype"},
+                  { "name":"pand_energieindex", "translation": "energieindex"},
+                  { "name":"pand_energieklasse", "translation": "energieklasse"},
+                  { "name":"pand_energielabel_is_prive", "translation": "energielabel isprive"},
+                  { "name":"pand_is_op_basis_van_referentie_gebouw", "translation": "is op basis van referentie gebouw"},
+                  { "name":"pand_gebouwklasse", "translation": "gebouwklasse"},
+                  { "name":"meting_geldig_tot", "translation": "meting geldig tot"},
+                  { "name":"pand_registratiedatum", "translation": "registratiedatum"},
+                  { "name":"pand_postcode", "translation": "postcode"},
+                  { "name":"pand_huisnummer", "translation": "huisnummer"},
+                  { "name":"pand_huisletter", "translation": "huisletter"},
+                  { "name":"pand_huisnummertoevoeging", "translation": "huisnummertoevoeging"},
+                  { "name":"pand_detailaanduiding", "translation": "detailaanduiding"},
+                  { "name":"pand_bagverblijfsobjectid", "translation": "bagverblijfsobjectid"},
+                  { "name":"pand_bagligplaatsid", "translation": "bagligplaatsid"},
+                  { "name":"pand_bagstandplaatsid", "translation": "bagstandplaatsid"},
+                  { "name":"pand_bagpandid", "translation": "bagpandid"},
+                  { "name":"pand_gebouwtype", "translation": "gebouwtype"},
+                  { "name":"pand_gebouwsubtype", "translation": "gebouwsubtype"},
+                  { "name":"pand_projectnaam", "translation": "projectnaam"},
+                  { "name":"pand_projectobject", "translation": "projectobject"},
+                  { "name":"pand_sbicode", "translation": "sbicode"},
+                  { "name":"pand_gebruiksoppervlakte_thermische_zone", "translation": "gebruiksoppervlakte thermische zone"},
+                  { "name":"pand_energiebehoefte", "translation": "energiebehoefte"},
+                  { "name":"pand_eis_energiebehoefte", "translation": "eis_energiebehoefte"},
+                  { "name":"pand_primaire_fossiele_energie", "translation": "primaire fossiele energie"},
+                  { "name":"pand_eis_primaire_fossiele_energie", "translation": "eis primaire fossiele energie"},
+                  { "name":"pand_primaire_fossiele_energie_emg_forfaitair", "translation": "primaire fossiele energie emg forfaitair"},
+                  { "name":"pand_aandeel_hernieuwbare_energie", "translation": "aandeel hernieuwbare energie"},
+                  { "name":"pand_eis_aandeel_hernieuwbare_energie", "translation": "eis aandeel hernieuwbare energie"},
+                  { "name":"pand_aandeel_hernieuwbare_energie_emg_forfaitair", "translation": "aandeel hernieuwbare energie emg forfaitair"},
+                  { "name":"pand_temperatuuroverschrijding", "translation": "temperatuuroverschrijding"},
+                  { "name":"pand_eis_temperatuuroverschrijding", "translation": "eis temperatuuroverschrijding"},
+                  { "name":"pand_warmtebehoefte", "translation": "warmtebehoefte"},
+                  { "name":"pand_energieindex_met_emg_forfaitair", "translation": "energieindex met emg forfaitair"},
+                  {"name": "bouwjaar"},
+                  {"name": "pandstatus"},
+                  {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
+                  {"name":"gemiddelde_aardgaslevering_woningen", "translation": "postcode gemiddelde aardgaslevering woningen", "unit": " m3"},
+                  {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "postcode gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "postcode gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                  {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "postcode gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "postcode gemiddelde elektriciteitslevering bedrijven", "unit": " kWh"},
+                  {"name": "cbs_aantal_hh", "translation": "postcode aantal huishoudens"},
+                  {"name": "cbs_gem_hh_gr", "translation": "postcode gemiddeld huishoudensgrootte"},
+                  {"name": "cbs_tothh_eenp", "translation": "postcode aantal eenperoonshuishoudens"},
+	                {"name": "cbs_tothh_mpzk", "translation": "postcode aantal meerpersoonshuishoudens zonder kinderen"},
+                  {"name": "cbs_hh_eenoud", "translation": "postcode aantal eenouder huishoudens"},
+                  {"name": "cbs_hh_tweeoud", "translation": "postcode aantal tweeouder huishoudens"},
+                  {"name": "cbs_p_koopwon", "translation": "postcode koopwoningen", "unit": " %"},
+                  {"name": "cbs_p_huurwon", "translation": "postcode huurwoningen", "unit": " %"},
+                  {"name": "cbs_won_hcorp", "translation": "postcode woningbouwcorporatie", "unit": " %"},
+                  {"name": "cbs_p_nl_achtg", "translation": "postcode nl achtergrond", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "postcode westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "postcode niet westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "postcode gem WOZ-waarde woning", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "postcode uitkeringen m.u.v. AOW"}
                 ]
               }
             },
@@ -641,7 +809,7 @@
             "type": "circle",
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556],
               "attribution": "CBS"
             },
@@ -652,73 +820,109 @@
               "circle-stroke-color": "white",
               "circle-stroke-width": 0.4,
               "circle-color": [
-                "case", ["==", ["get", "gem_gas21"], null], "#cccccc",
-                ["<", ["get", "gem_gas21"], 690], "#fff7ec",
-                ["<", ["get", "gem_gas21"], 800], "#fee8c8",
-                ["<", ["get", "gem_gas21"], 860], "#fdd49e",
-                ["<", ["get", "gem_gas21"], 980], "#fdbb84",
-                ["<", ["get", "gem_gas21"], 1040], "#fc8d59",
-                ["<", ["get", "gem_gas21"], 1110], "#ef6548",
-                ["<", ["get", "gem_gas21"], 1270], "#d7301f",
-                ["<", ["get", "gem_gas21"], 1500], "#b30000",
-                ["<", ["get", "gem_gas21"], 2680], "#7f0000",
-                [">=", ["get", "gem_gas21"], 2680], "yellow",
-                "#cccccc"
+                "case",
+                ["==", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 0], "#fee8c8",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 690], "#fff7fb",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 870], "#ece7f2",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 940], "#d0d1e6",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 1030], "#a6bddb",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 1110], "#74a9cf",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 1230], "#3690c0",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 1410], "#0570b0",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 1620], "#045a8d",
+                ["<", ["get", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"], 2730], "#023858",
+                "#7f0000"
               ]
-            }
+            },
+            "filter": ["has", "gemiddelde_aardgaslevering_woningen_gecorrigeerd"]
           }
         },
         {
-          "title": "elektriciteitsgebruik 2021",
+          "title": "elektriciteitlevering 2021",
           "layerInfo": {
             "id": "verblijfsobjectelektriciteitsgebruik21",
             "type": "circle",
             "metadata": {
               "maxinfofeatures": 20,
               "attributes": {
-                "translations": [{
-                    "name": "gem_elek21",
-                    "translation": "gem elektriciteitsverbruik 2021",
-                    "unit": " kWh"
-                  },
-                  {
-                    "name": "gem_gas21",
-                    "translation": "gem gasverbruik 2021 (pc6)",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "gem_gas21cor",
-                    "translation": "gem gasverbruik 2021 gecorrigeerd",
-                    "unit": " m3"
-                  },
-                  {
-                    "name": "oppervlakteverblijfsobject",
-                    "translation": "oppervlakte",
-                    "unit": " m2"
-                  },
-                  {
-                    "name": "openbareruimtenaam",
-                    "translation": "straat"
-                  },
-                  {
-                    "name": "huisnummer"
-                  },
-                  {
-                    "name": "huisletter"
-                  },
-                  {
-                    "name": "huisnummertoevoeging",
-                    "translation": "toevoeging"
-                  },
-                  {
-                    "name": "postcode"
-                  }
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "gebruiksdoel"},
+                  {"name": "identificatie"},
+                  {"name": "openbareruimtenaam","translation": "straat"},
+                  {"name": "huisnummer"},
+                  {"name": "huisletter"},
+                  {"name": "huisnummertoevoeging","translation": "toevoeging"},
+                  {"name": "postcode"},
+                  {"name": "woonplaatsnaam","translation": "woonplaats"},
+                  {"name": "verblijfsobjectstatus","translation": "status"},
+                  {"name": "oppervlakteverblijfsobject","translation": "oppervlakte","unit": " m2"},
+                  { "name":"pand_opnamedatum", "translation": "opnamedatum"},
+                  { "name":"pand_opnametype", "translation": "opnametype"},
+                  { "name":"pand_status", "translation": "status"},
+                  { "name":"pand_berekeningstype", "translation": "berekeningstype"},
+                  { "name":"pand_energieindex", "translation": "energieindex"},
+                  { "name":"pand_energieklasse", "translation": "energieklasse"},
+                  { "name":"pand_energielabel_is_prive", "translation": "energielabel isprive"},
+                  { "name":"pand_is_op_basis_van_referentie_gebouw", "translation": "is op basis van referentie gebouw"},
+                  { "name":"pand_gebouwklasse", "translation": "gebouwklasse"},
+                  { "name":"meting_geldig_tot", "translation": "meting geldig tot"},
+                  { "name":"pand_registratiedatum", "translation": "registratiedatum"},
+                  { "name":"pand_postcode", "translation": "postcode"},
+                  { "name":"pand_huisnummer", "translation": "huisnummer"},
+                  { "name":"pand_huisletter", "translation": "huisletter"},
+                  { "name":"pand_huisnummertoevoeging", "translation": "huisnummertoevoeging"},
+                  { "name":"pand_detailaanduiding", "translation": "detailaanduiding"},
+                  { "name":"pand_bagverblijfsobjectid", "translation": "bagverblijfsobjectid"},
+                  { "name":"pand_bagligplaatsid", "translation": "bagligplaatsid"},
+                  { "name":"pand_bagstandplaatsid", "translation": "bagstandplaatsid"},
+                  { "name":"pand_bagpandid", "translation": "bagpandid"},
+                  { "name":"pand_gebouwtype", "translation": "gebouwtype"},
+                  { "name":"pand_gebouwsubtype", "translation": "gebouwsubtype"},
+                  { "name":"pand_projectnaam", "translation": "projectnaam"},
+                  { "name":"pand_projectobject", "translation": "projectobject"},
+                  { "name":"pand_sbicode", "translation": "sbicode"},
+                  { "name":"pand_gebruiksoppervlakte_thermische_zone", "translation": "gebruiksoppervlakte thermische zone"},
+                  { "name":"pand_energiebehoefte", "translation": "energiebehoefte"},
+                  { "name":"pand_eis_energiebehoefte", "translation": "eis_energiebehoefte"},
+                  { "name":"pand_primaire_fossiele_energie", "translation": "primaire fossiele energie"},
+                  { "name":"pand_eis_primaire_fossiele_energie", "translation": "eis primaire fossiele energie"},
+                  { "name":"pand_primaire_fossiele_energie_emg_forfaitair", "translation": "primaire fossiele energie emg forfaitair"},
+                  { "name":"pand_aandeel_hernieuwbare_energie", "translation": "aandeel hernieuwbare energie"},
+                  { "name":"pand_eis_aandeel_hernieuwbare_energie", "translation": "eis aandeel hernieuwbare energie"},
+                  { "name":"pand_aandeel_hernieuwbare_energie_emg_forfaitair", "translation": "aandeel hernieuwbare energie emg forfaitair"},
+                  { "name":"pand_temperatuuroverschrijding", "translation": "temperatuuroverschrijding"},
+                  { "name":"pand_eis_temperatuuroverschrijding", "translation": "eis temperatuuroverschrijding"},
+                  { "name":"pand_warmtebehoefte", "translation": "warmtebehoefte"},
+                  { "name":"pand_energieindex_met_emg_forfaitair", "translation": "energieindex met emg forfaitair"},
+                  {"name": "bouwjaar"},
+                  {"name": "pandstatus"},
+                  {"name": "uhi_temperature", "translation": "stedelijk hitte-eiland effect (UHI)", "unit": " °C"},
+                  {"name":"gemiddelde_aardgaslevering_woningen", "translation": "postcode gemiddelde aardgaslevering woningen", "unit": " m3"},
+                  {"name":"gemiddelde_aardgaslevering_woningen_gecorrigeerd", "translation": "postcode gemiddelde aardgaslevering woningen gecorrigeerd", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_woningen", "translation": "postcode gemiddelde elektriciteitslevering woningen", "unit": " kWh"},
+                  {"name":"gemiddelde_aardgaslevering_bedrijven", "translation": "postcode gemiddelde aardgaslevering bedrijven", "unit": " m3"},
+                  {"name":"gemiddelde_elektriciteitslevering_bedrijven", "translation": "postcode gemiddelde elektriciteitslevering bedrijven", "unit": " kWh"},
+                  {"name": "cbs_aantal_hh", "translation": "postcode aantal huishoudens"},
+                  {"name": "cbs_gem_hh_gr", "translation": "postcode gemiddeld huishoudensgrootte"},
+                  {"name": "cbs_tothh_eenp", "translation": "postcode aantal eenperoonshuishoudens"},
+	                {"name": "cbs_tothh_mpzk", "translation": "postcode aantal meerpersoonshuishoudens zonder kinderen"},
+                  {"name": "cbs_hh_eenoud", "translation": "postcode aantal eenouder huishoudens"},
+                  {"name": "cbs_hh_tweeoud", "translation": "postcode aantal tweeouder huishoudens"},
+                  {"name": "cbs_p_koopwon", "translation": "postcode koopwoningen", "unit": " %"},
+                  {"name": "cbs_p_huurwon", "translation": "postcode huurwoningen", "unit": " %"},
+                  {"name": "cbs_won_hcorp", "translation": "postcode woningbouwcorporatie", "unit": " %"},
+                  {"name": "cbs_p_nl_achtg", "translation": "postcode nl achtergrond", "unit": " %"},
+                  {"name": "cbs_p_we_mig_a", "translation": "postcode westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_p_nw_mig_a", "translation": "postcode niet westerse migratie-achtergrond", "unit": " %"},
+                  {"name": "cbs_wozwoning", "translation": "postcode gem WOZ-waarde woning", "unit": " 000 euro"},
+                  {"name": "cbs_uitkminaow", "translation": "postcode uitkeringen m.u.v. AOW"}
                 ]
               }
             },
             "source": {
               "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.verblijfsobject/mvt/{z}/{x}/{y}?geom_column=geom2&columns=id,identificatie,openbareruimtenaam,huisnummer,huisletter,huisnummertoevoeging,postcode,woonplaatsnaam,typeadresseerbaarobject,verblijfsobjectstatus,gebruiksdoel,oppervlakteverblijfsobject,pand_opnamedatum,pand_opnametype,pand_status,pand_berekeningstype,pand_energieindex,pand_energieklasse,pand_energielabel_is_prive,pand_is_op_basis_van_referentie_gebouw,pand_gebouwklasse,meting_geldig_tot,pand_registratiedatum,pand_detailaanduiding,pand_gebouwtype,pand_gebouwsubtype,pand_projectnaam,pand_projectobject,pand_sbicode,pand_gebruiksoppervlakte_thermische_zone,pand_energiebehoefte,pand_eis_energiebehoefte,pand_primaire_fossiele_energie,pand_eis_primaire_fossiele_energie,pand_primaire_fossiele_energie_emg_forfaitair,pand_aandeel_hernieuwbare_energie,pand_eis_aandeel_hernieuwbare_energie,pand_aandeel_hernieuwbare_energie_emg_forfaitair,pand_temperatuuroverschrijding,pand_eis_temperatuuroverschrijding,pand_warmtebehoefte,pand_energieindex_met_emg_forfaitair,uhi_temperature,gemiddelde_aardgaslevering_woningen,gemiddelde_aardgaslevering_woningen_gecorrigeerd,gemiddelde_elektriciteitslevering_woningen,gemiddelde_aardgaslevering_bedrijven,gemiddelde_elektriciteitslevering_bedrijven,cbs_aantal_hh,cbs_tothh_eenp,cbs_tothh_mpzk,cbs_hh_eenoud,cbs_hh_tweeoud,cbs_gem_hh_gr,cbs_p_nl_achtg,cbs_p_we_mig_a,cbs_p_nw_mig_a,cbs_p_koopwon,cbs_p_huurwon,cbs_won_hcorp,cbs_wozwoning,cbs_uitkminaow&include_nulls=0"],
               "bounds": [4.5194, 51.9219, 4.5670, 51.9556]
             },
             "source-layer": "plll_prod.verblijfsobject",
@@ -728,20 +932,20 @@
               "circle-stroke-color": "white",
               "circle-stroke-width": 0.4,
               "circle-color": [
-                "case", ["==", ["get", "gem_elek21"], null], "#cccccc",
-                ["<", ["get", "gem_elek21"], 1500], "#f7fcfd",
-                ["<", ["get", "gem_elek21"], 1750], "#e0ecf4",
-                ["<", ["get", "gem_elek21"], 2000], "#bfd3e6",
-                ["<", ["get", "gem_elek21"], 2250], "#9ebcda",
-                ["<", ["get", "gem_elek21"], 2500], "#8c96c6",
-                ["<", ["get", "gem_elek21"], 2750], "#8c6bb1",
-                ["<", ["get", "gem_elek21"], 3000], "#88419d",
-                ["<", ["get", "gem_elek21"], 3500], "#810f7c",
-                ["<", ["get", "gem_elek21"], 5000], "#4d004b",
-                ["<", ["get", "gem_elek21"], 35000], "#000000",
+                "case",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],1500],"#f7f4f9",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],1800],"#e7e1ef",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2000],"#d4b9da",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2300],"#c994c7",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],2700],"#df65b0",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],3000],"#e7298a",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],3250],"#ce1256",
+                ["<",["get","gemiddelde_elektriciteitslevering_woningen"],3500],"#980043",
+                ["<=",["get","gemiddelde_elektriciteitslevering_woningen"],6500],"#67001f",
                 "#000000"
               ]
-            }
+            },
+            "filter": ["has", "gemiddelde_elektriciteitslevering_woningen"]
           }
         },
         {
