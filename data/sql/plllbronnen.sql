@@ -357,6 +357,6 @@ select k.* from anneb.kadaster_pc6_bezitsverhoudingen_geo_json k
 drop table if exists plll_uhi;
 create table plll_uhi as select ogc_fid id, (temperature/10.0)::float temperature, geom from anneb.plll_uhi;
 
-
+create table geothermie as select * from anneb.geothermie2;
 
 -- create table referentiewoningen as select * from plll.referentiewoningen_energiepres;
