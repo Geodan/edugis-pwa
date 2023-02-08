@@ -15,4 +15,5 @@ zcat dakdelen.sql.gz | psql -d research
 rm cbs_buurten.sql
 rm dakdelen.sql.gz
 psql -d pico -c "drop table if exists plllbronnen.cbs_buurten;drop table if exists plllbronnen.dakdelen;drop schema if exists plllbronnen;"
+psql -d research -c "create index if not exists dakdelen_geom_idx on plllbronnen.dakdelen using gist (geom);"
 echo table plllbronnen.dakdelen updated
