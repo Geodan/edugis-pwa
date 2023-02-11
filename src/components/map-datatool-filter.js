@@ -45,7 +45,7 @@ class MapDatatoolFilter extends LitElement {
         this.layerId = "";
         this.properties = {};
         this.selectedProperty = "";
-        this.selectedOperator = "";
+        this.selectedOperator = "==";
         this.outputLayername = "";
         this.map = {};
         this.buttonEnabled = false;
@@ -86,9 +86,6 @@ class MapDatatoolFilter extends LitElement {
         this.logicalOperator = e.target.value;
     }
     _renderLogicalOperators() {
-        if (this.selectedProperty === "") {
-            return html``;
-        }
         if (this.outputLayerId === "") {
             return html``;
         }
@@ -133,8 +130,8 @@ class MapDatatoolFilter extends LitElement {
     _layerSelected(e) {
         this.properties = {};
         this.selectedProperty = "";
-        this.selectedOperator = "";
         this.layerId = e.target.value;
+        this.selectedOperator = "==";
         const layer = this.map.getLayer(this.layerId);
         if (!layer) {
             this.outputLayername = "";
@@ -187,14 +184,14 @@ class MapDatatoolFilter extends LitElement {
                 </select><span class="arrow"></span></div>`
             case "mixed":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
-                <option value="=" ?selected="${this.selectedOperator==='='}">=</option>
-                <option value="<>" ?selected="${this.selectedOperator==='<>'}">!=</option>
+                <option value="===" ?selected="${this.selectedOperator==='==='}">=</option>
+                <option value="!=" ?selected="${this.selectedOperator==='!='}">!=</option>
                 <option value=">" ?selected="${this.selectedOperator==='>'}">&gt;</option>
                 <option value="<" ?selected="${this.selectedOperator==='<'}">&lt;</option>
                 <option value=">=" ?selected="${this.selectedOperator==='>='}">&gt;=</option>
                 <option value="<=" ?selected="${this.selectedOperator==='<='}">&lt;=</option>
-                <option value="null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
-                <option value="!null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
+                <option value="===null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
+                <option value="!==null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
                 <option value="contains" ?selected="${this.selectedOperator==='contains'}">bevat</option>
                 <option value="!contains" ?selected="${this.selectedOperator==='!contains'}">bevat niet</option>
                 <option value="startsWith" ?selected="${this.selectedOperator==='startsWith'}">begint met</option>
@@ -293,7 +290,9 @@ class MapDatatoolFilter extends LitElement {
                 } else if (this.selectedOperator === "endsWith") {
                     return feature.properties[this.selectedProperty].endsWith(this.value);
                 } else {
-                    return eval(feature.properties[this.selectedProperty] + this.selectedOperator + this.value);
+                    const leftoperand = typeof feature.properties[this.selectedProperty] === "string" ? `"${feature.properties[this.selectedProperty].toLowerCase()}"` : feature.properties[this.selectedProperty];
+                    const rightoperand = typeof this.value === "string" ? `"${this.value.toLowerCase()}"` : this.value;
+                    return eval(leftoperand + this.selectedOperator + rightoperand);
                 }
             });
             if (this.outputLayer) {
@@ -325,6 +324,8 @@ class MapDatatoolFilter extends LitElement {
                     this.outputLayer = this.map.getLayer(this.outputLayerId);
                 }, 500);
             }
+        } else {
+            alert("geen zichtbare elementen in de invoerlaag")
         }
     }
 }
