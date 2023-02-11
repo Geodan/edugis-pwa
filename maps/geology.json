@@ -82,11 +82,11 @@
         "type": "circle",
         "source": {
           "type": "geojson",
-          "data": "https://dl.dropbox.com/s/iaimjayg885czul/vulkanen.json?dl=0",
+          "data": "https://dl.dropbox.com/s/3mhg0wfad027pat/vulkanen.geojson?dl=0",  
           "attribution": "unknown"
         },
         "metadata": {
-          "abstract":"Global Volcano Model (GVM) and The International Association of Volcanology and Chemistry of the Earth’s Interior (IAVCEI)",
+          "abstract":"De PEI geeft aan of een uitbarsting veel schade en slachtoffers zou veroorzaken. Let wel op: de kaartlaag toont ook slapende vulkanen. Global Volcano Model (GVM) and The International Association of Volcanology and Chemistry of the Earth's Interior (IAVCEI)",
           "title": "Vulkanen",
           "userlayer": true,
           "activeEdits": [
@@ -94,7 +94,13 @@
           ]
         },
         "paint": {
-          "circle-color": "rgba(255,113.951,0,1)",
+          "circle-color":[  "interpolate",  ["linear"],
+            ["get", "PEI - Population Exposure Index (schaal 1-7)"],
+            1, "#7afaa5",
+            3, "#f4fa7a",
+            5, "#fab67a",
+            7, "#fa7a7a"
+          ],
           "circle-radius": 7,
           "circle-stroke-width": 1,
           "circle-stroke-color": "rgba(0,0,0,1)"
@@ -115,11 +121,7 @@
         },
         "metadata": {
           "title": "Hotspots",
-          "userlayer": true,
-          "maplayeropen": true,
-          "activeEdits": [
-            0
-          ]
+          "userlayer": true
         },
         "paint": {
           "circle-color": "rgba(255,255,0,1)",
@@ -128,6 +130,44 @@
           "circle-stroke-color": "rgba(255,0,0,1)"
         }
       }
+    },{
+      "type": "geojson",
+      "title": "Aardbevingen dit uur",
+      "checked": false,
+      "layerInfo": {
+        "id": "abd0c37d-390d-4b9f-9752-84d42829dfe10",
+        "type": "circle",
+        "source": {
+          "type": "geojson",
+          "data": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+          "attribution": "USGS"
+        },
+        "metadata": {
+          "abstract": "Alle gemeten aardbevingen tot een uur geleden (USGS)",
+          "title": "Aardbevingen 1 uur geleden",
+          "userlayer": true,
+          "reference": false
+        },
+        "paint": {
+             "circle-color":[  "interpolate",  ["linear"],
+                ["get", "mag"],
+                2, "#faf207",
+                4, "#faa907",
+                6, "#fa6c07",
+                8, "#fa0707"
+            ],
+            "circle-radius": [  "interpolate",  ["exponential", 2],
+              ["get", "mag"],
+              2, 5,
+              4, 10,
+              6, 20,
+              8, 50
+            ], 
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "#818181"
+        }
+      },
+      "id": "Aardbevingen_dit_uur_geojson_id"
     },
     {
       "type": "geojson",
@@ -149,27 +189,26 @@
         },
         "paint": {
              "circle-color":[  "interpolate",  ["linear"],
-  ["get", "mag"],
-  2, "#faf207",
-  4, "#faa907",
-  6, "#fa6c07",
-  8, "#fa0707"
-],
-                        
-"circle-radius": [  "interpolate",  ["exponential", 2],
-  ["get", "mag"],
-  2, 5,
-  4, 10,
-  6, 20,
-  8, 50
-], 
+                ["get", "mag"],
+                2, "#faf207",
+                4, "#faa907",
+                6, "#fa6c07",
+                8, "#fa0707"
+              ],
+              "circle-radius": [  "interpolate",  ["exponential", 2],
+                ["get", "mag"],
+                2, 5,
+                4, 10,
+                6, 20,
+                8, 50
+            ], 
             "circle-stroke-width": 1,
-            "circle-stroke-color": "rgba(255,255,0,0.9)"
+            "circle-stroke-color": "#818181"
         }
       },
       "id": "Aardbevingen_vandaag_geojson_id"
     },
-{
+    {
       "type": "geojson",
       "title": "Aardbevingen deze week > 2.5",
       "checked": false,
@@ -189,26 +228,26 @@
         },
         "paint": {
             "circle-color":[  "interpolate",  ["linear"],
-  ["get", "mag"],
-  2, "#faf207",
-  4, "#faa907",
-  6, "#fa6c07",
-  8, "#fa0707"
-],
-            
-"circle-radius": [  "interpolate",  ["exponential", 2],
-  ["get", "mag"],
-  2, 5,
-  4, 10,
-  6, 20,
-  8, 50
-],            "circle-stroke-width": 1,
-            "circle-stroke-color": "rgba(255,255,0,0.9)"
+              ["get", "mag"],
+              2, "#faf207",
+              4, "#faa907",
+              6, "#fa6c07",
+              8, "#fa0707"
+            ],
+            "circle-radius": [  "interpolate",  ["exponential", 2],
+              ["get", "mag"],
+              2, 5,
+              4, 10,
+              6, 20,
+              8, 50
+            ],
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "#818181"
         }
       },
       "id": "Aardbevingen_vorige week_geojson_id"
     },
-{
+    {
       "type": "geojson",
       "title": "Aardbevingen deze maand > 2.5",
       "checked": false,
@@ -243,7 +282,7 @@
   8, 50
 ], 
             "circle-stroke-width": 1,
-            "circle-stroke-color": "rgba(255,255,0,0.9)"
+            "circle-stroke-color": "#818181"
         }
       },
       "id": "Aardbevingen_deze_maand_geojson_id"
@@ -274,6 +313,30 @@
     },
     {
       "type": "geojson",
+      "title": "Breuken",
+      "checked": false,
+      "layerInfo": {
+        "id": "8fe6de0f-dfae-4f64-9cdd-b4c28a7a5612",
+        "type": "line",
+        "source": {
+          "type": "geojson",
+          "data": "https://dl.dropbox.com/s/h7bbe9abesz5rgw/Faults.json?dl=0",
+          "attribution": "unknown"
+        },
+        "metadata": {
+          "title": "Breuken",
+          "userlayer": true,
+          "reference": false
+        },
+        "paint": {
+          "line-color": "#fa0707",
+          "line-width": 1.5
+        }
+      },
+      "id": "Breuken_geojson_id"
+    },
+    {
+      "type": "geojson",
       "title": "Platen",
       "checked": false,
       "layerInfo": {
@@ -287,10 +350,7 @@
         "metadata": {
           "title": "Platen",
           "userlayer": true,
-          "reference": false,
-          "activeEdits": [
-            0
-          ]
+          "reference": false
         },
         "paint": {
           "fill-color": "rgba(128,128,128,0)",
@@ -341,7 +401,7 @@
             "source": {
               "type": "raster",
               "tileSize": 256,
-              "url": "mapbox://mapbox.satellite"
+              "tiles": ["https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"]
             },
             "metadata": {
               "title": "Mapbox | Satelliet",
