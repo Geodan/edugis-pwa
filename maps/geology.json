@@ -401,7 +401,8 @@
             "source": {
               "type": "raster",
               "tileSize": 256,
-              "tiles": ["https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"]
+              "tiles": ["https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"],
+              "attribution": "mapbox"
             },
             "metadata": {
               "title": "Mapbox | Satelliet",
