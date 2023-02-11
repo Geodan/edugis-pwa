@@ -7,6 +7,7 @@ export const foldercss = html`
     height: 12px;
     width: 16px;
     margin-left: 2px;
+    margin-right: 2px;
 }
 .folder-sheet {
     height: 10px;
