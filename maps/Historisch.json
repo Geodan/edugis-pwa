@@ -13,7 +13,7 @@
 
         {
           "type": "group",
-          "title": "Topotijdreis | Kadaster",
+          "title": "Topotijdreis | Kaarten",
           "sublayers": [
             {
               "title": "1815",
@@ -21,7 +21,7 @@
                 "id": "topotijdreis1815",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1815"
                 },
                 "source": {
@@ -52,7 +52,7 @@
                 "id": "topotijdreis1820",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1820"
                 },
                 "source": {
@@ -83,7 +83,7 @@
                 "id": "topotijdreis1821",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1821"
                 },
                 "source": {
@@ -109,12 +109,12 @@
               "checked": false
             },
             {
-              "title": "1823_1829",
+              "title": "1823-1829",
               "layerInfo": {
                 "id": "topotijdreis1823_1829",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1823_1829"
                 },
                 "source": {
@@ -140,12 +140,12 @@
               "checked": false
             },
             {
-              "title": "1830_1849",
+              "title": "1830-1849",
               "layerInfo": {
                 "id": "topotijdreis1830_1849",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1830_1849"
                 },
                 "source": {
@@ -176,7 +176,7 @@
                 "id": "topotijdreis1850",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1850"
                 },
                 "source": {
@@ -207,7 +207,7 @@
                 "id": "topotijdreis1857",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1857"
                 },
                 "source": {
@@ -238,7 +238,7 @@
                 "id": "topotijdreis1858",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1858"
                 },
                 "source": {
@@ -269,7 +269,7 @@
                 "id": "topotijdreis1861",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1861"
                 },
                 "source": {
@@ -300,7 +300,7 @@
                 "id": "topotijdreis1862",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1862"
                 },
                 "source": {
@@ -331,7 +331,7 @@
                 "id": "topotijdreis1865",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1865"
                 },
                 "source": {
@@ -362,7 +362,7 @@
                 "id": "topotijdreis1866",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1866"
                 },
                 "source": {
@@ -393,7 +393,7 @@
                 "id": "topotijdreis1868",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1868"
                 },
                 "source": {
@@ -424,7 +424,7 @@
                 "id": "topotijdreis1870",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1870"
                 },
                 "source": {
@@ -455,7 +455,7 @@
                 "id": "topotijdreis1871",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1871"
                 },
                 "source": {
@@ -486,7 +486,7 @@
                 "id": "topotijdreis1872",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1872"
                 },
                 "source": {
@@ -517,7 +517,7 @@
                 "id": "topotijdreis1880",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1880"
                 },
                 "source": {
@@ -548,7 +548,7 @@
                 "id": "topotijdreis1883",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1883"
                 },
                 "source": {
@@ -579,7 +579,7 @@
                 "id": "topotijdreis1886",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1886"
                 },
                 "source": {
@@ -610,7 +610,7 @@
                 "id": "topotijdreis1888",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1888"
                 },
                 "source": {
@@ -641,7 +641,7 @@
                 "id": "topotijdreis1889",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1889"
                 },
                 "source": {
@@ -672,7 +672,7 @@
                 "id": "topotijdreis1893",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1893"
                 },
                 "source": {
@@ -703,7 +703,7 @@
                 "id": "topotijdreis1899",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1899"
                 },
                 "source": {
@@ -734,7 +734,7 @@
                 "id": "topotijdreis1900",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1900"
                 },
                 "source": {
@@ -765,7 +765,7 @@
                 "id": "topotijdreis1901",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1901"
                 },
                 "source": {
@@ -796,7 +796,7 @@
                 "id": "topotijdreis1902",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1902"
                 },
                 "source": {
@@ -827,7 +827,7 @@
                 "id": "topotijdreis1904",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1904"
                 },
                 "source": {
@@ -858,7 +858,7 @@
                 "id": "topotijdreis1908",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1908"
                 },
                 "source": {
@@ -889,7 +889,7 @@
                 "id": "topotijdreis1909",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1909"
                 },
                 "source": {
@@ -920,7 +920,7 @@
                 "id": "topotijdreis1910",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1910"
                 },
                 "source": {
@@ -951,7 +951,7 @@
                 "id": "topotijdreis1912",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1912"
                 },
                 "source": {
@@ -982,7 +982,7 @@
                 "id": "topotijdreis1915",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1915"
                 },
                 "source": {
@@ -1013,7 +1013,7 @@
                 "id": "topotijdreis1918",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1918"
                 },
                 "source": {
@@ -1044,7 +1044,7 @@
                 "id": "topotijdreis1919",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1919"
                 },
                 "source": {
@@ -1075,7 +1075,7 @@
                 "id": "topotijdreis1920",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1920"
                 },
                 "source": {
@@ -1106,7 +1106,7 @@
                 "id": "topotijdreis1922",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1922"
                 },
                 "source": {
@@ -1137,7 +1137,7 @@
                 "id": "topotijdreis1925",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1925"
                 },
                 "source": {
@@ -1168,7 +1168,7 @@
                 "id": "topotijdreis1929",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1929"
                 },
                 "source": {
@@ -1199,7 +1199,7 @@
                 "id": "topotijdreis1931",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1931"
                 },
                 "source": {
@@ -1230,7 +1230,7 @@
                 "id": "topotijdreis1935",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1935"
                 },
                 "source": {
@@ -1261,7 +1261,7 @@
                 "id": "topotijdreis1937",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1937"
                 },
                 "source": {
@@ -1292,7 +1292,7 @@
                 "id": "topotijdreis1940",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1940"
                 },
                 "source": {
@@ -1323,7 +1323,7 @@
                 "id": "topotijdreis1942",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1942"
                 },
                 "source": {
@@ -1354,7 +1354,7 @@
                 "id": "topotijdreis1943",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1943"
                 },
                 "source": {
@@ -1385,7 +1385,7 @@
                 "id": "topotijdreis1947",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1947"
                 },
                 "source": {
@@ -1416,7 +1416,7 @@
                 "id": "topotijdreis1948",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1948"
                 },
                 "source": {
@@ -1447,7 +1447,7 @@
                 "id": "topotijdreis1949",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1949"
                 },
                 "source": {
@@ -1478,7 +1478,7 @@
                 "id": "topotijdreis1950",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1950"
                 },
                 "source": {
@@ -1509,7 +1509,7 @@
                 "id": "topotijdreis1951",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1951"
                 },
                 "source": {
@@ -1540,7 +1540,7 @@
                 "id": "topotijdreis1952",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1952"
                 },
                 "source": {
@@ -1571,7 +1571,7 @@
                 "id": "topotijdreis1953",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1953"
                 },
                 "source": {
@@ -1602,7 +1602,7 @@
                 "id": "topotijdreis1955",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1955"
                 },
                 "source": {
@@ -1633,7 +1633,7 @@
                 "id": "topotijdreis1962",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1962"
                 },
                 "source": {
@@ -1664,7 +1664,7 @@
                 "id": "topotijdreis1963",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1963"
                 },
                 "source": {
@@ -1695,7 +1695,7 @@
                 "id": "topotijdreis1965",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1965"
                 },
                 "source": {
@@ -1726,7 +1726,7 @@
                 "id": "topotijdreis1970",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1970"
                 },
                 "source": {
@@ -1757,7 +1757,7 @@
                 "id": "topotijdreis1971",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1971"
                 },
                 "source": {
@@ -1788,7 +1788,7 @@
                 "id": "topotijdreis1973",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1973"
                 },
                 "source": {
@@ -1819,7 +1819,7 @@
                 "id": "topotijdreis1975",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1975"
                 },
                 "source": {
@@ -1850,7 +1850,7 @@
                 "id": "topotijdreis1976",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1976"
                 },
                 "source": {
@@ -1881,7 +1881,7 @@
                 "id": "topotijdreis1978",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1978"
                 },
                 "source": {
@@ -1912,7 +1912,7 @@
                 "id": "topotijdreis1980",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1980"
                 },
                 "source": {
@@ -1943,7 +1943,7 @@
                 "id": "topotijdreis1984",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1984"
                 },
                 "source": {
@@ -1974,7 +1974,7 @@
                 "id": "topotijdreis1988",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1988"
                 },
                 "source": {
@@ -2005,7 +2005,7 @@
                 "id": "topotijdreis1990",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1990"
                 },
                 "source": {
@@ -2036,7 +2036,7 @@
                 "id": "topotijdreis1994",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1994"
                 },
                 "source": {
@@ -2067,7 +2067,7 @@
                 "id": "topotijdreis1995",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1995"
                 },
                 "source": {
@@ -2098,7 +2098,7 @@
                 "id": "topotijdreis1996",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1996"
                 },
                 "source": {
@@ -2129,7 +2129,7 @@
                 "id": "topotijdreis1997",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1997"
                 },
                 "source": {
@@ -2160,7 +2160,7 @@
                 "id": "topotijdreis1999",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "1999"
                 },
                 "source": {
@@ -2191,7 +2191,7 @@
                 "id": "topotijdreis2006",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2006"
                 },
                 "source": {
@@ -2222,7 +2222,7 @@
                 "id": "topotijdreis2010",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2010"
                 },
                 "source": {
@@ -2253,7 +2253,7 @@
                 "id": "topotijdreis2011",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2011"
                 },
                 "source": {
@@ -2284,7 +2284,7 @@
                 "id": "topotijdreis2014",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2014"
                 },
                 "source": {
@@ -2315,7 +2315,7 @@
                 "id": "topotijdreis2015",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2015"
                 },
                 "source": {
@@ -2346,7 +2346,7 @@
                 "id": "topotijdreis2016",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2016"
                 },
                 "source": {
@@ -2377,7 +2377,7 @@
                 "id": "topotijdreis2017",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2017"
                 },
                 "source": {
@@ -2408,7 +2408,7 @@
                 "id": "topotijdreis2018",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2018"
                 },
                 "source": {
@@ -2439,7 +2439,7 @@
                 "id": "topotijdreis2019",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2019"
                 },
                 "source": {
@@ -2468,37 +2468,9 @@
           "id": "Topotijdreis_group_id",
           "checked": false
         },
-        {
+{
           "type": "group",
-          "title": "Willem Blaeu (ca. 1650)",
-          "sublayers": [
-            {
-              "type": "getcapabilities",
-              "title": "Historische kaarten",
-              "layerInfo": {
-                "id": "blaeu",
-                "allowedlayers": "Nederland 17e eeuw (Blaeu),Amsterdam 17e eeuw (Blaeu),Noord-Holland 17e eeuw (Blaeu),Friesland 17e eeuw (Blaeu),Groningen 17e eeuw (Blaeu),Drenthe 17e eeuw (Blaeu),Overijssel 17e eeuw (Blaeu),Gelderland 17e eeuw (Blaeu),Utrecht 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Zeeland 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Delfland 17e eeuw (Blaeu),Brabant 17e eeuw (Blaeu),Limburg 17e eeuw (Blaeu)",
-                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/blaeu.map",
-                "tilecacheurl": [
-                  "https://t1.edugis.nl/tiles/tilecache.py",
-                  "https://t2.edugis.nl/tiles/tilecache.py"
-                ],
-                "type": "getcapabilities",
-                "metadata": {
-                  "title": "Historische kaarten"
-                }
-              },
-              "id": "Historische_kaarten_getcapabilities_id",
-              "checked": false
-            }
-          ],
-          "id": "Historische_kaarten Blaeu (ca. 1650)_group_id",
-          "checked": false
-        },
- 
-        {
-          "type": "group",
-          "title": "Luchtfoto's 2006 - 2020",
+          "title": "Topotijdreis | Luchtfoto's",
           "sublayers": [
             {
               "title": "2006",
@@ -2507,7 +2479,7 @@
                 "id": "tijdreisfoto2006",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2006"
                 },
                 "source": {
@@ -2535,7 +2507,7 @@
                 "id": "tijdreisfoto2007",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2007"
                 },
                 "source": {
@@ -2563,7 +2535,7 @@
                 "id": "tijdreisfoto2008",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2008"
                 },
                 "source": {
@@ -2591,7 +2563,7 @@
                 "id": "tijdreisfoto2009",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2009"
                 },
                 "source": {
@@ -2619,7 +2591,7 @@
                 "id": "tijdreisfoto2010",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2010"
                 },
                 "source": {
@@ -2647,7 +2619,7 @@
                 "id": "tijdreisfoto2011",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2011"
                 },
                 "source": {
@@ -2675,7 +2647,7 @@
                 "id": "tijdreisfoto2012",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2012"
                 },
                 "source": {
@@ -2703,7 +2675,7 @@
                 "id": "tijdreisfoto2013",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2013"
                 },
                 "source": {
@@ -2731,7 +2703,7 @@
                 "id": "tijdreisfoto2014",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2014"
                 },
                 "source": {
@@ -2759,7 +2731,7 @@
                 "id": "tijdreisfoto2015",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2015"
                 },
                 "source": {
@@ -2787,7 +2759,7 @@
                 "id": "tijdreisfoto2016",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2016"
                 },
                 "source": {
@@ -2815,7 +2787,7 @@
                 "id": "tijdreisfoto2017",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2017"
                 },
                 "source": {
@@ -2843,7 +2815,7 @@
                 "id": "tijdreisfoto2018",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnionh_s64tuvwvyLQTkhyl5NE3dqBTSBGxg&usqp=CAU",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "title": "2018"
                 },
                 "source": {
@@ -2871,7 +2843,7 @@
                 "id": "pdokluchtfotowmts2019_2",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2019.png",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "reference": true,
                   "title": "2019"
                 },
@@ -2901,7 +2873,7 @@
                 "id": "pdokluchtfotowmts2020_2",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2020.png",
+                  "legendurl": "https://www.edugis.nl/wp-content/uploads/2022/11/topotijdreis2.jpg",
                   "reference": true,
                   "title": "2020"
                 },
@@ -2928,10 +2900,36 @@
           "id": "Luchtfoto's_2006 - 2020_group_id",
           "checked": false
         },
-       
         {
           "type": "group",
-          "title": "Zuid-Limburg",
+          "title": "Jan en Willem Blaeu | 17e eeuw",
+          "sublayers": [
+            {
+              "type": "getcapabilities",
+              "title": "Historische kaarten",
+              "layerInfo": {
+                "id": "blaeu",
+                "allowedlayers": "Nederland 17e eeuw (Blaeu),Amsterdam 17e eeuw (Blaeu),Noord-Holland 17e eeuw (Blaeu),Friesland 17e eeuw (Blaeu),Groningen 17e eeuw (Blaeu),Drenthe 17e eeuw (Blaeu),Overijssel 17e eeuw (Blaeu),Gelderland 17e eeuw (Blaeu),Utrecht 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Zeeland 17e eeuw (Blaeu),Zuid-Holland 17e eeuw (Blaeu),Delfland 17e eeuw (Blaeu),Brabant 17e eeuw (Blaeu),Limburg 17e eeuw (Blaeu)",
+                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/blaeu.map",
+                "tilecacheurl": [
+                  "https://t1.edugis.nl/tiles/tilecache.py",
+                  "https://t2.edugis.nl/tiles/tilecache.py"
+                ],
+                "type": "getcapabilities",
+                "metadata": {
+                  "title": "Historische kaarten"
+                }
+              },
+              "id": "Historische_kaarten_getcapabilities_id",
+              "checked": false
+            }
+          ],
+          "id": "Historische_kaarten Blaeu (ca. 1650)_group_id",
+          "checked": false
+        },       
+        {
+          "type": "group",
+          "title": "Zuid-Limburg | 1820-1957",
           "sublayers": [
             {
               "type": "getcapabilities",
@@ -2958,7 +2956,7 @@
 
         {
           "type": "group",
-          "title": "Overig",
+          "title": "Overige historische kaarten",
           "sublayers": [
             {
               "type": "getcapabilities",
@@ -3011,92 +3009,30 @@
           "checked": false
         },
         {
-          "type": "reference",
-          "title": "Microsoft BING Kaart",
-          "layerInfo": {
-            "id": "bingmaproad",
-            "metadata": {
-              "reference": true,
-              "bing": true,
-              "title": "Microsoft BING Kaart"
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 19
-            }
-          },
-          "id": "Microsoft_BING Kaart_reference_id",
-          "checked": false
-        },
-        {
-          "type": "reference",
-          "title": "Microsoft BING Hybride",
-          "layerInfo": {
-            "id": "bingmaphybrid",
-            "metadata": {
-              "reference": true,
-              "bing": true,
-              "title": "Microsoft BING Hybride"
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 18
-            }
-          },
-          "id": "Microsoft_BING Hybride_reference_id",
-          "checked": false
-        },
-        {
-          "type": "reference",
-          "title": "Microsoft BING Luchtfoto",
-          "layerInfo": {
-            "id": "bingmapaerial",
-            "metadata": {
-              "reference": true,
-              "bing": true,
-              "title": "Microsoft BING Luchtfoto"
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 18
-            }
-          },
-          "id": "Microsoft_BING Luchtfoto_reference_id",
-          "checked": false
-        },
-        {
-          "type": "reference",
-          "title": "OpenTopo achtergrondkaart [tms]",
-          "layerInfo": {
-            "id": "OpenTopo_achtergrondkaart [tms]_id",
-            "type": "raster",
-            "metadata": {
-              "reference": true,
-              "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png",
-              "title": "OpenTopo achtergrondkaart [tms]"
-            },
-            "source": {
-              "tileSize": 512,
-              "type": "raster",
-              "bounds": [
-                3.20009,
-                50.7167,
-                7.27283,
-                53.5571
-              ],
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"
-              ],
-              "attribution": "PDOK"
-            }
-          },
-          "id": "OpenTopo_achtergrondkaart [tms]_reference_id",
-          "checked": false
-        },
-        {
+                  "type": "reference",
+                  "title": "ESRI | Satelliet",
+                  "layerInfo": {
+                    "id": "esriworldimagery",
+                    "metadata": {
+                      "reference": true,
+                      "title": "ESRI | Satelliet",
+                      "userlayer": true
+                    },
+                    "type": "raster",
+                    "source": {
+                      "type": "raster",
+                      "tiles": [
+                        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                      ],
+                      "tileSize": 256,
+                      "maxzoom": 22,
+                      "attribution": "ESRI World Imagery"
+                    }
+                  },
+                  "id": "Luchtfoto_(ESRI World Imagery)_reference_id",
+                  "checked": true
+                },
+               {
           "title": "PDOK luchtfoto's (Actueel)",
           "type": "reference",
           "layerInfo": {
@@ -3127,6 +3063,9 @@
           "id": "PDOK_luchtfoto's (Actueel)_reference_id",
           "checked": false
         }
+
+
+
       ],
       "id": "Achtergrondlagen_group_id",
       "checked": false
