@@ -53,6 +53,7 @@ class MapDatatoolFilter extends LitElement {
         this.logicalOperator = "new";
         this.outputLayerId = "";
         this.outputLayer = undefined;
+        this.attributeTranslations = [];
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('map')) {
@@ -132,11 +133,13 @@ class MapDatatoolFilter extends LitElement {
         this.selectedProperty = "";
         this.layerId = e.target.value;
         this.selectedOperator = "==";
+        this.attributeTranslations = [];
+        this.outputLayername = "";
         const layer = this.map.getLayer(this.layerId);
         if (!layer) {
-            this.outputLayername = "";
             return;
         }
+        this.attributeTranslations = layer?.metadata?.attributes?.translations??[];
         this.outputLayerId = layer.id + "_filter_" + outputLayerCounter;
         this.outputLayer = this.map.getLayer(this.outputLayerId);
         if (this.outputLayer) {
@@ -157,8 +160,8 @@ class MapDatatoolFilter extends LitElement {
         switch(this.properties[this.selectedProperty].type) {
             case "string":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
-                <option value="=" ?selected="${this.selectedOperator==='='}">=</option>
-                <option value="<>" ?selected="${this.selectedOperator==='<>'}">!=</option>
+                <option value="==" ?selected="${this.selectedOperator==='='}">=</option>
+                <option value="!=" ?selected="${this.selectedOperator==='<>'}">!=</option>
                 <option value="null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
                 <option value="!null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
                 <option value="contains" ?selected="${this.selectedOperator==='contains'}">bevat</option>
@@ -168,13 +171,14 @@ class MapDatatoolFilter extends LitElement {
                 </select><span class="arrow"></span></div>`
             case "boolean":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
-                <option value="=" ?selected="${this.selectedOperator==='='}">=</option>
-                <option value="<>" ?selected="${this.selectedOperator==='<>'}">!=</option>
+                <option value="==" ?selected="${this.selectedOperator==='='}">=</option>
+                <option value="!=" ?selected="${this.selectedOperator==='<>'}">!=</option>
                 <option value="null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
                 <option value="!null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
                 </select><span class="arrow"></span></div>`
             case "number":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
+                <option value="==" ?selected="${this.selectedOperator==='>'}">&gt;</option>
                 <option value=">" ?selected="${this.selectedOperator==='>'}">&gt;</option>
                 <option value="<" ?selected="${this.selectedOperator==='<'}">&lt;</option>
                 <option value=">=" ?selected="${this.selectedOperator==='>='}">&gt;=</option>
@@ -184,14 +188,14 @@ class MapDatatoolFilter extends LitElement {
                 </select><span class="arrow"></span></div>`
             case "mixed":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
-                <option value="===" ?selected="${this.selectedOperator==='==='}">=</option>
+                <option value="==" ?selected="${this.selectedOperator==='==='}">=</option>
                 <option value="!=" ?selected="${this.selectedOperator==='!='}">!=</option>
                 <option value=">" ?selected="${this.selectedOperator==='>'}">&gt;</option>
                 <option value="<" ?selected="${this.selectedOperator==='<'}">&lt;</option>
                 <option value=">=" ?selected="${this.selectedOperator==='>='}">&gt;=</option>
                 <option value="<=" ?selected="${this.selectedOperator==='<='}">&lt;=</option>
-                <option value="===null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
-                <option value="!==null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
+                <option value="null" ?selected="${this.selectedOperator==='null'}">geen data (null)</option>
+                <option value="!null" ?selected="${this.selectedOperator==='!null'}">wel data (not null)</option>
                 <option value="contains" ?selected="${this.selectedOperator==='contains'}">bevat</option>
                 <option value="!contains" ?selected="${this.selectedOperator==='!contains'}">bevat niet</option>
                 <option value="startsWith" ?selected="${this.selectedOperator==='startsWith'}">begint met</option>
@@ -225,16 +229,10 @@ class MapDatatoolFilter extends LitElement {
             Object.keys(feature.properties).forEach(attribute=>{
                 if (feature.properties[attribute] !== null && feature.properties[attribute] !== undefined) {
                     if (!attributes[attribute]) {
-                        attributes[attribute] = {type: typeof feature.properties[attribute], values: []};
+                        attributes[attribute] = {type: typeof feature.properties[attribute]};
                     } 
                     if (attributes[attribute].type != typeof feature.properties[attribute]) {
                         attributes[attribute].type = "mixed";
-                    } else {
-                        if (attributes[attribute].type == "string") {
-                            if (!attributes[attribute].values.includes(feature.properties[attribute])) {
-                                attributes[attribute].values.push(feature.properties[attribute]);
-                            }
-                        }
                     }
                 }
             })
@@ -252,14 +250,58 @@ class MapDatatoolFilter extends LitElement {
         }
         return html`<label for="attributeselect">Attribuut</label><div class="styled-select"><select id="attributeselect" @change="${e=>this._attributeSelected(e)}">
         <option value="" disabled ?selected="${this.selectedProperty===''}">Selecteer attribuut</option>
-        ${Object.keys(this.properties).map(property=>html`<option value=${property} ?selected="${this.selectedProperty===property}">${property}</option>`)}
+        ${Object.keys(this.properties).map(property=>html`<option value=${property} ?selected="${this.selectedProperty===property}">${this.attributeTranslations.find(({name})=>name===property)?.translation??property}</option>`)}
         </select><span class="arrow"></span></div>`
     }
-    async _handleClick(e) {
-        let features = [];
+    _getLayerFilterExpression() {
+        let filter = [];
+        switch (this.selectedOperator) {
+            case "==":
+            case "!=":
+            case ">":
+            case "<":
+            case ">=":
+            case "<=":
+                if (typeof this.value == "string") {
+                    filter = [this.selectedOperator, ["downcase", ["get" , this.selectedProperty]], this.value.toLowerCase()];
+                } else {
+                    filter = [this.selectedOperator, ["get" , this.selectedProperty], this.value];
+                }
+                break;
+            case "null":
+                filter = ["any", ["!", ["has", this.selectedProperty], ["==", ["get", this.selectedProperty], null]]];
+                break;
+            case "!null":
+                filter = ["all", ["has", this.selectedProperty], ["!=", ["get", this.selectedProperty], null]];
+                break;
+            case "contains":
+                filter = ["!=", ["index-of", this.value.toLowerCase(), ["downcase", ["get", this.selectedProperty]], 0], -1];
+                break;
+            case "!contains":
+                filter = ["==", ["index-of", this.value.toLowerCase(), ["downcase", ["get", this.selectedProperty]], 0], -1];
+                break;
+            case "startsWith":
+                filter = ["==", ["index-of", this.value.toLowerCase(), ["downcase", ["get", this.selectedProperty]], 0], 0];
+                break;
+            case "endsWith":
+                filter = ["==", ["index-of", this.value.toLowerCase(), ["downcase",["get", this.selectedProperty]], 0], ["-", ["length", ["get", this.selectedProperty]], this.value.length]];
+                break;
+        }
         switch (this.logicalOperator)   {
             case "new":
-                features = await getVisibleFeatures(this.map, this.layerId);
+                break;
+            case "and":
+                filter = ["all", filter, this.outputLayer.filter];
+                break;
+            case "or":
+                filter = ["any", filter, this.outputLayer.filter]
+                break;
+        }
+        return filter;
+    }
+    async _handleClick(e) {
+        switch (this.logicalOperator)   {
+            case "new":
                 if (this.outputLayer) {
                     outputLayerCounter++;
                     this.outputLayerId = this.layerId + "_filter_" + outputLayerCounter;
@@ -267,66 +309,28 @@ class MapDatatoolFilter extends LitElement {
                 }
                 break;
             case "and":
-                features = await getVisibleFeatures(this.map, this.outputLayerId);
-                this.dispatchEvent(new CustomEvent('removelayer', {detail: {layerid: this.outputLayerId}, bubbles: true, composed: true}));
-                this.outputLayer = undefined;
                 break;
             case "or":
-                features = await getVisibleFeatures(this.map, this.layerId);
                 break;
         }
-        if (features.length) {
-            const filteredFeatures = features.filter(feature=>{
-                if (this.selectedOperator === "null") {
-                    return feature.properties[this.selectedProperty] === null;
-                } else if (this.selectedOperator === "!null") {
-                    return feature.properties[this.selectedProperty] !== null;
-                } else if (this.selectedOperator === "contains") {
-                    return feature.properties[this.selectedProperty].includes(this.value);
-                } else if (this.selectedOperator === "!contains") {
-                    return !feature.properties[this.selectedProperty].includes(this.value);
-                } else if (this.selectedOperator === "startsWith") {
-                    return feature.properties[this.selectedProperty].startsWith(this.value);
-                } else if (this.selectedOperator === "endsWith") {
-                    return feature.properties[this.selectedProperty].endsWith(this.value);
-                } else {
-                    const leftoperand = typeof feature.properties[this.selectedProperty] === "string" ? `"${feature.properties[this.selectedProperty].toLowerCase()}"` : feature.properties[this.selectedProperty];
-                    const rightoperand = typeof this.value === "string" ? `"${this.value.toLowerCase()}"` : this.value;
-                    return eval(leftoperand + this.selectedOperator + rightoperand);
-                }
-            });
-            if (this.outputLayer) {
-                const features = this.map.getSource(this.outputLayer.source).serialize().data.features;
-                this.map.getSource(this.outputLayer.source).setData({
-                    type: 'FeatureCollection',
-                    features: [...features, ...filteredFeatures]
-                });
-            } else {
-                const inputLayer = this.map.getLayer(this.layerId).serialize();
-                const newLayer = {
-                    id: this.outputLayerId,
-                    type: inputLayer.type,
-                    metadata: {
-                        title: this.outputLayername,
-                        abstract: `Filter op ${this.selectedProperty} ${this.selectedOperator} ${this.value}`,
-                    },
-                    source: {
-                        type: 'geojson',
-                        data: {
-                            type: 'FeatureCollection',
-                            features: filteredFeatures
-                        }
-                    },
-                    paint: inputLayer.paint,
-                };
-                this.dispatchEvent(new CustomEvent('addlayer', {detail: newLayer, bubbles: true, composed: true}));
-                setTimeout(() => {
-                    this.outputLayer = this.map.getLayer(this.outputLayerId);
-                }, 500);
-            }
+        const filterExpression = this._getLayerFilterExpression();
+        if (this.outputLayer) {
+            this.map.setFilter(this.outputLayerId, filterExpression);
         } else {
-            alert("geen zichtbare elementen in de invoerlaag")
-        }
+            const inputLayer = this.map.getLayer(this.layerId).serialize();
+            const newLayer = {...inputLayer};
+            newLayer.id = this.outputLayerId;
+            newLayer.metadata = {
+                title: this.outputLayername,
+                abstract: `Filter op ${this.selectedProperty} ${this.selectedOperator} ${this.value}`
+            }
+            newLayer.source = this.map.getSource(inputLayer.source).serialize();
+            newLayer.filter = filterExpression;
+            this.dispatchEvent(new CustomEvent('addlayer', {detail: newLayer, bubbles: true, composed: true}));
+            setTimeout(() => {
+                this.outputLayer = this.map.getLayer(this.outputLayerId);
+            }, 500);
+        } 
     }
 }
 
