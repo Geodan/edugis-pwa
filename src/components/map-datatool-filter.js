@@ -244,12 +244,16 @@ class MapDatatoolFilter extends LitElement {
             return html``;
         }
         // check if this.properties is empty object
+        let selectText = "Selecteer attribuut";
         if (Object.keys(this.properties).length === 0 && this.properties.constructor === Object) {
             const features = await getVisibleFeatures(this.map, this.layerId);
+            if (features.length === 0) {
+                selectText = "Geen zichtbare elementen in invoerlaag";
+            }
             this.properties = this._getAttributesFromFeatures(features);
         }
         return html`<label for="attributeselect">Attribuut</label><div class="styled-select"><select id="attributeselect" @change="${e=>this._attributeSelected(e)}">
-        <option value="" disabled ?selected="${this.selectedProperty===''}">Selecteer attribuut</option>
+        <option value="" disabled ?selected="${this.selectedProperty===''}">${selectText}</option>
         ${Object.keys(this.properties).map(property=>html`<option value=${property} ?selected="${this.selectedProperty===property}">${this.attributeTranslations.find(({name})=>name===property)?.translation??property}</option>`)}
         </select><span class="arrow"></span></div>`
     }
