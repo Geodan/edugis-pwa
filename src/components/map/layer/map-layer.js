@@ -235,6 +235,10 @@ class MapLayer extends GestureEventListeners(LitElement) {
     _toggleVisibility(e) {
       this.visible = e.target.checked;
       this.layer.metadata.visible = this.visible;
+      if (this.layer.metadata.sublayers && this.layer.metadata.sublayers.length > 0) {
+        // store visibility in first sublayer, see visibility in map-layer-set.shouldUpdate
+        this.layer.metadata.sublayers[0].metadata.visible = this.visible;
+      }
       this.dispatchEvent(new CustomEvent('updatevisibility', {
         detail: {
           layerid: this.layer.metadata.sublayers?this.layer.metadata.sublayers.map(layer=>layer.id):this.layer.id,

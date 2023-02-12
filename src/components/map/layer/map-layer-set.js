@@ -94,6 +94,8 @@ class MapLayerSet extends LitElement {
                 && layer.metadata.sublayers[0].metadata) {
                 // restore legendclipped setting to whole layerSet, see <map-layer-info> toggleLegendClipped
                 layer.metadata.legendclipped = layer.metadata.sublayers[0].metadata.legendclipped;
+                // restore visible setting to whole layerSet, see <map-layer> _toggleVisibility
+                layer.metadata.visible = layer?.metadata?.sublayers[0]?.metadata?.visible ?? true;
             }
             this._setGroupLayerProperties();
             this._updateContainers();
@@ -180,7 +182,7 @@ class MapLayerSet extends LitElement {
                 .layer="${layer}" 
                 .boundspos="${boundspos}" 
                 .zoom=${this.zoom}
-                .itemcontainer="${this.itemcontainer}" 
+                .itemcontainer="${this.itemcontainer?this.itemcontainer:{}}" 
                 .itemscroller="${this.itemscroller}"
                 .updatelegend="${this.updatelegend}"
                 .datagetter="${this.datagetter}"
