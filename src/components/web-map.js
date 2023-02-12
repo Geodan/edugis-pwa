@@ -2180,6 +2180,15 @@ class WebMap extends LitElement {
       }
     }
     if (this.marker) {
+      const oldMarkerPixelPos = this.map.project(this.marker.getLngLat());
+      const newMarkerPixelPos = this.map.project(lngLat);
+      if (Math.abs(oldMarkerPixelPos.x - newMarkerPixelPos.x) < 5 && Math.abs(oldMarkerPixelPos.y - newMarkerPixelPos.y) < 5) {
+        // marker clicked again
+        this.marker.remove();
+        this.marker = null;
+        this.infoClicked = false;
+        return;
+      }
       this.marker.remove();
     }
     this.marker = new mapgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
