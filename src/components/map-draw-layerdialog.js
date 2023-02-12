@@ -34,7 +34,7 @@ const newLayers = {
         "title": "",
         "attributes": {
           "translations": [
-            {"name": "name", "tanslation": "naam"}
+            {"name": "name", "translation": "naam"}
           ]
         },
         "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
@@ -61,7 +61,7 @@ const newLayers = {
         "title": "",
         "attributes": {
           "translations": [
-            {"name": "name", "tanslation": "naam"}
+            {"name": "name", "translation": "naam"}
           ]
         },
         "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
@@ -87,7 +87,7 @@ const newLayers = {
         "title": "",
         "attributes": {
           "translations": [
-            {"name": "name", "tanslation": "naam"}
+            {"name": "name", "translation": "naam"}
           ]
         },
         "properties": defaultProperties.map(prop=>({name: prop.name, type: prop.type}))
