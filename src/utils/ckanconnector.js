@@ -1,3 +1,32 @@
+class WMTSLayer {
+    constructor(ckanLayer) {
+        this.id = ckanLayer.id;
+        this.title = ckanLayer.title;
+        this.checked = ckanLayer.defaultOn;
+        this.reference = ckanLayer.isBackground;
+        this.type = "wmts";
+        this.layerInfo = {
+            id: ckanLayer.id,
+            type: "raster",
+            metadata: {
+                title: ckanLayer.title,
+                abstract: ckanLayer.description,
+                imageUrl: ckanLayer.imageUrl,
+                legendurl: ckanLayer.legendUrl
+            },
+            source: {
+                tiles: [`${ckanLayer.settings.url}/${ckanLayer.settings.featureName}/EPSG:3857/{z}/{x}/{y}.png`],
+                type: "raster"
+            }
+        }
+        if (ckanLayer.attribution) {
+            this.layerInfo.source.attribution = ckanLayer.attribution;
+        }
+    }
+}
+
+
+
 export class CkanConnector {
     endpointGroups = "api/3/action/group_list";
     endpointLayers = "api/3/action/package_search";
@@ -12,7 +41,7 @@ export class CkanConnector {
         if (data.success) {
             const groups = new Map();
             for (const layer of data.layerConfigs) {
-                const resultLayer = {
+                let resultLayer = {
                     id: layer.id,
                     title: layer.title,
                     checked: layer.defaultOn,
@@ -37,23 +66,38 @@ export class CkanConnector {
                 }
                 switch(layer.type) {
                     case 'wmts':
-                        resultLayer.layerInfo.source.type = "raster";
-                        resultLayer.layerInfo.type = "raster";
+                        resultLayer = new WMTSLayer(layer);
                         break;
                     case 'wms':
-                        resultLayer.type = "wms";
-                        resultLayer.layerInfo.type = "raster";
-                        resultLayer.layerInfo.source.tiles[0] += `&layers=${layer.settings.featureName}`
+                        if (resultLayer.layerInfo.source.tiles[0].toUpperCase().indexOf("REQUEST=GETCAPABILITIES") !== -1) {
+                            resultLayer.type = "getcapabilities";
+                            resultLayer.layerInfo = {
+                                id: layer.id,
+                                url: resultLayer.layerInfo.source.tiles[0]
+                            }
+                        } else {
+                            resultLayer.type = "wms";
+                            resultLayer.layerInfo.type = "raster";
+                            resultLayer.layerInfo.source.type = "raster";
+                            if (resultLayer.layerInfo.source.tiles[0].indexOf("?") === -1) {
+                                resultLayer.layerInfo.source.tiles[0] += `?layers=${layer.settings.featureName}`;
+                            } else {
+                                resultLayer.layerInfo.source.tiles[0] += `&layers=${layer.settings.featureName}`;
+                            }
+                        }
                 }
-                if (layer.groupId) {
-                    let layerGroup = groups.get(layer.groupId);
-                    if (!layerGroup) {
-                        groups.set(layer.groupId, [resultLayer]);
+                if (resultLayer.type) {
+                    // only add layers with supported type
+                    if (layer.groupId) {
+                        let layerGroup = groups.get(layer.groupId);
+                        if (!layerGroup) {
+                            groups.set(layer.groupId, [resultLayer]);
+                        } else {
+                            layerGroup.push(resultLayer);
+                        }
                     } else {
-                        layerGroup.push(resultLayer);
+                        result.push(resultLayer);
                     }
-                } else {
-                    result.push(resultLayer);
                 }
             }
             for (const [key, value] of groups) {

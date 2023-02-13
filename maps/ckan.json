@@ -7,7 +7,7 @@
   "datacatalog": [{
       "type": "ckan",
       "url": "https://data.beta.geodan.nl",
-      "organizations": ["kadaster_"]
+      "organizations": ["kadaster_", "pdok"]
     },
     {
       "type": "group",
