@@ -10,6 +10,11 @@
       "organizations": ["kadaster_", "pdok"]
     },
     {
+      "type": "ckan",
+      "url": "https://novex-data.beta.geodan.nl",
+      "organizations": ["novex"]
+    },
+    {
       "type": "group",
       "title": "Achtergrondlagen",
       "sublayers": [{
