@@ -1105,6 +1105,7 @@ class WebMap extends LitElement {
         pitch: this.pitch,
         bearing: this.bearing
     });
+    //this.map.showTileBoundaries = true; // debug
     if (this.map.version === undefined) {
       this.map.version = 'mapblibregl';
     }
