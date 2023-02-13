@@ -10,12 +10,12 @@ create table verblijfsobject as
 select
     v.id,
     v.identificatie,
-	openbareruimtenaam,
-	huisnummer,
-	huisletter,
-	huisnummertoevoeging,
-	postcode,
-	woonplaatsnaam,
+	o.openbareruimtenaam,
+	n.huisnummer,
+	n.huisletter,
+	n.huisnummertoevoeging,
+	n.postcode,
+	w.woonplaatsnaam,
 	typeadresseerbaarobject,
 	v.verblijfsobjectstatus::text,
 	string_agg(distinct d."gebruiksdoelverblijfsobject"::text,',' order by d."gebruiksdoelverblijfsobject"::text ASC) gebruiksdoel,
@@ -70,6 +70,10 @@ select
 	cbs.won_hcorp cbs_won_hcorp,
 	cbs.wozwoning cbs_wozwoning,
 	uitkminaow cbs_uitkminaow,
+	b.particuliere_eigenaar_bewoner,
+	b.particuliere_verhuur,
+	b.woningcorporatie,
+	b.restcategorie,
 	geopunt geom,
 	null::geometry(point,28992) geom2
   from plllbronnen.verblijfsobject v
@@ -81,6 +85,7 @@ select
 	     left join lateral (select u2.temperature from plllbronnen.plll_uhi u2 where st_intersects(v.geopunt, u2.geom) limit 1) u on true
 		  left join plllbronnen.publicatiefile_energie_postcode6_2021 pep on (n.postcode=pep.postcode6)
 		   left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n.postcode)
+		    left join plllbronnen.kadaster_pc6_bezitsverhoudingen b on (b.postcode=n.postcode)
   group by 
   	v.id,
   	v.identificatie,
@@ -143,18 +148,22 @@ select
 	cbs.won_hcorp,
 	cbs.wozwoning,
 	uitkminaow,
+	b.particuliere_eigenaar_bewoner,
+	b.particuliere_verhuur,
+	b.woningcorporatie,
+	b.restcategorie,
   	v.geopunt,
   	geom2
  union
 select
     s.id,
     s.identificatie,
-	openbareruimtenaam,
-	huisnummer,
-	huisletter,
-	huisnummertoevoeging,
-	postcode,
-	woonplaatsnaam,
+	o2.openbareruimtenaam,
+	n2.huisnummer,
+	n2.huisletter,
+	n2.huisnummertoevoeging,
+	n2.postcode,
+	w2.woonplaatsnaam,
 	typeadresseerbaarobject,
 	standplaatsstatus::text,
 	'woonfunctie' gebruiksdoel,
@@ -209,6 +218,10 @@ select
 	cbs.won_hcorp cbs_won_hcorp,
 	cbs.wozwoning cbs_wozwoning,
 	uitkminaow cbs_uitkminaow,
+	b2.particuliere_eigenaar_bewoner,
+	b2.particuliere_verhuur,
+	b2.woningcorporatie,
+	b2.restcategorie,
 	st_centroid(s.geovlak) geom,
 	st_centroid(s.geovlak) geom2
   from plllbronnen.standplaats s  
@@ -219,6 +232,7 @@ select
        	left join lateral (select u2.temperature from plllbronnen.plll_uhi u2 where st_intersects(st_centroid(s.geovlak), u2.geom) limit 1) u on true
 		 left join plllbronnen.publicatiefile_energie_postcode6_2021 pep2 on (n2.postcode=pep2.postcode6)
 		  left join plllbronnen.cbs_pc6_2020_v1 cbs on (cbs.pc6 = n2.postcode)
+		    left join plllbronnen.kadaster_pc6_bezitsverhoudingen b2 on (b2.postcode=n2.postcode)
   group by 
   	s.id,
   	s.identificatie,
@@ -281,6 +295,10 @@ select
 	cbs.won_hcorp,
 	cbs.wozwoning,
 	uitkminaow,
+	b2.particuliere_eigenaar_bewoner,
+	b2.particuliere_verhuur,
+	b2.woningcorporatie,
+	b2.restcategorie,
   	st_centroid(s.geovlak),
   	geom2
 ;
