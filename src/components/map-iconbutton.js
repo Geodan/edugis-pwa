@@ -35,7 +35,7 @@ class IconButton extends LitElement {
       color: white;
     }
     .active {
-      background-color: #00811f;
+      background-color: #00401C;
       fill: white;
       color: white;
     }

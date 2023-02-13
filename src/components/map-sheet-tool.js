@@ -23,7 +23,7 @@ class MapSheetTool extends LitElement {
       .buttonbar {height: 55px;width:100%; margin-top: 19px; margin-bottom: 15px;}
       .tool {display: inline-block; height: 55px; width: 55px; line-height: 67px;}
       .edugisblue {
-        --dark-color: #00811f;
+        --dark-color: #00401C;
         --light-color: white;
         width: 100%;
       }

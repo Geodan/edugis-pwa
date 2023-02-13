@@ -36,9 +36,9 @@ class MapPitch extends LitElement {
       <style>
         .edugisblue {
         --mdc-theme-on-primary: white;
-        --mdc-theme-primary: #00811f;
+        --mdc-theme-primary: #00401C;
         --mdc-theme-on-secondary: white;
-        --mdc-theme-secondary: #00811f;
+        --mdc-theme-secondary: #00401C;
       }
       .padded {
         padding: 10px;

@@ -4,7 +4,7 @@ body {
     color: #333333;
 }
 h2 {
-    color: #00811f;
+    color: #00401C;
 }
 .voortgang, .stap {
     width: 100%;
@@ -33,8 +33,8 @@ a {
 .button {
     display: block;
     box-sizing: border-box;
-    background-color: #00811f;
-    border: 1px solid #00811f;
+    background-color: #00401C;
+    border: 1px solid #00401C;
     border-radius: 4px;
     color: white;
     padding: 4px;
@@ -46,6 +46,6 @@ a {
     width: 150px;
 }
 .button.secondary {
-    color: #00811f;
+    color: #00401C;
     background-color: white;
 }

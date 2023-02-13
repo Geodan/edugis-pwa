@@ -1,7 +1,7 @@
 {
   "entrypoint": "index.html",
   "fragments": ["mapbox.html"],
-  "shell": "src/components/rotterdam-app.js",
+  "shell": "src/components/novex-app.js",
   "sources": [
     "images/**/*", "course/**/*"
   ],
@@ -74,7 +74,7 @@
     "maps/zuidwestnl.json",
     "maps/nl2100.json",
     "maps/kea.json",
-    "maps/rotterdam.json",
+    "maps/novex.json",
     "maps/layers/*.json"
   ],
   "builds": [

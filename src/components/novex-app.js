@@ -39,7 +39,7 @@ import datacatalog from '../datacatalog.js';
 * @polymer
 * @extends HTMLElement
 */
-class EduGISApp extends (LitElement) {
+class NovexApp extends (LitElement) {
   static get properties() {
     return {
       appTitle: {type: String},
@@ -73,7 +73,7 @@ header {
   top: 0px;
   width: 100%;
   height: 40px;
-  background-color: #00811f;
+  background-color: #00401C;
   color: white;
   box-sizing: border-box;
   padding-left: 1em;
@@ -143,7 +143,7 @@ footer {
   bottom: 0px;
   width: 100%;
   height: 1.5em;
-  background-color: #00811f;
+  background-color: #00401C;
   color: white;
   box-sizing: border-box;
   padding-left: 0.5em;
@@ -164,17 +164,17 @@ footer a:hover {
 
 </style>
     <header>
-      <img src="${rootUrl}images/rdamviewerlogo.svg" alt="logo"/>
+      <img src="${rootUrl}images/novexlogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
-            <li class="menuitem"><a href="help.html" target="edugishelp">Hoe werkt de Rotterdam Viewer?</a></li>
+            <li class="menuitem"><a href="help.html" target="edugishelp">Hoe werkt de Novex Viewer?</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
     </header>
     <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" .haslegend=${true} .accesstoken="${APIkeys.mapbox}"></web-map>
     <tool-tip></tool-tip>
-    <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">Rotterdam viewer</a></footer>
+    <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">Novex viewer</a></footer>
     `;
   }
   firstUpdated() {
@@ -199,19 +199,19 @@ footer a:hover {
                   {
                       title: "Kaart",
                       content: "Je kunt:<ul><li><b>in-</b> en <b>uitzoomen</b>, van wereldwijd tot aan je eigen huis</li><li>de kaart <b>verslepen</b> naar bijna elke plek op de wereld.</li></ul>",
-                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
+                      target: document.querySelector("novex-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
                       placement: "top"
                   },
                   {
                       title: "Gereedschappen",
                       content: "Met deze knoppen doe je bewerkingen op de kaart.<p>Houd de muis stil boven de knoppen voor meer uitleg over elke knop",
-                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
+                      target: document.querySelector("novex-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
                       placement: "right"
                   },
                   {
                       title: "Legenda",
                       content: "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden",
-                      target: document.querySelector("rotterdam-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
+                      target: document.querySelector("novex-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
                       placement: "left"
                   }
               ]
@@ -240,4 +240,4 @@ footer a:hover {
   }
 }
 
-window.customElements.define('rotterdam-app', EduGISApp);
+window.customElements.define('novex-app', NovexApp);
