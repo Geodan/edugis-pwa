@@ -67,6 +67,8 @@ class MapDraw extends LitElement {
       this.currentLayer = {Point: null, Line: null, Polygon: null};
       this.layercolor = {layerid: -1, color: '#000'};
       this.savecounter = 0;
+      this.history = [];
+      this.historyIndex = 0;
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){
@@ -543,7 +545,6 @@ class MapDraw extends LitElement {
       this.map.on('draw.delete', this.drawDelete = (e)=>this._drawDelete(e));
       this.map.on('draw.combine', this.drawCombine = (e)=>this._drawCombine(e));
       this.map.on('draw.uncombine', this.drawUncombine = (e)=>this._drawUncombine(e));
-      this.keyDownBound = this._keyDown.bind(this);
       this.map.getCanvasContainer().addEventListener('keydown', this.keyDown=(e)=>this._keyDown(e));
       this.map.getCanvas().style.cursor = "unset"; // let mapbox-gl-draw handle the cursor
       this._addDialogs();
@@ -586,6 +587,44 @@ class MapDraw extends LitElement {
     //this._setMode(e.mode);
     this.requestUpdate();
   }
+  _undo() {
+    this.selectedFeatures = [];
+    this._setMode('simple_select');
+    if (this.historyIndex > 0) {
+      this.historyIndex--;
+      const undoAction = this.history[this.historyIndex];
+      switch (undoAction.type) {
+        case 'create':
+          this.mbDraw.delete(undoAction.features.map(f=>f.id));
+          break;
+        case 'update':
+          this.mbDraw.add({type: "FeatureCollection", features: undoAction.features});
+          break;
+        case 'delete':
+          this.mbDraw.add({type: "FeatureCollection", features: undoAction.features});
+          break;
+      }
+    }
+  }
+  _redo() {
+    this.selectedFeatures = [];
+    this._setMode('simple_select');
+    if (this.historyIndex < this.history.length) {
+      const redoAction = this.history[this.historyIndex];
+      switch (redoAction.type) {
+        case 'create':
+          this.mbDraw.add({type: "FeatureCollection", features: redoAction.features});
+          break;
+        case 'update':
+          this.mbDraw.add({type: "FeatureCollection", features: redoAction.newFeatures});
+          break;
+        case 'delete':
+          this.mbDraw.delete(redoAction.features.map(f=>f.id));
+          break;
+      }
+      this.historyIndex++;
+    }
+  }
   _keyDown(event) {
     if (!(event.srcElement || event.target).classList.contains('mapboxgl-canvas')) return; // we only handle events on the map
     if ((event.keyCode === 8 || event.keyCode === 46)) {
@@ -599,6 +638,10 @@ class MapDraw extends LitElement {
       this._changeMode('draw_polygon');
     } else if (event.keyCode === 27) {
       this._setMode('simple_select');
+    } else if (event.key === 'z' && event.ctrlKey) {
+      this._undo();
+    } else if (event.key === 'y' && event.ctrlKey) {
+      this._redo();
     }
   }
   _isEmptyNewLayer(layer) {
@@ -756,13 +799,33 @@ class MapDraw extends LitElement {
     }
     return result;
   }
+  _applyFeatureProperty(featureId, name, value) {
+    this.mbDraw.setFeatureProperty(featureId, name, value);
+    if (this.historyIndex > 0) {
+      // update current and future features
+      for (let i = this.historyIndex - 1; i < this.history.length; i++) {
+        const newFeature = this.history[i].newFeatures?.find(({id})=>id===featureId);
+        if (newFeature) {
+          newFeature.properties[name] = value;
+        } else {
+          const historyFeature = this.history[i].features.find(({id})=>id===featureId);
+          if (historyFeature) {
+            historyFeature.properties[name] = value;
+          }
+        }
+      }
+    }
+  }
   _updateDefaultFeatureProperties(feature) {
     const newId = this._getUniqueFeatureId();
     this.currentLayer[this.featureType].metadata.properties.forEach((property,idx)=>{
       if (idx === 0) {
-        this.mbDraw.setFeatureProperty(feature.id, property.name, newId);
+        this._applyFeatureProperty(feature.id, property.name, newId);
+        feature.properties[property.name] = newId;
       } else {
-        this.mbDraw.setFeatureProperty(feature.id, property.name, this._defaultPropertyValue(property.type, feature))
+        const value = this._defaultPropertyValue(property.type, feature);
+        this._applyFeatureProperty(feature.id, property.name, value);
+        //feature.properties[property.name] = value;
       }
     });
     this.hasUnsavedFeatures = true;
@@ -771,7 +834,8 @@ class MapDraw extends LitElement {
     this.currentLayer[this.featureType].metadata.properties.forEach((property)=>{
       const value = this._defaultPropertyValue(property.type, feature);
       if (value) {
-        this.mbDraw.setFeatureProperty(feature.id, property.name, value);
+        this._applyFeatureProperty(feature.id, property.name, value);
+        feature.properties[property.name] = value;
       }
     });
     this.hasUnsavedFeatures = true;
@@ -795,11 +859,19 @@ class MapDraw extends LitElement {
       const floatValue = value.replace(',', '.').replace(/([\+\-]?)[^\d\.]*([0-9]*)[^\.]*([\.]?)[^0-9]*([0-9]*).*/,'$1$2$3$4')
       e.target.value = floatValue;
     }
-    this.mbDraw.setFeatureProperty(feature.id, key, convertedValue);
+    this._applyFeatureProperty(feature.id, key, convertedValue);
+    feature.properties[key] = convertedValue;
     this.hasUnsavedFeatures = true;
     this._setMessage(`'${e.target.value}' opgeslagen`);
   }
   _featuresCreated(e) {
+    // update history
+    if (this.historyIndex < this.history.length) {
+      this.history = this.history.slice(0, this.historyIndex);
+    }
+    this.history.push({type: 'create', features: JSON.parse(JSON.stringify(e.features))});
+    this.historyIndex = this.history.length;
+    // update feature properties
     e.features.forEach(feature=>this._updateDefaultFeatureProperties(feature));
     this.hasUnsavedFeatures = true;
   }
@@ -810,21 +882,39 @@ class MapDraw extends LitElement {
       for (const feature of this.selectedFeatures) {
         if (!feature.properties.hasOwnProperty(prop.name)) {
           const value = this._defaultPropertyValue(prop.type, feature);
-          this.mbDraw.setFeatureProperty(feature.id, prop.name, value);
+          this._applyFeatureProperty(feature.id, prop.name, value);
           feature.properties[prop.name] = value; // update internal copy as well
         }
       }
     }
   }
   _featuresUpdated(e) {
-    e.features.forEach(feature=>this._updateFeatureAutoProperties(feature));
-    this.selectedFeatures = [];
-    this.hasUnsavedFeatures = true;
+    if (!e.midpoint) {
+      // update history
+      if (this.historyIndex < this.history.length) {
+        this.history = this.history.slice(0, this.historyIndex);
+      }
+      const oldFeaturesJson = JSON.stringify(this.selectedFeatures);
+      const newFeaturesJson = JSON.stringify(e.features);
+      if (oldFeaturesJson !== newFeaturesJson) {
+          this.history.push({type: 'update', features: JSON.parse(oldFeaturesJson), newFeatures: JSON.parse(newFeaturesJson)});
+          this.historyIndex = this.history.length;
+      }
+      // update feature properties
+      e.features.forEach(feature=>this._updateFeatureAutoProperties(feature));
+      this.hasUnsavedFeatures = true;
+    }
     setTimeout(()=>this.selectedFeatures = e.features, 0);
   }
   _drawDelete(e) {
     this.selectedFeatures = [];
     this.hasUnsavedFeatures = true;
+    // update history
+    if (this.historyIndex < this.history.length) {
+      this.history = this.history.slice(0, this.historyIndex);
+    }
+    this.history.push({type: 'delete', features: JSON.parse(JSON.stringify(e.features))});
+    this.historyIndex = this.history.length;
   }
   _drawCombine(e) {
     this.selectedFeatures = [];

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@edugis/lineunion": "^0.3.2",
-    "@edugis/mapbox-gl-draw": "^0.0.4",
+    "@edugis/mapbox-gl-draw": "^0.0.6",
     "@edugis/proj-convert": "^0.2.0",
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-button": "^0.25.1",
