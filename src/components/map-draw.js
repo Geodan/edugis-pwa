@@ -30,7 +30,7 @@ function trl(word) {
 * @polymer
 * @extends HTMLElement
 */
-class MapDraw2 extends LitElement {
+class MapDraw extends LitElement {
   static get properties() { 
     return {
       active: {type: Boolean},
