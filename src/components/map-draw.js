@@ -103,6 +103,8 @@ class MapDraw extends LitElement {
         if (layerType === this.featureType) {
           this.mbDraw.deleteAll();
           this.selectedFeatures = [];
+          this.history = [];
+          this.historyIndex = 0;
           this.hasUnsavedFeatures = false;
         }
       }
@@ -336,16 +338,20 @@ class MapDraw extends LitElement {
         });
       this.editableLayers[type].reverse();
   }
-  async _changeMode(newMode) {
-      this._restoreCurrentLayer();
-      this.drawMode = newMode;
-      const type = this.featureType = this._getType(newMode);
-      if (!this.currentLayer[type]) {
-        this._showDialog();
-      } else {
-        this._loadCurrentFeatures();
-      }
-      this._setMode(newMode);
+  _changeMode(newMode) {
+    this._restoreCurrentLayer(); // todo: inefficient if layer is not changed?
+    if (this.drawMode !== newMode) {
+      this.history = [];
+      this.historyIndex = 0;
+    }
+    this.drawMode = newMode;
+    const type = this.featureType = this._getType(newMode);
+    if (!this.currentLayer[type]) {
+      this._showDialog();
+    } else {
+      this._loadCurrentFeatures();
+    }
+    this._setMode(newMode);
   }
   _setMode(newMode) {
     this.mbDraw.changeMode(newMode);
@@ -404,6 +410,8 @@ class MapDraw extends LitElement {
     }
   }
   async _handleDialogOkClick() {
+    this.history = [];
+    this.historyIndex = 0;
     this.currentLayer[this.featureType] = this.mapDialog.currentEditLayer;
     if (this._isEmptyNewLayer(this.currentLayer[this.featureType])) {
       this._addNewLayerToMap();
