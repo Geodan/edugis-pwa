@@ -28,7 +28,7 @@ import './map-geolocation';
 import './map-pitch';
 import './map/layer/map-layer-container.js';
 import './map/layer/map-layer-set.js';
-import './map-draw2';
+import './map-draw';
 import './map-import-export';
 import './map-data-toolbox';
 import './map-sheet-tool';
@@ -841,7 +841,7 @@ class WebMap extends LitElement {
           <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"></map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
-          <map-draw2 .active="${this.currentTool==='draw'}" 
+          <map-draw .active="${this.currentTool==='draw'}" 
             .map="${this.map}"
             .layercolor=${this.layerFillColor}
             .removedlayerid="${this.removedLayerId}"
@@ -850,7 +850,7 @@ class WebMap extends LitElement {
             @movelayer="${e=>this.moveLayer(e)}"
             @titlechange="${e=>this.resetLayerList(e)}"
             @updatevisibility="${(e) => this.updateLayerVisibility(e)}">
-          </map-draw2>
+          </map-draw>
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
           <div style="width:100%">Kaart opslaan / openen</div>
