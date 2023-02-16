@@ -155,6 +155,7 @@ insert into verblijfsobjectgebruiksdoel
 -- hoogtestatistieken gebouwen
 drop table if exists "2020_hoogtestatistieken_gebouwen";
 create table "2020_hoogtestatistieken_gebouwen" as 
+with plll as (select st_transform(st_union(geom),7415) geom from cbs_buurten)
 select 
 	id, 
 	fid, 
@@ -190,9 +191,12 @@ select
 	bagpandid,
 	st_transform(h.geom,28992) geom 
 from anneb."3d_hoogtestatistieken_gebouwen" h
-	join cbs_buurten b on st_intersects(st_transform(h.geom,28992), b.geom);
+	join plll b on st_intersects(h.geom, b.geom);
+alter table "2020_hoogtestatistieken_gebouwen" add primary key (id);
 create index "2020_hoogtestatistiekengebouwen_geomidx" on "2020_hoogtestatistieken_gebouwen" using gist(geom);
-COMMENT ON TABLE plllbronnen."2020_hoogtestatistieken_gebouwen" IS 'imported with pgbrowser (https://github.com/geodan/pgbrowser) from 2020_3d_hoogtestatistieken_gebouwen.zip file 2020_3d_hoogtestatistieken_gebouwen.gpkg';
+create index "2020_hoogtestatistiekengebouwen_bagpandididx" on "2020_hoogtestatistieken_gebouwen" (bagpandid);
+COMMENT ON TABLE "2020_hoogtestatistieken_gebouwen" IS 'imported with pgbrowser (https://github.com/geodan/pgbrowser) from 2020_3d_hoogtestatistieken_gebouwen.zip file 2020_3d_hoogtestatistieken_gebouwen.gpkg';
+
 
 -- cbs kerncijfers 2020 per postcode
 drop table if exists cbs_pc6_2020_v1;

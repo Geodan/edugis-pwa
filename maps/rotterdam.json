@@ -1441,62 +1441,7 @@
     {
       "type": "group",
       "title": "Gebouwen",
-      "sublayers": [{
-          "title": "3D hoogte",
-          "layerInfo": {
-            "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
-            "metadata": {
-              "attributes": {
-                "translations": [
-                  {"name": "height", "translation": "hoogte", "valuemap": [
-                    [4, "0 - 4 m", "<"],
-                    [8, "4 - 8 m", "<"],
-                    [13, "8 - 13 m", "<"],
-                    [16, "13 - 16 m", "<"],
-                    [19, "16 - 19 m", "<"],
-                    [24, "19 - 24 m", "<"],
-                    [40, "24 - 40 m", "<"],
-                    [60, "40 - 60 m", "<"],
-                    [80, "60 - 80 m", "<"]
-                  ], "unit": " m", "decimals": 1},
-                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
-                  {"name": "dd_h_dak_max", "translation": "max dakhoogte (NAP)", "unit": " m", "decimals": 1}
-                ]
-              }
-            },  
-            "type": "fill-extrusion",
-            "source": {
-              "type": "vector",
-              "tiles": ["https://research1.geodan.nl/data/plllbronnen.2020_hoogtestatistieken_gebouwen/mvt/{z}/{x}/{y}?geom_column=geom&columns=dd_h_dak_max,h_maaiveld&include_nulls=0"],
-              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
-            },
-            "source-layer": "plllbronnen.2020_hoogtestatistieken_gebouwen",
-            "paint": {
-              "fill-extrusion-color": [
-                "let", "height", ["-", ["get", "dd_h_dak_max"],
-                  ["get", "h_maaiveld"]
-                ],
-                [
-                  "case", ["<", ["var", "height"], 4], "#fff7ec",
-                  ["<", ["var", "height"], 8], "#fee8c8",
-                  ["<", ["var", "height"], 13], "#fdd49e",
-                  ["<", ["var", "height"], 16], "#fdbb84",
-                  ["<", ["var", "height"], 19], "#fc8d59",
-                  ["<", ["var", "height"], 24], "#ef6548",
-                  ["<", ["var", "height"], 40], "#d7301f",
-                  ["<", ["var", "height"], 60], "#b30000",
-                  ["<", ["var", "height"], 80], "#7f0000",
-                  "#7f0000"
-                ]
-              ],
-              "fill-extrusion-height": ["-", ["get", "dd_h_dak_max"],
-                ["get", "h_maaiveld"]
-              ],
-              "fill-extrusion-base": 0,
-              "fill-extrusion-opacity": 0.95
-            }
-          }
-        },
+      "sublayers": [
         {
           "title": "status",
           "layerInfo": {
@@ -1816,6 +1761,281 @@
                 ["get", "dak_pv"], 0, "blue", 700000, "red"
               ],
               "fill-outline-color": "black"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "Gebouwen 3D",
+      "sublayers": [
+        {
+          "title": "Hoogte",
+          "layerInfo": {
+            "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["id"],
+                "translations": [{
+                    "name": "identificatie",
+                    "translation": "bag id"
+                  },
+                  {"name": "pandstatus"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"},
+                  {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "hoogte_dak_max", "translation": "hoogte", "valuemap": [
+                    [4, "0 - 4 m", "<"],
+                    [8, "4 - 8 m", "<"],
+                    [13, "8 - 13 m", "<"],
+                    [16, "13 - 16 m", "<"],
+                    [19, "16 - 19 m", "<"],
+                    [24, "19 - 24 m", "<"],
+                    [40, "24 - 40 m", "<"],
+                    [60, "40 - 60 m", "<"],
+                    [80, "60 - 80 m", "<"]
+                  ], "unit": " m", "decimals": 1},
+                  {"name": "dak_type", "translation": "dak type"},
+                  {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                  {"name": "ondergronds_type", "translation": "ondergronds type"}
+                ]
+              }
+            },  
+            "type": "fill-extrusion",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
+            },
+            "source-layer": "plll_prod.gebouw3d",
+            "paint": {
+              "fill-extrusion-color": [
+                "case", 
+                ["<", ["get", "hoogte_dak_max"], 4], "#fff7ec",
+                ["<", ["get", "hoogte_dak_max"], 8], "#fee8c8",
+                ["<", ["get", "hoogte_dak_max"], 13], "#fdd49e",
+                ["<", ["get", "hoogte_dak_max"], 16], "#fdbb84",
+                ["<", ["get", "hoogte_dak_max"], 19], "#fc8d59",
+                ["<", ["get", "hoogte_dak_max"], 24], "#ef6548",
+                ["<", ["get", "hoogte_dak_max"], 40], "#d7301f",
+                ["<", ["get", "hoogte_dak_max"], 60], "#b30000",
+                ["<", ["get", "hoogte_dak_max"], 80], "#7f0000",
+                "#7f0000"
+              ],
+              "fill-extrusion-height": ["get", "hoogte_dak_max"],
+              "fill-extrusion-base": 0,
+              "fill-extrusion-opacity": 0.95
+            }
+          }
+        },
+        {
+          "title": "status",
+          "layerInfo": {
+            "id": "1d96975a-c4e4-441b-8832-be150d87444",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"},
+                  {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "hoogte_dak_max", "translation": "hoogte", "unit": " m", "decimals": 1},
+                  {"name": "dak_type", "translation": "dak type"},
+                  {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                  {"name": "ondergronds_type", "translation": "ondergronds type"}
+                ]
+              }
+            },  
+            "type": "fill-extrusion",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
+            },
+            "source-layer": "plll_prod.gebouw3d",
+            "paint": {
+              "fill-extrusion-color": [
+                "match", 
+                ["get", "pandstatus"],
+                "Bouwvergunning verleend", "lightgreen",
+                "Verbouwing pand", "green",
+                "Pand in gebruik", "gray",
+                "Sloopvergunning verleend", "pink",
+                "Pand gesloopt", "red",
+                "black"
+              ],
+              "fill-extrusion-height": ["get", "hoogte_dak_max"],
+              "fill-extrusion-base": 0,
+              "fill-extrusion-opacity": 0.95
+            }
+          }
+        },
+        {
+          "title": "bouwjaar",
+          "layerInfo": {
+            "id": "1d96975a-ffe4-441b-8832-be150d874a5",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"},
+                  {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "hoogte_dak_max", "translation": "hoogte", "unit": " m", "decimals": 1},
+                  {"name": "dak_type", "translation": "dak type"},
+                  {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                  {"name": "ondergronds_type", "translation": "ondergronds type"}
+                ]
+              }
+            },  
+            "type": "fill-extrusion",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
+            },
+            "source-layer": "plll_prod.gebouw3d",
+            "paint": {
+              "fill-extrusion-color": ["case",
+                ["<", ["get", "bouwjaar"], 1900], "#99140a",
+                ["<", ["get", "bouwjaar"], 1920], "#c6141f",
+                ["<", ["get", "bouwjaar"], 1945], "#f21434",
+                ["<", ["get", "bouwjaar"], 1965], "#f7512c",
+                ["<", ["get", "bouwjaar"], 1975], "#f79520",
+                ["<", ["get", "bouwjaar"], 1978], "#f7d915",
+                ["<", ["get", "bouwjaar"], 1982], "#d5da32",
+                ["<", ["get", "bouwjaar"], 1990], "#97a56f",
+                ["<", ["get", "bouwjaar"], 2000], "#5970ad",
+                ["<", ["get", "bouwjaar"], 2005], "#1b3beb",
+                ["<", ["get", "bouwjaar"], 2015], "#5b24e3",
+                ["<", ["get", "bouwjaar"], 2023], "#a911d3",
+                "black"
+              ],
+              "fill-extrusion-height": ["get", "hoogte_dak_max"],
+              "fill-extrusion-base": 0,
+              "fill-extrusion-opacity": 0.95
+            }
+          }
+        },
+        {
+          "title": "energielabel",
+          "layerInfo": {
+            "id": "6d96975b-ffe4-441b-8832-be150d874cf",
+            "metadata": {
+              "attributes": {
+                "deniedattributes": ["id"],
+                "translations": [
+                  {"name": "identificatie", "translation": "bag id"},
+                  {"name": "pandstatus"},
+                  {"name": "bouwjaar"},
+                  {"name": "verblijfsobjecten"},
+                  {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                  {"name": "gebouwtypen"},
+                  {"name": "nummerreeks"},
+                  {"name": "elabels", "translation": "energielabels"},
+                  {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                  {"name": "postcodes"},
+                  {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                  {"name": "volume", "unit": " m3"},
+                  {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                  {"name": "vloeroppervlakte1", "unit": " m2"},
+                  {"name": "vloeroppervlakte2", "unit": " m2"},
+                  {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                  {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                  {"name": "hoogte_dak_max", "translation": "hoogte", "unit": " m", "decimals": 1},
+                  {"name": "dak_type", "translation": "dak type"},
+                  {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                  {"name": "ondergronds_type", "translation": "ondergronds type"}
+                ]
+              }
+            },  
+            "type": "fill-extrusion",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://research1.geodan.nl/data/plll_prod.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+              "bounds": [4.532957677889074, 51.92839550145261, 4.564038729644246, 51.95289636866623]
+            },
+            "source-layer": "plll_prod.gebouw3d",
+            "paint": {
+              "fill-extrusion-color": [
+                "match",["get", "meestvoorkomendelabel"],
+                "A+++", "#1a9641",
+                "A++", "#1a9641",
+                "A+", "#1a9641",
+                "A", "#6abd58",
+                "B", "#b3df5b",
+                "C", "#e6f51f",
+                "D", "#ffe81c",
+                "E", "#feba53",
+                "F", "#ed6e43",
+                "G", "#d7191c",
+                "#cccccc"
+              ],
+              "fill-extrusion-height": ["get", "hoogte_dak_max"],
+              "fill-extrusion-base": 0,
+              "fill-extrusion-opacity": 0.95
             }
           }
         }

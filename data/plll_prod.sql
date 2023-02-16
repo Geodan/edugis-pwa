@@ -609,3 +609,35 @@ select
    ) tpc on true;
   alter table gebouw add primary key(identificatie);
   create index gebouwgeomidx on gebouw using gist(geom);
+
+  create view gebouw3d as 
+  SELECT 
+	hg.id,
+	g.identificatie, 
+	g.bouwjaar, 
+	g."pandstatus", 
+	g.verblijfsobjecten, 
+	g.oppervlakteverblijfsobjecten, 
+	g.gebouwtypen, 
+	g.nummerreeks, 
+	g.elabels, 
+	g.meestvoorkomendelabel, 
+	g.postcodes, 
+	g.meestvoorkomendepostcode, 
+	g.volume, 
+	g.gem_hoogte, 
+	g.gem_bouwlagen, 
+	g.vloeroppervlakte1, 
+	g.vloeroppervlakte2, 
+	hg.h_maaiveld, 
+	hg.dd_h_dak_min,
+	hg.dd_h_dak_50p, 
+	hg.dd_h_dak_70p, 
+	hg.dd_h_dak_max,
+	hg.dd_h_dak_max - h_maaiveld hoogte_dak_max,
+	hg.dak_type, 
+	hg.kas_warenhuis, 
+	hg.ondergronds_type, 
+	hg.geom
+FROM plllbronnen."2020_hoogtestatistieken_gebouwen" hg
+  join gebouw g on (hg.bagpandid=g.identificatie);
