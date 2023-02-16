@@ -587,6 +587,8 @@ class MapDraw extends LitElement {
         this.mbDraw.changeMode(this.drawMode = 'simple_select');
       }
       this._restoreCurrentLayer();
+      this.history = [];
+      this.historyIndex = 0;
       //this.currentLayer[this.featureType] = null;
       this.featureType = 'None';
       this.map.off('draw.create', this.featuresCreated);
