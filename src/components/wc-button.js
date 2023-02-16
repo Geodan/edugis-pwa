@@ -4,13 +4,15 @@ class WcButton extends LitElement {
     static get properties() {
         return {
             disabled: {type: Boolean},
-            tabindex: {type: Number, reflect: true}
+            tabindex: {type: Number, reflect: true},
+            compact: {type: Boolean}
         }
     }
     constructor() {
         super();
         this.disabled = false;
         this.tabindex = 0;
+        this.compact = false;
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('disabled')) {
@@ -60,11 +62,17 @@ class WcButton extends LitElement {
                 opacity: .5;
                 cursor: not-allowed;
             }
+            button.compact {
+                height: 28px;
+                line-height: 28px;
+                padding: 0 8px 0 9px;
+                font-size: 12px;
+            }
         `
     }
     render() {
         return html`
-        <button ?disabled="${this.disabled}" @click="${e=>this._handleClick(e)}">
+        <button ?disabled="${this.disabled}" class="${this.compact?'compact':''}" @click="${e=>this._handleClick(e)}">
             <slot></slot>
         </button>
         `;
