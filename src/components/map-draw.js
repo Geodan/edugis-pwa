@@ -5,6 +5,7 @@ import drawStyle from './map-draw-theme.js';
 import drawCss from './map-draw-css.js';
 import {MapDrawLayerDialog} from './map-draw-layerdialog';
 import {threedots} from './my-icons.js';
+import './wc-button';
 
 const translate = {
   "number": "getal",
@@ -240,6 +241,18 @@ class MapDraw extends LitElement {
     const helphtml = helptext.split('\n').map(line=>line.trim() !== ''? html`<li>${line}</li>`: '');
     return html`<ul>${helphtml}</ul>`;
   }
+  _renderHistory() {
+    if (this.history.length > 0) {
+      return html`
+      <div class="history">
+        <wc-button compact @click=${this._undo} ?disabled=${!(this.historyIndex > 0)}><i class="material-icons">undo</i></wc-button>
+        <wc-button compact @click=${this._redo} ?disabled=${!(this.historyIndex < this.history.length)}><i class="material-icons">redo</i></wc-button>
+      </div>`
+    } else {
+      return html``
+    }
+    
+  }
   _inSelectMode() {
     return ['simple_select','direct_select'].includes(this.mbDraw.getMode())
   }
@@ -268,7 +281,14 @@ class MapDraw extends LitElement {
             cursor: pointer;
             display: flex;
             justify-content: space-between;
-        }
+      }
+      .history {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 4px;
+        gap: 10px;
+      }
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}">
       <div class="header">Kaartlaag tekenen</div>
@@ -289,6 +309,7 @@ class MapDraw extends LitElement {
       ${this._renderSelectedFeatures()}
       ${this._renderMessage()}
       ${this._renderHelp()}
+      ${this._renderHistory()}
       </div>
       </div>
     `
