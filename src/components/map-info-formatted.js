@@ -27,7 +27,9 @@ class MapInfoFormatted extends LitElement {
     .attributename {
       width: 90%;
       text-align: left;
-      font-style: bold;
+    }
+    .emphasize {
+      font-weight: bold;
     }
     .attributevalue {
       width: 90%;
@@ -155,7 +157,7 @@ class MapInfoFormatted extends LitElement {
                 value += translation.unit;
               }
               let translatedKey = translation.translation ? translation.translation: translation.name;
-              result.push(this.renderAttribute(translatedKey, value, odd=!odd));
+              result.push(this.renderAttribute(translatedKey, value, odd=!odd, attributes.emphasize?.includes(translation.name)));
             }
           }
         }
@@ -171,16 +173,16 @@ class MapInfoFormatted extends LitElement {
         if (attributes.translations && attributes.translations.findIndex(translation=>translation.name === key) > -1) {
           continue; // skip translated attributes
         }
-        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd), attributes.emphasize?.includes(key));
       }
     } else {
       for (let key in feature.properties) {
-        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd, attributes.emphasize?.includes(key)));
       }
     }
     return result;
   }
-  renderAttribute(key, value, odd) {
+  renderAttribute(key, value, odd, emphasize) {
     let lowCaseValue = typeof value === 'string'? value.toLowerCase() : '';
     let isImage = (
       lowCaseValue.startsWith('https://maps.googleapis.com') || 
@@ -189,8 +191,8 @@ class MapInfoFormatted extends LitElement {
           (lowCaseValue.toLowerCase().endsWith('.png') || lowCaseValue.endsWith('.jpg')  || lowCaseValue.endsWith('.gif') || lowCaseValue.endsWith('.svg'))
         )
       );
-    return html`<tr class=${odd?'':"even"}><td><div class="attributename">${key}</div></td>
-    <td><div class="attributevalue">${typeof value === 'object' && value !== null?
+    return html`<tr class=${odd?'':"even"}><td><div class="attributename${emphasize?' emphasize':''}">${key}</div></td>
+    <td><div class="attributevalue${emphasize?' emphasize':''}">${typeof value === 'object' && value !== null?
           JSON.stringify(value)
         :isImage?html`<img class="clickImage" src="${value}" width="95%" @click="${e=>this._imageClicked(e)}">`:value}</div></td></tr>`
   }

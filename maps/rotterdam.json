@@ -399,6 +399,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": "gebruiksdoel",
                 "translations": [
                   {"name": "gebruiksdoel"},
                   {"name": "identificatie"},
@@ -512,6 +513,7 @@
               "abstract": "Bij het vaststellen van energielabels wordt ook het pandtype vastgesteld. De pandtypes zijn daardoor alleen bekend voor panden waarvoor ook een energielabel is afgegven.",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["pand_gebouwtype"],
                 "translations": [
                   {"name": "gebruiksdoel"},
                   {"name": "identificatie"},
@@ -629,6 +631,7 @@
               "title": "energielabels",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["pand_energieklasse"],
                 "translations": [
                   {"name": "gebruiksdoel"},
                   {"name": "identificatie"},
@@ -743,6 +746,7 @@
               "maxinfofeatures": 20,
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_aardgaslevering_woningen_gecorrigeerd"],
                 "translations": [
                   {"name": "gebruiksdoel"},
                   {"name": "identificatie"},
@@ -862,6 +866,7 @@
               "maxinfofeatures": 20,
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_elektriciteitslevering_woningen_gecorrigeerd"],
                 "translations": [
                   {"name": "gebruiksdoel"},
                   {"name": "identificatie"},
@@ -1441,6 +1446,7 @@
     {
       "type": "group",
       "title": "Gebouwen",
+      "id": "pandenstatus",
       "sublayers": [
         {
           "title": "status",
@@ -1452,11 +1458,11 @@
               "abstract": "gebouwen, data gebaseerd op de BAG, BAG 3D en de RVO energielabels. Attribuut gem_hoogte is berekend: gebouwvolume/gebouwoppervlak. Bouwlagen zijn geschat: floor(gem_hoogte/3,1). Vloeroppervlak1:bouwlagen x gebouwoppervlak. Vloeroppervlak2: gebouwvolume/gebouwoppervlak/3,1.",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["pandstatus"],
                 "translations": [{
                     "name": "identificatie",
                     "translation": "bag id"
                   },
-                  {"name": "pandstatus"},
                   {"name": "pandstatus"},
                   {"name": "bouwjaar"},
                   {"name": "verblijfsobjecten"},
@@ -1508,6 +1514,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["bouwjaar"],
                 "translations": [
                   {"name": "identificatie", "translation": "bag id"},
                   {"name": "pandstatus"},
@@ -1588,6 +1595,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["meestvoorkomendelabel"],
                 "translations": [
                   {"name": "identificatie", "translation": "bag id"},
                   {"name": "pandstatus"},
@@ -1772,10 +1780,12 @@
       "sublayers": [
         {
           "title": "Hoogte",
+          "id": "hoogte3d",
           "layerInfo": {
-            "id": "1d96975a-c4e4-441b-8832-be150d87c2b6",
+            "id": "hoogte3d",
             "metadata": {
               "attributes": {
+                "emphasize": ["hoogte_dak_max"],
                 "deniedattributes": ["id"],
                 "translations": [{
                     "name": "identificatie",
@@ -1849,10 +1859,12 @@
         },
         {
           "title": "status",
+          "id": "pandstatus3d",
           "layerInfo": {
-            "id": "1d96975a-c4e4-441b-8832-be150d87444",
+            "id": "pandstatus3d",
             "metadata": {
               "attributes": {
+                "emphasize": ["pandstatus"],
                 "deniedattributes": ["id"],
                 "translations": [
                   {"name": "identificatie", "translation": "bag id"},
@@ -1910,15 +1922,31 @@
         },
         {
           "title": "bouwjaar",
+          "id": "bouwjaar3d",
           "layerInfo": {
             "id": "1d96975a-ffe4-441b-8832-be150d874a5",
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["bouwjaar"],
                 "translations": [
                   {"name": "identificatie", "translation": "bag id"},
                   {"name": "pandstatus"},
-                  {"name": "bouwjaar"},
+                  {"name": "bouwjaar","translation": "bouwjaar", "valuemap": [
+                      [1900, "1890 - 1899", "<"],
+                      [1920, "1900 - 1919", "<"],
+                      [1945, "1920 - 1944", "<"],
+                      [1965, "1945 - 1964", "<"],
+                      [1975, "1965 - 1974", "<"],
+                      [1978, "1975 - 1977", "<"],
+                      [1982, "1978 - 1981", "<"],
+                      [1990, "1982 - 1989", "<"],
+                      [2000, "1990 - 1999", "<"],
+                      [2005, "2000 - 2004", "<"],
+                      [2015, "2005 - 2014", "<"],
+                      [2023, "2015 - 2023", "<"]
+                    ]
+                  },
                   {"name": "verblijfsobjecten"},
                   {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
                   {"name": "gebouwtypen"},
@@ -1976,10 +2004,12 @@
         },
         {
           "title": "energielabel",
+          "id": "energielabel3d",
           "layerInfo": {
-            "id": "6d96975b-ffe4-441b-8832-be150d874cf",
+            "id": "energielabel3d",
             "metadata": {
               "attributes": {
+                "emphasize": ["meestvoorkomendelabel"],
                 "deniedattributes": ["id"],
                 "translations": [
                   {"name": "identificatie", "translation": "bag id"},
@@ -2126,6 +2156,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["particuliere_eigenaar_bewoner"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2213,6 +2244,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["particuliere_verhuur"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2300,6 +2332,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["woningcorporatie"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2388,6 +2421,7 @@
               "abstract": "gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied.",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_aardgaslevering_woningen_gecorrigeerd"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2477,6 +2511,7 @@
               "abstract": "Gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied per m2 woningoppervlak. Berekend door de gemiddelde aargaslevering te vermenigvuldigen met het aantal woningen en te delen door de som van de oppervlakten van woningen",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_aardgaslevering_woningen_gecorrigeerd"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2565,6 +2600,7 @@
               "abstract": "Gemiddelde elektriciteitslevering woningen (2021)",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["aardgasperm2"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2654,6 +2690,7 @@
               "abstract": "Meest voorkomend energielabel per postcode",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["toplabel"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2820,6 +2857,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["particuliere_eigenaar_bewoner"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2907,6 +2945,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["particuliere_verhuur"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -2994,6 +3033,7 @@
             "metadata": {
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["woningcorporatie"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -3082,6 +3122,7 @@
               "abstract": "gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied.",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_aardgaslevering_woningen_gecorrigeerd"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -3171,6 +3212,7 @@
               "abstract": "Gemiddelde aardgaslevering woningen (2021) gecorrigeerd voor afwijkende weersomstandigheden per postcodegebied per m2 woningoppervlak. Berekend door de gemiddelde aargaslevering te vermenigvuldigen met het aantal woningen en te delen door de som van de oppervlakten van woningen",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["aardgasperm2"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -3259,6 +3301,7 @@
               "abstract": "Gemiddelde elektriciteitslevering woningen (2021)",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["gemiddelde_elektriciteitslevering_woningen"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
@@ -3348,6 +3391,7 @@
               "abstract": "Meest voorkomend energielabel per postcode",
               "attributes": {
                 "deniedattributes": ["id"],
+                "emphasize": ["toplabel"],
                 "translations": [{"name":"postcode", "translation": "postcode"},
                 {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                 {"name":"woningen"},
