@@ -1619,22 +1619,6 @@
                 
                     "sublayers": [
                         {
-                            "type":"wms",
-                            "title":"Fietsroutes",
-                            "layerInfo":{
-                                "id":"fietsrouteswms",
-                                "metadata": {
-                                    "legendurl": ""
-                                },
-                                "type": "raster",
-                                "source": {
-                                    "type": "raster",
-                                    "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                    "tileSize" : 512,
-                                    "tiles": ["https://geodata.nationaalgeoregister.nl/fietsknooppuntennetwerk/ows?layers=knooppunten,netwerken"]
-                                }
-                            }
-                        },{
                     "title": "Fietsstallingen",
                     "layerInfo":{
                               "id": "attrlayer",
@@ -1642,20 +1626,25 @@
                               "source": {
                                 "type": "vector",
                                 "tiles": [
-                                  "https://tiles.edugis.nl/v1/mvt/public.fietsstallingen/{z}/{x}/{y}?columns=\"id\",name"
+                                  "https://tiles.edugis.nl/v1/mvt/edugis.fietsenstalling20230220osm/{z}/{x}/{y}?geomcolumn=geompunt&columns=name,soort,overdekt,bewaakt"
                                 ]
                               },
-                              "source-layer": "public.fietsstallingen",
+                              "source-layer": "edugis.fietsenstalling20230220osm",
                               "paint": {
                                 "circle-radius": 4,
-                                "circle-color": "#1f78b4",
+                                "circle-color": ["case",["==",["get","soort"],"stands"],"#a6cee3",
+                                ["==",["get","soort"],"wall_loops"],"#1f78b4",
+                                ["==",["get","soort"],"rack"],"#b2df8a",
+                                ["==",["get","soort"],"shed"],"#33a02c",
+                                ["==",["get","soort"],"lockers"],"#fb9a99",
+                                ["==",["get","soort"],"yes"],"#e31a1c",
+                                ["==",["get","soort"],"building"],"#fdbf6f",
+                                ["==",["get","soort"],"anchors"],"#ff7f00",
+                                ["==",["get","soort"],"wide_stands"],"#cab2d6",
+                                "#6a3d9a"],
                             "circle-stroke-color": "black",
                             "circle-stroke-width": 1
-                          },
-                          "filter": [
-                            "has",
-                            "id"
-                            ]
+                          }
                     }
                }
                     ]
@@ -2749,7 +2738,7 @@
                                 },
                                 "source": {
                                     "type": "raster",
-                                    "tiles": ["https://geodata.nationaalgeoregister.nl/fysischgeografischeregios/wms?layers=fysischgeografischeregios"]
+                                    "tiles": ["https://service.pdok.nl/ez/fysischgeografischeregios/wms/v1_0?layers=fysischgeografischeregios"]
                                 }
                             }
                         }
