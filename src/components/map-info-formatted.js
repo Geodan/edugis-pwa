@@ -181,7 +181,7 @@ class MapInfoFormatted extends LitElement {
       }
     } else {
       for (let key in feature.properties) {
-        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd, attributes.emphasize?.includes(key)));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd, false));
       }
     }
     return result;
