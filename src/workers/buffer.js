@@ -1,4 +1,4 @@
-importScripts('https://unpkg.com/@turf/turf@6/turf.min.js');
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js');
 //importScripts('../../node_modules/@turf/buffer/dist/es/index.js');
 
 this.onmessage = function(evt) {

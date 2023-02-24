@@ -100,6 +100,10 @@ export const getVisibleFeatures = async (map, layerid) => {
                     feature1 = features[featureIndex] = lineUnion(feature1, feature2, tolerance);
                   } else {
                     feature1 = features[featureIndex] = turf.union(feature1, feature2);
+                    // check if feature1.properties is empty
+                    if (((obj)=>{for (const key in obj) return false; return true;})(feature1.properties)) {
+                      feature1.properties = feature2.properties; // bug in turf.union?
+                    }
                   }
                   features[tileBorderFeatures[intersectCandidates[j]].index] = null;
                   tileBorderFeatures[intersectCandidates[j]].index = featureIndex;
