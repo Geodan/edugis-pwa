@@ -162,9 +162,13 @@ class MapDatatoolBuffer extends LitElement {
                   }
                 })
             }
-            this.busyMessage = "Bezig met berekenen van buffer(s)...";
             this._setTargetLayer(this.shadowRoot.querySelector("#targetname").value, bufferSize);
+            this.busyMessage = "Buffer(s) berekenen, dit kan even duren..";
             this.worker.postMessage([geojson, bufferSize]);
+        } else {
+          // no visble features in source layer
+          this.busyMessage = `Geen zichtbare elementen in ${this.map.getLayer(layerid).metadata.title}}`;
+          setTimeout(()=>this.busyMessage='', 3000);
         }
       }
       _setTargetLayer(title, bufferSize) {
