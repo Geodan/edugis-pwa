@@ -1590,18 +1590,18 @@
                     "title": "Hoogte",
                     "sublayers": [
                       {
-                        "type": "wms",
+                        "type": "wmts",
                         "title": "Hoogte (AHN3)",
                         "layerInfo": {
                             "id": "hoogteahn3_5",
                             "type": "raster",
                             "metadata": {
                                 "legendurl": "https://mapserver.edugis.nl/legends/nederland/ahn-nederland1.png",
-                                "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/ahn3/service=?WMS&layers=ahn3_05m_dsm",
-                                "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                "getFeatureInfoUrl": "https://service.pdok.nl/rws/ahn3/wms/v1_0?layers=ahn3_05m_dsm&query_layers=ahn3_05m_dsm&service=WMS&request=getfeatureinfo&version=1.1.1",
+                                "getFeatureInfoFormat":"application/json",
                                 "attributes": {
                                   "translations": [
-                                    {"name": "GRAY_INDEX", "translation": "hoogte", "unit": " m"}
+                                    {"name": "value_list", "translation": "hoogte (NAP)", "unit": " m", "decimals": 2}
                                   ]
                                 },
                                 "abstract": "Het Actueel Hoogtebestand Nederland (AHN) is de digitale hoogtekaart voor heel Nederland. Het bevat gedetailleerde en precieze hoogtegegevens met gemiddeld acht hoogtemetingen per vierkante meter. AHN is een samenwerking van de provincies, Rijksoverheid en de waterschappen. Deze kaartlaag heeft een resolutie van een halve meter horizontaal en 5cm verticaal. De hoogtegegevens zijn ingewonnen tussen 2014 en 2019."
@@ -1609,10 +1609,8 @@
                             "source": {
                                 "type": "raster",
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                "tiles": ["https://tiles.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
-                                    "https://t2.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
-                                    "https://t3.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true",
-                                    "https://t4.edugis.nl/mapproxy/ahn3/service?=WMS&layers=ahn3_dsm&transparent=true"]
+                                "tiles": ["https://service.pdok.nl/rws/ahn3/wmts/v1_0/ahn3_05m_dsm/EPSG:3857/{z}/{x}/{y}.png"],
+                                "maxzoom": 19
                             }
                           }
                         },
