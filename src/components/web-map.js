@@ -1379,17 +1379,18 @@ class WebMap extends LitElement {
     }
   }
   async prepareListItems(list) {
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].type && list[i].type === "ckan") {
-        const ckanConnector = new CkanConnector({url:list[i].url, organizations: list[i].organizations});
-        const data = await ckanConnector.getData();
-        const layers = ckanConnector.convertToMapboxLayers(data);
-        list.splice(i, 1, ...layers)
-      } else if (list[i].sublayers) {
-        this.prepareListItems(list[i].sublayers);
-      }
+  for (let i = 0; i < list.length; i++) {
+    const listItem = list[i];
+    if (listItem.type && listItem.type === "ckan") {
+      const ckanConnector = new CkanConnector({url:listItem.url, organizations: listItem.organizations});
+      const data = await ckanConnector.getData();
+      const layers = ckanConnector.convertToMapboxLayers(data);
+      list.splice(i, 1, ...layers)
+    } else if (listItem.sublayers) {
+      this.prepareListItems(listItem.sublayers);
     }
   }
+}
   async prepareCatalog(list) {
     await this.prepareListItems(list);
   }
