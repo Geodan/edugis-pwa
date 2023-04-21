@@ -1183,56 +1183,173 @@
             "type": "group",
             "title": "Gebouwen",
             "sublayers": [
-                {
+              {
                     "type": "group",
                     "title": "Panden e.d.",
                     "sublayers": [
-                        {
-                          "type": "vector",
-                          "title": "panden - 3D hoogte",
-                          "layerInfo": {
-                            "id": "building3D",
-                            "type": "fill-extrusion",
-                            "metadata": {
-                              "attributes": {
-                                "translations": [
-                                    {"name": "dd_h_dak_max", "translation": "gebouwhoogte (NAP)" , "unit": " m", "decimals": 1},
-                                    {"name": "h_maaiveld", "translation": "maaiveld (NAP)" , "unit": " m", "decimals": 3}
-                                ]
-                              },
-                              "abstract": "Deze kaartlaag is bedoeld om in 3D te bekijken (schuine kaarthoek). Bestand '3D Hoogtestatistieken gebouwen' is gebaseerd op hoogtemetingen uit het 'Algemeen Hoogtebestand Nederland' (AHN) en de 'Basisadministratie Adressen en Gebouwen' (BAG). Een gebouw is opgedeeld in 1 of meer hoogtevlakken. Van elk hoogtevlak is onder andere de hoogste hoogte boven Nieuw Amsterdams Peil (NAP) bepaald. De gebouwhoogte is het verschil tussen de gebouwhoogte boven NAP en de hoogte van de grond waarop het gebouw staat (maaiveld). Onbekende bouwjaren worden grijs weergegeven."
-                            },
-                            "source": {
-                              "type": "vector",
-                              "tiles":["https://tiles.edugis.nl/data/public.bag13_lod1213_2d_levering/mvt/{z}/{x}/{y}?geomcolumn=geom&columns=bouwjaar,dd_h_dak_max,h_maaiveld&include_nulls=0"],
-                              "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
-                              "minzoom": 13,
-                              "maxzoom": 18,
-                              "attribution": "Kadaster"
-                            },
-                            "source-layer": "public.bag13_lod1213_2d_levering",
-                            "minzoom": 13,
-                            "maxzoom": 24,
-                            "paint": {
-                              "fill-extrusion-color": ["case",
-                              ["==", ["get","bouwjaar"], null], "#cccccc",
-                              ["<",["get","bouwjaar"],1006],"#cccccc",
-                              ["<",["get","bouwjaar"],1700],"#7f0000",
-                              ["<",["get","bouwjaar"],1800],"#b30000",
-                              ["<",["get","bouwjaar"],1900],"#d7301f",
-                              ["<",["get","bouwjaar"],1930],"#ef6548",
-                              ["<",["get","bouwjaar"],1960],"#fc8d59",
-                              ["<",["get","bouwjaar"],1975],"#fdbb84",
-                              ["<",["get","bouwjaar"],1990],"#fdd49e",
-                              ["<",["get","bouwjaar"],2000],"#fee8c8",
-                              ["<=",["get","bouwjaar"],2025],"#fff7ec",
-                              "#cccccc"],
-                              "fill-extrusion-height": ["-",["get","dd_h_dak_max"],["get","h_maaiveld"]],
-                              "fill-extrusion-base": 0,
-                              "fill-extrusion-opacity": 0.95
+                      {
+                        "title": "Hoogte",
+                        "id": "hoogte3d",
+                        "layerInfo": {
+                          "id": "hoogte3d",
+                          "metadata": {
+                            "attributes": {
+                              "emphasize": ["hoogte_dak_max"],
+                              "deniedattributes": ["id"],
+                              "translations": [{
+                                  "name": "identificatie",
+                                  "translation": "bag id"
+                                },
+                                {"name": "pandstatus"},
+                                {"name": "pandstatus"},
+                                {"name": "bouwjaar"},
+                                {"name": "verblijfsobjecten"},
+                                {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                                {"name": "gebouwtypen"},
+                                {"name": "nummerreeks"},
+                                {"name": "elabels", "translation": "energielabels"},
+                                {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                                {"name": "postcodes"},
+                                {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                                {"name": "volume", "unit": " m3"},
+                                {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                                {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                                {"name": "vloeroppervlakte1", "unit": " m2"},
+                                {"name": "vloeroppervlakte2", "unit": " m2"},
+                                {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                                {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "hoogte_dak_max", "translation": "hoogte", "valuemap": [
+                                  [4, "0 - 4 m", "<"],
+                                  [8, "4 - 8 m", "<"],
+                                  [13, "8 - 13 m", "<"],
+                                  [16, "13 - 16 m", "<"],
+                                  [19, "16 - 19 m", "<"],
+                                  [24, "19 - 24 m", "<"],
+                                  [40, "24 - 40 m", "<"],
+                                  [60, "40 - 60 m", "<"],
+                                  [80, "60 - 80 m", "<"]
+                                ], "unit": " m", "decimals": 1},
+                                {"name": "dak_type", "translation": "dak type"},
+                                {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                                {"name": "ondergronds_type", "translation": "ondergronds type"}
+                              ]
                             }
+                          },  
+                          "type": "fill-extrusion",
+                          "source": {
+                            "type": "vector",
+                            "tiles": ["https://tiles.edugis.nl/data/nldata.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+                            "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
+                            "minzoom": 14
+                          },
+                          "source-layer": "nldata.gebouw3d",
+                          "minzoom": 14,
+                          "paint": {
+                            "fill-extrusion-color": [
+                              "case", 
+                              ["<", ["get", "hoogte_dak_max"], 4], "#fff7ec",
+                              ["<", ["get", "hoogte_dak_max"], 8], "#fee8c8",
+                              ["<", ["get", "hoogte_dak_max"], 13], "#fdd49e",
+                              ["<", ["get", "hoogte_dak_max"], 16], "#fdbb84",
+                              ["<", ["get", "hoogte_dak_max"], 19], "#fc8d59",
+                              ["<", ["get", "hoogte_dak_max"], 24], "#ef6548",
+                              ["<", ["get", "hoogte_dak_max"], 40], "#d7301f",
+                              ["<", ["get", "hoogte_dak_max"], 60], "#b30000",
+                              ["<", ["get", "hoogte_dak_max"], 80], "#7f0000",
+                              "#7f0000"
+                            ],
+                            "fill-extrusion-height": ["get", "hoogte_dak_max"],
+                            "fill-extrusion-base": 0,
+                            "fill-extrusion-opacity": 0.95
                           }
-                        },
+                        }
+                      },{
+                        "title": "bouwjaar",
+                        "id": "bouwjaar3d",
+                        "layerInfo": {
+                          "id": "1d96975a-ffe4-441b-8832-be150d874a5",
+                          "metadata": {
+                            "attributes": {
+                              "deniedattributes": ["id"],
+                              "emphasize": ["bouwjaar"],
+                              "translations": [
+                                {"name": "identificatie", "translation": "bag id"},
+                                {"name": "pandstatus"},
+                                {"name": "bouwjaar","translation": "bouwjaar", "valuemap": [
+                                    [1900, "1890 - 1899", "<"],
+                                    [1920, "1900 - 1919", "<"],
+                                    [1945, "1920 - 1944", "<"],
+                                    [1965, "1945 - 1964", "<"],
+                                    [1975, "1965 - 1974", "<"],
+                                    [1978, "1975 - 1977", "<"],
+                                    [1982, "1978 - 1981", "<"],
+                                    [1990, "1982 - 1989", "<"],
+                                    [2000, "1990 - 1999", "<"],
+                                    [2005, "2000 - 2004", "<"],
+                                    [2015, "2005 - 2014", "<"],
+                                    [2023, "2015 - 2023", "<"]
+                                  ]
+                                },
+                                {"name": "verblijfsobjecten"},
+                                {"name": "oppervlakteverblijfsobjecten", "translation":"oppervlakte verblijfsobjecten", "unit": " m2"},
+                                {"name": "gebouwtypen"},
+                                {"name": "nummerreeks"},
+                                {"name": "elabels", "translation": "energielabels"},
+                                {"name": "meestvoorkomendelabel", "translation": "meestvoorkomend energie-label"},
+                                {"name": "postcodes"},
+                                {"name": "meestvoorkomendepostcode", "translation": "meest voork. postcode"},
+                                {"name": "volume", "unit": " m3"},
+                                {"name": "gem_hoogte", "translation": "gem hoogte", "unit": " m", "decimals": 1},
+                                {"name": "gem_bouwlagen", "translation": "gem bouwlagen"},
+                                {"name": "vloeroppervlakte1", "unit": " m2"},
+                                {"name": "vloeroppervlakte2", "unit": " m2"},
+                                {"name": "gem_hoogte", "translation": "gem dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "gem_bouwlagen", "translation": "geschat aantal bouwlagen"},
+                                {"name": "h_maaiveld", "translation": "maaiveld (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_min", "translation": "min dakhoogte (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_50p", "translation": "dakhoogte 50p (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "dd_h_dak_70p", "translation": "dakhoogte 70p (NAP)", "unit": " m", "decimals": 1},
+                                {"name": "hoogte_dak_max", "translation": "hoogte", "unit": " m", "decimals": 1},
+                                {"name": "dak_type", "translation": "dak type"},
+                                {"name": "kas_warenhuis", "translation": "kas of warenhuis", "valuemap": [[true, "ja"], [false, "nee"]]},
+                                {"name": "ondergronds_type", "translation": "ondergronds type"}
+                              ]
+                            }
+                          },  
+                          "type": "fill-extrusion",
+                          "source": {
+                            "type": "vector",
+                            "tiles": ["https://tiles.edugis.nl/data/nldata.gebouw3d/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,identificatie,bouwjaar,pandstatus,verblijfsobjecten,oppervlakteverblijfsobjecten,gebouwtypen,nummerreeks,elabels,meestvoorkomendelabel,postcodes,meestvoorkomendepostcode,volume,gem_hoogte,gem_bouwlagen,vloeroppervlakte1,vloeroppervlakte2,h_maaiveld,dd_h_dak_min,dd_h_dak_50p,dd_h_dak_70p,dd_h_dak_max,hoogte_dak_max,dak_type,kas_warenhuis,ondergronds_type&include_nulls=0"],
+                            "bounds": [3.25524871110589,50.7347266517351,7.24079584680245,53.5258520631408],
+                            "minzoom": 14
+                          },
+                          "source-layer": "nldata.gebouw3d",
+                          "paint": {
+                            "fill-extrusion-color": ["case",
+                              ["<", ["get", "bouwjaar"], 1900], "#99140a",
+                              ["<", ["get", "bouwjaar"], 1920], "#c6141f",
+                              ["<", ["get", "bouwjaar"], 1945], "#f21434",
+                              ["<", ["get", "bouwjaar"], 1965], "#f7512c",
+                              ["<", ["get", "bouwjaar"], 1975], "#f79520",
+                              ["<", ["get", "bouwjaar"], 1978], "#f7d915",
+                              ["<", ["get", "bouwjaar"], 1982], "#d5da32",
+                              ["<", ["get", "bouwjaar"], 1990], "#97a56f",
+                              ["<", ["get", "bouwjaar"], 2000], "#5970ad",
+                              ["<", ["get", "bouwjaar"], 2005], "#1b3beb",
+                              ["<", ["get", "bouwjaar"], 2015], "#5b24e3",
+                              ["<", ["get", "bouwjaar"], 2023], "#a911d3",
+                              "black"
+                            ],
+                            "fill-extrusion-height": ["get", "hoogte_dak_max"],
+                            "fill-extrusion-base": 0,
+                            "fill-extrusion-opacity": 0.95
+                          }
+                        }
+                      },
                         {
                             "type": "wms",
                             "title": "panden - bouwjaar",
@@ -2466,6 +2583,31 @@
                     "type": "group",
                     "title": "Bodem",
                     "sublayers": [
+                      {
+                        "type": "wms",
+                        "title": "Bodemkaart",
+                        "layerInfo": {
+                            "id": "bodemkaartbro",
+                            "type": "raster",
+                            "metadata": {
+                                "abstract": "De bodemkaart geeft ruimtelijke informatie over de bodemopbouw tot globaal 1 meter diepte. Deze informatie heeft betrekking op de aard en samenstelling van de bovengrond (grondsoort) met een verdere onderverdeling naar bodemvorming, veensoort, afwijkende lagen in het profiel en de aanwezigheid van kalk.",
+                                "getFeatureInfoFormat":"application/vnd.ogc.gml",
+                                "attributes": {
+                                  "deniedattributes": ["geom","maparea_id","fuuid","first_soilcode","normal_soilprofile_code","normal_soilprofile_name"],
+                                  "translations": [
+                                    {"name": "soilcode"},
+                                    {"name": "first_soilname", "translation": "naam"}
+                                  ]
+                                }
+                            },
+                            "source": {
+                                "type": "raster",
+                                "tileSize": 256,
+                                "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                                "tiles": ["https://service.pdok.nl/bzk/bro-bodemkaart/wms/v1_0?layers=soilarea"]
+                            }
+                          }
+                        },
                         {
                             "type": "wms",
                             "title": "Gemiddelde bodemdaling",
@@ -2656,37 +2798,44 @@
                     "type": "group",
                     "title": "Landschappen",
                     "sublayers": [
-                        {
-                          "type": "vector",
-                          "title": "Landschappen",
-                          "layerInfo": {
-                            "id":"40397019-eb38-45f4-b734-57759601ba6e",
-                            "type":"fill",
-                            "source":{
-                                "type":"vector",
-                                "tiles":["https://tiles.edugis.nl/data/public.landschap_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
-                                "bounds":[3.35823892305048,50.7499127235754,7.23040469324804,53.5536468751346],
-                                "maxzoom": 12
-                            },
-                            "source-layer":"public.landschap_geo",
-                            "paint":{
+                      {
+                        "title": "Landschappen",
+                        "layerInfo": {
+                          "id":"a8948eea-17a0-44b5-ae68-31f054b0650c",
+                          "metadata": {
+                            "abstract": "HISTLAND (Historisch landschappelijk informatiesysteem) bevat geografische gegevens over de ontginningsgeschiedenis van het Nederlandse landschap en de mate van verandering van dat landschap."
+                          },
+                          "type":"fill",
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.histland_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=hoofdtype,landschap,v1850_2000&include_nulls=0"],
+                              "bounds":[3.35671395050726,50.7513650915412,7.22642801392666,53.5496202033688],
+                              "attribution":"RCE"
+                          },
+                          "source-layer":"public.histland_geo",
+                          "paint":{
                             "fill-color":[
-                                "match",["get","naam"],
-                                "Droogmakerijen","#c06448",
-                                "Heuvelland","#a80000",
-                                "Kustzone","#ffff00",
-                                "Laagveengebied","#ffccff",
-                                "Rivierengebied","#bae5f2",
-                                "Veenkoloniën","#c29ed7",
-                                "Verstedelijkt gebied","#e1e1e1",
-                                "Zandgebied","#ffd37f",
-                                "Zeekleigebied","#66cc99",
+                                "match", ["get", "hoofdtype"],
+                                "Veenkolonien","#c080ff",
+                                "Veenontginningen","#e8d0ff",
+                                "Stroomrug- en komontginningen","#00ff80",
+                                "Rivierterrasontginningen","#b3ff40",
+                                "Oude zeekleipolders","#90b5ff",
+                                "Jonge zeekleipolders","#c0d5ff",
+                                "Droogmakerijen","#00d0d0",
+                                "Duinen en duinontginningen","#ffff00",
+                                "Lossontginningen","#b05800",
+                                "Kampontginningen met plaatselijke essen","#d09c00",
+                                "Heideontginningen en bossen (sedert 1850)","#ffb0d8",
+                                "Niet ontgonnen landschappen","#ffd8b0",
+                                "Overige onderscheidingen","#c0c0c0",
                                 "#000000"
                               ],
-                              "fill-opacity":1}
+                            "fill-opacity":1
+                          }
                         }
-                        },
-                        {
+                      },
+                      {
                           "type": "vector",
                           "title": "Deellandschappen",
                           "layerInfo":  {
@@ -2746,6 +2895,47 @@
                     "type": "group",
                     "title": "Bodemgebruik",
                     "sublayers": [
+                        {
+                          "type": "wms",
+                          "title": "cbs bodemgebruik 2017",
+                          "layerInfo": {
+                              "id": "cbsbodemgebruik2017",
+                              "type": "raster",
+                              "metadata": {
+                                  "getFeatureInfoFormat":"application/json"
+                              },
+                              "minzoom": 4.5,
+                              "maxzoom": 11.5,
+                              "source": {
+                                  "type": "raster",
+                                  "tiles": ["https://tiles.edugis.nl/mapproxy/cbs_bbg2017/service?layers=bestandbodemgebruik_2017_hoofdgroep"],
+                                  "bounds": [3.35823892378111,50.7499127235773,7.23040469398028,53.5536468751385],
+                                  "attribution": "CBS",
+                                  "maxzoom": 11,
+                                  "minzoom": 5
+                              }
+                          }
+                        },
+                        {
+                          "type": "wms",
+                          "title": "cbs bodemgebruik 2017 detail",
+                          "layerInfo": {
+                              "id": "cbsbodemgebruik2017categorie",
+                              "type": "raster",
+                              "metadata": {
+                                  "getFeatureInfoFormat":"application/json",
+                                  "abstract": "Het Bestand Bodemgebruik 2017 bevat digitale geometrie van het bodemgebruik in Nederland. Voorbeelden van het bodemgebruik zijn verkeersterreinen, bebouwing, recreatieterreinen en binnen- en buitenwater. De begrenzingen zijn voor een groot deel gebaseerd op de Top10NL (BRT). Bij het interpreteren zijn luchtfoto&#x27;s leidend. De gegevens zijn ingewonnen in de zomer van 2017."
+                              },
+                              "minzoom": 11.5,
+                              "source": {
+                                  "type": "raster",
+                                  "tiles": ["https://tiles.edugis.nl/mapproxy/cbs_bbg2017/service?layers=bestandbodemgebruik_2017_categorie"],
+                                  "bounds": [2.00012,50.695,7.81981,55.7062],
+                                  "attribution": "CBS",
+                                  "minzoom": 12
+                              }
+                          }
+                        },
                         {
                             "type":"getcapabilities",
                             "title":"cbsbodemgebruik2012",
