@@ -10,7 +10,7 @@ class MapLegendFill extends LitElement {
         }
         .container {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         .stretch {
             display: flex;
@@ -49,7 +49,7 @@ class MapLegendFill extends LitElement {
     }
     _fillItem(color, strokeColor, label) {
         return svg`
-        <svg width="30" height="15">
+        <svg width="30" height="15" style="flex-shrink:0;">
           <rect width="30" height="15" style="fill:${color};stroke-width:1;stroke:${strokeColor}"/>
         </svg>${html`<span class="label">${label}</span>`}`;
         // <rect width="30" height="15" style="fill:${color};fill-opacity:${fillOpacity};stroke-width:1;stroke:${strokeColor}"/>

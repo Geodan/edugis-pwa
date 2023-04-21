@@ -9,7 +9,7 @@ class MapLegendLine extends LitElement {
         }
         .container {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         .label {
             padding-left: 2px;
@@ -45,7 +45,7 @@ class MapLegendLine extends LitElement {
         return true;
     }
     _lineItem(color, width, label) {
-        return svg`<svg width="30" height="15">
+        return svg`<svg width="30" height="15" style="flex-shrink:0;">
         <line x1="0" y1="8" x2="30" y2="8" style="stroke:${color};stroke-width:${width};" />
         </svg>${html`<span class="label">${label}</span>`}`
     }
