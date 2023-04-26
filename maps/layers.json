@@ -3341,6 +3341,50 @@
                         }
                       },
                       {
+                        "title": "NOVEX gebieden",
+                        "layerInfo": {
+                          "id":"93b53cb6-ae67-40d5-aa5a-1c57e7276450",
+                          "metadata": {
+                            "maxinfofeatures": 10
+                          },
+                          "type":"fill",
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.novex/mvt/{z}/{x}/{y}?geom_column=geom&columns=id,name&include_nulls=0"],
+                              "bounds":[3.42550965308801,50.7503675082741,7.09120018627512,53.4782409540815]
+                          },
+                          "source-layer":"public.novex",
+                          "paint":{
+                            "fill-color":[
+                                  "match",
+                                  ["get", "name"],
+                                  "Groningen", "rgba(235, 104, 117, 0.8)",
+                                  "Regio Groningen-Assen", "rgba(60, 179, 215, 0.8)",
+                                  "Lelylijn", "rgba(255, 127, 156, 0.8)",
+                                  "Regio Zwolle", "rgba(195, 166, 61, 0.8)",
+                                  "Regio Schiphol", "rgba(155, 97, 152, 0.8)",
+                                  "Metropoolregio Amsterdam", "rgba(255, 160, 92, 0.8)",
+                                  "Noordzeekanaalgebied", "rgba(108, 146, 255, 0.8)",
+                                  "Groene Hart", "rgba(200, 171, 109, 0.8)",
+                                  "Utrecht-Amersfoort", "rgba(248, 205, 176, 0.8)",
+                                  "Arnhem-Nijmegen Foodvalley", "rgba(130, 130, 245, 0.8)",
+                                  "Zuidelijke Randstad", "rgba(110, 218, 235, 0.8)",
+                                  "Stedelijk Brabant", "rgba(233, 85, 122, 0.8)",
+                                  "De Peel", "rgba(227, 204, 137, 0.8)",
+                                  "North Sea Port District", "rgba(255, 193, 80, 0.8)",
+                                  "Zuid-Limburg", "rgba(237, 184, 130, 0.8)",
+                                  "Rotterdamse Haven", "rgba(235, 144, 87, 0.8)",
+                                  "#000000"
+                            ],
+                            "fill-outline-color":"white",
+                            "fill-opacity":1
+                          },
+                          "layout": {
+                            "fill-sort-key": ["get", "id"]
+                          }
+                        }
+                      },
+                      {
                             "type":"getcapabilities",
                             "title":"specialestatus",
                             "layerInfo":{
