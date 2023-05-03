@@ -42,7 +42,8 @@ export default {
         {src: "node_modules/hopscotch/dist/img/sprite-*.png", dest: "build/img"},
         {src: "images/manifest/*", dest: "build/assets/images"},
         {src: "course/**/*", dest: "build/course"},
-        {src: "src/workers/*", dest: "build/src"}
+        {src: "src/workers/*", dest: "build/src"},
+        {src: "src/locales/**/*", dest: "build/src"}
       ],
       flatten: false
     }),
