@@ -1,4 +1,4 @@
-/**
+/*
 @license
 Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -11,13 +11,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { LitElement, html, css } from 'lit';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import rootUrl from '../utils/rooturl.js';
+import {translate as t} from '../i18n.js';
+
 
 // These are the actions needed by this element.
-import {
+//import {
 //  navigate,
 //  updateOffline,
 //  updateLayout
-} from '../actions/app.js';
+//} from '../actions/app.js';
 
 // These are the elements needed by this element.
 import { menuIcon } from './my-icons.js';
@@ -159,7 +161,7 @@ class EduGISApp extends (LitElement) {
       <img src="${rootUrl}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
-            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">Hoe werkt EduGIS?</a></li>
+            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">${t('How does EduGIS work?')}</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>

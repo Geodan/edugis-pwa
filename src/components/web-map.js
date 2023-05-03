@@ -35,6 +35,7 @@ import './map-sheet-tool';
 import './map-modal-dialog';
 import './map-proj-chooser';
 import "./map-save-layer";
+import {translate as t} from "../i18n.js"
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -221,23 +222,23 @@ class WebMap extends LitElement {
     this.copiedCoordinate = '';
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {name:"search", visible: true, position: "", order: 100, info:"Naam, plaats of adres zoeken", icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, search: false, position: "", order: 101, info:"Kaartlagen", icon:layermanagerIcon},
-      {name:"measure", visible: true, position: "", order: 102, info:"Afstand en oppervlakte meten", icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 103, info: "Informatie uit de kaart halen", icon: infoIcon},
-      {name:"maplanguage", visible: true, position: "", order: 104, info: "Kaarttaal", icon: languageIcon},
-      {name:"pitch", visible: true, position: "", order: 105, info: "Kaarthoek", icon: threeDIcon},
-      {name:"geolocate", visible: true, position: "", order: 106, info: "Zoom naar mijn locatie", icon: gpsIcon},
-      {name:"draw", visible: true, position: "", order: 107, info: "Kaartlaag tekenen", icon: drawIcon},
-      {name:"importexport", visible: true, position: "", order: 108, info: "Kaart opslaan / openen", icon: importExportIcon},
-      {name:"datatoolbox", visible: true, position: "", order: 109, info: "Gereedschapskist", icon: combineToolIcon},
-      {name:"sheetimport", visible: true, position: "", order: 110, info: "Tabel uploaden", icon: sheetIcon},
-      {name:"projchooser", visible: true, position:"", order: 120, info: "Kaartprojectie", icon: world3Icon},
-      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: "Zoom-niveau"},
-      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: "Zoom, Roteer"},
+      {name:"search", visible: true, position: "", order: 100, info:`${t("Search name, place or address")}`, icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, search: false, position: "", order: 101, info:`${t("Map layers")}`, icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 102, info:`${t('Measure distance and surface')}`, icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 103, info: `${t('Get info from map')}`, icon: infoIcon},
+      {name:"maplanguage", visible: true, position: "", order: 104, info: `${t('Map language')}`, icon: languageIcon},
+      {name:"pitch", visible: true, position: "", order: 105, info: `${t('Map view angle')}`, icon: threeDIcon},
+      {name:"geolocate", visible: true, position: "", order: 106, info: `${t('Zoom to my location')}`, icon: gpsIcon},
+      {name:"draw", visible: true, position: "", order: 107, info: `${t('Draw map layer')}`, icon: drawIcon},
+      {name:"importexport", visible: true, position: "", order: 108, info: `${t('Save map')}`, icon: importExportIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: `${t('Toolbox')}`, icon: combineToolIcon},
+      {name:"sheetimport", visible: true, position: "", order: 110, info: `${t('Upload table')}`, icon: sheetIcon},
+      {name:"projchooser", visible: true, position:"", order: 120, info: `${t('Map projection')}`, icon: world3Icon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: `${t('Zoom level')}`},
+      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: `${t('Zoom, rotate')}`},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
-      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: "Schaalbalk"},
-      {name:"legend", visible: true, position: "opened", opened: 1, order: 204, info: "Legenda en kaartlagen"},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: `${t('Scale')}`},
+      {name:"legend", visible: true, position: "opened", opened: 1, order: 204, info: `${t('Legend and map layers')}`},
     ];
     this.exporttool = false;
   }
@@ -903,13 +904,13 @@ class WebMap extends LitElement {
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
-          nolayer="Geen kaartlagen gekozen">
-            <span>Gekozen lagen</span>
+          nolayer=${t("No map layers selected")}>
+            <span>${t("Selected map layers")}</span>
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
           .zoom="${this.zoom}"
-          nolayer = "Geen achtergrondlagen beschikbaar">
-            <span>Achtergrondlagen</span>
+          nolayer = "${'No background layer available'}">
+            <span>${t('Background layers')}</span>
         </map-layer-set>
       </map-layer-container>
     </div>`;

@@ -1,6 +1,6 @@
 import "./map-iconbutton.js";
 import { imageSearchIcon, searchIcon, panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, closeIcon } from "./my-icons.js";
-import { searchIcon as gmSearchIcon } from "../gm/gm-iconset-svg.js";
+import {translate as t} from '../i18n.js';
 
 function getIcon(osmtype) {
   switch (osmtype) {
@@ -38,7 +38,7 @@ class MapSearch extends LitElement {
   constructor() {
     super(); // properties
 
-    this.info = "Landen, Plaatsen, Gebergten, Rivieren";
+    this.info = `${t('Countries, Places, Rivers, ...')}`;
     this.resultList = null;
     this.viewbox = [];
     this.active = true;
@@ -205,7 +205,7 @@ class MapSearch extends LitElement {
     <div class="searchbox${this.active ? '' : ' hidden'}">
       <input type="text" placeholder="${this.info}" @keyup="${e => this.keyup(e)}">
       ${this.active && this.resultList && this.resultList.length ? html`<i class="erasebutton" @click="${e => this.searchErase(e)}">${closeIcon}</i>` : ''}
-      <span title="zoek" class="searchbutton" @click="${e => this.search(e)}">${searchIcon}</span>
+      <span title="${t('search')}" class="searchbutton" @click="${e => this.search(e)}">${searchIcon}</span>
     </div>
     ${this.active && this.resultList && this.resultList.length ? html`
       <div class="resultlist">

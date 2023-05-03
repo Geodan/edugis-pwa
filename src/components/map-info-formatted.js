@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import rootUrl from '../utils/rooturl';
+import {translate as t} from '../i18n';
 
 /**
 * @polymer
@@ -81,14 +82,14 @@ class MapInfoFormatted extends LitElement {
         .check-on {display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${rootUrl}images/checkradio.png') 20px 20px; }
         .check-off { display: inline-block; width: 20px; height: 20px; vertical-align: middle; background: url('${rootUrl}images/checkradio.png') 20px 0px; }
       </style>
-      <div class="header">Informatie uit de kaart</div>
+      <div class="header">${t('Get info from map')}</div>
       <div class="content">
       <div class="streetviewcontainer">
       <div @click="${e=>this.toggleStreetView(e)}">
         <span>StreetView</span><div class="${this.streetViewOn?'check-on':'check-off'}"></div>
       </div>
       </div>
-      ${this.info.length == 0? 'Klik op een element in de kaart voor informatie over dat element':''}
+      ${this.info.length == 0? `${t('Click a map element for info on that element')}`:''}
       <table class="attributetable">
       ${this.info.filter(feature=>(feature.layer.layout && feature.layer.layout.visibility && feature.layer.layout.visibility === 'none') ||  (feature.layer.metadata && feature.layer.metadata.reference)?false:true)
         .filter(feature=>{ // filter muliple features from same layer

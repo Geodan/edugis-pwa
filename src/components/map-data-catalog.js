@@ -1,6 +1,7 @@
 
 import {LitElement, html} from 'lit';
 import './map-layer-tree';
+import {translate as t} from '../i18n.js';
 /**
 * @polymer
 * @extends HTMLElement
@@ -53,7 +54,7 @@ class MapDataCatalog extends LitElement {
     }
   }
   render() {
-    return html`<map-layer-tree headertext="Kaartlagen toevoegen" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}" .search="${this.search}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="${t('Add map layers')}" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}" .search="${this.search}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;

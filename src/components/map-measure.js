@@ -1,5 +1,5 @@
 import './map-iconbutton';
-import { measureIcon } from '../gm/gm-iconset-svg';
+import { translate as t } from '../i18n.js';
 
 /***
  * the following crashes polymer build, moved script load to index.html ?? :
@@ -88,7 +88,7 @@ class MapMeasure extends LitElement {
   }
   constructor() {
       super();
-      this.info = "Afstandsmeter";
+      this.info = `${t('Measure distance and surface')}`;
       // initialise variables
       this._boundHandleClick = this.handleMapClick.bind(this);
       this._boundHandleMapMouseMove = this.handleMapMouseMove.bind(this);
@@ -99,8 +99,8 @@ class MapMeasure extends LitElement {
       // set property defaults      
       this.active = this.activated = false;
       this.webmap = undefined;
-      this.header = html`<h5>Afstand en oppervlakte meten</h5>`;
-      this.startMessage = html`${this.header}Klik in de kaart om afstand of oppervlakte te meten.`;
+      this.header = html`<h5>${t('Measure distance and surface')}</h5>`;
+      this.startMessage = html`${this.header}${t('Click on the map to measure distance or area')}`;
       this.measureInfo = this.startMessage;
   }
   handleMapMouseMove(e) {
@@ -221,7 +221,7 @@ class MapMeasure extends LitElement {
             }
           )
         }
-        this.measureInfo = html`${this.measureInfo}<br>${area>0.0?"Omtrek:": "Afstand:"} <span class="label">${formatDistance(distance, options.units)}</span>
+        this.measureInfo = html`${this.measureInfo}<br>${area>0.0?`${t('Perimeter')}:`: `${t('Distance')}:`} <span class="label">${formatDistance(distance, options.units)}</span>
           ${polygon.length==0?
             html`<br>Kompashoek (start-eind): <span class="label">${
               turf.bearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
@@ -346,7 +346,7 @@ class MapMeasure extends LitElement {
     if (!this.active) {
       return html``;
     }
-    return html`<style>        
+    return html`<style>
         .measureinfo {
           width: 100%;
           font-size: 14px;

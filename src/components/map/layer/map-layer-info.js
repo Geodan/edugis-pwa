@@ -4,6 +4,7 @@ import '../../map-legend-panel.js';
 import './map-layer-config.js';
 import {iconInformationCircle, iconCog, iconDelete} from "./map-layer-icons.js";
 import { downloadIcon } from '../../my-icons.js';
+import {translate as t} from '../../../i18n.js';
 //import Picker from '../../colorpicker/picker.js';
 
 /**
@@ -148,7 +149,7 @@ class MapLayerInfo extends LitElement {
     _renderVisibleLayerInfo() {
         if (this.layervisible && this.open) {
             return html`
-            <div id="litransparency"><span class="bold">Doorzichtigheid:</span> ${Math.round(this.transparency)}%
+            <div id="litransparency"><span class="bold">${t('Transparency')}:</span> ${Math.round(this.transparency)}%
                 <div class="lislidercontainer">
                     <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
                 </div>

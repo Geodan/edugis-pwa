@@ -4,6 +4,7 @@ import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabiliti
 import {filterIcon, openfileIcon} from './my-icons';
 import rootUrl from '../utils/rooturl.js';
 import './map-iconbutton'
+import {translate as t} from '../i18n.js';
 
 /* This component renders a tree of nodes as a collapsible tree
    leaf nodes can be selected with checkbox or radio-boxes
@@ -336,7 +337,7 @@ class MapLayerTree extends LitElement {
         height: 20px;
       }
     </style>
-    <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
+    <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="${t('open file')}" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
     ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
