@@ -1,4 +1,5 @@
 import {LitElement, html, svg, css} from 'lit';
+import {translate as t} from '../i18n.js';
 import './map-iconbutton';
 import './map-datatool-distance';
 import './map-datatool-buffer';
@@ -43,20 +44,20 @@ class MapDataToolbox extends LitElement {
     }
     return html`
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
-        <div class="header">Gegevens combineren</div>
-        Selecteer een tool om vectorgegevens uit de verschillende lagen te combineren.
+        <div class="header">${t('Map Data Tools')}</div>
+        ${t('Select a tool button')}
           <div class="buttonbar">
             <div class="tool">
-            <map-iconbutton .active="${this.currentTool==='distancetool'}" .icon="${measureIcon}" info="Afstanden berekenen" @click="${e=>this.currentTool='distancetool'}"></map-iconbutton>
+            <map-iconbutton .active="${this.currentTool==='distancetool'}" .icon="${measureIcon}" info="${t('Calculate distances')}" @click="${e=>this.currentTool='distancetool'}"></map-iconbutton>
             </div>
             <div class="tool">
-            <map-iconbutton .active="${this.currentTool==='buffertool'}" .icon="${bufferIcon}" info="Bufferen" @click="${e=>this.currentTool='buffertool'}"></map-iconbutton>
+            <map-iconbutton .active="${this.currentTool==='buffertool'}" .icon="${bufferIcon}" info="${t('Buffer')}" @click="${e=>this.currentTool='buffertool'}"></map-iconbutton>
             </div>
             <div class="tool">
-            <map-iconbutton .active="${this.currentTool==='intersecttool'}" .icon="${intersectIcon}" info="Overlap" @click="${e=>this.currentTool='intersecttool'}"></map-iconbutton>
+            <map-iconbutton .active="${this.currentTool==='intersecttool'}" .icon="${intersectIcon}" info="${t('Intersect')}" @click="${e=>this.currentTool='intersecttool'}"></map-iconbutton>
             </div>
             <div class="tool">
-            <map-iconbutton .active="${this.currentTool==='filtertool'}" .icon="${filterIcon}" info="Filteren" @click="${e=>this.currentTool='filtertool'}"></map-iconbutton>
+            <map-iconbutton .active="${this.currentTool==='filtertool'}" .icon="${filterIcon}" info="${t('Filter')}" @click="${e=>this.currentTool='filtertool'}"></map-iconbutton>
             </div>
         </div>
         <div class="toolpanel">
@@ -68,7 +69,7 @@ class MapDataToolbox extends LitElement {
   _renderCurrentTool() {
     switch (this.currentTool) {
       case "":
-        return html`Kies combineergereedschap via de knoppen`;
+        return html`${t('Select a tool button')}`;
       case "distancetool":
         return html`<map-datatool-distance .map=${this.map}></map-datatool-distance>`;
       case "buffertool":

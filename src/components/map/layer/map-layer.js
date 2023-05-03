@@ -167,7 +167,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
         return html`
         <div class="mlcontainer">
             <div class="mltitle${this.itemcontainer?' draghandle':''}${this.outzoomrange || this.layer.metadata.layervisible === false || this.boundspos !== ""?' lightgray':''}">
-                <base-checkbox ?disabled="${this.outzoomrange || this.boundspos!==''}" ?checked="${this.visible}" title="toggle layer visibility" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
+                <base-checkbox ?disabled="${this.outzoomrange || this.boundspos!==''}" ?checked="${this.visible}" title="${'toggle layer visibility'}" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
                 <span @click="${()=>this._toggleArrow()}">${this.layer.metadata?this.layer.metadata.title?this.layer.metadata.title:this.layer.id:this.layer.id}</span>
                 <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}"></base-arrow>
             </div>

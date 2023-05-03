@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit';
+import {translate as t} from '../i18n.js';
 
-const startUpMessage = 'Starten plaatsbepaling...';
+const startUpMessage = `${t('Determining position')}...`;
 
 /* polyfill */
 Math.log10 = Math.log10 || function(x) {
@@ -92,10 +93,10 @@ class MapGeolocation extends LitElement {
   success(pos){
     // 1 meter => 6 digit coordinate, 10 meter => 5 digit coordinate, 100 meter 4 digit coordinate etc.
     const factor = 6 - Math.round(Math.log10(pos.coords.accuracy));
-    this.message = html`<b>Locatie</b><br>
-    <b>Breedte:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
-    <b>Lengte:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
-    <b>Nauwkeurigheid:</b> ${Math.round(pos.coords.accuracy)} m`;
+    this.message = html`<b>${t('Location')}</b><br>
+    <b>${t('Longitude')}:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
+    <b>${t('Latitude')}:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
+    <b>${t('Precision')}:</b> ${Math.round(pos.coords.accuracy)} m`;
     if (this.webmap.version) {
       this.geojson.features = [];
       this.geojson.features.push(this.geoJSONCircle(pos, pos.coords.accuracy));
@@ -112,7 +113,7 @@ class MapGeolocation extends LitElement {
     }
   }
   error(err) {
-    this.message = `Fout: ${err.code} : ${err.message}`;
+    this.message = `${t('Error')}: ${err.code} : ${err.message}`;
   }
   prepareMap() {
     if (this.webmap.version) {

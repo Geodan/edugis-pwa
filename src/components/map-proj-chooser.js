@@ -1,6 +1,6 @@
 import {LitElement, html,css} from 'lit';
 import './map-iconbutton';
-import {openfileIcon, downloadIcon} from './my-icons';
+import {translate as t} from '../i18n.js';
 
 
 /**
@@ -66,13 +66,13 @@ export default class MapProjChooser extends LitElement {
       return html``;
     }
     if (!this.map.setProjection) {
-      return html`<div>map projections not supported by this viewer</div>`;
+      return html`<div>${t('map projections not supported by this viewer')}</div>`;
     }
     return html`
         <div class="map-overlay top">
         <div class="map-overlay-inner">
         <fieldset>
-        <label>Kies projectie</label>
+        <label>${t('Select projection')}</label>
         <select @change="${e=>this._setProjection(e)}" id="projection" name="projection">
         <option value="albers">Albers</option>
         <option value="equalEarth">Equal Earth</option>

@@ -3,6 +3,7 @@ import { downloadIcon } from '../../my-icons.js';
 
 import "../../base/base-arrow.js";
 import "./map-layer.js";
+import {translate as t} from '../../../i18n.js';
 
 /**
 * @polymer
@@ -192,7 +193,7 @@ class MapLayerSet extends LitElement {
     }
     _renderSaveLayerList() {
         if (this.layerSet.length > 1) {
-            return html`<div class="iconbutton" @click="${()=>this._saveLayerList()}" title="lagen-set opslaan"><span class="icon">${downloadIcon}</span> Lagen-set bewaren</div>`
+            return html`<div class="iconbutton" @click="${()=>this._saveLayerList()}" title="${t('Save layer set')}"><span class="icon">${downloadIcon}</span> ${t('Save layer set')}</div>`
         }
     }
     _saveLayerList() {

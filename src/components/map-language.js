@@ -1,4 +1,5 @@
 import {LitElement, html} from 'lit';
+import {translate as t} from '../i18n.js';
 /**
 * @polymer
 * @extends HTMLElement
@@ -45,7 +46,7 @@ class MapLanguage extends LitElement {
               height: 39.2px;
         }
       </style>
-      Kies taal voor de kaartweergave:
+      ${t('Select language for map display')}:
       <select @change="${e=>this.changeLangue(e)}">
         <option .selected="${this.language==="autodetect"?'selected':undefined}" value="autodetect">Browser</option>
         <option .selected="${this.language==="native"?'selected':undefined}" value="native">Local</option>

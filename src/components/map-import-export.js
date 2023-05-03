@@ -1,7 +1,8 @@
 import {LitElement, html} from 'lit';
 import './map-iconbutton';
 import {openfileIcon, downloadIcon} from './my-icons';
-import {toGeoJSON} from '../lib//togeojson'
+import {toGeoJSON} from '../lib//togeojson';
+import {translate as t} from '../i18n';
 
 /**
 * @polymer
@@ -42,22 +43,22 @@ export default class MapImportExport extends LitElement {
       .spacer {flex-grow: 10;}
       </style>
       <hr>
-      <div>Openen</div>
+      <div>${t('Open')}</div>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDropZoneDrop(e)}">
       <div class="rowcontainer">
         <input type="file" id="fileElem" accept=".json" style="display:none" @change="${e=>this._openFiles(e)}">
         ${window.saveAs ? html`<div class="dropzone" @dragover="${e=>e.target.classList.add('dragover')}" @dragleave="${e=>e.target.classList.remove('dragover')}">drop config json here</map-iconbutton></div>`: ''}
-        ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="open file" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
+        ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}"><map-iconbutton info="${t('open file')}" .icon="${openfileIcon}"></map-iconbutton></div>`: ''}
       </div>
       <hr>
-      <div>Opslaan</div>
-      <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> Alleen geselecteerde kaartlagen<br>
-      Zichtbare tools:<br>
+      <div>${t('Save')}</div>
+      <input type="checkbox" name="onlyselected" ?checked="${this.onlyselected}" @click="${(e)=>this._toggleOnlyVisible(e)}"> ${t('Selected map layers only')}<br>
+      ${t('Visible tools')}:<br>
       <div class="rowcontainer">
       <div class="spacer">
       ${this.toollist.map(tool=>html`<input type="checkbox" name="${tool.name}" ?checked="${tool.visible}" @click="${e=>tool.visible=!tool.visible}">${tool.name}<br>`)}
       </div>
-      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="opslaan" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
+      ${window.saveAs ? html`<div class="buttoncontainer right" @click="${(e)=>this._saveFile()}"><map-iconbutton info="${t('save')}" .icon="${downloadIcon}"></map-iconbutton></div>`: ''}
       </div>
       </div>
     `

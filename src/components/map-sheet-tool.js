@@ -1,4 +1,5 @@
 import {LitElement, html, svg, css} from 'lit';
+import {translate as t} from '../i18n.js';
 import './map-iconbutton';
 import './map-datatool-distance';
 import './map-iconbutton';
@@ -41,10 +42,10 @@ class MapSheetTool extends LitElement {
     }
     return html`
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}" @drop="${(e)=>this._handleDrop(e)}">
-        <div class="header">Tabel inlezen</div>
+        <div class="header">${t('Load Table')}</div>
         <br>
         <input type="file" id="fileElem" accept=".csv,.xls,.xlsx" style="display:none" @change="${e=>this._handleFiles(e)}">
-        <wc-button class="edugisblue" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}">Tabel uploaden</wc-button>
+        <wc-button class="edugisblue" @click="${(e)=>this.shadowRoot.querySelector('#fileElem').click()}">${t('Upload Table')}</wc-button>
         <br>
       </div>
     `

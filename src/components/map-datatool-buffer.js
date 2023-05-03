@@ -1,6 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {customSelectCss} from './custom-select-css.js';
 import getVisibleFeatures from '../utils/mbox-features';
+import {translate as t} from '../i18n.js';
 import './wc-button';
 
 class MapDatatoolBuffer extends LitElement {
@@ -50,13 +51,13 @@ class MapDatatoolBuffer extends LitElement {
     }
     render() {
         return html`
-            <b>Buffer berekenen</b><p></p>
-            Bereken een 'buffer' rondom de zichtbare elementen in kaartlaag 1<p></p>
-            <b>Kaartlaag 1</b><br>
+            <b>${t('Calculate Buffer')}</b><p></p>
+            ${t("Calculate a 'buffer' around the visible elements in map layer 1")}<p></p>
+            <b>${t('Map Layer 1')}</b><br>
             ${this._renderLayerList()}<p></p>
             ${this._renderTargetLayer()}
             ${this._renderBusyMessage()}
-            <wc-button class="edugisblue" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">Berekenen</wc-button><br>
+            <wc-button class="edugisblue" @click="${e=>this._handleClick(e)}" ?disabled="${!this.buttonEnabled}">${t('Calculate')}</wc-button><br>
             ${this.resultMessage?this.resultMessage:''}
     </div>
     `
@@ -88,17 +89,17 @@ class MapDatatoolBuffer extends LitElement {
         title = (sourceLayer && sourceLayer.metadata && sourceLayer.metadata.title) ? sourceLayer.metadata.title + " buffer" : "buffer";
       }
       return html`
-        <label for="targetname">Uitvoer kaartlaag:</label><input name="targetname" id="targetname" type="text" value="${title}" placeholder="naam"><br/>
-        <label for="targetbuffer">Buffer afstand in meters:</label><input name="targetbuffer" id="targetbuffer" type="number" value="${bufferSize}"><p></p>
+        <label for="targetname">${t('Output map layer')}:</label><input name="targetname" id="targetname" type="text" value="${title}" placeholder="naam"><br/>
+        <label for="targetbuffer">${t('Buffer distance in meters')}:</label><input name="targetbuffer" id="targetbuffer" type="number" value="${bufferSize}"><p></p>
         `
     }
     _renderLayerList() {
         const layers = this.map.getStyle().layers.filter(layer=>layer.metadata && !layer.metadata.reference && !layer.metadata.isToolLayer && ['fill','line','circle','symbol'].includes(layer.type));
         if (layers.length < 1) {
-          return html`${layers.length} kaartlagen aanwezig (minimmaal 1 nodig)`;
+          return html`${layers.length} ${t('available map map layers (at least 1 required)')}`;
         }
         return html`<div class="styled-select"><select @change="${e=>this._layerSelected(e)}">
-        <option value="" disabled selected>Selecteer kaartlaag</option>
+        <option value="" disabled selected>${t('Select map layer')}</option>
         ${layers.map(layer=>html`<option value=${layer.id}>${layer.metadata.title?layer.metadata.title:layer.id}</option>`)}
         </select><span class="arrow"></span></div>`
       }
@@ -149,7 +150,7 @@ class MapDatatoolBuffer extends LitElement {
             }
             const bufferSize = parseFloat(buffervalue);
             if (bufferSize === 0) {
-              this.busyMessage = "Een buffer van 0 heeft geen effect";
+              this.busyMessage = `${t('A zero buffer has no effect')}`;
               return;
             }
             const geojson = {
@@ -163,11 +164,11 @@ class MapDatatoolBuffer extends LitElement {
                 })
             }
             this._setTargetLayer(this.shadowRoot.querySelector("#targetname").value, bufferSize);
-            this.busyMessage = "Buffer(s) berekenen, dit kan even duren..";
+            this.busyMessage = `${t('Calculating buffers, please wait')}...`;
             this.worker.postMessage([geojson, bufferSize]);
         } else {
           // no visble features in source layer
-          this.busyMessage = `Geen zichtbare elementen in ${this.map.getLayer(layerid).metadata.title}}`;
+          this.busyMessage = `${t('No visible elements in')} ${this.map.getLayer(layerid).metadata.title}}`;
           setTimeout(()=>this.busyMessage='', 3000);
         }
       }

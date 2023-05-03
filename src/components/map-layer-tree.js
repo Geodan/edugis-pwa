@@ -338,7 +338,7 @@ class MapLayerTree extends LitElement {
       }
     </style>
     <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="${t('open file')}" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
-    ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="zoek een kaartlaag..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
+    ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="${t('find map layer')}..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
         ${this.searchActive ?

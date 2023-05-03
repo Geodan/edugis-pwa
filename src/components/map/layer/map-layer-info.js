@@ -5,7 +5,6 @@ import './map-layer-config.js';
 import {iconInformationCircle, iconCog, iconDelete} from "./map-layer-icons.js";
 import { downloadIcon } from '../../my-icons.js';
 import {translate as t} from '../../../i18n.js';
-//import Picker from '../../colorpicker/picker.js';
 
 /**
 * @polymer
@@ -122,7 +121,7 @@ class MapLayerInfo extends LitElement {
         return html`
         <div id="licontainer">
             ${this._renderVisibleLayerInfo()}
-            <div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> Verwijderen</div>
+            <div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> ${t('Remove')}</div>
         </div>
         `
     }
@@ -155,7 +154,7 @@ class MapLayerInfo extends LitElement {
                 </div>
             </div>
             <div id="lilegend">
-                <div id="lilegendtitle" class="bold">Legenda:</div>
+                <div id="lilegendtitle" class="bold">${t('Legend')}:</div>
                 <div id="legend" class="${this.legendclipped?' clipped':''}">
                     <map-legend-panel 
                         @load="${()=>this.requestUpdate()}" 
@@ -238,12 +237,12 @@ class MapLayerInfo extends LitElement {
         if (this.layer.metadata) {
             if (this.layer.metadata.markdown && this.layer.metadata.markdown.trim() !== "") {
                 return html`
-                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
+                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> ${t('More info')}</div>
                 `
             }
             if (this.layer.metadata.abstract && this.layer.metadata.abstract.trim() !== "") {
                 return html`
-                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> Meer informatie</div>
+                    <div class="iconbutton" @click="${()=>this._toggleInfo()}"><span class="icon">${iconInformationCircle}</span> ${t('More info')}</div>
                     ${this.moreInfo?html`<div class="moreinfo">${this._renderLinks(this.layer.metadata.abstract)}</div>`:""}
                 `
             }
@@ -317,7 +316,7 @@ class MapLayerInfo extends LitElement {
     _renderSaveLayerButton() {
         if (this.layer.metadata && this.layer.metadata.cansave) {
             return html`
-            <div class="iconbutton" @click="${()=>this._saveLayer()}" title="laag opslaan"><span class="icon">${downloadIcon}</span> Laag bewaren</div>
+            <div class="iconbutton" @click="${()=>this._saveLayer()}" title="${t('save layer')}"><span class="icon">${downloadIcon}</span> ${t('Save layer')}</div>
             `
         }
     }

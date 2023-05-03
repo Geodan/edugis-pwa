@@ -5,6 +5,7 @@
 
 import {LitElement, html, svg, css} from 'lit';
 import mbStyleParser from '../utils/mbox-style-parse.js';
+import {translate as t} from '../i18n.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './map-legend-item-edit';
 import './map-legend-line';
@@ -174,7 +175,7 @@ class MapLegendPanel extends LitElement {
     if ((maplayer.hasOwnProperty('minzoom') && maplayer.minzoom > this.zoom) || (maplayer.hasOwnProperty('maxzoom') && maplayer.maxzoom < this.zoom)) {
       return html``;
     }
-    let legendContent = html`legenda niet beschikbaar`;
+    let legendContent = html`${t('legend unavailable')}`;
     if (maplayer.metadata && maplayer.metadata.classInfo) {
       return this.getUserLegend(maplayer)
     }
@@ -283,7 +284,7 @@ class MapLegendPanel extends LitElement {
       case 'hillshade':
       case 'sky':
       default:
-        legendContent = html`<div>legenda niet beschikbaar voor type ${maplayer.type}</div>`;
+        legendContent = html`<div>${t('legend unavailable for type')}: ${maplayer.type}</div>`;
     }
     return legendContent;
   }

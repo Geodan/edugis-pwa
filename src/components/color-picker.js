@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {translate as t} from '../i18n.js';
 
 let colorPalette = [
   'rgba(128,128,128,0)',
@@ -98,10 +99,9 @@ class ColorPicker extends LitElement {
             }
         },
         i18n: {
-          'btn:save': 'Ok',
-          'btn:cancel':'Annuleer'
+          'btn:save': t('OK'),
+          'btn:cancel':t('Cancel')
         }
-
       });
       this.pickr.on('change', (color, source, instance) => this._colorChanged(color, source, instance));
       this.pickr.on('cancel', () => {
