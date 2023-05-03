@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {translate as t} from '../i18n.js';
 
 function _uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -236,11 +237,10 @@ export class MapDrawLayerDialog extends LitElement {
           formStatus: {type: Number}
         }; 
     }
-    constructor(trl) {
+    constructor() {
         super();
         this.active = false;
         this.formStatus = FormStatus.setLayer;
-        this.trl = trl;
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('active')) {
@@ -280,24 +280,6 @@ export class MapDrawLayerDialog extends LitElement {
         this.currentEditLayer = JSON.parse(JSON.stringify(newLayers[this.featureType]));
         this.currentEditLayer.id = this.currentEditLayerId = _uuidv4();
     }
-    _layerTypeName()
-    {
-        let layerTypeName;
-        switch (this.featureType) {
-            case 'Point':
-                layerTypeName = 'puntenlaag';
-                break;
-            case 'Line':
-                layerTypeName = 'lijnenlaag';
-                break;
-            case 'Polygon':
-                layerTypeName = 'vlakkenlaag';
-                break;
-            default:
-                layerTypeName = 'tekenlaag'
-        }
-        return layerTypeName;
-    }
     _checkEnterKeyInTitle(event) {
         if (event.key === "Enter") {
             const ref = this.shadowRoot.querySelector('#propertyName');
@@ -315,16 +297,16 @@ export class MapDrawLayerDialog extends LitElement {
         switch(this.formStatus) {
             case FormStatus.setLayer:
                 return html`
-                <div>Kies een laag: </div>
+                <div>${t('Select a layer')}: </div>
                 <div id="layerlist" @dblclick="${(e)=>this._handleNextButtonClick(e)}">
                     <select size="6">
-                        <option value="new" ?selected="${this.currentEditLayerId == null}">Nieuwe ${this._layerTypeName()}</option>
+                        <option value="new" ?selected="${this.currentEditLayerId == null}">${t('New draw layer', {layertype: t(`layertype${this.featureType}`)})}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
                         })}
                     </select>
                 </div>
-                <div tabindex="0" class="button" @keydown="${(e)=>{if (e.key==='Enter') this._handleNextButtonClick()}}" @click="${(e)=>this._handleNextButtonClick(e)}">Volgende</div>
+                <div tabindex="0" class="button" @keydown="${(e)=>{if (e.key==='Enter') this._handleNextButtonClick()}}" @click="${(e)=>this._handleNextButtonClick(e)}">${t('Next')}</div>
                 `
             case FormStatus.setLayerDetail:
                 if (!(this.currentEditLayer && this.currentEditLayer.id === this.currentEditLayerId)) {
@@ -335,29 +317,29 @@ export class MapDrawLayerDialog extends LitElement {
                 }
                 let placeHolder = this.currentEditLayer.metadata.title;
                 if (placeHolder === "") {
-                    placeHolder = `naam nieuwe ${this._layerTypeName()}`
+                    placeHolder = t('name of new layer',{layertype: t(`layertype${this.featureType}`)});
                 }
                 return html`
                 <input id="layername" type="text" @keyup="${(e)=>this._checkEnterKeyInTitle(e)}" value="${this.currentEditLayer.metadata.title}" placeholder="${placeHolder}">
-                ${this.formError === FormError.noLayerName ? html`<div class="error">Voer een naam in</div>`:''}
+                ${this.formError === FormError.noLayerName ? html`<div class="error">${t('Enter a name')}</div>`:''}
                 <div>
                     <div>
                     <table id="propertytable">
-                        <tr><th>eigenschappen</th><th>${this.trl('type')}</th><th class="btncolumn"></th></tr>
-                        ${this.currentEditLayer.metadata.properties.map((property,idx)=>html`<tr><td>${this.trl(property.name)}</td><td>${this.trl(property.type)}</td><td>${idx===0?'':html`<button class="btnsmall" @click="${(e)=>this._removeProperty(e, idx)}">-</button>`}</td></tr>`)}
+                        <tr><th>${t('Properties')}</th><th>${t('Type')}</th><th class="btncolumn"></th></tr>
+                        ${this.currentEditLayer.metadata.properties.map((property,idx)=>html`<tr><td>${t(property.name)}</td><td>${t(property.type)}</td><td>${idx===0?'':html`<button class="btnsmall" @click="${(e)=>this._removeProperty(e, idx)}">-</button>`}</td></tr>`)}
                         <tr>
-                        <td><input id="propertyName" @keyup="${(e)=>this._checkEnterInPropertyName(e)}" type="text" placeholder="nieuwe eigenschap"></td>
+                        <td><input id="propertyName" @keyup="${(e)=>this._checkEnterInPropertyName(e)}" type="text" placeholder="${t('new property')}"></td>
                         <td>
                             <select id="propertyType">
-                            ${propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${this.trl(type)}</option>`)}
+                            ${propertyTypes[this.featureType].map((type, idx)=>html`<option ?selected=${idx===0} value="${type}">${t(type)}</option>`)}
                             </select>
                         </td>
                         <td><button class="btnsmall" @click="${(event)=>this._addProperty(event)}">+</button></tr>
                     </table>
                     </div>
                 </div>
-                <div tabindex="0" class="button" @click="${(e)=>this._handleBackButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleBackButtonClick()}}">Vorige</div>
-                <div tabindex="0" class="button" @click="${(e)=>this._handleOkButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleOkButtonClick()}}">OK</div>
+                <div tabindex="0" class="button" @click="${(e)=>this._handleBackButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleBackButtonClick()}}">${t('Previous')}</div>
+                <div tabindex="0" class="button" @click="${(e)=>this._handleOkButtonClick(e)}" @keydown="${(e)=>{if (e.key==='Enter') this._handleOkButtonClick()}}">${t('OK')}</div>
                 `;
             default:
                 return html`invalid form status`;

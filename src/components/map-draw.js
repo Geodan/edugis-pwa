@@ -6,26 +6,7 @@ import drawCss from './map-draw-css.js';
 import {MapDrawLayerDialog} from './map-draw-layerdialog';
 import {threedots} from './my-icons.js';
 import './wc-button';
-
-const translate = {
-  "number": "getal",
-  "string": "tekst",
-  "longitude": "lengtegraad",
-  "latitude": "breedtegraad",
-  "length": "lengte",
-  "perimeter": "omtrek",
-  "area": "oppervlak",
-  "name":"naam",
-  "type":"soort",
-  "Point": "Punt",
-  "Line": "Lijn",
-  "Polygon": "Vlak"
-};
-
-function trl(word) {
-  return translate[word] ? translate[word] : word;
-}
-
+import {translate as t} from '../i18n.js';
 
 /**
 * @polymer
@@ -116,7 +97,7 @@ class MapDraw extends LitElement {
     }
   }
   _addDialogs() {
-    this.mapDialog = new MapDrawLayerDialog(trl);
+    this.mapDialog = new MapDrawLayerDialog();
     this.map.getContainer().parentNode.appendChild(this.mapDialog);
     this.mapDialog.clickHandler = () => this._handleDialogOkClick();
     this.mapDialog.cancelHandler = () => this._handleDialogCancel();
@@ -146,7 +127,7 @@ class MapDraw extends LitElement {
     const currentLayer = this.currentLayer[this.featureType];
     return html`
     <div id="selectedfeatures">
-      <div>Geselecteerd${this._currentGeometryType()==='Line'?'e':''} ${trl(this._currentGeometryType()).toLowerCase()}:</div>
+      <div>${t(`Selected${this._currentGeometryType()}`)}:</div>
       <table id="selectedproperties">
         ${this.selectedFeatures.map(feature=>{
           const properties = {...feature.properties};
@@ -156,7 +137,7 @@ class MapDraw extends LitElement {
             }
           }
           return Object.keys(properties).map(key=>html`
-            <tr><td class="propertyname">${trl(key)}</td>
+            <tr><td class="propertyname">${t(key)}</td>
               <td><input ?disabled=${key==="id" || !["string","number"].includes(currentLayer.metadata.properties.find(attr=>attr.name===key).type)} 
                     type="text" 
                     @input="${(e)=>this._updateFeatureProperty(e, feature, key)}" 
@@ -171,69 +152,37 @@ class MapDraw extends LitElement {
     let helptext = ''
     let mode = this.mbDraw.getMode();
     const showTrash = this.selectedFeatures.length && (this.mbDraw.getMode() === 'simple_select' || this.mbDraw.getSelectedPoints().features.length);
-    const element = trl(this.featureType).toLowerCase();
-    const lidwoord = (element === 'lijn')? 'de': 'het';
-    const extraE = (element === 'lijn')? 'e': '';
-    const diedat = (element === 'lijn')? 'die' : 'dat'
-
+    const element = this.featureType.toLowerCase();
+    
     switch (mode) {
       case 'simple_select':
         if (this.selectedFeatures.length) {
           if (this.featureType === 'Point') {
-            helptext = `klik op prullenbak om te verwijderen
-            versleep het geselecteerde punt naar een nieuwe plek
-            klik op een ander punt om dat te selecteren
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+            helptext = t('draw-help-selected-point');
           } else {
-            helptext = `klik op prullenbak om te verwijderen
-            klik nogmaals op ${lidwoord} ${element} om vorm te bewerken
-            klik op een ander${extraE} ${element} om ${diedat} te selecteren
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+            helptext = t('draw-help-selected-non-point', {'definitearticleelement': t(`definitearticle${element}`), otherelement: t(`other${element}`), referelement: t(`refer${element}`)});
           }
         } else if (this.featureType === 'None') {
             helptext = ``
         } else {
-          helptext = `klik op een ${trl(this.featureType).toLowerCase()} om te selecteren
-          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+          helptext = t('draw-help-select-element', {'indefinitearticleelement': t(`indefinitearticle${element}`)});
         }
         break;
       case 'direct_select':
         if (this.mbDraw.getSelectedPoints().features.length) {
-          helptext = `klik op prullenbak om punt te verwijderen
-            versleep het geselecteerde punt naar een nieuwe plek
-            klik op het kleine punt tussen 2 punten om een punt toe te voegen
-            klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-            klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+          helptext = t('draw-help-edit-point');
         } else {
-          helptext = `klik op punt om te verplaatsen
-          klik op het kleine punt tussen 2 punten om een punt toe te voegen
-          klik op een ander${extraE} ${element} om ${diedat} te selecteren
-          klik op 'punt', 'lijn' of 'vlak' om een nieuw element te tekenen
-          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+          helptext = t('draw-help-edit-element', {otherelement: t(`other${element}`), referelement: t(`refer${element}`)});
         }
         break;
       case 'draw_point':
-        helptext = `klik op de kaart om punt toe te voegen
-        houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
-        klik op 'selecteren' om een bestaand punt aan te passen
-        klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+        helptext = t('draw-help-point');
         break;
       case 'draw_line_string':
-        helptext = `klik op de kaart om de lijn toe te voegen
-          klik nogmaals op het eindpunt of [ENTER] om de lijn te voltooien
-          houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
-          klik op 'selecteren' om een bestaande lijn aan te passen
-          klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+        helptext =t('draw-help-line');
         break;
       case 'draw_polygon': 
-        helptext = `klik op de kaart om een vlak toe te voegen
-        houd [ALT] ingedrukt om de magneetfunctie (snap) uit te schakelen
-        klik nogmaals op het laatst toegevoegde punt of [ENTER] om het vlak te voltooien
-        klik op 'selecteren' om een bestaand vlak aan te passen
-        klik op ⋮ voor nieuwe kaartlaag of laageigenschappen`
+        helptext = t('draw-help-polygon');
         break;
       default:
         helptext = `onbekende modus: ${mode}`
@@ -291,17 +240,17 @@ class MapDraw extends LitElement {
       }
       </style>
       <div class="drawcontainer" @dragover="${e=>e.preventDefault()}">
-      <div class="header">Kaartlaag tekenen</div>
-      <div>${this.featureType === 'None'? 'Kies punten-, lijnen- of vlakkenlaag':`${this._inSelectMode()?'Selecteer ':'Teken '} ${trl(this.featureType)}`}</div>
+      <div class="header">${t('Draw map layer')}</div>
+      <div>${this.featureType === 'None'? `${t('Select point, line, or shape layer')}`:`${this._inSelectMode()?`${t('Select')} `:`${t('Draw')} `} ${t(this.featureType).toLocaleLowerCase()}`}</div>
       <div class="buttonbar">
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="Puntenlaag" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="Lijnenlaag" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="Vlakkenlaag" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="${t('Point layer')}" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="${t('Line layer')}" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="${t('Polygon layer')}" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
       ${showSelect?html`
-      <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="Selecteer ${trl(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="${t('Select')} ${t(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
       ${showTrash?html`
-      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[DEL]" ><map-iconbutton info="Verwijder selectie" .icon="${trashIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[DEL]" ><map-iconbutton info="${t('Delete selection')}" .icon="${trashIcon}"></map-iconbutton></div>
       ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
@@ -527,7 +476,7 @@ class MapDraw extends LitElement {
     if (featureType == 'None' || !this.currentLayer[this.featureType]) {
         return html``;
     }
-    return html`<div class="layertype" @click="${()=>this._showDialog()}" >kaartlaag: ${this.currentLayer[this.featureType].metadata.title} <span title="kaartlaag aanpassen" class="dotsright">${threedots}</span></div>`;
+    return html`<div class="layertype" @click="${()=>this._showDialog()}" >${t('Map layer')}: '${this.currentLayer[this.featureType].metadata.title}' <span title="${t('edit map layer')}" class="dotsright">${threedots}</span></div>`;
   }
   _renderMessage() {
     if (this.message) {

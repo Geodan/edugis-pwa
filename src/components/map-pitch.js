@@ -1,6 +1,8 @@
 import '@material/mwc-button';
 
 import {LitElement, html} from 'lit';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
+import {translate as t} from '../i18n.js';
 
 /**
 * @polymer
@@ -55,11 +57,11 @@ class MapPitch extends LitElement {
       }
       </style>
       <div class="padded" style="user-select:none">
-        <div class="heading">Huidige kaarthoek</div>
+        <div class="heading">${t('Current view angle')}</div>
         <mwc-button class="edugisblue" ?outlined="${this.pitch!==0}" ?unelevated="${this.pitch===0}" @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button>
         <mwc-button class="edugisblue" ?outlined="${this.pitch===0 || this.pitch===60}" ?unelevated="${this.pitch!==0 && this.pitch!==60}" @click="${e=>this.updatePitch(this.pitch===0||this.pitch===60?30:this.pitch)}">${this.pitch!==0 && this.pitch!==60?Math.round(this.pitch):30}&deg;</mwc-button>
         <mwc-button class="edugisblue" ?outlined="${this.pitch!==60}" ?unelevated="${this.pitch===60}" @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button>
-        <div class="toolpanel">Kies hierboven een andere kaarthoek<br><i>of</i> gebruik CTRL + muisknop<br><i>of</i> sleep de kompasnaald links onderaan de kaart</div>
+        <div class="toolpanel">${unsafeHTML(t('Choose another view angle above<br><i>or</i> use CTRL + mouse button<br><i>or</i> drag the compass needle at the bottom left of the map'))}</div>
       </div>`;          
   }
   updated() {

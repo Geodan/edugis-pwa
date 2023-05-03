@@ -119,7 +119,7 @@ class MapInfoFormatted extends LitElement {
   }
   renderAttributes(feature) {
     if (Object.keys(feature.properties).length === 0) {
-      return html`<tr><div class="attributevalue">geen info beschikbaar op deze locatie</div></tr>`
+      return html`<tr><div class="attributevalue">${t('no info available for this location')}</div></tr>`
     }
     let result = [];
     let odd = false;
