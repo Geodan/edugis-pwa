@@ -165,6 +165,7 @@ class EduGISApp extends (LitElement) {
                 <select id="languageselect" @change="${(e)=>this.changeLanguage(e)}">
                   <option value="nl" ?selected="${i18next.language === 'nl'}">nl</option>
                   <option value="en" ?selected="${i18next.language === 'en'}">en</option>
+                  <option value="fr" ?selected="${i18next.language === 'fr'}">fr</option>
                 </select>
             </li>
             <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">${t('How does EduGIS work?')}</a></li>
