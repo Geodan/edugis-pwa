@@ -384,6 +384,8 @@ class MapMeasure extends LitElement {
         this.webmap.getCanvasContainer().addEventListener('keydown', this._boundHandleKeyPress);
       } else {
         // remove measuring from map
+        this.hasPolygon = false;
+        this.geojson.features = [];
         if (this.shouldReenableDoubleClickZoom) {
           this.webmap.doubleClickZoom.enable();
           this.shouldReenableDoubleClickZoom = false;
