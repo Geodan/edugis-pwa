@@ -148,5 +148,6 @@
     "Bearing (start-finish)": "Kompashoek (start-eind)",
     "Bearing": "Kompashoek",
     "Area": "Oppervlakte",
-    "Total distance": "Afstand totaal"
+    "Total distance": "Afstand totaal",
+    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] verwijdert laatste punt"
 }

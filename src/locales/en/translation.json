@@ -149,5 +149,6 @@
     "Bearing (start-finish)": "Bearing (start-finish)",
     "Bearing": "Bearing",
     "Area": "Area",
-    "Total distance": "Total distance"
+    "Total distance": "Total distance",
+    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] removes last point"
     }

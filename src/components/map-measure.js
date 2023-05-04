@@ -84,8 +84,10 @@ class MapMeasure extends LitElement {
   constructor() {
       super();
       // initialise variables
+      this.shouldReenableDoubleClickZoom = false;
       this._boundHandleClick = this.handleMapClick.bind(this);
       this._boundHandleMapMouseMove = this.handleMapMouseMove.bind(this);
+      this._boundHandleKeyPress = this.handleKeyPress.bind(this);
       this.geojson = {
         "type": "FeatureCollection",
         "features": []
@@ -174,6 +176,71 @@ class MapMeasure extends LitElement {
       source.setData(this.geojson);
     }
   }
+  updateGeoJsonSource() {
+    // update the geojson source
+    const source = this.webmap.getSource('map-measure-geojson');
+    if (source) {
+      source.setData(this.geojson);
+    }
+  }
+  addGeoJsonLinesAndPolygon() {
+    // add line through points, calculate distance
+    const options = {units: 'kilometers'};
+    const pointCount = this.geojson.features.length;
+    let polygon = [];
+    if (pointCount > 1) {
+      for (let i = 1; i < pointCount; i++) {
+        const point1 = this.geojson.features[i-1].geometry.coordinates;
+        const point2 = this.geojson.features[i].geometry.coordinates;
+        const lineDistance = turf.distance(point1, point2, options);
+        const line = getPointsAlongLine(point1, point2);
+        this.geojson.features.push(
+          {
+            "type": "Feature",
+            "geometry" : {
+              "type": "LineString",
+              "coordinates": line
+            },
+            "properties": {
+              "length": formatDistance(lineDistance, options.units)
+            }
+          }
+        );
+        if (this.hasPolygon) {
+          polygon.push(...line);
+        }
+      }
+      if (polygon.length) {
+        polygon.push(polygon[0]);
+        this.geojson.features.push(
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [polygon]
+            },
+            "properties": {}
+          }
+        )
+      }
+    } 
+  }
+  handleKeyPress(e) {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      e.preventDefault();
+      this.geojson.features = this.geojson.features.filter(feature=>feature.geometry.type=="Point");
+      this.hasPolygon = false;
+      if (this.geojson.features.length > 0) {
+        if (this.geojson.features[this.geojson.features.length-1].geometry.type=="Point") {
+          // remove last point feature
+          this.geojson.features.pop();
+        }
+      }
+    }
+    this.addGeoJsonLinesAndPolygon();
+    this.updateGeoJsonSource();
+    this.requestUpdate();
+  }
   handleMapClick(e) {
     if (this.webmap.version) {
       let clickedFeatures = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
@@ -228,53 +295,10 @@ class MapMeasure extends LitElement {
         );
       }
 
-      // add line through points, calculate distance
-      const options = {units: 'kilometers'};
-      const pointCount = this.geojson.features.length;
-      let polygon = [];
-      if (pointCount > 1) {
-        for (let i = 1; i < pointCount; i++) {
-          const point1 = this.geojson.features[i-1].geometry.coordinates;
-          const point2 = this.geojson.features[i].geometry.coordinates;
-          const lineDistance = turf.distance(point1, point2, options);
-          const line = getPointsAlongLine(point1, point2);
-          this.geojson.features.push(
-            {
-              "type": "Feature",
-              "geometry" : {
-                "type": "LineString",
-                "coordinates": line
-              },
-              "properties": {
-                "length": formatDistance(lineDistance, options.units)
-              }
-            }
-          );
-          if (this.hasPolygon) {
-            polygon.push(...line);
-          }
-        }
-        if (polygon.length) {
-          polygon.push(polygon[0]);
-          this.geojson.features.push(
-            {
-              "type": "Feature",
-              "geometry": {
-                "type": "Polygon",
-                "coordinates": [polygon]
-              },
-              "properties": {}
-            }
-          )
-        }
-      } 
-      try {
-        this.webmap.getSource('map-measure-geojson').setData(this.geojson);
-      } catch(e) {
-        console.warn('map-measure source-layer missing');
-      }
+      this.addGeoJsonLinesAndPolygon();
+      this.updateGeoJsonSource();
+      this.requestUpdate();
     };
-    this.requestUpdate();
   };
   updateActivation() {
     if (this.active === this.activated) {
@@ -284,6 +308,10 @@ class MapMeasure extends LitElement {
     if (this.webmap.version) {
       if (this.activated) {
         // setup measuring on map
+        if (this.webmap.doubleClickZoom.isEnabled()) {
+          this.webmap.doubleClickZoom.disable();
+          this.shouldReenableDoubleClickZoom = true;
+        }
         this.webmap.addSource('map-measure-geojson', {
           "type":"geojson", 
           "data":this.geojson
@@ -353,10 +381,16 @@ class MapMeasure extends LitElement {
         });
         this.webmap.on('click', this._boundHandleClick);
         this.webmap.on('mousemove', this._boundHandleMapMouseMove);
+        this.webmap.getCanvasContainer().addEventListener('keydown', this._boundHandleKeyPress);
       } else {
         // remove measuring from map
+        if (this.shouldReenableDoubleClickZoom) {
+          this.webmap.doubleClickZoom.enable();
+          this.shouldReenableDoubleClickZoom = false;
+        }
         this.webmap.off('click', this._boundHandleClick);
         this.webmap.off('mousemove', this._boundHandleMapMouseMove);
+        this.webmap.getCanvasContainer().removeEventListener('keydown', this._boundHandleKeyPress);
         if (this.webmap.isStyleLoaded()) { // false if webmap got replaced
           this.webmap.removeLayer('map-measure-line');
           this.webmap.removeLayer('map-measure-points');
@@ -411,6 +445,7 @@ class MapMeasure extends LitElement {
               ${points.length === 1 && !this.hasPolygon ? html`${t('Click next point')}` : ''}
               ${points.length > 1 && !this.hasPolygon ? html`${t('Click next point')}.<br>${t('Click last point to finish')}.` : ''}
               ${points.length > 2 && !this.hasPolygon ? html`<br>${t('Click first point for area')}.` : ''}
+              ${points.length > 0 ? html`<br>${t('[DEL]/[Backspace] to remove last point')}` : ''}
             </div>
           </div>
         </div>
