@@ -1,5 +1,6 @@
+import {LitElement, html, css} from 'lit';
 import './map-iconbutton';
-import { translate as t } from '../i18n.js';
+import { translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 /***
  * the following crashes polymer build, moved script load to index.html ?? :
@@ -73,22 +74,15 @@ function formatArea(a) {
   return html`${Math.round(a / 1000000)} km<sup>2</sup>`
 }
 
-import {LitElement, html} from 'lit';
-/**
-* @polymer
-* @extends HTMLElement
-*/
 class MapMeasure extends LitElement {
   static get properties() { 
     return { 
       active: Boolean,
-      webmap: Object,
-      measureInfo: String
+      webmap: Object
     }; 
   }
   constructor() {
       super();
-      this.info = `${t('Measure distance and surface')}`;
       // initialise variables
       this._boundHandleClick = this.handleMapClick.bind(this);
       this._boundHandleMapMouseMove = this.handleMapMouseMove.bind(this);
@@ -96,12 +90,76 @@ class MapMeasure extends LitElement {
         "type": "FeatureCollection",
         "features": []
       };
-      // set property defaults      
+      // set property defaults
       this.active = this.activated = false;
       this.webmap = undefined;
-      this.header = html`<h5>${t('Measure distance and surface')}</h5>`;
-      this.startMessage = html`${this.header}${t('Click on the map to measure distance or area')}`;
-      this.measureInfo = this.startMessage;
+  }
+  static styles = css`
+    .measurecontainer {
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      max-height: 100%;
+    }
+    .header {
+      width: 100%;
+      font-weight: bold;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      border-bottom: 1px solid lightgray;
+      flex-shrink: 0;
+    }
+    .scrollcontainer {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column-reverse;
+      width: 100%;
+      overflow: auto;
+    }
+    .totals {
+      width: 100%;
+      font-weight: bold;
+    }
+    .separator {
+      width: 100%;
+      height: 1px;
+      background-color: lightgray;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      margin-bottom: 1em;
+      border-collapse: collapse;
+    }
+    th{
+      font-weight: bold;
+      background-color: #ddd;
+    }
+    th, td {
+      padding: 0.25em;
+      border: 1px solid #ccc;
+    }
+    .label {
+      background-color: #32b4b8;
+      color: white;
+      font-weight: bold;
+    }`;
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.header = html`<div class="header">${t('Measure distance and surface')}</div>`;
+    this.startMessage = html`${this.header}${t('Click on the map to measure distance or area')}`;
+    this.requestUpdate();
   }
   handleMapMouseMove(e) {
     let features = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points']});
@@ -126,7 +184,7 @@ class MapMeasure extends LitElement {
       
       // Remove the linestrings from the group
       // So we can redraw it based on the points collection
-      this.geojson.features = this.geojson.features.filter(curfeature=>curfeature.geometry.type=="Point");
+      this.geojson.features = this.geojson.features.filter(feature=>feature.geometry.type=="Point");
  
       let point = [e.lngLat.lng, e.lngLat.lat];
       if (clickedFeatures.length) {
@@ -171,21 +229,14 @@ class MapMeasure extends LitElement {
       }
 
       // add line through points, calculate distance
-      let distance = 0.0;
-      let area = 0.0;
       const options = {units: 'kilometers'};
       const pointCount = this.geojson.features.length;
       let polygon = [];
       if (pointCount > 1) {
-        this.measureInfo = html`${this.header}Klik volgend punt. <br>Klik op laatste punt om te stoppen.`;
-        if (pointCount > 2) {
-          this.measureInfo = html`${this.measureInfo}<br>Klik op eerste punt voor oppervlakte.`;
-        }
         for (let i = 1; i < pointCount; i++) {
           const point1 = this.geojson.features[i-1].geometry.coordinates;
           const point2 = this.geojson.features[i].geometry.coordinates;
           const lineDistance = turf.distance(point1, point2, options);
-          distance += lineDistance;
           const line = getPointsAlongLine(point1, point2);
           this.geojson.features.push(
             {
@@ -205,8 +256,6 @@ class MapMeasure extends LitElement {
         }
         if (polygon.length) {
           polygon.push(polygon[0]);
-          const p = turf.polygon([polygon]);
-          area = turf.area(p);
           this.geojson.features.push(
             {
               "type": "Feature",
@@ -214,33 +263,18 @@ class MapMeasure extends LitElement {
                 "type": "Polygon",
                 "coordinates": [polygon]
               },
-              "properties": {
-                "area": area,
-                "perimeter": formatDistance(distance, options.units)
-              }
+              "properties": {}
             }
           )
         }
-        this.measureInfo = html`${this.measureInfo}<br>${area>0.0?`${t('Perimeter')}:`: `${t('Distance')}:`} <span class="label">${formatDistance(distance, options.units)}</span>
-          ${polygon.length==0?
-            html`<br>Kompashoek (start-eind): <span class="label">${
-              turf.bearing(this.geojson.features[0].geometry.coordinates, this.geojson.features[pointCount -1].geometry.coordinates).toFixed(0)
-              } &deg;</span>`:''}
-          ${area>0.0?html`<br>Oppervlakte: <span class="label">${formatArea(area)}</span>`:""}`
-      } else {
-        if (pointCount == 0) {
-          this.measureInfo = this.startMessage;
-        } else {
-          // pointCount == 1
-          this.measureInfo = html`${this.header}Klik volgend punt`;
-        }        
-      }
+      } 
       try {
         this.webmap.getSource('map-measure-geojson').setData(this.geojson);
       } catch(e) {
         console.warn('map-measure source-layer missing');
       }
     };
+    this.requestUpdate();
   };
   updateActivation() {
     if (this.active === this.activated) {
@@ -254,7 +288,7 @@ class MapMeasure extends LitElement {
           "type":"geojson", 
           "data":this.geojson
         });
-        this.webmap.addLayer({        
+        this.webmap.addLayer({
           "id": "map-measure-line",
           "type": "line",
           "metadata": {"isToolLayer": true},
@@ -274,7 +308,7 @@ class MapMeasure extends LitElement {
           "id": "map-measure-points",
           "type": "circle",
           "metadata": {"isToolLayer": true},
-          "source": "map-measure-geojson",            
+          "source": "map-measure-geojson",
           "paint": {
             "circle-radius": 5,
             "circle-color": ["match", 
@@ -346,23 +380,43 @@ class MapMeasure extends LitElement {
     if (!this.active) {
       return html``;
     }
-    return html`<style>
-        .measureinfo {
-          width: 100%;
-          font-size: 14px;
-        }
-        .measureinfo h5 {
-          color: #555;
-          font-weight: bold;
-          font-size: 14px;
-        }
-        .label {
-          background-color: #32b4b8;
-          color: white;
-          font-weight: bold;
-        }
-    </style>
-    <div class="measureinfo">${this.measureInfo}</div>`
+    const points = this.geojson.features.filter(f => f.geometry.type == 'Point');
+    let measurements = [];
+    let totalDistance = 0;
+    let totalArea = this.hasPolygon ? turf.area(this.geojson.features[this.geojson.features.length-1]) : 0;
+    for (let p = 1; p < points.length; p++) {
+      const distance = turf.distance(points[p-1].geometry.coordinates, points[p].geometry.coordinates, {units: 'kilometers'});
+      totalDistance += distance;
+      const bearing = turf.bearing(points[p-1].geometry.coordinates, points[p].geometry.coordinates);
+      measurements.push({distance: distance, bearing: bearing});
+    }
+    return html`
+    <div class="measurecontainer">
+      <div class="header">${t('Measure distance and surface')}</div>
+        <div class="scrollcontainer">
+          <div>
+            ${points.length > 1 ? html`
+              <table>
+                <tr><th>${t('Distance')}</th><th>${t('Bearing')}</th></tr>
+                ${measurements.map(m => html`<tr><td>${formatDistance(m.distance, 'kilometers')}</td><td>${Math.round(m.bearing)} &deg;</td></tr>`)}
+              </table>
+            ` : ''}
+            <div class="totals">
+              ${points.length > 2 ? html`${t('Total distance')}: ${formatDistance(totalDistance, 'kilometers')}<br>` : ''}
+              ${totalArea > 0 ? html`${t('Area')}: ${formatArea(totalArea)}<br>` : ''}
+            </div>
+            ${points.length > 1 ? html`<div class="separator"></div>` : ''}
+            <div>
+              ${points.length === 0 || this.hasPolygon ? html`${t('Click on the map to measure distance or area')}` : ''}
+              ${points.length === 1 && !this.hasPolygon ? html`${t('Click next point')}` : ''}
+              ${points.length > 1 && !this.hasPolygon ? html`${t('Click next point')}.<br>${t('Click last point to finish')}.` : ''}
+              ${points.length > 2 && !this.hasPolygon ? html`<br>${t('Click first point for area')}.` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
   }
 }
 customElements.define('map-measure', MapMeasure);

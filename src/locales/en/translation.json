@@ -142,5 +142,12 @@
     "Save": "Save",
     "Selected map layers only": "Selected map layers only",
     "Visible tools": "Visible tools",
-    "save": "save"
+    "save": "save",
+    "Click next point": "Click next point",
+    "Click last point to finish": "Click last point to finish",
+    "Click first point for area": "Click first point for area",
+    "Bearing (start-finish)": "Bearing (start-finish)",
+    "Bearing": "Bearing",
+    "Area": "Area",
+    "Total distance": "Total distance"
     }

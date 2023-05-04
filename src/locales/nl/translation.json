@@ -141,5 +141,12 @@
     "Save": "Opslaan",
     "Selected map layers only": "Alleen geselecteerde kaartlagen",
     "Visible tools": "Zichtbare tools",
-    "save": "opslaan"
+    "save": "opslaan",
+    "Click next point": "Klik volgend punt",
+    "Click last point to finish": "Klik laatste punt om te eindigen",
+    "Click first point for area": "Klik op eerste punt voor oppervlakte",
+    "Bearing (start-finish)": "Kompashoek (start-eind)",
+    "Bearing": "Kompashoek",
+    "Area": "Oppervlakte",
+    "Total distance": "Afstand totaal"
 }

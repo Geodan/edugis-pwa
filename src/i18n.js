@@ -8,7 +8,7 @@ export async function initI18n()
       .use(LanguageDetector)
       .use(Backend)
       .init({
-        fallbackLng: ["en", "nl"],
+        fallbackLng: ["en"],
         backend: {
           loadPath: './src/locales/{{lng}}/{{ns}}.json'
         }
