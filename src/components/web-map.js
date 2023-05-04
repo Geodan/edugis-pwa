@@ -35,7 +35,7 @@ import './map-sheet-tool';
 import './map-modal-dialog';
 import './map-proj-chooser';
 import "./map-save-layer";
-import {translate as t} from "../i18n.js"
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from "../i18n.js"
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -170,7 +170,7 @@ class WebMap extends LitElement {
       displaylat: Number,
       displaylng: Number,
       resolution: Number,
-      datacatalog: Object,
+      defaultdatacatalog: Object,
       layerlist: Array,
       haslegend: Boolean,
       accesstoken: String,
@@ -220,27 +220,69 @@ class WebMap extends LitElement {
     this.removedLayerId = "";
     this.saveCounter = 0;
     this.copiedCoordinate = '';
+    this.defaultdatacatalog = [];
     this.toolList = [
       {name:"toolbar", visible: true, position: "opened", order: 0, info:""},
-      {name:"search", visible: true, position: "", order: 100, info:`${t("Search name, place or address")}`, icon: gmSearchIcon},
-      {name:"datacatalog", visible: true, search: false, position: "", order: 101, info:`${t("Map layers")}`, icon:layermanagerIcon},
-      {name:"measure", visible: true, position: "", order: 102, info:`${t('Measure distance and surface')}`, icon: measureIcon},
-      {name:"info", visible: true, position: "", order: 103, info: `${t('Get info from map')}`, icon: infoIcon},
-      {name:"maplanguage", visible: true, position: "", order: 104, info: `${t('Map language')}`, icon: languageIcon},
-      {name:"pitch", visible: true, position: "", order: 105, info: `${t('Map view angle')}`, icon: threeDIcon},
-      {name:"geolocate", visible: true, position: "", order: 106, info: `${t('Zoom to my location')}`, icon: gpsIcon},
-      {name:"draw", visible: true, position: "", order: 107, info: `${t('Draw map layer')}`, icon: drawIcon},
-      {name:"importexport", visible: true, position: "", order: 108, info: `${t('Save map')}`, icon: importExportIcon},
-      {name:"datatoolbox", visible: true, position: "", order: 109, info: `${t('Toolbox')}`, icon: combineToolIcon},
-      {name:"sheetimport", visible: true, position: "", order: 110, info: `${t('Upload table')}`, icon: sheetIcon},
-      {name:"projchooser", visible: true, position:"", order: 120, info: `${t('Map projection')}`, icon: world3Icon},
-      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: `${t('Zoom level')}`},
-      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: `${t('Zoom, rotate')}`},
+      {name:"search", visible: true, position: "", order: 100, info:"", icon: gmSearchIcon},
+      {name:"datacatalog", visible: true, search: false, position: "", order: 101, info:"", icon:layermanagerIcon},
+      {name:"measure", visible: true, position: "", order: 102, info:"", icon: measureIcon},
+      {name:"info", visible: true, position: "", order: 103, info: "", icon: infoIcon},
+      {name:"maplanguage", visible: true, position: "", order: 104, info: "", icon: languageIcon},
+      {name:"pitch", visible: true, position: "", order: 105, info: "", icon: threeDIcon},
+      {name:"geolocate", visible: true, position: "", order: 106, info: "", icon: gpsIcon},
+      {name:"draw", visible: true, position: "", order: 107, info: "", icon: drawIcon},
+      {name:"importexport", visible: true, position: "", order: 108, info: "", icon: importExportIcon},
+      {name:"datatoolbox", visible: true, position: "", order: 109, info: "", icon: combineToolIcon},
+      {name:"sheetimport", visible: true, position: "", order: 110, info: "", icon: sheetIcon},
+      {name:"projchooser", visible: true, position:"", order: 120, info: "", icon: world3Icon},
+      {name:"zoomlevel", visible: true, position: "bottom-left", order: 200, info: ""},
+      {name:"navigation", visible: true, position: "bottom-left", order: 201, info: ""},
       {name:"coordinates", visible: true, position: "bottom-center", order: 202},
-      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: `${t('Scale')}`},
-      {name:"legend", visible: true, position: "opened", opened: 1, order: 204, info: `${t('Legend and map layers')}`},
+      {name:"scalebar", visible: true, position: "bottom-right", order: 203, info: ""},
+      {name:"legend", visible: true, position: "opened", opened: 1, order: 204, info: ""},
     ];
+    this.setToolListInfo();
     this.exporttool = false;
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.listener = this.langChanged.bind(this);
+    registerLanguageChangedListener(this.listener);
+  }
+  disconnectedCallback() {
+      super.disconnectedCallback()
+      unregisterLanguageChangedListener(this.listener);
+  }
+  setToolListInfo() {
+    const info = [
+      ["toolbar", ""],
+      ["search",`${t("Search name, place or address")}`],
+      ["datacatalog",`${t("Map layers")}`],
+      ["measure",`${t('Measure distance and surface')}`],
+      ["info", `${t('Get info from map')}`],
+      ["maplanguage", `${t('Map language')}`],
+      ["pitch", `${t('Map view angle')}`],
+      ["geolocate", `${t('Zoom to my location')}`],
+      ["draw", `${t('Draw map layer')}`],
+      ["importexport", `${t('Save map')}`],
+      ["datatoolbox", `${t('Toolbox')}`],
+      ["sheetimport", `${t('Upload table')}`],
+      ["projchooser", `${t('Map projection')}`],
+      ["zoomlevel", `${t('Zoom level')}`],
+      ["navigation",`${t('Zoom, rotate')}`],
+      ["scalebar", `${t('Scale')}`],
+      ["legend", `${t('Legend and map layers')}`]
+    ];
+    this.toolList.forEach(tool=>{
+      const item = info.find(item=>item[0]===tool.name);
+      if (item) {
+        tool.info = item[1];
+      }
+    });
+  }
+  langChanged() {
+    this.setToolListInfo();
+    this.requestUpdate();
   }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
@@ -1419,6 +1461,7 @@ class WebMap extends LitElement {
     if (this.configurl) {
       this.loadConfig(this.configurl);
     } else {
+      this.datacatalog = this.defaultdatacatalog;
       this.initMap();
     }
     this.addEventListener('openedfile', (ev)=> this.handleOpenedFile(ev));

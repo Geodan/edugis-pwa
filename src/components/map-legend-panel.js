@@ -5,7 +5,7 @@
 
 import {LitElement, html, svg, css} from 'lit';
 import mbStyleParser from '../utils/mbox-style-parse.js';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 //import MbStyleParser2 from '../utils/mbox-style-parse2.js'
 import './map-legend-item-edit';
 import './map-legend-line';
@@ -51,6 +51,18 @@ class MapLegendPanel extends LitElement {
       this.transparency = 0;
       this.updatelegend = 0;
       this.activeEdits = {};
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   shouldUpdate(changedProperties) {
     if (changedProperties.has('maplayer')) {

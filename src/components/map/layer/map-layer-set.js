@@ -3,7 +3,7 @@ import { downloadIcon } from '../../my-icons.js';
 
 import "../../base/base-arrow.js";
 import "./map-layer.js";
-import {translate as t} from '../../../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../../../i18n.js';
 
 /**
 * @polymer
@@ -64,6 +64,18 @@ class MapLayerSet extends LitElement {
         this.itemscroller = null;
         this.datagetter = null;
         this.updatelegend = 0;
+    }
+    connectedCallback() {
+        super.connectedCallback()
+        this.languageChanged = this.languageChanged.bind(this);
+        registerLanguageChangedListener(this.languageChanged);
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        unregisterLanguageChangedListener(this.languageChanged);
+    }
+    languageChanged() {
+        this.requestUpdate();
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layerlist')) {

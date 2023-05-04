@@ -1,7 +1,7 @@
 
 import {LitElement, html} from 'lit';
 import './map-layer-tree';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 /**
 * @polymer
 * @extends HTMLElement
@@ -19,6 +19,18 @@ class MapDataCatalog extends LitElement {
     this.datacatalog = null;
     this.maplayers = [];
     this.search = false;
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   setListIds(list) {
     list.forEach(item=>{

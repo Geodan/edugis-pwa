@@ -2,7 +2,7 @@ import {LitElement, html} from 'lit';
 import './map-iconbutton';
 import {openfileIcon, downloadIcon} from './my-icons';
 import {toGeoJSON} from '../lib//togeojson';
-import {translate as t} from '../i18n';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n';
 
 /**
 * @polymer
@@ -23,6 +23,18 @@ export default class MapImportExport extends LitElement {
       this.active = false;
       this.datacatalog = [];
       this.onlyselected = false;
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   /* createRenderRoot() {
     return this;

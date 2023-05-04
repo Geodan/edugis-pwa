@@ -8,6 +8,7 @@ export async function initI18n()
       .use(LanguageDetector)
       .use(Backend)
       .init({
+        fallbackLng: ["en", "nl"],
         backend: {
           loadPath: './src/locales/{{lng}}/{{ns}}.json'
         }
@@ -15,5 +16,27 @@ export async function initI18n()
   return translate;
 }
 
-export const translate = await initI18n();
-export default translate;
+export let translate = await initI18n();
+export {i18next};
+
+const listeners = [];
+
+export function registerLanguageChangedListener(listener)
+{
+  listeners.push(listener);
+}
+
+export function unregisterLanguageChangedListener(listener)
+{
+  const index = listeners.indexOf(listener);
+  if (index > -1)
+  {
+    listeners.splice(index, 1);
+  }
+}
+
+export async function changeLanguage(lang)
+{
+  translate = await i18next.changeLanguage(lang);
+  listeners.forEach(listener => listener());
+}

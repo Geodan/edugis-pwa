@@ -1,5 +1,5 @@
 import {LitElement, html} from 'lit';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 /**
 * @polymer
 * @extends HTMLElement
@@ -15,6 +15,18 @@ class MapLanguage extends LitElement {
     super();
     this.active = false;
     this.language = 'autodetect';
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   changeLangue(e) {
     this.language = this.shadowRoot.querySelector('select').value;

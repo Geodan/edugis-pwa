@@ -1,7 +1,5 @@
 import {LitElement, html} from 'lit';
-import {translate as t} from '../i18n.js';
-
-const startUpMessage = `${t('Determining position')}...`;
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 /* polyfill */
 Math.log10 = Math.log10 || function(x) {
@@ -28,7 +26,7 @@ class MapGeolocation extends LitElement {
       this.latitude = 0;
       this.longitude = 0;
       this.tracking = false;
-      this.message = startUpMessage;
+      this.message = `${t('Determining position')}...`;
       this.watchId = undefined;
       this.webmap = undefined;
       this.flownTo = false;
@@ -36,6 +34,18 @@ class MapGeolocation extends LitElement {
         "type": "FeatureCollection",
         "features": []
       };
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.updateMessage();
   }
   shouldUpdate(changedProps) {
     if (changedProps.has('active')) {
@@ -91,12 +101,9 @@ class MapGeolocation extends LitElement {
     }
   }
   success(pos){
-    // 1 meter => 6 digit coordinate, 10 meter => 5 digit coordinate, 100 meter 4 digit coordinate etc.
-    const factor = 6 - Math.round(Math.log10(pos.coords.accuracy));
-    this.message = html`<b>${t('Location')}</b><br>
-    <b>${t('Longitude')}:</b> ${pos.coords.latitude.toFixed(factor)}&deg;<br>
-    <b>${t('Latitude')}:</b> ${pos.coords.longitude.toFixed(factor)}&deg;<br>
-    <b>${t('Precision')}:</b> ${Math.round(pos.coords.accuracy)} m`;
+    this.pos = pos;
+    this.error = null;
+    this.updateMessage();
     if (this.webmap.version) {
       this.geojson.features = [];
       this.geojson.features.push(this.geoJSONCircle(pos, pos.coords.accuracy));
@@ -113,7 +120,9 @@ class MapGeolocation extends LitElement {
     }
   }
   error(err) {
-    this.message = `${t('Error')}: ${err.code} : ${err.message}`;
+    this.pos = null;
+    this.error = err;
+    this.updateMessage();
   }
   prepareMap() {
     if (this.webmap.version) {
@@ -159,7 +168,7 @@ class MapGeolocation extends LitElement {
   clearMap() {
     navigator.geolocation.clearWatch(this.watchId);
     this.watchId = undefined;
-    this.message = startUpMessage;
+    this.message = `${t('Determining position')}...`
     this.geojson.features = [];
     try {
       if (this.webmap.version) {
@@ -171,7 +180,22 @@ class MapGeolocation extends LitElement {
       console.warn('geolocate.clearMap: exception ' + err);
     }
   }
+  updateMessage() {
+    if (this.pos) {
+      // 1 meter => 6 digit coordinate, 10 meter => 5 digit coordinate, 100 meter 4 digit coordinate etc.
+      const factor = 6 - Math.round(Math.log10(this.pos.coords.accuracy));
+      this.message = html`<b>${t('Location')}</b><br>
+      <b>${t('Longitude')}:</b> ${this.pos.coords.latitude.toFixed(factor)}&deg;<br>
+      <b>${t('Latitude')}:</b> ${this.pos.coords.longitude.toFixed(factor)}&deg;<br>
+      <b>${t('Precision')}:</b> ${Math.round(this.pos.coords.accuracy)} m`;
+    } else if (this.error) {
+      this.message = `${t('Error')}: ${this.error.code} : ${this.error.message}`;
+    } else {
+      this.message = `${t('Determining position')}...`
+    }
+  }
   render() {
+    
     return html`
     <div>
       ${this.message}

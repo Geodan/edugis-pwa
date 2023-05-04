@@ -1,6 +1,6 @@
 import "./map-iconbutton.js";
 import { imageSearchIcon, searchIcon, panoramaWideIcon as areaIcon, showChartIcon as lineIcon, locationOnIcon as pointIcon, closeIcon } from "./my-icons.js";
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 function getIcon(osmtype) {
   switch (osmtype) {
@@ -43,7 +43,18 @@ class MapSearch extends LitElement {
     this.viewbox = [];
     this.active = true;
   }
-
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.info = `${t('Countries, Places, Rivers, ...')}`;
+  }
   triggerResult() {
     if (this.prevResultList == null && this.resultList == null) {
       return;

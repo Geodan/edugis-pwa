@@ -1,5 +1,5 @@
 import {LitElement, html, css} from 'lit';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 function _uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -241,6 +241,18 @@ export class MapDrawLayerDialog extends LitElement {
         super();
         this.active = false;
         this.formStatus = FormStatus.setLayer;
+    }
+    connectedCallback() {
+        super.connectedCallback()
+        this.languageChanged = this.languageChanged.bind(this);
+        registerLanguageChangedListener(this.languageChanged);
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        unregisterLanguageChangedListener(this.languageChanged);
+    }
+    languageChanged() {
+        this.requestUpdate();
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('active')) {

@@ -6,7 +6,7 @@ import drawCss from './map-draw-css.js';
 import {MapDrawLayerDialog} from './map-draw-layerdialog';
 import {threedots} from './my-icons.js';
 import './wc-button';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 /**
 * @polymer
@@ -51,6 +51,18 @@ class MapDraw extends LitElement {
       this.savecounter = 0;
       this.history = [];
       this.historyIndex = 0;
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   shouldUpdate(changedProp){
     if (changedProp.has('map')){

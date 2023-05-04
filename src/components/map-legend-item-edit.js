@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import './color-picker';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 class MapLegendItemEdit extends LitElement {
     static get styles() {
@@ -152,6 +152,18 @@ class MapLegendItemEdit extends LitElement {
         this.radius = undefined;
         this.fontStyle = "";
     }
+    connectedCallback() {
+        super.connectedCallback()
+        this.languageChanged = this.languageChanged.bind(this);
+        registerLanguageChangedListener(this.languageChanged);
+      }
+      disconnectedCallback() {
+        super.disconnectedCallback()
+        unregisterLanguageChangedListener(this.languageChanged);
+      }
+      languageChanged() {
+        this.requestUpdate();
+      }
     shouldUpdate(changedProp) {
         return true;
     }

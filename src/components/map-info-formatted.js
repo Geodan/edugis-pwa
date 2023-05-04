@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import rootUrl from '../utils/rooturl';
-import {translate as t} from '../i18n';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n';
 
 /**
 * @polymer
@@ -51,6 +51,18 @@ class MapInfoFormatted extends LitElement {
       this.filteredInfo = [];
       this.active = false;
       this.streetViewOn = false;
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   toggleStreetView(e)
   {

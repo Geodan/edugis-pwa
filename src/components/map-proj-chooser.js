@@ -1,6 +1,6 @@
 import {LitElement, html,css} from 'lit';
 import './map-iconbutton';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 
 
 /**
@@ -18,6 +18,18 @@ export default class MapProjChooser extends LitElement {
       super();
       this.map = {};
       this.active = false;
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   static get styles() {
     return css`

@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { LitElement, html, css } from 'lit';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import rootUrl from '../utils/rooturl.js';
-import {translate as t} from '../i18n.js';
+import {translate as t, i18next,  changeLanguage} from '../i18n.js';
 
 
 // These are the actions needed by this element.
@@ -161,12 +161,18 @@ class EduGISApp extends (LitElement) {
       <img src="${rootUrl}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
+            <li class="menuitem">
+                <select id="languageselect" @change="${(e)=>this.changeLanguage(e)}">
+                  <option value="nl" ?selected="${i18next.language === 'nl'}">nl</option>
+                  <option value="en" ?selected="${i18next.language === 'en'}">en</option>
+                </select>
+            </li>
             <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">${t('How does EduGIS work?')}</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
     </header>
-    <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .datacatalog="${datacatalog}" .haslegend=${true} .accesstoken="${APIkeys.mapbox}"></web-map>
+    <web-map .configurl="${this.configUrl}" .exporttool=${this.exporttool} navigation="bottom-left" scalebar="bottom-right" geolocate="top-right" coordinates="true" .defaultdatacatalog="${datacatalog}" .haslegend=${true} .accesstoken="${APIkeys.mapbox}"></web-map>
     <tool-tip></tool-tip>
     <footer className="App-footer">&copy;${new Date().getFullYear()} <a href="about.html" target="about">EduGIS</a></footer>
     `;
@@ -174,6 +180,11 @@ class EduGISApp extends (LitElement) {
   firstUpdated() {
     window.addEventListener("hashchange", ()=>this.hashChanged());
     this.doHelpstart();
+  }
+  async changeLanguage(e) {
+    const newLanguage = e.target.value;
+    await changeLanguage(newLanguage);
+    this.requestUpdate();
   }
   doHelpstart() {
     if (this.helpstart && window.sessionStorage.getItem('helpstart') !== 'shown') {

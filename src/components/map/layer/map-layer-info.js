@@ -4,7 +4,7 @@ import '../../map-legend-panel.js';
 import './map-layer-config.js';
 import {iconInformationCircle, iconCog, iconDelete} from "./map-layer-icons.js";
 import { downloadIcon } from '../../my-icons.js';
-import {translate as t} from '../../../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../../../i18n.js';
 
 /**
 * @polymer
@@ -101,6 +101,18 @@ class MapLayerInfo extends LitElement {
         this.zoom = 0;
         this.datagetter = null;
         this.updatelegend = 0;
+    }
+    connectedCallback() {
+        super.connectedCallback()
+        this.languageChanged = this.languageChanged.bind(this);
+        registerLanguageChangedListener(this.languageChanged);
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        unregisterLanguageChangedListener(this.languageChanged);
+    }
+    languageChanged() {
+      this.requestUpdate();
     }
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {

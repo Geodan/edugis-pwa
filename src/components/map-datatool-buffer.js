@@ -1,7 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {customSelectCss} from './custom-select-css.js';
 import getVisibleFeatures from '../utils/mbox-features';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 import './wc-button';
 
 class MapDatatoolBuffer extends LitElement {
@@ -36,12 +36,16 @@ class MapDatatoolBuffer extends LitElement {
         this.bufferSize = 100;
     }
     connectedCallback() {
-        super.connectedCallback()
-        //addEventListener('keydown', this._handleKeydown);
+      super.connectedCallback()
+      this.languageChanged = this.languageChanged.bind(this);
+      registerLanguageChangedListener(this.languageChanged);
     }
     disconnectedCallback() {
-        super.disconnectedCallback()
-        //window.removeEventListener('keydown', this._handleKeydown);
+      super.disconnectedCallback()
+      unregisterLanguageChangedListener(this.languageChanged);
+    }
+    languageChanged() {
+      this.requestUpdate();
     }
     shouldUpdate(changedProp) {
         if (changedProp.has('map')) {

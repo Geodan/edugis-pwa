@@ -1,5 +1,5 @@
 import {LitElement, html, svg, css} from 'lit';
-import {translate as t} from '../i18n.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 import './map-iconbutton';
 import './map-datatool-distance';
 import './map-iconbutton';
@@ -35,6 +35,18 @@ class MapSheetTool extends LitElement {
       this.map = {};
       this.active = false;
       this.currentTool = "";
+  }
+  connectedCallback() {
+    super.connectedCallback()
+    this.languageChanged = this.languageChanged.bind(this);
+    registerLanguageChangedListener(this.languageChanged);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    unregisterLanguageChangedListener(this.languageChanged);
+  }
+  languageChanged() {
+    this.requestUpdate();
   }
   render() {
     if (!this.active) {
