@@ -54,6 +54,9 @@
     "OK":"OK",
     "Cancel":"Annuler",
     "Select":"Sélectionner",
+    "Done": "Terminé",
+    "Skip": "Passer",
+    "Close": "Fermer",
     "Draw":"Dessiner",
     "Save map":"Enregistrer / Ouvrir la carte",
     "Point layer": "Couche de points",
@@ -139,5 +142,12 @@
     "Bearing": "Relèvement",
     "Area": "Surface",
     "Total distance": "Distance totale",
-    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] supprime le dernier point"
+    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backsp] pour enlever point ajouté",
+    "waiting for response": "récupération des données",
+    "link how does EduGIS work?": "https://www-edugis-nl.translate.goog/hoe-werkt-edugis-atlas/?_x_tr_sl=nl&_x_tr_tl=fr&_x_tr_hl=nl&_x_tr_pto=wapp",
+    "Map": "Carte",
+    "Tools": "Outils",
+    "Hopscotch map explain" : "Vous pouvez :<ul><li><b>zoomer</b> et <b>dézoomer</b>, du monde entier jusqu'à votre domicile</li><li><b>faire glisser</b> la carte vers presque n'importe quel endroit sur Terre.</li></ul>",
+    "Hopscotch tools explain": "Avec ces boutons, vous effectuez des opérations sur la carte.<p>Passez la souris sur les boutons pour obtenir des informations supplémentaires",
+    "Hopscotch legend explain": "Ici, les légendes des couches de la carte seront affichées. La légende de la couche d'arrière-plan est également disponible"
 }

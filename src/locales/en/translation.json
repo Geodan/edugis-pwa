@@ -53,6 +53,9 @@
     "Previous": "Previous",
     "OK":"OK",
     "Cancel":"Cancel",
+    "Done": "Done",
+    "Skip": "Skip",
+    "Close": "Close",
     "Select":"Select",
     "Draw":"Draw",
     "Save map":"Save or open map",
@@ -150,5 +153,11 @@
     "Bearing": "Bearing",
     "Area": "Area",
     "Total distance": "Total distance",
-    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] removes last point"
-    }
+    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] removes last point",
+    "link how does EduGIS work?": "https://www-edugis-nl.translate.goog/hoe-werkt-edugis-atlas/?_x_tr_sl=nl&_x_tr_tl=en&_x_tr_hl=nl&_x_tr_pto=wapp",
+    "Map": "Map",
+    "Tools": "Tools",
+    "Hopscotch map explain" : "You can:<ul><li><b>zoom in</b> and <b>out</b>, from world wide to your home</li><li><b>drag</b> the map to almost any location on earth.</li></ul>",
+    "Hopscotch tools explain": "With these buttons, you perform operations on the map.<p>Hover the mouse over the buttons for additional information",
+    "Hopscotch legend explain": "Here, the legends for the map layers will be shown. The legend for the background layer is also available"
+}

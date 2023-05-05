@@ -168,7 +168,7 @@ class EduGISApp extends (LitElement) {
                   <option value="fr" ?selected="${i18next.language === 'fr'}">fr</option>
                 </select>
             </li>
-            <li class="menuitem"><a href="https://edugis.nl/hoe-werkt-edugis-atlas" target="edugishelp">${t('How does EduGIS work?')}</a></li>
+            <li class="menuitem"><a href="${t('link how does EduGIS work?')}" target="edugishelp">${t('How does EduGIS work?')}</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
@@ -194,29 +194,29 @@ class EduGISApp extends (LitElement) {
           var tour = {
               id: "hello-hopscotch",
               i18n: {
-                nextBtn: "Volgende",
-                prevBtn: "Vorige",
-                doneBtn: "Klaar",
-                skipBtn: "Overslaan",
-                closeTooltip: "Sluiten",
+                nextBtn: `${t('Next')}`,
+                prevBtn: `${t('Previous')}`,
+                doneBtn: `${t('Done')}`,
+                skipBtn: `${t('Skip')}`,
+                closeTooltip: `${t('Close')}`,
                 stepNums : ["1/3", "2/3", "3/3"]
               },
               steps: [
                   {
-                      title: "Kaart",
-                      content: "Je kunt:<ul><li><b>in-</b> en <b>uitzoomen</b>, van wereldwijd tot aan je eigen huis</li><li>de kaart <b>verslepen</b> naar bijna elke plek op de wereld.</li></ul>",
+                      title: `${t('Map')}`,
+                      content: `${t('Hopscotch map explain')}`,
                       target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('map-spinner'),
                       placement: "top"
                   },
                   {
-                      title: "Gereedschappen",
-                      content: "Met deze knoppen doe je bewerkingen op de kaart.<p>Houd de muis stil boven de knoppen voor meer uitleg over elke knop",
+                      title: `${t('Tools')}`,
+                      content: `${t('Hopscotch tools explain')}`,
                       target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#tool-menu-container'),
                       placement: "right"
                   },
                   {
-                      title: "Legenda",
-                      content: "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden",
+                      title: `${t('Legend')}`,
+                      content: `${t('Hopscotch legend explain')}`,
                       target: document.querySelector("edugis-app").shadowRoot.querySelector('web-map').shadowRoot.querySelector('#legend-container-container > map-layer-container'),
                       placement: "left"
                   }

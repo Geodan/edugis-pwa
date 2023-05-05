@@ -2186,7 +2186,7 @@ class WebMap extends LitElement {
       "type":"Feature",
       "layer": {"id": layer.id, "metadata": layer.metadata},
       "geometry": null,
-      "properties": {"info": "waiting for response..."}
+      "properties": {"info": `${t('waiting for response')}...`}
     };
   }
   toggleStreetView(e) {

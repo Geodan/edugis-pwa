@@ -53,6 +53,9 @@
     "Previous": "Vorige",
     "OK":"OK",
     "Cancel":"Annuleer",
+    "Done": "Klaar",
+    "Skip": "Overslaan",
+    "Close": "Sluiten",
     "Select":"Selecteer",
     "Draw":"Teken",
     "Save map":"Kaart opslaan / openen",
@@ -149,5 +152,12 @@
     "Bearing": "Kompashoek",
     "Area": "Oppervlakte",
     "Total distance": "Afstand totaal",
-    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] verwijdert laatste punt"
+    "[DEL]/[Backspace] to remove last point": "[DEL]/[Backspace] verwijdert laatste punt",
+    "waiting for response": "gegevens ophalen",
+    "link how does EduGIS work?": "https://edugis.nl/hoe-werkt-edugis-atlas",
+    "Map": "Kaart",
+    "Tools": "Gereedschappen",
+    "Hopscotch map explain" : "Je kunt:<ul><li><b>in-</b> en <b>uitzoomen</b>, van wereldwijd tot aan je eigen huis</li><li>de kaart <b>verslepen</b> naar bijna elke plek op de wereld.</li></ul>",
+    "Hopscotch tools explain": "Met deze knoppen doe je bewerkingen op de kaart.<p>Houd de muis stil boven de knoppen voor meer uitleg over elke knop",
+    "Hopscotch legend explain": "Hier komen de legenda's van de kaartlagen<br>De legenda van de achtergrondlaag is hier ook te vinden"
 }
