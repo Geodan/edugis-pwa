@@ -138,6 +138,16 @@ class EduGISApp extends (LitElement) {
         top: 10px;
         right: 10px;
       }
+      #languageselect {
+        background-color: #2e7dba;
+        color: white;
+        font-size: 1em;
+        border: 1px solid #cfcfcf;
+        border-radius: 2px;
+      }
+      #languageselect:focus-visible {
+        outline: none;
+      }
   `;
   constructor() {
     super();
@@ -161,6 +171,7 @@ class EduGISApp extends (LitElement) {
       <img src="${rootUrl}images/edugislogo.png" alt="logo"/>
         <nav class="topnav">
           <ul>
+            <li class="menuitem"><a href="${t('link how does EduGIS work?')}" target="edugishelp">${t('How does EduGIS work?')}</a></li>
             <li class="menuitem">
                 <select id="languageselect" @change="${(e)=>this.changeLanguage(e)}">
                   <option value="nl" ?selected="${i18next.language === 'nl'}">nl</option>
@@ -168,7 +179,6 @@ class EduGISApp extends (LitElement) {
                   <option value="fr" ?selected="${i18next.language === 'fr'}">fr</option>
                 </select>
             </li>
-            <li class="menuitem"><a href="${t('link how does EduGIS work?')}" target="edugishelp">${t('How does EduGIS work?')}</a></li>
             <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
