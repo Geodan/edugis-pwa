@@ -144,11 +144,21 @@ class MapMeasure extends LitElement {
       padding: 0.25em;
       border: 1px solid #ccc;
     }
-    .label {
-      background-color: #32b4b8;
+    .button {
+      display: inline-block;
       color: white;
-      font-weight: bold;
-    }`;
+      background-color: #2e7dba;
+      border-radius: 4px;
+      text-align: center;
+      border: 1px solid lightgray;
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+    .button:hover {
+      cursor: pointer;
+      background-color: #286CA0;
+    }
+    `;
   connectedCallback() {
     super.connectedCallback()
     this.languageChanged = this.languageChanged.bind(this);
@@ -225,23 +235,27 @@ class MapMeasure extends LitElement {
       }
     } 
   }
-  handleKeyPress(e) {
-    if (e.key === 'Delete' || e.key === 'Backspace') {
-      e.preventDefault();
-      this.geojson.features = this.geojson.features.filter(feature=>feature.geometry.type=="Point");
-      this.hasPolygon = false;
-      if (this.geojson.features.length > 0) {
-        if (this.geojson.features[this.geojson.features.length-1].geometry.type=="Point") {
-          // remove last point feature
-          this.geojson.features.pop();
-        }
+  removeLastPoint() {
+    this.geojson.features = this.geojson.features.filter(feature=>feature.geometry.type=="Point");
+    this.hasPolygon = false;
+    if (this.geojson.features.length > 0) {
+      if (this.geojson.features[this.geojson.features.length-1].geometry.type=="Point") {
+        // remove last point feature
+        this.geojson.features.pop();
       }
     }
     this.addGeoJsonLinesAndPolygon();
     this.updateGeoJsonSource();
     this.requestUpdate();
   }
+  handleKeyPress(e) {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      e.preventDefault();
+      this.removeLastPoint();
+    }
+  }
   handleMapClick(e) {
+    this.mouseUsed = (e && e.originalEvent && e.originalEvent.pointerType && e.originalEvent.pointerType === 'mouse')
     if (this.webmap.version) {
       let clickedFeatures = this.webmap.queryRenderedFeatures(e.point, { layers: ['map-measure-points'] });
       if (this.hasPolygon) {
@@ -447,7 +461,8 @@ class MapMeasure extends LitElement {
               ${points.length === 1 && !this.hasPolygon ? html`${t('Click next point')}` : ''}
               ${points.length > 1 && !this.hasPolygon ? html`${t('Click next point')}.<br>${t('Click last point to finish')}.` : ''}
               ${points.length > 2 && !this.hasPolygon ? html`<br>${t('Click first point for area')}.` : ''}
-              ${points.length > 0 ? html`<br>${t('[DEL]/[Backspace] to remove last point')}` : ''}
+              ${points.length > 0 && !this.mouseUsed ? html`<br><div class="button" @click="${e=>this.removeLastPoint(e)}">Del</div>`:html`<br>`}
+              ${points.length > 0 ? html`${t('[Del]/[Backspace] to remove last point')}` : ''}
             </div>
           </div>
         </div>

@@ -262,7 +262,7 @@ class MapDraw extends LitElement {
       <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="${t('Select')} ${t(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
       ${showTrash?html`
-      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[DEL]" ><map-iconbutton info="${t('Delete selection')}" .icon="${trashIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[Del]" ><map-iconbutton info="${t('Delete selection')}" .icon="${trashIcon}"></map-iconbutton></div>
       ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
