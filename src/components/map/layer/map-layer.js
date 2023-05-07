@@ -6,6 +6,7 @@ import "./map-layer-info.js";
 import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import * as Gestures from '@polymer/polymer/lib/utils/gestures.js';
 import {arrowForwardIcon} from './map-layer-icons.js';
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener } from '../../../i18n.js';
 
 /**
 * @polymer
@@ -121,6 +122,18 @@ class MapLayer extends GestureEventListeners(LitElement) {
         this.datagetter = null;
         this.updatelegend = 0;
     }
+    connectedCallback() {
+      super.connectedCallback()
+      this.languageChanged = this.languageChanged.bind(this);
+      registerLanguageChangedListener(this.languageChanged);
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback()
+      unregisterLanguageChangedListener(this.languageChanged);
+    }
+    languageChanged() {
+      this.requestUpdate();
+    }  
     shouldUpdate(changedProperties) {
         if (changedProperties.has('layer')) {
             if (this.layer && this.layer.id) {
@@ -145,7 +158,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
           }
         } else if (!this.visible) {
           if (this.layer??metadata??inEditmode) {
-            this.subtitle = `t('In drawing mode')`;
+            this.subtitle = t('In drawing mode');
           } else {
             this.subtitle = "";
           }
