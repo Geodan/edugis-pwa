@@ -172,7 +172,7 @@ class MapDatatoolBuffer extends LitElement {
             this.worker.postMessage([geojson, bufferSize]);
         } else {
           // no visble features in source layer
-          this.busyMessage = `${t('No visible elements in')} ${this.map.getLayer(layerid).metadata.title}}`;
+          this.busyMessage = `${t('No visible elements in')} ${this.map.getLayer(layerid).metadata.title}`;
           setTimeout(()=>this.busyMessage='', 3000);
         }
       }
@@ -217,10 +217,17 @@ class MapDatatoolBuffer extends LitElement {
       _handleWorkerMessage(event) {
         this.busyMessage = '';
         const result = event.data;
-        //setTimeout(()=>{
-          const targetLayer = this.map.getLayer(this.targetLayerid);
-          this.map.getSource(this.targetLayerid).setData(result);
-        //}, 300);
+        setTimeout(()=>{
+        this.dispatchEvent(new CustomEvent('updatevisibility', {
+          detail: {
+            layerid: this.targetLayerid,
+            visible: true
+          },
+          bubbles: true,
+          composed: true
+        }));
+      }, 100);
+        this.map.getSource(this.targetLayerid).setData(result);
       }
 }
 

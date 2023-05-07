@@ -288,6 +288,7 @@ class WebMap extends LitElement {
     const layer = this.map.getLayer(id);
     if (layer) {
       layer.setLayoutProperty('visibility', (visible ? 'visible' : 'none'));
+      layer.metadata.visible = visible;
       // update item in this.layerlist
       const layerlistitem = this.layerlist.find(layerlistitem=>layerlistitem.id===id);
       if (layerlistitem) {
@@ -304,6 +305,7 @@ class WebMap extends LitElement {
       } else {
         this.updateSingleLayerVisibility(e.detail.layerid, e.detail.visible);
       }
+      this.resetLayerListRequested = true;
       this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
     }
   }
@@ -901,7 +903,13 @@ class WebMap extends LitElement {
         </map-panel>
         <map-panel .active="${this.currentTool==='datatoolbox'}">
           <div style="width:100%"></div>
-          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" .map="${this.map}" @titlechange="${()=>this.resetLayerList()}" @addlayer="${e=>this.addLayer(e)}" @removelayer="${e=>this.removeLayer(e)}"></map-data-toolbox>
+          <map-data-toolbox .active="${this.currentTool==='datatoolbox'}" 
+            .map="${this.map}" 
+            @titlechange="${()=>this.resetLayerList()}" 
+            @addlayer="${e=>this.addLayer(e)}" 
+            @removelayer="${e=>this.removeLayer(e)}"
+            @updatevisibility="${(e) => this.updateLayerVisibility(e)}">
+          </map-data-toolbox>
         </map-panel>
         <map-panel .active="${this.currentTool==='sheetimport'}">
           <div style="width:100%"></div>
