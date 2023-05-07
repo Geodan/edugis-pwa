@@ -128,12 +128,19 @@ class MapLayerInfo extends LitElement {
         }
         return true;
     }
+    _renderRemoveButton() {
+        // do not show layer remove button while editing the layer
+        if (!this.layer??metadata??inEditMode) {
+            return html`<div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> ${t('Remove')}</div>`;
+        }
+        return ``
+    }
     render() {
         // <button @click="${(e)=>this._buttonClick(e)}">colors</button>
         return html`
         <div id="licontainer">
             ${this._renderVisibleLayerInfo()}
-            <div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> ${t('Remove')}</div>
+            ${this._renderRemoveButton()}
         </div>
         `
     }
