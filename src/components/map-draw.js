@@ -756,9 +756,9 @@ class MapDraw extends LitElement {
     if (mapLayer) {
       //this.map.setLayoutProperty(layer.id, 'visibility', visible?'visible':'none');
       if (visible) {
-        delete mapLayer.metadata.inEditmode;
+        delete mapLayer.metadata.inEditMode;
       } else {
-        mapLayer.metadata.inEditmode = true;
+        mapLayer.metadata.inEditMode = true;
       }
       setTimeout(()=> // wait for map.addLayer to update full UI
         this.dispatchEvent(new CustomEvent('updatevisibility', {

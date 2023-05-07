@@ -130,7 +130,7 @@ class MapLayerInfo extends LitElement {
     }
     _renderRemoveButton() {
         // do not show layer remove button while editing the layer
-        if (!this.layer??metadata??inEditMode) {
+        if (!this.layer.metadata.inEditMode) {
             return html`<div class="iconbutton" @click="${()=>this._removeLayer()}"><span class="icon">${iconDelete}</span> ${t('Remove')}</div>`;
         }
         return ``
