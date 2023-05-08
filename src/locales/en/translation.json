@@ -84,6 +84,7 @@
     "Map language": "Map language",
     "Map layer": "Map layer",
     "Map Layer 1": "Map Layer 1",
+    "Map layer outside current view": "Map layer outside current view",
     "Map layers": "Map layers",
     "Map layers available (at least 1 required)": "Map layers available (at least 1 required)",
     "Map projection": "Map projection",
@@ -160,5 +161,7 @@
     "width": "width",
     "Zoom level": "Zoom level",
     "Zoom to my location": "Zoom to my location",
-    "Zoom, rotate": "Zoom, rotate"
+    "Zoom, rotate": "Zoom, rotate",
+    "Zoom in further": "Zoom in further",
+    "Zoom out further": "Zoom out further"
 }

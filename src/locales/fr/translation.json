@@ -84,6 +84,7 @@
     "Map language": "Langue de la carte",
     "Map layer": "Couche de carte",
     "Map Layer 1": "Couche de carte 1",
+    "Map layer outside current view": "Couche de carte en dehors de la vue",
     "Map layers": "Couches de carte",
     "Map layers available (at least 1 required)": "Couches de carte disponibles (au moins 1 requise)",
     "Map projection": "Projection de la carte",
@@ -160,5 +161,7 @@
     "width": "épaisseur",
     "Zoom level": "Niveau de zoom",
     "Zoom to my location": "Zoom sur ma position",
-    "Zoom, rotate": "Zoom, rotation"
+    "Zoom, rotate": "Zoom, rotation",
+    "Zoom in further": "Zoom davantage",
+    "Zoom out further": "Dézoomer davantage"
 }

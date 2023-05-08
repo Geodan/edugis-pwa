@@ -84,6 +84,7 @@
     "Map language": "Kaarttaal",
     "Map layer": "Kaartlaag",
     "Map Layer 1": "Kaartlaag 1",
+    "Map layer outside current view": "Kaartlaag buiten kaartbeeld",
     "Map layers": "Kaartlagen",
     "Map layers available (at least 1 required)": "kaartlagen aanwezig (minimmaal 1 nodig)",
     "Map projection": "Kaartprojectie",
@@ -160,5 +161,7 @@
     "width": "dikte",
     "Zoom level": "Zoom-niveau",
     "Zoom to my location": "Zoom naar mijn locatie",
-    "Zoom, rotate": "Zoom, Roteer"
+    "Zoom, rotate": "Zoom, Roteer",
+    "Zoom in further": "Zoom verder in",
+    "Zoom out further": "Zoom verder uit"
 }

@@ -149,12 +149,12 @@ class MapLayer extends GestureEventListeners(LitElement) {
         this.boundspos = this.layer.metadata && this.layer.metadata.boundspos?this.layer.metadata.boundspos:"";
         this._checkZoomRange();
         if (this.boundspos && this.boundspos != "") {
-          this.subtitle = html`Kaartlaag buiten kaartbeeld <span class="direction ${this.boundspos}">${arrowForwardIcon}</span>`
+          this.subtitle = html`${t(`Map layer outside current view`)} <span class="direction ${this.boundspos}">${arrowForwardIcon}</span>`
         } else if (this.outzoomrange){
           if (this.zoom < this.minzoom) {
-            this.subtitle = "Zoom verder in";
+            this.subtitle = t("Zoom in further");
           } else {
-            this.subtitle = "Zoom verder uit";
+            this.subtitle = t("Zoom out further");;
           }
         } else if (!this.visible) {
           if (this.layer.metadata.inEditMode) {
@@ -174,7 +174,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
                     <div class="mltitle">
                         ${this.nolayer}
                     </div>
-                </div>        
+                </div>
             `
         }
         if (!this.layer.metadata) {
