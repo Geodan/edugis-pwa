@@ -23,7 +23,7 @@ class BaseButtonRadio extends LitElement {
                 align-items: stretch;
                 margin: 2px;
                 border-radius: 5px;
-                border: 1px solid #2E7DBA;
+                border: 1px solid var(--theme-background-color, #2e7dba);
                 overflow: hidden;
             }
             .hidden{

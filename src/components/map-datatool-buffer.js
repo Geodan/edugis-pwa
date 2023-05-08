@@ -10,8 +10,8 @@ class MapDatatoolBuffer extends LitElement {
           ${customSelectCss()}
           .buttoncontainer {border: 1px solid gray; border-radius:4px;padding:2px;fill:gray;width:150px;margin-top:5px;}
           .edugisblue {
-            --dark-color: #2E7DBA;
-            --light-color: white;
+            --dark-color: var(--theme-background-color, #2e7dba);
+            --light-color: var(--theme-color, white);
             width: 100%;
           }
           #targetname {

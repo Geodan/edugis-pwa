@@ -147,7 +147,7 @@ class MapMeasure extends LitElement {
     .button {
       display: inline-block;
       color: white;
-      background-color: #2e7dba;
+      background-color: var(--theme-background-color, #2e7dba);
       border-radius: 4px;
       text-align: center;
       border: 1px solid lightgray;

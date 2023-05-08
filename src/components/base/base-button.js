@@ -59,23 +59,23 @@ class BaseButton extends LitElement {
             }
             button:not([disabled]):active {
                 background-color: white;
-                color: #2E7DBA;
+                color: var(--theme-background-color, #2e7dba);
                 opacity: 1;
             }
             button:not([disabled]):not([isradio]):active {
-                border: 1px solid #2E7DBA;
+                border: 1px solid var(--theme-background-color, #2e7dba);
                 padding: 9px 31px;
             }
             button[isradio]:not([checked]):not([disabled]) {
-                background-color: white;
-                color: #2E7DBA;
+                background-color: var(--theme-color, white);
+                color: var(--theme-background-color, #2e7dba);
             }
             button[isradio]:not([checked]):not([disabled]):active {
-                background-color: #2E7DBA;
-                color: white;                
+                background-color: var(--theme-background-color, #2e7dba);
+                color: var(theme-color, white);
             }
             button[isradio][rightborder] {
-                border-right: 1px solid #2E7DBA;
+                border-right: 1px solid var(--theme-background-color, #2e7dba);
             }
             button[small]:not([disabled]):not([isradio]):active {
                 padding: 4px 7px;

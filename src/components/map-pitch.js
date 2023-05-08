@@ -49,10 +49,10 @@ class MapPitch extends LitElement {
     return html`
       <style>
         .edugisblue {
-        --mdc-theme-on-primary: white;
-        --mdc-theme-primary: #2E7DBA;
-        --mdc-theme-on-secondary: white;
-        --mdc-theme-secondary: #2E7DBA;
+        --mdc-theme-on-primary: var(--theme-color, white);
+        --mdc-theme-primary: var(--theme-background-color, #2E7DBA);
+        --mdc-theme-on-secondary: var(--theme-color, white);
+        --mdc-theme-secondary: var(--theme-background-color, #2E7DBA);
       }
       .padded {
         padding: 10px;

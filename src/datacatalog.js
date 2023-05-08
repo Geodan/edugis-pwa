@@ -1605,7 +1605,7 @@ export default
                 "type":"hillshade",
                 "source":{
                   "type":"raster-dem",
-                  "url":"mapbox://mapbox.terrain-rgb"
+                  "url":"https://a.tiles.mapbox.com/v4/mapbox-terrain-dem?access_token={mapboxkey}",
                 }
               }
             },
@@ -1742,30 +1742,6 @@ export default
             "id":"DarkMatter",
             "type":"style",
             "source":"styles/openmaptiles/dark-matter.json",
-            "metadata":{
-              "reference":true
-            }
-          }
-        },
-        {
-          "type":"reference",
-          "title":"MapBox Streets v8 (stijl)",
-          "layerInfo":{
-            "id":"streets-v8",
-            "type":"style",
-            "source":"mapbox://styles/mapbox/streets-v8",
-            "metadata":{
-              "reference":true
-            }
-          }
-        },
-        {
-          "type":"reference",
-          "title":"MapBox Streets v9 (stijl)",
-          "layerInfo":{
-            "id":"streets-v9",
-            "type":"style",
-            "source":"mapbox://styles/mapbox/streets-v9",
             "metadata":{
               "reference":true
             }

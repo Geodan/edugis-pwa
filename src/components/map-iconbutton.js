@@ -20,7 +20,7 @@ class IconButton extends LitElement {
       cursor: pointer; /* Mouse pointer on hover */
     }
     .button:hover {
-      background-color: #3982b9;
+      background-color: var(--theme-hover-background-color, #3982b9);
       fill: white;
       color: white;
     }
@@ -30,12 +30,12 @@ class IconButton extends LitElement {
       fill: rgb(160,160,160);
     }
     .button.active:hover {
-      background-color: #286CA0;
+      background-color: var(--theme-active-background-color, #286CA0);
       fill: white;
       color: white;
     }
     .active {
-      background-color: #2E7DBA;
+      background-color: var(--theme-background-color, #2e7dba);
       fill: white;
       color: white;
     }

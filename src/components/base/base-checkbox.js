@@ -61,12 +61,12 @@ class BaseCheckbox extends LitElement {
               background-color: #ccc;
             }
             .bccontainer.checked:hover input ~ .checkmark {
-                background-color: #2E7DBA;
+                background-color: var(--theme-background-color, #2e7dba);
             }
             
             /* When the checkbox is checked, add a blue background */
             .bccontainer.checked .checkmark {
-              background-color: #2196F3;
+              background-color: var(--theme-hover-background-color, #2196F3);
             }
             .bccontainer.disabled .checkmark {
                 background-color: lightgray;

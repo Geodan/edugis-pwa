@@ -124,7 +124,7 @@ export class MapDrawLayerDialog extends LitElement {
         .button {
             display: inline-block;
             color: white;
-            background-color: #2e7dba;
+            background-color: var(--theme-background-color, #2e7dba);
             border-radius: 4px;
             text-align: center;
             border: 1px solid lightgray;
@@ -170,8 +170,8 @@ export class MapDrawLayerDialog extends LitElement {
           display: block;
           height: 2em;
           border-bottom: 1px solid whitesmoke;
-          background-color: #2e7dba;
-          color: white;
+          background-color: var(--theme-background-color, #2e7dba);
+          color: var(--theme-color, white);
         }
         #closebutton {
           float: right;

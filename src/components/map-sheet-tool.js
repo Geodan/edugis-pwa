@@ -24,8 +24,8 @@ class MapSheetTool extends LitElement {
       .buttonbar {height: 55px;width:100%; margin-top: 19px; margin-bottom: 15px;}
       .tool {display: inline-block; height: 55px; width: 55px; line-height: 67px;}
       .edugisblue {
-        --dark-color: #2E7DBA;
-        --light-color: white;
+        --dark-color: var(--theme-background-color, #2e7dba);
+        --light-color: var(--theme-color, white);
         width: 100%;
       }
     `

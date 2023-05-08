@@ -60,8 +60,8 @@ class EduGISApp extends (LitElement) {
         top: 0px;
         width: 100%;
         height: 40px;
-        background-color: #2e7dba;
-        color: white;
+        background-color: var(--theme-background-color, #2e7dba);
+        color: var(--theme-color, white);
         box-sizing: border-box;
         padding-left: 1em;
       }
@@ -121,7 +121,7 @@ class EduGISApp extends (LitElement) {
         bottom: 0px;
         width: 100%;
         height: 1.5em;
-        background-color: #2e7dba;
+        background-color: var(--theme-background-color, #2e7dba);
         color: white;
         box-sizing: border-box;
         padding-left: 0.5em;
@@ -139,7 +139,7 @@ class EduGISApp extends (LitElement) {
         right: 10px;
       }
       #languageselect {
-        background-color: #2e7dba;
+        background-color: var(--theme-background-color, #2e7dba);
         color: white;
         font-size: 1em;
         border: 1px solid #cfcfcf;

@@ -38,10 +38,10 @@ class WcButton extends LitElement {
                 user-select: none;
                 text-align: center;
                 font: inherit;
-                border: 1px solid var(--dark-color, #2E7DBA);
+                border: 1px solid var(--theme-background-color, var(--dark-color, #2E7DBA));
                 border-radius: 5px;
-                color: var(--light-color, white);
-                background-color: var(--dark-color, #2E7DBA);
+                color: var(--theme-color, var(--light-color, white));
+                background-color: var(--theme-background-color, var(--dark-color, #2E7DBA));
                 height: 100%;
                 line-height: 36px;
                 padding: 0 8px 0 9px;
