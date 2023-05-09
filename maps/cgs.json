@@ -469,113 +469,418 @@
           "title": "Meerjarenprogramma Infrastructuur, Ruimte en Transport (MIRT)",
           "sublayers": [
             {
+              "type": "group",
               "title": "Lijnen",
-              "layerInfo": {
-                "id":"mirtlijnen",
-                "metadata": {
-                  "title": "Alle lijnen uit het MIRT"
+              "sublayers": [
+                {
+                  "title": "Alle lijnen uit het MIRT",
+                  "layerInfo": {
+                    "id":"mirtlijnen",
+                    "metadata": {
+                      "title": "Alle lijnen uit het MIRT"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color":"red",
+                      "line-width":2
+                    }
+                  }
                 },
-                "type":"line",
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
-                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                    "maxzoom": 17
+                {
+                  "title": "Hoofdvaarwegen",
+                  "layerInfo": {
+                    "id":"mirtlijnenhoofdvaarwegen",
+                    "metadata": {
+                      "title": "Hoofdvaarwegen"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color":"#154273",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdvaarwegen"]
+                  }
                 },
-                "source-layer":"cg.mirt2022_lijnen",
-                "paint":{
-                  "line-color":"red",
-                  "line-width":2
+                {
+                  "title": "Hoofdwegen",
+                  "layerInfo": {
+                    "id":"mirtlijnenhoofdwegen",
+                    "metadata": {
+                      "title": "Hoofwegen"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "#f2a900",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdwegen"]
+                  }
+                },
+                {
+                  "title": "OV en Spoor",
+                  "layerInfo": {
+                    "id":"mirtlijnenovenspoor",
+                    "metadata": {
+                      "title": "OV en Spoor"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "black",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "OV en Spoor"]
+                  }
+                },
+                {
+                  "title": "Regionale/lokale infrastructuur",
+                  "layerInfo": {
+                    "id":"mirtlijnenregionalelokaleinfrastructuur",
+                    "metadata": {
+                      "title": "Regionale/lokale infrastructuur"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "green",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Regionale/lokale infrastructuur"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen goederen",
+                  "layerInfo": {
+                    "id":"mirtlijnenspoorwegengoederen",
+                    "metadata": {
+                      "title": "Spoorwegen goederen"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "darkmagenta",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen goederen"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen goederen en personen",
+                  "layerInfo": {
+                    "id":"mirtlijnenspoorwegengoederenen personen",
+                    "metadata": {
+                      "title": "Spoorwegen goederen en personen"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "brown",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen goederen en personen"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen personen",
+                  "layerInfo": {
+                    "id":"mirtlijnenspoorwegenpersonen",
+                    "metadata": {
+                      "title": "Spoorwegen personen"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "black",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen personen"]
+                  }
+                },
+                {
+                  "title": "Waterveiligheid",
+                  "layerInfo": {
+                    "id":"mirtlijnenwaterveiligheid",
+                    "metadata": {
+                      "title": "Waterveiligheid"
+                    },
+                    "type":"line",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_lijnen",
+                    "paint":{
+                      "line-color": "navy",
+                      "line-width":2
+                    },
+                    "filter": ["==", "onderwerp", "Waterveiligheid"]
+                  }
                 }
-              }
+              ]
             },
             {
-              "title": "Hoofdvaarwegen",
-              "layerInfo": {
-                "id":"mirtlijnenhoofdvaarwegen",
-                "metadata": {
-                  "title": "Hoofdvaarwegen"
+              "type": "group",
+              "title": "Vlakken",
+              "sublayers": [
+                {
+                  "title": "Alle vlakken uit het MIRT",
+                  "layerInfo": {
+                    "id":"mirtvlakken",
+                    "metadata": {
+                      "title": "Alle vlakken uit het MIRT"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color":"red",
+                      "fill-outline-color":"white"
+                    }
+                  }
                 },
-                "type":"line",
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
-                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                    "maxzoom": 17
+                {
+                  "title": "Groot project",
+                  "id":"mirtvlakkengrootproject",
+                  "layerInfo": {
+                    "id":"mirtvlakkengrootproject",
+                    "metadata": {
+                      "title": "Groot project"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color":"orangeRed",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Groot project"]
+                  }
                 },
-                "source-layer":"cg.mirt2022_lijnen",
-                "paint":{
-                  "line-color":"#154273",
-                  "line-width":2
+                {
+                  "title": "Hoofdvaarwegen",
+                  "id":"mirtvlakkenhoofdvaarwegen",
+                  "layerInfo": {
+                    "id":"mirtvlakkenhoofdvaarwegen",
+                    "metadata": {
+                      "title": "Hoofdvaarwegenvlak"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color":"#154273",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdvaarwegen"]
+                  }
                 },
-                "filter": ["==", "onderwerp", "Hoofdvaarwegen"]
-              }
-            },
-            {
-              "title": "Hoofdwegen",
-              "layerInfo": {
-                "id":"mirtlijnenhoofdwegen",
-                "metadata": {
-                  "title": "Hoofwegen"
+                {
+                  "title": "Hoofdwegen",
+                  "id":"mirtvlakkenhoofdwegen",
+                  "layerInfo": {
+                    "id":"mirtvlakkenhoofdwegen",
+                    "metadata": {
+                      "title": "Hoofdwegen"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color":"#f2a900",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdwegen"]
+                  }
+                },                
+                {
+                  "title": "Regionale/lokale infrastructuur",
+                  "id":"mirtvlakkenregionalelokaleinfrastructuur",
+                  "layerInfo": {
+                    "id":"mirtvlakkenregionalelokaleinfrastructuur",
+                    "metadata": {
+                      "title": "Regionale/lokale infrastructuur"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color": "green",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Regionale/lokale infrastructuur"]
+                  }
                 },
-                "type":"line",
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
-                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                    "maxzoom": 17
+                {
+                  "title": "Spoorwegen personen",
+                  "id":"mirtvlakkenenspoorwegenpersonen",
+                  "layerInfo": {
+                    "id":"mirtvlakkenenspoorwegenpersonen",
+                    "metadata": {
+                      "title": "Spoorwegen personen"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color": "black",
+                      "fill-outline-color":"white"
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen personen"]
+                  }
                 },
-                "source-layer":"cg.mirt2022_lijnen",
-                "paint":{
-                  "line-color": "#f2a900",
-                  "line-width":2
+                {
+                  "title": "Water",
+                  "id":"mirtvlakkenenwater",
+                  "layerInfo": {
+                    "id":"mirtvlakkenenwater",
+                    "metadata": {
+                      "title": "Water"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color": "RoyalBlue",
+                      "fill-outline-color":"white"
+                    },
+                    "filter": ["==", "onderwerp", "Water"]
+                  }
                 },
-                "filter": ["==", "onderwerp", "Hoofdwegen"]
-              }
-            },
-            {
-              "title": "OV en Spoor",
-              "layerInfo": {
-                "id":"mirtlijnenovenspoor",
-                "metadata": {
-                  "title": "OV en Spoor"
+                {
+                  "title": "Waterkwaliteit",
+                  "id":"mirtvlakkenwaterkwaliteit",
+                  "layerInfo": {
+                    "id":"mirtvlakkenwaterkwaliteit",
+                    "metadata": {
+                      "title": "Waterkwaliteit"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color": "skyblue",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Waterkwaliteit"]
+                  }
                 },
-                "type":"line",
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
-                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                    "maxzoom": 17
-                },
-                "source-layer":"cg.mirt2022_lijnen",
-                "paint":{
-                  "line-color": "black",
-                  "line-width":2
-                },
-                "filter": ["==", "onderwerp", "OV en Spoor"]
-              }
-            },
-            {
-              "title": "Regionale/lokale infrastructuur",
-              "layerInfo": {
-                "id":"mirtlijnenregionalelokaleinfrastructuur",
-                "metadata": {
-                  "title": "Regionale/lokale infrastructuur"
-                },
-                "type":"line",
-                "source":{
-                    "type":"vector",
-                    "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_lijnen/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
-                    "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
-                    "maxzoom": 17
-                },
-                "source-layer":"cg.mirt2022_lijnen",
-                "paint":{
-                  "line-color": "darkred",
-                  "line-width":2
-                },
-                "filter": ["==", "onderwerp", "Regionale/lokale infrastructuur"]
-              }
+                {
+                  "title": "Waterveiligheid",
+                  "id":"mirtvlakkenwaterveiligheid",
+                  "layerInfo": {
+                    "id":"mirtvlakkenwaterveiligheid",
+                    "metadata": {
+                      "title": "Waterveiligheid"
+                    },
+                    "type":"fill",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_vlakken/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreali,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_vlakken",
+                    "paint":{
+                      "fill-color": "navy",
+                      "fill-outline-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Waterveiligheid"]
+                  }
+                }
+              ]
             }
           ]
         },
@@ -604,11 +909,13 @@
                                   ]
                                 }
                             },
+                            "minzoom": 6.5,
                             "source": {
                                 "type": "raster",
                                 "tileSize": 256,
                                 "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                                "tiles": ["https://service.pdok.nl/bzk/bro-bodemkaart/wms/v1_0?layers=soilarea"]
+                                "tiles": ["https://service.pdok.nl/bzk/bro-bodemkaart/wms/v1_0?layers=soilarea"],
+                                "minzoom": 7
                             }
                           }
                         },
@@ -1405,136 +1712,7 @@
         {
             "type": "group",
             "title": "Water",
-            "sublayers": [{
-                    "type": "group",
-                    "title": "Vitens",
-                    "sublayers": [
-                        {
-                            "title":"Productielocaties",
-                            "layerInfo":{
-                        "id": "productielocaties",
-                        "type": "circle",
-                        "source": {
-                            "type": "vector",
-                            "tiles": [
-                                "https://tiles.edugis.nl/v1/mvt/public.productielocatie_centrum/{z}/{x}/{y}?columns=\"id\",naam"
-                                ]
-                                },
-                        "source-layer": "public.productielocatie_centrum",
-                        "paint": {
-                            "circle-radius": 4,
-                            "circle-color": "darkblue",
-                            "circle-stroke-color": "black",
-                            "circle-stroke-width": 1
-                            },
-                        "filter": [
-                            "has",
-                            "id"
-                            ]
-                    }
-                        },{
-                            "title":"Balansgebieden",
-                            "layerInfo":{
-                              "id": "balansgebieden",
-                              "metadata": {
-                                "abstract": "Vitens balansgebieden. Om zo min mogelijk energie te gebruiken voor het transport van water van de                                waterfabrieken naar de huizen is het gebied van Vitens verdeeld in zogenaamde                                 balansgebieden. In een balansgebied zorgen 1 of meerdere waterfabrieken samen voor voldoende water voor de inwoners en bedrijven in dat gebied."
-                              },
-                              "type": "fill",
-                              "source": {
-                                  "type": "vector",
-                                  "tiles": [
-                                      "https://tiles.edugis.nl/v1/mvt/public.balansgebieden/{z}/{x}/{y}?columns=\"id\",keyname"
-                                      ]
-                                      },
-                              "source-layer": "public.balansgebieden",
-                              "paint": {
-                                  "fill-color": "#89ea27",
-                                  "fill-outline-color": "black",
-                                  "fill-opacity": 0.6
-        },
-                              "filter": [
-                                  "has",
-                                  "id"
-                                  ]
-                    }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Rivieren",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"water",
-                            "layerInfo":{
-                                "id":"water",
-                                "url":"https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/water.map",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Noordzee",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Noordzee",
-                            "layerInfo":{
-                                "id":"noordzee",
-                                "url": "https://mapserver.edugis.nl/cgi-bin/mapserv?request=getcapabilities&version=1.1.1&service=wms&map=maps/edugis/cache/noordzee.map",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Overstromingsrisico",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Overstromingsrisico",
-                            "layerInfo":{
-                                "id":"overstromingsrisico",
-                                "url": "https://kaart.edugis.nl/data/nederland/waterdieptes.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Overstromingsschade",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Overstromingsschade",
-                            "layerInfo":{
-                                "id":"overstromingsschade",
-                                "url": "https://kaart.edugis.nl/data/nederland/overstromingsschade.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Overstromingsmodel",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Overstromingsmodel",
-                            "layerInfo":{
-                                "id":"overstromingsmodel",
-                                "url": "https://kaart.edugis.nl/data/nederland/water_overstromingsmodel.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
+            "sublayers": [
                 {
                   "type": "group",
                   "title": "Vaarwegen",
@@ -1599,193 +1777,94 @@
                       }
                     }
                   ]
-                },
-                {
-                    "type": "group",
-                    "title": "Zuiderzeeland",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Zuiderzeeland",
-                            "layerInfo":{
-                                "id":"zuiderzeeland",
-                                "url": "https://kaart.edugis.nl/data/nederland/zuiderzeeland.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "group",
-                    "title": "Zeeuwse delta",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"Zeeuwse delta",
-                            "layerInfo":{
-                                "id":"zeeuwsedelta",
-                                "url": "https://kaart.edugis.nl/data/nederland/zeeuwse_delta.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
                 }
             ]
         },
         {
-            "type": "group",
-            "title": "Topografie",
-            "sublayers": [
-              {
-                "type": "group",
-                "title": "Topografie lagen",
-                "sublayers": [
-                  {
-                    "title": "Achtergrondkleur",
-                    "layerInfo": "./layers/osmbrightbackground.json"
-                  },
-                  {
-                    "title": "Grondgebruik",
-                    "layerInfo": "./layers/osmbrightlandcov.json"
-                  },
-                  {
-                    "title": "Water en waterwegen",
-                    "layerInfo": "./layers/osmbrightwater.json"
-                  },
-                  {
-                    "title": "Waterpatroon (golven)",
-                    "layerInfo": "./layers/osmbrightwaterpattern.json"
-                  },
-                  {
-                    "title": "Waternamen",
-                    "layerInfo": "./layers/osmbrightwatername.json"
-                  },
-                  {
-                    "title": "Administratieve grenzen",
-                    "layerInfo": "./layers/osmbrightadminborders.json"
-                  },
-                  {
-                    "title": "Snelwegen",
-                    "layerInfo": "./layers/osmbrightroads.json"
-                  },
-                  {
-                    "title": "Snelwegnamen",
-                    "layerInfo": "./layers/brightmotorwayname.json"
-                  },
-                  {
-                    "title": "Wegen",
-                    "layerInfo": "./layers/osmbrightallroads.json"
-                  },
-                  {
-                    "title": "Wegnamen",
-                    "layerInfo": "./layers/osmbrightallroadnames.json"
-                  },
-                  {
-                    "title":"Spoorwegen",
-                    "layerInfo": "./layers/osmbrightrail.json"
-                  },
-                  {
-                    "title": "Plaatsen",
-                    "layerInfo": "./layers/osmbrightpoi.json"
-                  },
-                  {
-                    "title": "Plaatsnamen",
-                    "layerInfo": "./layers/osmbrightpoiname.json"
-                  },
-                  {
-                    "title": "Gebouwen",
-                    "layerInfo": "./layers/osmbrightbuildings.json"
-                  },
-                  {
-                    "title": "Huisnummers",
-                    "layerInfo": {
-                      "id": "housenumber-topo",
-                      "type": "symbol",
-                      "source": {
-                        "type": "vector",
-                        "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
-                      },
-                      "source-layer": "housenumber",
-                      "minzoom": 16,
-                      "filter": [
-                        "==",
-                        "$type",
-                        "Point"
-                      ],
-                      "layout": {
-                        "text-field": "{housenumber}",
-                        "text-size": 10,
-                        "text-font": [
-                          "Noto Sans Regular"
-                        ]
-                      },
-                      "paint": {
-                        "text-color": "rgba(212, 177, 146, 1)"
-                      }
-                    }
-                  }
-                ]
-              },
-               {
-                    "type":"getcapabilities",
-                    "title":"Topografie",
-                    "layerInfo":{
-                        "id":"topografie",
-                        "url": "https://kaart.edugis.nl/data/nederland/topografie.xml",
-                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                    }
-                },{
-                  "type": "wms",
-                  "title": "topografie: 1:250.000",
-                  "layerInfo": {
-                      "id": "top250raster",
-                      "type": "raster",
-                      "minzoom": 9.5,
-                      "metadata": {
-                          "getFeatureInfoFormat":"application/json"
-                          },
-                      "source": {
-                          "type": "raster",
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top250raster"]
-                      }
-                  }
+          "type": "group",
+          "title": "Topografie",
+          "sublayers": [
+            {
+              "title": "Achtergrondkleur",
+              "layerInfo": "./layers/osmbrightbackground.json"
+            },
+            {
+              "title": "Grondgebruik",
+              "layerInfo": "./layers/osmbrightlandcov.json"
+            },
+            {
+              "title": "Water en waterwegen",
+              "layerInfo": "./layers/osmbrightwater.json"
+            },
+            {
+              "title": "Waternamen",
+              "layerInfo": "./layers/osmbrightwatername.json"
+            },
+            {
+              "title": "Administratieve grenzen",
+              "layerInfo": "./layers/osmbrightadminborders.json"
+            },
+            {
+              "title": "Snelwegen",
+              "layerInfo": "./layers/osmbrightroads.json"
+            },
+            {
+              "title": "Snelwegnamen",
+              "layerInfo": "./layers/brightmotorwayname.json"
+            },
+            {
+              "title": "Wegen",
+              "layerInfo": "./layers/osmbrightallroads.json"
+            },
+            {
+              "title": "Wegnamen",
+              "layerInfo": "./layers/osmbrightallroadnames.json"
+            },
+            {
+              "title":"Spoorwegen",
+              "layerInfo": "./layers/osmbrightrail.json"
+            },
+            {
+              "title": "Plaatsen",
+              "layerInfo": "./layers/osmbrightpoi.json"
+            },
+            {
+              "title": "Plaatsnamen",
+              "layerInfo": "./layers/osmbrightpoiname.json"
+            },
+            {
+              "title": "Gebouwen",
+              "layerInfo": "./layers/osmbrightbuildings.json"
+            },
+            {
+              "title": "Huisnummers",
+              "layerInfo": {
+                "id": "housenumber-topo",
+                "type": "symbol",
+                "source": {
+                  "type": "vector",
+                  "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
                 },
-                {
-                  "type": "wms",
-                  "title": "topografie: 1:50.000",
-                  "layerInfo": {
-                      "id": "top50raster",
-                      "type": "raster",
-                      "minzoom": 11.5,
-                      "metadata": {
-                          "getFeatureInfoFormat":"application/json"
-                          },
-                      "source": {
-                          "type": "raster",
-                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top50raster"]
-                      }
-                  }
+                "source-layer": "housenumber",
+                "minzoom": 16,
+                "filter": [
+                  "==",
+                  "$type",
+                  "Point"
+                ],
+                "layout": {
+                  "text-field": "{housenumber}",
+                  "text-size": 10,
+                  "text-font": [
+                    "Noto Sans Regular"
+                  ]
                 },
-                {
-                    "type": "wms",
-                    "title": "topografie: 1:25.000",
-                    "layerInfo": {
-                        "id": "top25raster",
-                        "type": "raster",
-                        "minzoom": 12.5,
-                        "metadata": {
-                            "getFeatureInfoFormat":"application/json"
-                            },
-                        "source": {
-                            "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top25raster"]
-                        }
-                    }
+                "paint": {
+                  "text-color": "rgba(212, 177, 146, 1)"
                 }
-            ]
+              }
+            }
+          ]
         },
         {
           "type": "group",
