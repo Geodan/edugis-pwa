@@ -57,6 +57,7 @@
     "Hopscotch map explain": "Vous pouvez :<ul><li><b>zoomer</b> et <b>dézoomer</b>, du monde entier jusqu'à votre maison</li><li><b>faire glisser</b> la carte vers presque n'importe quel endroit sur Terre.</li></ul>",
     "Hopscotch tools explain": "Avec ces boutons, vous effectuez des opérations sur la carte.<p>Passez la souris sur les boutons pour obtenir des informations supplémentaires",
     "How does EduGIS work?": "Comment fonctionne EduGIS?",
+    "How does {{appname}} work?": "Comment fonctionne {{appname}}?",
     "In drawing mode": "En mode dessin",
     "indefinitearticleline": "une ligne",
     "indefinitearticlepoint": "un point",
