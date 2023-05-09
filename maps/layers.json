@@ -3532,6 +3532,71 @@
                     ]
                 },
                 {
+                  "type": "group",
+                  "title": "Vaarwegen",
+                  "sublayers": [
+                    {
+                      "title":"Vaarwegen",
+                      "layerInfo": {
+                        "id":"91eebe6f-327a-44ec-aaa5-6c731806be58",
+                        "type":"line",
+                        "metadata": {
+                          "title": "Vaarwegen",
+                          "abstract": "Vaarwegen in Nederland, 2023, https://vaarweginformatie.nl/frp/main/#/geo/map",
+                          "attributes": {
+                            "translations": [
+                              {"name": "name", "translation": "Naam"},
+                              {"name": "category", "translation": "Categorie", "valuemap": [
+                                ["0", "0 Kleinere vaartuigen"],
+                                ["I", "I Spits"],
+                                ["II", "II Kempnaar"],
+                                ["III", "III Hagenaar, Dortmund-Eemskanaalschip"],
+                                ["IV", "IVa Rijn-Hernekanaalschip"],
+                                ["V_A", "Va Groot Rijnschip"],
+                                ["V_B", "Vb duwkonvooi 1x2 bakken"],
+                                ["VI_A", "VIa Rijnmax schip"],
+                                ["VI_B", "VIb Duwkonvooi 2x2 bakken"],
+                                ["VI_C", "VIc Duwkonvooi 3x2 bakken"],
+                                ["VII_A", "VIIa Duwkonvooi 2x3 bakken"]
+                              ]},
+                              {"name": "recreationcategory", "translation": "Recreatie categorie"},
+                              {"name": "length", "translation": "Lengte", "unit": "km", "decimals": 2},
+                              {"name": "loc", "translation": "Locatie"}
+                            ]
+                          }
+                        },
+                        "source":{
+                            "type":"vector",
+                            "tiles":["https://saturnus.geodan.nl/data/public.vaarwegen/mvt/{z}/{x}/{y}?geom_column=geom&columns=name,category,recreationcategory,length,loc&include_nulls=0"],
+                            "bounds":[-1.0871823117597,43.04992916095,18.849226684024,54.2074911474283],
+                            "attribution": "Rijkswaterstaat, FIS"
+                        },
+                        "source-layer":"public.vaarwegen",
+                        "paint":{
+                          "line-color": "#154273",
+                          "line-width":["match", ["get", "category"],
+                            "0", 1,
+                            "I", 1.5,
+                            "II", 2,
+                            "III", 2.5,
+                            "IV", 3,
+                            "V_A", 3.5,
+                            "V_B", 4,
+                            "VI_A", 4.5,
+                            "VI_B", 5,
+                            "VI_C", 5.5,
+                            15
+                          ]
+                        },
+                        "filter": ["has","category"],
+                        "layout": {
+                          "line-sort-key": ["-", ["get", "length"]]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
                     "type": "group",
                     "title": "Zuiderzeeland",
                     "sublayers": [

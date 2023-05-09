@@ -178,7 +178,6 @@ class MapApp extends (LitElement) {
     if (changedProperties.has('logoUrl') && !this.logoUrl.toLowerCase().startsWith('http')) {
       this.logoUrl = rootUrl + this.logoUrl;
     }
-    console.log(this.appName);
     return true;
   }
   render() {

@@ -466,6 +466,213 @@
         },
         {
           "type": "group",
+          "title": "IJmeerlijn",
+          "sublayers": [
+            {
+              "title": "Voorkeurstracé M55",
+              "id": "cc234cb9-369f-440f-94e9-5f44ebfe33fc",
+              "layerInfo": {
+                  "id": "cc234cb9-369f-440f-94e9-5f44ebfe33fc",
+                  "type": "line",
+                  "source": {
+                    "type": "geojson",
+                    "data": {
+                      "type": "FeatureCollection",
+                      "features": [
+                        {
+                          "id": "fe2e60a8918111296af2664abbaecb32",
+                          "type": "Feature",
+                          "properties": {
+                            "id": 1,
+                            "name": "Voorkeurstracé M55",
+                            "lengte": 19.60563187819985
+                          },
+                          "geometry": {
+                            "coordinates": [
+                              [
+                                5.2143435867106405,
+                                52.37452711899596
+                              ],
+                              [
+                                5.209567494566443,
+                                52.37383287745158
+                              ],
+                              [
+                                5.204336536504911,
+                                52.372860920955304
+                              ],
+                              [
+                                5.202415991516261,
+                                52.37289177704588
+                              ],
+                              [
+                                5.20011639159469,
+                                52.37343175514039
+                              ],
+                              [
+                                5.196199490630249,
+                                52.374311133907014
+                              ],
+                              [
+                                5.193470295120818,
+                                52.37517506792477
+                              ],
+                              [
+                                5.190538937018317,
+                                52.378183277719586
+                              ],
+                              [
+                                5.187607578877021,
+                                52.378923728699704
+                              ],
+                              [
+                                5.1851563569838675,
+                                52.38122213286053
+                              ],
+                              [
+                                5.182123917527292,
+                                52.383134807528364
+                              ],
+                              [
+                                5.179243100043664,
+                                52.38467722674585
+                              ],
+                              [
+                                5.175679983691282,
+                                52.38551011072062
+                              ],
+                              [
+                                5.173001328839433,
+                                52.385787735219026
+                              ],
+                              [
+                                5.169438212478383,
+                                52.385787735219026
+                              ],
+                              [
+                                5.125355930134958,
+                                52.37223898211488
+                              ],
+                              [
+                                5.124413627761853,
+                                52.37209047595102
+                              ],
+                              [
+                                5.106391237849039,
+                                52.36704080931716
+                              ],
+                              [
+                                5.012181684780387,
+                                52.354721937499164
+                              ],
+                              [
+                                5.0047503733039775,
+                                52.35218719343541
+                              ],
+                              [
+                                4.9837110758711844,
+                                52.341810911833136
+                              ],
+                              [
+                                4.981298312404448,
+                                52.33980612219233
+                              ],
+                              [
+                                4.976762317087093,
+                                52.340041984514585
+                              ],
+                              [
+                                4.97261236392464,
+                                52.33903956095554
+                              ],
+                              [
+                                4.95910088851133,
+                                52.33119628640779
+                              ],
+                              [
+                                4.95910088851133,
+                                52.33125526358671
+                              ],
+                              [
+                                4.95803927258541,
+                                52.33096037690572
+                              ]
+                            ],
+                            "type": "LineString"
+                          }
+                        },
+                        {
+                          "id": "fab4c2c6ff64852037dfa0873488442a",
+                          "type": "Feature",
+                          "properties": {
+                            "id": 2,
+                            "name": "IJmeertunnel",
+                            "lengte": 7.8885921644495465
+                          },
+                          "geometry": {
+                            "coordinates": [
+                              [
+                                5.124413627761853,
+                                52.37209047595102
+                              ],
+                              [
+                                5.106391237849039,
+                                52.36704080931716
+                              ],
+                              [
+                                5.012181684780387,
+                                52.354721937499164
+                              ]
+                            ],
+                            "type": "LineString"
+                          }
+                        }
+                      ]
+                    },
+                    "attribution": "EduGIS"
+                  },
+                  "metadata": {
+                    "title": "Voorkeurstracé M55 IJmeerlijn",
+                    "attributes": {
+                      "translations": [
+                        {"name": "name", "translation": "naam"},
+                        {"name": "length", "translation": "lengte", "unit": " km", "decimals": 2}
+                      ]
+                    },
+                    "properties": [
+                      {
+                        "name": "id",
+                        "type": "number"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      },
+                      {
+                        "name": "lengte",
+                        "type": "length"
+                      }
+                    ],
+                    "visible": true
+                  },
+                  "layout": {
+                    "visibility": "visible"
+                  },
+                  "paint": {
+                    "line-color": [
+                      "match", ["get", "name"],
+                      "IJmeertunnel", "green",
+                      "Voorkeurstracé M55", "rgba(45,160,84,1)",
+                      "rgba(0,0,0,0)"
+                    ],
+                    "line-width": 5
+                  }
+                }
+            }
+          ]
+        },
+        {
+          "type": "group",
           "title": "Meerjarenprogramma Infrastructuur, Ruimte en Transport (MIRT)",
           "sublayers": [
             {
@@ -881,6 +1088,283 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "group",
+              "title": "Punten",
+              "sublayers": [
+                {
+                  "title": "Alle punten uit het MIRT",
+                  "layerInfo": {
+                    "id":"mirtpunten",
+                    "metadata": {
+                      "title": "Alle punten uit het MIRT"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    }
+                  }
+                },
+                {
+                  "title": "Hoofdvaarwegen",
+                  "id":"mirtpuntenhoofdvaarwegen",
+                  "layerInfo": {
+                    "id":"mirtpuntenhoofdvaarwegen",
+                    "metadata": {
+                      "title": "Hoofdvaarwegen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color": "green",
+                      "circle-stroke-color": "white"
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdvaarwegen"]
+                  }
+                },
+                {
+                  "title": "Hoofdwegen",
+                  "id": "mirtpuntenhoofdwegenen",
+                  "layerInfo": {
+                    "id": "mirtpuntenhoofdwegen",
+                    "metadata": {
+                      "title": "Hoofdwegen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdwegen"]
+                  }
+                },
+                {
+                  "title": "Hoofdwegen en spoorwegen personen",
+                  "id": "mirtpuntenhoofdwegenenspoorwegenpersonen",
+                  "layerInfo": {
+                    "id": "mirtpuntenhoofdwegenenspoorwegenpersonen",
+                    "metadata": {
+                      "title": "Hoofdwegen en Spoorwegen personen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Hoofdwegen en Spoorwegen personen"]
+                  }
+                },
+                {
+                  "title": "Integrale gebiedsopgaven",
+                  "id": "mirtpuntenintegralegebiedsopgaven",
+                  "layerInfo": {
+                    "id": "mirtpuntenintegralegebiedsopgaven",
+                    "metadata": {
+                      "title": "Integrale gebiedsopgaven"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Integrale gebiedsopgaven"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen",
+                  "id": "mirtpuntenspoorwegen",
+                  "layerInfo": {
+                    "id": "mirtpuntenspoorwegen",
+                    "metadata": {
+                      "title": "Spoorwegen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen goederen",
+                  "id": "mirtpuntenspoorwegengoederen",
+                  "layerInfo": {
+                    "id": "mirtpuntenspoorwegengoederen",
+                    "metadata": {
+                      "title": "Spoorwegen goederen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen goederen"]
+                  }
+                },
+                {
+                  "title": "Spoorwegen personen",
+                  "id": "mirtpuntenspoorwegenpersonen",
+                  "layerInfo": {
+                    "id": "mirtpuntenspoorwegenpersonen",
+                    "metadata": {
+                      "title": "Spoorwegen personen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Spoorwegen personen"]
+                  }
+                },
+                {
+                  "title": "Vaarwegen",
+                  "id": "mirtpuntenvaarwegen",
+                  "layerInfo": {
+                    "id": "mirtpuntenvaarwegen",
+                    "metadata": {
+                      "title": "Vaarwegen"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Vaarwegen"]
+                  }
+                },
+                {
+                  "title": "Waterveiligheid",
+                  "id": "mirtpuntenwaterveiligheid",
+                  "layerInfo": {
+                    "id": "mirtpuntenwaterveiligheid",
+                    "metadata": {
+                      "title": "Waterveiligheid"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Waterveiligheid"]
+                  }
+                },
+                {
+                  "title": "Zoetwater",
+                  "id": "mirtpuntenzoetwater",
+                  "layerInfo": {
+                    "id": "mirtpuntenzoetwater",
+                    "metadata": {
+                      "title": "Zoetwater"
+                    },
+                    "type":"circle",
+                    "source":{
+                        "type":"vector",
+                        "tiles":["https://saturnus.geodan.nl/data/cg.mirt2022_punten/mvt/{z}/{x}/{y}?geom_column=wkb_geometry&columns=mirtnr,mirtnrid,project,omschr,onderwerp,gebied,fase,ministerie,besluit,startreal,oplevering,f_mln,gdb_geomattr_data&include_nulls=0"],
+                        "bounds":[3.30793777653039,50.7503674846166,7.22749845044618,53.5764232865484],
+                        "maxzoom": 17
+                    },
+                    "source-layer":"cg.mirt2022_punten",
+                    "paint":{
+                      "circle-color":"red",
+                      "circle-radius":10,
+                      "circle-stroke-color":"white",
+                      "circle-stroke-width":1
+                    },
+                    "filter": ["==", "onderwerp", "Zoetwater"]
+                  }
+                }
+              ]
             }
           ]
         },
@@ -1248,24 +1732,6 @@
                           }
                         },
                         {
-                            "type":"getcapabilities",
-                            "title":"cbsbodemgebruik2012",
-                            "layerInfo":{
-                                "id":"cbsbodemgebruik2012",
-                                "deniedlayers": "bbg2012",
-                                "url":"https://tiles.edugis.nl/mapproxy/bbg2012/service"
-                            }
-                        },
-                        {
-                            "type":"getcapabilities",
-                            "title":"cbsbodemgebruik",
-                            "layerInfo":{
-                                "id":"cbsbodemgebruik",
-                                "url":"https://kaart.edugis.nl/data/nederland/cbs_bodemgebruik.xml",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        },
-                        {
                           "type": "vectortile",
                           "title": "Gewaspercelen 2020",
                           "layerInfo":{
@@ -1482,7 +1948,7 @@
                                       "tiles":["https://tiles.edugis.nl/data/public.ntllandschappenmasker/mvt/{z}/{x}/{y}?geom_column=geom&columns=naam&include_nulls=0"],
                                       "bounds":[3.35852336424683,50.7503674846964,7.2273889722302,53.5536397519099],
                                       "maxzoom": 15,
-                                      "attribution": "EduGIS"
+                                      "attribution": "m55.nl"
                                   },
                                   "source-layer":"public.ntllandschappenmasker",
                                   "paint":{
