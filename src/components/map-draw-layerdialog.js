@@ -123,7 +123,7 @@ export class MapDrawLayerDialog extends LitElement {
         }
         .button {
             display: inline-block;
-            color: white;
+            color: var(--theme-color, white);
             background-color: var(--theme-background-color, #2e7dba);
             border-radius: 4px;
             text-align: center;
@@ -137,7 +137,7 @@ export class MapDrawLayerDialog extends LitElement {
         }
         .button:hover {
             cursor: pointer;
-            background-color: #286CA0;
+            background-color: var(--theme-background-color-hover, #286CA0);
         }
         #overlay {
             position: absolute;

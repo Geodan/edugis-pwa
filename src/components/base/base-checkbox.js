@@ -62,11 +62,14 @@ class BaseCheckbox extends LitElement {
             }
             .bccontainer.checked:hover input ~ .checkmark {
                 background-color: var(--theme-background-color, #2e7dba);
+                color: var(--theme-color, white);
             }
             
             /* When the checkbox is checked, add a blue background */
             .bccontainer.checked .checkmark {
               background-color: var(--theme-hover-background-color, #2196F3);
+              color: var(--theme-color, white);
+              border-color: var(--theme-color, white);
             }
             .bccontainer.disabled .checkmark {
                 background-color: lightgray;
@@ -85,14 +88,14 @@ class BaseCheckbox extends LitElement {
             /* Show the checkmark when checked */
             .bccontainer.checked .checkmark:after {
                 display: block;
-            }            
+            }
             /* Style the checkmark/indicator */
             .bccontainer .checkmark:after {
               left: 7px;
               top: 2px;
               width: 5px;
               height: 10px;
-              border: solid white;
+              border: solid var(--theme-color, white);
               border-width: 0 2px 2px 0;
               -webkit-transform: rotate(45deg);
               -ms-transform: rotate(45deg);

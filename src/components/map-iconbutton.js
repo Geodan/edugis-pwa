@@ -21,8 +21,8 @@ class IconButton extends LitElement {
     }
     .button:hover {
       background-color: var(--theme-hover-background-color, #3982b9);
-      fill: white;
-      color: white;
+      fill: var(--theme-color, white);
+      color: var(--theme-color, white);
     }
     .button.disabled:hover {
       background-color: white;
@@ -31,13 +31,13 @@ class IconButton extends LitElement {
     }
     .button.active:hover {
       background-color: var(--theme-active-background-color, #286CA0);
-      fill: white;
-      color: white;
+      fill: var(--theme-color, white);
+      color: var(--theme-color, white);
     }
     .active {
       background-color: var(--theme-background-color, #2e7dba);
-      fill: white;
-      color: white;
+      fill: var(--theme-color, white);
+      color: var(--theme-color, white);
     }
     .disabled {
       background-color: white;
