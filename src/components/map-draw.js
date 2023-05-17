@@ -206,8 +206,8 @@ class MapDraw extends LitElement {
     if (this.history.length > 0) {
       return html`
       <div class="history">
-        <wc-button compact @click=${this._undo} ?disabled=${!(this.historyIndex > 0)}><i class="material-icons">undo</i></wc-button>
-        <wc-button compact @click=${this._redo} ?disabled=${!(this.historyIndex < this.history.length)}><i class="material-icons">redo</i></wc-button>
+        <wc-button compact @click=${this._undo} ?disabled=${!(this.historyIndex > 0)}><i class="material-icons">${t('undo')}</i></wc-button>
+        <wc-button compact @click=${this._redo} ?disabled=${!(this.historyIndex < this.history.length)}><i class="material-icons">${t('redo')}</i></wc-button>
       </div>`
     } else {
       return html``
