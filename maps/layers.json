@@ -2954,6 +2954,80 @@
                                 "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
                             }
                         },
+                        {  
+                          "title": "Landelijk Grondgebruik Nederland (LGN)",
+                          "layerInfo": {
+                            "id": "landelijkegrondgebruiknederland",
+                            "type": "raster",
+                            "metadata": {
+                              "getFeatureInfoUrl": "https:lgn.nl/geoserver/ows?service=WMS&request=GetFeatureInfo&&layers=lgn:LGN2021&query_layers=lgn:LGN2021&style=&serverType=geoserver",
+                              "getFeatureInfoFormat": "application/json",
+                              "legendurl": "https://lgn.nl/geoserver/ows?service=WMS&request=GetLegendGraphic&layer=lgn:LGN2021&format=image/png&STYLE=lgn:LGN2021",
+                              "attributes": {
+                                "translations": [
+                                  {"name": "GRAY_INDEX", "translation": "Grondgebruik", "valuemap" :[
+                                    [1, "agrarisch gras"],
+                                    [2, "mais"],
+                                    [3, "aardappelen"],
+                                    [4, "bieten"],
+                                    [5, "granen"],
+                                    [6, "overige landbouwgewassen"],
+                                    [8, "glastuinbouw"],
+                                    [9, "boomgaarden"],
+                                    [10, "bloembollen"],
+                                    [11, "loofbos"],
+                                    [12, "naaldbos"],
+                                    [16, "zoet water"],
+                                    [17, "zout water"],
+                                    [18, "bebouwing in primair bebouwd gebied"],
+                                    [19, "bebouwing in secundair bebouwd gebied"],
+                                    [20, "bos in primair bebouwd gebied"],
+                                    [22, "bos in secundair bebouwd gebied"],
+                                    [23, "gras in primair bebouwd gebied"],
+                                    [26, "bebouwing in het buitengebied"],
+                                    [27, "overig grondgebruik in het buitengebied"],
+                                    [28, "gras in secundair bebouwd gebied"],
+                                    [29, "zonneparken"],
+                                    [30, "kwelders"],
+                                    [31, "open zand in kustgebied"],
+                                    [32, "duinen met lage vegetatie"],
+                                    [33, "duinen met hoge vegetatie"],
+                                    [34, "duinenheide"],
+                                    [35, "open stuifzand en/of rivierzand"],
+                                    [36, "heide"],
+                                    [37, "matig vergraste heide"],
+                                    [38, "sterk vergraste heide"],
+                                    [39, "hoogveen"],
+                                    [40, "bos in hoogveengebied"],
+                                    [41, "overige moerasvegetatie"],
+                                    [42, "rietvegetatie"],
+                                    [43, "bos in moerasgebied"],
+                                    [45, "natuurlijk beheerde agrarische gronden"],
+                                    [46, "gras in kustgebied"],
+                                    [47, "overig gras"],
+                                    [61, "boomkwekerijen"],
+                                    [62, "fuitkwekerijen"],
+                                    [251, "hoofdinfrastructuur en spoorbaanlichamen"],
+                                    [252, "halfverharde wegen, infrastructuur langzaam verkeer en overige infrastructuur"],
+                                    [253, "smalle wegen"],
+                                    [321, "struikvegetatie in hoogveengebeid (laag)"],
+                                    [322, "struikvegetatie in moerasgebeid (laag)"],
+                                    [323, "overige struikvegetatie (laag)"],
+                                    [331, "struikvegetatie in hoogveengebeid (hoog)"],
+                                    [332, "struikvegetatie in moerasgebeid (hoog)"],
+                                    [333, "overige struikvegetatie (hoog)"]
+                                  ]}
+                                ]
+                              }
+                            },
+                            "source": {
+                              "type": "raster",
+                              "tiles": ["https://lgn.nl/geoserver/gwc/service/wmts?layer=lgn%3ALGN2021&style=lgn%3ALGN2021&tilematrixset=EPSG%3A3857&Service=WMTS&Request=GetTile&Version=1.0.0&Format=image%2Fpng&TileMatrix=EPSG%3A3857%3A{z}&TileCol={x}&TileRow={y}"],
+                              "bounds": [3.35823892378111,50.7499127235773,7.23040469398028,53.5536468751385],
+                              "attribution": "lgn.nl"
+                            }
+                          }
+                        },
                         {
                           "type": "vectortile",
                           "title": "Gewaspercelen 2020",
