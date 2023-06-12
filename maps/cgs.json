@@ -2339,7 +2339,6 @@
               {
                   "title":"Openstreetmap",
                   "type":"reference",
-                  "checked": true,
                   "layerInfo":{
                       "id":"openstreetmap",
                       "type":"raster",
@@ -2360,6 +2359,7 @@
               {
                   "title":"Openstreetmap Grijs",
                   "type":"reference",
+                  "checked": true,
                   "layerInfo":{
                     "id":"openstreetmapgray",
                     "type":"raster",
