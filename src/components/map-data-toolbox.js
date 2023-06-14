@@ -5,8 +5,9 @@ import './map-datatool-distance';
 import './map-datatool-buffer';
 import './map-datatool-intersect';
 import './map-datatool-filter';
+import './map-datatool-route';
 import './map-iconbutton';
-import {bufferIcon, intersectIcon, filterIcon} from './my-icons';
+import {bufferIcon, intersectIcon, filterIcon, zigzagIcon} from './my-icons';
 import { measureIcon} from '../gm/gm-iconset-svg';
 
 //const dummyIcon = svg`<svg height="24" width="24" viewbox="0 0 24 24"><style>.normal{ font: bold 18px sans-serif;}</style><text x="4" y="16" class="normal">A</text></svg>`;
@@ -28,7 +29,7 @@ class MapDataToolbox extends LitElement {
     return css`
       .drawcontainer {font-size: 14px;}
       .header {font-weight: bold; padding-bottom:10px; padding-top: 10px; border-bottom: 1px solid lightgray;}
-      .buttonbar {height: 55px;width:100%; margin-top: 19px; margin-bottom: 15px;}
+      .buttonbar {height: 55px;width:100%; margin-top: 19px; margin-bottom: 15px;overflow: auto;}
       .tool {display: inline-block; height: 55px; width: 55px; line-height: 67px;}
     `
   }
@@ -71,6 +72,9 @@ class MapDataToolbox extends LitElement {
             <div class="tool">
             <map-iconbutton .active="${this.currentTool==='filtertool'}" .icon="${filterIcon}" info="${t('Filter')}" @click="${e=>this.currentTool='filtertool'}"></map-iconbutton>
             </div>
+            <div class="tool">
+            <map-iconbutton .active="${this.currentTool==='routetool'}" .icon="${zigzagIcon}" info="${t('Route')}" @click="${e=>this.currentTool='routetool'}"></map-iconbutton>
+            </div>
         </div>
         <div class="toolpanel">
           ${this._renderCurrentTool()}
@@ -90,6 +94,8 @@ class MapDataToolbox extends LitElement {
         return html`<map-datatool-intersect @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-intersect>`;
       case "filtertool":
         return html`<map-datatool-filter @titlechange="${()=>this._titlechange()}" .map=${this.map}></map-datatool-filter>`;
+      case "routetool":
+        return html`<map-datatool-route .map=${this.map}></map-datatool-route>`;
       default:
         return html`Nog niet geimplementeerd: '${this.currentTool}'`;
     }

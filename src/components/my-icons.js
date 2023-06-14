@@ -309,3 +309,5 @@ export const intersectIcon = svg`
 <path d="m7.5 8.5a1 1 0 0 1 1-1h8v8a1 1 0 0 1-1 1h-8z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `
+export const zigzagIcon = svg`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24" width="24"><defs></defs><title>button-zigzag-2</title><polyline points="13 4.999 16.5 1.499 20 4.999" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></polyline><path d="M7.5,23V12.867a1,1,0,0,1,1.555-.832l5.89,3.927A1,1,0,0,0,16.5,15.13V1.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>`
