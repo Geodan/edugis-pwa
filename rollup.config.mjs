@@ -16,7 +16,7 @@ export default {
     // Entry point for application build; can specify a glob to build multiple
     // HTML files for non-SPA app
     html({
-      input: ['index.html', 'demo.html', 'mapbox.html'],
+      input: ['index.html', 'demo.html', 'mapbox.html','cgstromen.html'],
     }),
     // Resolve bare module specifiers to relative paths
     resolve({
