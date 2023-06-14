@@ -4131,6 +4131,21 @@
                     ]
                 },
                 {
+                  "type": "group",
+                  "title": "Ruimtelijkeplannen",
+                  "sublayers": [
+                      {
+                          "type":"getcapabilities",
+                          "title":"ruimtelijkeplannen",
+                          "layerInfo":{
+                            "id":"ruimtelijkeplannen",
+                            "allowedlayers": "BP_Bestemmingsplangebied,BP_Enkelbestemming,BP_Dubbelbestemming",
+                            "url":"https://tiles.edugis.nl/mapproxy/ruimtelijkeplannen/service?REQUEST=GetCapabilities"
+                          }
+                      }
+                  ]
+                },
+                {
                     "type": "group",
                     "title": "Plannen: Nieuwe Kaart",
                     "sublayers": [
