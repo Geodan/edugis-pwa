@@ -1445,22 +1445,84 @@
                     "sublayers": [
                         {
                             "type": "wms",
-                            "title": "Monument",
+                            "title": "Rijksmonumenten (punten)",
                             "layerInfo": {
                                 "type": "raster",
                                 "id": "monument",
                                 "metadata": {
-                                    "legendurl" : "https://www.atlasleefomgeving.nl/documents/10156/115096/Rijksmonumenten/aeef6538-e086-41dd-b8d9-24c0b9aaa1eb?t=1471598655569",
+                                    "legendurl" : "https://data.geo.cultureelerfgoed.nl/openbaar/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&layer=rijksmonumentpunten&format=image/png&STYLE=",
+                                    "getFeatureInfoUrl": "https://data.geo.cultureelerfgoed.nl/openbaar/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&layers=rijksmonumentpunten&query_layers=rijksmonumentpunten",
                                     "getFeatureInfoFormat": "application/vnd.ogc.gml"
                                 },
+                                "minzoom": 13,
                                 "source" : {
                                     "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                                     "type" : "raster",
-                                    "tiles": ["https://tiles.edugis.nl/mapproxy/monumenten/service?LAYERS=NationalListedMonuments"]
+                                    "tiles": ["https://data.geo.cultureelerfgoed.nl/openbaar/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=rijksmonumentpunten&STYLES=&CRS=EPSG%3A3857&BBOX={bbox-epsg-3857}"]
                                 }
                             }
-                        },
-                        {
+                          },
+                          {
+                              "title": "Monumenten",
+                              "type": "default",
+                              "layerInfo": {
+                                "type": "fill",
+                                "id": "monumentennieuw",
+                                "metadata": {
+                                    "title": "Monumenten",
+                                    "abstract": "Monumenten gebaseerd op dataset publiekrechtelijke beperkingen van het Kadaster. De data is in EduGIS geupdate op 13 juni 2023",
+                                    "maxinfofeatures": 10,
+                                    "attributes": {
+                                      "translations": [
+                                        {"name": "identificatie"},
+                                        {"name": "domein"},
+                                        {"name":"grondslag_code", "translation": "grondslag code", "valuemap": [
+                                          ["EWE", "Rijksmonument"],
+                                          ["GG", "Gemeentelijk monument"],
+                                          ["MP", "Provinciaal monument"],
+                                          ["EWD", "Voorbeschermd rijksmonument"]
+                                        ]},
+                                        {"name": "grondslag_omschrijving", "translation": "grondslag omschrijving"},
+                                        {"name": "type_beperkingsgebied", "translation": "type beperkingsgebied"},
+                                        {"name": "datum_in_werking", "translation": "datum in werking"},
+                                        {"name": "datum_aanbieden_bestuursorgaan", "translation": "datum aanbieden bestuursorgaan"},
+                                        {"name": "tijdstip_inschrijven_kadaster", "translation": "tijdstip inschrijven kadaster"},
+                                        {"name": "gebaseerd_op_stuk", "translation": "gebaseerd op stuk"},
+                                        {"name": "datum_kenbaarheid", "translation": "datum kenbaarheid"},
+                                        {"name": "statutaire_naam_bestuursorgaan", "translation": "statutaire naam bestuursorgaan"}
+                                      ]
+                                    }
+                                },
+                                "source" : {
+                                    "bounds": [3.15, 50.76, 7.22, 53.6],
+                                    "type" : "vector",
+                                    "tiles": ["https://tiles.edugis.nl/data/public.pb_multipolygon/mvt/{z}/{x}/{y}?geom_column=geom&columns=identificatie,domein,grondslag_code,grondslag_omschrijving,type_beperkingsgebied,datum_in_werking,datum_beeindiging,datum_aanbieden_bestuursorgaan,tijdstip_inschrijven_kadaster,gebaseerd_op_stuk,datum_kenbaarheid,statutaire_naam_bestuursorgaan&include_nulls=0"],
+                                    "attribution": "Kadaster"
+                                },
+                                "source-layer":"public.pb_multipolygon",
+                                "paint": {
+                                  "fill-color": ["match", ["get", "grondslag_code"],
+                                    "EWE", "rgba(213, 62, 79, 1)",
+                                    "GG", "#218B45",
+                                    "MP", "#673AB7",
+                                    "EWD", "#FFC107",
+                                    "#ccc"
+                                   ], 
+                                  "fill-opacity": 0.75
+                                },
+                                "layout": {
+                                  "fill-sort-key": ["match", ["get", "grondslag_code"],
+                                    "GG", 2,
+                                    "MP", 3,
+                                    "EWD", 4,
+                                    "EWE", 1,
+                                    5
+                                  ]
+                                },
+                                "filter": ["in", ["get", "grondslag_code"], ["literal", ["GG", "MP", "EWE", "EWD"]]]
+                              }
+                          },
+                          {
                             "type": "wms",
                             "title": "Werelderfgoed",
                             "layerInfo": {
