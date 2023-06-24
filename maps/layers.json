@@ -1925,23 +1925,19 @@
                                   "abstract": "Aantal inwoners per 100 x 100 meter vak volgens CBS (jaar 2020)",
                                   "attributes": {
                                       "translations": [
-                                          {"name": "aantal_inwoners", "translation": "aantal inwoners", "unit": ""}
+                                          {"name": "aantal_inwoners", "translation": "aantal inwoners", "unit": "", "valuemap": [
+                                            [9, "1 tot 10", "<="],
+                                            [19, "10 tot 20", "<="],
+                                            [49, "20 tot 50", "<="],
+                                            [99, "50 tot 100", "<="],
+                                            [149, "100 tot 150", "<="],
+                                            [249, "150 tot 250", "<="],
+                                            [499, "250 tot 500", "<="],
+                                            [100000, "500 en meer", "<="]
+                                          ]}
                                       ]
-                                  },
-                                  "legendMap": [
-                                    {
-                                      "property": "aantal_inwoners",
-                                      "mapping": [
-                                        {"description": "5 tot 10","literal": "4.000001,9.0"},
-                                        {"description": "10 tot 20","literal": "19.0,9.000001"},
-                                        {"description": "20 tot 50","literal": "19.000001,49.0"},
-                                        {"description": "50 tot 100","literal": "49.000001,99.0"},
-                                        {"description": "100 tot 150","literal": "149.0,99.000001"},
-                                        {"description": "150 tot 250","literal": "149.000001,249.0"},
-                                        {"description": "250 of meer","literal": "100000.0,249.000001"}
-                                      ]
-                                    }
-                                  ]
+                                  }
+                                  
                                 },
                                 "source": {
                                   "type": "vector",
@@ -1960,7 +1956,8 @@
                                     ["<=",["get","aantal_inwoners"], 99],"#FFFFBF",
                                     ["<=",["get","aantal_inwoners"], 149],"#FAB984",
                                     ["<=",["get","aantal_inwoners"], 249],"#ED7551",
-                                    ["<=",["get","aantal_inwoners"], 100000],"#D62F27",
+                                    ["<=",["get","aantal_inwoners"], 499],"#D62F27",
+                                    ["<=",["get","aantal_inwoners"], 100000],"#000000",
                                     "rgba(80,80,80,0.2)"
                                   ]
                                 }
