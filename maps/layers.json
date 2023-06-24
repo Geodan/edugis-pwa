@@ -1933,8 +1933,13 @@
                                             [149, "100 tot 150", "<="],
                                             [249, "150 tot 250", "<="],
                                             [499, "250 tot 500", "<="],
-                                            [100000, "500 en meer", "<="]
-                                          ]}
+                                            [100000, "500 en meer", "<="],
+                                            [-99997, "geen gegevens"],
+                                            [-99998, "geen gegevens"],
+                                            [-99999, "geen gegevens"]
+                                          ]},
+                                          {"name": "aantal_mannen", "translation": "aantal mannen", "valuemap": [[-99997, "geen gegevens"], [-99998, "geen gegevens"], [-99999, "geen gegevens"]]},
+                                          {"name": "aantal_vrouwen", "translation": "aantal vrouwen", "valuemap": [[-99997, "geen gegevens"], [-99998, "geen gegevens"], [-99999, "geen gegevens"]]}
                                       ]
                                   }
                                   
