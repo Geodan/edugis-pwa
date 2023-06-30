@@ -194,9 +194,9 @@ class MapApp extends (LitElement) {
             <li class="menuitem">
                 ${this.showLanguage ? html`
                 <select id="languageselect" @change="${(e)=>this.changeLanguage(e)}">
-                  <option value="nl" ?selected="${i18next.language === 'nl'}">nl</option>
-                  <option value="en" ?selected="${i18next.language === 'en'}">en</option>
-                  <option value="fr" ?selected="${i18next.language === 'fr'}">fr</option>
+                  <option value="nl" ?selected="${i18next.resolvedLanguage === 'nl'}">nl</option>
+                  <option value="en" ?selected="${i18next.resolvedLanguage === 'en'}">en</option>
+                  <option value="fr" ?selected="${i18next.resolvedLanguage === 'fr'}">fr</option>
                 </select>
                 ` : ''}
             </li>
