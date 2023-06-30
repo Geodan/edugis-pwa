@@ -190,7 +190,7 @@ class MapApp extends (LitElement) {
       <img src="${this.logoUrl}" alt="logo"/>
         <nav class="topnav">
           <ul>
-            <li class="menuitem"><a href="${t('link how does {{appname}} work?', {appname: this.appName})}" target="edugishelp">${t('How does {{appname}} work?', {appname: this.appName})}</a></li>
+            <li class="menuitem"><a href="${t('$t(link how does {{appname}} work?)', {appname: this.appName})}" target="edugishelp">${t('How does {{appname}} work?', {appname: this.appName})}</a></li>
             <li class="menuitem">
                 ${this.showLanguage ? html`
                 <select id="languageselect" @change="${(e)=>this.changeLanguage(e)}">
