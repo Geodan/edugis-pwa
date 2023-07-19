@@ -954,7 +954,7 @@ class WebMap extends LitElement {
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
-          nolayer=${t("No map layers selected")}>
+          nolayer="${t("No map layers selected")}">
             <span>${t("Selected Map Layers")}</span>
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
@@ -1181,7 +1181,7 @@ class WebMap extends LitElement {
               this.map.addControl(new ZoomControl(), this._positionString(tool.position));
             break;
           case "navigation":
-            this.map.addControl(new mapgl.NavigationControl(), this._positionString(tool.position));
+            this.map.addControl(new mapgl.NavigationControl({visualizePitch: true, showCompass: true, showZoom: true}), this._positionString(tool.position));
             break;
           case "coordinates":
             this.map.on('mousemove', e=>{this.displaylat = e.lngLat.lat; this.displaylng = e.lngLat.lng;});
@@ -1410,15 +1410,16 @@ class WebMap extends LitElement {
       }
     }
   }
-  async resolveLayerReferences(parentUrl, layerArray) {
+  async resolveLayerReferences(parentUrl, layerArray, baseUrl) {
     for (let layer of layerArray) {
       if (layer.type === "group") {
-        await this.resolveLayerReferences(parentUrl, layer.sublayers);
+        await this.resolveLayerReferences(parentUrl, layer.sublayers, baseUrl);
       } else {
         if (typeof layer.layerInfo === 'string') {
           try {
             let url = layer.layerInfo;
             if (!url.match(/^https?:\/\//i)) {
+              // relative url
               let slashPos = parentUrl.lastIndexOf('/');
               if (slashPos >= 0) {
                 url = parentUrl.substr(0, slashPos + 1) + url;
@@ -1427,6 +1428,19 @@ class WebMap extends LitElement {
             let response = await fetch(url);
             if (response.status >= 200 && response.status < 300) {
               layer.layerInfo = await response.json();
+            } else if (baseUrl) {
+              // try again with baseUrl
+              let slashPos = baseUrl.lastIndexOf('/');
+              if (slashPos >= 0) {
+                url = baseUrl.substr(0, slashPos + 1) + url;
+              }
+              response = await fetch(url);
+              if (response.status >= 200 && response.status < 300) {
+                layer.layerInfo = await response.json();
+              }
+            }
+            if (typeof layer.layerInfo === 'string') {
+              throw new Error(`Error loading layer ${layer.layerInfo}`);  
             }
           } catch (err) {
             layer.title = `Error ${err.message} (${layer.layerInfo})`;
@@ -1447,7 +1461,7 @@ class WebMap extends LitElement {
         }
         throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
       }).then(config=>{
-        this.resolveLayerReferences(configurl, config.datacatalog).then(()=>
+        this.resolveLayerReferences(configurl, config.datacatalog, config.baseUrl).then(()=>
           {
             this.applyConfig(config);
             this.initMap();
@@ -1716,8 +1730,10 @@ class WebMap extends LitElement {
     } else if (droppedFile.error) {
       alert('Json error: ' + droppedFile.error);
     } else if (droppedFile.data.map && droppedFile.data.tools) {
-      this.applyConfig(droppedFile.data);
-      this.initMap();
+      this.resolveLayerReferences(droppedFile.filename, droppedFile.data.datacatalog, droppedFile.data.baseUrl).then(()=>{
+        this.applyConfig(droppedFile.data);
+        this.initMap();
+      })
     } else if (droppedFile.data.type && (droppedFile.data.type === "Feature" || droppedFile.data.type === "FeatureCollection")) {
       const filename = droppedFile.filename.replace(/\.[^/.]+$/,"");
       let geojson = droppedFile.data;
