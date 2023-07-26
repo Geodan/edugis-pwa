@@ -3024,7 +3024,7 @@
                             "id": "landelijkegrondgebruiknederland",
                             "type": "raster",
                             "metadata": {
-                              "getFeatureInfoUrl": "https:lgn.nl/geoserver/ows?service=WMS&request=GetFeatureInfo&&layers=lgn:LGN2021&query_layers=lgn:LGN2021&style=&serverType=geoserver",
+                              "getFeatureInfoUrl": "https://lgn.nl/geoserver/ows?service=WMS&request=GetFeatureInfo&&layers=lgn:LGN2021&query_layers=lgn:LGN2021&style=&serverType=geoserver",
                               "getFeatureInfoFormat": "application/json",
                               "legendurl": "https://lgn.nl/geoserver/ows?service=WMS&request=GetLegendGraphic&layer=lgn:LGN2021&format=image/png&STYLE=lgn:LGN2021",
                               "attributes": {
@@ -4584,8 +4584,8 @@
                         "translations": [{"name":"postcode", "translation": "postcode"},
                         {"name":"verblijfsobjecten", "translation": "verblijfsobjecten"},
                         {"name":"woningen"},
-                        {"name":"verblijfsobjectoppervlak", "translation": "verblijfsobjectoppervlak"},
-                        {"name":"woningoppervlak"},
+                        {"name":"verblijfsobjectoppervlak", "translation": "tot. opp. verblijfsobj."},
+                        {"name":"woningoppervlak", "translation": "tot. woningoppervlak"},
                         {"name":"reeksen", "translation": "reeksen"},
                         {"name":"labels", "translation": "labels"},
                         {"name":"toplabel", "translation": "toplabel"},
