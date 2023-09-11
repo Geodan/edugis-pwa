@@ -80,20 +80,21 @@ export default class MapProjChooser extends LitElement {
     if (!this.map.setProjection) {
       return html`<div>${t('map projections not supported by this viewer')}</div>`;
     }
+    const mapProj = this.map.getProjection().name;
     return html`
         <div class="map-overlay top">
         <div class="map-overlay-inner">
         <fieldset>
         <label>${t('Select projection')}</label>
         <select @change="${e=>this._setProjection(e)}" id="projection" name="projection">
-        <option value="albers">Albers</option>
-        <option value="equalEarth">Equal Earth</option>
-        <option value="equirectangular">Equirectangular</option>
-        <option value="lambertConformalConic" >Lambert Conformal Conic</option>
-        <option value="mercator" selected="">Mercator</option>
-        <option value="naturalEarth">Natural Earth</option>
-        <option value="winkelTripel">Winkel Tripel</option>
-        <option value="globe">Globe</option>
+        <option value="albers" ?selected=${mapProj==='albers'}>Albers</option>
+        <option value="equalEarth" ?selected=${mapProj==='equalEarth'}>Equal Earth</option>
+        <option value="equirectangular" ?selected=${mapProj==='equirectangular'}>Equirectangular</option>
+        <option value="lambertConformalConic" ?selected=${mapProj==='lambertConformalConic'}>Lambert Conformal Conic</option>
+        <option value="mercator" ?selected=${mapProj==='mercator'}>Mercator</option>
+        <option value="naturalEarth" ?selected=${mapProj==='naturalEarth'}>Natural Earth</option>
+        <option value="winkelTripel" ?selected=${mapProj==='winkelTripel'}>Winkel Tripel</option>
+        <option value="globe" ?selected=${mapProj==='globe'}>Globe</option>
         </select>
         </fieldset>
         <fieldset class="conic-param-input">
