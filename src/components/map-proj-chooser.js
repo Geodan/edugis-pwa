@@ -2,6 +2,7 @@ import {LitElement, html,css} from 'lit';
 import './map-iconbutton';
 import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import {rootUrl} from '../utils/rooturl.js';
 
 
 /**
@@ -148,22 +149,22 @@ export default class MapProjChooser extends LitElement {
         ${MapProjChooser.projections.map(proj=>html`<option value="${proj.id}" title="${ifDefined(t(proj.type)??undefined)}" ?selected=${mapProj===proj.id}>${t(proj.name)}</option>`)}
         </select>
         ${t('Type')}: ${t(projType)}<br>
-        <img id="projimage" src="../../images/${image}">
+        <img id="projimage" src="${rootUrl}images/${image}">
         </fieldset>
         <fieldset class="conic-param-input">
-        <label>Center Longitude: <span id="lng-value">0</span></label>
+        <label>${t('Center Longitude')}: <span id="lng-value">0</span></label>
         <input @change="${e=>this._setProjectionParameter(e)}" id="lng" type="range" min="-180" max="180" value="0">
         </fieldset>
         <fieldset class="conic-param-input">
-        <label>Center Latitude: <span id="lat-value">30</span></label>
+        <label>${t('Center Latitude')}: <span id="lat-value">30</span></label>
         <input @change="${e=>this._setProjectionParameter(e)}" id="lat" type="range" min="-90" max="90" value="30">
         </fieldset>
         <fieldset class="conic-param-input">
-        <label>Southern Parallel Lat: <span id="lat1-value">30</span></label>
+        <label>${t('Southern Parallel Lat')}: <span id="lat1-value">30</span></label>
         <input @change="${e=>this._setProjectionParameter(e)}" id="lat1" type="range" min="-90" max="90" value="30">
         </fieldset>
         <fieldset class="conic-param-input">
-        <label>Northern Parallel Lat: <span id="lat2-value">30</span></label>
+        <label>${t('Northern Parallel Lat')}: <span id="lat2-value">30</span></label>
         <input @change="${e=>this._setProjectionParameter(e)}" id="lat2" type="range" min="-90" max="90" value="30">
         </fieldset>
         </div>
