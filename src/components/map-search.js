@@ -19,6 +19,7 @@ function getIcon(osmtype) {
 }
 
 import { LitElement, html} from "../../node_modules/lit/index.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 /**
 * @polymer
 * @extends HTMLElement
@@ -81,9 +82,9 @@ class MapSearch extends LitElement {
       let url;
 
       if (this.viewbox.length) {
-        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&viewbox=${this.viewbox.join(',')}&bounded=0&polygon_geojson=1&addressdetails=1&limit=15`;
+        url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchText)}&format=json&viewbox=${this.viewbox.join(',')}&bounded=0&polygon_geojson=1&addressdetails=1&limit=15`;
       } else {
-        url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&polygon_geojson=1&addressdetails=1&limit=15`;
+        url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchText)}&format=json&polygon_geojson=1&addressdetails=1&limit=15`;
       }
 
       let response = await fetch(url);
@@ -98,7 +99,7 @@ class MapSearch extends LitElement {
            if (!isNaN(lon) && isFinite(lon) && lon > -360 && lon < 360 && !isNaN(lat) && isFinite(lat) && lat > -90 && lon < 90) {
             searchText = `${lat},${lon}`;
             swapped = true;
-            url = `https://nominatim.openstreetmap.org/search/${encodeURIComponent(searchText)}?format=json&polygon_geojson=1&addressdetails=1&limit=15`;
+            url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchText)}&format=json&polygon_geojson=1&addressdetails=1&limit=15`;
             response = await fetch(url);
             if (response.ok) {
               this.resultList = await response.json();
@@ -216,7 +217,7 @@ class MapSearch extends LitElement {
     <div class="searchbox${this.active ? '' : ' hidden'}">
       <input type="text" placeholder="${this.info}" @keyup="${e => this.keyup(e)}">
       ${this.active && this.resultList && this.resultList.length ? html`<i class="erasebutton" @click="${e => this.searchErase(e)}">${closeIcon}</i>` : ''}
-      <span title="${t('search')}" class="searchbutton" @click="${e => this.search(e)}">${searchIcon}</span>
+      <span title="${ifDefined(t('search')??undefined)}" class="searchbutton" @click="${e => this.search(e)}">${searchIcon}</span>
     </div>
     ${this.active && this.resultList && this.resultList.length ? html`
       <div class="resultlist">
