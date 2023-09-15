@@ -35,7 +35,8 @@ import './map-sheet-tool';
 import './map-modal-dialog';
 import './map-proj-chooser';
 import "./map-save-layer";
-import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from "../i18n.js"
+import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from "../i18n.js";
+
 
 import {GeoJSON} from '../utils/geojson';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -832,7 +833,8 @@ class WebMap extends LitElement {
       return '';
     }
     const showLanguageTool = this.checkMapIsLanguageSwitcherCapable();
-    const tools = this.toolList.filter(tool=>tool.visible && tool.icon && (tool.name!=='maplanguage' || showLanguageTool));
+    const showProjectionTool = typeof mapboxgl !== 'undefined';
+    const tools = this.toolList.filter(tool=>tool.visible && tool.icon && (tool.name!=='maplanguage' || showLanguageTool) && (tool.name !== 'projchooser' || showProjectionTool));
     if (this.exporttool && this.exporttool !== "0" && this.exporttool.toString().toLowerCase() !== "false") {
       if (!tools.find(tool=>tool.name === 'importexport')) {
         let overrideTool = this.toolList.find(tool=>tool.name === 'importexport');
@@ -954,7 +956,7 @@ class WebMap extends LitElement {
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
-          nolayer="${t("No map layers selected")}">
+          nolayer="${ifDefined(t("No map layers selected")??undefined)}">
             <span>${t("Selected Map Layers")}</span>
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
@@ -1209,6 +1211,16 @@ class WebMap extends LitElement {
           this.addActiveLayers();
         }
         this.disableRightMouseDragRotate();
+        if (this.map.setFog) {
+          this.map.setFog({
+            "range": [0.8, 8],
+            "color": "#ffffff",
+            "horizon-blend": 0.2,
+            "high-color": "#4faac6",
+            "space-color": "#000000",
+            "star-intensity": 0.15
+          });
+        }
     });
   }
   addCheckedLayersFromCapabilitiesNodes(layer) {

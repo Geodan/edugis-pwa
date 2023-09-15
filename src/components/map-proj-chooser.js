@@ -1,6 +1,7 @@
 import {LitElement, html,css} from 'lit';
 import './map-iconbutton';
 import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 
 /**
@@ -13,6 +14,58 @@ export default class MapProjChooser extends LitElement {
       active: {type: Boolean},
       map: {type: Object}
     }; 
+  }
+  static get projections() {
+    return [
+        {
+            id: 'albers',
+            name: 'Albers',
+            type: 'equal-area conic',
+            image: 'conic.png'
+        },
+        {
+            id: 'equalEarth',
+            name: 'Equal Earth',
+            type: 'equal-area pseudocylindrical',
+            image: 'cylindrical.png'
+        },
+        {
+            id: 'equirectangular',
+            name: 'Equirectangular',
+            type: 'equidistant cylindrical',
+            image: 'cylindrical.png'
+        },
+        {
+            id: 'lambertConformalConic',
+            name: 'Lambert Conformal Conic',
+            type: 'conic',
+            image: 'conic.png'
+        },
+        {
+            id: 'mercator',
+            name: 'Mercator',
+            type: 'cylindrical',
+            image: 'cylindrical.png'
+        },
+        {
+            id: 'naturalEarth',
+            name: 'Natural Earth',
+            type: 'pseudocylindrical',
+            image: 'cylindrical.png'
+        },
+        {
+            id: 'winkelTripel',
+            name: 'Winkel Tripel',
+            type: 'modified azimuthal',
+            image: 'azimuthal.png'
+        },
+        {
+            id: 'globe',
+            name: 'Globe',
+            type: 'orthographic',
+            image: 'azimuthal.png'
+        }
+      ]
   }
   constructor() {
       super();
@@ -68,6 +121,9 @@ export default class MapProjChooser extends LitElement {
     }
     .conic-param-input {
         display: none;
+    }
+    #projimage {
+        width: 100%;
     }`
   }
   shouldUpdate(changedProp){
@@ -81,21 +137,18 @@ export default class MapProjChooser extends LitElement {
       return html`<div>${t('map projections not supported by this viewer')}</div>`;
     }
     const mapProj = this.map.getProjection().name;
+    const projType = t(MapProjChooser.projections.find(proj=>proj.id===mapProj).type);
+    const image = MapProjChooser.projections.find(proj=>proj.id===mapProj).image;
     return html`
         <div class="map-overlay top">
         <div class="map-overlay-inner">
         <fieldset>
         <label>${t('Select projection')}</label>
         <select @change="${e=>this._setProjection(e)}" id="projection" name="projection">
-        <option value="albers" ?selected=${mapProj==='albers'}>Albers</option>
-        <option value="equalEarth" ?selected=${mapProj==='equalEarth'}>Equal Earth</option>
-        <option value="equirectangular" ?selected=${mapProj==='equirectangular'}>Equirectangular</option>
-        <option value="lambertConformalConic" ?selected=${mapProj==='lambertConformalConic'}>Lambert Conformal Conic</option>
-        <option value="mercator" ?selected=${mapProj==='mercator'}>Mercator</option>
-        <option value="naturalEarth" ?selected=${mapProj==='naturalEarth'}>Natural Earth</option>
-        <option value="winkelTripel" ?selected=${mapProj==='winkelTripel'}>Winkel Tripel</option>
-        <option value="globe" ?selected=${mapProj==='globe'}>Globe</option>
+        ${MapProjChooser.projections.map(proj=>html`<option value="${proj.id}" title="${ifDefined(t(proj.type)??undefined)}" ?selected=${mapProj===proj.id}>${t(proj.name)}</option>`)}
         </select>
+        ${t('Type')}: ${t(projType)}<br>
+        <img id="projimage" src="../../images/${image}">
         </fieldset>
         <fieldset class="conic-param-input">
         <label>Center Longitude: <span id="lng-value">0</span></label>
@@ -153,6 +206,7 @@ export default class MapProjChooser extends LitElement {
     for (const [input, value] of inputs) {
         value.textContent = input.value;
     }
+    this.requestUpdate();
   }
   _setProjectionParameter(e) {
     const projectionInput = this.shadowRoot.querySelector('#projection');
