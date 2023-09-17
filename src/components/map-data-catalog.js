@@ -1,5 +1,6 @@
 
 import {LitElement, html} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import './map-layer-tree';
 import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
 /**
@@ -66,7 +67,7 @@ class MapDataCatalog extends LitElement {
     }
   }
   render() {
-    return html`<map-layer-tree headertext="${t('Add map layers')}" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}" .search="${this.search}"></map-layer-tree>`;
+    return html`<map-layer-tree headertext="${ifDefined(t('Add map layers')??undefined)}" .nodelist="${this.datacatalog}" .maplayers="${this.maplayers}" @toggleitem="${e=>this.toggleLayer(e)}" .search="${this.search}"></map-layer-tree>`;
   }
   getDataInfo(treenodes, dataid) {
     let result = null;
