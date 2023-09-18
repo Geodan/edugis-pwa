@@ -187,7 +187,7 @@ export default class MapProjChooser extends LitElement {
         [lat1Input, lat1Value],
         [lat2Input, lat2Value]
     ];
-
+    
     const isConic = ['albers', 'lambertConformalConic'].includes(e.target.value);
 
     // Hide non-conic projection params
@@ -195,17 +195,33 @@ export default class MapProjChooser extends LitElement {
         input.style.display = isConic ? 'block' : 'none';
     }
 
-    this.map.setProjection(e.target.value);
-
     if (isConic) {
-        const { center, parallels } = this.map.getProjection();
-        lngInput.value = center[0];
-        latInput.value = center[1];
-        lat1Input.value = parallels[0];
-        lat2Input.value = parallels[1];
-    }
-    for (const [input, value] of inputs) {
-        value.textContent = input.value;
+        let { name, center, parallels } = this.map.getProjection();
+        if (name !== e.target.value && e.target.value === 'albers') {
+            // new albers projection
+            // set default values
+            center = [0,37.5]; // mapbox default is [-96,37.5]
+            parallels = [29.5,45.5]; // mapbox default is [29.5,45.5]
+            this.map.setProjection({
+              name: 'albers',
+              center: center,
+              parallels: parallels
+          });
+        } else {
+          this.map.setProjection(e.target.value);
+        }
+        const {center:newcenter, parallels:newparallels} = this.map.getProjection();
+        /* update projection paremeter values */
+        lngInput.value = newcenter[0];
+        latInput.value = newcenter[1];
+        lat1Input.value = newparallels[0];
+        lat2Input.value = newparallels[1];
+
+        for (const [input, value] of inputs) {
+            value.textContent = input.value;
+        }
+    } else {
+      this.map.setProjection(e.target.value);
     }
     this.requestUpdate();
   }
