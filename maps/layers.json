@@ -4274,14 +4274,6 @@
                 ]
               },
                {
-                    "type":"getcapabilities",
-                    "title":"Topografie",
-                    "layerInfo":{
-                        "id":"topografie",
-                        "url": "https://kaart.edugis.nl/data/nederland/topografie.xml",
-                        "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                    }
-                },{
                   "type": "wms",
                   "title": "topografie: 1:250.000",
                   "layerInfo": {
@@ -4337,7 +4329,26 @@
                             "maxzoom": 15
                         }
                     }
-                }
+                },
+                {
+                  "type": "wms",
+                  "title": "topografie: 1:10.000",
+                  "layerInfo": {
+                      "id": "top10nl",
+                      "type": "raster",
+                      "minzoom": 13.5,
+                      "metadata": {
+                          "getFeatureInfoFormat":"application/json",
+                          "legendurl": "https://service.pdok.nl/brt/top10nl/wms/v1_0/legend/top10nl/top10nl.png"
+                          },
+                      "source": {
+                          "type": "raster",
+                          "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                          "tiles": ["https://service.pdok.nl/brt/top10nl/wms/v1_0?layers=top10nl"],
+                          "maxzoom": 20
+                      }
+                  }
+              }
             ]
         },
         {
