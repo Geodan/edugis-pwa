@@ -4289,7 +4289,8 @@
                       "type": "raster",
                       "minzoom": 8.5,
                       "metadata": {
-                          "getFeatureInfoFormat":"application/json"
+                          "getFeatureInfoFormat":"application/json",
+                          "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top250raster/default.png"
                           },
                       "source": {
                           "type": "raster",
@@ -4307,7 +4308,8 @@
                       "type": "raster",
                       "minzoom": 11.5,
                       "metadata": {
-                          "getFeatureInfoFormat":"application/json"
+                          "getFeatureInfoFormat":"application/json",
+                          "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top50raster/default.png"
                           },
                       "source": {
                           "type": "raster",
@@ -4325,7 +4327,8 @@
                         "type": "raster",
                         "minzoom": 12.5,
                         "metadata": {
-                            "getFeatureInfoFormat":"application/json"
+                            "getFeatureInfoFormat":"application/json",
+                            "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top25raster/default.png"
                             },
                         "source": {
                             "type": "raster",
