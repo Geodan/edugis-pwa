@@ -4287,14 +4287,15 @@
                   "layerInfo": {
                       "id": "top250raster",
                       "type": "raster",
-                      "minzoom": 9.5,
+                      "minzoom": 8.5,
                       "metadata": {
                           "getFeatureInfoFormat":"application/json"
                           },
                       "source": {
                           "type": "raster",
                           "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top250raster"]
+                          "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top250raster"],
+                          "maxzoom": 11
                       }
                   }
                 },
@@ -4311,7 +4312,8 @@
                       "source": {
                           "type": "raster",
                           "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                          "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top50raster"]
+                          "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top50raster"],
+                          "maxzoom": 14
                       }
                   }
                 },
@@ -4328,7 +4330,8 @@
                         "source": {
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://geodata.nationaalgeoregister.nl/top25raster/wms?layers=top25raster"]
+                            "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top25raster"],
+                            "maxzoom": 15
                         }
                     }
                 }
