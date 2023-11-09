@@ -4273,6 +4273,27 @@
                   }
                 ]
               },
+              {
+                "type": "wms",
+                "title": "topografie: 1:1000.000",
+                "layerInfo": {
+                    "id": "top500raster",
+                    "type": "raster",
+                    "minzoom": 7.5,
+                    "maxzoom": 11,
+                    "metadata": {
+                      "getFeatureInfoUrl":"",
+                        "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top1000raster/default.png"
+                        },
+                    "source": {
+                        "type": "raster",
+                        "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                        "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top1000raster"],
+                        "maxzoom": 9,
+                        "attribution":"Kadaster"
+                    }
+                }
+              },
                {
                   "type": "wms",
                   "title": "topografie: 1:250.000",
@@ -4281,14 +4302,15 @@
                       "type": "raster",
                       "minzoom": 8.5,
                       "metadata": {
-                          "getFeatureInfoFormat":"application/json",
+                          "getFeatureInfoUrl":"",
                           "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top250raster/default.png"
                           },
                       "source": {
                           "type": "raster",
                           "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                           "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top250raster"],
-                          "maxzoom": 11
+                          "maxzoom": 11,
+                          "attribution":"Kadaster"
                       }
                   }
                 },
@@ -4300,14 +4322,15 @@
                       "type": "raster",
                       "minzoom": 11.5,
                       "metadata": {
-                          "getFeatureInfoFormat":"application/json",
+                        "getFeatureInfoUrl":"",
                           "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top50raster/default.png"
                           },
                       "source": {
                           "type": "raster",
                           "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                           "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top50raster"],
-                          "maxzoom": 14
+                          "maxzoom": 14,
+                          "attribution":"Kadaster"
                       }
                   }
                 },
@@ -4319,14 +4342,15 @@
                         "type": "raster",
                         "minzoom": 12.5,
                         "metadata": {
-                            "getFeatureInfoFormat":"application/json",
+                          "getFeatureInfoUrl":"",
                             "legendurl": "https://service.pdok.nl/brt/topraster/wms/v1_0/legend/top25raster/default.png"
                             },
                         "source": {
                             "type": "raster",
                             "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                             "tiles": ["https://service.pdok.nl/brt/topraster/wms/v1_0?layers=top25raster"],
-                            "maxzoom": 15
+                            "maxzoom": 15,
+                            "attribution":"Kadaster"
                         }
                     }
                 },
@@ -4338,14 +4362,16 @@
                       "type": "raster",
                       "minzoom": 13.5,
                       "metadata": {
-                          "getFeatureInfoFormat":"application/json",
+                          "abstract": "Topografische kaart 1:10 000 (TOP10NL). TOP10NL is het digitale topografische basisbestand van het Kadaster. Dit is het meest gedetailleerde product binnen de Basisregistratie Topografie (BRT). Omdat de kaart zo gedetailleerd is, is deze alleen zichtbaar bij ver inzoomen.",
+                          "getFeatureInfoUrl":"",
                           "legendurl": "https://service.pdok.nl/brt/top10nl/wms/v1_0/legend/top10nl/top10nl.png"
-                          },
+                      },
                       "source": {
                           "type": "raster",
                           "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
                           "tiles": ["https://service.pdok.nl/brt/top10nl/wms/v1_0?layers=top10nl"],
-                          "maxzoom": 20
+                          "maxzoom": 20,
+                          "attribution":"Kadaster"
                       }
                   }
               }
