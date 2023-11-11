@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import './map-iconbutton';
 import {selectIcon, pointIcon, lineIcon, polygonIcon, trashIcon, checkIcon, combineIcon, uncombineIcon, downloadIcon, openfileIcon, threeDIcon} from './my-icons';
 import drawStyle from './map-draw-theme.js';
@@ -255,14 +256,14 @@ class MapDraw extends LitElement {
       <div class="header">${t('Draw map layer')}</div>
       <div>${this.featureType === 'None'? `${t('Select point, line, or shape layer')}`:`${this._inSelectMode()?`${t('Select')} `:`${t('Draw')} `} ${t(this.featureType).toLocaleLowerCase()}`}</div>
       <div class="buttonbar">
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="${t('Point layer')}" .icon="${pointIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="${t('Line layer')}" .icon="${lineIcon}"></map-iconbutton></div>
-      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="${t('Polygon layer')}" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_point')}" title="[1]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Point'}" info="${ifDefined(t('Point layer')??undefined)}" .icon="${pointIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_line_string')}" title="[2]"><map-iconbutton .active="${!inSelectMode && this.featureType === 'Line'}" info="${ifDefined(t('Line layer')??undefined)}" .icon="${lineIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this._changeMode('draw_polygon')}" title="[3]" ><map-iconbutton info="${ifDefined(t('Polygon layer')??undefined)}" .active="${!inSelectMode && this.featureType === 'Polygon'}" .icon="${polygonIcon}"></map-iconbutton></div>
       ${showSelect?html`
       <div class="buttoncontainer" @click="${(e)=>this._setMode('simple_select')}" title="[ESC]" ><map-iconbutton info="${t('Select')} ${t(this.featureType).toLowerCase()}" .active="${this._inSelectMode()}" .icon="${selectIcon}"></map-iconbutton></div>
       ` : html``}
       ${showTrash?html`
-      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[Del]" ><map-iconbutton info="${t('Delete selection')}" .icon="${trashIcon}"></map-iconbutton></div>
+      <div class="buttoncontainer" @click="${(e)=>this.mbDraw.trash()}" title="[Del]" ><map-iconbutton info="${ifDefined(t('Delete selection')??undefined)}" .icon="${trashIcon}"></map-iconbutton></div>
       ` : html``}
       </div>
       ${this._renderEditLayerInfo()}
@@ -488,7 +489,7 @@ class MapDraw extends LitElement {
     if (featureType == 'None' || !this.currentLayer[this.featureType]) {
         return html``;
     }
-    return html`<div class="layertype" @click="${()=>this._showDialog()}" >${t('Map layer')}: '${this.currentLayer[this.featureType].metadata.title}' <span title="${t('edit map layer')}" class="dotsright">${threedots}</span></div>`;
+    return html`<div class="layertype" @click="${()=>this._showDialog()}" >${t('Map layer')}: '${this.currentLayer[this.featureType].metadata.title}' <span title="${ifDefined(t('edit map layer')??undefined)}" class="dotsright">${threedots}</span></div>`;
   }
   _renderMessage() {
     if (this.message) {
@@ -705,7 +706,7 @@ class MapDraw extends LitElement {
     if (this._saveFeaturesToLayer()) {
       this.mbDraw.deleteAll();
       this.selectedFeatures = [];
-      this._setMapLayerVisibity(this.currentLayer[this.featureType].id, true);
+      this._setEditMode(this.currentLayer[this.featureType].id, false);
     } else {
       //console.log('_updateMapLayer failed for layer ' + layer.id);
     }
@@ -745,28 +746,21 @@ class MapDraw extends LitElement {
         this._updateDrawLayerStyle(layer);
         this.mbDraw.set(featureCollection);
         this.hasUnsavedFeatures = false;
-        this._setMapLayerVisibity(layer.id, false);
+        this._setEditMode(layer.id, true);
       }
     } else {
       console.error(`could not get source for ${layer.id}`)
     }
   }
-  _setMapLayerVisibity(layerid, visible) {
-    const mapLayer = this.map.getLayer(layerid);
+  _setEditMode(layerId, editMode) {
+    const mapLayer = this.map.getLayer(layerId);
     if (mapLayer) {
-      //this.map.setLayoutProperty(layer.id, 'visibility', visible?'visible':'none');
-      if (visible) {
-        delete mapLayer.metadata.inEditMode;
-      } else {
-        mapLayer.metadata.inEditMode = true;
-      }
-      setTimeout(()=> // wait for map.addLayer to update full UI
-        this.dispatchEvent(new CustomEvent('updatevisibility', {
-          detail: {
-            layerid: layerid,
-            visible: visible
-          }
-      })), 100);
+      this.dispatchEvent(new CustomEvent('updateeditmode', {
+        detail: {
+          layerId: layerId,
+          editMode: editMode
+        }
+      }));
     }
   }
   _defaultPropertyValue(type, feature) {
