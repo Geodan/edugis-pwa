@@ -504,6 +504,11 @@
       "position": "",
       "order": 11
     },
+    "projchooser": {
+      "visible": true,
+      "position": "",
+      "order": 12
+    },
     "zoomlevel": {
       "visible": 1,
       "position": "bottom-left",
