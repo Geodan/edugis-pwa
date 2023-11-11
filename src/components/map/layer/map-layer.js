@@ -157,12 +157,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
           } else {
             this.subtitle = t("Zoom out further");;
           }
-        } else if (!this.visible) {
-          if (this.layer.metadata.inEditMode) {
+        } else if (this.layer && this.layer.metadata && this.layer.metadata.inEditMode) {
             this.subtitle = t('In drawing mode');
-          } else {
-            this.subtitle = "";
-          }
         } else {
           this.subtitle = "";
         }
