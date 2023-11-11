@@ -1,4 +1,5 @@
 import {LitElement, html} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
 import {filterIcon, openfileIcon} from './my-icons';
@@ -72,7 +73,7 @@ class MapLayerTree extends LitElement {
         .then(newNodes=> {
           copyMetadataToCapsNodes(subNode.layerInfo, newNodes);
           for (let i = 0; i < nodeList.length; i++) {
-            if (nodeList[i].id === nodeId) {                  
+            if (nodeList[i].id === nodeId) {
               nodeList.splice(i, 1, ...newNodes);
               //this.requestUpdate();
             }
@@ -337,7 +338,7 @@ class MapLayerTree extends LitElement {
         height: 20px;
       }
     </style>
-    <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="${t('open file')}" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
+    <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="${ifDefined(t('open file')??undefined)}" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
     ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="${t('find map layer')}..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
       <div>
