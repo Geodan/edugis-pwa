@@ -165,6 +165,28 @@ class MapLayerInfo extends LitElement {
         }
         return 0;
     }
+    _updateTerrain(event) {
+        this.layer.metadata.terrain = event.target.checked;
+        this.dispatchEvent(new CustomEvent('updateterrain', {
+            detail: {
+                layerid: this.layer.id,
+                terrain: this.layer.metadata.terrain
+            },
+            bubbles: true,
+            composed: true
+        }))
+    }
+    _renderTerrainButton() {
+        if (this.layer.type === 'hillshade') {
+            return html`
+            <div>
+                <base-checkbox small id="terrain" label="${ifDefined(t('Terrain')??undefined)}" .checked="${this.layer.metadata.terrain}" @change="${e=>this._updateTerrain(e)}"></base-checkbox>
+                <label>${t('Show terrain in 3D')}</label>
+            </div>
+            `
+        } 
+        return html``;
+    }
     _renderVisibleLayerInfo() {
         if (this.layervisible && this.open) {
             return html`
@@ -173,6 +195,7 @@ class MapLayerInfo extends LitElement {
                     <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
                 </div>
             </div>
+            ${this._renderTerrainButton()}
             <div id="lilegend">
                 <div id="lilegendtitle" class="bold">${t('Legend')}:</div>
                 <div id="legend" class="${this.legendclipped?' clipped':''}">
