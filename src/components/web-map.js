@@ -191,6 +191,7 @@ class WebMap extends LitElement {
     this.map = {};
     this.pitch = 0;
     this.bearing = 0;
+    this.maxPitch = 60;
     this.viewbox = [];
     // default property values
     this.mapstyle = rootUrl + "styles/openmaptiles/osmbright.json";
@@ -285,11 +286,41 @@ class WebMap extends LitElement {
     this.setToolListInfo();
     this.requestUpdate();
   }
+  setTerrainLayer(id, active) {
+    const layer = this.map.getLayer(id);
+    if (layer?.type === 'hillshade') {
+      if (active) {
+        const clonedSource = this.map.getSource(this.map.getLayer(id).source).serialize()
+        delete clonedSource.id;
+        const newId = GeoJSON._uuidv4();
+        this.map.addSource(newId, clonedSource);
+        this.map.setTerrain({source: newId});
+      } else {
+        this.map.setTerrain();
+      }
+    }
+  }
+  updateTerrain(customEvent) {
+    const id = customEvent.detail.layerid;
+    const active = customEvent.detail.terrain;
+    const layer = this.map.getLayer(id);
+    if (layer) {
+      layer.metadata.terrain = active;
+      this.setTerrainLayer(id, active);
+    }
+  }
   updateSingleLayerVisibility(id, visible) {
     const layer = this.map.getLayer(id);
     if (layer) {
-      layer.setLayoutProperty('visibility', (visible ? 'visible' : 'none'));
+      this.map.setLayoutProperty(id, 'visibility', (visible ? 'visible' : 'none'));
       layer.metadata.visible = visible;
+      if (layer.type === 'hillshade' && layer.metadata.terrain) {
+        if (visible) {
+          this.setTerrainLayer(id, true);
+        } else {
+          this.setTerrainLayer(id, false);
+        }
+      }
       // update item in this.layerlist
       const layerlistitem = this.layerlist.find(layerlistitem=>layerlistitem.id===id);
       if (layerlistitem) {
@@ -306,6 +337,23 @@ class WebMap extends LitElement {
       } else {
         this.updateSingleLayerVisibility(e.detail.layerid, e.detail.visible);
       }
+      this.resetLayerListRequested = true;
+      this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
+    }
+  }
+  updateEditMode(e) {
+    if (this.map.version) {
+      const editMode = e.detail.editMode;
+      const visible = !editMode;
+      const layerId = e.detail.layerId;
+      const layer = this.map.getLayer(layerId);
+      if (editMode) {
+        layer.metadata.inEditMode = true;
+      } else {
+        delete layer.metadata.inEditMode;
+      }
+      layer.metadata.visible = visible; // why is this necessary?
+      this.updateSingleLayerVisibility(layerId, visible);
       this.resetLayerListRequested = true;
       this.map._update(true); // TODO: how refresh map wihtout calling private mapbox-gl function?
     }
@@ -387,6 +435,9 @@ class WebMap extends LitElement {
     if (this.map.version && e && e.detail && e.detail.layerid) {
       const targetLayer = this.map.getLayer(e.detail.layerid);
       if (targetLayer) {
+        if (targetLayer.type === 'hillshade' && targetLayer.metadata.terrain) {
+          this.setTerrainLayer(e.detail.layerid, false); // remove terrain
+        }
         const source = targetLayer.source;
         this.map.removeLayer(targetLayer.id);
         this.removeSourceIfOrphaned(source);
@@ -745,6 +796,9 @@ class WebMap extends LitElement {
       if (layerInfo.metadata && layerInfo.metadata.hasOwnProperty('opacity')) {
         this.updateSingleLayerOpacity(layerInfo.id, layerInfo.metadata.opacity / 100);
       }
+      if (layerInfo.type === 'hillshade' && layerInfo.metadata?.terrain) {
+          this.setTerrainLayer(layerInfo.id, true);
+      }
       this.resetLayerList();
     }
   }
@@ -896,7 +950,7 @@ class WebMap extends LitElement {
             @addlayer="${e=>this.addLayer(e)}" 
             @movelayer="${e=>this.moveLayer(e)}"
             @titlechange="${e=>this.resetLayerList(e)}"
-            @updatevisibility="${(e) => this.updateLayerVisibility(e)}">
+            @updateeditmode="${(e) => this.updateEditMode(e)}">
           </map-draw>
         </map-panel>
         <map-panel .active="${this.currentTool==='importexport'}">
@@ -950,6 +1004,7 @@ class WebMap extends LitElement {
         @updateopacity="${e => this.updateLayerOpacity(e)}"
         @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         @changefilter="${e=>this.updateLayerFilter(e)}"
+        @updateterrain="${e=>this.updateTerrain(e)}"
         >
         <span slot="title">Gekozen kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
@@ -1164,7 +1219,8 @@ class WebMap extends LitElement {
         center: [this.lon,this.lat],
         zoom: this.zoom,
         pitch: this.pitch,
-        bearing: this.bearing
+        bearing: this.bearing,
+        maxPitch: this.maxPitch
     });
     //this.map.showTileBoundaries = true; // debug
     if (this.map.version === undefined) {
@@ -1372,6 +1428,9 @@ class WebMap extends LitElement {
       }
       if (config.map.hasOwnProperty('bearing')) {
         this.bearing = config.map.bearing;
+      }
+      if (config.map.hasOwnProperty('maxPitch')) {
+        this.maxPitch = config.map.maxPitch;
       }
       if (!config.map.style) {
         config.map.style = {
@@ -1803,6 +1862,7 @@ class WebMap extends LitElement {
         console.log("layerlist empty")
         return;
       }
+      console.log('resetting layerlist');
       this._updateLayerIconImages();
       const newLayerList = this.map.getStyle().layers
       this.layerlist = [...newLayerList];
@@ -1855,6 +1915,7 @@ class WebMap extends LitElement {
     }
 
     if (changedProperties.has("layerlist")) {
+      console.log("web-map: layerlist changed");
       this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
       this.backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference).reverse();
     }
@@ -2271,7 +2332,7 @@ class WebMap extends LitElement {
       }
       this.marker.remove();
     }
-    this.marker = new mapgl.Marker(this.markerDiv).setLngLat(lngLat).addTo(this.map);
+    this.marker = new mapgl.Marker({element:this.markerDiv}).setLngLat(lngLat).addTo(this.map);
   }
   _updateFeatureState()
   {
@@ -2309,6 +2370,8 @@ class WebMap extends LitElement {
     }
     if (e.type === "mousemove" && !this.infoClicked) {
       this.featureInfo = this.map.queryRenderedFeatures(e.point);
+      const height = this.map.queryTerrainElevation(e.lngLat);
+      console.log(`height: ${height}`);
       this._updateFeatureState();
       return;
     }
@@ -2347,6 +2410,8 @@ class WebMap extends LitElement {
           if (features.length) {
             featureInfo.push(...features.reverse());
           }
+          const height = this.map.queryTerrainElevation(e.lngLat);
+          console.log(`height: ${height}`);
         }
       }
       if (this.streetViewOn) {
@@ -2373,18 +2438,23 @@ class WebMap extends LitElement {
       const images = this.map.style.imageManager.images;
       this._iconDataCache = []
       for (const name in images) {
-        const {height,width,data} = images[name].data;
-        //const size = Math.max(width, height);
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        //const offsetX = (size - width) / 2;
-        //const offsetY = (size - height) / 2;
-        const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
-        //ctx.putImageData(imageData, offsetX, offsetY);
-        ctx.putImageData(imageData, 0, 0);
-        this._iconDataCache.push({name: name, data: canvas.toDataURL()});
+        if (images[name].data) {
+          const {height,width,data} = images[name].data;
+          //const size = Math.max(width, height);
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          //const offsetX = (size - width) / 2;
+          //const offsetY = (size - height) / 2;
+          const imageData = new ImageData(Uint8ClampedArray.from(data), width, height);
+          //ctx.putImageData(imageData, offsetX, offsetY);
+          ctx.putImageData(imageData, 0, 0);
+          this._iconDataCache.push({name: name, data: canvas.toDataURL()});
+        } else {
+          // empty data
+          this._iconDataCache.push({name: name, data: "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="});
+        }
       }
     }
     const iconSearch = iconName.replace(/{[^}]+}/g, '(.+)');
