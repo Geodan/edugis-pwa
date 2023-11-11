@@ -1,4 +1,5 @@
 import {html, css, LitElement} from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { downloadIcon } from '../../my-icons.js';
 
 import "../../base/base-arrow.js";
@@ -205,7 +206,7 @@ class MapLayerSet extends LitElement {
     }
     _renderSaveLayerList() {
         if (this.layerSet.length > 1) {
-            return html`<div class="iconbutton" @click="${()=>this._saveLayerList()}" title="${t('Save layer set')}"><span class="icon">${downloadIcon}</span> ${t('Save layer set')}</div>`
+            return html`<div class="iconbutton" @click="${()=>this._saveLayerList()}" title="${ifDefined(t('Save layer set')??undefined)}"><span class="icon">${downloadIcon}</span> ${t('Save layer set')}</div>`
         }
     }
     _saveLayerList() {

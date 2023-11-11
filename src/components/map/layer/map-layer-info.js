@@ -1,4 +1,5 @@
 import {html, css, LitElement} from 'lit';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import '../../base/base-slider.js';
 import '../../map-legend-panel.js';
 import './map-layer-config.js';
@@ -335,7 +336,7 @@ class MapLayerInfo extends LitElement {
     _renderSaveLayerButton() {
         if (this.layer.metadata && this.layer.metadata.cansave) {
             return html`
-            <div class="iconbutton" @click="${()=>this._saveLayer()}" title="${t('save layer')}"><span class="icon">${downloadIcon}</span> ${t('Save layer')}</div>
+            <div class="iconbutton" @click="${()=>this._saveLayer()}" title="${ifDefined(t('save layer')??undefined)}"><span class="icon">${downloadIcon}</span> ${t('Save layer')}</div>
             `
         }
     }
