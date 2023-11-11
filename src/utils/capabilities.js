@@ -1,6 +1,21 @@
 import {wmsUrl} from './wmsurl';
 import {coordProject} from '@edugis/proj-convert';
 
+function uuid4() {
+    // from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    // Public Domain/MIT
+    let d = new Date().getTime();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+}
+
 function convertToArray(layerlist) {
     if (!layerlist) {
         return [];
@@ -62,6 +77,7 @@ function layerGroup(Layer) {
   return {
     "type" : "group",
     "title": Layer.Title,
+    "id": uuid4(),
     "sublayers" :[]
   }
 }
@@ -88,8 +104,8 @@ function layerToNode(Layer, Request, scaleHintType) {
     if (Layer.Style && Layer.Style.length && Layer.Style[0].LegendURL && Layer.Style[0].LegendURL.length) {
       legendurl = Layer.Style[0].LegendURL[0].OnlineResource;
     }
-    const node = { "title": Layer.Title, "id": Layer.Name, "type":"wmsfromcaps", "layerInfo": {
-      "id" : Layer.Name,
+    const node = { "title": Layer.Title, "id": uuid4(), "type":"wmsfromcaps", "layerInfo": {
+      "id" : uuid4(),
       "type" : "raster",
       "metadata" : {
           "title" : Layer.Title,
