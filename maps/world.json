@@ -359,7 +359,8 @@
             "type": "hillshade",
             "metadata": {
               "opacity": 80,
-              "title": "Reliëf"
+              "title": "Reliëf",
+              "terrain": true
             },
             "source": {
               "id": "mapzenhillshading",
@@ -380,34 +381,6 @@
             }
           },
           "id": "Relief_rasterdem_id",
-          "checked": false
-        },
-        {
-          "type": "rasterdem",
-          "title": "Relief2",
-          "layerInfo": {
-            "id": "jaxa-terrainrgb",
-            "type": "hillshade",
-            "metadata": {
-              "opacity": 80,
-              "title": "blaaba"
-            },
-            "source": {
-              "id": "newhillshading",
-              "type": "raster-dem",
-              "tileSize": 256,
-              "encoding": "mapbox",
-              "maxzoom": 12,
-              "tiles": [
-                "http://localhost:8080/data/jaxa_terrainrgb0-12/{z}/{x}/{y}.png"
-              ],
-              "attribution": "jaxa"
-            },
-            "paint": {
-              
-            }
-          },
-          "id": "Relief2",
           "checked": false
         },
         {
@@ -3767,7 +3740,7 @@
               "type": "raster",
               "tileSize": 256,
               "tiles": [
-                "https://api.mapbox.com/v4/mapbox.satellite/{z}/{y}/{x}.webp?access_token={mapboxkey}"
+                "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"
               ]
               
             },
