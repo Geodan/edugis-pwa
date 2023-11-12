@@ -35,7 +35,7 @@
     "jsts": "^2.9.3",
     "lit": "^2.7.3",
     "mapbox-gl": "^1.13.2",
-    "maplibre-gl": "^2.4.0",
+    "maplibre-gl": "^3.3.1",
     "marked": "^4.2.4",
     "papaparse": "^5.4.0",
     "reselect": "^3.0.1",
