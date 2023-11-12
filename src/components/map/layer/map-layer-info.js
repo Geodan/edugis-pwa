@@ -88,6 +88,9 @@ class MapLayerInfo extends LitElement {
                 max-width: 200px;
                 overflow: auto;
             }
+            .terraintoggle {
+                margin-top: 10px;
+            }
         `
     }
     constructor() {
@@ -179,9 +182,10 @@ class MapLayerInfo extends LitElement {
     _renderTerrainButton() {
         if (this.layer.type === 'hillshade') {
             return html`
-            <div>
-                <base-checkbox small id="terrain" label="${ifDefined(t('Terrain')??undefined)}" .checked="${this.layer.metadata.terrain}" @change="${e=>this._updateTerrain(e)}"></base-checkbox>
-                <label>${t('Show terrain in 3D')}</label>
+            <div class="terraintoggle">
+                <base-checkbox name="terraintoggle" id="terraintoggle" small id="terrain" label="${ifDefined(t('Terrain')??undefined)}" .checked="${this.layer.metadata.terrain}" @change="${e=>this._updateTerrain(e)}">
+                    ${t('Show terrain in 3D')}
+                </base-checkbox>
             </div>
             `
         } 
@@ -190,12 +194,12 @@ class MapLayerInfo extends LitElement {
     _renderVisibleLayerInfo() {
         if (this.layervisible && this.open) {
             return html`
+            ${this._renderTerrainButton()}
             <div id="litransparency"><span class="bold">${t('Transparency')}:</span> ${Math.round(this.transparency)}%
                 <div class="lislidercontainer">
                     <base-slider id="${this.layer.id}" value="${this.transparency}" minvalue="0" maxvalue="100" @change="${e=>this._updateTransparency(e)}"></base-slider>
                 </div>
             </div>
-            ${this._renderTerrainButton()}
             <div id="lilegend">
                 <div id="lilegendtitle" class="bold">${t('Legend')}:</div>
                 <div id="legend" class="${this.legendclipped?' clipped':''}">

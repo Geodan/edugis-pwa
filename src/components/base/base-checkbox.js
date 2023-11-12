@@ -19,7 +19,8 @@ class BaseCheckbox extends LitElement {
                 display: inline-block;
             }
             .bccontainer {
-                display: inline-block;
+                display: flex;
+                align-items: center;
                 position: relative;
                 vertical-align: top;
                 padding-left: 22px;
@@ -45,7 +46,6 @@ class BaseCheckbox extends LitElement {
             /* Create a custom checkbox */
             .checkmark {
                 position: absolute;
-                bottom: .20em;
                 left: 0;
                 height: 20px;
                 width: 20px;

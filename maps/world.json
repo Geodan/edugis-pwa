@@ -3741,8 +3741,8 @@
               "tileSize": 256,
               "tiles": [
                 "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={mapboxkey}"
-              ]
-              
+              ],
+              "attribution": "Mapbox"
             },
             "metadata": {
               "title": "Satelliet",

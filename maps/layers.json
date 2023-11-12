@@ -2748,6 +2748,11 @@
                           "title": "AHN schaduwering",
                           "layerInfo": {
                             "id": "ahnhillshading",
+                            "metadata": {
+                              "title": "AHN schaduwering",
+                              "terrain": false
+                              
+                            },
                             "type": "hillshade",
                             "source": {
                               "id": "ahnhillshading",
