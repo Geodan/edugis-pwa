@@ -1862,7 +1862,6 @@ class WebMap extends LitElement {
         console.log("layerlist empty")
         return;
       }
-      console.log('resetting layerlist');
       this._updateLayerIconImages();
       const newLayerList = this.map.getStyle().layers
       this.layerlist = [...newLayerList];
@@ -1915,7 +1914,6 @@ class WebMap extends LitElement {
     }
 
     if (changedProperties.has("layerlist")) {
-      console.log("web-map: layerlist changed");
       this.thematicLayers = this.layerlist.filter(layer=>!layer.metadata || (layer.metadata && (!layer.metadata.reference) && !(layer.metadata.isToolLayer))).reverse();
       this.backgroundLayers = this.layerlist.filter(layer=>layer.metadata && layer.metadata.reference).reverse();
     }
