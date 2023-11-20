@@ -159,8 +159,8 @@ export class MapDrawLayerDialog extends LitElement {
           border: 1px solid lightgray;
           box-shadow: 4px 4px 9px 0px rgba(168,168,168,1);
           border-radius: 4px;
-          min-width: 20em;
-          max-width: 50%;
+          min-width: 40%;
+          max-width: 70%;
           min-height: 120px;
           max-height: 80%;
           background-color: white;
@@ -311,7 +311,7 @@ export class MapDrawLayerDialog extends LitElement {
                 return html`
                 <div>${t('Select a layer')}: </div>
                 <div id="layerlist" @dblclick="${(e)=>this._handleNextButtonClick(e)}">
-                    <select size="6">
+                    <select size="10">
                         <option value="new" ?selected="${this.currentEditLayerId == null}">${t('New draw layer', {layertype: t(`layertype${this.featureType}`)})}</option>
                         ${this.editableLayers.map(layer=>{
                             return html`<option value="${layer.id}" ?selected="${layer.id===this.currentEditLayerId}">${layer.metadata.title}</option>`
