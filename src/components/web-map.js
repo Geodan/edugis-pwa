@@ -880,6 +880,10 @@ class WebMap extends LitElement {
       this.currentTool = name;
     }
   }
+  disableDrawTool() {
+    this.currentTool = '';
+    this.resetLayerList();
+  }
   renderToolbarTools()
   {
     const toolbar = this.toolList.find(tool=>tool.name==="toolbar");
@@ -1005,6 +1009,7 @@ class WebMap extends LitElement {
         @changepaintproperty="${e=>this.updateLayerPaintProperty(e)}"
         @changefilter="${e=>this.updateLayerFilter(e)}"
         @updateterrain="${e=>this.updateTerrain(e)}"
+        @enddrawmode="${(e)=>this.disableDrawTool()}"
         >
         <span slot="title">Gekozen kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 

@@ -186,6 +186,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
                 <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}"></base-arrow>
             </div>
             <div class="mlsubtitle">${this.subtitle}</div>
+            ${this._renderEndDrawModeButton()}
             <div id="layerinfo" class="${this.open?'':'closed'}">${this._renderLayerInfo()}</div>
         </div>
         `
@@ -195,6 +196,16 @@ class MapLayer extends GestureEventListeners(LitElement) {
         if (mltitle) {
           Gestures.addListener(mltitle, 'track', (e)=>this._trackHandler(e));
         }
+    }
+    _endDrawMode() {
+      this.dispatchEvent(new CustomEvent('enddrawmode', {bubbles: true, composed: true}));
+    }
+    _renderEndDrawModeButton() {
+        if (this.layer.metadata && this.layer.metadata.inEditMode) {
+          
+            return html`<wc-button compact @click=${this._endDrawMode}><i class="material-icons">${t('Done')}</i></wc-button>`
+        }
+        return html``;
     }
     _checkZoomRange()
     {
