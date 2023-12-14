@@ -619,7 +619,8 @@ class MapDraw extends LitElement {
     }
   }
   _keyDown(event) {
-    if (!(event.srcElement || event.target).classList.contains('mapboxgl-canvas')) return; // we only handle events on the map
+    if (!((event.srcElement || event.target).classList.contains('mapboxgl-canvas') || 
+      (event.srcElement || event.target).classList.contains('maplibregl-canvas'))) return; // we only handle events on the map
     if ((event.keyCode === 8 || event.keyCode === 46)) {
       this.mbDraw.trash();
       event.preventDefault();
