@@ -17,7 +17,7 @@
                         "id":"openstreetmap",
                         "type":"raster",
                         "metadata":{
-                        "legendurl":"https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
+                        "legendurl":"https://mapserver.edugis.nl/legends/wernormeld/osm_logo.png"
                         },
                         "source":{
                         "type":"raster",
@@ -1027,6 +1027,508 @@
                         }
                     ]
                 },
+                {
+                  "type": "group",
+                  "title": "Provincies, gemeenten, wijken en buurten (2023)",
+                  "sublayers": [
+                      {
+                        "title" : "Provincies",
+                        "id": "provincies2023",
+                        "layerInfo": {
+                          "id": "provincies2023style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "provincie2023source": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.provincies_2023_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=provincienaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                                "attribution": "CBS"
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"2e12eb6e-1188-42d0-91f1-edb28627a58c",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "provincie",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "provincienaam", "translation":"naam"},
+                                      {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                      {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                      {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                      {"name": "mannen", "translation":"aantal mannen"},
+                                      {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                      {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                      {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                      {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                      {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                      {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                      {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                      {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                      {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                      {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                      {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                      {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                      {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                      {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                      {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                      {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                      {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                    ]
+                                  }
+                                },
+                                "source": "provincie2023source",
+                                "source-layer":"public.provincies_2023_geo",
+                                "paint": {
+                                  "fill-color": "rgba(227,26,28,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "provincie2023-outline",
+                                "metadata": {
+                                  "title": "provinciegrens",
+                                  "attributes": {
+                                    "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                                    "translations":[
+                                      {"name": "provincienaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "provincie2023source",
+                                "source-layer":"public.provincies_2023_geo",
+                                "paint": {
+                                  "line-color": "#e31a1c",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Provincienamen",
+                        "id": "provincienamen2023",
+                        "layerInfo": {
+                          "id": "provincienamen2023",
+                          "type": "symbol",
+                          "metadata":{
+                            "attributes": {
+                              "deniedattributes": "water",
+                              "translations":[
+                                {"name": "provincienaam", "translation":"naam"}
+                              ]
+                            }
+                          },
+                          "source": {
+                            "type": "vector",
+                            "tiles":["https://tiles.edugis.nl/data/public.provincies_2023_geo/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=provincienaam,water&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                            "attribution": "EduGIS"
+                          },
+                          "source-layer":"public.provincies_2023_geo",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","provincienaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ]
+                          },
+                          "filter": ["==",["get","water"],"NEE"]
+                        }
+                      },
+                      {
+                        "title" : "Gemeenten",
+                        "id": "gemeenten2023",
+                        "layerInfo": {
+                          "id": "gemeenten2023style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "gemeentesource2023": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                                "attribution": "CBS"
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"gemeentevlak2023",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "gemeente",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "gemeentenaam", "translation":"naam"},
+                                      {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                      {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                      {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                      {"name": "mannen", "translation":"aantal mannen"},
+                                      {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                      {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                      {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                      {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                      {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                      {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                      {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                      {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                      {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                      {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                      {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                      {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                      {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                      {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                      {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                      {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                      {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                    ]
+                                  }
+                                },
+                                "source": "gemeentesource2023",
+                                "source-layer":"public.gemeenten_2023_simplified_geo",
+                                "paint": {
+                                  "fill-color": "rgba(10,10,10,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "gemeente-outline",
+                                "metadata": {
+                                  "title": "gemeentegrens",
+                                  "attributes": {
+                                    "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                                    "translations":[
+                                      {"name": "gemeentenaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "gemeentesource2023",
+                                "source-layer": "public.gemeenten_2023_simplified_geo",
+                                "paint": {
+                                  "line-color": "rgb(10,10,10)",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Gemeentenamen",
+                        "id": "gemeentenamen2023",
+                        "layerInfo": {
+                          "id": "gemeentenamen2023",
+                          "metadata": {
+                            "attributes": {
+                              "deniedattributes": "water,aantal_inwoners",
+                              "translations":[
+                                {"name":"gemeenteaam", "translation": "naam"}
+                              ]
+                            }
+                          },
+                          "type": "symbol",
+                          "source": {
+                            "type": "vector",
+                            "tiles":["https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=gemeentenaam,water,aantal_inwoners&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                            "attribution": "CBS"
+                          },
+                          "source-layer":"public.gemeenten_2023_simplified_geo",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","gemeentenaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ],
+                            "text-size": 10,
+                            "symbol-sort-key": ["-",["get","aantal_inwoners"]]
+                          },
+                          "filter": ["==",["get","water"],"NEE"]
+                        }
+                      },
+                      {
+                        "title" : "Wijken",
+                        "id": "wijken2023",
+                        "layerInfo": {
+                          "id": "wijken2023style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "wijksource2023": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.cbs_wijken_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=wijknaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                                "attribution": "CBS"
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"wijkvlak2023",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "wijk",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "wijknaam", "translation":"naam"},
+                                      {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                      {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                      {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                      {"name": "mannen", "translation":"aantal mannen"},
+                                      {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                      {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                      {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                      {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                      {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                      {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                      {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                      {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                      {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                      {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                      {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                      {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                      {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                      {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                      {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                      {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                      {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                    ]
+                                  }
+                                },
+                                "source": "wijksource2023",
+                                "source-layer":"public.cbs_wijken_2023_simplified_geo",
+                                "paint": {
+                                  "fill-color": "rgba(49,154,42,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "wijk2023-outline",
+                                "metadata": {
+                                  "title": "wijkgrens",
+                                  "attributes": {
+                                    "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                                    "translations":[
+                                      {"name": "wijknaam", "translation":"naam"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "wijksource2023",
+                                "source-layer": "public.cbs_wijken_2023_simplified_geo",
+                                "paint": {
+                                  "line-color": "rgb(49,154,42)",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Wijknamen",
+                        "id": "wijknamen2023",
+                        "layerInfo": {
+                          "id": "wijknamen2023",
+                          "metadata": {
+                            "attributes": {
+                              "deniedattributes": "water,aantal_inwoners",
+                              "translations":[
+                                {"name":"wijknaam", "translation": "naam"}
+                              ]
+                            }
+                          },
+                          "type": "symbol",
+                          "source": {
+                            "type": "vector",
+                            "tiles":["https://tiles.edugis.nl/data/public.cbs_wijken_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=wijknaam,water,aantal_inwoners&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                            "attribution": "CBS"
+                          },
+                          "source-layer": "public.cbs_wijken_2023_simplified_geo",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","wijknaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ],
+                            "text-size": 9,
+                            "symbol-sort-key": ["-",["get","aantal_inwoners"]]
+                          },
+                          "filter": ["==",["get","water"],"NEE"]
+                        }
+                      },
+                      {
+                        "title" : "Buurten",
+                        "id": "buurten2023",
+                        "layerInfo": {
+                          "id": "buurt2023style",
+                          "type": "style",
+                          "source": {
+                            "version": 8,
+                            "sources": {
+                              "buurtsource2023": {
+                                "type": "vector",
+                                "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                                "attribution": "CBS"
+                              }
+                            },
+                            "layers": [
+                              {
+                                "id":"buurtvlak2023",
+                                "type": "fill",
+                                "metadata": {
+                                  "title": "buurt",
+                                  "attributes": {
+                                    "deniedattributes": "water",
+                                    "translations":[
+                                      {"name": "buurtnaam", "translation":"naam"},
+                                      {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                      {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                      {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                      {"name": "mannen", "translation":"aantal mannen"},
+                                      {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                      {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                      {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                      {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                      {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                      {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                      {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                      {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                      {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                      {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                      {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                      {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                      {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                      {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                      {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                      {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                      {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                      {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                      {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                      {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                    ]
+                                  }
+                                },
+                                "source": "buurtsource2023",
+                                "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                "paint": {
+                                  "fill-color": "rgba(254,134,18,0)"
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              },
+                              {
+                                "id": "buurt2023-outline",
+                                "metadata": {
+                                  "title": "buurtgrens",
+                                  "attributes": {
+                                    "deniedattributes": "water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                                    "translations":[
+                                      {"name": "buurtnaam", "translation":"naam"},
+                                      {"name": "aantal_inwoners", "translation":"aantal inwoners"}
+                                    ]
+                                  }
+                                },
+                                "type": "line",
+                                "source": "buurtsource2023",
+                                "source-layer": "public.cbs_buurten_2023_simplified_geo",
+                                "paint": {
+                                  "line-color": "rgb(254,134,18)",
+                                  "line-width": 2
+                                },
+                                "filter": ["==",["get","water"],"NEE"]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "title": "Buurtnamen",
+                        "id": "buurtnamen2023",
+                        "layerInfo": {
+                          "id": "buurtnamen2023",
+                          "metadata": {
+                            "attributes": {
+                              "deniedattributes": "water,aantal_inwoners",
+                              "translations":[
+                                {"name":"buurtnaam", "translation": "naam"},
+                                {"name":"aantal_inwoners", "translation": "aantal inwoners"}
+                              ]
+                            }
+                          },
+                          "type": "symbol",
+                          "source": {
+                            "type": "vector",
+                            "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=labelpoint&columns=buurtnaam,water,aantal_inwoners&include_nulls=0"],
+                            "bounds":[3.30793777958783,50.7503734330573,7.22699558355019,53.5764233247369],
+                            "attribution": "CBS"
+                          },
+                          "source-layer": "public.cbs_buurten_2023_simplified_geo",
+                          "paint":{
+                              "text-color":"black"
+                          },
+                          "layout":{
+                            "text-field": ["get","buurtnaam"],
+                            "text-font": [
+                              "Noto Sans Regular"
+                            ],
+                            "text-size": 8,
+                            "symbol-sort-key": ["-",["get","aantal_inwoners"]]
+                          },
+                          "filter": ["==",["get","water"],"NEE"]
+                        }
+                      }
+                  ]
+              },
                 {
                   "type": "group",
                   "title": "Kadastrale percelen (2020)",
@@ -2497,6 +2999,398 @@
                             ]
                         },
                         {
+                          "type": "group",
+                          "title": "Leeftijd (2023)",
+                          "sublayers": [
+                              {
+                                "type": "group",
+                                "title": "per buurt",
+                                "sublayers": [
+                                  {
+                                    "type": "vector",
+                                    "title": "0-15 jaar",
+                                    "layerInfo": {
+                                      "id":"leeftijd2023-0-15",
+                                      "type":"fill",
+                                      "metadata":{
+                                        "abstract": "Aandeel inwoners van 0-15 jaar per buurt volgens CBS (jaar 2023)",
+                                        "attributes": {
+                                          "deniedattributes": "water",
+                                            "emphasize": "percentage_personen_0_tot_15_jaar",
+                                            "translations": [
+                                              {"name": "buurtnaam", "translation":"buurtnaam"},
+                                              {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                              {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                              {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                              {"name": "mannen", "translation":"aantal mannen"},
+                                              {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                              {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %", "valuemap": [
+                                                [null, "geen gegevens"],
+                                                [12, "0 tot 12%", "<"],
+                                                [15, "12 tot 15%", "<"],
+                                                [17, "15 tot 17%", "<"],
+                                                [27, "17 tot 27%", "<"],
+                                                [46, "27 tot 46%", "<="]
+                                              ]},
+                                              {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                              {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                              {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                              {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                              {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                              {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                              {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                              {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                              {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                              {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                              {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                              {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                              {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                              {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                              {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                              {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                            ]
+                                        }
+                                      },
+                                      "source":{
+                                          "type":"vector",
+                                          "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                          "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                                          "attribution": "CBS"
+                                      },
+                                      "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                      "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!",["has","percentage_personen_0_tot_15_jaar"]], "lightgray",
+                                            ["<",["get","percentage_personen_0_tot_15_jaar"],12],"#fef0d9",
+                                            ["<",["get","percentage_personen_0_tot_15_jaar"],15],"#fdcc8a",
+                                            ["<",["get","percentage_personen_0_tot_15_jaar"],17],"#fc8d59",
+                                            ["<",["get","percentage_personen_0_tot_15_jaar"],27],"#d7301f",
+                                            ["<=",["get","percentage_personen_0_tot_15_jaar"],46],"#ac2618",
+                                            "#d7301f"
+                                          ],
+                                          "fill-outline-color":"rgba(97, 97, 97, 0.4)",
+                                          "fill-opacity":1
+                                      },
+                                      "filter": ["==", ["get","water"], "NEE"]
+                                    }
+                                  },
+                                  {
+                                    "type": "vector",
+                                    "title": "15-25 jaar",
+                                    "layerInfo": {
+                                      "id":"leeftijd2023-15-25",
+                                      "type":"fill",
+                                      "metadata":{
+                                        "abstract": "Aandeel inwoners van 15-25 jaar per buurt volgens CBS (jaar 2023)",
+                                        "attributes": {
+                                          "deniedattributes": "water",
+                                            "emphasize": "percentage_personen_15_tot_25_jaar",
+                                            "translations": [
+                                              {"name": "buurtnaam", "translation":"buurtnaam"},
+                                              {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                              {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                              {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                              {"name": "mannen", "translation":"aantal mannen"},
+                                              {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                              {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %", "valuemap": [
+                                                [null, "geen gegevens"],
+                                                [8, "0 tot 8%", "<"],
+                                                [10, "8 tot 10%", "<"],
+                                                [12, "10 tot 12%", "<"],
+                                                [16, "12 tot 16%", "<"],
+                                                [98, "16 tot 98%", "<="]
+                                              ]},
+                                              {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                              {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                              {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                              {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                              {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                              {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                              {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                              {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                              {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                              {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                              {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                              {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                              {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                              {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                              {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                              {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                            ]
+                                        }
+                                      },
+                                      "source":{
+                                          "type":"vector",
+                                          "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                          "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                                          "attribution": "CBS"
+                                      },
+                                      "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                      "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!",["has","percentage_personen_15_tot_25_jaar"]], "lightgray",
+                                            ["<",["get","percentage_personen_15_tot_25_jaar"],8],"#fef0d9",
+                                            ["<",["get","percentage_personen_15_tot_25_jaar"],10],"#fdcc8a",
+                                            ["<",["get","percentage_personen_15_tot_25_jaar"],12],"#fc8d59",
+                                            ["<",["get","percentage_personen_15_tot_25_jaar"],16],"#d7301f",
+                                            ["<=",["get","percentage_personen_15_tot_25_jaar"],98],"#ac2618",
+                                            "#d7301f"
+                                          ],
+                                          "fill-outline-color":"rgba(97, 97, 97, 0.4)",
+                                          "fill-opacity":1
+                                      },
+                                      "filter": ["==", ["get","water"], "NEE"]
+                                    }
+                                  },
+                                  {
+                                    "type": "vector",
+                                    "title": "25-45 jaar",
+                                    "layerInfo": {
+                                      "id":"leeftijd2023-25-45",
+                                      "type":"fill",
+                                      "metadata":{
+                                        "abstract": "Aandeel inwoners van 25-45 jaar per buurt volgens CBS (jaar 2023)",
+                                        "attributes": {
+                                          "deniedattributes": "water",
+                                            "emphasize": "percentage_personen_25_tot_45_jaar",
+                                            "translations": [
+                                              {"name": "buurtnaam", "translation":"buurtnaam"},
+                                              {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                              {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                              {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                              {"name": "mannen", "translation":"aantal mannen"},
+                                              {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                              {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %", "valuemap": [
+                                                [null, "geen gegevens"],
+                                                [16, "0 tot 16%", "<"],
+                                                [19, "16 tot 19%", "<"],
+                                                [22, "19 tot 22%", "<"],
+                                                [35, "22 tot 35%", "<"],
+                                                [81, "35 tot 98%", "<="]
+                                              ]},
+                                              {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                              {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                              {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                              {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                              {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                              {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                              {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                              {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                              {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                              {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                              {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                              {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                              {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                              {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                              {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                              {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                            ]
+                                        }
+                                      },
+                                      "source":{
+                                          "type":"vector",
+                                          "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                          "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                                          "attribution": "CBS"
+                                      },
+                                      "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                      "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!",["has","percentage_personen_25_tot_45_jaar"]], "lightgray",
+                                            ["<",["get","percentage_personen_25_tot_45_jaar"],16],"#fef0d9",
+                                            ["<",["get","percentage_personen_25_tot_45_jaar"],19],"#fdcc8a",
+                                            ["<",["get","percentage_personen_25_tot_45_jaar"],22],"#fc8d59",
+                                            ["<",["get","percentage_personen_25_tot_45_jaar"],35],"#d7301f",
+                                            ["<=",["get","percentage_personen_25_tot_45_jaar"],81],"#ac2618",
+                                            "#d7301f"
+                                          ],
+                                          "fill-outline-color":"rgba(97, 97, 97, 0.4)",
+                                          "fill-opacity":1
+                                      },
+                                      "filter": ["==", ["get","water"], "NEE"]
+                                    }
+                                  },
+                                  {
+                                    "type": "vector",
+                                    "title": "45-65 jaar",
+                                    "layerInfo": {
+                                      "id":"leeftijd2023-45-65",
+                                      "type":"fill",
+                                      "metadata":{
+                                        "abstract": "Aandeel inwoners van 45-65 jaar per buurt volgens CBS (jaar 2023)",
+                                        "attributes": {
+                                          "deniedattributes": "water",
+                                            "emphasize": "percentage_personen_45_tot_65_jaar",
+                                            "translations": [
+                                              {"name": "buurtnaam", "translation":"buurtnaam"},
+                                              {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                              {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                              {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                              {"name": "mannen", "translation":"aantal mannen"},
+                                              {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                              {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %", "valuemap": [
+                                                [null, "geen gegevens"],
+                                                [24, "0 tot 24%", "<"],
+                                                [27, "24 tot 27%", "<"],
+                                                [30, "27 tot 30%", "<"],
+                                                [34, "30 tot 34%", "<"],
+                                                [57, "34 tot 57%", "<="]
+                                              ]},
+                                              {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %"},
+                                              {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                              {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                              {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                              {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                              {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                              {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                              {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                              {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                              {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                              {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                              {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                              {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                              {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                              {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                              {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                            ]
+                                        }
+                                      },
+                                      "source":{
+                                          "type":"vector",
+                                          "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                          "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                                          "attribution": "CBS"
+                                      },
+                                      "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                      "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!",["has","percentage_personen_45_tot_65_jaar"]], "lightgray",
+                                            ["<",["get","percentage_personen_45_tot_65_jaar"],24],"#fef0d9",
+                                            ["<",["get","percentage_personen_45_tot_65_jaar"],27],"#fdcc8a",
+                                            ["<",["get","percentage_personen_45_tot_65_jaar"],30],"#fc8d59",
+                                            ["<",["get","percentage_personen_45_tot_65_jaar"],34],"#d7301f",
+                                            ["<=",["get","percentage_personen_45_tot_65_jaar"],57],"#ac2618",
+                                            "#d7301f"
+                                          ],
+                                          "fill-outline-color":"rgba(97, 97, 97, 0.4)",
+                                          "fill-opacity":1
+                                      },
+                                      "filter": ["==", ["get","water"], "NEE"]
+                                    }
+                                  },
+                                  {
+                                    "type": "vector",
+                                    "title": "65 jaar en ouder",
+                                    "layerInfo": {
+                                      "id":"leeftijd2023-65+",
+                                      "type":"fill",
+                                      "metadata":{
+                                        "abstract": "Aandeel inwoners van 65 jaar en ouder per buurt volgens CBS (jaar 2023)",
+                                        "attributes": {
+                                          "deniedattributes": "water",
+                                            "emphasize": "percentage_personen_65_jaar_en_ouder",
+                                            "translations": [
+                                              {"name": "buurtnaam", "translation":"buurtnaam"},
+                                              {"name": "aantal_inwoners", "translation":"aantal inwoners"},
+                                              {"name": "omgevingsadressendichtheid", "translation":"omgevingsadressendichtheid"},
+                                              {"name": "bevolkingsdichtheid_inwoners_per_km2", "translation":"bevolkingsdichtheid","unit": " inw / km2"},
+                                              {"name": "mannen", "translation":"aantal mannen"},
+                                              {"name": "vrouwen", "translation":"aantal vrouwen"},
+                                              {"name": "percentage_personen_0_tot_15_jaar", "translation":"personen 0 tot 15 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_15_tot_25_jaar", "translation":"personen 15 tot 25 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_25_tot_45_jaar", "translation":"personen 25 tot 45 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_45_tot_65_jaar", "translation":"personen 45 tot 65 jaar", "unit": " %"},
+                                              {"name": "percentage_personen_65_jaar_en_ouder", "translation":"personen 65 jaar en ouder", "unit": " %", "valuemap": [
+                                                [null, "geen gegevens"],
+                                                [14, "0 tot 14%", "<"],
+                                                [19, "14 tot 19%", "<"],
+                                                [22, "19 tot 22%", "<"],
+                                                [27, "22 tot 27%", "<"],
+                                                [99, "27 tot 100%", "<="]
+                                              ]},
+                                              {"name": "percentage_ongehuwd", "translation":"ongehuwd", "unit": " %"},
+                                              {"name": "percentage_gescheid", "translation":"gescheiden", "unit": " %"},
+                                              {"name": "percentage_verweduwd", "translation":"verweduwd", "unit": " %"},
+                                              {"name": "aantal_huishoudens", "translation":"aantal huishoudens"},
+                                              {"name": "percentage_eenpersoonshuishoudens", "translation":"eenpersoonshuishoudens", "unit": " %"},
+                                              {"name": "percentage_huishoudens_zonder_kinderen", "translation":"huishoudens zonder kinderen", "unit": " %"},
+                                              {"name": "percentage_huishoudens_met_kinderen", "translation":"huishoudens met kinderen", "unit": " %"},
+                                              {"name": "gemiddelde_huishoudsgrootte", "translation":"gemiddelde huishoudsgrootte"},
+                                              {"name": "percentage_met_herkomstland_nederland", "translation":"herkomstland nederland", "unit": " %"},
+                                              {"name": "percentage_met_herkomstland_uit_europa_excl_nl", "translation": "herkomstland uit europa excl nl", "unit":" %"},
+                                              {"name": "percentage_met_herkomstland_buiten_europa", "translation": "herkomstland buiten europa", "unit":" %"},
+                                              {"name": "percentage_geb_in_nl_met_herkomstland_nederland", "translation": "geboren in NL met herkomstland nederland", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl", "translation": "geboren in NL met herkomstland in europa ex NL", "unit":" %"},
+                                              {"name": "perc_geb_in_nl_met_herkomstland_buiten_europa", "translation": "geboren in NL met herkomstland buiten europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl", "translation": "geboren buiten NL met herkomstlnd in europa", "unit":" %"},
+                                              {"name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa", "translation": "geboren buiten NL met herkomstlnd buiten europa", "unit":" %"},
+                                              {"name": "oppervlakte_totaal_in_ha", "translation": "oppervlakte totaal", "unit":" ha"},
+                                              {"name": "oppervlakte_land_in_ha", "translation": "oppervlakte land", "unit":" ha"},
+                                              {"name": "oppervlakte_water_in_ha", "translation": "oppervlakte water", "unit":" ha"}
+                                            ]
+                                        }
+                                      },
+                                      "source":{
+                                          "type":"vector",
+                                          "tiles":["https://tiles.edugis.nl/data/public.cbs_buurten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=buurtnaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"],
+                                          "bounds":[3.3588746550864,50.7508113613355,7.22601107045137,53.5349203306375],
+                                          "attribution": "CBS"
+                                      },
+                                      "source-layer":"public.cbs_buurten_2023_simplified_geo",
+                                      "paint":{
+                                        "fill-color":[
+                                            "case",
+                                            ["!",["has","percentage_personen_65_jaar_en_ouder"]], "lightgray",
+                                            ["<",["get","percentage_personen_65_jaar_en_ouder"],14],"#fef0d9",
+                                            ["<",["get","percentage_personen_65_jaar_en_ouder"],19],"#fdcc8a",
+                                            ["<",["get","percentage_personen_65_jaar_en_ouder"],22],"#fc8d59",
+                                            ["<",["get","percentage_personen_65_jaar_en_ouder"],27],"#d7301f",
+                                            ["<=",["get","percentage_personen_65_jaar_en_ouder"],99],"#ac2618",
+                                            "#d7301f"
+                                          ],
+                                          "fill-outline-color":"rgba(97, 97, 97, 0.4)",
+                                          "fill-opacity":1
+                                      },
+                                      "filter": ["==", ["get","water"], "NEE"]
+                                    }
+                                  }
+                                ]
+                              }
+                          ]
+                      },
+                        {
                             "type": "group",
                             "title": "Leeftijd overig",
                             "sublayers": [
@@ -3546,78 +4440,433 @@
         },
         {
             "type": "group",
-            "title": "Water (hydrografie)",
-            "sublayers": [{
-                    "type": "group",
-                    "title": "Vitens",
-                    "sublayers": [
-                        {
-                            "title":"Productielocaties",
-                            "layerInfo":{
-                        "id": "productielocaties",
-                        "type": "circle",
-                        "source": {
-                            "type": "vector",
-                            "tiles": [
-                                "https://tiles.edugis.nl/v1/mvt/public.productielocatie_centrum/{z}/{x}/{y}?columns=\"id\",naam"
-                                ]
-                                },
-                        "source-layer": "public.productielocatie_centrum",
-                        "paint": {
-                            "circle-radius": 4,
-                            "circle-color": "darkblue",
-                            "circle-stroke-color": "black",
-                            "circle-stroke-width": 1
-                            },
-                        "filter": [
-                            "has",
-                            "id"
-                            ]
-                    }
-                        },{
-                            "title":"Balansgebieden",
-                            "layerInfo":{
-                              "id": "balansgebieden",
-                              "metadata": {
-                                "abstract": "Vitens balansgebieden. Om zo min mogelijk energie te gebruiken voor het transport van water van de                                waterfabrieken naar de huizen is het gebied van Vitens verdeeld in zogenaamde                                 balansgebieden. In een balansgebied zorgen 1 of meerdere waterfabrieken samen voor voldoende water voor de inwoners en bedrijven in dat gebied."
-                              },
-                              "type": "fill",
-                              "source": {
-                                  "type": "vector",
-                                  "tiles": [
-                                      "https://tiles.edugis.nl/v1/mvt/public.balansgebieden/{z}/{x}/{y}?columns=\"id\",keyname"
-                                      ]
-                                      },
-                              "source-layer": "public.balansgebieden",
-                              "paint": {
-                                  "fill-color": "#89ea27",
-                                  "fill-outline-color": "black",
-                                  "fill-opacity": 0.6
+            "title": "Water",
+            "sublayers": [
+ {
+      "type": "group",
+      "title": "Hoogwaterbescherming",
+      "sublayers": [
+        {
+          "type": "geojson",
+          "title": "Dijkringgebieden (2010)",
+          "checked": false,
+          "layerInfo": {
+            "id": "cd35f895-2af4-4634-b996-aa6d820b0a89",
+            "type": "fill",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Dijkringgebieden_2010_vlak.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Dijkringgebieden (2010)",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "paint": {
+      "fill-color": [
+        "match",
+        ["get", "Overstromingskans"],
+        "Eens per 10.000 jaar", "rgba(213,62,79,1)",
+        "Eens per 4.000 jaar", "rgba(255, 193, 7, 1)",
+        "Eens per 2.000 jaar", "rgba(35,139,69,1)",  
+        "Eens per 1.250 jaar", "rgba(15, 153, 224, 1)",
+        "Eens per 500 jaar", "rgba(71, 0, 198, 1)",
+        "Eens per 250 jaar", "rgba(146, 102, 224, 1)",
+        "nvt", "rgba(110, 110, 110, 1)",
+        "#000000"],
+      "fill-opacity": 0.6,
+      "fill-outline-color": "#444"
+    }
+          }
         },
-                              "filter": [
-                                  "has",
-                                  "id"
-                                  ]
-                    }
-                        }
-                    ]
+        {
+          "type": "geojson",
+          "title": "Dijken en dijkringen (2010)",
+          "checked": false,
+          "layerInfo": {
+            "id": "40b82790-3ef6-40cc-a0ec-1",
+            "type": "line",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Dijkringgebieden_2010_lijn.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Dijken en dijkringen (2010)",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
                 },
                 {
-                    "type": "group",
-                    "title": "Rivieren",
-                    "sublayers": [
-                        {
-                            "type":"getcapabilities",
-                            "title":"water",
-                            "layerInfo":{
-                                "id":"water",
-                                "url":"https://map.edugis.nl/cgi-bin/mapserv?map=maps/edugis/cache/water.map",
-                                "tilecacheurl": ["https://t1.edugis.nl/tiles/tilecache.py", "https://t2.edugis.nl/tiles/tilecache.py"]
-                            }
-                        }
-                    ]
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible"
+            },
+            "paint": {
+      "line-color": [
+        "match",
+        ["get", "Overstromingskans"],
+        "Eens per 10.000 jaar", "rgba(213,62,79,1)",
+        "Eens per 4.000 jaar", "rgba(255, 193, 7, 1)",
+        "Eens per 2.000 jaar", "rgba(35,139,69,1)",  
+        "Eens per 1.250 jaar", "rgba(15, 153, 224, 1)",
+        "Eens per 500 jaar", "rgba(71, 0, 198, 1)",
+        "Eens per 250 jaar", "rgba(146, 102, 224, 1)",
+        "nvt", "rgba(110, 110, 110, 1)",
+
+        "#000000"       ],
+    
+      "line-width": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        10, 2,
+        14, 6
+      ]
+    }          }
+        },
+        {
+          "type": "geojson",
+          "title": "Dijken en duinen (2024)",
+          "checked": false,
+          "layerInfo": {
+            "id": "40b82790-3ef6-40cc-a0ec-3",
+            "type": "line",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Primaire_Waterkeringen_Overstromingskans.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Dijken en duinen",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
                 },
                 {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible"
+            },
+            "paint": {
+              "line-color": [
+                "match",
+                [
+                  "get",
+                  "Overstromingskans"
+                ],
+                "Eens per 1.000.000 jaar",
+                "rgba( 13, 8, 135, 1.00 )",
+                "Eens per 100.000 jaar",
+                "rgba( 81, 2, 163, 1.00 )",
+                "Eens per 30.000 jaar",
+                "rgba( 156, 23, 158, 1.00 )",
+                "Eens per 10.000 jaar",
+                "rgba( 201, 68, 122, 1.00 )",
+                "Eens per 3.000 jaar",
+                "rgba( 233, 114, 87, 1.00 )",
+                "Eens per 1.000 jaar",
+                "rgba( 254, 183, 45, 1.00 )",
+                "Eens per 300 jaar",
+                "rgba( 240, 249, 33, 1.00 )",
+                "Eens per 10 keer aanspraak",
+                "rgba(128, 128, 128, 1.0)",
+                "rgba(128, 128, 128, 1.0)"
+              ],
+              "line-width": [
+                "interpolate",
+                [
+                  "linear"
+                ],
+                [
+                  "zoom"
+                ],
+                10,
+                2,
+                14,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "type": "geojson",
+          "title": "Veiligheidsoordeel dijktrajecten",
+          "checked": false,
+          "layerInfo": {
+            "id": "40b82790-3ef6-40cc-a0ec-4",
+            "type": "line",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Veiligheidsoordeel_per_dijktraject.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Veiligheidsoordeel dijktraject 2022",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible"
+            },
+            "paint": {
+              "line-color": [
+                "match",
+                [
+                  "get",
+                  "Veiligheidsoordeel"
+                ],
+                "A+ Voldoet ruim aan norm",
+                "rgba(35,139,69,1)",
+                "A Voldoet aan norm",
+                "#53FF00",
+                "B Voldoet aan ondergrens",
+                "#C9FF00",
+                "C Voldoet niet aan ondergrens",
+                "rgba(255, 193, 7, 1)",
+                "D Voldoet ruim niet aan ondergrens",
+                "rgba(213,62,79,1)",
+                "rgba(128, 128, 128, 1.0)"
+              ],
+              "line-width": [
+                "interpolate",
+                [
+                  "linear"
+                ],
+                [
+                  "zoom"
+                ],
+                10,
+                2,
+                14,
+                6
+              ]
+            }
+          }
+        },
+        {
+          "type": "geojson",
+          "title": "Versterking kunstwerken '24-'29",
+          "checked": false,
+          "layerInfo": {
+            "id": "40b82790-3ef6-40cc-a0ec-18768768",
+            "type": "circle",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Kunstwerken_HWBP_2024-2029.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Versterkingsprojecten",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible"
+            },
+            "paint": {
+              "circle-color": "rgba(195.688,104.772,36.949,1)",
+              "circle-radius": 5.9,
+              "circle-stroke-width": 1,
+              "circle-stroke-color": "rgba(0,0,0,1)"
+            }
+          }
+        },
+        {
+          "type": "geojson",
+          "title": "Versterking dijkvakken '24-'29",
+          "checked": false,
+          "layerInfo": {
+            "id": "40b82790-3ef6-40cc-a0ec-5",
+            "type": "line",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Dijkvakken_HWBP_2024-2029.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Verstreking dijkvakken 24-29",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible"
+            },
+            "paint": {
+              "line-color": "rgba(197.706,47.475,47.475,1)",
+              "line-width": 4.7
+            }
+          }
+        },
+        {
+          "type": "geojson",
+          "title": "Dijktrajectlabels",
+          "checked": false,
+          "layerInfo": {
+            "id": "cd35f895-2af4-4634-b996-aa6d820b0a7d",
+            "type": "symbol",
+            "source": {
+              "type": "geojson",
+              "data": "https://kaart.edugis.nl/data/nederland/hoogwaterbescherming/Dijktrajectlabels.geo.json",
+              "attribution": "EduGIS"
+            },
+            "metadata": {
+              "title": "Dijktrajectlabels",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+            "layout": {
+              "visibility": "visible",
+              "text-field": "{TRAJECT_ID}",
+              "text-size": 18,
+              "text-letter-spacing": 0.1
+            },
+            "paint": {
+              "text-color": "rgba(78, 214, 124, 1)",
+              "text-halo-color": "black",
+              "text-halo-width": 0.7,
+              "text-halo-blur": 0
+            }
+          }
+        }
+      ]
+    },                 
+              {
                     "type": "group",
                     "title": "Noordzee",
                     "sublayers": [
@@ -7191,7 +8440,7 @@
         "draw" : {"visible" : 1, "order": 7},
         "geolocate" : {"visible" : 1, "order": 8},
         "importexport": {"visible": 0, "order": 9},
-        "datatoolbox": {"visible": 0, "order": 10},
+        "datatoolbox": {"visible": 1, "order": 10},
         "sheetimport": {"visible": 0, "order": 11},
         "legend" : {"visible" : 1, "position" : "top-right", "opened" : 1},
         "zoomlevel" : {"visible" : 1, "position" : "bottom-left", "order" : 0},
