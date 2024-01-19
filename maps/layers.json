@@ -98,7 +98,25 @@
                         "reference":true
                       }
                     }
-                  },
+                  },{
+                    "title": "Topografisch | Water",
+                    "type":"reference",
+                    "checked": false,
+                    "layerInfo": {
+                      "id": "BRT_achtergrondkaart Water [tms]_id",
+                      "type": "raster",
+                      "source": {
+                        "type": "raster",
+                        "tileSize": 256,
+                        "tiles": [
+                          "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/water/EPSG:3857/{z}/{x}/{y}.png"
+                        ],
+                        "attribution": "© CC-BY Kadaster"
+                      },
+                      "metadata": {}
+                    },
+                    "id": "1275"
+                },
                 {
                     "type":"reference",
                     "title":"Microsoft BING Kaart",
