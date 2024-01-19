@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_water_pattern": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -16,7 +16,7 @@
         "metadata": {
           "title": "waterpatroon"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water_pattern",
         "source-layer": "water",
         "layout": {
           "visibility": "visible"

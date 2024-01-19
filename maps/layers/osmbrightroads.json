@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_roads": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -16,7 +16,7 @@
           "title": "snelwegtunnel"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -63,7 +63,7 @@
         "metadata": {
           "title": "op- en afrit buitenrand"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -116,7 +116,7 @@
           "title": "snelweg buitenrand"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 4,
         "filter": [
@@ -185,7 +185,7 @@
           "title":"op- en afrit"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -237,7 +237,7 @@
           "title": "snelweg"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 5,
         "filter": [
@@ -294,7 +294,7 @@
           "title": "snelweg brug buitenrand"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -344,7 +344,7 @@
           "title": "op- en afrit brug"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -394,7 +394,7 @@
           "title": "brug snelweg"
         },
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_roads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [

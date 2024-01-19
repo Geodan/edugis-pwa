@@ -4,7 +4,7 @@
   "type":"style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_landcov": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -16,7 +16,7 @@
         "metadata": {
           "title":"gletsjer"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landcover",
         "filter": [
           "==",
@@ -49,7 +49,7 @@
         "metadata": {
           "title": "bewoond"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "==",
@@ -78,7 +78,7 @@
         "metadata": {
           "title": "bedrijven"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "all",
@@ -103,7 +103,7 @@
         "metadata": {
           "title": "industrie"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "all",
@@ -128,7 +128,7 @@
         "metadata": {
           "title": "park"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "park",
         "filter": [
           "==",
@@ -158,7 +158,7 @@
         "metadata": {
           "title": "parkrand"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "park",
         "filter": [
           "==",
@@ -192,7 +192,7 @@
         "metadata": {
           "title": "begraafplaats"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "==",
@@ -209,7 +209,7 @@
         "metadata": {
           "title": "ziekenhuis"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "==",
@@ -226,7 +226,7 @@
         "metadata": {
           "title": "schoolgebouwen"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "==",
@@ -243,7 +243,7 @@
         "metadata": {
           "title": "spoorterrein"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landuse",
         "filter": [
           "==",
@@ -260,7 +260,7 @@
         "metadata": {
           "title": "bos"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landcover",
         "filter": [
           "==",
@@ -292,7 +292,7 @@
         "metadata": {
           "title": "grasland"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "landcover",
         "filter": [
           "==",
@@ -310,7 +310,7 @@
         "metadata": {
           "title": "park (gras)"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "park",
         "filter": [
           "==",
@@ -328,7 +328,7 @@
         "metadata": {
           "title": "luchthaven"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "aeroway",
         "minzoom": 4,
         "filter": [
@@ -371,7 +371,7 @@
         "metadata": {
           "title": "snelwegen"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_landcov",
         "source-layer": "transportation",
         "filter": [
           "==",

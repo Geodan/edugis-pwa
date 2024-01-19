@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_rail": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -17,7 +17,7 @@
         "metadata": {
           "mapbox:group": "1444849354174.1904"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -64,7 +64,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -114,7 +114,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -172,7 +172,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -218,7 +218,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -275,7 +275,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -331,7 +331,7 @@
         "metadata": {
           "mapbox:group": "1444849345966.4436"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -391,7 +391,7 @@
         "metadata": {
           "mapbox:group": "1444849334699.1902"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -434,7 +434,7 @@
         "metadata": {
           "mapbox:group": "1444849334699.1902"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_rail",
         "source-layer": "transportation",
         "filter": [
           "all",

@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_adminborders": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -16,7 +16,7 @@
         "metadata": {
           "title": "interne administratieve grens "
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_adminborders",
         "source-layer": "boundary",
         "filter": [
           "all",
@@ -72,7 +72,7 @@
         "metadata": {
           "title": "landsgrens"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_adminborders",
         "source-layer": "boundary",
         "filter": [
           "all",
@@ -127,7 +127,7 @@
         "metadata": {
           "title":"betwiste grens"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_adminborders",
         "source-layer": "boundary",
         "filter": [
           "all",
@@ -181,7 +181,7 @@
         "metadata": {
           "title": "grens in water"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_adminborders",
         "source-layer": "boundary",
         "filter": [
           "all",

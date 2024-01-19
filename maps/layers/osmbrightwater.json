@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_water": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -31,7 +31,7 @@
           ]
         ],
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "waterway",
         "layout": {
           "line-cap": "round"
@@ -64,7 +64,7 @@
         "metadata": {
           "title": "overig water"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "waterway",
         "filter": [
           "!in",
@@ -99,7 +99,7 @@
         "metadata": {
           "title": "kanaal"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "waterway",
         "filter": [
           "all",
@@ -141,7 +141,7 @@
         "metadata": {
           "title": "rivier"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "waterway",
         "filter": [
           "all",
@@ -179,7 +179,7 @@
       {
         "id": "ferry3",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "metadata": {
           "title": "veerboot"
         },
@@ -211,7 +211,7 @@
         "metadata": {
           "titel": "waterverrand"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "water",
         "maxzoom": 8,
         "filter": [
@@ -252,7 +252,7 @@
         "metadata": {
           "title": "water"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "water",
         "layout": {
           "visibility": "visible"
@@ -267,7 +267,7 @@
         "metadata": {
           "title": "ijsbedekking"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_water",
         "source-layer": "landcover",
         "filter": [
           "==",

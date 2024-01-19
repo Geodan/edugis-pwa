@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_poi": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -26,7 +26,7 @@
           }
         },
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poi",
         "source-layer": "poi",
         "minzoom": 13,
         "filter": [
@@ -71,7 +71,7 @@
           }
         },
         "type": "circle",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poi",
         "source-layer": "place",
         "filter": [
           "==",
@@ -99,7 +99,7 @@
           }
         },
         "type": "circle",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poi",
         "source-layer": "place",
         "filter": [
           "==",
@@ -129,7 +129,7 @@
           }
         },
         "type": "circle",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poi",
         "source-layer": "place",
         "filter": [
           "all",
@@ -165,7 +165,7 @@
           }
         },
         "type": "circle",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poi",
         "source-layer": "place",
         "filter": [
           "all",

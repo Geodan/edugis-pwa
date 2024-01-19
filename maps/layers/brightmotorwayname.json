@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_motorwayname": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -13,7 +13,7 @@
        {
         "id": "highway-shield2",
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_motorwayname",
         "source-layer": "transportation_name",
         "minzoom": 6.5,
         "filter": [
@@ -71,7 +71,7 @@
       {
         "id": "highway-shield-us-interstate2",
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_motorwayname",
         "source-layer": "transportation_name",
         "minzoom": 7,
         "filter": [
@@ -128,7 +128,7 @@
       {
         "id": "highway-shield-us-other2",
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_motorwayname",
         "source-layer": "transportation_name",
         "minzoom": 9,
         "filter": [

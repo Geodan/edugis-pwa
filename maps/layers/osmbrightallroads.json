@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_allroads": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -14,7 +14,7 @@
         "id": "tunnel-service-track-casing_allroads_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -62,7 +62,7 @@
         "id": "tunnel-minor-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -121,7 +121,7 @@
         "id": "tunnel-secondary-tertiary-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -162,7 +162,7 @@
         "id": "tunnel-trunk-primary-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -210,7 +210,7 @@
         "id": "tunnel-motorway-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -262,7 +262,7 @@
         "id": "tunnel-path_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -310,7 +310,7 @@
         "id": "tunnel-service-track_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -354,7 +354,7 @@
         "id": "tunnel-minor_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -398,7 +398,7 @@
         "id": "tunnel-secondary-tertiary_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -442,7 +442,7 @@
         "id": "tunnel-trunk-primary_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -486,7 +486,7 @@
         "id": "tunnel-motorway_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -529,7 +529,7 @@
       {
         "id": "ferry_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 4,
         "filter": [
@@ -557,7 +557,7 @@
         "id": "highway-area_allroads_wegen",
         "type": "fill",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "==",
@@ -577,7 +577,7 @@
       {
         "id": "highway-motorway-link-casing_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -627,7 +627,7 @@
       {
         "id": "highway-link-casing_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 13,
         "filter": [
@@ -682,7 +682,7 @@
         "id": "highway-minor-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -752,7 +752,7 @@
         "id": "highway-secondary-tertiary-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -795,7 +795,7 @@
       {
         "id": "highway-primary-casing_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 5,
         "filter": [
@@ -857,7 +857,7 @@
       {
         "id": "highway-trunk-casing_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 5,
         "filter": [
@@ -919,7 +919,7 @@
       {
         "id": "highway-motorway-casing_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 4,
         "filter": [
@@ -986,7 +986,7 @@
         "id": "highway-path_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1034,7 +1034,7 @@
       {
         "id": "highway-motorway-link_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 12,
         "filter": [
@@ -1083,7 +1083,7 @@
       {
         "id": "highway-link_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 13,
         "filter": [
@@ -1137,7 +1137,7 @@
         "id": "highway-minor_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1192,7 +1192,7 @@
         "id": "highway-secondary-tertiary_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1239,7 +1239,7 @@
         "id": "highway-primary_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1293,7 +1293,7 @@
         "id": "highway-trunk_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1346,7 +1346,7 @@
       {
         "id": "highway-motorway_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 5,
         "filter": [
@@ -1401,7 +1401,7 @@
         "id": "bridge-motorway-link-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1449,7 +1449,7 @@
         "id": "bridge-link-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1500,7 +1500,7 @@
         "id": "bridge-secondary-tertiary-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1541,7 +1541,7 @@
         "id": "bridge-trunk-primary-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1589,7 +1589,7 @@
         "id": "bridge-motorway-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1636,7 +1636,7 @@
         "id": "bridge-path-casing_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1680,7 +1680,7 @@
         "id": "bridge-path_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1728,7 +1728,7 @@
         "id": "bridge-motorway-link_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1774,7 +1774,7 @@
       {
         "id": "bridge-motorway_allroads_wegen",
         "type": "line",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 4,
         "filter": [
@@ -1818,7 +1818,7 @@
         "id": "bridge-link_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1868,7 +1868,7 @@
         "id": "bridge-secondary-tertiary_allroads_wegen",
         "type": "line",
         "minzoom": 4,
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1912,7 +1912,7 @@
         "id": "bridge-trunk-primary_allroads_wegen",
         "type": "line",
         "minzoom":4, 
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "filter": [
           "all",
@@ -1955,7 +1955,7 @@
       {
         "id": "road_oneway_allroads_wegen",
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 15,
         "filter": [
@@ -2004,7 +2004,7 @@
       {
         "id": "road_oneway_opposite_allroads_wegen",
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_allroads",
         "source-layer": "transportation",
         "minzoom": 15,
         "filter": [

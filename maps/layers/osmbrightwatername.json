@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles4": {
+      "openmaptiles_watername": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -13,7 +13,7 @@
       {
         "id": "water-name-lakeline4",
         "type": "symbol",
-        "source": "openmaptiles4",
+        "source": "openmaptiles_watername",
         "source-layer": "water_name",
         "filter": [
           "==",
@@ -41,7 +41,7 @@
       {
         "id": "water-name-ocean4",
         "type": "symbol",
-        "source": "openmaptiles4",
+        "source": "openmaptiles_watername",
         "source-layer": "water_name",
         "filter": [
           "all",
@@ -77,7 +77,7 @@
       {
         "id": "water-name-other4",
         "type": "symbol",
-        "source": "openmaptiles4",
+        "source": "openmaptiles_watername",
         "source-layer": "water_name",
         "filter": [
           "all",

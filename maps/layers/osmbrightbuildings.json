@@ -4,7 +4,7 @@
   "id": "osm-bright-buildings-topo",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_buildings": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -16,7 +16,7 @@
         "metadata": {
           "mapbox:group": "1444849364238.8171"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_buildings",
         "source-layer": "building",
         "minzoom":13,
         "paint": {
@@ -42,7 +42,7 @@
         "metadata": {
           "mapbox:group": "1444849364238.8171"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_buildings",
         "source-layer": "building",
         "minzoom":13,
         "layout": {

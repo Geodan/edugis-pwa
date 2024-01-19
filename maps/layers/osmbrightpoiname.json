@@ -4,7 +4,7 @@
   "type": "style",
   "source": {
     "sources": {
-      "openmaptiles": {
+      "openmaptiles_poiname": {
         "type": "vector",
         "url": "https://saturnus.geodan.nl/openmaptiles/data/v3.json"
       }
@@ -26,7 +26,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "poi",
         "minzoom": 16,
         "filter": [
@@ -80,7 +80,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "poi",
         "minzoom": 15,
         "filter": [
@@ -139,7 +139,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "poi",
         "minzoom": 14,
         "filter": [
@@ -197,7 +197,7 @@
           }
         },
         "type": "symbol",
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "poi",
         "minzoom": 13,
         "filter": [
@@ -266,7 +266,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "!in",
@@ -322,7 +322,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "==",
@@ -373,7 +373,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "==",
@@ -424,7 +424,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -483,7 +483,7 @@
             ]
           }
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -538,7 +538,7 @@
         "metadata": {
           "title": "Overige landen"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -591,7 +591,7 @@
         "metadata": {
           "title": "land 3"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -644,7 +644,7 @@
         "metadata": {
           "title": "land 2"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -697,7 +697,7 @@
         "metadata": {
           "title": "land 1"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "filter": [
           "all",
@@ -746,7 +746,7 @@
         "metadata": {
           "title": "Continent"
         },
-        "source": "openmaptiles",
+        "source": "openmaptiles_poiname",
         "source-layer": "place",
         "maxzoom": 1,
         "filter": [
