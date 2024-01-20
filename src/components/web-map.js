@@ -1537,7 +1537,7 @@ class WebMap extends LitElement {
         }
         throw (new Error(`Error loading config from ${this.configurl}, status: ${response.statusText || response.status}`));
       }).then(config=>{
-        this.resolveLayerReferences(configurl, config.datacatalog, config.baseUrl).then(()=>
+        this.resolveLayerReferences(configurl, config.datacatalog, config.fallbackBaseUrl ?? config.baseUrl).then(()=>
           {
             this.applyConfig(config);
             this.initMap();

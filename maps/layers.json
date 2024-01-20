@@ -1,5 +1,5 @@
 {
-    "baseUrl": "https://kaart.edugis.nl/v2/maps",
+    "fallbackBaseUrl": "https://kaart.edugis.nl/v2/maps",
     "map": {
         "zoom": 6.5,
         "center": [5.375, 52.168],
