@@ -1772,12 +1772,21 @@
           "sublayers": [
             {
               "type": "wms",
-              "title": "Waterschappen (defect)",
+              "title": "Waterschappen",
               "layerInfo": {
                 "id": "waterschappen",
                 "type": "raster",
                 "metadata": {
-                  "getFeatureInfoFormat": "application/json"
+                  "getFeatureInfoFormat": "application/json",
+                  "attributes": {
+                    "deniedattributes": ["guid","nen3610id","tijdstipregistratie"],
+                    "translations": [
+                      {
+                        "name": "naam",
+                        "translation": "naam"
+                      }
+                    ]
+                  }
                 },
                 "source": {
                   "bounds": [
@@ -1788,7 +1797,7 @@
                   ],
                   "type": "raster",
                   "tiles": [
-                    "https://geodata.nationaalgeoregister.nl/hwh/eenheden/wms/v1_0?layers=AU.AdministrativeUnit"
+                    "https://service.pdok.nl/hwh/waterschapsgrenzenimso/wms/v1_0?layers=waterschap"
                   ]
                 }
               }
