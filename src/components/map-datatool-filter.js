@@ -107,7 +107,7 @@ class MapDatatoolFilter extends LitElement {
         this.value = e.target.value;
     }
     _numberValueChanged(e) {
-        this.value = e.target.value;
+        this.value = parseFloat(e.target.value);
     }
     _booleanValueChanged(e) {
         this.value = e.target.checked;
@@ -178,7 +178,7 @@ class MapDatatoolFilter extends LitElement {
                 </select><span class="arrow"></span></div>`
             case "number":
                 return html`<label for="operatorselect">Operator</label><div class="styled-select"><select id="operatorselect" @change="${(e)=>this._operatorSelected(e)}">
-                <option value="==" ?selected="${this.selectedOperator==='>'}">&gt;</option>
+                <option value="==" ?selected="${this.selectedOperator==='>'}">=</option>
                 <option value=">" ?selected="${this.selectedOperator==='>'}">&gt;</option>
                 <option value="<" ?selected="${this.selectedOperator==='<'}">&lt;</option>
                 <option value=">=" ?selected="${this.selectedOperator==='>='}">&gt;=</option>

@@ -110,7 +110,7 @@ class MapLegendFill extends LitElement {
                 .lineColor=${lineColor}><div class="container">${fill}</div></map-legend-item-edit>
             `
         }
-        if (items.colorItems[0].attrExpression && items.colorItems[0].attrExpression.startsWith('interpolate-')) {
+        if (typeof items.colorItems[0]?.attrExpression === 'string' && items.colorItems[0].attrExpression.startsWith('interpolate-')) {
             let gradients = [];
             for (let i = 0; i < items.colorItems.length; i++) {
                 gradients.push({label: items.colorItems[i].attrValue, color: items.colorItems[i].paintValue});
