@@ -1,4 +1,4 @@
-import {LitElement, html} from 'lit';
+import {LitElement, html, css, unsafeCSS} from 'lit';
 import {ifDefined} from 'lit/directives/if-defined.js';
 import {foldercss} from './folder-icon.css.js';
 import {getCapabilitiesNodes, copyMetadataToCapsNodes} from '../utils/capabilities';
@@ -29,6 +29,162 @@ class MapLayerTree extends LitElement {
       search: Boolean
     }; 
   }
+  static styles = [foldercss,css`
+  ul {
+    list-style-type: none;
+    padding-left: 10px;
+    overflow: hidden;
+    transition: height 0.2s ease-in-out;
+    height: 0;
+  }
+  ul.open {
+    height: auto;
+  }
+  li {
+    cursor: pointer;
+    line-height: 2.0em;
+    position: relative;
+  }
+  li ul {
+    cursor: default;
+  }
+  li:last-child {
+    border-bottom: none;
+  }
+  .arrow-down {
+    position: absolute;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+    content: '';
+    height: 8px;
+    margin-right: 10px;
+    left: auto;
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin-top: 8px;
+    vertical-align: top;
+    width: 8px;
+    right: 0px;
+    border-color: #007BC7;;
+    transition: transform .2s ease-in-out;
+  }
+  .opened {
+    transform: rotate(133deg);
+  }
+  .radio-on {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background: url('${unsafeCSS(rootUrl)}images/checkradio.png') 0 0;
+  }
+  .radio-off {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background: url('${unsafeCSS(rootUrl)}images/checkradio.png') 0 20px;
+  }
+  .check-on {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background: url('${unsafeCSS(rootUrl)}images/checkradio.png') 20px 20px;
+  }
+  .check-off {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background: url('${unsafeCSS(rootUrl)}images/checkradio.png') 20px 0px;
+  }
+  .label {
+    vertical-align: middle;
+  }
+  .title {
+    font-weight: bold;
+    position: relative;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border-bottom: 1px solid lightblue;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100%  - 22px);
+  }
+  .layertree {
+    font-size: 12px;
+    overflow: auto;
+    box-sizing: border-box;
+    user-select: none;
+    margin-right: -8px; /* compensate for padding of .panel-content */
+  }
+  .search {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #E3E2E3;
+    margin-top: 4px;
+    width: calc(100% - 8px);
+  }
+  .search:hover {
+    border: 1px solid #21a2ac;
+  }
+  .search input {
+    flex-grow:1;
+    border: none;
+    height: 36px;
+  }
+  .search input:focus-visible {
+    outline: none;
+  }
+  .searchicon {
+    flex-grow:0;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin: 6px 4px;
+    color: gray;
+    fill: rgb(51,51,51);
+  }
+  .menugroup {
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+  }
+  .clear {
+    flex-grow: 0;
+    cursor: pointer;
+    margin: 6px 4px;
+    color: #9E9E9E;
+    width: 1em;
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .clear.hidden {
+    display: none;
+  }
+  .clear::before {
+    content: 'x';
+  }
+  #edugisfile {
+    display: none;
+  }
+  #filebutton {
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    height: 20px;
+  }
+  `]
+
   constructor() {
       super();
       this.nodelist = [];
@@ -163,12 +319,19 @@ class MapLayerTree extends LitElement {
       e.stopPropagation();
     }
   }
+  ignoreClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
   renderLayerItem(nodeList, node, opened, radio, groupname) {
     if (opened && node.type === 'getcapabilities') {
       this.replaceNode(nodeList, node.id);
     }
     if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
       return html`<li><img src="${rootUrl}images/spinner.gif"> Loading...</li>`;
+    }
+    if (node.type === 'menugroup') {
+      return html`<li class="menugroup" @click="${e=>this.ignoreClick(e)}">Hallo!</li>`
     }
     return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}" title="${node.path?node.path:''}">
     <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
@@ -179,8 +342,9 @@ class MapLayerTree extends LitElement {
       <ul class="${opened?'open':''}">${nodeList.map(node=>{
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
-            <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div> ${node.title}
+            <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div><div class="folder-title">${node.title}
             <span class="arrow-down${node.opened?' opened':''}"></span>
+            </div>
             ${this.renderTree(node.sublayers, node.opened, this.isRadioNode(node), node.id)}</li>`
         } else {
           delete node.path;
@@ -190,158 +354,11 @@ class MapLayerTree extends LitElement {
     })}</ul>`;
   }
   render() {
-    return html`${foldercss}
-      <style>
-      ul {
-        list-style-type: none;
-        padding-left: 10px;
-        overflow: hidden;
-        transition: height 0.5s ease-in-out;
-        height: 0;
-      }
-      ul.open {
-        height: auto;
-      }
-      li {
-        border-bottom: 1px solid lightgray;
-        cursor: pointer;
-        line-height: 2.5em;
-        position: relative;
-      }
-      li ul {
-        cursor: default;
-      }
-      li:last-child {
-        border-bottom: none;
-      }
-      .arrow-down {
-        position: absolute;
-        border-style: solid;
-        border-width: 1px 1px 0 0;
-        content: '';
-        height: 8px;
-        margin-right: 10px;
-        left: auto;
-        -ms-transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-        transform: rotate(45deg);
-        margin-top: 6px;
-        vertical-align: top;
-        width: 8px;
-        right: 0px;
-        border-color: #555;
-        transition: transform .5s ease-in-out;
-      }
-      .opened {
-        transform: rotate(133deg);
-      }
-      .radio-on {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${rootUrl}images/checkradio.png') 0 0;
-      }
-      .radio-off {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${rootUrl}images/checkradio.png') 0 20px;
-      }
-      .check-on {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${rootUrl}images/checkradio.png') 20px 20px;
-      }
-      .check-off {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        vertical-align: middle;
-        background: url('${rootUrl}images/checkradio.png') 20px 0px;
-      }
-      .label {
-        vertical-align: middle;
-      }
-      .title {
-        font-weight: bold;
-        position: relative;
-        width: 100%;
-        height: 30px;
-        padding: 5px;
-        border-bottom: 1px solid lightblue;
-        box-sizing: border-box;
-      }
-      .wrapper {
-        width: 100%;
-        padding-right: 5%;
-        height: calc(100% - 40px);
-        font-size: 12px;
-        overflow: auto;
-        box-sizing: border-box;
-        user-select: none;
-      }
-      .search {
-        display: flex;
-        flex-direction: row;
-        min-width: 100%;
-        width: 12em;
-        border: 1px solid #E3E2E3;
-      }
-      .search:hover {
-        border: 1px solid #21a2ac;
-      }
-      .search input {
-        flex-grow:1;
-        border: none;
-        height: 36px;
-      }
-      .search input:focus-visible {
-        outline: none;
-      }
-      .searchicon {
-        flex-grow:0;
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        margin: 6px 4px;
-        color: gray;
-        fill: rgb(51,51,51);
-      }
-      .clear {
-        flex-grow: 0;
-        cursor: pointer;
-        margin: 6px 4px;
-        color: #9E9E9E;
-        width: 1em;
-        text-align: center;
-        font-size: 1.25em;
-        font-weight: 500;
-        line-height: 1;
-      }
-      .clear.hidden {
-        display: none;
-      }
-      .clear::before {
-        content: 'x';
-      }
-      #edugisfile {
-        display: none;
-      }
-      #filebutton {
-        display: inline-block;
-        position: absolute;
-        right: 20px;
-        height: 20px;
-      }
-    </style>
+    return html`
     <div class="title">${this.headertext}<div id="filebutton"><input @change="${(e)=>this.openFile(e)}" id="edugisfile" type="file" accept=".json,.geojson,.zip"/><label for="edugisfile"><map-iconbutton info="${ifDefined(t('open file')??undefined)}" .icon="${openfileIcon}"></map-iconbutton></label></div></div>
-    ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="${t('find map layer')}..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
     <div class="wrapper">
-      <div>
+      ${this.search?html`<div class="search"><div class="searchicon">${filterIcon}</div><input autocomplete="off" id="searchinput" spellcheck="false" type="text" placeholder="${t('find map layer')}..." @input="${(e)=>this.input(e)}"/><div class="clear ${this.clearbtnvisible?"":"hidden"}" @click="${(e)=>this.handleClearButton(e)}"></div></div>`:html``}
+      <div class="layertree">
         ${this.searchActive ?
           this.renderSearch()
             :
