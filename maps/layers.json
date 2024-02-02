@@ -11045,6 +11045,16 @@
           ]
         },
         {
+          "type": "vectortile",
+          "title": "Basiskaart Grootschalige Topografie",
+          "layerInfo": {
+            "id": "bgtpdok",
+            "type": "style",
+            "minzoom": 17,
+            "source": "styles/bgt_standaardvisualisatie.json"
+          }
+        },
+        {
           "type": "wms",
           "title": "topografie: 1:1000.000",
           "layerInfo": {
