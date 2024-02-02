@@ -72,12 +72,13 @@ class MapLayerInfo extends LitElement {
                 pointer-events: none;
             }
             #legend {
-                max-height: 6000px;
-                overflow: hidden;
+                max-height: 12000px;
+                overflow-y: auto;
                 transition: max-height .8s ease-in-out;
             }
             #legend.clipped {
                 max-height: 200px;
+                overflow: hidden;
             }
             .iconbutton {
                 padding: 5px;
