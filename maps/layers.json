@@ -21,7 +21,7 @@
             "id": "openstreetmap",
             "type": "raster",
             "metadata": {
-              "legendurl": "https://mapserver.edugis.nl/legends/wernormeld/osm_logo.png"
+              "legendurl": "https://mapserver.edugis.nl/legends/wereld/osm_logo.png"
             },
             "source": {
               "type": "raster",
@@ -259,7 +259,9 @@
             "id": "brtachtergrondkaart",
             "type": "raster",
             "metadata": {
-              "reference": true
+              "reference": true,
+              "legendurl": "https://kaart.edugis.nl/data/img/brt.png"
+
             },
             "source": {
               "type": "raster",
@@ -9793,7 +9795,61 @@
           "type": "group",
           "title": "Noordzee",
           "sublayers": [
-            {
+           {
+          "type": "geojson",
+          "title": "Diepte zeebodem",
+          "checked": false,
+          "layerInfo": {
+            "id": "cd562495-2af4-4634-b996-aa6d820b0a89",
+            "type": "fill",
+            "source": {
+              "type": "vector",
+              "tiles": ["https://tiles.edugis.nl/data/public.noordzeedieptengrijs/mvt/{z}/{x}/{y}?geom_column=geom&columns=diepte%20(m)&include_nulls=0"],
+              "attribution": "EduGIS"
+            },
+            "source-layer": "public.noordzeedieptengrijs",
+            "metadata": {
+              "title": "Diepte zeebodem",
+              "attributes": {
+                "translations": [
+                  {
+                    "name": "name",
+                    "translation": "naam"
+                  }
+                ]
+              },
+              "properties": [
+                {
+                  "name": "id",
+                  "type": "number"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                }
+              ],
+              "visible": true,
+              "maplayeropen": false,
+              "userlayer": true,
+              "cansave": true
+            },
+         
+            "paint": {
+      "fill-color": [
+        "interpolate-lab",
+        ["linear"],
+        ["get", "diepte (m)"],
+        0, "#FF0000",
+        10, "#FFC107",
+        20, "#FBFF07",
+        30, "#3BFF07",
+        40, "#07FFC2",
+        50, "#0790FF",
+        60, "#5A07FF"
+      ]
+    }            }
+          }
+, {
               "type": "getcapabilities",
               "title": "Noordzee",
               "layerInfo": {
@@ -10607,7 +10663,7 @@
     "type": "circle",
     "source": {
       "type": "geojson",
-      "data": "https://kaart.edugis.nl/data/nederland/energietransitie/windturbines.geo.json",
+      "data": "https://kaart.edugis.nl/data/nederland/energietransitie/windturbinesraw.geojson",
       "attribution": "EduGIS"
     },
     "metadata": {
