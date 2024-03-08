@@ -599,15 +599,57 @@
         }
       ]
     },
-
     {
       "type": "group",
       "title": "Administratieve indelingen",
       "sublayers": [
         {
           "type": "group",
-          "title": "Provincies, gemeenten, wijken en buurten (2023)",
+          "title": "Provincie, gemeente, wijk, buurt (2023)",
           "sublayers": [
+            {
+              "type": "geojson",
+              "title": "Landsgrens",
+              "checked": false,
+              "layerInfo": {
+                "id": "cd35f895-2af4-4634-b886-aa6d820b0a89",
+                "type": "line",
+                "source": {
+                  "type": "geojson",
+                  "data": "https://kaart.edugis.nl/data/nederland/grenzen/landgrens.geojson",
+                  "attribution": "EduGIS"
+                },
+                "metadata": {
+                  "title": "Rijksgrens",
+                  "attributes": {
+                    "translations": [
+                      {
+                        "name": "name",
+                        "translation": "naam"
+                      }
+                    ]
+                  },
+                  "properties": [
+                    {
+                      "name": "id",
+                      "type": "number"
+                    },
+                    {
+                      "name": "name",
+                      "type": "string"
+                    }
+                  ],
+                  "visible": true,
+                  "maplayeropen": false,
+                  "userlayer": true,
+                  "cansave": true
+                },
+                "paint": {
+                  "line-color": "#000",
+                  "line-width": 2
+                }
+              }
+            },
             {
               "title": "Provincies (2023)",
               "id": "provincies2023",
@@ -3078,7 +3120,7 @@
             },
             {
               "type": "wms",
-              "title": "Percelen (Kadaster 20??)",
+              "title": "Percelen (Kadaster 2006)",
               "layerInfo": {
                 "id": "percelenwms",
                 "type": "raster",
@@ -8482,8 +8524,8 @@
                           "type": "layer",
                           "title": "Geomorfologische kaart",
                           "layerInfo": "./layers/geomorfologischekaart.json"
-                        }
-,{
+                        },
+                        {
                             "type": "wms",
                             "title": "Olie- en gasvelden",
                             "layerInfo": {
@@ -8497,6 +8539,53 @@
                                     "tiles": ["https://www.nlog.nl/arcgis/services/nlog/gdw_ng_field_utm/MapServer/WmsServer?layers=0"]
                                 }
                             }
+                        },
+                        {
+                          "type": "geojson",
+                          "title": "100 aardbevingen Noord-Nederland",
+                          "checked": false,
+                          "layerInfo": {
+                            "id": "abd0c37d-390d-4b9f-3333-84d42829dfe9",
+                            "type": "circle",
+                            "source": {
+                              "type": "geojson",
+                              "data": "https://kaart.edugis.nl/data/nederland/knmi/knmilaatste100bevingen_noordnederland.geojson",
+                              "attribution": "KNMI"
+                            },
+                            "metadata": {
+                              "abstract": "De 100 meest recente aardbevingen in en rond Noord-Nederland gemeten door het KNMI ",
+                              "title": "Aardbevingen Noord-Nederland",
+                              "attributes": {
+                                "deniedattributes": ["localId","quantitativeValue_uom"],
+                                "translations": [
+                                  {"name": "quantitativeValue", "translation": "magnitude", "unit": " R", "decimals": 1},
+                                  {"name": "validFrom", "translation": "datum"},
+                                  {"name": "year", "translation": "jaar"}
+                                ]
+                              }
+                            },
+                            "paint": {
+                              "circle-color": [
+                                "interpolate",["linear"],
+                                ["get","quantitativeValue"],
+                                2,"#faf207",
+                                4,"#faa907",
+                                6,"#fa6c07",
+                                8,"#fa0707"
+                              ],
+                              "circle-radius": [
+                                "interpolate",["exponential",2],
+                                ["get","quantitativeValue"],
+                                2,5,
+                                4,10,
+                                6,20,
+                                8,50
+                              ],
+                              "circle-stroke-width": 1,
+                              "circle-stroke-color": "#818181"
+                            }
+                          },
+                          "id": "100_laatste_aardbevingen_NN_id"
                         }
                     ]
                 },
