@@ -8509,9 +8509,7 @@
                     "type": "group",
                     "title": "Geologie en Geomorfologie",
                     "sublayers": [
-                       
-
- {
+                        {
                             "type":"getcapabilities",
                             "title":"geologie",
                             "layerInfo":{
@@ -8557,6 +8555,7 @@
                               "title": "Aardbevingen Noord-Nederland",
                               "attributes": {
                                 "deniedattributes": ["localId","quantitativeValue_uom"],
+                                "emphasize": "quantitativeValue",
                                 "translations": [
                                   {"name": "quantitativeValue", "translation": "magnitude", "unit": " R", "decimals": 1},
                                   {"name": "validFrom", "translation": "datum"},
