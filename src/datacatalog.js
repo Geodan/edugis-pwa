@@ -1606,8 +1606,9 @@ export default
                 "source":{
                   "type":"raster-dem",
                   "tiles":[
-                    "https://api.mapbox.com/raster/v1/mapbox.mapbox-terrain-dem-v1/{z}/{x}/{y}.webp?sku=1017KvSEvLWA1&access_token={mapboxkey}"
-                  ]
+                    "https://api.mapbox.com/raster/v1/mapbox.mapbox-terrain-dem-v1/{z}/{x}/{y}.webp?sku=1017KvSEvLWA1&access_token={mapboxkey}",
+                  ],
+                  "attribution": "© Mapbox"
                 }
               }
             },
