@@ -1605,7 +1605,9 @@ export default
                 "type":"hillshade",
                 "source":{
                   "type":"raster-dem",
-                  "url":"https://a.tiles.mapbox.com/v4/mapbox-terrain-dem?access_token={mapboxkey}",
+                  "tiles":[
+                    "https://api.mapbox.com/raster/v1/mapbox.mapbox-terrain-dem-v1/{z}/{x}/{y}.webp?sku=1017KvSEvLWA1&access_token={mapboxkey}"
+                  ]
                 }
               }
             },
