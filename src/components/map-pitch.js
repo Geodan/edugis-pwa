@@ -53,7 +53,7 @@ class MapPitch extends LitElement {
   renderTerrainButton() {
     if (this.terrainButton) {
       return html`<div>
-        <base-checkbox small ?checked="${this.terrainActive}" @change="${e=>this.updateTerrain(e.target.checked)}"> ${t('Show terrain')}</base-checkbox>
+        <base-checkbox small ?checked="${this.terrainActive}" @change="${e=>this.updateTerrain(e.target.checked)}"> ${t('Show terrain in 3D')}</base-checkbox>
       </div>`;
     }
     return html``;
