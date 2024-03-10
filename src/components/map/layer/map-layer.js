@@ -27,7 +27,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
             zoom: {type: Number},
             boundspos: {type: String},
             datagetter: {type: Object},
-            updatelegend: {type: Number}
+            updatelegend: {type: Number},
+            terrainActive: {type: Boolean, attribute: 'terrain-active'}
         }
     }
     static get styles() {
@@ -231,6 +232,7 @@ class MapLayer extends GestureEventListeners(LitElement) {
           .zoom="${this.zoom}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
+          ?terrain-active="${this.terrainActive}"
           ?layervisible="${this.visible && !this.outzoomrange && this.boundspos==""}"></map-layer-info>`
     }
     _openChange() {

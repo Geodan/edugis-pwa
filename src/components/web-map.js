@@ -183,7 +183,10 @@ class WebMap extends LitElement {
       layerFillColor: Object,
       removedLayerId: String,
       saveCounter: Number,
-      copiedCoordinate: String
+      copiedCoordinate: String,
+      hasHillshadeLayer: Boolean,
+      hillshadeLayerId: String,
+      terrainActive: Boolean
     }; 
   }
   constructor() {
@@ -295,18 +298,41 @@ class WebMap extends LitElement {
         const newId = GeoJSON._uuidv4();
         this.map.addSource(newId, clonedSource);
         this.map.setTerrain({source: newId});
+        this.terrainActive = true;
       } else {
         this.map.setTerrain();
+        this.terrainActive = false;
       }
     }
   }
-  updateTerrain(customEvent) {
-    const id = customEvent.detail.layerid;
-    const active = customEvent.detail.terrain;
-    const layer = this.map.getLayer(id);
-    if (layer) {
-      layer.metadata.terrain = active;
-      this.setTerrainLayer(id, active);
+  async updateTerrain(customEvent) {
+    if (customEvent.detail.layerid) {
+      const id = customEvent.detail.layerid;
+      const active = customEvent.detail.terrain;
+      const layer = this.map.getLayer(id);
+      if (layer) {
+        layer.metadata.terrain = active;
+        this.setTerrainLayer(id, active);
+        this.hillshadeLayerId = id;
+        this.terrainActive = active;
+      }
+    } else {
+      const id = this.hillshadeLayerId;
+      const active = customEvent.detail.checked;
+      let layer = this.map.getLayer(id);
+      if (!layer) {
+        layer = this.getDataCatalogLayers(this.datacatalog).find(layer=>layer.layerInfo.id===id);
+        if (layer) {
+          // merge metadata: {terrain: true} with layer.metadata
+          layer.layerInfo.metadata = { ...(layer.layerInfo.metadata || {}), terrain: active };
+          const event = new CustomEvent('addlayer', {detail: layer.layerInfo});
+          await this.addLayer(event);
+        }
+      } else {
+        layer.metadata.terrain = active;
+        this.setTerrainLayer(id, active);
+        this.terrainActive = active;
+      }
     }
   }
   updateSingleLayerVisibility(id, visible) {
@@ -436,8 +462,8 @@ class WebMap extends LitElement {
       const targetLayer = this.map.getLayer(e.detail.layerid);
       if (targetLayer) {
         if (targetLayer.type === 'hillshade' && targetLayer.metadata.terrain) {
-          this.setTerrainLayer(e.detail.layerid, false); // remove terrain
-        }
+            this.setTerrainLayer(e.detail.layerid, false); // remove terrain
+        }        
         const source = targetLayer.source;
         this.map.removeLayer(targetLayer.id);
         this.removeSourceIfOrphaned(source);
@@ -831,6 +857,31 @@ class WebMap extends LitElement {
       this.map.setPitch(this.pitch);
     }
   }
+  getDataCatalogLayers(catalog) {
+    const result = [];
+    const enumerateLayers = (layers)=>{
+      if (Array.isArray(layers)) {
+        layers.forEach(layer=>{
+          if (layer.sublayers && layer.sublayers.length) {
+            enumerateLayers(layer.sublayers);
+          } else {
+            result.push(layer);
+          }
+        })
+      }
+    }
+    enumerateLayers(catalog);
+    return result;
+  }
+  getHillshadeLayerId(catalog) {
+    // returns first hillshade layerId from this.datacatalog or null    
+    const catalogLayers = this.getDataCatalogLayers(catalog);
+    const hillshadeLayer = catalogLayers.find(layer=>layer.layerInfo.type==='hillshade');
+    if (hillshadeLayer) {
+      return hillshadeLayer.layerInfo.id;
+    }
+    return null;
+  }
   fitBounds(e)
   {
     this.map.fitBounds(e.detail.bbox, {maxZoom: 19});
@@ -943,7 +994,13 @@ class WebMap extends LitElement {
         <map-geolocation .webmap="${this.map}" .active="${this.currentTool==='geolocate'}"></map-geolocation>
         </map-panel>        
         <map-panel .active="${this.currentTool==='pitch'}">
-          <map-pitch .active="${this.currentTool==='pitch'}" .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}" @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"></map-pitch>
+          <map-pitch .active="${this.currentTool==='pitch'}" .terrain .pitch="${this.currentTool==='pitch' && this.map && this.map.getPitch()}"
+             @updatepitch="${e=>this.updatePitch(e.detail.degrees)}"
+             ?terrain-button="${this.hasHillshadeLayer}"
+             ?terrain-active="${this.terrainActive}"
+             @updateterrain="${e=>this.updateTerrain(e)}"
+             @updatevisibility="${(e) => this.updateLayerVisibility(e)}"
+             ></map-pitch>
         </map-panel>
         <map-panel .active="${this.currentTool==='draw'}">
           <map-draw .active="${this.currentTool==='draw'}" 
@@ -1014,6 +1071,7 @@ class WebMap extends LitElement {
         <span slot="title">Gekozen kaartlagen</span>
         <map-layer-set id="layersthematic" userreorder open .layerlist="${this.thematicLayers}" 
           .zoom="${this.zoom}"
+          ?terrain-active="${this.terrainActive}"
           .datagetter="${this.datagetter}"
           .updatelegend="${this.updatelegend}"
           nolayer="${ifDefined(t("No map layers selected")??undefined)}">
@@ -1021,6 +1079,7 @@ class WebMap extends LitElement {
         </map-layer-set>
         <map-layer-set id="layersbackground" .layerlist="${this.backgroundLayers}" 
           .zoom="${this.zoom}"
+          ?terrain-active="${this.terrainActive}"
           nolayer = "${'No background layer available'}">
             <span>${t('Background layers')}</span>
         </map-layer-set>
@@ -1409,6 +1468,17 @@ class WebMap extends LitElement {
       activeReferenceLayer.checked = 1;
     }
   }
+  setHillShadeInfo(catalog) {
+    if (catalog) {
+    this.hillshadeLayerId = this.getHillshadeLayerId(catalog);
+      this.hasHillshadeLayer = this.hillshadeLayerId !== null;
+      this.terrainActive = false;
+    } else {
+      this.hillshadeLayerId = null;
+      this.hasHillshadeLayer = false;
+      this.terrainActive = false;
+    }
+  }
   applyConfig(config) {
     this.currentTool = '';
     this.activeLayers = null;    
@@ -1462,7 +1532,8 @@ class WebMap extends LitElement {
     if (config.datacatalog) {
       this.prepareLayerInfos(config.datacatalog);
       this.activeLayers = this.getCheckedLayerInfos(config.datacatalog).sort((a,b)=>a.order-b.order).map(layer=>layer.layerInfo);
-      this.datacatalog = config.datacatalog;    
+      this.datacatalog = config.datacatalog;
+      this.setHillShadeInfo(this.datacatalog);
     }
     if (config.tools) {
       this.toolList.forEach(tool=>tool.visible=(tool.name==='toolbar'));
@@ -1560,6 +1631,7 @@ class WebMap extends LitElement {
       this.loadConfig(this.configurl);
     } else {
       this.datacatalog = this.defaultdatacatalog;
+      this.setHillShadeInfo(this.datacatalog);
       this.initMap();
     }
     this.addEventListener('openedfile', (ev)=> this.handleOpenedFile(ev));

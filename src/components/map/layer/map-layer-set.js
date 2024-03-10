@@ -20,7 +20,8 @@ class MapLayerSet extends LitElement {
             itemscroller: {type: Object},
             zoom: {type: Number},
             datagetter: {type: Object},
-            updatelegend: {type: Number}
+            updatelegend: {type: Number},
+            terrainActive: {type: Boolean, attribute: 'terrain-active'},
         }
     }
     static get styles() {
@@ -200,6 +201,7 @@ class MapLayerSet extends LitElement {
                 .itemscroller="${this.itemscroller}"
                 .updatelegend="${this.updatelegend}"
                 .datagetter="${this.datagetter}"
+                ?terrain-active="${this.terrainActive}"
                 @movelayer="${(e)=>this._moveLayer(e)}">
             </map-layer>`
         });

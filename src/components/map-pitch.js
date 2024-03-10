@@ -3,6 +3,7 @@ import '@material/mwc-button';
 import {LitElement, html} from 'lit';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n.js';
+import './base/base-checkbox.js'
 
 /**
 * @polymer
@@ -11,13 +12,17 @@ import {translate as t, registerLanguageChangedListener, unregisterLanguageChang
 class MapPitch extends LitElement {
   static get properties() { 
     return { 
-      active: Boolean,
-      pitch: Number
+      active: {type: Boolean},
+      pitch: {type: Number},
+      terrainActive: {type: Boolean, attribute: 'terrain-active'},
+      terrainButton: {type: Boolean, attribute: 'terrain-button'}
     }; 
   }
   constructor() {
       super();
       this.active = false;
+      this.terrainActive = false;
+      this.terrainButton = false;
   }
   connectedCallback() {
     super.connectedCallback()
@@ -32,7 +37,7 @@ class MapPitch extends LitElement {
     this.requestUpdate();
   }
   shouldUpdate(changedProps) {
-      return this.active;
+    return this.active;
   }
   updatePitch(degrees) {
     this.dispatchEvent(
@@ -44,6 +49,14 @@ class MapPitch extends LitElement {
         }
       )
     );
+  }
+  renderTerrainButton() {
+    if (this.terrainButton) {
+      return html`<div>
+        <base-checkbox small ?checked="${this.terrainActive}" @change="${e=>this.updateTerrain(e.target.checked)}"> ${t('Show terrain')}</base-checkbox>
+      </div>`;
+    }
+    return html``;
   }
   render() {
     return html`
@@ -73,12 +86,26 @@ class MapPitch extends LitElement {
         <mwc-button class="edugisblue" ?outlined="${this.pitch!==0}" ?unelevated="${this.pitch===0}" @click="${e=>this.updatePitch(0)}">0&deg;</mwc-button>
         <mwc-button class="edugisblue" ?outlined="${this.pitch===0 || this.pitch===60}" ?unelevated="${this.pitch!==0 && this.pitch!==60}" @click="${e=>this.updatePitch(this.pitch===0||this.pitch===60?30:this.pitch)}">${this.pitch!==0 && this.pitch!==60?Math.round(this.pitch):30}&deg;</mwc-button>
         <mwc-button class="edugisblue" ?outlined="${this.pitch!==60}" ?unelevated="${this.pitch===60}" @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button>
-        <div class="toolpanel">${unsafeHTML(t('Choose another view angle above<br><i>or</i> use CTRL + mouse button<br><i>or</i> drag the compass needle at the bottom left of the map'))}</div>
+        <div class="toolpanel">
+          ${unsafeHTML(t('Choose another view angle above<br><i>or</i> use CTRL + mouse button<br><i>or</i> drag the compass needle at the bottom left of the map'))}
+          ${this.renderTerrainButton()}
+        </div>
       </div>`;          
   }
   updated() {
     // remove focus from buttons
     this.shadowRoot.querySelectorAll('mwc-button').forEach(button=>button.blur());
+  }
+  updateTerrain(checked) {
+    this.dispatchEvent(
+      new CustomEvent('updateterrain',
+        {
+          detail: {
+            checked: checked
+          }
+        }
+      )
+    );
   }
 }
 customElements.define('map-pitch', MapPitch);

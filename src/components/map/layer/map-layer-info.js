@@ -24,7 +24,8 @@ class MapLayerInfo extends LitElement {
             legendclipped: {type: Boolean},
             zoom: {type:Number},
             datagetter: {type: Object},
-            updatelegend: {type: Number}
+            updatelegend: {type: Number},
+            terrainActive: {type: Boolean, attribute: 'terrain-active'},
         }
     }
     static get styles() {
@@ -130,6 +131,9 @@ class MapLayerInfo extends LitElement {
                 }
                 this.legendclipped = true;
             }
+            if (this.layer.type === 'hillshade') {
+                this.terrainActive = this.layer.metadata.terrain;
+            }
         }
         return true;
     }
@@ -170,6 +174,7 @@ class MapLayerInfo extends LitElement {
         return 0;
     }
     _updateTerrain(event) {
+        this.terrainActive = event.target.checked;
         this.layer.metadata.terrain = event.target.checked;
         this.dispatchEvent(new CustomEvent('updateterrain', {
             detail: {
@@ -184,7 +189,7 @@ class MapLayerInfo extends LitElement {
         if (this.layer.type === 'hillshade') {
             return html`
             <div class="terraintoggle">
-                <base-checkbox name="terraintoggle" id="terraintoggle" small id="terrain" label="${ifDefined(t('Terrain')??undefined)}" .checked="${this.layer.metadata.terrain}" @change="${e=>this._updateTerrain(e)}">
+                <base-checkbox name="terraintoggle" id="terraintoggle" small id="terrain" label="${ifDefined(t('Terrain')??undefined)}" .checked="${this.terrainActive}" @change="${e=>this._updateTerrain(e)}">
                     ${t('Show terrain in 3D')}
                 </base-checkbox>
             </div>
