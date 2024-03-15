@@ -87,7 +87,7 @@ class MapPitch extends LitElement {
         <mwc-button class="edugisblue" ?outlined="${this.pitch===0 || this.pitch===60}" ?unelevated="${this.pitch!==0 && this.pitch!==60}" @click="${e=>this.updatePitch(this.pitch===0||this.pitch===60?30:this.pitch)}">${this.pitch!==0 && this.pitch!==60?Math.round(this.pitch):30}&deg;</mwc-button>
         <mwc-button class="edugisblue" ?outlined="${this.pitch!==60}" ?unelevated="${this.pitch===60}" @click="${e=>this.updatePitch(60)}">60&deg;</mwc-button>
         <div class="toolpanel">
-          ${unsafeHTML(t('Choose another view angle above<br><i>or</i> use CTRL + mouse button<br><i>or</i> drag the compass needle at the bottom left of the map'))}
+          ${unsafeHTML(t('Choose another view angle above<br><i>or</i> use CTRL + mouse button<br><i>or</i> drag the compass needle at the bottom left of the map<br><i>or</i> use 2 fingers on a touch screen'))}
           ${this.renderTerrainButton()}
         </div>
       </div>`;          
