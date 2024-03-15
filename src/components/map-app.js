@@ -49,6 +49,7 @@ class MapApp extends (LitElement) {
       showLanguage: {type: Boolean, attribute: 'show-language'},
       defaultLanguage: {type: String, attribute: 'default-language'},
       logoUrl: {type: String, attribute: 'logo-url'},
+      logoLinkUrl: {type: String, attribute: 'logo-link-url'},
       helpUrl: {type: String, attribute: 'help-url'},
     }
   }
@@ -88,30 +89,47 @@ class MapApp extends (LitElement) {
         display: inline-block;
         padding-left: 4px;
       }
-      .topnav ul .menu-btn-container {
-        display: none;
-      }
       .topnav ul li a {
         display: block;
         text-decoration: none;
         color: var(--theme-color, white);
       }
-      .menu-btn {
-        background: none;
-        border: none;
-        fill: white;
+      .hamburger {
+        display: none;
         cursor: pointer;
-        height: 24px;
-        width: 24px;
-        padding: 1px;
       }
       @media only screen and (max-width: 650px) {
-        .topnav ul .menuitem {
+        .topnav ul {
           display: none;
         }
-        .topnav ul .menu-btn-container {
+        .hamburger {
           display: inline-block;
+          fill: white;
+          position: absolute;
+          top: 5px;
+          right: 1em;
         }
+      }
+      /* reponsive menu */
+      .topnav.responsive {
+        position: absolute;
+        top: 35px;
+        right: 0px;
+        background-color: var(--theme-background-color, #f9e11e);
+        z-index: 10;
+        width: 200px;
+      }
+      .topnav.responsive ul {
+        display: block;
+        padding-right: 1em;
+        margin: 2px;
+        border-width: 0 1px 1px 1px;
+        border-style: solid;
+        border-color: #ccc;
+        padding-bottom: 0.5em;
+      }
+      .topnav.responsive ul li {
+        display: block;
       }
       web-map {
         position: absolute;
@@ -155,6 +173,11 @@ class MapApp extends (LitElement) {
       #languageselect:focus-visible {
         outline: none;
       }
+      a img {
+        border: none;
+        outline: none;
+        text-decoration: none;
+      }
   `;
   constructor() {
     super();
@@ -165,6 +188,7 @@ class MapApp extends (LitElement) {
     this.defaultLanguage = 'en';
     this.appName = "map-app";
     this.logoUrl = rootUrl + 'images/edugislogo.png';
+    this.logoLinkUrl = '';
     this.helpUrl = 'https://edugis.nl/hoe-werkt-edugis-atlas';
 
     // To force all event listeners for gestures to be passive.
@@ -180,6 +204,14 @@ class MapApp extends (LitElement) {
     }
     return true;
   }
+  renderLogo() {
+    if (this.logoUrl) {
+      if (this.logoLinkUrl) {
+        return html`<a href="${this.logoLinkUrl}" target="webmaplogotab"><img src="${this.logoUrl}" alt="logo"/></a>`;
+      }
+      return html`<img src="${this.logoUrl}" alt="logo"/>`;
+    }
+  }
   render() {
     // Anything that's related to rendering should be done in here.
     if (typeof APIkeys === 'undefined') {
@@ -187,7 +219,8 @@ class MapApp extends (LitElement) {
     }
     return html`
     <header>
-      <img src="${this.logoUrl}" alt="logo"/>
+      ${this.renderLogo()}
+        <span class="hamburger" @click="${(e)=>this.toggleMenu()}">${menuIcon}</span>
         <nav class="topnav">
           <ul>
             <li class="menuitem"><a href="${t('$t(link how does {{appname}} work?)', {appname: this.appName})}" target="edugishelp">${t('How does {{appname}} work?', {appname: this.appName})}</a></li>
@@ -201,7 +234,6 @@ class MapApp extends (LitElement) {
                 </select>
                 ` : ''}
             </li>
-            <li class="menu-btn-container"><button class="menu-btn">${menuIcon}</button></li>
           </ul>
         </nav>
     </header>
@@ -214,10 +246,33 @@ class MapApp extends (LitElement) {
     window.addEventListener("hashchange", ()=>this.hashChanged());
     this.doHelpstart();
   }
+  toggleMenu() {
+    const x = this.shadowRoot.querySelector(".topnav");
+    if (x.classList.contains("responsive")) {
+      x.classList.remove("responsive");
+    } else {
+      x.classList.add("responsive");
+    }
+  }
+  resetMenu() {
+    const x = this.shadowRoot.querySelector(".topnav");
+    if (window.innerWidth < 650 && x.classList.contains("responsive")) {
+      x.classList.remove("responsive");
+    }
+  }
   async changeLanguage(e) {
     const newLanguage = e.target.value;
     await changeLanguage(newLanguage);
     this.requestUpdate();
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    this.resizeHandler = ()=>this.resetMenu();
+    window.addEventListener('resize', this.resizeHandler);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('resize', this.resizeHandler);
   }
   doHelpstart() {
     if (this.helpstart && window.sessionStorage.getItem('helpstart') !== 'shown') {
