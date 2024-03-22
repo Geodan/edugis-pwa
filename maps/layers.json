@@ -14,7 +14,7 @@
       "title": "Achtergrondlagen",
       "sublayers": [
         {
-          "title": "Openstreetmap",
+          "title": "Topografisch | Standaard (OSM)",
           "type": "reference",
           "checked": true,
           "layerInfo": {
@@ -34,8 +34,20 @@
             }
           }
         },
+ {
+          "type": "reference",
+          "title": "Topografisch | Helder (OSM)",
+          "layerInfo": {
+            "id": "OsmBright",
+            "type": "style",
+            "source": "styles/openmaptiles/osmbright.json",
+            "metadata": {
+              "reference": true
+            }
+          }
+        },
         {
-          "title": "Openstreetmap Grijs",
+          "title": "Topografisch | Grijs (OSM)",
           "type": "reference",
           "layerInfo": {
             "id": "openstreetmapgray",
@@ -56,43 +68,7 @@
         },
         {
           "type": "reference",
-          "title": "OSM Helder (stijl)",
-          "layerInfo": {
-            "id": "OsmBright",
-            "type": "style",
-            "source": "styles/openmaptiles/osmbright.json",
-            "metadata": {
-              "reference": true
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "OSM Basis (stijl)",
-          "layerInfo": {
-            "id": "klokantechbasic",
-            "type": "style",
-            "source": "styles/openmaptiles/klokantech-basic.json",
-            "metadata": {
-              "reference": true
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "OSM Positron (stijl)",
-          "layerInfo": {
-            "id": "Positron",
-            "type": "style",
-            "source": "styles/openmaptiles/positron.json",
-            "metadata": {
-              "reference": true
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "OSM Donker (stijl)",
+          "title": "Topografisch | Donker (OSM)",
           "layerInfo": {
             "id": "DarkMatter",
             "type": "style",
@@ -101,159 +77,33 @@
               "reference": true
             }
           }
-        },
-        {
-          "title": "Topografisch | Water",
+        },   
+  {
           "type": "reference",
-          "checked": false,
+          "title": "Topografisch | Eenvoudig (OSM)",
           "layerInfo": {
-            "id": "BRT_achtergrondkaart Water [tms]_id",
-            "type": "raster",
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/water/EPSG:3857/{z}/{x}/{y}.png"
-              ],
-              "attribution": "© CC-BY Kadaster"
-            },
-            "metadata": {}
-          },
-          "id": "1275"
-        },
-        {
-          "type": "reference",
-          "title": "Microsoft BING Kaart",
-          "layerInfo": {
-            "id": "bingmaproad",
-            "metadata": {
-              "reference": true,
-              "bing": true
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 19
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "Hybride (Microsoft BING)",
-          "layerInfo": {
-            "id": "bingmaphybrid",
-            "metadata": {
-              "reference": true,
-              "bing": true
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 18
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "Luchtfoto (Microsoft BING)",
-          "layerInfo": {
-            "id": "bingmapaerial",
-            "metadata": {
-              "reference": true,
-              "bing": true
-            },
-            "type": "raster",
-            "source": {
-              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
-              "maxzoom": 18
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "Luchtfoto (ESRI World Imagery)",
-          "layerInfo": {
-            "id": "esriworldimagery",
+            "id": "klokantechbasic",
+            "type": "style",
+            "source": "styles/openmaptiles/klokantech-basic.json",
             "metadata": {
               "reference": true
-            },
-            "type": "raster",
-            "source": {
-              "type": "raster",
-              "tiles": [
-                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-              ],
-              "tileSize": 256,
-              "maxzoom": 22,
-              "attribution": "ESRI World Imagery"
             }
           }
-        },
-        {
+        }, 
+{
           "type": "reference",
-          "title": "Stamen Toner",
+          "title": "Topografisch | Eenvoudig grijs (OSM)",
           "layerInfo": {
-            "id": "stamentoner",
+            "id": "Positron",
+            "type": "style",
+            "source": "styles/openmaptiles/positron.json",
             "metadata": {
               "reference": true
-            },
-            "type": "raster",
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "scheme": "tms",
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
-              ],
-              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-              "maxzoom": 17
             }
           }
-        },
-        {
-          "type": "reference",
-          "title": "Stamen Waterverf",
-          "layerInfo": {
-            "id": "stamenwatercolor",
-            "metadata": {
-              "reference": true
-            },
-            "type": "raster",
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "scheme": "tms",
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
-              ],
-              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-              "maxzoom": 17
-            }
-          }
-        },
-        {
-          "type": "reference",
-          "title": "Stamen Terrein",
-          "layerInfo": {
-            "id": "stamenterrain",
-            "metadata": {
-              "reference": true
-            },
-            "type": "raster",
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "scheme": "tms",
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
-              ],
-              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
-              "maxzoom": 16
-            }
-          }
-        },
-        {
-          "title": "PDOK BRT Achtergrondkaart",
+        }, 
+{
+          "title": "Topografisch | Standaard (BRT)",
           "type": "reference",
           "layerInfo": {
             "id": "brtachtergrondkaart",
@@ -281,34 +131,124 @@
             }
           }
         },
-        {
+ {
+          "title": "Topografisch | Wateren (BRT)",
           "type": "reference",
-          "title": "OpenTopo achtergrondkaart [tms]",
+          "checked": false,
           "layerInfo": {
-            "id": "OpenTopo_achtergrondkaart [tms]_id",
+            "id": "BRT_achtergrondkaart Water [tms]_id",
             "type": "raster",
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "tiles": [
+                "https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/water/EPSG:3857/{z}/{x}/{y}.png"
+              ],
+              "attribution": "© CC-BY Kadaster"
+            },
+            "metadata": {}
+          },
+          "id": "1275"
+        },
+ {
+          "type": "reference",
+          "title": "Topografisch | Standaard (Bing)",
+          "layerInfo": {
+            "id": "bingmaproad",
             "metadata": {
               "reference": true,
-              "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
+              "bing": true
             },
+            "type": "raster",
             "source": {
-              "tileSize": 512,
-              "type": "raster",
-              "bounds": [
-                3.20009,
-                50.7167,
-                7.27283,
-                53.5571
-              ],
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"
-              ],
-              "attribution": "PDOK"
+              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Road?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom": 19
             }
           }
         },
+ {
+          "type": "reference",
+          "title": "Topografisch | Zwart-Wit (Stamen)",
+          "layerInfo": {
+            "id": "stamentoner",
+            "metadata": {
+              "reference": true
+            },
+            "type": "raster",
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "scheme": "tms",
+              "tiles": [
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+              ],
+              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom": 17
+            }
+          }
+        },
+
         {
-          "title": "PDOK luchtfoto's (2016)",
+                    "type": "reference",
+                    "title": "Topografisch | Nederland (OpenTopo)",
+                    "layerInfo": {
+                        "id": "OpenTopo_achtergrondkaart [tms]_id",
+                        "type": "raster",
+                        "metadata": {
+                            "reference": true,
+                            "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
+                        },
+                        "source": {
+                            "tileSize": 512,
+                            "type": "raster",
+                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
+                            "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
+                            "attribution": "PDOK"
+                        }
+                    }
+                },
+       
+       
+        {
+          "type": "reference",
+          "title": "Luchtfoto | Wereld (ESRI World Imagery)",
+          "layerInfo": {
+            "id": "esriworldimagery",
+            "metadata": {
+              "reference": true
+            },
+            "type": "raster",
+            "source": {
+              "type": "raster",
+              "tiles": [
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              ],
+              "tileSize": 256,
+              "maxzoom": 22,
+              "attribution": "ESRI World Imagery"
+            }
+          }
+        }, 
+ {
+          "type": "reference",
+          "title": "Luchtfoto | Wereld (Microsoft Bing)",
+          "layerInfo": {
+            "id": "bingmapaerial",
+            "metadata": {
+              "reference": true,
+              "bing": true
+            },
+            "type": "raster",
+            "source": {
+              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom": 18
+            }
+          }
+        },
+
+       
+        {
+          "title": "Luchtfoto | Nederland-2016 (PDOK)",
           "type": "reference",
           "layerInfo": {
             "id": "pdokluchtfotowmts2016",
@@ -336,7 +276,7 @@
           }
         },
         {
-          "title": "PDOK luchtfoto's (Actueel)",
+          "title": "Luchtfoto | Nederland (PDOK)",
           "type": "reference",
           "layerInfo": {
             "id": "pdokluchtfotowmtsactueel",
@@ -362,7 +302,67 @@
               ]
             }
           }
+        },
+ {
+          "type": "reference",
+          "title": "Hybride | Wereld (Microsoft Bing)",
+          "layerInfo": {
+            "id": "bingmaphybrid",
+            "metadata": {
+              "reference": true,
+              "bing": true
+            },
+            "type": "raster",
+            "source": {
+              "url": "https://dev.virtualearth.net/REST/V1/Imagery/Metadata/AerialWithLabels?output=json&include=ImageryProviders&uriScheme=https&key={bingkey}",
+              "maxzoom": 18
+            }
+          }
+        },
+ {
+          "type": "reference",
+          "title": "Waterverf (Stamen)",
+          "layerInfo": {
+            "id": "stamenwatercolor",
+            "metadata": {
+              "reference": true
+            },
+            "type": "raster",
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "scheme": "tms",
+              "tiles": [
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom": 17
+            }
+          }
+        },
+     
+        {
+          "type": "reference",
+          "title": "Terrein | Relief (Stamen)",
+          "layerInfo": {
+            "id": "stamenterrain",
+            "metadata": {
+              "reference": true
+            },
+            "type": "raster",
+            "source": {
+              "type": "raster",
+              "tileSize": 256,
+              "scheme": "tms",
+              "tiles": [
+                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
+              ],
+              "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
+              "maxzoom": 16
+            }
+          }
         }
+
       ]
     },
 
