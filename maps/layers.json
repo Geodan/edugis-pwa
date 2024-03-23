@@ -178,9 +178,8 @@
             "source": {
               "type": "raster",
               "tileSize": 256,
-              "scheme": "tms",
               "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamentoner_EPSG900913/{z}/{x}/{y}.png"
+                "https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png"
               ],
               "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom": 17
@@ -331,9 +330,8 @@
             "source": {
               "type": "raster",
               "tileSize": 256,
-              "scheme": "tms",
               "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenwatercolor_EPSG900913/{z}/{x}/{y}.jpg"
+                "https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg"
               ],
               "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom": 17
@@ -353,9 +351,8 @@
             "source": {
               "type": "raster",
               "tileSize": 256,
-              "scheme": "tms",
               "tiles": [
-                "https://tiles.edugis.nl/mapproxy/stamen/tiles/stamenterrain_EPSG900913/{z}/{x}/{y}.jpg"
+                "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}.png"
               ],
               "attribution": "&copy; <a href=\"https://www.stamen.com\" target=\"attribution\">Stamen Design</a>,<a href=\"https://www.openstreetmap.org/about\" target=\"attribution\">OpenStreetMap contributors</a>",
               "maxzoom": 16
