@@ -862,10 +862,12 @@ class WebMap extends LitElement {
     const enumerateLayers = (layers)=>{
       if (Array.isArray(layers)) {
         layers.forEach(layer=>{
-          if (layer.sublayers && layer.sublayers.length) {
-            enumerateLayers(layer.sublayers);
-          } else {
-            result.push(layer);
+          if (layer.type !== 'itemgroup') {  
+            if (layer.sublayers) {
+              enumerateLayers(layer.sublayers);
+            } else {
+              result.push(layer);
+            }
           }
         })
       }
@@ -1423,41 +1425,43 @@ class WebMap extends LitElement {
   prepareLayerInfos(nodeList) {
     let activeReferenceLayer = undefined;
     nodeList.forEach(node=>{
-      if (node.sublayers) {
-        this.prepareLayerInfos(node.sublayers);
-      } else {
-        if (!node.layerInfo.type) {
-          node.layerInfo.type = node.type;
-        }
-        if (!node.layerInfo.metadata) {
-          node.layerInfo.metadata = {};
-        }
-        if (!node.layerInfo.metadata.title) {
-          node.layerInfo.metadata.title = node.title;
-        }
-        if (node.type === 'wms') {
-          node.layerInfo.metadata.wms = true;        
-        }        
-        if (node.layerInfo.type === 'style') {
-          node.layerInfo.metadata.styleid = node.layerInfo.id;
-          node.layerInfo.metadata.styletitle = node.title;
-        }
-        if (node.type === 'reference') {
-          node.layerInfo.metadata.reference = true;
-          if (!activeReferenceLayer) {
-            activeReferenceLayer = node;
-          }
-          if (node.checked) {
-            activeReferenceLayer = node;
-          }
+      if (node.type !== 'itemgroup') {
+        if (node.sublayers) {
+          this.prepareLayerInfos(node.sublayers);
         } else {
-          // checked non reference nodes should have a numbered checked property starting at 2
-          // checked property 1 is reserved for the reference layer
-          if (node.checked) {
-            if (isNaN(parseInt(node.checked))) {
-              node.checked = 2;
-            } else {
-              node.checked = parseInt(node.checked) + 1;
+          if (!node.layerInfo.type) {
+            node.layerInfo.type = node.type;
+          }
+          if (!node.layerInfo.metadata) {
+            node.layerInfo.metadata = {};
+          }
+          if (!node.layerInfo.metadata.title) {
+            node.layerInfo.metadata.title = node.title;
+          }
+          if (node.type === 'wms') {
+            node.layerInfo.metadata.wms = true;        
+          }        
+          if (node.layerInfo.type === 'style') {
+            node.layerInfo.metadata.styleid = node.layerInfo.id;
+            node.layerInfo.metadata.styletitle = node.title;
+          }
+          if (node.type === 'reference') {
+            node.layerInfo.metadata.reference = true;
+            if (!activeReferenceLayer) {
+              activeReferenceLayer = node;
+            }
+            if (node.checked) {
+              activeReferenceLayer = node;
+            }
+          } else {
+            // checked non reference nodes should have a numbered checked property starting at 2
+            // checked property 1 is reserved for the reference layer
+            if (node.checked) {
+              if (isNaN(parseInt(node.checked))) {
+                node.checked = 2;
+              } else {
+                node.checked = parseInt(node.checked) + 1;
+              }
             }
           }
         }

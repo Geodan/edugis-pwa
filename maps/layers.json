@@ -14,7 +14,11 @@
       "title": "Achtergrondlagen",
       "sublayers": [
         {
-          "title": "Topografisch | Standaard (OSM)",
+          "title": "Topografisch",
+          "type": "itemgroup"
+        },
+        {
+          "title": "Standaard (OSM)",
           "type": "reference",
           "checked": true,
           "layerInfo": {
@@ -34,9 +38,9 @@
             }
           }
         },
- {
+        {
           "type": "reference",
-          "title": "Topografisch | Helder (OSM)",
+          "title": "Helder (OSM)",
           "layerInfo": {
             "id": "OsmBright",
             "type": "style",
@@ -47,7 +51,7 @@
           }
         },
         {
-          "title": "Topografisch | Grijs (OSM)",
+          "title": "Grijs (OSM)",
           "type": "reference",
           "layerInfo": {
             "id": "openstreetmapgray",
@@ -68,7 +72,7 @@
         },
         {
           "type": "reference",
-          "title": "Topografisch | Donker (OSM)",
+          "title": "Donker (OSM)",
           "layerInfo": {
             "id": "DarkMatter",
             "type": "style",
@@ -80,7 +84,7 @@
         },   
   {
           "type": "reference",
-          "title": "Topografisch | Eenvoudig (OSM)",
+          "title": "Eenvoudig (OSM)",
           "layerInfo": {
             "id": "klokantechbasic",
             "type": "style",
@@ -92,7 +96,7 @@
         }, 
 {
           "type": "reference",
-          "title": "Topografisch | Eenvoudig grijs (OSM)",
+          "title": "Eenvoudig grijs (OSM)",
           "layerInfo": {
             "id": "Positron",
             "type": "style",
@@ -103,7 +107,7 @@
           }
         }, 
 {
-          "title": "Topografisch | Standaard (BRT)",
+          "title": "Standaard (NL BRT)",
           "type": "reference",
           "layerInfo": {
             "id": "brtachtergrondkaart",
@@ -132,7 +136,7 @@
           }
         },
  {
-          "title": "Topografisch | Wateren (BRT)",
+          "title": "Wateren (NL BRT)",
           "type": "reference",
           "checked": false,
           "layerInfo": {
@@ -152,7 +156,7 @@
         },
  {
           "type": "reference",
-          "title": "Topografisch | Standaard (Bing)",
+          "title": "Standaard (Bing)",
           "layerInfo": {
             "id": "bingmaproad",
             "metadata": {
@@ -168,7 +172,7 @@
         },
  {
           "type": "reference",
-          "title": "Topografisch | Zwart-Wit (Stamen)",
+          "title": "Zwart-Wit (Stamen)",
           "layerInfo": {
             "id": "stamentoner",
             "metadata": {
@@ -186,31 +190,13 @@
             }
           }
         },
-
         {
-                    "type": "reference",
-                    "title": "Topografisch | Nederland (OpenTopo)",
-                    "layerInfo": {
-                        "id": "OpenTopo_achtergrondkaart [tms]_id",
-                        "type": "raster",
-                        "metadata": {
-                            "reference": true,
-                            "legendurl": "https://mapserver.edugis.nl/legends/nederland/legenda-opentopo.png"
-                        },
-                        "source": {
-                            "tileSize": 512,
-                            "type": "raster",
-                            "bounds": [3.20009, 50.7167, 7.27283, 53.5571],
-                            "tiles": ["https://tiles.edugis.nl/mapproxy/opentopo/wms?layers=opentopo&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A3857&width=512&height=512&BBOX={bbox-epsg-3857}"],
-                            "attribution": "PDOK"
-                        }
-                    }
-                },
-       
-       
+          "type": "itemgroup",
+          "title": "Luchtfoto"
+        },
         {
           "type": "reference",
-          "title": "Luchtfoto | Wereld (ESRI World Imagery)",
+          "title": "Wereld (ESRI World Imagery)",
           "layerInfo": {
             "id": "esriworldimagery",
             "metadata": {
@@ -230,7 +216,7 @@
         }, 
  {
           "type": "reference",
-          "title": "Luchtfoto | Wereld (Microsoft Bing)",
+          "title": "Wereld (Microsoft Bing)",
           "layerInfo": {
             "id": "bingmapaerial",
             "metadata": {
@@ -244,10 +230,8 @@
             }
           }
         },
-
-       
         {
-          "title": "Luchtfoto | Nederland-2016 (PDOK)",
+          "title": "Nederland-2016 (PDOK)",
           "type": "reference",
           "layerInfo": {
             "id": "pdokluchtfotowmts2016",
@@ -275,7 +259,7 @@
           }
         },
         {
-          "title": "Luchtfoto | Nederland (PDOK)",
+          "title": "Nederland Actueel (PDOK)",
           "type": "reference",
           "layerInfo": {
             "id": "pdokluchtfotowmtsactueel",
@@ -301,6 +285,10 @@
               ]
             }
           }
+        },
+        {
+          "type": "itemgroup",
+          "title": "Overig"
         },
  {
           "type": "reference",
@@ -14798,8 +14786,7 @@
                 "id": "pdokluchtfotowmts2019_2",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2019.png",
-                  "reference": true
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2019.png"
                 },
                 "source": {
                   "type": "raster",
@@ -14826,8 +14813,7 @@
                 "id": "pdokluchtfotowmts2020_2",
                 "type": "raster",
                 "metadata": {
-                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2020.png",
-                  "reference": true
+                  "legendurl": "https://map.edugis.nl/legends2/pdoklufolegend2020.png"
                 },
                 "source": {
                   "type": "raster",

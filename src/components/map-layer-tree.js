@@ -152,11 +152,6 @@ class MapLayerTree extends LitElement {
     color: gray;
     fill: rgb(51,51,51);
   }
-  .menugroup {
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-  }
   .clear {
     flex-grow: 0;
     cursor: pointer;
@@ -182,6 +177,26 @@ class MapLayerTree extends LitElement {
     position: absolute;
     right: 20px;
     height: 20px;
+  }
+  .itemgroup {
+    display: flex;
+    align-items: center;
+    cursor: default;
+  }
+  .leftline {
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background-color: #999;
+    margin-right: 5px; 
+  }
+  .rightline {
+    display: inline-block;
+    flex-grow: 1;
+    height: 1px;
+    background-color: #999;
+    margin-left: 5px;
+    margin-right:24px;
   }
   `]
 
@@ -281,8 +296,8 @@ class MapLayerTree extends LitElement {
     if (node.type === "radio" || node.type === "reference") {
       return true;
     }
-    if (node.sublayers && node.sublayers.length && node.sublayers[0].type === "reference") {
-      return true;
+    if (node.sublayers?.length) {
+      return node.sublayers.findIndex(subnode=>subnode.type === "reference") > -1;
     }
     return false;
   }
@@ -330,9 +345,6 @@ class MapLayerTree extends LitElement {
     if (node.type === 'getcapabilities' || node.type === 'gettingcapabilities') {
       return html`<li><img src="${rootUrl}images/spinner.gif"> Loading...</li>`;
     }
-    if (node.type === 'menugroup') {
-      return html`<li class="menugroup" @click="${e=>this.ignoreClick(e)}">Hallo!</li>`
-    }
     return html`<li class="data" @click="${(e)=>{this.handleClick(e, node)}}" title="${node.path?node.path:''}">
     <div class="${radio?(node.checked?'radio-on':'radio-off'):(node.checked?'check-on':'check-off')}" name="${radio?groupname:node.id}" value="${node.id}" id="${node.id}"></div>
     <span class="label">${node.title}</span></li>`;
@@ -340,6 +352,9 @@ class MapLayerTree extends LitElement {
   renderTree(nodeList, opened, radio, groupname) {
     return html`
       <ul class="${opened?'open':''}">${nodeList.map(node=>{
+        if (node.type === 'itemgroup') {
+          return html`<li @click="${e=>this.ignoreClick(e)}"><div class="itemgroup"><span class="leftline"></span>${node.title}<span class="rightline"></span></div></li>`
+        }
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
             <div class="folder-icon"><div class="folder-tab"></div><div class="folder-sheet"></div></div><div class="folder-title">${node.title}
@@ -362,7 +377,7 @@ class MapLayerTree extends LitElement {
         ${this.searchActive ?
           this.renderSearch()
             :
-          this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && this.nodelist[0].type && this.nodelist[0].type==='reference')
+          this.renderTree(this.nodelist, true, this.nodelist && this.nodelist.length && ((this.nodelist[0].type && this.nodelist[0].type==='reference') || (this.nodelist[1]?.type && this.nodelist[1]?.type==='reference')))
         }
       </div>
     </div>`;
