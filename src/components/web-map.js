@@ -862,7 +862,7 @@ class WebMap extends LitElement {
     const enumerateLayers = (layers)=>{
       if (Array.isArray(layers)) {
         layers.forEach(layer=>{
-          if (layer.type !== 'itemgroup') {  
+          if (layer.type !== 'layergroup') {  
             if (layer.sublayers) {
               enumerateLayers(layer.sublayers);
             } else {
@@ -1425,7 +1425,7 @@ class WebMap extends LitElement {
   prepareLayerInfos(nodeList) {
     let activeReferenceLayer = undefined;
     nodeList.forEach(node=>{
-      if (node.type !== 'itemgroup') {
+      if (node.type !== 'layergroup') {
         if (node.sublayers) {
           this.prepareLayerInfos(node.sublayers);
         } else {

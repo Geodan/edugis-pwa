@@ -15,7 +15,7 @@
       "sublayers": [
         {
           "title": "Topografisch",
-          "type": "itemgroup"
+          "type": "layergroup"
         },
         {
           "title": "Standaard (OSM)",
@@ -191,7 +191,7 @@
           }
         },
         {
-          "type": "itemgroup",
+          "type": "layergroup",
           "title": "Luchtfoto"
         },
         {
@@ -287,7 +287,7 @@
           }
         },
         {
-          "type": "itemgroup",
+          "type": "layergroup",
           "title": "Overig"
         },
  {

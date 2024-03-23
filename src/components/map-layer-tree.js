@@ -178,7 +178,7 @@ class MapLayerTree extends LitElement {
     right: 20px;
     height: 20px;
   }
-  .itemgroup {
+  .layergroup {
     display: flex;
     align-items: center;
     cursor: default;
@@ -352,8 +352,8 @@ class MapLayerTree extends LitElement {
   renderTree(nodeList, opened, radio, groupname) {
     return html`
       <ul class="${opened?'open':''}">${nodeList.map(node=>{
-        if (node.type === 'itemgroup') {
-          return html`<li @click="${e=>this.ignoreClick(e)}"><div class="itemgroup"><span class="leftline"></span>${node.title}<span class="rightline"></span></div></li>`
+        if (node.type === 'layergroup') {
+          return html`<li @click="${e=>this.ignoreClick(e)}"><div class="layergroup"><span class="leftline"></span>${node.title}<span class="rightline"></span></div></li>`
         }
         if (node.sublayers){
           return html`<li @click="${e=>this.toggleOpen(e, node)}">
