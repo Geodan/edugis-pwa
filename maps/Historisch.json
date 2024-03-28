@@ -2986,7 +2986,7 @@
       "title": "Achtergrondlagen",
       "sublayers": [
         {
-          "title": "Openstreetmap",
+          "title": "Topografisch | Standaard | OSM",
           "type": "reference",
           "layerInfo": {
             "id": "openstreetmap",
@@ -3010,7 +3010,7 @@
         },
         {
                   "type": "reference",
-                  "title": "ESRI | Satelliet",
+                  "title": "Luchtfoto | Wereld | ESRI World Imagery",
                   "layerInfo": {
                     "id": "esriworldimagery",
                     "metadata": {
@@ -3033,7 +3033,7 @@
                   "checked": true
                 },
                {
-          "title": "PDOK luchtfoto's (Actueel)",
+          "title": "Luchtfoto | Nederland | PDOK",
           "type": "reference",
           "layerInfo": {
             "id": "pdokluchtfotowmtsactueel",
