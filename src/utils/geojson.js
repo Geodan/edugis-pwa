@@ -80,7 +80,7 @@ export class GeoJSON {
     return crs;
   }
 
-  static _calcBbox(geojson) {
+  static getBoundingBox(geojson) {
     var min = [Number.MAX_VALUE, Number.MAX_VALUE],
         max = [-Number.MAX_VALUE, -Number.MAX_VALUE];
     GeoJSON._traverseGeoJson(function(_gj) {
