@@ -190,7 +190,7 @@ class MapInfoFormatted extends LitElement {
         if (attributes.translations && attributes.translations.findIndex(translation=>translation.name === key) > -1) {
           continue; // skip translated attributes
         }
-        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd), attributes.emphasize?.includes(key));
+        result.push(this.renderAttribute(key, feature.properties[key], odd=!odd, attributes.emphasize?.includes(key)));
       }
     } else {
       for (let key in feature.properties) {
