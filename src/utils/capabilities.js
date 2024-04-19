@@ -114,9 +114,9 @@ function layerToNode(Layer, Request, scaleHintType) {
       },
       "source" : {
           "type": "raster",
-          "tileSize" : 512,
+          "tileSize" : 256,
           "tiles": [
-              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=512&height=512&styles=" // + encodeURIComponent(Layer.Style[0].Name)
+              onlineResource + "service=WMS&version=1.1.1&request=GetMap&layers=" + encodeURIComponent(Layer.Name) + "&SRS=EPSG:3857&transparent=true&format=image/png&BBOX={bbox-epsg-3857}&width=256&height=256&styles=" // + encodeURIComponent(Layer.Style[0].Name)
           ],
           "attribution": Layer.Attribution && Layer.Attribution.Title ? Layer.Attribution.Title: ""
           }
