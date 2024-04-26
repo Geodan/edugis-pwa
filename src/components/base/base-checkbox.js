@@ -1,4 +1,5 @@
 import {html, css, LitElement} from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 
 /**
 * @polymer
@@ -18,6 +19,7 @@ class BaseCheckbox extends LitElement {
             :host {
                 display: inline-block;
             }
+            /* Base container styling */
             .bccontainer {
                 display: flex;
                 align-items: center;
@@ -35,6 +37,7 @@ class BaseCheckbox extends LitElement {
             .bccontainer.small {
                 padding-left: 18px;
             }
+
             /* Hide the browser's default checkbox */
             .bccontainer input {
                 position: absolute;
@@ -43,6 +46,7 @@ class BaseCheckbox extends LitElement {
                 height: 0;
                 width: 0;
             }
+
             /* Create a custom checkbox */
             .checkmark {
                 position: absolute;
@@ -50,34 +54,42 @@ class BaseCheckbox extends LitElement {
                 height: 20px;
                 width: 20px;
                 border-radius: 4px;
-                border: 1px solid lightgray
+                border: 1px solid lightgray;
             }
+
             .small .checkmark {
                 height: 15px;
                 width: 15px;
             }
-            /* On mouse-over, add a grey background color */
+
+            /* On mouse-over, add a gray background color */
             .bccontainer:hover input ~ .checkmark {
               background-color: #ccc;
             }
-            .bccontainer.checked:hover input ~ .checkmark {
-                background-color: var(--theme-background-color, #2e7dba);
-                color: var(--theme-color, white);
-            }
-            
             /* When the checkbox is checked, add a blue background */
             .bccontainer.checked .checkmark {
-              background-color: var(--theme-hover-background-color, #2196F3);
-              color: var(--theme-color, white);
-              border-color: var(--theme-color, white);
+                background-color: var(--theme-background-color, #2196F3);
+                color: var(--theme-color, white);
+                border-color: var(--theme-color, white);
             }
-            .bccontainer.disabled .checkmark {
+
+            .bccontainer.checked:not(.disabled):hover input ~ .checkmark {
+                background-color: var(--theme-hover-background-color, #2e7dba);
+                color: var(--theme-color, white);
+            }
+
+            /* Styles for disabled state */
+            .bccontainer.disabled .checkmark, 
+            .bccontainer.disabled:hover .checkmark {
                 background-color: lightgray;
-                cursor: auto;
+                cursor: inherit;
+                border-color: lightgray;
             }
-            .bccontainer.disabled {
+
+            .bccontainer.disabled, 
+            .bccontainer.disabled:hover {
                 color: gray;
-                cursor: auto;
+                cursor: inherit;
             }
             /* Create the checkmark/indicator (hidden when not checked) */
             .checkmark:after {
@@ -116,8 +128,18 @@ class BaseCheckbox extends LitElement {
     }
     render() {
         return html`
-        <label class="bccontainer${this.disabled?' disabled':''}${this.small?' small':''}${this.checked?' checked':''}"><slot></slot>
-            <input type="checkbox" ?checked="${this.checked}" ?disabled="${this.disabled}" ?.value="${this.value}" @change="${(e)=>this._handleChange(e)}">
+        <label class="${classMap({
+                'bccontainer': true,
+                'disabled': this.disabled,
+                'small': this.small,
+                'checked': this.checked
+            })}"><slot></slot>
+            <input type="checkbox" 
+                ?checked="${this.checked}" 
+                ?disabled="${this.disabled}" 
+                ?.value="${this.value}" 
+                @click="${(e)=>e.stopPropagation()}"
+                @change="${(e)=>this._handleChange(e)}">
             <span class="checkmark"></span>
         </label>
         `
