@@ -1,4 +1,5 @@
 import {html, css, LitElement} from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import {ifDefined} from 'lit/directives/if-defined.js';
 
 import "../../base/base-arrow.js";
@@ -182,9 +183,18 @@ class MapLayer extends GestureEventListeners(LitElement) {
         return html`
         <div class="mlcontainer">
             <div 
-              class="mltitle${this.itemcontainer?' draghandle':''}${this.outzoomrange || this.layer.metadata.layervisible === false || this.boundspos !== ""?' lightgray':''}"
+              class="${classMap({
+                'mltitle': true,
+                'draghandle': this.itemcontainer,
+                'lightgray': this.outzoomrange || this.layer.metadata.layervisible === false || this.boundspos !== ""
+              })}"
               @click="${()=>this._toggleArrow()}">
-                <base-checkbox ?disabled="${this.outzoomrange || this.boundspos!==''}" ?checked="${this.visible}" title="${ifDefined(t('toggle layer visibility')??undefined)}" @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
+                <base-checkbox 
+                  ?disabled="${this.outzoomrange || this.boundspos!==''}" 
+                  ?checked="${this.visible}" 
+                  title="${ifDefined(t('toggle layer visibility')??undefined)}" 
+                  @click="${(e)=>e.stopPropagation()}"
+                  @change="${(e)=>this._toggleVisibility(e)}"></base-checkbox>
                 <span>${this.layer.metadata?this.layer.metadata.title?this.layer.metadata.title:this.layer.id:this.layer.id}</span>
                 <base-arrow ?open="${this.open}" @change="${e=>this._openChange(e)}"></base-arrow>
             </div>
@@ -262,6 +272,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
         }
     }
     _toggleVisibility(e) {
+      // prevent event from bubbling up to map-layer-set
+      e.stopPropagation();
       this.visible = e.target.checked;
       this.layer.metadata.visible = this.visible;
       if (this.layer.metadata.sublayers && this.layer.metadata.sublayers.length > 0) {
