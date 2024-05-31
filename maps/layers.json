@@ -8720,6 +8720,9 @@
                           "title": "Basiskaart Grootschalige Topografie",
                           "layerInfo": {
                             "id": "bgtpdok",
+                            "metadata": {
+                              "abstract": "De Basisregistratie Grootschalige Topografie (BGT) is een digitale kaart van Nederland waarop gebouwen, wegen, waterlopen, terreinen en spoorlijnen eenduidig zijn vastgelegd. De kaart is op 20 centimeter nauwkeurig en bevat veel details, zoals je die in de werkelijkheid ook ziet. Denk aan bomen, wegen en gebouwen. Kortom: de inrichting van de fysieke omgeving."
+                            },  
                             "type": "style",
                             "minzoom": 17,
                             "source": "styles/bgt_standaardvisualisatie.json"
