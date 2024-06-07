@@ -325,8 +325,8 @@ class MapLayer extends GestureEventListeners(LitElement) {
         }
         let result = siblings.filter(elem=> {
             const elemClientRect = elem.getBoundingClientRect();
-            return (y > elemClientRect.top && y < (elemClientRect.top + elemClientRect.height));
-          });
+            return (y > elemClientRect.top - 10 && y < elemClientRect.top + elemClientRect.height + 10);
+        });
         if (result.length) {
           result = result.slice(0,1);
           if (result[0] === this.itemcontainer.children[0]) {
