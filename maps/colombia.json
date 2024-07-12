@@ -1,10 +1,8 @@
 {
   "map": {
-    "zoom": 0.8012137600139599,
+    "zoom": 13.11,
     "center": [
-      17.494197060024817,
-      -0.7238730987698005
-    ],
+      -75.4283,2.4887    ],
     "pitch": 0,
     "bearing": 0,
     "maxPitch": 85
@@ -1234,7 +1232,7 @@
             "metadata": {
               "legendurl": "https://tiles.edugis.nl/mapproxy/forest_change/wms/GHM_mix_2022?service=WMS&version=1.1.1&request=GetLegendGraphic&styles=&layer=GHM_mix_2022&format=image/png",
               "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/forest_change/wms/GHM_mix_2022?service=WMS&version=1.1.1&request=GetFeatureInfo&layers=GHM_mix_2022&query_layers=GHM_mix_2022",
-              "title": "Bos",
+              "title": "Bos verandering 2000-2022",
               "abstract": "Bos veranderingen tussen 2000 en 2022 dataset.",
               "reference": false
             },
@@ -4287,6 +4285,34 @@
                 "black"
               ],
               "fill-outline-color":"white","fill-opacity":0.8}
+            }
+          },
+          {
+            "title": "Catastro publico Marzo 2024",
+            "layerInfo": {
+              "id":"e1e6e8fb-b5d3-43ec-b620-8135e8fc14b6",
+              "type":"fill",
+              "source":{
+                  "type":"vector",
+                  "tiles":["https://tiles.edugis.nl/data/public.catastro_publico_marzo_2024/mvt/{z}/{x}/{y}?geom_column=geom&columns=codigo_municipio&include_nulls=0"],
+                  "bounds":[-76.0286933762233,1.78169943011444,-74.943721681178,2.98275742319354]},
+              "source-layer":"public.catastro_publico_marzo_2024",
+              "paint":{
+              "fill-color":[
+                  "case",["==",["get","codigo_municipio"],"41615"],"#a6cee3",
+                  ["==",["get","codigo_municipio"],"41306"],"#1f78b4",
+                  ["==",["get","codigo_municipio"],"41132"],"#b2df8a",
+                  ["==",["get","codigo_municipio"],"41801"],"#33a02c",
+                  ["==",["get","codigo_municipio"],"41357"],"#fb9a99",
+                  ["==",["get","codigo_municipio"],"41885"],"#e31a1c",
+                  ["==",["get","codigo_municipio"],"41524"],"#fdbf6f",
+                  ["==",["get","codigo_municipio"],"41349"],"#ff7f00",
+                  ["==",["get","codigo_municipio"],"41797"],"#cab2d6",
+                  ["==",["get","codigo_municipio"],"41013"],"#6a3d9a",
+                  ["==",["get","codigo_municipio"],"41518"],"#ffff99",
+                  "#b15928"],
+                  "fill-outline-color":"white",
+                  "fill-opacity":0.8}
             }
           }
         ]
