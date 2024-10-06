@@ -164,6 +164,11 @@ class MapInfoFormatted extends LitElement {
                   value = valueMap[1];
                 }
               }
+              if (translation.multiplier && !isNaN(parseFloat(translation.multiplier))) {
+                if (typeof parseFloat(value) == "number" && !isNaN(parseFloat(value))) {
+                  value = parseFloat(value) * parseFloat(translation.multiplier);
+                }
+              }
               if (translation.hasOwnProperty('decimals') && !isNaN(parseInt(translation.decimals))) {
                 if (typeof parseFloat(value) == "number" && !isNaN(parseFloat(value))) {
                   let factor = Math.pow(10, parseInt(translation.decimals));
