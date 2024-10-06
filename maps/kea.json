@@ -7,98 +7,7 @@
   "datacatalog": [{
       "type": "group",
       "title": "Basislagen",
-      "sublayers": [{
-          "title": "Beweegbare bruggen",
-          "layerInfo": {
-            "id": "KEA_Beweegbare_bruggen",
-            "type": "raster",
-            "minzoom": 2.5,
-            "maxzoom": 16.5,
-            "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Beweegbare_bruggen&query_layers=Beweegbare_bruggen",
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Beweegbare_bruggen&format=image%2Fpng"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Beweegbare_bruggen/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
-            }
-          }
-        },
-        {
-          "title": "Zwemwaterlocaties",
-          "layerInfo": {
-            "id": "KEA_Zwemwaterlocaties",
-            "type": "raster",
-            "minzoom": 2.5,
-            "maxzoom": 16.5,
-            "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Zwemwaterlocaties&query_layers=Zwemwaterlocaties",
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Zwemwaterlocaties&format=image%2Fpng"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Zwemwaterlocaties/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds":[2.75,50.50, 7.5, 53.6]
-            }
-          }
-        },
-        {
-          "title": "Tunnels",
-          "layerInfo": {
-            "id": "KEA_Tunnels",
-            "type": "raster",
-            "minzoom": 2.5,
-            "maxzoom": 16.5,
-            "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Tunnels&query_layers=Tunnels",
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Tunnels&format=image%2Fpng"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Tunnels/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
-            }
-          }
-        },
-        {
-          "title":"Filter bebouwde kom",
-          "layerInfo": {
-            "id": "KEA_Filter_bebouwde_kom",
-            "type": "raster",
-            "minzoom": 2.5,
-            "maxzoom": 16.5,
-            "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Filter_bebouwde_kom&query_layers=Filter_bebouwde_kom",
-              "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Filter_bebouwde_kom&format=image%2Fpng"
-            },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Filter_bebouwde_kom/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
-            }
-          }
-        },
+      "sublayers": [
         {
           "title":"Boom per buurt",
           "layerInfo": {
@@ -107,19 +16,27 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Boom_per_buurt&query_layers=Boom_per_buurt",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_B", "translation": "Percentage bomen", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage bomen (boomkroon en het gebied eronder).  Door een gebied te vergroenen, zorg je ervoor dat het water vrij in de bodem kan infiltreren, bomen en planten water kunnen opnemen en het vervolgens verdampen of het grondwater ermee aanvullen. Daarnaast draagt groen niet alleen bij aan klimaatadaptatie, het versterkt ook de leefbaarheid en biodiversiteit. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=boom_per_buurt26&query_layers=boom_per_buurt26",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Boom_per_buurt&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=boom_per_buurt26"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Boom_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
-            }
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=boom_per_buurt26&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
+            }  
           }
         },
         {
@@ -130,18 +47,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_per_buurt&query_layers=Groen_per_buurt",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_GROEN", "translation": "Percentage groen", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage bomen (boomkroon en het gebied eronder) + laag groen (gras en struiken).  Door een gebied te vergroenen, zorg je ervoor dat het water vrij in de bodem kan infiltreren, bomen en planten water kunnen opnemen en het vervolgens verdampen of het grondwater ermee aanvullen. Daarnaast draagt groen niet alleen bij aan klimaatadaptatie, het versterkt ook de leefbaarheid en biodiversiteit. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=boom_per_buurt27&query_layers=boom_per_buurt27",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_per_buurt&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=boom_per_buurt27"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=boom_per_buurt27&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -153,18 +78,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Grijs_per_buurt&query_layers=Grijs_per_buurt",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_GRIJS", "translation": "Percentage grijs", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage grijs (stenen, verharding, kale grond, zandverstuiving) per buurt.  Door een gebied te vergroenen, zorg je ervoor dat het water vrij in de bodem kan infiltreren, bomen en planten water kunnen opnemen en het vervolgens verdampen of het grondwater ermee aanvullen. Daarnaast draagt groen niet alleen bij aan klimaatadaptatie, het versterkt ook de leefbaarheid en biodiversiteit. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=boom_per_buurt28&query_layers=boom_per_buurt28",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Grijs_per_buurt&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=boom_per_buurt28"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Grijs_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=boom_per_buurt28&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -176,18 +109,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Water_per_buurt&query_layers=Water_per_buurt",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_WA_T", "translation": "Percentage water", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage oppervlaktewater per buurt. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=boom_per_buurt29&query_layers=boom_per_buurt29",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Water_per_buurt&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=boom_per_buurt29"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Water_per_buurt/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=boom_per_buurt29&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -199,18 +140,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_openbare_ruimte&query_layers=Groen_binnen_openbare_ruimte",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_G_BOBR", "translation": "Percentage groen binnen openbare ruimte", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage groen in de openbare ruimte (bomen, plantsoenen, parken, enz). Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=groen_binnen_openbare_ruimte1&query_layers=groen_binnen_openbare_ruimte1",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_openbare_ruimte&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=groen_binnen_openbare_ruimte1"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_binnen_openbare_ruimte/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=groen_binnen_openbare_ruimte1&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -222,18 +171,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Groen_binnen_niet_openbare_ruimte&query_layers=Groen_binnen_niet_openbare_ruimte",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID"],
+                "translations": [
+                  {"name": "PC_G_BNOBR", "translation": "Percentage groen binnen niet openbare ruimte", "unit": " %", "decimals": 0},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "Deze kaartlaag geeft het percentage groen in de niet openbare ruimte (tuinen, binnenplaatsen, afgerasterd terrein enz). Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-groen-en-grijs",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=groen_binnen_openbare_ruimte2&query_layers=groen_binnen_openbare_ruimte2",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Groen_binnen_niet_openbare_ruimte&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=groen_binnen_openbare_ruimte2"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Groen_binnen_niet_openbare_ruimte/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=groen_binnen_openbare_ruimte2&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Cobra groeninzicht 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -245,41 +202,60 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Wijktypologie&query_layers=Wijktypologie",
+              "attributes": {
+                "deniedattributes": ["the_geom", "fid", "OBJECTID", "WijktypeDe"],
+                "translations": [
+                  {"name": "Wijktype1", "translation": "Hoofdtype", "unit": ""},
+                  {"name": "Beoordelin", "translation": "Percentage hoofdtype", "unit": " %", "decimals": 0, "multiplier": 100},
+                  {"name": "Wijktype2", "translation": "Subtype", "unit": ""},
+                  {"name": "Beoordeli2", "translation": "Percentage subtype", "unit": " %", "decimals": 0, "multiplier": 100},
+                  {"name": "BU_CODE", "translation": "CBS buurtcode", "unit": ""},
+                  {"name": "GM_CODE", "translation": "CBS gemeentecode", "unit": ""}
+                ]
+              },
+              "abstract": "De indeling in 14 wijktypen (zie legenda) biedt handvatten voor klimaatadaptatie: zo kun je voor elk wijktype in beeld brengen wat de typische kwetsbaarheden zijn en welke maatregelen je daarvoor kunt nemen. Meer informatie: https://www.klimaateffectatlas.nl/nl/wijktypologie",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=wijktypen_buurten&query_layers=wijktypen_buurten",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Wijktypologie&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=wijktypen_buurten"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Wijktypologie/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=wijktypen_buurten&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/HvA 2023",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
         {
-          "title": "Landbouwgebieden",
+          "title": "Postcodetypologie",
           "layerInfo": {
-            "id": "KEA_Landbouwgebieden",
+            "id": "KEA_Postcodetypologie",
             "type": "raster",
-            "minzoom": 2.5,
+            "minzoom": 9.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Landbouwgebieden&query_layers=Landbouwgebieden",
+              "attributes": {
+                "deniedattributes": ["geom", "WijktypeDef"],
+                "translations": [
+                  {"name": "Wijktype1", "translation": "Hoofdtype", "unit": ""},
+                  {"name": "Beoordeling1", "translation": "Percentage hoofdtype", "unit": " %", "decimals": 0, "multiplier": 100},
+                  {"name": "PC6", "translation": "6 positie postcode", "unit": ""}
+                ]
+              },
+              "abstract": "De indeling in 14 postcodetypen (zie legenda) biedt handvatten voor klimaatadaptatie: zo kun je voor elk postcodetype in beeld brengen wat de typische kwetsbaarheden zijn en welke maatregelen je daarvoor kunt nemen. Meer informatie: https://www.klimaateffectatlas.nl/nl/wijktypologie",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=wijktypen_PC6&query_layers=wijktypen_PC6",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Landbouwgebieden&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=wijktypen_PC6"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Landbouwgebieden/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=wijktypen_PC6&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/HvA 2023",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -291,18 +267,37 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse",
+              "attributes": {
+                "deniedattributes": ["geom", "id"],
+                "translations": [
+                  {"name": "gridcode", "translation": "Landschapstype", "unit": "", "valuemap": [
+                      [1000, "Strandwallen en binnenduinrand"],
+                      [2000, "Zeekleipolders"],
+                      [3000, "Laagveen"],
+                      [4000, "Droogmakerijen en IJsselmeerpolders"],
+                      [5000, "Rivierengebied"],
+                      [6000, "Rivierterrassen"],
+                      [7000, "Stuwwallen"],
+                      [8000, "Keileemgebied"],
+                      [9000, "Dekzandgebeid"],
+                      [10000, "Voormalige hoogvenen"],
+                      [11000, "Heuvelland en lõssgebied"]
+                    ]
+                  }
+                ]
+              },
+              "abstract": "Natuurlijk systeem betekent de samenhang tussen het landschap, de bodem en de ondergrond, en het watersysteem. Daarvoor is het land in 11 landschapstypen ingedeeld (zie legenda). Het doel is dat de kaart helpt bij klimaatadaptatie en om water en bodem belangrijker te maken bij het inrichten van het land. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-natuurlijk-systeem-nederland",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=bknsn_hoofdklasse&query_layers=bknsn_hoofdklasse",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=bknsn_hoofdklasse"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Basiskaart_Natuurlijk_Systeem_Nederland_Hoofdklasse/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=bknsn_hoofdklasse&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Geo-Inspiratie en GrondRR, 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         },
@@ -314,18 +309,26 @@
             "minzoom": 2.5,
             "maxzoom": 16.5,
             "metadata": {
-              "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&query_layers=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse",
+              "attributes": {
+                "deniedattributes": ["geom", "shape_leng", "shape_area", "meta_lands", "w1", "w2","w3","w4","v1","v2","v3","v4","v5","v6","v7","v8","av1","av2","av3","av4","ab1","ab2","aa1","aa2","al1","z1"],
+                "translations": [
+                  {"name": "hoofdlands", "translation": "hoofdtype"},
+                  {"name": "subtype_na", "translation": "subtype"},
+                  {"name": "bknsn_code", "translation": "subtype code"}
+                ]
+              },
+              "abstract": "Natuurlijk systeem betekent de samenhang tussen het landschap, de bodem en de ondergrond, en het watersysteem. Daarvoor is het land in 11 landschapstypen ingedeeld die elk weer zijn onderverdeed in subklassen (zie legenda). Het doel is dat de kaart helpt bij klimaatadaptatie en om water en bodem belangrijker te maken bij het inrichten van het land. Meer informatie: https://www.klimaateffectatlas.nl/nl/basiskaart-natuurlijk-systeem-nederland",
+              "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=bkns_subklasse_2023_dreigingen_kansen&query_layers=bkns_subklasse_2023_dreigingen_kansen",
               "getFeatureInfoFormat": "application/vnd.ogc.gml",
-              "legendurl": "https://tiles.edugis.nl/mapproxy/basiskaarten/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse&format=image%2Fpng"
+              "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=bkns_subklasse_2023_dreigingen_kansen"
             },
-            "source": {
-              "type": "raster",
-              "tileSize": 256,
-              "tiles": [
-                "https://tiles.edugis.nl/mapproxy/basiskaarten/wmts/Basiskaart_Natuurlijk_Systeem_Nederland_Subklasse/spherical_mercator/{z}/{x}/{y}.png"
-              ],
-              "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+            "source":{
+              "type":"raster",
+              "tileSize":256,
+              "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=bkns_subklasse_2023_dreigingen_kansen&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+              "attribution":"KEA/Geo-Inspiratie en GrondRR, 2021",
+              "bounds" : [2.75,50.50, 7.5, 53.6],
+              "maxzoom": 18
             }
           }
         }
