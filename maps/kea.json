@@ -1060,14 +1060,14 @@
                 "minzoom": 2.5,
                 "maxzoom": 16.5,
                 "metadata": {
-                  "getFeatureInfoUrl": "https://tiles.edugis.nl/mapproxy/droogte/wms/?version=1.1.1&request=GetFeatureInfo&styles=&layers=Risico_droogtestress_2050_Hoog&query_layers=Risico_droogtestress_2050_Hoog",
+                  "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=droogtestress_huidig&query_layers=droogtestress_huidig",
                   "legendurl": "https://tiles.edugis.nl/mapproxy/droogte/wms?version=1.1.1&request=GetLegendGraphic&styles=&layer=Risico_droogtestress_2050_Hoog&format=image%2Fpng"
                 },
                 "source": {
                   "type": "raster",
                   "tileSize": 256,
                   "tiles": [
-                    "https://tiles.edugis.nl/mapproxy/droogte/wmts/Risico_droogtestress_2050_Hoog/spherical_mercator/{z}/{x}/{y}.png"
+                    "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=droogtestress_huidig&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"
                   ],
                   "attribution":"KEA",
               "bounds" : [2.75,50.50, 7.5, 53.6]
@@ -2209,14 +2209,16 @@
                 "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
                 "type":"raster",
                 "metadata": {
-                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar&query_layers=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
+                  "getFeatureInfoUrl_old":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=waterdiepte1000jaar&query_layers=waterdiepte1000jaar",
+                  "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=waterdiepte_neerslag_140mm_2uur&query_layers=waterdiepte_neerslag_140mm_2uur",
                   "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                  "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Waterdiepte_bij_intense_neerslag_-_1-1000_jaar&format=image%2Fpng"
+                  "legendurl_old":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=waterdiepte1000jaar&format=image%2Fpng",
+                  "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=waterdiepte_neerslag_140mm_2uur"
                 },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
-                  "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Waterdiepte_bij_intense_neerslag_-_1-1000_jaar/spherical_mercator/{z}/{x}/{y}.png"],
+                  "tiles":["https://tiles.edugis.nl/mapproxy/keawateroverlast/wmts/waterdiepte1000jaar/spherical_mercator/{z}/{x}/{y}.png"],
                   "attribution":"KEA",
               "bounds" : [2.75,50.50, 7.5, 53.6]
                 }
@@ -2228,14 +2230,14 @@
                 "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
                 "type":"raster",
                 "metadata": {
-                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=Waterdiepte_bij_intense_neerslag_-_1-100_jaar&query_layers=Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
+                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=waterdiepte100jaar&query_layers=waterdiepte100jaar",
                   "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                  "legendurl":"https://tiles.edugis.nl/mapproxy/wateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=Waterdiepte_bij_intense_neerslag_-_1-100_jaar&format=image%2Fpng"
+                  "legendurl":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=waterdiepte100jaar&format=image%2Fpng"
                 },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
-                  "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Waterdiepte_bij_intense_neerslag_-_1-100_jaar/spherical_mercator/{z}/{x}/{y}.png"],
+                  "tiles":["https://tiles.edugis.nl/mapproxy/keawateroverlast/wmts/waterdiepte100jaar/spherical_mercator/{z}/{x}/{y}.png"],
                   "attribution":"KEA",
               "bounds" : [2.75,50.50, 7.5, 53.6]
                 }
