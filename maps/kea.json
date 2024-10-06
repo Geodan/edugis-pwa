@@ -2199,7 +2199,7 @@
                   "tileSize":256,
                   "tiles":["https://tiles.edugis.nl/mapproxy/wateroverlast/wmts/Gevoeligheid_watererosie/spherical_mercator/{z}/{x}/{y}.png"],
                   "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+                  "bounds" : [2.75,50.50, 7.5, 53.6]
                 }
               }
             },
@@ -2209,18 +2209,31 @@
                 "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-1000_jaar",
                 "type":"raster",
                 "metadata": {
-                  "getFeatureInfoUrl_old":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=waterdiepte1000jaar&query_layers=waterdiepte1000jaar",
+                  "attributes": {
+                    "translations": [
+                      {"name": "GRAY_INDEX", "translation": "waterdiepte", "valuemap": [                              [
+                                127,"geen gegevens"],
+                              [1, "5 - 10 cm"],
+                              [2, "10 - 15 cm"],
+                              [3, "15 - 20 cm"],
+                              [4, "20 - 30 cm"],
+                              [5, " > 30 cm"]
+                          ] 
+                      }
+                    ]
+                  },
+                  "abstract": "Deze kaartlaag geeft de waterdiepte die ontstaat bij een neerslag van 140 mm in 2 uur. Dit gebeurt op een locatie gemiddeld eens in de 1000 jaar. Bij de berekening wordt uitgegaan van een bui van 140 mm in 2 uur waarbij rekening wordt gehouden met hoogteverschllen en het water wordt afgevoerd naar het rioolstelsel en het oppervlaktewater. Ongeveer tien procent van de gebouwen in Nederland heeft bij een zeer hevige bui die gemiddeld eens in de 1000 jaar voorkomt een kans op wateroverlast. Laaggelegen verharde delen zijn in het bijzonder gevoelig voor wateroverlast. Voor meer informatie zie https://www.klimaateffectatlas.nl/nl/waterdiepte-bij-kortdurende-hevige-neerslag",
                   "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=waterdiepte_neerslag_140mm_2uur&query_layers=waterdiepte_neerslag_140mm_2uur",
                   "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                  "legendurl_old":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=waterdiepte1000jaar&format=image%2Fpng",
                   "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=waterdiepte_neerslag_140mm_2uur"
                 },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
-                  "tiles":["https://tiles.edugis.nl/mapproxy/keawateroverlast/wmts/waterdiepte1000jaar/spherical_mercator/{z}/{x}/{y}.png"],
-                  "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+                  "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=waterdiepte_neerslag_140mm_2uur&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+                  "attribution":"KEA/Deltares",
+                  "bounds" : [2.75,50.50, 7.5, 53.6],
+                  "maxzoom": 18
                 }
               }
             },
@@ -2230,16 +2243,31 @@
                 "id": "KEA_Waterdiepte_bij_intense_neerslag_-_1-100_jaar",
                 "type":"raster",
                 "metadata": {
-                  "getFeatureInfoUrl":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetFeatureInfo&styles=&layers=waterdiepte100jaar&query_layers=waterdiepte100jaar",
+                  "attributes": {
+                    "translations": [
+                      {"name": "GRAY_INDEX", "translation": "waterdiepte", "valuemap": [                              [
+                                255,"geen gegevens"],
+                              [1, "5 - 10 cm"],
+                              [2, "10 - 15 cm"],
+                              [3, "15 - 20 cm"],
+                              [4, "20 - 30 cm"],
+                              [5, " > 30 cm"]
+                          ] 
+                      }
+                    ]
+                  },
+                  "abstract": "Deze kaartlaag geeft de waterdiepte die ontstaat bij een neerslag van 70 mm in 2 uur. Dit gebeurt op een locatie gemiddeld eens in de 100 jaar. Bij de berekening wordt uitgegaan van een bui van 70 mm in 2 uur waarbij rekening wordt gehouden met hoogteverschllen en het water wordt afgevoerd naar het rioolstelsel en het oppervlaktewater. Laaggelegen verharde delen zijn in het bijzonder gevoelig voor wateroverlast. Voor meer informatie zie https://www.klimaateffectatlas.nl/nl/waterdiepte-bij-kortdurende-hevige-neerslag",
+                  "getFeatureInfoUrl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?service=WMS&version=1.1.1&styles=&request=GetFeatureInfo&layers=waterdiepte_neerslag_70mm_2uur&query_layers=waterdiepte_neerslag_70mm_2uur",
                   "getFeatureInfoFormat": "application/vnd.ogc.gml",
-                  "legendurl":"https://tiles.edugis.nl/mapproxy/keawateroverlast/wms?version=1.1.1&request=GetLegendGraphic&layer=waterdiepte100jaar&format=image%2Fpng"
+                  "legendurl": "https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/ows?service=WMS&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=waterdiepte_neerslag_70mm_2uur"
                 },
                 "source":{
                   "type":"raster",
                   "tileSize":256,
-                  "tiles":["https://tiles.edugis.nl/mapproxy/keawateroverlast/wmts/waterdiepte100jaar/spherical_mercator/{z}/{x}/{y}.png"],
-                  "attribution":"KEA",
-              "bounds" : [2.75,50.50, 7.5, 53.6]
+                  "tiles":["https://apps.geodan.nl/public/data/org/gws/YWFMLMWERURF/kea_public/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&SRS=EPSG:3857&TRANSPARENT=true&FORMAT=image%2Fpng&STYLES=&LAYERS=waterdiepte_neerslag_70mm_2uur&EXCEPTIONS=INIMAGE&WIDTH=256&HEIGHT=256&BBOX={bbox-epsg-3857}"],
+                  "attribution":"KEA/Deltares",
+                  "bounds" : [2.75,50.50, 7.5, 53.6],
+                  "maxzoom": 18
                 }
               }
             }
@@ -2614,7 +2642,7 @@
       "order": 6
     },
     "draw": {
-      "visible": 0,
+      "visible": 1,
       "order": 7
     },
     "legend": {
