@@ -39,7 +39,8 @@
     "marked": "^4.2.4",
     "papaparse": "^5.4.0",
     "reselect": "^3.0.1",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "@frsource/cypress-plugin-visual-regression-diff": "^3.2.7",
