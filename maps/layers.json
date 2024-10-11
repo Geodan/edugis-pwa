@@ -818,14 +818,7 @@
                       "paint": {
                         "fill-color": "rgba(227,26,28,0)"
                       },
-                      "filter": [
-                        "==",
-                        [
-                          "get",
-                          "water"
-                        ],
-                        "NEE"
-                      ]
+                      "filter": ["==",["get","water"],"NEE"]
                     },
                     {
                       "id": "provincie2023-outline",
@@ -902,7 +895,7 @@
                       "type": "fill",
                       "metadata": {
                         "title": "gemeente",
-                        "abstract": "Gemeentegrenzen 2023 met CBS gegevens per gemeente voor bevolking, autobezit en inkomen (2020). Een inkomen is 'hoog' als die tot de 20% hoogste inkomens behoort. Een inkomen is 'laag' als die tot de 40% laagste inkomens behoort",
+                        "abstract": "Gemeentegrenzen 2023 met CBS gegevens per gemeente voor bevolking, autobezit en inkomen (2020). Een inkomen is 'hoog' als dat tot de 20% hoogste inkomens behoort. Een inkomen is 'laag' als dat tot de 40% laagste inkomens behoort",
                         "attributes": {
                           "deniedattributes": "water",
                           "translations": [
@@ -6861,6 +6854,674 @@
           "type": "group",
           "title": "Welvaart",
           "sublayers": [
+            {
+              "type": "group",
+              "title": "Welvaart (2023)",
+              "sublayers": [
+                {
+                  "type": "group",
+                  "title": "Welvaart per gemeente",
+                  "sublayers": [
+                      {
+                        "title": "Gemiddeld inkomen (2020) per gemeente",
+                        "layerInfo" : {
+                          "id":"b37194c9-d8c3-49a5-997e-dd44aa8ce862",
+                          "type":"fill",
+                          "metadata": {
+                            "abstract": "Gemiddeld inkomen per gemeente 2020 volgens CBS. Gekoppeld aan gemeentekaart 2023. Het CBS publiceert deze gegevens als maatwerk (op verzoek). In dit geval voor de Kamer van Koophandel. Meer informatie: https://www.cbs.nl/nl-nl/maatwerk/2023/35/inkomen-per-gemeente-en-wijk-2020",
+                             "attributes": {
+                                "emphasize": [
+                                  "gemiddeld_inkomen_2020"
+                                ],
+                                "translations": [
+                                  {
+                                    "name": "gemeentenaam",
+                                    "translation": "naam"
+                                  },
+                                  {
+                                    "name": "gemiddeld_inkomen_2020", "translation": "gemiddeld inkomen", "multiplier": 1000, "unit": " euro", "valuemap": [
+                                      [24.5, "€21000 - €24500", "<"],
+                                      [25.8, "€24500 - €25800", "<"],
+                                      [26.5, "€25800 - €26500", "<"],
+                                      [26.9, "€26500 - €26900", "<"],
+                                      [27.4, "€26900 - €27400", "<"],
+                                      [28.1, "€27400 - €28100", "<"],
+                                      [29.5, "€28100 - €29500", "<"],
+                                      [31.4, "€29500 - €31400", "<"],
+                                      [45.3, "€31400 - €45300", "<="]
+                                    ]
+                                 },
+                                 {
+                                  "name": "percentage_laaginkomen_2020",
+                                  "translation": "percentage laag inkomen 2020",
+                                  "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_hooginkomen_2020",
+                                    "translation": "percentage hoog inkomen 2020",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "autobezit_huishouden",
+                                    "translation": "auto's per huishouden",
+                                    "unit": ""
+                                  },
+                                
+                                  {
+                                    "name": "aantal_inwoners",
+                                    "translation": "aantal inwoners"
+                                  },
+                                  {
+                                    "name": "omgevingsadressendichtheid",
+                                    "translation": "omgevingsadressendichtheid"
+                                  },
+                                  {
+                                    "name": "bevolkingsdichtheid_inwoners_per_km2",
+                                    "translation": "bevolkingsdichtheid",
+                                    "unit": " inw / km2"
+                                  },
+                                  {
+                                    "name": "mannen",
+                                    "translation": "aantal mannen"
+                                  },
+                                  {
+                                    "name": "vrouwen",
+                                    "translation": "aantal vrouwen"
+                                  },
+                                  {
+                                    "name": "percentage_personen_0_tot_15_jaar",
+                                    "translation": "personen 0 tot 15 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_15_tot_25_jaar",
+                                    "translation": "personen 15 tot 25 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_25_tot_45_jaar",
+                                    "translation": "personen 25 tot 45 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_45_tot_65_jaar",
+                                    "translation": "personen 45 tot 65 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_65_jaar_en_ouder",
+                                    "translation": "personen 65 jaar en ouder",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_ongehuwd",
+                                    "translation": "ongehuwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_gescheid",
+                                    "translation": "gescheiden",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_verweduwd",
+                                    "translation": "verweduwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "aantal_huishoudens",
+                                    "translation": "aantal huishoudens"
+                                  },
+                                  {
+                                    "name": "percentage_eenpersoonshuishoudens",
+                                    "translation": "eenpersoonshuishoudens",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_zonder_kinderen",
+                                    "translation": "huishoudens zonder kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_met_kinderen",
+                                    "translation": "huishoudens met kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "gemiddelde_huishoudsgrootte",
+                                    "translation": "gemiddelde huishoudsgrootte"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_nederland",
+                                    "translation": "herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_uit_europa_excl_nl",
+                                    "translation": "herkomstland uit europa excl nl",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_buiten_europa",
+                                    "translation": "herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_geb_in_nl_met_herkomstland_nederland",
+                                    "translation": "geboren in NL met herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl",
+                                    "translation": "geboren in NL met herkomstland in europa ex NL",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_buiten_europa",
+                                    "translation": "geboren in NL met herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl",
+                                    "translation": "geboren buiten NL met herkomstlnd in europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa",
+                                    "translation": "geboren buiten NL met herkomstlnd buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "oppervlakte_totaal_in_ha",
+                                    "translation": "oppervlakte totaal",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_land_in_ha",
+                                    "translation": "oppervlakte land",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_water_in_ha",
+                                    "translation": "oppervlakte water",
+                                    "unit": " ha"
+                                  }
+                                ]
+                             }
+                          },
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0"],
+                              "bounds":[3.307937714123451,50.75036749286305,7.227498373226648,53.57642327097569],
+                              "attribution":"CBS"
+                          },
+                          "source-layer":"public.gemeenten_2023_simplified_geo",
+                          "paint":{
+                            "fill-color":[
+                                "case",
+                                ["<",["get","gemiddeld_inkomen_2020"],24.5],"#fff7ec",
+                                ["<",["get","gemiddeld_inkomen_2020"],25.8],"#fee8c8",
+                                ["<",["get","gemiddeld_inkomen_2020"],26.5],"#fdd49e",
+                                ["<",["get","gemiddeld_inkomen_2020"],26.9],"#fdbb84",
+                                ["<",["get","gemiddeld_inkomen_2020"],27.4],"#fc8d59",
+                                ["<",["get","gemiddeld_inkomen_2020"],28.1],"#ef6548",
+                                ["<",["get","gemiddeld_inkomen_2020"],29.5],"#d7301f",
+                                ["<",["get","gemiddeld_inkomen_2020"],31.4],"#b30000",
+                                ["<=",["get","gemiddeld_inkomen_2020"],45.3],"#7f0000",
+                                "black"
+                              ],
+                            "fill-outline-color":"gray"
+                          },
+                          "filter":["!=",["get","water"],"JA"]
+                        }
+                      },
+                      {
+                        "title": "Percentage lage inkomens (2020) per gemeente",
+                        "layerInfo" : {
+                          "id":"percentage_laaginkomen_2020",
+                          "type":"fill",
+                          "metadata": {
+                            "title": "Percentage lage inkomens (2020) per gemeente",
+                            "abstract": "Percentage lage inkomens (2020) van huishoudens per gemeente volgens CBS. Gekoppeld aan gemeentekaart 2023. Een inkomen van een huishouden is 'hoog' als dat tot de 20% hoogste Nederlandse inkomens behoort. Een huishoudinkomen is 'laag' als dat tot de 40% laagste inkomens van Nederland behoort. Het CBS publiceert deze gegevens als maatwerk (op verzoek). In dit geval voor de Kamer van Koophandel. Meer informatie: https://www.cbs.nl/nl-nl/maatwerk/2023/35/inkomen-per-gemeente-en-wijk-2020",
+                             "attributes": {
+                                "emphasize": [
+                                  "percentage_laaginkomen_2020"
+                                ],
+                                "translations": [
+                                  {
+                                    "name": "gemeentenaam",
+                                    "translation": "naam"
+                                  },
+                                  {
+                                    "name": "percentage_laaginkomen_2020","translation": "percentage laag inkomen 2020", "unit": " %", "valuemap": [
+                                      [30, "Minder dan 30%", "<"],
+                                      [35, "30 tot 35%", "<"],
+                                      [40, "35 tot 40%", "<"],
+                                      [45, "40 tot 45%", "<"],
+                                      [70, "45% of meer", "<"]
+                                    ]
+                                  },
+                                  {
+                                    "name": "percentage_hooginkomen_2020",
+                                    "translation": "percentage hoog inkomen 2020",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "gemiddeld_inkomen_2020", "translation": "gemiddeld inkomen", "multiplier": 1000, "unit": " euro"
+                                  },
+                                  {
+                                    "name": "autobezit_huishouden",
+                                    "translation": "auto's per huishouden",
+                                    "unit": ""
+                                  },
+                                
+                                  {
+                                    "name": "aantal_inwoners",
+                                    "translation": "aantal inwoners"
+                                  },
+                                  {
+                                    "name": "omgevingsadressendichtheid",
+                                    "translation": "omgevingsadressendichtheid"
+                                  },
+                                  {
+                                    "name": "bevolkingsdichtheid_inwoners_per_km2",
+                                    "translation": "bevolkingsdichtheid",
+                                    "unit": " inw / km2"
+                                  },
+                                  {
+                                    "name": "mannen",
+                                    "translation": "aantal mannen"
+                                  },
+                                  {
+                                    "name": "vrouwen",
+                                    "translation": "aantal vrouwen"
+                                  },
+                                  {
+                                    "name": "percentage_personen_0_tot_15_jaar",
+                                    "translation": "personen 0 tot 15 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_15_tot_25_jaar",
+                                    "translation": "personen 15 tot 25 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_25_tot_45_jaar",
+                                    "translation": "personen 25 tot 45 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_45_tot_65_jaar",
+                                    "translation": "personen 45 tot 65 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_65_jaar_en_ouder",
+                                    "translation": "personen 65 jaar en ouder",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_ongehuwd",
+                                    "translation": "ongehuwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_gescheid",
+                                    "translation": "gescheiden",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_verweduwd",
+                                    "translation": "verweduwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "aantal_huishoudens",
+                                    "translation": "aantal huishoudens"
+                                  },
+                                  {
+                                    "name": "percentage_eenpersoonshuishoudens",
+                                    "translation": "eenpersoonshuishoudens",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_zonder_kinderen",
+                                    "translation": "huishoudens zonder kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_met_kinderen",
+                                    "translation": "huishoudens met kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "gemiddelde_huishoudsgrootte",
+                                    "translation": "gemiddelde huishoudsgrootte"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_nederland",
+                                    "translation": "herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_uit_europa_excl_nl",
+                                    "translation": "herkomstland uit europa excl nl",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_buiten_europa",
+                                    "translation": "herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_geb_in_nl_met_herkomstland_nederland",
+                                    "translation": "geboren in NL met herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl",
+                                    "translation": "geboren in NL met herkomstland in europa ex NL",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_buiten_europa",
+                                    "translation": "geboren in NL met herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl",
+                                    "translation": "geboren buiten NL met herkomstlnd in europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa",
+                                    "translation": "geboren buiten NL met herkomstlnd buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "oppervlakte_totaal_in_ha",
+                                    "translation": "oppervlakte totaal",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_land_in_ha",
+                                    "translation": "oppervlakte land",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_water_in_ha",
+                                    "translation": "oppervlakte water",
+                                    "unit": " ha"
+                                  }
+                                ]
+                             }
+                          },
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0"],
+                              "bounds":[3.307937714123451,50.75036749286305,7.227498373226648,53.57642327097569],
+                              "attribution":"CBS"
+                          },
+                          "source-layer":"public.gemeenten_2023_simplified_geo",
+                          "paint":{
+                            "fill-color":[
+                                "case",
+                                ["<",["get","percentage_laaginkomen_2020"],30],"#c0e7ff",
+                                ["<",["get","percentage_laaginkomen_2020"],35],"#77cbe5",
+                                ["<",["get","percentage_laaginkomen_2020"],40],"#3d95d4",
+                                ["<",["get","percentage_laaginkomen_2020"],45],"#2256a0",
+                                ["<",["get","percentage_laaginkomen_2020"],70],"#143564",
+                                "black"
+                              ],
+                            "fill-outline-color":"gray"
+                          },
+                          "filter":["!=",["get","water"],"JA"]
+                        }
+                      },
+                      {
+                        "title": "Huishoudens hoge inkomens (2020) per gemeente",
+                        "layerInfo" : {
+                          "id":"percentage_hooginkomen_2020",
+                          "type":"fill",
+                          "metadata": {
+                            "title": "Percentage hoge inkomens (2020) per gemeente",
+                            "abstract": "Percentage hoge inkomens (2020) van huishoudens per gemeente volgens CBS. Gekoppeld aan gemeentekaart 2023. Een inkomen van een huishouden is 'hoog' als dat tot de 20% hoogste Nederlandse inkomens behoort. Een huishoudinkomen is 'laag' als dat tot de 40% laagste inkomens van Nederland behoort. Het CBS publiceert deze gegevens als maatwerk (op verzoek). In dit geval voor de Kamer van Koophandel. Meer informatie: https://www.cbs.nl/nl-nl/maatwerk/2023/35/inkomen-per-gemeente-en-wijk-2020",
+                             "attributes": {
+                                "emphasize": [
+                                  "percentage_hooginkomen_2020"
+                                ],
+                                "translations": [
+                                  {
+                                    "name": "gemeentenaam",
+                                    "translation": "naam"
+                                  },
+                                  {
+                                    "name": "percentage_hooginkomen_2020","translation": "percentage hoog inkomen 2020","unit": " %", "valuemap": [
+                                      [15, "Minder dan 15%", "<"],
+                                      [20, "15 tot 20%", "<"],
+                                      [25, "20 tot 25%", "<"],
+                                      [30, "25 tot 30%", "<"],
+                                      [70, "30% of meer", "<"]
+                                    ]
+                                  },
+                                  {
+                                    "name": "percentage_laaginkomen_2020","translation": "percentage laag inkomen 2020", "unit": " %"
+                                  },
+                                  {
+                                    "name": "gemiddeld_inkomen_2020", "translation": "gemiddeld inkomen", "multiplier": 1000, "unit": " euro"
+                                  },
+                                  {
+                                    "name": "autobezit_huishouden",
+                                    "translation": "auto's per huishouden",
+                                    "unit": ""
+                                  },
+                                
+                                  {
+                                    "name": "aantal_inwoners",
+                                    "translation": "aantal inwoners"
+                                  },
+                                  {
+                                    "name": "omgevingsadressendichtheid",
+                                    "translation": "omgevingsadressendichtheid"
+                                  },
+                                  {
+                                    "name": "bevolkingsdichtheid_inwoners_per_km2",
+                                    "translation": "bevolkingsdichtheid",
+                                    "unit": " inw / km2"
+                                  },
+                                  {
+                                    "name": "mannen",
+                                    "translation": "aantal mannen"
+                                  },
+                                  {
+                                    "name": "vrouwen",
+                                    "translation": "aantal vrouwen"
+                                  },
+                                  {
+                                    "name": "percentage_personen_0_tot_15_jaar",
+                                    "translation": "personen 0 tot 15 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_15_tot_25_jaar",
+                                    "translation": "personen 15 tot 25 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_25_tot_45_jaar",
+                                    "translation": "personen 25 tot 45 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_45_tot_65_jaar",
+                                    "translation": "personen 45 tot 65 jaar",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_personen_65_jaar_en_ouder",
+                                    "translation": "personen 65 jaar en ouder",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_ongehuwd",
+                                    "translation": "ongehuwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_gescheid",
+                                    "translation": "gescheiden",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_verweduwd",
+                                    "translation": "verweduwd",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "aantal_huishoudens",
+                                    "translation": "aantal huishoudens"
+                                  },
+                                  {
+                                    "name": "percentage_eenpersoonshuishoudens",
+                                    "translation": "eenpersoonshuishoudens",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_zonder_kinderen",
+                                    "translation": "huishoudens zonder kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_huishoudens_met_kinderen",
+                                    "translation": "huishoudens met kinderen",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "gemiddelde_huishoudsgrootte",
+                                    "translation": "gemiddelde huishoudsgrootte"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_nederland",
+                                    "translation": "herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_uit_europa_excl_nl",
+                                    "translation": "herkomstland uit europa excl nl",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_met_herkomstland_buiten_europa",
+                                    "translation": "herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "percentage_geb_in_nl_met_herkomstland_nederland",
+                                    "translation": "geboren in NL met herkomstland nederland",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_in_europa_ex_nl",
+                                    "translation": "geboren in NL met herkomstland in europa ex NL",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_in_nl_met_herkomstland_buiten_europa",
+                                    "translation": "geboren in NL met herkomstland buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl",
+                                    "translation": "geboren buiten NL met herkomstlnd in europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa",
+                                    "translation": "geboren buiten NL met herkomstlnd buiten europa",
+                                    "unit": " %"
+                                  },
+                                  {
+                                    "name": "oppervlakte_totaal_in_ha",
+                                    "translation": "oppervlakte totaal",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_land_in_ha",
+                                    "translation": "oppervlakte land",
+                                    "unit": " ha"
+                                  },
+                                  {
+                                    "name": "oppervlakte_water_in_ha",
+                                    "translation": "oppervlakte water",
+                                    "unit": " ha"
+                                  }
+                                ]
+                             }
+                          },
+                          "source":{
+                              "type":"vector",
+                              "tiles":["https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0"],
+                              "bounds":[3.307937714123451,50.75036749286305,7.227498373226648,53.57642327097569],
+                              "attribution":"CBS"
+                          },
+                          "source-layer":"public.gemeenten_2023_simplified_geo",
+                          "paint":{
+                            "fill-color":[
+                                "case",
+                                ["<",["get","percentage_hooginkomen_2020"],15],"#c0e7ff",
+                                ["<",["get","percentage_hooginkomen_2020"],20],"#77cbe5",
+                                ["<",["get","percentage_hooginkomen_2020"],25],"#3d95d4",
+                                ["<",["get","percentage_hooginkomen_2020"],30],"#2256a0",
+                                ["<",["get","percentage_hooginkomen_2020"],70],"#143564",
+                                "black"
+                              ],
+                            "fill-outline-color":"gray"
+                          },
+                          "filter":["!=",["get","water"],"JA"]
+                        }
+                      },
+                      {
+                        "title": "Gemiddeld aantal auto's per huishouden per gemeente",
+                        "layerInfo": {
+
+                        }
+                      }
+                  ]    
+                },
+                {
+                  "type": "group",
+                  "title": "Welvaart per wijk",
+                  "sublayers": [
+                      {
+                        "title": "Gemiddeld inkomen (2020) per wijk",
+                        "layerInfo": {
+
+                        }
+                      },
+                      {
+                        "title": "Percentage lage inkomens (2020) per wijk",
+                        "layerInfo": {
+
+                        }
+                      },
+                      {
+                        "title": "Percentage hoge inkomens (2020) per wijk",
+                        "layerInfo": {
+
+                        }
+                      },
+                      {
+                        "title": "Gemiddeld aantal auto's per huishouden per wijk",
+                        "layerInfo": {
+
+                        }
+                      }
+                  ]    
+                }
+              ]
+              
+            },
             {
               "type": "group",
               "title": "Welvaart (2010)",
