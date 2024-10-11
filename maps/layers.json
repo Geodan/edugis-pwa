@@ -885,7 +885,7 @@
                     "gemeentesource2023": {
                       "type": "vector",
                       "tiles": [
-                        "https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"
+                        "https://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0"
                       ],
                       "bounds": [
                         3.30793777958783,
@@ -902,6 +902,7 @@
                       "type": "fill",
                       "metadata": {
                         "title": "gemeente",
+                        "abstract": "Gemeentegrenzen 2023 met CBS gegevens per gemeente voor bevolking, autobezit en inkomen (2020). Een inkomen is 'hoog' als die tot de 20% hoogste inkomens behoort. Een inkomen is 'laag' als die tot de 40% laagste inkomens behoort",
                         "attributes": {
                           "deniedattributes": "water",
                           "translations": [
@@ -1034,6 +1035,26 @@
                               "unit": " %"
                             },
                             {
+                              "name": "gemiddeld_inkomen_2020",
+                              "translation": "gemiddeld inkomen 2020 per persoon",
+                              "unit": " x 1000 €"
+                            },
+                            {
+                              "name": "percentage_laaginkomen_2020",
+                              "translation": "percentage laag inkomen 2020",
+                              "unit": " %"
+                            },
+                            {
+                              "name": "percentage_hooginkomen_2020",
+                              "translation": "percentage hoog inkomen 2020",
+                              "unit": " %"
+                            },
+                            {
+                              "name": "autobezit_huishouden",
+                              "translation": "auto's per huishouden",
+                              "unit": ""
+                            },
+                            {
                               "name": "oppervlakte_totaal_in_ha",
                               "translation": "oppervlakte totaal",
                               "unit": " ha"
@@ -1066,11 +1087,11 @@
                       ]
                     },
                     {
-                      "id": "gemeente-outline",
+                      "id": "gemeente2023-outline",
                       "metadata": {
                         "title": "gemeentegrens",
                         "attributes": {
-                          "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                          "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_hahttps://tiles.edugis.nl/data/public.gemeenten_2023_simplified_geo/mvt/0/0/0?geom_column=geom&columns=gemeentenaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0",
                           "translations": [
                             {
                               "name": "gemeentenaam",
@@ -1123,7 +1144,7 @@
                     "wijksource2023": {
                       "type": "vector",
                       "tiles": [
-                        "https://tiles.edugis.nl/data/public.cbs_wijken_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=wijknaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha&include_nulls=0"
+                        "https://tiles.edugis.nl/data/public.cbs_wijken_2023_simplified_geo/mvt/{z}/{x}/{y}?geom_column=geom&columns=wijknaam,water,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,aantal_inwoners,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden&include_nulls=0"
                       ],
                       "bounds": [
                         3.30793777958783,
@@ -1140,6 +1161,7 @@
                       "type": "fill",
                       "metadata": {
                         "title": "wijk",
+                        "abstract": "Wijken 2023 met CBS gegevens per wijk voor bevolking, autobezit en inkomen (2020). Een inkomen is 'hoog' als die tot de 20% hoogste inkomens behoort. Een inkomen is 'laag' als die tot de 40% laagste inkomens behoort",
                         "attributes": {
                           "deniedattributes": "water",
                           "translations": [
@@ -1270,6 +1292,25 @@
                               "name": "perc_geb_buiten_nl_met_herkomstlnd_buiten_europa",
                               "translation": "geboren buiten NL met herkomstlnd buiten europa",
                               "unit": " %"
+                            },{
+                              "name": "gemiddeld_inkomen_2020",
+                              "translation": "gemiddeld inkomen 2020 per persoon",
+                              "unit": " x 1000 €"
+                            },
+                            {
+                              "name": "percentage_laaginkomen_2020",
+                              "translation": "percentage laag inkomen 2020",
+                              "unit": " %"
+                            },
+                            {
+                              "name": "percentage_hooginkomen_2020",
+                              "translation": "percentage hoog inkomen 2020",
+                              "unit": " %"
+                            },
+                            {
+                              "name": "autobezit_huishouden",
+                              "translation": "auto's per huishouden",
+                              "unit": ""
                             },
                             {
                               "name": "oppervlakte_totaal_in_ha",
@@ -1308,7 +1349,7 @@
                       "metadata": {
                         "title": "wijkgrens",
                         "attributes": {
-                          "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha",
+                          "deniedattributes": "water,aantal_inwoners,omgevingsadressendichtheid,bevolkingsdichtheid_inwoners_per_km2,mannen,vrouwen,percentage_personen_0_tot_15_jaar,percentage_personen_15_tot_25_jaar,percentage_personen_25_tot_45_jaar,personen 25 tot 45 jaar,percentage_personen_45_tot_65_jaar,percentage_personen_65_jaar_en_ouder,percentage_ongehuwd,percentage_gescheid,percentage_verweduwd,aantal_huishoudens,percentage_eenpersoonshuishoudens,percentage_huishoudens_zonder_kinderen,percentage_huishoudens_met_kinderen,gemiddelde_huishoudsgrootte,percentage_met_herkomstland_nederland,percentage_met_herkomstland_uit_europa_excl_nl,percentage_met_herkomstland_buiten_europa,percentage_geb_in_nl_met_herkomstland_nederland,perc_geb_in_nl_met_herkomstland_in_europa_ex_nl,perc_geb_in_nl_met_herkomstland_buiten_europa,perc_geb_buiten_nl_met_herkomstlnd_in_europa_ex_nl,perc_geb_buiten_nl_met_herkomstlnd_buiten_europa,oppervlakte_totaal_in_ha,oppervlakte_land_in_ha,oppervlakte_water_in_ha,gemiddeld_inkomen_2020,percentage_laaginkomen_2020,percentage_hooginkomen_2020,autobezit_huishouden",
                           "translations": [
                             {
                               "name": "wijknaam",
@@ -5195,7 +5236,16 @@
                         "translations": [
                           {
                             "name": "aantal_woningen",
-                            "translation": "aantal woningen"
+                            "translation": "aantal woningen per vierkant", 
+                            "valuemap": [
+                              [5, "minder dan 5", "<"],
+                              [10, "5 tot 10", "<"],
+                              [15, "10 tot 15", "<"],
+                              [20, "15 tot 20", "<"],
+                              [25, "20 tot 25", "<"],
+                              [35, "25 tot 35", "<"],
+                              [860, "35 tot 860", "<="]
+                            ]
                           }
                         ]
                       }
@@ -5299,7 +5349,16 @@
                           {
                             "name": "percentage_koopwoningen",
                             "translation": "percentage koopwoningen",
-                            "unit": "%"
+                            "unit": "%", 
+                            "valuemap": [
+                              [20, "0 tot 20%", "<"],
+                              [30, "20 tot 30%", "<"],
+                              [40, "30 tot 40%", "<"],
+                              [50, "40 tot 50%", "<"],
+                              [60, "50 tot 60%", "<"],
+                              [90, "60 tot 90%", "<"],
+                              [100, "90 tot 100%", "<="]
+                            ]
                           },
                           {
                             "name": "percentage_huurwoningen",
@@ -5327,7 +5386,7 @@
                       "fill-color": [
                         "case",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5336,7 +5395,7 @@
                         ],
                         "#4575B5",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5345,7 +5404,7 @@
                         ],
                         "#849EBA",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5354,7 +5413,7 @@
                         ],
                         "#C0CCBE",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5363,7 +5422,7 @@
                         ],
                         "#FFFFBF",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5372,7 +5431,7 @@
                         ],
                         "#FAB984",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_koopwoningen"
@@ -5391,7 +5450,15 @@
                         "#D62F27",
                         "rgba(80,80,80,0.2)"
                       ]
-                    }
+                    },
+                    "filter": [
+                      ">=",
+                      [
+                        "get",
+                        "percentage_koopwoningen"
+                      ],
+                      0
+                    ]
                   }
                 },
                 {
@@ -5407,7 +5474,16 @@
                           {
                             "name": "percentage_huurwoningen",
                             "translation": "percentage huurwoningen",
-                            "unit": "%"
+                            "unit": "%",
+                            "valuemap": [
+                              [20, "0 tot 20%", "<"],
+                              [30, "20 tot 30%", "<"],
+                              [40, "30 tot 40%", "<"],
+                              [50, "40 tot 50%", "<"],
+                              [60, "50 tot 60%", "<"],
+                              [90, "60 tot 90%", "<"],
+                              [100, "90 tot 100%", "<="]
+                            ]
                           },
                           {
                             "name": "percentage_koopwoningen",
@@ -5435,7 +5511,7 @@
                       "fill-color": [
                         "case",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5444,7 +5520,7 @@
                         ],
                         "#4575B5",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5453,7 +5529,7 @@
                         ],
                         "#849EBA",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5462,7 +5538,7 @@
                         ],
                         "#C0CCBE",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5471,7 +5547,7 @@
                         ],
                         "#FFFFBF",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5480,7 +5556,7 @@
                         ],
                         "#FAB984",
                         [
-                          "<=",
+                          "<",
                           [
                             "get",
                             "percentage_huurwoningen"
@@ -5499,7 +5575,15 @@
                         "#D62F27",
                         "rgba(80,80,80,0.2)"
                       ]
-                    }
+                    },
+                    "filter": [
+                      ">=",
+                      [
+                        "get",
+                        "percentage_huurwoningen"
+                      ],
+                      0
+                    ]
                   }
                 },
                 {
@@ -5515,7 +5599,18 @@
                           {
                             "name": "gemiddelde_woz_waarde_woning",
                             "translation": "gemiddelde woz waarde woning",
-                            "unit": " x 1000 euro"
+                            "unit": " x 1000 euro",
+                            "valuemap": [
+                              [0, "geen gegevens", "<"],
+                              [111, "0 tot 111 000 euro", "<"],
+                              [122, "111 tot 122 000 euro", "<"],
+                              [176, "122 tot 176 000 euro", "<"],
+                              [217, "176 tot 217 000 euro", "<"],
+                              [257, "217 tot 257 000 euro", "<"],
+                              [305, "257 tot 305 000 euro", "<"],
+                              [384, "305 tot 384 000 euro", "<"],
+                              [4479, "384 tot 4 479 000 euro", "<="]
+                            ]
                           }
                         ]
                       }
