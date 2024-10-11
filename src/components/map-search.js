@@ -229,7 +229,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
       const floatParts = coordinates.map(parseFloat);
       // assume lat, lon, but swap if lat > 90 or lat < -90
       if (floatParts[0] > 90 || floatParts[0] < -90) {
-        floatParts = floatParts.reverse();
+        floatParts.reverse();
       }
       floatParts[0] = normalizeLongitude(floatParts[0]);
       return `${Math.abs(floatParts[0])} ${floatParts[0] >= 0 ? 'N' : 'S'},${Math.abs(floatParts[1])} ${floatParts[1] >= 0 ? 'E' : 'W'}`;
