@@ -7928,9 +7928,10 @@
                                     [null, "Geen gegevens"],
                                     [20, "Minder dan 20%", "<"],
                                     [25, "20 tot 25%", "<"],
-                                    [30, "25 tot 30%", "<"],
-                                    [45, "30 tot 45%", "<"],
-                                    [100, "45% of meer", "<="]
+                                    [30, "25 tot 30%"], "<",
+                                    [40, "30 tot 40%", "<"],
+                                    [50, "40 tot 50%", "<"],
+                                    [100, "Meer dan 50%", "<="]
                                   ]
                                 },
                                 {
@@ -8133,11 +8134,13 @@
                                 },
                                 {
                                   "name": "percentage_hooginkomen_2020","translation": "percentage hoog inkomen 2020","unit": " %", "valuemap": [
-                                    [15, "Minder dan 15%", "<"],
+                                    [10, "Minder dan 10%", "<"],
+                                    [15, "10 tot 25%", "<"],
                                     [20, "15 tot 20%", "<"],
                                     [25, "20 tot 25%", "<"],
                                     [30, "25 tot 30%", "<"],
-                                    [70, "30% of meer", "<"]
+                                    [75, "30% of meer", "<="],
+                                    [null, ""]
                                   ]
                                 },
                                 {
@@ -8304,11 +8307,13 @@
                         "paint":{
                           "fill-color":[
                               "case",
-                              ["<",["get","percentage_hooginkomen_2020"],15],"#c0e7ff",
-                              ["<",["get","percentage_hooginkomen_2020"],20],"#77cbe5",
-                              ["<",["get","percentage_hooginkomen_2020"],25],"#3d95d4",
-                              ["<",["get","percentage_hooginkomen_2020"],30],"#2256a0",
-                              ["<",["get","percentage_hooginkomen_2020"],70],"#143564",
+                              ["!", ["has","percentage_hooginkomen_2020"]],"rgba(211, 211, 211, 0.5)",
+                              ["<",["get","percentage_hooginkomen_2020"],10],"#f1eef6",
+                              ["<",["get","percentage_hooginkomen_2020"],15],"#d0d1e6",
+                              ["<",["get","percentage_hooginkomen_2020"],20],"#a6bddb",
+                              ["<",["get","percentage_hooginkomen_2020"],25],"#74a9cf",
+                              ["<",["get","percentage_hooginkomen_2020"],30],"#2b8cbe",
+                              ["<=",["get","percentage_hooginkomen_2020"],75],"#045a8d",
                               "black"
                             ],
                           "fill-outline-color":"gray"
@@ -8317,7 +8322,7 @@
                       }
                     },
                     {
-                      "title": "Gemiddeld aantal auto's per huishouden per wijken",
+                      "title": "Gemiddeld aantal auto's per huishouden per wijk",
                       "layerInfo" : {
                         "id":"autobezit_huishouden_wijk",
                         "type":"fill",
@@ -8337,12 +8342,17 @@
                                 },
                                 {
                                   "name": "autobezit_huishouden","translation": "Aantal auto's per huishouden","unit": "", "valuemap": [
-                                    [0.8, "0.4 tot 0.8", "<"],
-                                    [1.0, "0.8 tot 1.0", "<"],
+                                    [0.5, "minder dan 0.5", "<"],
+                                    [0.75, "0.5 tot 0.75", "<"],
+                                    [1, "0.75 t/m 1", "<="],
                                     [1.1, "1.0 tot 1.1", "<"],
                                     [1.2, "1.1 tot 1.2", "<"],
                                     [1.3, "1.2 tot 1.3", "<"],
-                                    [1.4, "1.3 t/m 1.4", "<="]
+                                    [1.4, "1.3 tot 1.4", "<"],
+                                    [1.5, "1.4 tot 1.5", "<"],
+                                    [1.6, "1.5 tot 1.6", "<"],
+                                    [2.1, "meer dan 1.6", "<="],
+                                    [null, ""]
                                   ]
                                 },
                                 {
@@ -8506,12 +8516,16 @@
                         "paint":{
                           "fill-color":[
                               "case",
-                              ["<",["get","autobezit_huishouden"],0.8],"#feebe2",
-                              ["<",["get","autobezit_huishouden"],1.0],"#fcc5c0",
-                              ["<",["get","autobezit_huishouden"],1.1],"#fa9fb5",
-                              ["<",["get","autobezit_huishouden"],1.2],"#f768a1",
-                              ["<",["get","autobezit_huishouden"],1.3],"#c51b8a",
-                              ["<=",["get","autobezit_huishouden"],1.4],"#7a0177",
+                              ["!", ["has","autobezit_huishouden"]], "rgba(211, 211, 211, 0.5)",
+                              ["<",["get","autobezit_huishouden"],0.5],"#fff7f3",
+                              ["<",["get","autobezit_huishouden"],0.75],"#fde0dd",
+                              ["<=",["get","autobezit_huishouden"],1],"#fcc5c0",
+                              ["<",["get","autobezit_huishouden"],1.2],"#fa9fb5",
+                              ["<",["get","autobezit_huishouden"],1.3],"#f768a1",
+                              ["<",["get","autobezit_huishouden"],1.4],"#dd3497",
+                              ["<",["get","autobezit_huishouden"],1.5],"#ae017e",
+                              ["<",["get","autobezit_huishouden"],1.6],"#7a0177",
+                              ["<=",["get","autobezit_huishouden"],2.1],"#49006a",
                               "black"
                             ],
                           "fill-outline-color":"gray"
