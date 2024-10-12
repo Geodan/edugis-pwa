@@ -7873,7 +7873,7 @@
                 "paint":{
                   "fill-color":[
                       "case",
-                      ["!", ["has","gemiddeld_inkomen_2020"]],"lightgray",
+                      ["!", ["has","gemiddeld_inkomen_2020"]],"rgba(211,211,211,0.5)",
                       ["<",["get","gemiddeld_inkomen_2020"],23.5],"#fff7ec",
                       ["<",["get","gemiddeld_inkomen_2020"],25.1],"#fee8c8",
                       ["<",["get","gemiddeld_inkomen_2020"],26.2],"#fdd49e",
@@ -8086,7 +8086,7 @@
                 "paint":{
                   "fill-color":[
                       "case",
-                      ["!", ["has","percentage_laaginkomen_2020"]],"lightgray",
+                      ["!", ["has","percentage_laaginkomen_2020"]],"rgba(211,211,211,0.5)",
                       ["<",["get","percentage_laaginkomen_2020"],20],"#f1eef6",
                       ["<",["get","percentage_laaginkomen_2020"],25],"#d0d1e6",
                       ["<",["get","percentage_laaginkomen_2020"],30],"#a6bddb",
@@ -8338,7 +8338,7 @@
                             [1.5, "1.4 tot 1.5", "<"],
                             [1.6, "1.5 tot 1.6", "<"],
                             [2.1, "meer dan 1.6", "<="],
-                            [null, ""]
+                            [null, "Geen gegevens"]
                           ]
                         },
                         {
