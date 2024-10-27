@@ -22,9 +22,11 @@
     "@material/mwc-base": "^0.25.1",
     "@material/mwc-button": "^0.25.1",
     "@material/slider": "^0.44.1",
+    "@polymer/polymer": "^3.5.2",
     "@simonwep/pickr": "^1.8.2",
     "@turf/turf": "^6.5.0",
     "@webcomponents/webcomponentsjs": "^2.7.0",
+    "@xmldom/xmldom": "^0.9.4",
     "dompurify": "^2.4.1",
     "file-saver": "^2.0.5",
     "flatbush": "^4.0.0",
@@ -39,24 +41,22 @@
     "marked": "^4.2.4",
     "papaparse": "^5.4.0",
     "reselect": "^3.0.1",
-    "xlsx": "^0.18.5",
-    "xmldom": "^0.6.0"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
-    "@frsource/cypress-plugin-visual-regression-diff": "^3.2.7",
+    "@frsource/cypress-plugin-visual-regression-diff": "^1.4.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
-    "@web/dev-server": "^0.1.35",
+    "@web/dev-server": "^0.4.6",
     "@web/rollup-plugin-html": "^2.0.0",
-    "cypress": "^12.1.0",
+    "cypress": "^13.15.0",
     "del": "^3.0.0",
     "pixelmatch": "^4.0.2",
     "rollup": "^2.79.1",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-minify-template-literals": "^1.1.7",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-summary": "^2.0.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "wct-browser-legacy": "^1.0.2"
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
