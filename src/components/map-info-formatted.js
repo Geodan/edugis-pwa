@@ -1,4 +1,5 @@
 import {LitElement, html, css} from 'lit';
+import {unsafeHTML} from 'lit/directives/unsafe-html.js'
 import rootUrl from '../utils/rooturl';
 import {translate as t, registerLanguageChangedListener, unregisterLanguageChangedListener} from '../i18n';
 
@@ -204,19 +205,50 @@ class MapInfoFormatted extends LitElement {
     }
     return result;
   }
+  formatAttributeValue(htmlvalue) {
+    if (typeof htmlvalue !== "string") {
+      return JSON.stringify(htmlvalue);
+    }
+    htmlvalue = htmlvalue.replace(">", "&gt;");
+    htmlvalue = htmlvalue.replace("<", "&lt;");
+    const urls = htmlvalue.match(/(https?:\/\/[^\s]+)(?=\s|$)/gi);
+    if (urls) {
+      urls.forEach(url => {
+          htmlvalue = htmlvalue.replace(url, `<a href="${url}" noreferrer noopener target="_blank">${url}</a>`);
+      });
+    }
+    return unsafeHTML(htmlvalue);
+  }
+  isImgageUrl(value){
+    if (typeof value !== 'string') {
+      return false;
+    }
+    if (value.toLocaleLowerCase().startsWith('https://maps.googleapis.com')) {
+      return true;
+    }
+    if (!value.toLocaleLowerCase().startsWith('https://')) {
+      return false;
+    }
+    value = value.trim();
+    if (value.indexOf(' ') > -1) {
+      return false;
+    }
+    try {
+      const objectUrl = new URL(value);
+      const ext = objectUrl.pathname.split('.').pop().toLocaleLowerCase();
+      return ['png', 'jpg', 'gif', 'svg'].includes(ext);
+    } catch (error) {
+      return false;
+    }
+  }
   renderAttribute(key, value, odd, emphasize) {
-    let lowCaseValue = typeof value === 'string'? value.toLowerCase() : '';
-    let isImage = (
-      lowCaseValue.startsWith('https://maps.googleapis.com') || 
-        (
-          (lowCaseValue.startsWith('https://') || lowCaseValue.startsWith('https://')) && 
-          (lowCaseValue.toLowerCase().endsWith('.png') || lowCaseValue.endsWith('.jpg')  || lowCaseValue.endsWith('.gif') || lowCaseValue.endsWith('.svg'))
-        )
-      );
+    let isImage = this.isImgageUrl(value);
     return html`<tr class=${odd?'':"even"}><td><div class="attributename${emphasize?' emphasize':''}">${key}</div></td>
     <td><div class="attributevalue${emphasize?' emphasize':''}">${typeof value === 'object' && value !== null?
-          JSON.stringify(value)
-        :isImage?html`<img class="clickImage" src="${value}" width="95%" @click="${e=>this._imageClicked(e)}">`:value}</div></td></tr>`
+          JSON.stringify(value) :
+            isImage?
+              html`<img class="clickImage" src="${value}" width="95%" @click="${e=>this._imageClicked(e)}">`:
+              this.formatAttributeValue(value)}</div></td></tr>`
   }
   _imageClicked(event) {
     const imageUrl = event.target.src;
@@ -240,7 +272,7 @@ class MapInfoFormatted extends LitElement {
       bubbles: true,
       composed: true,
       detail: {
-        markdown: `![Afbeelding](${event.target.src})`
+        markdown: `[![Afbeelding](${event.target.src})](${event.target.src})`
       }
     }))
   }
