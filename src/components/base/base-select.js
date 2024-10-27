@@ -67,10 +67,8 @@ class BaseSelect extends LitElement {
                 display: none;  /* hide default down arrow in IE10*/
             }
               
-            /* hack to fall back in opera */
-            _:-o-prefocus, .selector {
-                .bscontainer { background: none; }
-            }
+            /* hack to fall back in opera ?*/
+            .selector .bscontainer { background: none; }
             .hidden {
                 display: none;
             }

@@ -3,9 +3,7 @@ import { rollupPluginHTML as html } from "@web/rollup-plugin-html";
 import copy from 'rollup-plugin-copy';
 import resolve from '@rollup/plugin-node-resolve';
 import {terser} from 'rollup-plugin-terser';
-import pkg from 'rollup-plugin-minify-html-literals';
-const minifyHTML = pkg.default;
-import summary from 'rollup-plugin-summary';
+import { minifyTemplateLiterals } from "rollup-plugin-minify-template-literals";import summary from 'rollup-plugin-summary';
 import del from 'rollup-plugin-delete'
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
@@ -23,7 +21,7 @@ export default {
       exportConditions: ['development']
     }),
     // Minify HTML template literals
-    minifyHTML(),
+    minifyTemplateLiterals(),
     // Minify JS
     terser({
       ecma: 2020,

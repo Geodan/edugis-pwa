@@ -51,9 +51,7 @@ export function customSelectCss() {
       }
       select::-ms-expand { display: none; } /* hide default down arrow in IE10*/
       
-      /* hack to fall back in opera */
-      _:-o-prefocus, .selector {
-        .styled-select { background: none; }
-        }
+      /* hack to fall back in opera ?*/
+      .selector .styled-select { background: none; }
     `
 }
